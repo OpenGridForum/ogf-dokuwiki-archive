@@ -10,6 +10,6 @@ the following assets, archived in read-only mode.
 
  
 
-Except where otherwise noted, content on this wiki is licensed under the
+Except where otherwise noted, content on this archive is licensed under the
 following license: [CC Attribution-Share Alike 4.0
 International](http://creativecommons.org/licenses/by-sa/4.0/)
