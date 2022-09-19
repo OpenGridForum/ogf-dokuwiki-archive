@@ -1,2 +1,1 @@
-# ogf-dokuwiki-archive
- Archive ot OGF dokuwiki-based web site
+This repository hosts a static converted version of the Open Grid Forum web site intended for archive purposes.
