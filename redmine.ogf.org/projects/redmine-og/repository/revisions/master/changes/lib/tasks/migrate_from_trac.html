@@ -1,0 +1,988 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/master/changes/lib/tasks/migrate_from_trac.rake by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:40:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>/lib/tasks/migrate_from_trac.rake - Changes - Redmine - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+  <script src="https://redmine.ogf.org/javascripts/repository_navigation.js?1425381960" type="text/javascript"></script>
+</head>
+<body class="theme-Ogf redmine controller-repositories action-changes">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/redmine-og" method="get">
+        <input name="changesets" type="hidden" value="1" />
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/redmine-og" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=repository" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=repository" class="ancestor">IT</a> » Redmine</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/redmine-og" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/redmine-og" class="dmsf">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/repository" class="repository selected">Repository</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+  
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/statistics" class="icon icon-stats">Statistics</a>
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/changes/lib/tasks/migrate_from_trac.rake?rev=" id="revision_selector" method="get">  <!-- Branches Dropdown -->
+      | Branch: 
+    <select id="branch" name="branch"><option value=""></option>
+<option value="1.3-stable">1.3-stable</option>
+<option value="devel">devel</option>
+<option value="master" selected="selected">master</option></select>
+  
+  
+  | Revision: 
+  <input id="rev" name="rev" size="8" type="text" value="master" />
+</form>
+</div>
+
+<h2>
+  <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/show">root</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/show/lib">lib</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/show/lib/tasks">tasks</a>
+
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/changes/lib/tasks/migrate_from_trac.rake">migrate_from_trac.rake</a>
+
+
+@ master
+
+
+</h2>
+
+<p>
+
+<p>
+History |
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/entry/lib/tasks/migrate_from_trac.rake">View</a> |
+
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/annotate/lib/tasks/migrate_from_trac.rake">Annotate</a> |
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/raw/lib/tasks/migrate_from_trac.rake">Download</a>
+(29.6 kB)
+</p>
+
+
+</p>
+
+
+
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/diff/lib/tasks/migrate_from_trac.rake" method="get">
+<table class="list changesets">
+<thead><tr>
+
+<th>#</th>
+<th></th>
+<th></th>
+<th>Date</th>
+<th>Author</th>
+<th>Comment</th>
+</tr></thead>
+<tbody>
+
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a00f04886fac78e489bb030d20414ebdf10841e3" title="Revision a00f0488">a00f0488</a></td>
+<td class="checkbox"><input checked="checked" id="cb-1" name="rev" onclick="$('cbto-2').checked=true;" type="radio" value="a00f04886fac78e489bb030d20414ebdf10841e3" /></td>
+<td class="checkbox"></td>
+<td class="committed_on">02/05/2012 06:50 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Increase username length limit from 30 to 60 (#2719).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8778 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8474b084568986a0fc6377f9f940df3f1a7d8dba" title="Revision 8474b084">8474b084</a></td>
+<td class="checkbox"><input id="cb-2" name="rev" onclick="$('cbto-3').checked=true;" type="radio" value="8474b084568986a0fc6377f9f940df3f1a7d8dba" /></td>
+<td class="checkbox"><input checked="checked" id="cbto-2" name="rev_to" onclick="if ($('cb-2').checked==true) {$('cb-1').checked=true;}" type="radio" value="8474b084568986a0fc6377f9f940df3f1a7d8dba" /></td>
+<td class="committed_on">09/07/2011 04:17 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>remove trailing white-spaces from lib/tasks/migrate_from_trac.rake</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7074 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/44ffc5a3365ffd16d6971d1c3f691a2f3f80ba3b" title="Revision 44ffc5a3">44ffc5a3</a></td>
+<td class="checkbox"><input id="cb-3" name="rev" onclick="$('cbto-4').checked=true;" type="radio" value="44ffc5a3365ffd16d6971d1c3f691a2f3f80ba3b" /></td>
+<td class="checkbox"><input id="cbto-3" name="rev_to" onclick="if ($('cb-3').checked==true) {$('cb-2').checked=true;}" type="radio" value="44ffc5a3365ffd16d6971d1c3f691a2f3f80ba3b" /></td>
+<td class="committed_on">12/31/2010 10:30 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Remove the limitation on characters that can be used in custom_field, issue_status, role, tracker, user names (#5152).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4599 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a52417eca9311aabaeaab847873aea52cb78ce52" title="Revision a52417ec">a52417ec</a></td>
+<td class="checkbox"><input id="cb-4" name="rev" onclick="$('cbto-5').checked=true;" type="radio" value="a52417eca9311aabaeaab847873aea52cb78ce52" /></td>
+<td class="checkbox"><input id="cbto-4" name="rev_to" onclick="if ($('cb-4').checked==true) {$('cb-3').checked=true;}" type="radio" value="a52417eca9311aabaeaab847873aea52cb78ce52" /></td>
+<td class="committed_on">11/29/2010 02:34 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Escapes attachment ids in TracMigrate (#6996).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4449 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8e57b1f6cdd76119227eecd69d4777b045ab5fd8" title="Revision 8e57b1f6">8e57b1f6</a></td>
+<td class="checkbox"><input id="cb-5" name="rev" onclick="$('cbto-6').checked=true;" type="radio" value="8e57b1f6cdd76119227eecd69d4777b045ab5fd8" /></td>
+<td class="checkbox"><input id="cbto-5" name="rev_to" onclick="if ($('cb-5').checked==true) {$('cb-4').checked=true;}" type="radio" value="8e57b1f6cdd76119227eecd69d4777b045ab5fd8" /></td>
+<td class="committed_on">02/28/2010 11:51 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: Trac importer creates duplicate wiki records (#4743).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3517 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c7c43d38cef92b74403b3c1adb70686145c16829" title="Revision c7c43d38">c7c43d38</a></td>
+<td class="checkbox"><input id="cb-6" name="rev" onclick="$('cbto-7').checked=true;" type="radio" value="c7c43d38cef92b74403b3c1adb70686145c16829" /></td>
+<td class="checkbox"><input id="cbto-6" name="rev_to" onclick="if ($('cb-6').checked==true) {$('cb-5').checked=true;}" type="radio" value="c7c43d38cef92b74403b3c1adb70686145c16829" /></td>
+<td class="committed_on">02/26/2010 10:55 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Removes a useless assignment in Trac importer (#4931).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3494 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/b4cf8ea52512b6db80262a508f1b30b3e3cfbd39" title="Revision b4cf8ea5">b4cf8ea5</a></td>
+<td class="checkbox"><input id="cb-7" name="rev" onclick="$('cbto-8').checked=true;" type="radio" value="b4cf8ea52512b6db80262a508f1b30b3e3cfbd39" /></td>
+<td class="checkbox"><input id="cbto-7" name="rev_to" onclick="if ($('cb-7').checked==true) {$('cb-6').checked=true;}" type="radio" value="b4cf8ea52512b6db80262a508f1b30b3e3cfbd39" /></td>
+<td class="committed_on">01/17/2010 07:00 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds a few STDOUT.flush to migration scripts (#3675).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3328 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ff7eb7b23a6aa86f4bc1a2d73ee0a3a4f1487ba7" title="Revision ff7eb7b2">ff7eb7b2</a></td>
+<td class="checkbox"><input id="cb-8" name="rev" onclick="$('cbto-9').checked=true;" type="radio" value="ff7eb7b23a6aa86f4bc1a2d73ee0a3a4f1487ba7" /></td>
+<td class="checkbox"><input id="cbto-8" name="rev_to" onclick="if ($('cb-8').checked==true) {$('cb-7').checked=true;}" type="radio" value="ff7eb7b23a6aa86f4bc1a2d73ee0a3a4f1487ba7" /></td>
+<td class="committed_on">12/29/2009 08:28 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Auto-detect attachment content type when blank (#3782).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3258 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8db9ecef08ee8afe600bdb2d95ead0162b8b43d4" title="Revision 8db9ecef">8db9ecef</a></td>
+<td class="checkbox"><input id="cb-9" name="rev" onclick="$('cbto-10').checked=true;" type="radio" value="8db9ecef08ee8afe600bdb2d95ead0162b8b43d4" /></td>
+<td class="checkbox"><input id="cbto-9" name="rev_to" onclick="if ($('cb-9').checked==true) {$('cb-8').checked=true;}" type="radio" value="8db9ecef08ee8afe600bdb2d95ead0162b8b43d4" /></td>
+<td class="committed_on">12/25/2009 12:13 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Removes column opt in enumerations table.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3240 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0b3e3471b0f6df18eb6d4e2dbe0458a40390e1ec" title="Revision 0b3e3471">0b3e3471</a></td>
+<td class="checkbox"><input id="cb-10" name="rev" onclick="$('cbto-11').checked=true;" type="radio" value="0b3e3471b0f6df18eb6d4e2dbe0458a40390e1ec" /></td>
+<td class="checkbox"><input id="cbto-10" name="rev_to" onclick="if ($('cb-10').checked==true) {$('cb-9').checked=true;}" type="radio" value="0b3e3471b0f6df18eb6d4e2dbe0458a40390e1ec" /></td>
+<td class="committed_on">10/11/2009 06:12 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Makes migration scripts load tickets in batches (#4011).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2923 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0ac07afc67000f38712ee5d62ffd055daa2bdc46" title="Revision 0ac07afc">0ac07afc</a></td>
+<td class="checkbox"><input id="cb-11" name="rev" onclick="$('cbto-12').checked=true;" type="radio" value="0ac07afc67000f38712ee5d62ffd055daa2bdc46" /></td>
+<td class="checkbox"><input id="cbto-11" name="rev_to" onclick="if ($('cb-11').checked==true) {$('cb-10').checked=true;}" type="radio" value="0ac07afc67000f38712ee5d62ffd055daa2bdc46" /></td>
+<td class="committed_on">10/11/2009 06:08 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixes migration scripts broken by r2726.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2922 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7e1ac0e602a8eb39b08543b8fb190d3456bb264c" title="Revision 7e1ac0e6">7e1ac0e6</a></td>
+<td class="checkbox"><input id="cb-12" name="rev" onclick="$('cbto-13').checked=true;" type="radio" value="7e1ac0e602a8eb39b08543b8fb190d3456bb264c" /></td>
+<td class="checkbox"><input id="cbto-12" name="rev_to" onclick="if ($('cb-12').checked==true) {$('cb-11').checked=true;}" type="radio" value="7e1ac0e602a8eb39b08543b8fb190d3456bb264c" /></td>
+<td class="committed_on">05/10/2009 04:39 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Same as fix as r2705 from Trac wiki pages attachments (#3291).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2718 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/19f44cd1cba9b798a083a0d40caf5e93f2dcfb7f" title="Revision 19f44cd1">19f44cd1</a></td>
+<td class="checkbox"><input id="cb-13" name="rev" onclick="$('cbto-14').checked=true;" type="radio" value="19f44cd1cba9b798a083a0d40caf5e93f2dcfb7f" /></td>
+<td class="checkbox"><input id="cbto-13" name="rev_to" onclick="if ($('cb-13').checked==true) {$('cb-12').checked=true;}" type="radio" value="19f44cd1cba9b798a083a0d40caf5e93f2dcfb7f" /></td>
+<td class="committed_on">05/04/2009 01:41 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Disable email notifications before importing data.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2710 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ad1ffa06a070bebb4bc5698577fcaf3e238e72e8" title="Revision ad1ffa06">ad1ffa06</a></td>
+<td class="checkbox"><input id="cb-14" name="rev" onclick="$('cbto-15').checked=true;" type="radio" value="ad1ffa06a070bebb4bc5698577fcaf3e238e72e8" /></td>
+<td class="checkbox"><input id="cbto-14" name="rev_to" onclick="if ($('cb-14').checked==true) {$('cb-13').checked=true;}" type="radio" value="ad1ffa06a070bebb4bc5698577fcaf3e238e72e8" /></td>
+<td class="committed_on">05/04/2009 12:48 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed Trac importer broken by r2670 (#3254).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2705 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/4601ed2f3aebc545024287e318494ce32bc5803f" title="Revision 4601ed2f">4601ed2f</a></td>
+<td class="checkbox"><input id="cb-15" name="rev" onclick="$('cbto-16').checked=true;" type="radio" value="4601ed2f3aebc545024287e318494ce32bc5803f" /></td>
+<td class="checkbox"><input id="cbto-15" name="rev_to" onclick="if ($('cb-15').checked==true) {$('cb-14').checked=true;}" type="radio" value="4601ed2f3aebc545024287e318494ce32bc5803f" /></td>
+<td class="committed_on">02/15/2009 08:33 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Replaces Enumeration.get_values and Enumeration.default with named scopes.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2472 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a4882467cbab94d444a6eb5030c68fc0f5097f05" title="Revision a4882467">a4882467</a></td>
+<td class="checkbox"><input id="cb-16" name="rev" onclick="$('cbto-17').checked=true;" type="radio" value="a4882467cbab94d444a6eb5030c68fc0f5097f05" /></td>
+<td class="checkbox"><input id="cbto-16" name="rev_to" onclick="if ($('cb-16').checked==true) {$('cb-15').checked=true;}" type="radio" value="a4882467cbab94d444a6eb5030c68fc0f5097f05" /></td>
+<td class="committed_on">01/18/2009 06:54 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed that Trac importer was creating duplicate custom values (#2506).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2280 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/876a9b6ffb49319e1c07e7ac12c471077f391db1" title="Revision 876a9b6f">876a9b6f</a></td>
+<td class="checkbox"><input id="cb-17" name="rev" onclick="$('cbto-18').checked=true;" type="radio" value="876a9b6ffb49319e1c07e7ac12c471077f391db1" /></td>
+<td class="checkbox"><input id="cbto-17" name="rev_to" onclick="if ($('cb-17').checked==true) {$('cb-16').checked=true;}" type="radio" value="876a9b6ffb49319e1c07e7ac12c471077f391db1" /></td>
+<td class="committed_on">11/11/2008 08:32 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: Trac milestone links not correctly converted (#2052).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2014 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/d545ca736070e3117637e9ea1b065df07ab705d2" title="Revision d545ca73">d545ca73</a></td>
+<td class="checkbox"><input id="cb-18" name="rev" onclick="$('cbto-19').checked=true;" type="radio" value="d545ca736070e3117637e9ea1b065df07ab705d2" /></td>
+<td class="checkbox"><input id="cbto-18" name="rev_to" onclick="if ($('cb-18').checked==true) {$('cb-17').checked=true;}" type="radio" value="d545ca736070e3117637e9ea1b065df07ab705d2" /></td>
+<td class="committed_on">11/11/2008 08:28 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: Trac migration of ticket:123 or [ticket:34] do not work (#2053).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2013 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1802fa9348eadf0c890996fbac6e8c6011c7d8e0" title="Revision 1802fa93">1802fa93</a></td>
+<td class="checkbox"><input id="cb-19" name="rev" onclick="$('cbto-20').checked=true;" type="radio" value="1802fa9348eadf0c890996fbac6e8c6011c7d8e0" /></td>
+<td class="checkbox"><input id="cbto-19" name="rev_to" onclick="if ($('cb-19').checked==true) {$('cb-18').checked=true;}" type="radio" value="1802fa9348eadf0c890996fbac6e8c6011c7d8e0" /></td>
+<td class="committed_on">11/11/2008 08:28 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: Trac migration of ticket:123 or [ticket:34] do not work (#2053).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2012 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/29bad1dc95d2a845317ec2e5bd6a02daefaf789c" title="Revision 29bad1dc">29bad1dc</a></td>
+<td class="checkbox"><input id="cb-20" name="rev" onclick="$('cbto-21').checked=true;" type="radio" value="29bad1dc95d2a845317ec2e5bd6a02daefaf789c" /></td>
+<td class="checkbox"><input id="cbto-20" name="rev_to" onclick="if ($('cb-20').checked==true) {$('cb-19').checked=true;}" type="radio" value="29bad1dc95d2a845317ec2e5bd6a02daefaf789c" /></td>
+<td class="committed_on">11/11/2008 08:22 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac importer improvements (patch #2050 by Karl Heinz Marbaise).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2011 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ab4873b83d6f62fa78fdf07da4de2f2f7e0d738d" title="Revision ab4873b8">ab4873b8</a></td>
+<td class="checkbox"><input id="cb-21" name="rev" onclick="$('cbto-22').checked=true;" type="radio" value="ab4873b83d6f62fa78fdf07da4de2f2f7e0d738d" /></td>
+<td class="checkbox"><input id="cbto-21" name="rev_to" onclick="if ($('cb-21').checked==true) {$('cb-20').checked=true;}" type="radio" value="ab4873b83d6f62fa78fdf07da4de2f2f7e0d738d" /></td>
+<td class="committed_on">08/10/2008 05:35 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Quote ids for attachment association since Trac's attachment.id is varchar (#1759).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1728">http://redmine.rubyforge.org/svn/trunk@1728</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0344719482d47c7e69761c6f2d550f3cd98efa93" title="Revision 03447194">03447194</a></td>
+<td class="checkbox"><input id="cb-22" name="rev" onclick="$('cbto-23').checked=true;" type="radio" value="0344719482d47c7e69761c6f2d550f3cd98efa93" /></td>
+<td class="checkbox"><input id="cbto-22" name="rev_to" onclick="if ($('cb-22').checked==true) {$('cb-21').checked=true;}" type="radio" value="0344719482d47c7e69761c6f2d550f3cd98efa93" /></td>
+<td class="committed_on">06/29/2008 05:03 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Makes importer work with Trac 0.8.x (#1540).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1597">http://redmine.rubyforge.org/svn/trunk@1597</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/042da97f541824d72a60d51acd118dcf7892853e" title="Revision 042da97f">042da97f</a></td>
+<td class="checkbox"><input id="cb-23" name="rev" onclick="$('cbto-24').checked=true;" type="radio" value="042da97f541824d72a60d51acd118dcf7892853e" /></td>
+<td class="checkbox"><input id="cbto-23" name="rev_to" onclick="if ($('cb-23').checked==true) {$('cb-22').checked=true;}" type="radio" value="042da97f541824d72a60d51acd118dcf7892853e" /></td>
+<td class="committed_on">06/07/2008 10:55 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac importer: read session_attribute table to find user's email and real name (#1340).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1502">http://redmine.rubyforge.org/svn/trunk@1502</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8aa57058cf0eafdf4fe02f4ab9e4ceb2d2d6d23b" title="Revision 8aa57058">8aa57058</a></td>
+<td class="checkbox"><input id="cb-24" name="rev" onclick="$('cbto-25').checked=true;" type="radio" value="8aa57058cf0eafdf4fe02f4ab9e4ceb2d2d6d23b" /></td>
+<td class="checkbox"><input id="cbto-24" name="rev_to" onclick="if ($('cb-24').checked==true) {$('cb-23').checked=true;}" type="radio" value="8aa57058cf0eafdf4fe02f4ab9e4ceb2d2d6d23b" /></td>
+<td class="committed_on">06/06/2008 11:02 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac importer: improves wiki link conversion (#1287).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1494">http://redmine.rubyforge.org/svn/trunk@1494</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ffea0446992f91ae45ff3c9d47a89d24d23298a1" title="Revision ffea0446">ffea0446</a></td>
+<td class="checkbox"><input id="cb-25" name="rev" onclick="$('cbto-26').checked=true;" type="radio" value="ffea0446992f91ae45ff3c9d47a89d24d23298a1" /></td>
+<td class="checkbox"><input id="cbto-25" name="rev_to" onclick="if ($('cb-25').checked==true) {$('cb-24').checked=true;}" type="radio" value="ffea0446992f91ae45ff3c9d47a89d24d23298a1" /></td>
+<td class="committed_on">05/29/2008 03:31 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac importer: migrate attachments descriptions (#1326).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1477">http://redmine.rubyforge.org/svn/trunk@1477</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/251b1f75e9407d28ef8e952266a9299293a9f040" title="Revision 251b1f75">251b1f75</a></td>
+<td class="checkbox"><input id="cb-26" name="rev" onclick="$('cbto-27').checked=true;" type="radio" value="251b1f75e9407d28ef8e952266a9299293a9f040" /></td>
+<td class="checkbox"><input id="cbto-26" name="rev_to" onclick="if ($('cb-26').checked==true) {$('cb-25').checked=true;}" type="radio" value="251b1f75e9407d28ef8e952266a9299293a9f040" /></td>
+<td class="committed_on">05/02/2008 12:48 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: error on Trac import when :due attribute is nil (#1164).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1406">http://redmine.rubyforge.org/svn/trunk@1406</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1bb51f743a3568dd8714233e83500bd7ff4feda8" title="Revision 1bb51f74">1bb51f74</a></td>
+<td class="checkbox"><input id="cb-27" name="rev" onclick="$('cbto-28').checked=true;" type="radio" value="1bb51f743a3568dd8714233e83500bd7ff4feda8" /></td>
+<td class="checkbox"><input id="cbto-27" name="rev_to" onclick="if ($('cb-27').checked==true) {$('cb-26').checked=true;}" type="radio" value="1bb51f743a3568dd8714233e83500bd7ff4feda8" /></td>
+<td class="committed_on">03/29/2008 06:54 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: migrate_from_trac doesn't import timestamps of wiki and tickets (patch #882 by Andreas Neuhaus slightly edited).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1302">http://redmine.rubyforge.org/svn/trunk@1302</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ef80597c39e02d5e209f5c3dadcf27096b21120b" title="Revision ef80597c">ef80597c</a></td>
+<td class="checkbox"><input id="cb-28" name="rev" onclick="$('cbto-29').checked=true;" type="radio" value="ef80597c39e02d5e209f5c3dadcf27096b21120b" /></td>
+<td class="checkbox"><input id="cbto-28" name="rev_to" onclick="if ($('cb-28').checked==true) {$('cb-27').checked=true;}" type="radio" value="ef80597c39e02d5e209f5c3dadcf27096b21120b" /></td>
+<td class="committed_on">03/26/2008 07:22 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac importer: exclude more Trac wiki pages (#933).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1297">http://redmine.rubyforge.org/svn/trunk@1297</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7fb72e671b867eefd4ce57ba6b4e69564cbce7a9" title="Revision 7fb72e67">7fb72e67</a></td>
+<td class="checkbox"><input id="cb-29" name="rev" onclick="$('cbto-30').checked=true;" type="radio" value="7fb72e671b867eefd4ce57ba6b4e69564cbce7a9" /></td>
+<td class="checkbox"><input id="cbto-29" name="rev_to" onclick="if ($('cb-29').checked==true) {$('cb-28').checked=true;}" type="radio" value="7fb72e671b867eefd4ce57ba6b4e69564cbce7a9" /></td>
+<td class="committed_on">03/21/2008 05:37 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac importer: prevent validation failure due to the default value when saving the Resolution custom field if it already exists (#869).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1286">http://redmine.rubyforge.org/svn/trunk@1286</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2d01398d67dd43b594445a7fca31243585b22172" title="Revision 2d01398d">2d01398d</a></td>
+<td class="checkbox"><input id="cb-30" name="rev" onclick="$('cbto-31').checked=true;" type="radio" value="2d01398d67dd43b594445a7fca31243585b22172" /></td>
+<td class="checkbox"><input id="cbto-30" name="rev_to" onclick="if ($('cb-30').checked==true) {$('cb-29').checked=true;}" type="radio" value="2d01398d67dd43b594445a7fca31243585b22172" /></td>
+<td class="committed_on">03/16/2008 10:54 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">Trac importer:
+	<ul>
+	<li>prevent duplication of associated trackers when the target project already exists (closes #829)</li>
+		<li>warn user if the target project already exists</li>
+	</ul>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1263">http://redmine.rubyforge.org/svn/trunk@1263</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/888b254844092cc4b007fd6e40db719c6ed8dfc8" title="Revision 888b2548">888b2548</a></td>
+<td class="checkbox"><input id="cb-31" name="rev" onclick="$('cbto-32').checked=true;" type="radio" value="888b254844092cc4b007fd6e40db719c6ed8dfc8" /></td>
+<td class="checkbox"><input id="cbto-31" name="rev_to" onclick="if ($('cb-31').checked==true) {$('cb-30').checked=true;}" type="radio" value="888b254844092cc4b007fd6e40db719c6ed8dfc8" /></td>
+<td class="committed_on">03/15/2008 09:24 AM</td>
+<td class="author">John Goerzen </td>
+
+  <td class="comments"><p>Further refine WikiCaps processing for Trac to eliminate problems in<br />some corner cases</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1258">http://redmine.rubyforge.org/svn/trunk@1258</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/cdf3e2b6ef0f2c2bd79c79417a7ae7c9e5280046" title="Revision cdf3e2b6">cdf3e2b6</a></td>
+<td class="checkbox"><input id="cb-32" name="rev" onclick="$('cbto-33').checked=true;" type="radio" value="cdf3e2b6ef0f2c2bd79c79417a7ae7c9e5280046" /></td>
+<td class="checkbox"><input id="cbto-32" name="rev_to" onclick="if ($('cb-32').checked==true) {$('cb-31').checked=true;}" type="radio" value="cdf3e2b6ef0f2c2bd79c79417a7ae7c9e5280046" /></td>
+<td class="committed_on">03/13/2008 08:52 PM</td>
+<td class="author">John Goerzen </td>
+
+  <td class="comments"><p>Fix trac converter WikiCaps to put a space before converted WikiCaps words</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1246">http://redmine.rubyforge.org/svn/trunk@1246</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/87fb78be0b48fb86ce1cc823f836ffe5a7bf3ad2" title="Revision 87fb78be">87fb78be</a></td>
+<td class="checkbox"><input id="cb-33" name="rev" onclick="$('cbto-34').checked=true;" type="radio" value="87fb78be0b48fb86ce1cc823f836ffe5a7bf3ad2" /></td>
+<td class="checkbox"><input id="cbto-33" name="rev_to" onclick="if ($('cb-33').checked==true) {$('cb-32').checked=true;}" type="radio" value="87fb78be0b48fb86ce1cc823f836ffe5a7bf3ad2" /></td>
+<td class="committed_on">03/13/2008 01:48 AM</td>
+<td class="author">John Goerzen </td>
+
+  <td class="comments"><p>Support WikiCaps for Trac migrations</p>
+
+
+	<p>Trac wikis support WikiCaps for links to pages.  They also use<br />!WikiCaps syntax to prevent links.  Support both.</p>
+
+
+	<p>Uses patch from and closes #758.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1242">http://redmine.rubyforge.org/svn/trunk@1242</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/494a6ecfb0a90bb3ddf46f3ee5a886a3496bea30" title="Revision 494a6ecf">494a6ecf</a></td>
+<td class="checkbox"><input id="cb-34" name="rev" onclick="$('cbto-35').checked=true;" type="radio" value="494a6ecfb0a90bb3ddf46f3ee5a886a3496bea30" /></td>
+<td class="checkbox"><input id="cbto-34" name="rev_to" onclick="if ($('cb-34').checked==true) {$('cb-33').checked=true;}" type="radio" value="494a6ecfb0a90bb3ddf46f3ee5a886a3496bea30" /></td>
+<td class="committed_on">03/09/2008 01:23 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac and Mantis importers: check that default configuration is loaded before processing.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1221">http://redmine.rubyforge.org/svn/trunk@1221</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/fbcdfee622729792ab58648228209bbd3c2142b6" title="Revision fbcdfee6">fbcdfee6</a></td>
+<td class="checkbox"><input id="cb-35" name="rev" onclick="$('cbto-36').checked=true;" type="radio" value="fbcdfee622729792ab58648228209bbd3c2142b6" /></td>
+<td class="checkbox"><input id="cbto-35" name="rev_to" onclick="if ($('cb-35').checked==true) {$('cb-34').checked=true;}" type="radio" value="fbcdfee622729792ab58648228209bbd3c2142b6" /></td>
+<td class="committed_on">03/05/2008 07:54 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac importer: support database schema for Trac migration (#757 by John Goerzen).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1195">http://redmine.rubyforge.org/svn/trunk@1195</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/421d4203113a3cefdcc6998a9b9cc92ddbb27321" title="Revision 421d4203">421d4203</a></td>
+<td class="checkbox"><input id="cb-36" name="rev" onclick="$('cbto-37').checked=true;" type="radio" value="421d4203113a3cefdcc6998a9b9cc92ddbb27321" /></td>
+<td class="checkbox"><input id="cbto-36" name="rev_to" onclick="if ($('cb-36').checked==true) {$('cb-35').checked=true;}" type="radio" value="421d4203113a3cefdcc6998a9b9cc92ddbb27321" /></td>
+<td class="committed_on">02/26/2008 02:47 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">Trac importer fix:
+	<ul>
+	<li>error when trying to convert too long ticket ids (closes #719)</li>
+	</ul>
+
+
+Enhancements (#619):
+	<ul>
+	<li>Trac guide wiki pages skipped</li>
+		<li>wiki attachments migration added</li>
+	</ul>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1175">http://redmine.rubyforge.org/svn/trunk@1175</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/943ba3e34fed6d82f79a737e043c408746ab392a" title="Revision 943ba3e3">943ba3e3</a></td>
+<td class="checkbox"><input id="cb-37" name="rev" onclick="$('cbto-38').checked=true;" type="radio" value="943ba3e34fed6d82f79a737e043c408746ab392a" /></td>
+<td class="checkbox"><input id="cbto-37" name="rev_to" onclick="if ($('cb-37').checked==true) {$('cb-36').checked=true;}" type="radio" value="943ba3e34fed6d82f79a737e043c408746ab392a" /></td>
+<td class="committed_on">02/06/2008 02:05 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac importer: handle nil usernames.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1125">http://redmine.rubyforge.org/svn/trunk@1125</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3dda6dc4a3dd898357b5aaab6acffdb03f4da5e" title="Revision a3dda6dc">a3dda6dc</a></td>
+<td class="checkbox"><input id="cb-38" name="rev" onclick="$('cbto-39').checked=true;" type="radio" value="a3dda6dc4a3dd898357b5aaab6acffdb03f4da5e" /></td>
+<td class="checkbox"><input id="cbto-38" name="rev_to" onclick="if ($('cb-38').checked==true) {$('cb-37').checked=true;}" type="radio" value="a3dda6dc4a3dd898357b5aaab6acffdb03f4da5e" /></td>
+<td class="committed_on">02/04/2008 01:01 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Use Postgresql's reset_pk_sequence in Trac importer to reset issue id sequence (#595).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1119">http://redmine.rubyforge.org/svn/trunk@1119</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/b0f3de5c3b75c6e69ff5df31eac9f12c6cce064e" title="Revision b0f3de5c">b0f3de5c</a></td>
+<td class="checkbox"><input id="cb-39" name="rev" onclick="$('cbto-40').checked=true;" type="radio" value="b0f3de5c3b75c6e69ff5df31eac9f12c6cce064e" /></td>
+<td class="checkbox"><input id="cbto-39" name="rev_to" onclick="if ($('cb-39').checked==true) {$('cb-38').checked=true;}" type="radio" value="b0f3de5c3b75c6e69ff5df31eac9f12c6cce064e" /></td>
+<td class="committed_on">01/23/2008 05:19 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: PostgreSQL issues_seq_id not updated when using Trac importer.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1099">http://redmine.rubyforge.org/svn/trunk@1099</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/d1a3fbea4087bdf5bb06b2bf231a2fe9bda65201" title="Revision d1a3fbea">d1a3fbea</a></td>
+<td class="checkbox"><input id="cb-40" name="rev" onclick="$('cbto-41').checked=true;" type="radio" value="d1a3fbea4087bdf5bb06b2bf231a2fe9bda65201" /></td>
+<td class="checkbox"><input id="cbto-40" name="rev_to" onclick="if ($('cb-40').checked==true) {$('cb-39').checked=true;}" type="radio" value="d1a3fbea4087bdf5bb06b2bf231a2fe9bda65201" /></td>
+<td class="committed_on">12/14/2007 04:31 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed Trac importer error with Rails 2.0: readonly? is defined by ActiveRecord.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@995">http://redmine.rubyforge.org/svn/trunk@995</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/e4724c7626a329cee82875a7e1bbec450eab4667" title="Revision e4724c76">e4724c76</a></td>
+<td class="checkbox"><input id="cb-41" name="rev" onclick="$('cbto-42').checked=true;" type="radio" value="e4724c7626a329cee82875a7e1bbec450eab4667" /></td>
+<td class="checkbox"><input id="cbto-41" name="rev_to" onclick="if ($('cb-41').checked==true) {$('cb-40').checked=true;}" type="radio" value="e4724c7626a329cee82875a7e1bbec450eab4667" /></td>
+<td class="committed_on">12/02/2007 10:09 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">Trac importer:
+	<ul>
+	<li>should now support mysql and postgresql Trac database</li>
+		<li>minor fixes</li>
+	</ul>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@946">http://redmine.rubyforge.org/svn/trunk@946</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2cf11bd64e7b272171f72cac1572e26224daf4ca" title="Revision 2cf11bd6">2cf11bd6</a></td>
+<td class="checkbox"><input id="cb-42" name="rev" onclick="$('cbto-43').checked=true;" type="radio" value="2cf11bd64e7b272171f72cac1572e26224daf4ca" /></td>
+<td class="checkbox"><input id="cbto-42" name="rev_to" onclick="if ($('cb-42').checked==true) {$('cb-41').checked=true;}" type="radio" value="2cf11bd64e7b272171f72cac1572e26224daf4ca" /></td>
+<td class="committed_on">11/29/2007 03:08 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed Mantis importer: projects trackers and modules assignment<br />Fixed Trac and Mantis importers: roles assignments</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@936">http://redmine.rubyforge.org/svn/trunk@936</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/3937caeb3c8fe87763e19c179d418949fb31dc61" title="Revision 3937caeb">3937caeb</a></td>
+<td class="checkbox"><input id="cb-43" name="rev" onclick="$('cbto-44').checked=true;" type="radio" value="3937caeb3c8fe87763e19c179d418949fb31dc61" /></td>
+<td class="checkbox"><input id="cbto-43" name="rev_to" onclick="if ($('cb-43').checked==true) {$('cb-42').checked=true;}" type="radio" value="3937caeb3c8fe87763e19c179d418949fb31dc61" /></td>
+<td class="committed_on">11/25/2007 07:11 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">Trac importer improvements (by Mat Trudel):
+	<ul>
+	<li>better support for wiki internal links (still not perfect, but much improved)</li>
+		<li>support for unordered lists</li>
+		<li>support for most of trac's highlighting tags (underline, bold, etc)</li>
+		<li>import progress dots now flush to stdout on every dot, so the import doesn't look frozen...</li>
+	</ul></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/b0bb1baeaac665eea6188f05af627697a3e90eaa" title="Revision b0bb1bae">b0bb1bae</a></td>
+<td class="checkbox"><input id="cb-44" name="rev" onclick="$('cbto-45').checked=true;" type="radio" value="b0bb1baeaac665eea6188f05af627697a3e90eaa" /></td>
+<td class="checkbox"><input id="cbto-44" name="rev_to" onclick="if ($('cb-44').checked==true) {$('cb-43').checked=true;}" type="radio" value="b0bb1baeaac665eea6188f05af627697a3e90eaa" /></td>
+<td class="committed_on">11/09/2007 08:32 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac importer: user can now choose between sqlite and sqlite3 adapter for Trac database.<br />Trac importer: issues and wiki modules are enabled by default for the imported project.<br />Fixed: 404 error when trying to save a custom query under certain circumstance....</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/eb6ab2af50e53cf4a8037390536b5501719863e0" title="Revision eb6ab2af">eb6ab2af</a></td>
+<td class="checkbox"><input id="cb-45" name="rev" onclick="$('cbto-46').checked=true;" type="radio" value="eb6ab2af50e53cf4a8037390536b5501719863e0" /></td>
+<td class="checkbox"><input id="cbto-45" name="rev_to" onclick="if ($('cb-45').checked==true) {$('cb-44').checked=true;}" type="radio" value="eb6ab2af50e53cf4a8037390536b5501719863e0" /></td>
+<td class="committed_on">09/02/2007 08:00 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac importer: 'resolution' field imported with history as a custom field.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@694">http://redmine.rubyforge.org/svn/trunk@694</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/72b5cd3889778ab028ddc96127db9a7ba27e6341" title="Revision 72b5cd38">72b5cd38</a></td>
+<td class="checkbox"><input id="cb-46" name="rev" onclick="$('cbto-47').checked=true;" type="radio" value="72b5cd3889778ab028ddc96127db9a7ba27e6341" /></td>
+<td class="checkbox"><input id="cbto-46" name="rev_to" onclick="if ($('cb-46').checked==true) {$('cb-45').checked=true;}" type="radio" value="72b5cd3889778ab028ddc96127db9a7ba27e6341" /></td>
+<td class="committed_on">09/02/2007 06:07 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac importer now migrates status changes.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@693">http://redmine.rubyforge.org/svn/trunk@693</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a2439f3b34c3f272e1688e24dc4ff94bd33c477d" title="Revision a2439f3b">a2439f3b</a></td>
+<td class="checkbox"><input id="cb-47" name="rev" onclick="$('cbto-48').checked=true;" type="radio" value="a2439f3b34c3f272e1688e24dc4ff94bd33c477d" /></td>
+<td class="checkbox"><input id="cbto-47" name="rev_to" onclick="if ($('cb-47').checked==true) {$('cb-46').checked=true;}" type="radio" value="a2439f3b34c3f272e1688e24dc4ff94bd33c477d" /></td>
+<td class="committed_on">09/02/2007 05:12 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Trac importer now checks the existence of trac.db and attachments directory before processing.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@692">http://redmine.rubyforge.org/svn/trunk@692</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/296b6aee5aac812d35bc32eaab246f33574d30e0" title="Revision 296b6aee">296b6aee</a></td>
+<td class="checkbox"></td>
+<td class="checkbox"><input id="cbto-48" name="rev_to" onclick="if ($('cb-48').checked==true) {$('cb-47').checked=true;}" type="radio" value="296b6aee5aac812d35bc32eaab246f33574d30e0" /></td>
+<td class="committed_on">09/01/2007 04:03 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">Trac importer initial commit. The script migrates:
+	<ul>
+	<li>users (default password = 'trac')</li>
+		<li>components</li>
+		<li>milestones</li>
+		<li>tickets</li>
+		<li>ticket comments, files, custom fields</li>
+		<li>wiki</li>
+	</ul>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@689">http://redmine.rubyforge.org/svn/trunk@689</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+</tbody>
+</table>
+<input type="submit" value="View differences" />
+</form>
+
+
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/master/changes/lib/tasks/migrate_from_trac.rake by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:40:20 GMT -->
+</html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title></title>
+  <link rel="self" href="https://redmine.ogf.org/issues/243.atom"/>
+  <link rel="alternate" href="https://redmine.ogf.org/"/>
+  <id>https://redmine.ogf.org/</id>
+  <updated>2014-11-25T13:06:10-05:00</updated>
+  <author>
+    <name>Open Grid Forum</name>
+  </author>
+  <entry>
+    <title>DFDL WG - document #243: Problems with implied separatorSuppressionPolicy depending on occursCountKind of element</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/243"/>
+    <id>https://redmine.ogf.org/issues/243?journal_id=661</id>
+    <updated>2014-11-25T13:06:10-05:00</updated>
+    <author>
+      <name>Steve Hanson</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;/ul&gt;&lt;p&gt;Following changes needed to the specification to clarify the behaviour of separator suppression. Changes in* bold.*&lt;/p&gt;
+
+
+	&lt;p&gt;1) 14.2 - updates to paragraphs that describe positional and non-positional sequences&lt;/p&gt;
+
+
+	&lt;p&gt;Positional sequence - Each occurrence in the sequence can be identified by its position in the data. Typically the components of such a sequence do not have an initiator. In some such sequences, the separators for optional zero-length occurrences may or must be omitted when at the end of the group. &lt;strong&gt;In DFDL, a sequence is considered positional if it contains only required elements and/or optional and array elements that have dfdl:occursCountKind 'implicit', 'fixed' or 'expression', and it has dfdl:separatorSuppressionPolicy 'never', 'trailingEmptyStrict' &#160;or 'trailingEmpty'.&lt;/strong&gt;&lt;/p&gt;
+
+
+	&lt;p&gt;Non-positional sequence - Occurrences in the sequence cannot be identified by their position in the data alone. &lt;strong&gt;Often&lt;/strong&gt; the components of such a sequence have an initiator. Such sequences &lt;strong&gt;sometimes&lt;/strong&gt; allow the separator to be omitted for optional zero-length occurrences anywhere in the sequence. Speculative parsing might need to be employed by to identify each occurrence. &lt;strong&gt;In DFDL, a sequence is non-positional if it contains any optional or array elements that have dfdl:occursCountKind 'parsed' or 'stopValue', and/or it has dfdl:separatorSuppressionPolicy 'anyEmpty'.&lt;/strong&gt;&lt;/p&gt;
+
+
+	&lt;p&gt;2) 14.2.2 - updates to the last sentences of the 'When dfdl:occursCountKind is ...' paragraphs to match the table and notes below.&lt;/p&gt;
+
+
+	&lt;p&gt;When an element is required and is not an array then one occurrence is always expected along with its separator. The dfdl:separatorSuppressionPolicy &lt;strong&gt;of the sequence has no effect (nothing is eligible for suppression).&lt;/strong&gt; &lt;br /&gt;Otherwise the behaviour is dependent on dfdl:occursCountKind.&lt;br /&gt;When dfdl:occursCountKind is 'fixed' then XSDL minOccurs must equal maxOccurs and that many occurrences are always expected along with their separators. The dfdl:separatorSuppressionPolicy &lt;strong&gt;of the sequence has no effect (nothing is eligible for suppression).&lt;/strong&gt;&lt;br /&gt;When dfdl:occursCountKind is 'expression' the number of occurrences is given by dfdl:occursCount and exactly that many occurrences are always expected along with their separators. The dfdl:separatorSuppressionPolicy &lt;strong&gt;of the sequence has no effect (nothing is eligible for suppression).&lt;/strong&gt;&lt;br /&gt;When dfdl:occursCountKind is 'parsed' any number of occurrences and their separators are expected. The dfdl:separatorSuppressionPolicy &lt;strong&gt;of the sequence must be 'anyEmpty' and it is a schema definition error otherwise.&lt;/strong&gt;&lt;br /&gt;When dfdl:occursCountKind is 'stopValue', any number of occurrences and their separators are expected followed by the stop value and its separator. The dfdl:separatorSuppressionPolicy &lt;strong&gt;of the sequence has no effect.&lt;/strong&gt; &lt;br /&gt;When dfdl:occursCountKind is 'implicit', between XSDL minOccurs and maxOccurs (inclusive) occurrences and their separators are expected, &lt;strong&gt;according to the dfdl:separatorSuppressionPolicy of the sequence.&lt;/strong&gt;&lt;/p&gt;
+
+
+	&lt;p&gt;3) 14.2.3 - updates to the last sentences of the 'When dfdlk:occursCountKind is ...' paragraphs to match the table and notes below.&lt;/p&gt;
+
+
+	&lt;p&gt;When an element is required and is not an array then one occurrence is always output along with its separator. The dfdl:separatorSuppressionPolicy &lt;strong&gt;of the sequence has no effect (nothing is eligible for suppression).&lt;/strong&gt;&lt;br /&gt;Otherwise the behaviour is dependent on dfdl:occursCountKind.&lt;br /&gt;When dfdl:occursCountKind is 'fixed' or 'expression' the occurrences in the augmented Infoset are always output along with their separators. The dfdl:separatorSuppressionPolicy &lt;strong&gt;of the sequence has no effect (nothing is eligible for suppression).&lt;/strong&gt;&lt;br /&gt;When dfdl:occursCountKind is 'parsed' non zero-length occurrences in the augmented Infoset are output along with their separators. The dfdl:separatorSuppressionPolicy &lt;strong&gt;of the sequence must be 'anyEmpty' and it is a schema definition error otherwise.&lt;/strong&gt;&lt;br /&gt;When dfdl:occursCountKind is 'stopValue' the occurrences in the augmented Infoset are output along with their separators followed by the stop value and its separator, &lt;strong&gt;according to the dfdl:separatorSuppressionPolicy of the sequence.&lt;/strong&gt;&lt;br /&gt;When dfdl:occursCountKind is 'implicit' the occurrences in the augmented Infoset are output along with their separators, &lt;strong&gt;according to the dfdl:separatorSuppressionPolicy of the sequence.&lt;/strong&gt;&lt;/p&gt;
+
+
+	&lt;p&gt;4) 16 - update to occursStopValue property description&lt;br /&gt;The property is a list of logical values, so need to add: &lt;strong&gt;"The dfdl:stopValue property must not be empty string."&lt;/strong&gt;&lt;/p&gt;    </content>
+  </entry>
+  <entry>
+    <title>DFDL WG - document #243: Problems with implied separatorSuppressionPolicy depending on occursCountKind of element</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/243"/>
+    <id>https://redmine.ogf.org/issues/243?journal_id=662</id>
+    <updated>2014-11-25T13:12:37-05:00</updated>
+    <author>
+      <name>Steve Hanson</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status&lt;/strong&gt; changed from &lt;i&gt;submitted&lt;/i&gt; to &lt;i&gt;accepted&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;% Done&lt;/strong&gt; changed from &lt;i&gt;0&lt;/i&gt; to &lt;i&gt;100&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;    </content>
+  </entry>
+  <entry>
+    <title>DFDL WG - document #243: Problems with implied separatorSuppressionPolicy depending on occursCountKind of element</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/243"/>
+    <id>https://redmine.ogf.org/issues/243?journal_id=686</id>
+    <updated>2015-01-12T09:01:20-05:00</updated>
+    <author>
+      <name>Steve Hanson</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;/ul&gt;&lt;p&gt;Erratum 5.8 added to DFDL Experience Document 4&lt;/p&gt;    </content>
+  </entry>
+  <entry>
+    <title>DFDL WG - document #243: Problems with implied separatorSuppressionPolicy depending on occursCountKind of element</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/243"/>
+    <id>https://redmine.ogf.org/issues/243?journal_id=1145</id>
+    <updated>2017-07-25T11:17:50-04:00</updated>
+    <author>
+      <name>Michael Beckerle</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status&lt;/strong&gt; changed from &lt;i&gt;accepted&lt;/i&gt; to &lt;i&gt;closed&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;    </content>
+  </entry>
+</feed>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.w3.org/INFOD" xmlns:tns="http://www.w3.org/INFOD" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xsd:import namespace="http://www.w3.org/2005/08/addressing" schemaLocation="http://www.w3.org/2005/08/addressing/ws-addr.xsd" />
+	<xsd:import namespace="http://docs.oasis-open.org/wsrf/bf-2" schemaLocation="http://docs.oasis-open.org/wsrf/bf-2.xsd" />
+	<xsd:import namespace="http://docs.oasis-open.org/wsn/t-1" schemaLocation="http://docs.oasis-open.org/wsn/t-1.xsd" />
+
+
+		
+	<xsd:element name="PropertyConstraint" type="xsd:string"></xsd:element>
+	
+	<xsd:element name="PropertyConstraints">
+	<xsd:annotation> An array of constraints with one or more items</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element>tns:PropertyConstraint</xsd:element>				
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="infodPublisher">
+		<xsd:annotation>
+			<xsd:documentation>An infod publisher consists of a unique reference, a name, description and associated property constraints</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="WSEntityReference" minOccurs="0" maxOccurs="1">
+					<xsd:simpleType>wsa:EndPointReference</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="PublisherName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="PublisherDescription" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="PropertyConstraints" minOccurs="0" maxOccurs="unbounded">
+					<xsd:simpleType>tns:PropertyConstraints</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="Notification" type="xsd:boolean" nillable="true" minOccurs="0" maxOccurs="1" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="infodSubscriber">
+		<xsd:annotation>
+			<xsd:documentation>Description of Subscribers</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="WSEntityReference" minOccurs="0" maxOccurs="1">
+					<xsd:simpleType>tns:EndPointReference</xsd:simpleType>
+				</xsd:element>
+
+				<xsd:element name="SubscriberName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="SubscriberDescription" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="PropertyConstraints" minOccurs="0" maxOccurs="unbounded">
+					<xsd:simpleType>tns:PropertyConstraints</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="infodConsumer">
+		<xsd:annotation>
+			<xsd:documentation>Description of Consumers</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="WSEntityReference" minOccurs="0" maxOccurs="1">
+					<xsd:simpleType>tns:EndPointReference</xsd:simpleType>
+				</xsd:element>
+
+				<xsd:element name="ConsumerrName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="ConsumerDescription" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="PropertyConstraints" minOccurs="0" maxOccurs="unbounded">
+					<xsd:simpleType>tns:PropertyConstraints</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="infodSubscription">
+		<xsd:annotation>
+			<xsd:documentation>Description of Subscriptions</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="SubscriptionName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="SubscriptionDescription" type="xsd:string" minOccurs="1" maxOccurs="1" />
+				<xsd:element name="SubscriberReference" minOccurs="0" maxOccurs="1">
+					<xsd:simpleType>tns:EndPointReference</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="DataConstraints" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="PropertyConstraints" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+				<xsd:element name="DynamicConsumerConstraints" minOccurs="0" maxOccurs="unbounded">
+					<xsd:simpleType>tns:PropertyConstraints</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="infodVocabulary">
+		<xsd:annotation>
+			<xsd:documentation>Description of Vocabularies</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="VocabularyName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="VocabularyDescription" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="VcabularyLanguage" type="xsd:string" minOccurs="1" maxOccurs="1" />
+				<xsd:element name="LanguageUsageDescription" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="VocabularyBody" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="infodAssociation">
+		<xsd:annotation>
+			<xsd:documentation>Description of Associations</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="AssociateVocabularyName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="AssociateVocabulryDescription" type="xsd:string" minOccurs="0" maxOccurs="1" />
+				<xsd:element name="AssociationEntityReference" minOccurs="1" maxOccurs="1">
+					<xsd:simpleType>tns:EndPointReference</xsd:simpleType>
+				</xsd:element>
+
+				<xsd:element name="AssociationVocabularyReference" minOccurs="1" maxOccurs="1">
+					<xsd:simpleType>tns:EndPointReference</xsd:simpleType>
+				</xsd:element>
+
+				<xsd:element name="PropertyConstraints" minOccurs="0" maxOccurs="unbounded">
+					<xsd:simpleType>tns:PropertyConstraints</xsd:simpleType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:simpleType name="status">
+		<xsd:restriction base="xsd:string"/>
+		<xsd:enumeration value="COMPLETED"/>
+	</xsd:simpleType>
+
+
+
+	<xsd:complexType name="CreateEntityAuthorizationFailureType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:element name="CreateEntityAuthorizationFailure" type="wsnt:CreateEntityAuthorizationFailureType" />
+
+	<xsd:complexType name="ReplaceEntityAuthorizationFailureType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="ReplaceEntityAuthorizationFailure" type="wsnt:ReplaceEntityAuthorizationFailureType" />
+
+	<xsd:complexType name="DropEntityAuthorizationFailureType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="DropEntityAuthorizationFailure" type="wsnt:DropEntityAuthorizationFailureType" />
+
+	<xsd:complexType name="CreatePropertyVocabularyInstanceAuthorizationFailureType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="CreatePropertyVocabularyInstanceAuthorizationFailure" type="wsnt: CreatePropertyVocabularyInstanceAuthorizationFailureType" />
+
+	<xsd:complexType name="DropPropertyVocabularyInstanceAuthorizationFailureType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="DropPropertyVocabularyInstanceAuthorizationFailure" type="wsnt:DropPropertyVocabularyInstanceAuthorizationFailureType" />
+
+	<xsd:complexType name="RegisterVocabularyAuthorizationFailureType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="RegisterVocabularyAuthorizationFailure" type="wsnt:RegisterVocabularyAuthorizationFailureType" />
+
+	<xsd:complexType name="UnregisterVocabularyAuthorizationFailureType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="UnregisterVocabularyAuthorizationFailure" type="wsnt:UnregisterVocabularyAuthorizationFailureType" />
+
+	<xsd:complexType name="CreateAssociationAuthorizationFailureType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="CreateAssociationAuthorizationFailure" type="wsnt:CreateAssociationAuthorizationFailureType" />
+
+	<xsd:complexType name="DisAssociationAuthorizationFailureType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="DisAssociationAuthorizationFailure" type="wsnt:DisAssociationAuthorizationFailureType" />
+
+	<xsd:complexType name="ExecutionModeFaultType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="ExecutionModeFault" type="wsnt:ExecutionModeFaultType" />
+
+	<xsd:complexType name="UnSupportedVocabularyFaultType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="UnSupportedVocabularyFault" type="wsnt:UnSupportedVocabularyFaultType" />
+
+	<xsd:complexType name="UnSupportedXQueryFaultType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="UnSupportedXQueryFault" type="wsnt:UnSupportedXQueryFaultType" />
+
+	<xsd:complexType name="XXXGetMetaDataFaultType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="XXXGetMetaDataFault" type="wsnt:XXXGetMetaDataFaultType" />
+
+	<xsd:complexType name="UnknownElementReferenceFaultType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="UnknownElementReferenceFault" type="wsnt:UnknownElementReferenceFaultType" />
+
+	<xsd:complexType name="MissingRequiredParameterFaultType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="MissingRequiredParameterFault" type="wsnt:MissingRequiredParameterFaultType" />
+
+	<xsd:complexType name="UnknownFaultType">
+		<xsd:complexContent>
+			<xsd:extension base="wsrf-bf:BaseFaultType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:element name="UnknownFault" type="wsnt:UnknownFaultType" />
+
+
+	
+
+</xsd:schema>

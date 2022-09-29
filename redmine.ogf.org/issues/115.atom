@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title></title>
+  <link rel="self" href="https://redmine.ogf.org/issues/115.atom"/>
+  <link rel="alternate" href="https://redmine.ogf.org/"/>
+  <id>https://redmine.ogf.org/</id>
+  <updated>2013-09-08T08:59:14-04:00</updated>
+  <author>
+    <name>Open Grid Forum</name>
+  </author>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #115: nead to clearify that all return values of "methods" are deep copies of values which must be freed by caller</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/115"/>
+    <id>https://redmine.ogf.org/issues/115?journal_id=236</id>
+    <updated>2013-09-08T08:59:14-04:00</updated>
+    <author>
+      <name>Peter Tr&#246;ger</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status&lt;/strong&gt; changed from &lt;i&gt;submitted&lt;/i&gt; to &lt;i&gt;accepted&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;With DRMAAv1, we had the situation that people understood the binding specification as end-user manual, which we really should avoid.&lt;/p&gt;
+
+
+	&lt;p&gt;However, in this case, the spec may not be crystal clear even for the implementor. Section 2 has the following text:&lt;/p&gt;
+
+
+	&lt;p&gt;" All structures have a specific support function for freeing them (drmaa2 * free). Implementations SHOULD perform the freeing of struct members automatically if the struct itself is freed."&lt;/p&gt;
+
+
+	&lt;p&gt;This goes into the same direction, but is definitely not enough.&lt;/p&gt;
+
+
+	&lt;p&gt;We could either extend Section 2, or add another Section with "user manual recommendations".&lt;/p&gt;    </content>
+  </entry>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #115: nead to clearify that all return values of "methods" are deep copies of values which must be freed by caller</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/115"/>
+    <id>https://redmine.ogf.org/issues/115?journal_id=301</id>
+    <updated>2013-09-19T10:27:57-04:00</updated>
+    <author>
+      <name>Stefan Klauck</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;/ul&gt;&lt;p&gt;A general rule should be (current language binding and mock implementation):&lt;/p&gt;
+
+
+	&lt;p&gt;Users have to call drmaa2_*_free for each object they retrieve by using drmaa2 library functions.&lt;br /&gt;Objects are all returned variables, whose type starts with drmaa2_ and is not implemented as enum (i.e. drmaa2_error, drmaa2_bool and drmaa2_state (the other enums are currently not returned directly by library functions) ).&lt;/p&gt;    </content>
+  </entry>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #115: nead to clearify that all return values of "methods" are deep copies of values which must be freed by caller</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/115"/>
+    <id>https://redmine.ogf.org/issues/115?journal_id=302</id>
+    <updated>2013-09-24T03:26:32-04:00</updated>
+    <author>
+      <name>Daniel Gruber</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;/ul&gt;&lt;p&gt;In DRMAA2 Grid Engine implementation we have following exceptions to the rule:
+ * DRMAA2 dict accessors don't return deep copies (a dict is already a deep copy / main reason is because of performance).
+ * The same for list accessors (traversing a list and always producing a copy and freeing is really not what we want).
+ * Operation which are working on an array and returns one element of the given array. This is the wait for state function.&lt;/p&gt;    </content>
+  </entry>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #115: nead to clearify that all return values of "methods" are deep copies of values which must be freed by caller</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/115"/>
+    <id>https://redmine.ogf.org/issues/115?journal_id=514</id>
+    <updated>2014-09-09T19:41:21-04:00</updated>
+    <author>
+      <name>Redmine Admin</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;/ul&gt;&lt;p&gt;I agree with the exceptions listed by Daniel -- doing deep copy in those places would not be useful, IMHO.&lt;/p&gt;    </content>
+  </entry>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #115: nead to clearify that all return values of "methods" are deep copies of values which must be freed by caller</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/115"/>
+    <id>https://redmine.ogf.org/issues/115?journal_id=636</id>
+    <updated>2014-11-05T08:17:00-05:00</updated>
+    <author>
+      <name>Daniel Gruber</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;/ul&gt;&lt;p&gt;As a result of OGF 42 in London I wrote a summary for the errata, when &lt;br /&gt;copies and when pointer to existing objects needs to be returned:&lt;/p&gt;
+
+
+	&lt;p&gt;When do we have to free for DRMAA2 functions?&lt;/p&gt;
+
+
+	&lt;p&gt;DRMAA2 functions in C differ from the fact if return values are newly allocated or not. Unlike other APIs the DRMAA2 API functions can allocate the required memory for certain output values. The intention behind that is that it simplifies DRMAA2 applications. In case of errors such functions return either an error code or NULL if the newly allocated object should be returned.&lt;/p&gt;
+
+
+	&lt;p&gt;Following table shows which functions are returning newly allocated objects which needs to be freed by the API caller in order to prevent memory leaks. As a rule of thumb a developer can remember that calls to previously allocated collections does return just a pointer to the collection while functions which return objects which do not exist in the memory accessible by the user are returning a copy of the element.&lt;/p&gt;
+
+
+	&lt;p&gt;Following functions do return an object which needs to be freed:&lt;/p&gt;
+
+
+	&lt;p&gt;drmaa2_get_drms_name &lt;br /&gt;drmaa2_get_drms_version&lt;br /&gt;drmaa2_describe_attribute &lt;br /&gt;drmaa2_dict_create&lt;br /&gt;drmaa2_dict_list &lt;br /&gt;drmaa2_get_instance_value&lt;br /&gt;drmaa2_get_jsession_names&lt;br /&gt;drmaa2_get_rsession_names&lt;br /&gt;drmaa2_jarray_get_id&lt;br /&gt;drmaa2_jarray_get_jobs&lt;br /&gt;drmaa2_jarray_get_job_template &amp;lt;&#8212;-name must be fixed other DRMAA2 issue&lt;br /&gt;drmaa2_jarray_get_session_name&lt;br /&gt;drmaa2_j_get_id&lt;br /&gt;drmaa2_j_get_info&lt;br /&gt;drmaa2_j_get_get_jt&lt;br /&gt;drmaa2_j_get_session_name&lt;br /&gt;drmaa2_jinfo_create&lt;br /&gt;drmaa2_jinfo_impl_spec&lt;br /&gt;drmaa2_jsession_get_contact&lt;br /&gt;drmaa2_jsession_get_jarray&lt;br /&gt;drmaa2_jsession_get_job_categories&lt;br /&gt;drmaa2_jsession_get_jobs&lt;br /&gt;drmaa2_jsession_get_session_name&lt;br /&gt;drmaa2_jsession_run_bulk_jobs&lt;br /&gt;drmaa2_jsession_run_job&lt;br /&gt;drmaa2_jtemplate_create&lt;br /&gt;drmaa2_jtemplate_impl_spec&lt;br /&gt;drmaa2_lasterror_text&lt;br /&gt;drmaa2_list_create&lt;br /&gt;drmaa2_machineinfo_impl_spec&lt;br /&gt;drmaa2_msession_get_all_jobs&lt;br /&gt;drmaa2_msession_get_all_machines&lt;br /&gt;drmaa2_msession_get_all_queues&lt;br /&gt;drmaa2_msession_get_all_reservations&lt;br /&gt;drmaa2_notification_impl_spec&lt;br /&gt;drmaa2_open_jsession&lt;br /&gt;drmaa2_open_msession&lt;br /&gt;drmaa2_open_rsession&lt;br /&gt;drmaa2_queueinfo_impl_spec&lt;br /&gt;drmaa2_rinfo_impl_spec&lt;br /&gt;drmaa2_rtemplate_impl_spec&lt;/p&gt;
+
+
+	&lt;p&gt;Following functions do return an object which is a pointer to an existing object:&lt;/p&gt;
+
+
+	&lt;p&gt;drmaa2_dict_get&lt;br /&gt;drmaa2_list_get&lt;br /&gt;drmaa2_jsession_wait_any_started&lt;br /&gt;drmaa2_jsession_wait_any_terminated&lt;/p&gt;    </content>
+  </entry>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #115: nead to clearify that all return values of "methods" are deep copies of values which must be freed by caller</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/115"/>
+    <id>https://redmine.ogf.org/issues/115?journal_id=798</id>
+    <updated>2015-07-14T16:15:29-04:00</updated>
+    <author>
+      <name>Peter Tr&#246;ger</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status&lt;/strong&gt; changed from &lt;i&gt;accepted&lt;/i&gt; to &lt;i&gt;closed&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Fixed in July 2015 errata.&lt;/p&gt;    </content>
+  </entry>
+</feed>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title></title>
+  <link rel="self" href="https://redmine.ogf.org/issues/116.atom"/>
+  <link rel="alternate" href="https://redmine.ogf.org/"/>
+  <id>https://redmine.ogf.org/</id>
+  <updated>2013-09-19T09:47:42-04:00</updated>
+  <author>
+    <name>Open Grid Forum</name>
+  </author>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #116: default callback method for freeing dictionary entries should be part of DRMAA2 implementation</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/116"/>
+    <id>https://redmine.ogf.org/issues/116?journal_id=300</id>
+    <updated>2013-09-19T09:47:42-04:00</updated>
+    <author>
+      <name>Stefan Klauck</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;/ul&gt;&lt;p&gt;Currently, there are two possibilities to use drmaa2 dictionaries:&lt;br /&gt;As in Daniel's example with allocated strings. &lt;br /&gt;Or with string literals (example below).&lt;/p&gt;
+
+
+&lt;pre&gt;
+drmaa2_dict d = drmaa2_dict_create(NULL);
+drmaa2_dict_set(d, "foo", "bar");
+drmaa2_dict_free(&amp;#38;d)
+&lt;/pre&gt;
+
+	&lt;p&gt;As both need different deallocation callbacks, we currently need a callback parameter.&lt;/p&gt;
+
+
+	&lt;p&gt;I agree with Daniel to add a standard callback for allocated strings.&lt;br /&gt;However, the language binding should warn to use it only for allocated strings (and not for string literals).&lt;/p&gt;
+
+
+	&lt;p&gt;(An other option would be to allow only a single dictionary usage possibility (with allocated or string literals).&lt;br /&gt;We could then omit the callback parameter.&lt;br /&gt;I don't like this option.)&lt;/p&gt;    </content>
+  </entry>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #116: default callback method for freeing dictionary entries should be part of DRMAA2 implementation</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/116"/>
+    <id>https://redmine.ogf.org/issues/116?journal_id=303</id>
+    <updated>2013-09-24T03:29:40-04:00</updated>
+    <author>
+      <name>Daniel Gruber</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;/ul&gt;&lt;p&gt;You are right, the standard callback should only be used only for allocated strings&lt;br /&gt;(which is a very common use case). Literals don't need to be freed, hence the callback&lt;br /&gt;is NULL in such cases in our implementation.&lt;/p&gt;    </content>
+  </entry>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #116: default callback method for freeing dictionary entries should be part of DRMAA2 implementation</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/116"/>
+    <id>https://redmine.ogf.org/issues/116?journal_id=809</id>
+    <updated>2015-07-14T18:14:11-04:00</updated>
+    <author>
+      <name>Peter Tr&#246;ger</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status&lt;/strong&gt; changed from &lt;i&gt;submitted&lt;/i&gt; to &lt;i&gt;closed&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Fixed in the July 2015 errata.&lt;/p&gt;    </content>
+  </entry>
+</feed>

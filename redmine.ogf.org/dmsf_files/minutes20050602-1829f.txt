@@ -1,0 +1,245 @@
+Telecon Minutes -- 2 June 2005
+
+Attendees
+---------
+	Fred Maciel
+	Andrew Grimshaw
+	Mark Morgan (Minutes)
+	Darren Pulsipher
+	Karl Czajkowski
+	Chris Smith
+	Tom Maguire
+
+Agenda Bashing
+--------------
+	* Overview of Conclussions from London Meeting
+	* Minutes approval from London Meeting
+	* Management
+	* Wrap up
+
+	* Add talk about number of session at GGF.
+		- Andrew has put in one session so far.  He has sent mail to
+		  Joel.
+
+	* Grid Forge has minutes from London
+	* Briefly review what we agreed to in London
+	* Formerly approve minutes
+	* Move on to taking a look at DMTF CIM Models
+
+London Overview
+---------------
+	* Might make sense to use this existing standard rather then invent
+	  another one
+	* We decided in terms of factory port types that the create activity
+	  will take in a string.
+	* We need to have a mechanism to suppress duplicate submissions
+	* Output will be a WS-Name (Essentially EPR)
+	* GetActivityStatus 
+		- Will take in vector of WS-Names.
+		- It will return a document with some schema
+			-- this schema should refer back to things in terms of
+			   the original JSDL document that came in.
+			-- Darren, Andreas, and Steve McGough agreed to hook in
+			   a draft of what this would look like.
+	* The other thing is that we decided that data staging would definitely
+	  be part of what we are doing.
+		- There will be a stage in, an action and a stage out.
+			-- No job has to contain all of these though.
+	* Any comments?  No.
+	* Terminate 
+		- Not a whole lot of discussion on this really 
+		- Some in the notes, but basic thing is that this is a hard
+		  terminate.
+		- We had a number of other issues.
+	* To summarize, we decided that we were going to keep the scope small
+		- Right now we aren't defining any of the port types on the
+		  activities themselves -- only on the factory/container.
+		- But, just as JSDL has a POSIX profile for a particular class
+		  of activity, at a later date we might put together a port
+		  type that might be specific to a specific type of activity.
+			-- A fairly important decision.
+		- Yeah, but it might be reasonable to re-considering this and
+		  do something for the POSIX like activity.
+			-- Main issue was one of timing and spreading out the
+		  	   activity.
+			-- Is this something that you (Chris) would be willing
+			   to take a first stab at?
+				--- Yes, absolutely.
+				--- He thinks that it wouldn't take too long to
+				    get this.
+			-- Seems like without the operations on the activity,
+			   the usefulness of this group is diminished.
+			-- Any comments or dissention
+				--- no -- seems fine.
+		- So, the conceptual BES model won't say anything about what
+		  those port types have to be, but we will "profile" the port
+		  types for some of them.
+			-- Chris, by POSIX do you mean a legacy batch?
+				--- Yes
+		- The other thing was the decision for a group of people to go
+		  out and look at the meta model possibilities.
+
+* Minutes discussion?
+	- Approved!
+
+* We have a really simple port type defined with three or four methods on it.
+* Chris is going to go off and do a port type for the POSIX application.
+* What sort of resource properties or meta data do you want to be associating
+  with these things.
+	- It makes sense that it be JSDL
+	- There was also a desire to make it more generic.
+	- This got Andrew to thinking about another standard that is out there
+	  for describing resources.
+	- This is also something that EGA is really interested in looking at.
+	- In particular, there is one called CIM (Component Information Model).
+	- Bring this up because it's been very well thought out, it has a
+	  number of different types of resources that it's trying to model
+	  (not just host or CPU, but also filesystem, users, etc.).
+	- The reason why attracted to it
+		-- It is a standard (not sure how much uptake).
+		-- They have gone through the process of figuring out what
+		   information you want to keep about these things.
+		-- They have a number of attributes or resource properties.
+		-- This is also an extensible model.
+	- Should we consider using the CIM model which doesn't just include
+	  resource properties, but also includes some methods (like on OS,
+	  reboot and shutdown).
+	- Do we think that it is appropriate to use this model in total, or
+	  cherry pick pieces (which might have less value), or something else.
+	- Incorporating CIM wholesale seems like a good idea.
+		-- There are some activities to make a WSRF-CIM.
+		-- A lot of benefit to using CIM.
+		-- The hardest part is just figuring out which classes to use.
+		-- The exercise of trying to incorporate it would be really
+		   worth while.
+		-- A problem would be the complexity of it.
+		-- Also, since CIM is a generic model, there are lots of things
+		   that will interest us and a lot which won't.
+	- Can you cherry pick which fields you want or not?
+		-- Seems like you have to support each class and the attributes
+		   in it, but you can support an attribute as having an
+		   undefined or meaningless value.
+		-- You can have profiles on the models 
+			--- say which relationships they want, which properties
+			    they want, and which classes they want for a
+			    particular domain or discipline of use.
+	- CIM was originally for IT management but is only now progressing to
+	  Grid.
+	- The JSDL resource properties or attributes aren't as rich as CIM.
+	- Could easily see that a BES container is something that has a
+	  FileSystem, an OS, etc.
+	- What we are hearing is that we should look strongly at a CIM-like
+	  model.
+	- It's probably premature to make a decision about that, particularly
+	  since we have three people to go off and look at the meta model
+	  thing.
+	- Can we say that we should look strongly at CIM as a way of
+	  representing our resource properties?
+	- From a BES point of view, what we'd have to do is have a section
+	  beyond the port types that says, with respect to resource properties
+	  or whatever, we are using the CIM models specified in etc...
+	- The BES container then we should say may or should implement the CIM
+	  classes of OS, Filesystem, etc.
+	- We'd have to make some statement about how we access the data.
+	- There are a couple of things that you have to consider in a resource
+	  model
+		-- Semantics of what the data means, and how you access the
+		   data.
+		-- If you want to model this as resource properties that's
+		   fine.
+		-- The main problem isn't the rendering, it's defining the
+		   semantics.
+		-- The problem is that if we are trying to get something out,
+		   it's a classic chicken and egg problem 
+			--- how much can we wait for and how much do we need to
+			    just go forward.
+	- Fears lie in the complexity of CIM.
+		-- CIM seems incredibly complex but that might be just because
+		   they have so many classes.
+		-- If we say we are only talking about a small subset, does it
+		   become better?
+	- Resource Modeling working group will adopt bits and pieces of CIM as
+	  a profile.
+	- When can we expect to have this profile?
+		-- They don't have an answer for that.
+	- Since you are looking at the CIM model, what are the classes?
+		-- What about jobs?
+		-- For a job, is an activity a job.
+	- We need to read through the CIM stuff.
+		-- Just in the system stuff there's a lot of obvious overlap.
+	- For some of the things that we might want to specify about BES, user
+	  info is important.
+	- We weren't sure in JSDL how some of the things were being named.
+	- Before we could really decide what is right, we have to read and
+	  understand this model.
+	- Wasn't there also at some point a JCIM document that described a job.
+
+	- It seems that we are in a state where what we need to do is gather
+	  some more information.
+		-- Let Jay, Mark and Chris do some voodoo keeping in mind CIM,
+		   and then maybe that's one of the major topics we need to
+		   discuss in Chicago.
+		-- We could give each other the homework of reading this stuff
+		   so we can have a more informed discussion next week.
+		-- Also, next week want to have written up for everyone a draft
+		   spec as it's coming together so far with sections that still
+		   need to be filled in.
+		-- So we can see what things are beginning to look like.
+	- We said we were going to try to have a specification by the end of
+	  June.
+		-- Doesn't look like that is going to happen completely, but
+		   we'll have some pieces.
+	- Resource Management Design Team sessions at GGF 
+		-- Perhaps BES should join those.
+		-- We need to make sure that the BES sessions don't overlap
+		   with the two RM sessions.
+	- Is only having one session enough?
+		-- No, not really, but there was already 10 OGSA sessions.
+		-- Think we need to have at least two sessions.
+		-- Darren to put in for a second session.
+
+	- For next week, Andrew will have prepared a draft specification with
+	  missing pieces with real text the way it should be for the pieces
+	  that we have decided, so that we can go over it.
+		-- Let's plan on that being most of the session next week.
+
+	- Suppose that the resource model and design team and BES decide on a
+	  CIM like resource model, is it possible in that context that the JSDL
+	  guys could go back in and change some of those terms.
+		-- We think actually that all the terms in JSDL do match the
+	   	   CIM model already.
+		-- In addition, JSDL has the ability to put in anything that
+		   they want.
+		-- Goal for JSDL to put in anything that came out as resource
+		   modeling.
+		-- What we are doing in BES right now can be the forcing
+		   function for that.
+		-- We can't really do a BES spec. unless this issue gets
+		   crystallized.
+
+	- Next week we'll go through the spec that Andrew will gen. up.
+	- Anything else for next week on the agenda.
+		- Chris to say something about a proposed interface for a job
+		  port type.
+	- The following week Chris to present what the meta model team comes up
+	  with.
+	- Then we're into GGF.
+	- One should be discussion of resource model.
+		-- There's already a resource model team which we don't want to
+		   crash.
+		-- BES would be more focused 
+			--- they'll be talking about what pieces out of CIM and
+			    JCIM that they want to include or not include.
+
+	- For the other session we should be going over the document.
+		-- Darren, Stephen and Andrew need to work that out.
+
+	- Next week go over straw man spec. doc. and the batch POSIX activity
+	  that Chris will do.
+	- The following will have a report out from Metamodel sub-team.
+	- The one after that is cancelled due to absentees and proximity to GGF
+	- Think that progress is being made.
+	- Any other comments?
+		-- Do we have a mailing list.
+			--- Subscribe to ogsa-bes-wg and until GGF 14 Andrew
+			    will cross post everything to ogsa mailing list.

@@ -1,0 +1,151 @@
+CA Operations Working Group meeting
+GGF12 (Brussels)
+Tuesday, September 21, 2004
+13:30-15:00
+
+Agenda:
+  - Review minutes of GGF11         (10 min)
+  - Old documents update            (20 min)
+     -- PDS
+     -- PMA Charter
+  - New Open Source CA development
+    as a grid research platform     (10 min)
+  - New document update             (50 min)
+      -- Authentication Profiles
+      -- OCSP
+
+Summary:
+* The PDS and PMA Charter documents are awaiting steering group approval.
+* The NAREGI PKI working group has developed an open source online
+  PKI certification system based on AiCA.
+* Tony will propose a Federation BOF at GGF13 for the authentication
+  profiles document.
+* The OCSP document is 80% complete and will be ready for detailed
+  working group discussion at GGF13.
+
+Meeting minutes:
+
+There were no objections to the GGF11 minutes.
+
+The PDS and PMA Charter documents are awaiting steering group
+approval.  The PDS document requires approval by the American Bar
+Association for permission to publish electronically.
+
+Takuto Okuno (National Research Grid Initiative in Japan) presented
+"New Open Source CA Development as Grid Research Platform."  NAREGI is
+a national grid project in Japan.  The NAREGI PKI working group has
+developed a user registration system for PKI certification.  Users can
+apply for certificates online using the registration system, and sites
+can download grid-mapfiles from the system.  The software is based on
+the open source AiCA software.  It uses LCMP, a lightweight
+certificate management protocol for managing the CA and RA server,
+based on the IETF CMP protocol.  The software runs on Linux using the
+Apache web server and is written in the C programming language.
+
+AiCA features include:
+- key recovery
+- PKCS#11 support
+- remote CA management
+- multiple CAs/RAs per server
+- Internet Explorer based web enrollment feature
+- command-line enrollment feature for Globus
+- authorization using ID/Password, LicenseID (one-time password)
+- LDAP support
+- CRL issuance
+- grid-mapfile management
+- UNICORE UUDB support
+
+The site administrator is given a set of LicenseIDs by the CA
+administrator.  The site administrator gives a LicenseID to the user
+to use in the certificate request.
+
+Darcy suggests that grids currently using OpenCA or SimpleCA may want
+to investigate the NAREGI CA software.
+
+There are more than 20 institutions in APGRID.  Most sites are
+currently using SimpleCA.  The NAREGI CA software is being offered to
+the APGRID as an alternative to SimpleCA.
+
+Tony led a discussion of the Grid Authentication Service Profiles
+informational document.  The intention is to profile authentication
+services, focused on federations.  The document currently contains a
+template for authentication profiles and a section on minimum
+requirements for federations.  Should the document include example
+profiles?  If yes, volunteers are needed.  Kerberos and OTP could be
+included as examples.
+
+What is needed in an authentication service profile?
+- governing board to manage the service
+- set of membership and operational requirements
+- a trusted publishing process for operational information
+
+Isn't this information already in the CP/CPS document?  Not if you're
+running Kerberos or some other non-PKI authentication infrastructure.
+The intention is to agree on a concise profile, to be read by relying
+parties.  Document the contents of (for example)
+http://www.eugridpma.org/.  A CP/CPS template for non-PKIs that also
+includes the contents of the PMA charter.  Talk about how to do
+Kerberos cross-realm authentication.
+
+Is this out of scope for the group, since it's not restricted to PKIs?
+The overhead of starting a new working group should be considered.
+Since it's an informational document, it can be submitted
+individually.  The focus is on the authentication process (operational
+practices), not on the tokens or protocols.
+
+What is "Grid" about Kerberos?  As grid protocols move to web
+services, there is room for alternative authentication mechanisms.
+PKI is only one option for grid authentication.
+
+Components of federations:
+- Who is the federation? What is the mission? Which community will be
+  served?
+- general architecture
+- identity management
+- operational requirements
+- site security
+- publication and repository responsibilities
+- liability
+- financial responsibilities
+- audits
+- privacy and confidentiality
+- compromise and disaster recovery
+- federation administration
+
+Mike Helm proposed that this document needs a new working group,
+focused on federations.  Darcy agreed.  There was general working
+group agreement for Tony to propose a BOF at GGF13 for a new
+federation working group.
+
+Olle Mulmo gave an update on the OCSP Requirements document.  A new
+draft of the document was uploaded to gridforge last week and is
+approximately 80% complete.
+
+OCSP trust model alternatives:
+1. CA signs responses: not workable
+2. authorized responder: dedicated OCSP signing key certified by
+   issuing CA
+3. trusted responder: client configured with trusted OCSP key
+The proposed OCSP service architecture in the document uses a
+combination of #2 & #3.
+
+Don't verify the OCSP responder certificate's revocation status.
+Instead, use short-lived (10 mins) OCSP responder certificates.
+
+CA:
+- SHOULD include service locator of authorized responder(s) in all
+  issued certificates
+- SHOULD certify authorized responders with ocsp-nocheck and
+  OCSPSigning extensions
+- SHOULD make sure authorized responders are updated immediately
+  after e.g. CRL update
+
+Clients:
+- REQUIRE network connectivity
+- SHOULD cache responses
+- SHOULD NOT use nonces
+
+Please see the document for additional details.  The document should
+be complete and ready for detailed working group discussion at GGF13.
+
+Meeting adjourned.

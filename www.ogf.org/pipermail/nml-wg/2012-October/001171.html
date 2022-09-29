@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2012-October/001171.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Sep 2022 15:02:42 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] References
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=Re%3A%20%5BNml-wg%5D%20References&In-Reply-To=%3C5073080E.2070802%40man.poznan.pl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2012-October/001168.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2012-October/001173.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] References</H1>
+    <B>Roman &#321;apacz</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=Re%3A%20%5BNml-wg%5D%20References&In-Reply-To=%3C5073080E.2070802%40man.poznan.pl%3E"
+       TITLE="[Nml-wg] References">romradz at man.poznan.pl
+       </A><BR>
+    <I>Mon Oct  8 13:06:22 EDT 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-October/001168.html">[Nml-wg] References
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-October/001173.html">[Nml-wg] References
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/date.html#1171">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/thread.html#1171">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/subject.html#1171">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/author.html#1171">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>W dniu 2012-10-05 17:56, Aaron Brown pisze:
+&gt;<i>
+</I>&gt;<i> On Oct 5, 2012, at 10:06 AM, Jeroen van der Ham wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Yes indeed.
+</I>&gt;&gt;<i> Freek is now out of the running, so it is up to us to finalize things 
+</I>&gt;&gt;<i> and close this issue.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Summarizing:
+</I>&gt;&gt;<i> - &quot;isReference &lt;URL&gt;&quot; solution is off the table, this is a 
+</I>&gt;&gt;<i> control-plane construct, I'm proposing to move this to NSI topology 
+</I>&gt;&gt;<i> constructs, so this will be an NSI issue.
+</I>&gt;&gt;<i> - id/idRef solution seems to boil down to extra parser logic, i.e. 
+</I>&gt;&gt;<i> whether or not an id is defined in some place or not.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For the RDF/OWL syntax this is a non-issue, because statements about 
+</I>&gt;&gt;<i> objects can be made everywhere.
+</I>&gt;&gt;<i> In my opinion this should also hold true for the XML syntax. You can 
+</I>&gt;&gt;<i> not stop me from stating properties of a certain object, therefore, 
+</I>&gt;&gt;<i> you can not state that a certain definition is only in one place.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Also, how do we enforce the id / idRef construct? What to do when you 
+</I>&gt;&gt;<i> encounter an id statement in two different places?
+</I>&gt;<i>
+</I>&gt;<i> So the logic you are proposing is that the &quot;canonical&quot; definition of 
+</I>&gt;<i> network element A is the union of all definitions of A? e.g.
+</I>&gt;<i>
+</I>&gt;<i> &lt;topology&gt;
+</I>&gt;<i>   &lt;relation type=&quot;hasNode&quot;&gt;
+</I>&gt;<i>     &lt;node id=A&gt;
+</I>&gt;<i>       # canonical definition
+</I>&gt;<i>     &lt;/node&gt;
+</I>&gt;<i>   &lt;/relation&gt;
+</I>&gt;<i> &lt;/topology&gt;
+</I>&gt;<i>
+</I>&gt;<i> &lt;port X&gt;
+</I>&gt;<i>   &lt;relation type=&quot;inNode&quot;&gt;
+</I>&gt;<i>     &lt;node id=A&gt;
+</I>&gt;<i>       # some added properties from X's perspective about A
+</I>&gt;<i>     &lt;/node&gt;
+</I>&gt;<i>   &lt;/relation&gt;
+</I>&gt;<i> &lt;/port&gt;
+</I>&gt;<i>
+</I>&gt;<i> &lt;port Y&gt;
+</I>&gt;<i>   &lt;relation type=&quot;inNode&quot;&gt;
+</I>&gt;<i>     &lt;node id=A&gt;
+</I>&gt;<i>       # some added properties from Y's perspective about A
+</I>&gt;<i>     &lt;/node&gt;
+</I>&gt;<i>   &lt;/relation&gt;
+</I>&gt;<i> &lt;/port&gt;
+</I>&gt;<i>
+</I>&gt;<i> Would be semantically equivalent to:
+</I>&gt;<i>
+</I>&gt;<i> &lt;topology&gt;
+</I>&gt;<i>   &lt;relation type=&quot;hasNode&quot;&gt;
+</I>&gt;<i>     &lt;node id=A /&gt;
+</I>&gt;<i>   &lt;/relation&gt;
+</I>&gt;<i> &lt;/topology&gt;
+</I>&gt;<i>
+</I>&gt;<i> &lt;port X&gt;
+</I>&gt;<i>   &lt;relation type=&quot;inNode&quot;&gt;
+</I>&gt;<i>     &lt;node id=A /&gt;
+</I>&gt;<i>   &lt;/relation&gt;
+</I>&gt;<i> &lt;/port&gt;
+</I>&gt;<i>
+</I>&gt;<i> &lt;port Y&gt;
+</I>&gt;<i>   &lt;relation type=&quot;inNode&quot;&gt;
+</I>&gt;<i>     &lt;node id=A /&gt;
+</I>&gt;<i>   &lt;/relation&gt;
+</I>&gt;<i> &lt;/port&gt;
+</I>&gt;<i>
+</I>&gt;<i> &lt;node id=A&gt;
+</I>&gt;<i>       # canonical definition
+</I>&gt;<i>       # some added properties from X's perspective about A
+</I>&gt;<i>       # some added properties from Y's perspective about A
+</I>&gt;<i> &lt;/node&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Using that logic, are there any circumstances where there might be 
+</I>&gt;<i> conflicting information in the various &quot;definitions&quot; of A? e.g. if X's 
+</I>&gt;<i> &quot;description&quot; attribute for A is different than Y's &quot;description&quot; for 
+</I>&gt;<i> A which is different from the topology's &quot;description&quot; attribute for A 
+</I>&gt;<i> (e.g. a domain defines topology, along with some VO elements, and the 
+</I>&gt;<i> VO uses their &quot;external&quot; description of an interface vs. the 
+</I>&gt;<i> &quot;internal&quot; description that the domain itself uses). In that scenario, 
+</I>&gt;<i> there are different &quot;description&quot; attributes for A.
+</I>
+If I remember correctly Jerry presented similar scenario for Nordunett 
+topology (two internal topologies/domains) where the alias relation (a 
+kind of mapping) was used. Internal ids and topology elements were not 
+available externally.
+
+Roman
+
+&gt;<i>
+</I>&gt;<i> Before there was a &quot;scoping&quot; of attributes. e.g. it was X's view of A, 
+</I>&gt;<i> not a canonical definition of A. For things like the list relations, 
+</I>&gt;<i> the 'next' and 'prev' attributes of a network element were scoped 
+</I>&gt;<i> inside the group. Now, they're global which means if an element is a 
+</I>&gt;<i> member of multiple lists, those relationships are ambiguous.
+</I>&gt;<i>
+</I>&gt;<i> I'm not sure any of that is needed even if we get rid of idRef. If we 
+</I>&gt;<i> special-case 1 relationship type &quot;definedBy&quot;, I think we can get rid 
+</I>&gt;<i> of essentially all the ambiguity.
+</I>&gt;<i>
+</I>&gt;<i> Rule 1: If there are 2 network elements with the same id attribute in 
+</I>&gt;<i> a given document, the behavior is undefined
+</I>&gt;<i> Rule 1a: The exception to the above is if a network element is defined 
+</I>&gt;<i> in a &quot;definedBy&quot; relationship, in that case, the id attribute of the 
+</I>&gt;<i> relationship is a pointer to a network element with that id defined 
+</I>&gt;<i> elsewhere.
+</I>&gt;<i>
+</I>&gt;<i> We'd make use of anonymous network elements inside of relationships:
+</I>&gt;<i>
+</I>&gt;<i> &lt;relation type=&quot;hasPort&quot;&gt;
+</I>&gt;<i>   &lt;port&gt;
+</I>&gt;<i>     &lt;relation type=&quot;definedBy&quot;&gt;
+</I>&gt;<i>       &lt;port id=&quot;XYZ&quot; /&gt;
+</I>&gt;<i>     &lt;/relation&gt;
+</I>&gt;<i>   &lt;/port&gt;
+</I>&gt;<i> &lt;/relation&gt;
+</I>&gt;<i>
+</I>&gt;<i> The above syntax was shortened using the idRef to:
+</I>&gt;<i>
+</I>&gt;<i> &lt;relation type=&quot;hasPort&quot;&gt;
+</I>&gt;<i>   &lt;port idRef=&quot;XYZ&quot; /&gt;
+</I>&gt;<i> &lt;/relation&gt;
+</I>&gt;<i>
+</I>&gt;<i> To me, these semantics are logical, and allow scoping properties about 
+</I>&gt;<i> a network element.
+</I>&gt;<i>
+</I>&gt;<i> Cheers,
+</I>&gt;<i> Aaron
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Jeroen.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 5 Oct 2012, at 12:12, Roman &#321;apacz &lt;<A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">romradz at man.poznan.pl</A> 
+</I>&gt;&gt;<i> &lt;mailto:<A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">romradz at man.poznan.pl</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Correct me if I'm wrong but I think that the references issue could 
+</I>&gt;&gt;&gt;<i> be the last major one to solve and announce the first stable 
+</I>&gt;&gt;&gt;<i> official version of NML. Other issues could be discussed afterwards 
+</I>&gt;&gt;&gt;<i> and belong to the next version (I remember that October has been a 
+</I>&gt;&gt;&gt;<i> deadline).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Roman
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> W dniu 2012-09-20 17:13, Jeroen van der Ham pisze:
+</I>&gt;&gt;&gt;&gt;<i> Hi,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> We've been discussing references, meaning things that are not 
+</I>&gt;&gt;&gt;&gt;<i> defined locally, but you do want to provide additional information 
+</I>&gt;&gt;&gt;&gt;<i> about them. For XML there has been a proposal to use id / idRef to 
+</I>&gt;&gt;&gt;&gt;<i> denote something like that. Unfortunately it is not very easy to 
+</I>&gt;&gt;&gt;&gt;<i> port that construct to RDF/OWL.
+</I>&gt;&gt;&gt;&gt;<i> The only way to express something like that in RDF/OWL is by using 
+</I>&gt;&gt;&gt;&gt;<i> a relation. Fortunately a relation like that already exists in the 
+</I>&gt;&gt;&gt;&gt;<i> form of rdfs:isDefinedBy. This states that an object is actually 
+</I>&gt;&gt;&gt;&gt;<i> defined by another description, and conveniently provides the URL 
+</I>&gt;&gt;&gt;&gt;<i> of that description to reference it.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Could we perhaps use the isDefinedBy construct also in XML to make 
+</I>&gt;&gt;&gt;&gt;<i> the reference definition somewhat more explicit? This would really 
+</I>&gt;&gt;&gt;&gt;<i> help keeping the difference between the two syntaxes at a minimum also.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Jeroen.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> nml-wg mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">nml-wg at ogf.org</A> &lt;mailto:<A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">nml-wg at ogf.org</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">https://www.ogf.org/mailman/listinfo/nml-wg</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> nml-wg mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">nml-wg at ogf.org</A> &lt;mailto:<A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">nml-wg at ogf.org</A>&gt;
+</I>&gt;&gt;&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">https://www.ogf.org/mailman/listinfo/nml-wg</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> nml-wg mailing list
+</I>&gt;&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">nml-wg at ogf.org</A> &lt;mailto:<A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">nml-wg at ogf.org</A>&gt;
+</I>&gt;&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">https://www.ogf.org/mailman/listinfo/nml-wg</A>
+</I>&gt;<i>
+</I>&gt;<i> Internet2 Fall Member Meeting
+</I>&gt;<i> Sep 30-Oct 4, 2012 - Philadelphia, PA
+</I>&gt;<i> <A HREF="http://events.internet2.edu/2012/fall-mm/">http://events.internet2.edu/2012/fall-mm/</A>
+</I>&gt;<i>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://www.ogf.org/pipermail/nml-wg/attachments/20121008/35d1491d/attachment.html">http://www.ogf.org/pipermail/nml-wg/attachments/20121008/35d1491d/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-October/001168.html">[Nml-wg] References
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-October/001173.html">[Nml-wg] References
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/date.html#1171">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/thread.html#1171">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/subject.html#1171">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/author.html#1171">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2012-October/001171.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Sep 2022 15:02:42 GMT -->
+</html>

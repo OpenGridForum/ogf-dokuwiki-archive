@@ -1,0 +1,1337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/c5665276b7a465f29230341f8800af4f77b3c141/diff/app/controllers/members_controller.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:42:31 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>/app/controllers/members_controller.rb - Diff - Redmine - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+<link href="https://redmine.ogf.org/stylesheets/scm.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body class="theme-Ogf redmine controller-repositories action-diff">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/redmine-og" method="get">
+        <input name="changesets" type="hidden" value="1" />
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/redmine-og" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=repository" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=repository" class="ancestor">IT</a> » Redmine</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/redmine-og" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/redmine-og" class="dmsf">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/repository" class="repository selected">Repository</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        <h2>Revision c5665276 app/controllers/members_controller.rb</h2>
+
+<!-- Choose view type -->
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/diff/app/controllers/members_controller.rb" method="get">
+  <input id="rev" name="rev" type="hidden" value="c5665276b7a465f29230341f8800af4f77b3c141" />
+  
+  <p>
+    <label>View differences</label>
+    <select id="type" name="type" onchange="if (this.value != '') {this.form.submit()}"><option value="inline" selected="selected">inline</option>
+<option value="sbs">side by side</option></select>
+  </p>
+</form>
+
+
+<div class="autoscroll">
+<table class="filecontent">
+<thead>
+  <tr>
+    <th colspan="3" class="filename">
+      b/app/controllers/members_controller.rb
+    </th>
+  </tr>
+</thead>
+<tbody>
+
+<tr>
+  <th class="line-num">17</th>
+  <th class="line-num">17</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">18</th>
+  <th class="line-num">18</th>
+  <td class="line-code ">
+    <pre>class MembersController &lt; ApplicationController
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">19</th>
+  <th class="line-num">19</th>
+  <td class="line-code ">
+    <pre>  model_object Member
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">20</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>  before_filter :find_model_object, :except =&gt; [:<span></span>create, :autocomplete]
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">21</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>  before_filter :find_project_from_association, :except =&gt; [:<span></span>create, :autocomplete]
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">22</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>  before_filter :find_project_by_project_id, :only =&gt; [:<span></span>create, :autocomplete]
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">20</th>
+  <td class="line-code diff_in">
+    <pre>  before_filter :find_model_object, :except =&gt; [:<span>index, :</span>create, :autocomplete]
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">21</th>
+  <td class="line-code diff_in">
+    <pre>  before_filter :find_project_from_association, :except =&gt; [:<span>index, :</span>create, :autocomplete]
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">22</th>
+  <td class="line-code diff_in">
+    <pre>  before_filter :find_project_by_project_id, :only =&gt; [:<span>index, :</span>create, :autocomplete]
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">23</th>
+  <th class="line-num">23</th>
+  <td class="line-code ">
+    <pre>  before_filter :authorize
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">24</th>
+  <td class="line-code diff_in">
+    <pre>  accept_api_auth :index, :show, :create, :update, :destroy
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">25</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">26</th>
+  <td class="line-code diff_in">
+    <pre>  def index
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">27</th>
+  <td class="line-code diff_in">
+    <pre>    @offset, @limit = api_offset_and_limit
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">28</th>
+  <td class="line-code diff_in">
+    <pre>    @member_count = @project.member_principals.count
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">29</th>
+  <td class="line-code diff_in">
+    <pre>    @member_pages = Paginator.new self, @member_count, @limit, params['page']
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">30</th>
+  <td class="line-code diff_in">
+    <pre>    @offset ||= @member_pages.current.offset
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">31</th>
+  <td class="line-code diff_in">
+    <pre>    @members =  @project.member_principals.all(
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">32</th>
+  <td class="line-code diff_in">
+    <pre>      :order =&gt; &quot;#{Member.table_name}.id&quot;,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">33</th>
+  <td class="line-code diff_in">
+    <pre>      :limit  =&gt;  @limit,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">34</th>
+  <td class="line-code diff_in">
+    <pre>      :offset =&gt;  @offset
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">35</th>
+  <td class="line-code diff_in">
+    <pre>    )
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">36</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">37</th>
+  <td class="line-code diff_in">
+    <pre>    respond_to do |format|
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">38</th>
+  <td class="line-code diff_in">
+    <pre>      format.html { head 406 }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">39</th>
+  <td class="line-code diff_in">
+    <pre>      format.api
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">40</th>
+  <td class="line-code diff_in">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">41</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">42</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">43</th>
+  <td class="line-code diff_in">
+    <pre>  def show
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">44</th>
+  <td class="line-code diff_in">
+    <pre>    respond_to do |format|
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">45</th>
+  <td class="line-code diff_in">
+    <pre>      format.html { head 406 }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">46</th>
+  <td class="line-code diff_in">
+    <pre>      format.api
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">47</th>
+  <td class="line-code diff_in">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">48</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">24</th>
+  <th class="line-num">49</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">25</th>
+  <th class="line-num">50</th>
+  <td class="line-code ">
+    <pre>  def create
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">26</th>
+  <th class="line-num">51</th>
+  <td class="line-code ">
+    <pre>    members = []
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">27</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>    if params[:membership] &amp;&amp; <span>request.post?</span>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">52</th>
+  <td class="line-code diff_in">
+    <pre>    if params[:membership] &amp;&amp; <span>params[:membership][:user_ids]</span>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">28</th>
+  <th class="line-num">53</th>
+  <td class="line-code ">
+    <pre>      attrs = params[:membership].dup
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">29</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>      if (user_ids = attrs.delete(:user_ids))
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">30</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>        user_ids.each do |user_id|
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">31</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>          members &lt;&lt; Member.new(attrs.merge(:user_id =&gt; user_id))
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">32</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>        end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">33</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>      else
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">34</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>        members &lt;&lt; Member.new(attrs)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">54</th>
+  <td class="line-code diff_in">
+    <pre>      user_ids = attrs.delete(:user_ids)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">55</th>
+  <td class="line-code diff_in">
+    <pre>      user_ids.each do |user_id|
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">56</th>
+  <td class="line-code diff_in">
+    <pre>        members &lt;&lt; Member.new(attrs.merge(:user_id =&gt; user_id))
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">35</th>
+  <th class="line-num">57</th>
+  <td class="line-code ">
+    <pre>      end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">36</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>      @project.members &lt;&lt; members
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">58</th>
+  <td class="line-code diff_in">
+    <pre>    else
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">59</th>
+  <td class="line-code diff_in">
+    <pre>      members &lt;&lt; Member.new(params[:membership])
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">37</th>
+  <th class="line-num">60</th>
+  <td class="line-code ">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">61</th>
+  <td class="line-code diff_in">
+    <pre>    @project.members &lt;&lt; members
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">62</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">38</th>
+  <th class="line-num">63</th>
+  <td class="line-code ">
+    <pre>    respond_to do |format|
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">39</th>
+  <th class="line-num">64</th>
+  <td class="line-code ">
+    <pre>      if members.present? &amp;&amp; members.all? {|m| m.valid? }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">40</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">41</th>
+  <th class="line-num">65</th>
+  <td class="line-code ">
+    <pre>        format.html { redirect_to :controller =&gt; 'projects', :action =&gt; 'settings', :tab =&gt; 'members', :id =&gt; @project }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">42</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">43</th>
+  <th class="line-num">66</th>
+  <td class="line-code ">
+    <pre>        format.js {
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">44</th>
+  <th class="line-num">67</th>
+  <td class="line-code ">
+    <pre>          render(:update) {|page|
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">45</th>
+  <th class="line-num">68</th>
+  <td class="line-code ">
+    <pre>            page.replace_html &quot;tab-content-members&quot;, :partial =&gt; 'projects/settings/members'
+</pre>
+  </td>
+</tr>
+
+<tr class="spacing">
+  <th class="line-num">...</th><th class="line-num">...</th><td></td>
+</tr>
+<tr>
+  <th class="line-num">47</th>
+  <th class="line-num">70</th>
+  <td class="line-code ">
+    <pre>            members.each {|member| page.visual_effect(:highlight, &quot;member-#{member.id}&quot;) }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">48</th>
+  <th class="line-num">71</th>
+  <td class="line-code ">
+    <pre>          }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">49</th>
+  <th class="line-num">72</th>
+  <td class="line-code ">
+    <pre>        }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">73</th>
+  <td class="line-code diff_in">
+    <pre>        format.api {
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">74</th>
+  <td class="line-code diff_in">
+    <pre>          @member = members.first
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">75</th>
+  <td class="line-code diff_in">
+    <pre>          render :action =&gt; 'show', :status =&gt; :created, :location =&gt; membership_url(@member)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">76</th>
+  <td class="line-code diff_in">
+    <pre>        }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">50</th>
+  <th class="line-num">77</th>
+  <td class="line-code ">
+    <pre>      else
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">51</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">52</th>
+  <th class="line-num">78</th>
+  <td class="line-code ">
+    <pre>        format.js {
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">53</th>
+  <th class="line-num">79</th>
+  <td class="line-code ">
+    <pre>          render(:update) {|page|
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">54</th>
+  <th class="line-num">80</th>
+  <td class="line-code ">
+    <pre>            errors = members.collect {|m|
+</pre>
+  </td>
+</tr>
+
+<tr class="spacing">
+  <th class="line-num">...</th><th class="line-num">...</th><td></td>
+</tr>
+<tr>
+  <th class="line-num">58</th>
+  <th class="line-num">84</th>
+  <td class="line-code ">
+    <pre>            page.alert(l(:notice_failed_to_save_members, :errors =&gt; errors.join(', ')))
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">59</th>
+  <th class="line-num">85</th>
+  <td class="line-code ">
+    <pre>          }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">60</th>
+  <th class="line-num">86</th>
+  <td class="line-code ">
+    <pre>        }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">61</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">87</th>
+  <td class="line-code diff_in">
+    <pre>        format.api { render_validation_errors(members.first) }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">62</th>
+  <th class="line-num">88</th>
+  <td class="line-code ">
+    <pre>      end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">63</th>
+  <th class="line-num">89</th>
+  <td class="line-code ">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">64</th>
+  <th class="line-num">90</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr class="spacing">
+  <th class="line-num">...</th><th class="line-num">...</th><td></td>
+</tr>
+<tr>
+  <th class="line-num">67</th>
+  <th class="line-num">93</th>
+  <td class="line-code ">
+    <pre>    if params[:membership]
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">68</th>
+  <th class="line-num">94</th>
+  <td class="line-code ">
+    <pre>      @member.role_ids = params[:membership][:role_ids]
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">69</th>
+  <th class="line-num">95</th>
+  <td class="line-code ">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">70</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>    if request.put? &amp;&amp; @member.save
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">71</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>  	 respond_to do |format|
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">72</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>        format.html { redirect_to :controller =&gt; 'projects', :action =&gt; 'settings', :tab =&gt; 'members', :id =&gt; @project }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">73</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>        format.js {
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">74</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>          render(:update) {|page|
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">75</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>            page.replace_html &quot;tab-content-members&quot;, :partial =&gt; 'projects/settings/members'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">76</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>            page &lt;&lt; 'hideOnLoad()'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">77</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>            page.visual_effect(:highlight, &quot;member-#{@member.id}&quot;)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">78</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>          }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">96</th>
+  <td class="line-code diff_in">
+    <pre>    saved = @member.save
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">97</th>
+  <td class="line-code diff_in">
+    <pre>    respond_to do |format|
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">98</th>
+  <td class="line-code diff_in">
+    <pre>      format.html { redirect_to :controller =&gt; 'projects', :action =&gt; 'settings', :tab =&gt; 'members', :id =&gt; @project }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">99</th>
+  <td class="line-code diff_in">
+    <pre>      format.js {
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">100</th>
+  <td class="line-code diff_in">
+    <pre>        render(:update) {|page|
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">101</th>
+  <td class="line-code diff_in">
+    <pre>          page.replace_html &quot;tab-content-members&quot;, :partial =&gt; 'projects/settings/members'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">102</th>
+  <td class="line-code diff_in">
+    <pre>          page &lt;&lt; 'hideOnLoad()'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">103</th>
+  <td class="line-code diff_in">
+    <pre>          page.visual_effect(:highlight, &quot;member-#{@member.id}&quot;)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">79</th>
+  <th class="line-num">104</th>
+  <td class="line-code ">
+    <pre>        }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">80</th>
+  <th class="line-num"></th>
+  <td class="line-code diff_out">
+    <pre>      end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">105</th>
+  <td class="line-code diff_in">
+    <pre>      }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">106</th>
+  <td class="line-code diff_in">
+    <pre>      format.api {
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">107</th>
+  <td class="line-code diff_in">
+    <pre>        if saved
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">108</th>
+  <td class="line-code diff_in">
+    <pre>          head :ok
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">109</th>
+  <td class="line-code diff_in">
+    <pre>        else
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">110</th>
+  <td class="line-code diff_in">
+    <pre>          render_validation_errors(@member)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">111</th>
+  <td class="line-code diff_in">
+    <pre>        end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">112</th>
+  <td class="line-code diff_in">
+    <pre>      }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">81</th>
+  <th class="line-num">113</th>
+  <td class="line-code ">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">82</th>
+  <th class="line-num">114</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">83</th>
+  <th class="line-num">115</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr class="spacing">
+  <th class="line-num">...</th><th class="line-num">...</th><td></td>
+</tr>
+<tr>
+  <th class="line-num">92</th>
+  <th class="line-num">124</th>
+  <td class="line-code ">
+    <pre>          page &lt;&lt; 'hideOnLoad()'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">93</th>
+  <th class="line-num">125</th>
+  <td class="line-code ">
+    <pre>        }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">94</th>
+  <th class="line-num">126</th>
+  <td class="line-code ">
+    <pre>      }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">127</th>
+  <td class="line-code diff_in">
+    <pre>      format.api {
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">128</th>
+  <td class="line-code diff_in">
+    <pre>        if @member.destroyed?
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">129</th>
+  <td class="line-code diff_in">
+    <pre>          head :ok
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">130</th>
+  <td class="line-code diff_in">
+    <pre>        else
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">131</th>
+  <td class="line-code diff_in">
+    <pre>          head :unprocessable_entity
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">132</th>
+  <td class="line-code diff_in">
+    <pre>        end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">133</th>
+  <td class="line-code diff_in">
+    <pre>      }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">95</th>
+  <th class="line-num">134</th>
+  <td class="line-code ">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">96</th>
+  <th class="line-num">135</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">97</th>
+  <th class="line-num">136</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+<p class="other-formats">(Other formats not available in this archive.</p>
+
+
+
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/c5665276b7a465f29230341f8800af4f77b3c141/diff/app/controllers/members_controller.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:42:31 GMT -->
+</html>

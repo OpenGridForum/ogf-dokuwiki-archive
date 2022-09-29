@@ -1,0 +1,813 @@
+%!TEX TS-program = pdflatex
+\documentclass[12pt]{article}  % larger font to compensate for long lines with fullpage
+\usepackage{ifpdf,ifxetex}
+\ifxetex
+% \usepackage{fontspec}
+\else % inputenc is incompatible with xetex (which always takes UTF-8 as input)
+\usepackage[utf8]{inputenc}
+\fi
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage[pdfborder={0 0 0}]{hyperref} % use hyperref without borders
+\usepackage{url}
+\usepackage{authblk}
+\usepackage{framed}  % frames sections with page breaks
+\usepackage{textcomp}
+% Define some basics for your document:
+
+\title{A URN Namespace for Network Resources}
+\author{Freek Dijkstra \and Jeroen van der Ham}
+\newcommand{\shortdoctitle}{URN:OGF:network specification}  % Title used in page header
+% \date{} and \author{} are currently ignored
+\newcommand{\authorsshort}{Freek Dijkstra, SURFsara \\ Jeroen van der Ham, University of Amsterdam}
+\newcommand{\publicationdate}{April 2013}  % Date of first publication of the document
+% \newcommand{\revisiondate}{December 2010}  % Optional: date of last revision of the document
+\newcommand{\copyrightyears}{2011-2013}  % Years used in copyright notice
+\newcommand{\docseries}{GFD-C.202}  % GWD-R, GWD-I or GWD-C (for working drafts), GFD-I, GFD-R, or GFD-C
+\newcommand{\groupname}{NML-WG}  % Optional: name of the authoring working or research group
+\newcommand{\groupurl}{\href{mailto:nml-wg@ogf.org}{nml-wg@ogf.org}}  % Optional: URL or email address of the authoring working or research group
+%\newcommand{\documenturl}{}  % Optional: URL of this document
+
+
+% Read pictures from img/ and current directory
+\graphicspath{{img/}{./}}
+
+%%% GWD/GFD header follows %%%
+% Feel free to make changes, as long as your document follows the guidelines of GFD.152
+
+\usepackage[numbers]{natbib} % Use [1] for references, 
+\bibliographystyle{plainnat} % References show full author name(s) and document URL
+
+\usepackage[sf,compact]{titlesec} % Use sans-serif for section headers
+
+\usepackage[titles]{tocloft} % Format table of contents
+% (tocloft is used, since titletoc is incompatible with xetex.)
+\renewcommand{\cftsecfont}{\sffamily}
+\renewcommand{\cftsubsecfont}{\sffamily}
+\renewcommand{\cftsubsubsecfont}{\sffamily}
+\renewcommand{\cftsecpagefont}{\sffamily}
+\renewcommand{\cftsubsecpagefont}{\sffamily}
+\renewcommand{\cftsubsubsecpagefont}{\sffamily}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsubsecdotsep}} % dots for sections the same as for subsections
+\setlength{\cftbeforesecskip}{0.5ex}
+
+
+\usepackage{parskip} % Blank lines between paragraphs, no indentation.
+
+% font style for headers and footers
+\newcommand{\headerstyle}{\sffamily} % sans-serif
+
+% Set page margins
+\usepackage{fancyhdr}
+\addtolength{\headheight}{15pt}
+\renewcommand{\headrulewidth}{0pt}
+% \setlength{\headrulewidth}{0pt}
+\setlength{\headsep}{20pt}
+\usepackage[headings]{fullpage}  % small margins
+
+% Macro to check if (optional) values above are defined or not.
+\newcommand{\ifnonempty}[2]{\ifthenelse{\isundefined{#1}}{}{\ifthenelse{\equal{#1}{}}{}{#2}}}
+
+% Define page header and footers
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{\fancyplain{}{\headerstyle\docseries}}
+% use \revisiondate if defined, otherwise \publicationdate for right header:
+\rhead{\fancyplain{}{\headerstyle\ifthenelse{\isundefined{\revisiondate }}{\publicationdate}{\ifthenelse{\equal{\revisiondate}{}}{\publicationdate}{\revisiondate}}}}
+\lfoot{\headerstyle\ifnonempty{\groupurl}{\groupurl}}
+\rfoot{\headerstyle\thepage}
+\thispagestyle{plain}
+
+\ifpdf
+\hypersetup{
+    pdftitle = {A URN Namespace for Network Resources},
+    pdfauthor = {Freek Dijkstra, Jeroen van der Ham},
+    pdfsubject = {urn:ogf:network specification},
+    pdfkeywords = {URN network NML}
+}
+\fi
+
+\begin{document}
+
+% Title page header
+{\noindent
+\begin{minipage}[t]{1.5in}
+\headerstyle
+\docseries \\
+\ifnonempty{\groupname}{\groupname \\}
+\ifnonempty{\groupurl}{\groupurl \\}
+\ifnonempty{\documenturl}{\documenturl \\}
+\end{minipage}
+\hfill
+\raggedleft
+\begin{minipage}[t]{4.5in}
+\raggedleft
+\headerstyle
+\authorsshort \\
+\vspace{1em}
+\publicationdate \\
+\ifnonempty{\revisiondate}{Revised \revisiondate \\}
+\end{minipage}
+}
+
+\vspace{1em}
+\begin{center}
+\makeatletter
+\Large\bf\textsf \@title
+\makeatother
+\end{center}
+
+%%% End of header, insert content below this line %%%
+
+\subsection*{Status of This Document}
+
+Grid Final Draft (GFD), Community Practice.
+
+% \section{Document Change History}
+% 
+% This template has been updated to confirm to GFD-C.152~\cite{gfd152}.
+
+\subsection*{Copyright Notice}
+
+Copyright \copyright \ Open Grid Forum (\copyrightyears).  Some Rights Reserved.  
+Distribution is unlimited.
+
+\phantomsection\addcontentsline{toc}{section}{Abstract}
+\section*{Abstract}
+
+This document specifies the procedure to create Uniform Resource Names (URNs) in the \texttt{urn:ogf:network} namespace. URNs in this namespace can be used to define logical network resources, such a devices, (logical) ports, (logical) links, and topologies.
+
+\phantomsection\addcontentsline{toc}{section}{Contents}
+\tableofcontents
+
+\newpage
+
+\section{Introduction}%
+\label{sec:introduction}
+
+Uniform Resource Names (URNs) are persistent, globally unique identifiers~\cite{rfc2141}.
+
+Topology exchange between network operators requires globally unique identifiers for network resources.  The \texttt{urn:ogf:network} namespace provides globally unique identifiers for naming network resources without central registration.
+
+This document defines and registers the \texttt{urn:ogf:network} namespace in accordance with \cite{urn-ogf-procedure}.  It defines a procedure how organisation can create a globally unique organisation identifier, which can be used to prefix locally unique resource identifiers to form globally unique resource identifiers.
+
+By re-using the domain name system with a date, no additional central registry or procedural overhead is required to create a globally unique organisation identifier.
+
+
+\subsection*{Notational Conventions}
+\label{sec:rfc2119}
+
+\newcommand{\MUST}{\textsc{must}}
+\newcommand{\MUSTNOT}{\textsc{must not}}
+\newcommand{\REQUIRED}{\textsc{required}}
+\newcommand{\SHALL}{\textsc{shall}}
+\newcommand{\SHALLNOT}{\textsc{shall not}}
+\newcommand{\SHOULD}{\textsc{should}}
+\newcommand{\SHOULDNOT}{\textsc{should not}}
+\newcommand{\RECOMMENDED}{\textsc{recommended}}
+\newcommand{\NOTRECOMMENDED}{\textsc{not recommended}}
+\newcommand{\MAY}{\textsc{may}}
+\newcommand{\OPTIONAL}{\textsc{optional}}
+
+The keywords “\MUST{}” “\MUSTNOT{}”, “\REQUIRED{}”, “\SHALL{}”, “\SHALLNOT{}”, “\SHOULD{}”, “\SHOULDNOT{}”, “\RECOMMENDED{}”, “\MAY{}”,  and “\OPTIONAL{}” are to be interpreted as described in~\cite{rfc2119}.
+% except that the words do not appear in uppercase. 
+
+\newcommand{\qq}{\symbol{34}} % 34 is the decimal LaTeX code for "
+% \newcommand{\q}{\symbol{39}} % 39 is the decimal LaTeX code for '  % gives ’ instead of '. GRRR, LaTeX
+\newcommand{\q}{\textquotesingle} % 39 is the decimal LaTeX code for '
+\newcommand{\underscore}{\symbol{95}} % 95 is the decimal LaTeX code for _
+
+
+\section{Registration}
+
+\subsection{Namespace Identifier}
+
+“\texttt{urn:ogf:network:}”
+The OGF is the Namespace Organisation for the \texttt{urn:ogf:network} namespace.
+
+\subsection{Document Version}
+
+Registration version number: 1 \\
+Registration date: 2013-04-23  %% TODO: replace with date of publication of this GFD
+
+\section{Syntax}
+
+\subsection{Syntactic Structure}
+
+A network resource URN (NURN) is defined by the following rules. These rules follow Augmented BFR~\cite{rfc5234} format.
+\begin{quote}
+  \texttt{NURN = \qq{}urn:ogf:network:\qq{} ORGID \qq{}:\qq{} OPAQUE-PART *1QUERY *1FRAGMENT} \\
+  \texttt{ORGID = FQDN \qq{}:\qq{} DATE } ; ID of assigning organisation  \\
+  \texttt{FQDN = 1*(ALPHA / DIGIT / \qq{}-\qq{} / \qq{}.\qq{})} ; Domain name \\
+  \texttt{DATE = YEAR *1(MONTH *1DAY)} ; Date of creation of ORGID \\
+  \texttt{YEAR = 4DIGIT} \\
+  \texttt{MONTH = 2DIGIT} \\
+  \texttt{DAY = 2DIGIT} \\
+  \texttt{OPAQUE-PART = *(ALPHA / DIGIT / OTHER)} \\
+  \texttt{OTHER = ALLOWED / EXTENSION} \\
+  \texttt{ALLOWED = \qq{}+\qq{} / \qq{},\qq{} / \qq{}-\qq{} / \qq{}.\qq{} / \qq{}:\qq{} / \qq{};\qq{} / \qq{}=\qq{} / \qq{}\underscore\qq{}} \\
+  \texttt{EXTENSION = \qq{}!\qq{} / \qq{}\$\qq{} / \qq{}(\qq{} / \qq{})\qq{} / \qq{}*\qq{} / \qq{}@\qq{} / \qq{}\textasciitilde\qq{} / \qq{}\&\qq{}} \\
+  \texttt{QUERY = \qq{}?\qq{} *QFCHAR} \\
+  \texttt{FRAGMENT = \qq{}\#\qq{} *QFCHAR} \\
+  \texttt{QFCHAR = ALPHA / DIGIT / OTHER}
+\end{quote}
+
+\texttt{ALPHA}, \texttt{DIGIT} and \texttt{HEXDIG} are defined by \cite{rfc5234}, \texttt{OTHER} is almost equal to \texttt{<other>} as defined by~\cite{rfc2141}, but lacks the single quote (\texttt{\q{}}) character and includes the ampersand (\texttt{\&}) and tilde characters (\texttt{\textasciitilde}). \texttt{QFCHAR} is a subset of \texttt{pchar} as defined by~\cite{rfc3986}, only lacking the single quote character (\texttt{\q{}}) and percentage encoding (\texttt{\qq\%\qq{} HEXDIG HEXDIG}).
+
+\texttt{ALLOWED} characters \MAY{} be used for the assignment of network resource URNs. 
+\texttt{EXTENSION} characters \SHOULDNOT{} be used to assign network resource URNs. 
+To allow for future extensions, parsers \SHOULD{} accept network resource URNs with \texttt{EXTENSION} characters.
+
+The \texttt{QUERY} and \texttt{FRAGMENT} parts \MUSTNOT{} be present in any \textbf{assigned} URN.  This specification reserves their use for future standardization.
+
+A network resource URN \MUSTNOT{} contain percentage-encoded characters (\texttt{\qq\%\qq{} HEXDIG HEXDIG}). It should also be noted that the following characters (which are either allowed by the URI or URN specification) \MUSTNOT{} be used in the \texttt{OPAQUE-PART} of a network resource URN: \texttt{\qq\%\qq}, \texttt{\qq/\qq}, \texttt{\qq{}?\qq}, \texttt{\qq\#\qq}, and \texttt{\qq{}\q{}\qq{}}. 
+
+%\texttt{DP} is a prefix (\texttt{\qq{}domain=\qq{}}) of the \texttt{DOMAIN} 
+%for backward compatibility with a previous syntax (see section~\ref{sec:perfsonar}). 
+%It is deprecated and \SHOULDNOT{} be used for the assignment of new network resource URNs.
+
+\texttt{DOMAIN} is a fully qualified domain name (FQDN) of the URN assigning organisation 
+in LDR format~\cite{rfc5890}. 
+Valid examples are \texttt{example.net} and \texttt{example.xn--jxalpdlp}. 
+%\texttt{\underscore{}http.\underscore{}tcp.example.net} is an invalid example.
+\texttt{DATE} is a date (either year, year+month or year+month+day).
+The combination of \texttt{DOMAIN} and \texttt{DATE} forms the \emph{organisation identifier}, \texttt{ORGID}.
+
+The full length of a \texttt{NURN} \MUSTNOT{} exceed 255 characters.
+
+\texttt{OPAQUE-PART} is opaque, and \MUSTNOT{} be parsed or interpreted by any 
+organisation except for the organisation that assigned the URN.
+
+\subsection{Encoding}
+
+A network resource URN uses a subset of 7-bit ASCII characters. 
+No percentage-encoded characters are allowed.
+
+\subsection{Rules for Lexical Equivalence}
+
+Network resource URNs are lexical equivalent if and only if they are byte-equivalent after case normalisation.
+
+Consider the following URNs:
+
+  1- \texttt{urn:ogf:network:example.net:2012:path-glif-0418} \\
+  2- \texttt{UrN:oGf:NeTwOrK:eXaMpLe.NeT:2012:pAtH-gLiF-0418} \\
+  3- \texttt{URN:OGF:NETWORK:EXAMPLE.NET:2012:PATH-GLIF-0418} \\
+
+URNs 1, 2, and 3 are lexically equivalent to each other. 
+
+\subsection{Assignment}
+
+The ORGID part must belong to the assignment organisation, as described in 
+section~\ref{sec:orgid-assignment}.
+
+Assigned network resource URNs \MUSTNOT{} contain a fragment or query part.
+
+The characters defined in \texttt{EXTENSION} \SHOULDNOT{} be used in assignment 
+of network resources URNs, and are reserved for future use. 
+Only characters in \texttt{ALPHA / DIGIT / ALLOWED} \SHOULD{} be used in the \texttt{OPAQUE-PART}.
+
+The length of the \texttt{URN} \MUSTNOT{} exceed 255 bytes.
+
+\subsection{Validation}
+
+A network resource URN that does not follow the specified syntax \SHOULD{} be rejected.
+
+No specific validation service or resolution service is defined in this document.
+
+A recipient should either use the credibility of the sender or some other mechanism to 
+judge the correctness of a given URN.
+
+\subsection{URN Rewriting}
+
+A recipient \MUSTNOT{} rewrite the URN if the rewriting results in a URN which is not 
+lexically equivalent to the received URN.
+In particular, percentage-decoding of the URN as described in section 6.2.2.2. 
+of~\cite{rfc3986} \MUSTNOT{} take place.
+
+If two lexical equivalent URNs with different capitalisation 
+have been received, the recipient \MAY{} pick one of the two 
+capitalisations, and use that in all communications, effectively rewriting 
+the URNs.
+
+With the above exception, URNs \SHOULD{} retain the same capitalisation in a message exchange.
+
+\section{Namespace Considerations}
+
+\subsection{Scope}
+
+The \texttt{urn:ogf:network} namespace is created to allow network 
+operators to uniquely define resources in their network and facilitate 
+unambiguous exchange of topology data with other network operators.
+
+The only requirement for naming network resources is administrative 
+ownership of the domain name used for \texttt{DOMAIN} on the \texttt{DATE} of the identifier assignment (see section~\ref{sec:orgid-assignment}). 
+No other central registration is required.
+
+The intended use of the \texttt{urn:ogf:network} namespace is to describe 
+logical network resources roughly on OSI layers 1 and OSI layer 2. 
+“Logical network resources” intends to mean elements in a functional topology 
+description, rather than physical resources. It is expected that a peering 
+network is only interested in the functional description of the network, 
+not of its (physical) implementation. Nevertheless, this document does 
+not forbid the description of other resources, such a physical network 
+resources for inventory management.
+
+\subsection{Resource Type Described}
+
+The exact type of resource described by a URN can not and \MUSTNOT{} be 
+determined from the syntax of the URN. This information \MUST{} be provided 
+by the context or through other means by the data exchange protocol.
+
+Network resources URNs \SHOULD{} identify \emph{manifestations} of a 
+network resources --- they should refer to a functional component in a 
+network that remains in place for a prolonged period of time. 
+New version of the resource \SHOULDNOT{} receive a new identifier.
+The change of attributes over time \SHOULD{} be dealt with by a protocol, 
+not by a change of the URN.
+
+\subsection{Identifier uniqueness considerations}
+
+URN identifiers \MUST{} be assigned uniquely -- they are assigned to 
+at most one resource, and \MUSTNOT{} be re-assigned.
+
+URN assigning organisations \MUST{} follow these requirements before 
+assigning URNs to network resources.
+
+A single network resource \MAY{} be identified by multiple URNs. 
+
+\section{Community Considerations}
+
+\subsection{Process of Organisation Identifier Assignment}
+\label{sec:orgid-assignment}
+
+An organisation that wishes to become an assigning organisation, must pick a 
+globally unique organisation identifier.
+
+An organisation identifier consists of two components, a fully qualified domain 
+name and a date, which must both be chosen by the assigning organisation.
+
+The assigning organisation \MUST{} be the administrative contact of the chosen 
+domain~\cite{rfc5890} for at least the duration of the date.
+
+It is \RECOMMENDED{} that the date is a year. Organisation that expect their 
+DNS registration to be more volatile \SHOULD{} pick a more fine grained date 
+specification (year+month or year+month+day).
+
+There is no need for the assigning organisation to register themselves at the 
+Open Grid Forum (the Namespace Organisation for the \texttt{urn:ogf:network} namespace).
+
+An organisation \MAY{} use multiple organisation identifiers. 
+For example, an organisation may pick a new organisation identifier in order 
+to create a new syntax for their \texttt{OPAQUE-PART} syntax.
+
+\subsection{Process of Network Resource Identifier Assignment}
+
+An assigning organisation assigns \texttt{OPAQUE-PART}s to 
+it network resources. The following requirements apply to the 
+\texttt{OPAQUE-PART}:
+\begin{itemize}
+    \item The \texttt{OPAQUE-PART} \MUST{} uniquely define at most one network resource;
+    \item The \texttt{OPAQUE-PART} \MUSTNOT{} be re-assigned;
+    \item The \texttt{OPAQUE-PART} \SHOULDNOT{} specify any properties of the network resource;
+    \item The \texttt{OPAQUE-PART} \MAY{} contain some structure according to some policy internal to the assigning organisation.
+    \item The \texttt{OPAQUE-PART} \MUST{} have a valid syntax (use only allowed characters, does not exceed maximum length).
+\end{itemize}
+
+The reason that the \texttt{OPAQUE-PART} \SHOULDNOT{} contain any properties 
+is because a URN \MUST{} be persistent: it \MUSTNOT{} change, even after the 
+properties of the described resource change.
+Naming these properties in the URN gives a false sense of meaning to the URN. 
+Peer may indadvertedly assume the identifier describes certain 
+properties, and act upon that, even if the properties have long changed.
+
+Good examples of URNs:
+\begin{quote}
+\texttt{urn:ogf:network:example.net:2012:9ad7ef-mcasip-139284} \\
+\texttt{urn:ogf:network:example.net:2012:link:2013:175} \\
+\texttt{urn:ogf:network:example.net:2012:port:eth:98a-3470}
+\end{quote}
+
+Not so good examples of URNs:
+\begin{quote}
+\texttt{urn:ogf:network:example.net:2012:link:24x7-protected:925-175} \\
+\texttt{urn:ogf:network:example.net:2012:sw3.rtr.example.net:port3-1:vlan118} \\
+\texttt{link:eth:US\underscore{}CHI-NL\underscore{}AMS-3937}
+\end{quote}
+
+A useful syntax for \texttt{OPAQUE-PART} is 
+\texttt{<type>:<year of creation>:<sequence number>}, 
+e.g. \texttt{port:2013:129}.
+
+While \texttt{port:2013:129} contains attributes (type and year of 
+creation), these may be acceptable as they will never change. 
+\texttt{link:24x7-protected:925-175} contains attributes about the type of link, 
+which may change in the future, and is therefore not a good URN. 
+\texttt{link:eth:US\underscore{}CHI-NL\underscore{}AMS-3937} is also not a good URN. 
+It contains the end points of a path, which are unlikely to change. 
+However, if the path is actually an Ethernet LAN, it is possible to add 
+another end-point, changing these properties. The network domains along 
+the path may use this identifier for monitoring and do not accept a 
+change in identifier. For that reason, it is best never to add attributes 
+to a URN identifier.
+
+\subsection{Identifier persistence considerations}
+\label{sec:persistence}
+
+\cite{rfc3406} requires that URNs \MUSTNOT{} be re-assigned. Ever.
+In practice, it is impossible to control what identifiers will be assigned 
+in a few decades from now.
+
+The requirement of the date in the organisation is sufficient guarantee.
+If a domain name is transferred, or an organisation decides to start over 
+with the assignment of local identifiers, it is easy enough to create a 
+new organisational identifier.
+
+Any organisation that wishes to assign names in the \texttt{urn:ogf:network} 
+namespace must do so after due diligence, and make sure that no 
+re-assignment occurs within the namespace(s) of the organisation and 
+that the assigned name does not contain attributes which can change 
+during the lifetime of the resource.
+
+\section{Examples}
+
+Syntactically valid network resource URNs which \MAY{} be assigned include:
+\begin{quote}
+\texttt{urn:ogf:network:example.net:2012:9ad7ef-mcasip-139284} \\
+\texttt{urn:ogf:network:example.net:2012:link:925-175} \\
+\texttt{urn:ogf:network:example.net:2012:port:2011-07-129} \\
+\texttt{urn:ogf:network:example.net:20120916:4A6173706572} \\
+\texttt{urn:ogf:network:example.net:2012:} \\
+\texttt{urn:ogf:network:example.net:2012:l=214.56:x=a5y}
+\end{quote}
+
+The following URNs contain characters in the extension range. While they \SHOULDNOT{} be assigned to network resources, a recipient \SHOULD{} accept these examples:
+\begin{quote}
+\texttt{urn:ogf:network:example.net:20120916:4A6173706572(AMS-GEN)} \\
+\texttt{urn:ogf:network:example.net:20120916:l=*:x=a5y} \\
+\end{quote}
+ 
+The following example is a syntactically valid URN, which contains a query 
+part and hence \MUSTNOT{} be assigned to a network resource, but \MAY{} 
+be used to query for a network resource, provided that subsequent standards 
+define the syntax of the query part:
+\begin{quote}
+\texttt{urn:ogf:network:example.net:2012:portgroup:ams3?vlan=18}
+\end{quote}
+
+The following URNs is \emph{invalid}, and \SHOULD{} be rejected by a recipient, 
+because a slash is not allowed in a URN (this is a limitation of all URNs, 
+not just this specification):
+\begin{quote}
+\texttt{urn:ogf:network:example.net:2012:port:sw3:eth4/1:vlan18}
+\end{quote}
+
+
+
+
+
+\section{Security Considerations}
+
+While this specification goes to great length to avoid accidental naming collisions,
+malicious software can easily craft a NURN to collide with an existing NURN. 
+Recipients of a NURN \MUST{} take such risks in consideration.
+
+Recipients of a NURN \MUSTNOT{} assume that a NURN was crafted by the domain
+specified in the \texttt{DOMAIN} part of the NURN, without a proper validation 
+check.
+
+The allowed syntax is so limited that it is not expected that similar-looking 
+malicious NURNs will be an issue. Users and applications should be able to detect the 
+differences between \texttt{urn:ogf:network:example.c0m:4638I27} 
+and \texttt{urn:ogf:network:example.com:4638127}.
+
+Software that takes input from a user \MUST{} ensure that the NURN is 
+syntactically correct before transmitting it. For example, it \SHOULD{} remove any 
+trailing spaces from the user input.
+
+Information in the \texttt{OPAQUE-PART} \MUSTNOT{} be interpreted to have 
+any meaning whatsoever. While the originating domain may have included 
+meaningful attributes in the NURN, these attributes may be out-of-date.
+
+\section{Prior Usage}
+
+URN identifiers in the \texttt{urn:ogf:network} namespace have been in use in 
+three communities, GLIF, PerfSONAR, and AutoGOLE, with mutually conflicting syntaxes.
+
+\subsection{GLIF Community} %
+\label{sec:glif}
+
+The Global Lambda Integrated Facility (GLIF) is a community of research and 
+education networks. Operators in this community agreed to use unique identifier 
+for \emph{lightpaths}, dedicated inter-domain circuits for researchers.
+
+These identifiers take the form:
+\begin{quote}
+  \texttt{GLOBAL-ID = \qq{}urn:ogf:network:\qq{} DOMAIN \qq{}:\qq{} LOCAL-PART } \\
+  \texttt{DOMAIN = 1*(ALPHA / DIGIT / \qq{}-\qq{} / \qq{}.\qq{})} ; Domain name \\
+  \texttt{LOCAL-PART = 1*(ALPHA / DIGIT / \qq{}-\qq{} / \qq{}.\qq{})}
+\end{quote}
+
+For example:
+\begin{quote}
+\texttt{urn:ogf:network:canarie.ca:kisti-uninett-glif-001} \\
+\texttt{urn:ogf:network:es.net:4005} \\
+\texttt{urn:ogf:network:dcn.internet2.edu:6811}
+\end{quote}
+
+The syntax is described in \cite{glif-identifiers}.
+
+Identifiers described by the GLIF community generally do not contain a date, although it is possible to construct a URN which is both a valid \texttt{NURN} and \texttt{GLOBAL-ID}.
+
+\subsection{PerfSONAR Community} %
+\label{sec:perfsonar}
+
+PerfSONAR is a distributed system for network performance monitoring on 
+paths crossing several networks. Much of the perfSONAR protocols are 
+standardised by the OGF in the Network Measurement (NM) and Network 
+Measurement and Control (NMC) working groups. 
+URNs in the \texttt{urn:ogf:network} namespace are used for topology description.
+
+These identifiers take the form:
+\begin{quote}
+  \texttt{PS-URN = \qq{}urn:ogf:network\qq{} 1DOMAIN-PART *1NODE-PART *1PORT-PART } \\
+  \hspace*{2cm}\texttt{*1LINK-PART *1PATH-PART *1SERVICE-PART *1WILDCARD } \\
+  \texttt{DOMAIN-PART  = \qq{}:domain=\qq{} 1*DOMAIN} \\
+  \texttt{NODE-PART    = \qq{}:node=\qq{} 1*PART-CHAR} \\
+  \texttt{PORT-PART    = \qq{}:port=\qq{} 1*PART-CHAR} \\
+  \texttt{LINK-PART    = \qq{}:link=\qq{} 1*PART-CHAR} \\
+  \texttt{PATH-PART    = \qq{}:path=\qq{} 1*PART-CHAR} \\
+  \texttt{SERVICE-PART = \qq{}:service=\qq{} 1*PART-CHAR} \\
+  \texttt{DOMAIN = 1*(ALPHA / DIGIT / \qq{}-\qq{} / \qq{}.\qq{})} ; Domain name \\
+  \texttt{PART-CHAR = (ALPHA / DIGIT / \qq{}-\qq{} / \qq{}.\qq{} / \qq{}/\qq{} / \qq{}\underscore\qq{})} \\
+  \texttt{WILDCARD = \qq{}:*\qq{}} ; Used for queries.
+\end{quote}
+
+For example:
+
+\begin{quote}
+\texttt{urn:ogf:network:domain=example.net} \\
+\texttt{urn:ogf:network:domain=example.net:node=packrat} \\
+\texttt{urn:ogf:network:domain=example.net:link=WASH\underscore{}to\underscore{}ATLA} \\
+\texttt{urn:ogf:network:domain=example.net:node=packrat:port=eth0} \\
+\texttt{urn:ogf:network:domain=example.net:port=Interface\underscore{}To\underscore{}Geant} \\
+\texttt{urn:ogf:network:domain=example.net:node=packrat:service=Optical\underscore{}Converter} \\
+\texttt{urn:ogf:network:domain=example.net:node=packrat:port=eth0:link=WASH\underscore{}to\underscore{}ATLA} \\
+\texttt{urn:ogf:network:domain=example.net:node=AMS:port=3/1:link=AMS-GEN} \\
+\texttt{urn:ogf:network:domain=example.net:path=IN2P3\underscore{}Circuit} \\
+\texttt{urn:ogf:network:domain=example.net:node=packrat:*}
+\end{quote}
+
+The syntax is described in \cite{ps-urn}.
+
+Identifiers described by the perfSONAR topology service are \textbf{not} valid network resource URNs.
+Note that the PS-URN syntax allows a slash in a URN, even though this is not allowed by \cite{rfc2141}.
+
+The meaning of the perfSONAR URNs is fundamentally different from network resource URNs:
+whereas perfSONAR URNs should specifically be parsed to find properties of the resource, 
+this is not allowed for network resource URNs.
+
+This document does not define a specific migration strategy for perfSONAR URNs.
+
+\subsection{AutoGOLE Community}
+
+Historically the AutoGOLE community used an invalid variant of the network resource URN. AutoGOLE is a proof-of-concept architecture where over ten organisations provide a persistent testbed to show their ability to perform automatic network provisioning across network domains. The resources used in that demo follow the following syntax.
+
+\begin{quote}
+  \texttt{AUTOGOLE-URN = \qq{}urn:ogf:network:\qq{} TYPE \qq{}:\qq{} NETWORK *1LOCAL-PART} \\
+  \texttt{TYPE = (\qq{}stp\qq{} / \qq{}nsa\qq{} / \qq{}nsnetwork\qq{})} \\
+  \texttt{NETWORK = 1*(ALPHA / DIGIT / \qq{}-\qq{} / \qq{}.\qq{})} ; Human readable string \\
+  \texttt{LOCAL-PART = \qq{}:\qq{} 1*(ALPHA / DIGIT / \qq{}-\qq{} / \qq{}.\qq{})}
+\end{quote}
+
+No formal publication has been made to describe this syntax.
+
+The historic AutoGOLE Identifiers are \textbf{not} valid network resource URNs. A drawback 
+of these AutoGOLE identifiers is that they use a custom name to identify networks, 
+and subsequently the organisational identifiers of the assigning organisations. 
+Deploying this syntax on a large scale would require the set up of a namespace registry.
+
+The AutoGOLE community is currently in the process of adopting the valid network resource URNs.
+
+\subsection{Backwards Compatibility}
+
+Applications that wish to be backward compatible with the GLIF-based, PerfSONAR-based and AutoGOLE-based URNS, are recommended to accept:
+
+\begin{quote}
+  \texttt{BC-NURN = \qq{}urn:ogf:network:\qq{} 1*(ALPHA / DIGIT / OTHER / \qq{}/\qq{})}
+\end{quote}
+
+Applications that decide to be liberal in the URN that they accept \MUST{} anticipate that other clients may do a more thorough syntax check and reject these URNs. In particular, the slash is formally not allowed in URNs.
+
+Applications that merely accept URNs according to the \texttt{BC-NURN} syntax can still be compatible with this specification. 
+However, as soon as a possibility exists that the application sends out URNs that do not comply to \texttt{NURN} syntax, 
+then the application is no longer compatible with the specification described in this document.
+
+\section{Contributors}
+
+\textbf{Freek Dijkstra} \\
+SURFsara \\
+Science Park 121 \\
+1098 XG\ \  Amsterdam \\
+The Netherlands \\
+Email: Freek.Dijkstra@surfsara.nl
+
+\textbf{Jeroen van der Ham} \\
+Faculty of Science, Informatics Institute, University of Amsterdam \\
+Science Park 904, 1098 XH  Amsterdam  \\
+The Netherlands \\
+Email: vdham@uva.nl \\
+\\
+
+\subsection*{Acknowledgments}
+
+The authors would like to thank the following people (in arbitrary order).
+
+Jason Zurawski for also initiating this work in the network markup language (NML) working group.
+
+Jens Jensen, Richard Hughes-Jones, Greg Newby, Joel Replogle, and Alan Sill for their help in establishing the \texttt{urn:ogf} namespace.
+
+Aaron Brown and others at Internet2 for defining the \texttt{urn:ogf:network} namespace specification in the perfSONAR community and the network measurement (NM) working group.
+
+Lars Fischer, Tom Lehman, Ronald van der Pol, and Thomas Tam for defining the \texttt{urn:ogf:network} namespace specification in the GLIF community.
+
+Björn Höhrmann and Kadir Karaca Koçer of the urn and urn-nid mailing lists at the IETF for useful advice on long term requirements for URNs.
+
+\phantomsection\addcontentsline{toc}{section}{Intellectual Property Statement}
+\section*{Intellectual Property Statement}
+
+The OGF takes no position regarding the validity or scope of any intellectual
+property or other rights that might be claimed to pertain to the
+implementation or use of the technology described in this document or the
+extent to which any license under such rights might or might not be
+available; neither does it represent that it has made any effort to identify
+any such rights. Copies of claims of rights made available for publication
+and any assurances of licenses to be made available, or the result of an
+attempt made to obtain a general license or permission for the use of such
+proprietary rights by implementers or users of this specification can be
+obtained from the OGF Secretariat.
+
+The OGF invites any interested party to bring to its attention any
+copyrights, patents or patent applications, or other proprietary rights which
+may cover technology that may be required to practice this recommendation.
+Please address the information to the OGF Executive Director.
+
+\phantomsection\addcontentsline{toc}{section}{Disclaimer}
+\section*{Disclaimer}
+
+This document and the information contained herein is provided on an ``As
+Is'' basis and the OGF disclaims all warranties, express or implied,
+including but not limited to any warranty that the use of the information
+herein will not infringe any rights or any implied warranties of
+merchantability or fitness for a particular purpose.
+
+\phantomsection\addcontentsline{toc}{section}{Full Copyright Notice}
+\section*{Full Copyright Notice}
+
+Copyright \copyright \ Open Grid Forum (\copyrightyears). Some Rights Reserved.
+
+This document and translations of it may be copied and furnished to
+others, and derivative works that comment on or otherwise explain it
+or assist in its implementation may be prepared, copied, published and
+distributed, in whole or in part, without restriction of any kind,
+provided that the above copyright notice and this paragraph are
+included as references to the derived portions on all such copies and
+derivative works. The published OGF document from which such works are
+derived, however, may not be modified in any way, such as by removing
+the copyright notice or references to the OGF or other organizations,
+except as needed for the purpose of developing new or updated OGF
+documents in conformance with the procedures defined in the OGF
+Document Process, or as required to translate it into languages other
+than English. OGF, with the approval of its board, may remove this
+restriction for inclusion of OGF document content for the purpose of
+producing standards in cooperation with other international standards
+bodies.
+
+The limited permissions granted above are perpetual and will not be
+revoked by the OGF or its successors or assignees.
+
+
+\phantomsection\addcontentsline{toc}{section}{References}
+% \section{References}
+% 
+% % Define heading of bibliography to be empty, since we already have a heading above the text.
+% \renewcommand{\refname}{}
+% \vspace*{-3em}
+\begin{thebibliography}{2}
+% \bibitem[draft-dijkstra-urn-ogf]{urn-ogf-delegation}
+% Freek Dijkstra and Richard Highes-Jones.
+% \newblock {A URN Namespace for the Open Grid Forum (OGF)}.
+% \newblock draft-dijkstra-urn-ogf (Informational), April 2011.
+% \newblock URL \url{http://tools.ietf.org/html/draft-dijkstra-urn-ogf}.
+
+% \bibitem[GFD-C.152]{gfd152}
+% Charlie Catlett, Cees de Laat, David Martin, Gregory B.\ Newby and Dane Skow.
+% \newblock {Open Grid Forum Document Process and Requirements}.
+% \newblock GFD-C.152 (Community Practice), 24 June 2009.
+% \newblock URL \url{http://www.ogf.org/documents/GFD.152.pdf}.
+
+\bibitem[GFD.191]{urn-ogf-procedure}
+Freek Dijkstra, Richard Hughes-Jones, Gregory B.\ Newby and Joel Replogle.
+\newblock {Procedure for Registration of Subnamespace Identifiers in the URN:OGF Hierarchy}.
+\newblock December 2011.
+\newblock URL \url{http://www.ogf.org/documents/GFD.191.pdf}.
+
+\bibitem[GLIF-ID]{glif-identifiers}
+Lars Fischer, Tom Lehman, Ronald van der Pol and Thomas Tam.
+\newblock {Global Lightpath Identifiers Naming Scheme}.
+\newblock Version 2.2. April 2009.
+\newblock URL \url{http://www.glif.is/working-groups/tech/global-identifiers-v2.2.pdf}.
+
+% \bibitem[NFKD]{nfkd}
+% Mark Davis and Ken Whistler.
+% \newblock {Unicode Standard Annex \#15; Unicode Normalization Forms}.
+% \newblock Version 6.0.0. September 2010.
+% \newblock URL \url{http://unicode.org/reports/tr15/}.
+
+\bibitem[perfSONAR-URN]{ps-urn}
+Aaron Brown (editor).
+\newblock {A short description of the URN scheme}.
+\newblock Retrieved February 2010.
+\newblock URL \url{http://code.google.com/p/perfsonar-ps/wiki/URNs}.
+
+\bibitem[RFC 2119]{rfc2119}
+Scott Bradner.
+\newblock {Key words for use in RFCs to Indicate Requirement Levels}.
+\newblock RFC 2119 (Best Current Practice), March 1997.
+\newblock URL \url{http://tools.ietf.org/html/rfc2119}.
+
+\bibitem[RFC 2141]{rfc2141}
+Ryan Moats.
+\newblock {URN Syntax}.
+\newblock RFC 2141 (Standards Track), May 1997.
+\newblock URL \url{http://tools.ietf.org/html/rfc2141}.
+
+% \bibitem[RFC2141bis]{rfc2141bis}
+% Alfred Hoenes (Editor).
+% \newblock {Uniform Resource Name (URN) Syntax}.
+% \newblock draft-ah-rfc2141bis-urn (Standards Track, if aproved), May 2010.
+% \newblock URL \url{http://tools.ietf.org/html/draft-ah-rfc2141bis-urn}.
+
+% \bibitem[RFC 3305]{rfc3305}
+% Michael Mealling and Ray Denenberg.
+% \newblock {Report from the Joint W3C/IETF URI Planning Interest Group: Uniform Resource Identifiers (URIs), URLs, and Uniform Resource Names (URNs): Clarifications and Recommendations}
+% \newblock RFC 3305 (Informational), November 2003.
+% \newblock URL \url{http://tools.ietf.org/html/rfc3650}.
+
+% \bibitem[RFC 3650]{rfc3650}
+% Sam Sun, Larry Lannom and Brian Boesch.
+% \newblock {Handle System Overview}
+% \newblock RFC 3650 (Informational), August 2002.
+% \newblock URL \url{http://tools.ietf.org/html/rfc3305}.
+
+\bibitem[RFC 3406]{rfc3406}
+Leslie L.\ Daigle, Dirk-Willem van Gulik, Renato Iannella and Patrik Fältström.
+\newblock {Uniform Resource Names (URN) Namespace Definition Mechanisms}.
+\newblock RFC 3406 (Best Current Practice), October 2002.
+\newblock URL \url{http://tools.ietf.org/html/rfc3406}.
+
+\bibitem[RFC 3986]{rfc3986}
+Tim Berners-Lee, Roy T.\ Fielding, and Larry Masinter.
+\newblock {Uniform Resource Identifier (URI): Generic Syntax}.
+\newblock RFC 3986 (Standards Track), January 2005.
+\newblock URL \url{http://tools.ietf.org/html/rfc3986}.
+
+% \bibitem[RFC 3912]{rfc3912}
+% Leslie Daigle.
+% \newblock {WHOIS Protocol Specification}.
+% \newblock RFC 3912 (Standards Track), September 2004.
+% \newblock URL \url{http://tools.ietf.org/html/rfc3912}.
+
+% \bibitem[RFC 3987]{rfc3987}
+% Martin Dürst and Michel Suignard.
+% \newblock {Internationalized Resource Identifiers (IRIs)}.
+% \newblock RFC 3987 (Standards Track), January 2005.
+% \newblock URL \url{http://tools.ietf.org/html/rfc3987}.
+
+\bibitem[RFC 5234]{rfc5234}
+Dave Crocker and Paul Overell.
+\newblock {Augmented BNF for Syntax Specifications: ABNF}.
+\newblock RFC 5234 (Standards Track), January 2008.
+\newblock URL \url{http://tools.ietf.org/html/rfc5234}.
+
+\bibitem[RFC 5890]{rfc5890}
+John C.\ Klensin.
+\newblock {Internationalized Domain Names in Applications (IDNA): Definitions and Document Framework}.
+\newblock RFC 5890 (Standards Track), August 2010.
+\newblock URL \url{http://tools.ietf.org/html/rfc5890}.
+
+% \bibitem[RFC 5891]{rfc5891}
+% John C.\ Klensin.
+% \newblock {Internationalized Domain Names in Applications (IDNA): Protocol}.
+% \newblock RFC 5891 (Standards Track), August 2010.
+% \newblock URL \url{http://tools.ietf.org/html/rfc5891}.
+
+% \bibitem[RFC 5892]{rfc5892}
+% Patrik Fältström (editor).
+% \newblock {The Unicode Code Points and Internationalized Domain Names for Applications (IDNA)}.
+% \newblock RFC 5892 (Standards Track), August 2010.
+% \newblock URL \url{http://tools.ietf.org/html/rfc5892}.
+
+\end{thebibliography}
+
+
+\end{document}

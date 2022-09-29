@@ -1,0 +1,4554 @@
+
+
+  2005-04-22 20:44       === GGF SAGA-RG - Strawman API ===       Page 1
+
+
+  
+  +---------------------------------------------------------------+
+  
+    Group:     GGF SAGA-RG
+    Category:  Informational Document
+    Title:     SAGA Strawman API
+    Authors:   Andre Merzky      <andre@merzky.net> 
+               Shantenu Jha      <s.jha@ucl.ac.uk>
+               Tom Goodale       <goodale@cct.lsu.edu>, 
+               John Shalf        <jshalf@ncsa.uiuc.edu>,
+               Christopher Smith <csmith@platform.com>
+    Date:      April 12 2005
+    $Revision: 1.3 $
+  
+  +---------------------------------------------------------------+
+  
+  
+  Intellectual Property Statement
+  ===============================
+  
+    The GGF takes no position regarding the validity or scope of
+    any intellectual property or other rights that might be claimed
+    to pertain to the implementation or use of the technology
+    described in this document or the extent to which any license
+    under such rights might or might not be available; neither does
+    it represent that it has made any effort to identify any such
+    rights. Copies of claims of rights made available for
+    publication and any assurances of licenses.  to be made
+    available, or the result of an attempt made to obtain a general
+    license or permission for the use of such proprietary rights by
+    implementers or users of this specification can be obtained
+    from the GGF Secretariat.  
+    
+    The GGF invites any interested party to bring to its attention
+    any copyrights, patents or patent applications, or other
+    proprietary rights which may cover technology that may be
+    required to practice this recommendation. Please address the
+    information to the GGF Executive Director.
+  
+  +---------------------------------------------------------------+
+    
+    
+  Copyright Notice
+  ================
+  
+    Copyright (C) Global Grid Forum (date). All Rights Reserved.
+    Distribution of this memo is unlimited.
+      
+    This document and translations of it may be copied and
+    furnished to others, and derivative works that comment on or
+    otherwise explain it or assist in its implementation may be
+    prepared, copied, published and distributed, in whole or in
+    part, without restriction of any kind, provided that the above
+    copyright notice and this paragraph are included on all such
+    copies and derivative works.  However, this document itself may
+    not be modified in any way, such as by removing the copyright
+
+
+
+
+
+
+
+  2005-04-22 20:44       === GGF SAGA-RG - Strawman API ===       Page 2
+
+
+    notice or references to the GGF or other organizations, except
+    as needed for the purpose of developing Grid Recommendations in
+    which case the procedures for copyrights defined in the GGF
+    Document process must be followed, or as required to translate
+    it into languages other than English.  
+      
+    The limited permissions granted above are perpetual and will
+    not be revoked by the GGF or its successors or assigns.  
+      
+    This document and the information contained herein is provided
+    on an "AS IS" basis and THE GLOBAL GRID FORUM DISCLAIMS ALL
+    WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+    ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT
+    INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
+    MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."
+  
+  +---------------------------------------------------------------+
+  
+  
+  +---------------------------------------------------------------+
+  
+           ###         
+            #    #    #   #####   #####     ####  
+            #    ##   #     #     #    #   #    # 
+            #    # #  #     #     #    #   #    #    #####
+            #    #  # #     #     #####    #    #   #####
+            #    #   ##     #     #   #    #    # 
+           ###   #    #     #     #    #    ####  
+  
+        #####   #    #   ####   #####  #   ####   #    # 
+        #    #  #    #  #    #    #    #  #    #  ##   # 
+        #    #  #    #  #         #    #  #    #  # #  # 
+        #    #  #    #  #         #    #  #    #  #  # # 
+        #    #  #    #  #    #    #    #  #    #  #   ## 
+        #####    ####    ####     #    #   ####   #    # 
+  
+  +---------------------------------------------------------------+
+  
+  Introduction
+  ============
+  
+    In response to its call for Use Cases, the SAGA-RG received
+    about 12-15 Use Cases in the latter half of 2004. A list of 
+    the Use Cases can be found on the Wiki and the mailing list
+    archives:
+    
+      http://wiki.cct.lsu.edu/saga/space/Use+Cases
+      http://www.gridforum.org/mail_archive/saga-rg/threads.html
+    
+    In addition several Use Cases were indirectly received: nine
+    were received from Frédéric Desprez (via Craig Lee), that 
+    were intended to be GridRPC-oriented but have relevance to 
+    SAGA.  These Use Cases had varying degrees of detail and 
+    completeness (available as file "gridrpc_use_cases.zip" at:
+    
+      http://wiki.cct.lsu.edu/saga/space/Use+Cases.
+
+
+
+
+
+
+
+  2005-04-22 20:44       === GGF SAGA-RG - Strawman API ===       Page 3
+
+
+    
+    
+    We also looked at the OGSA Use Cases (GFD.29 available at
+    http://www.ggf.org/documents/final.htm ). The OGSA Use Cases in
+    the document determined to be of most significance, were the
+    two scientific grid usecases; Severe Storm Modeling & National
+    Fusion Collaboratory. The OGSA usecase document describes each
+    usecase at a rather high level, and unfortunately does not
+    include API information.
+    
+    The analysis of the first batch of Use Cases submitted
+    specifically to SAGA was done primarily by Andre Merzky and
+    Gabrielle Allen. This is documented in the file "related.txt":
+    http://cs.cct.lsu.edu/saga/space/Related+Grid+APIs/related.txt
+    Clarifying remarks that help define the entries in the feature
+    matrix can be found in "comments_on_andre_gab_doc.txt".
+    
+    Based upon the Use Cases received and the discussions of the
+    design team to determine which areas to focus effort on, it was
+    felt that a two tier approach should be taken: the first tier
+    of areas would be for the "fundamental" areas (e.g., file
+    transfer, streams, job submission), loosely defined as those
+    which are required by most, if not all Use Cases, are well
+    understood and for which prototypes exist (at least partially).
+    The second tier of areas would be those which are to be found
+    in several Use Cases, are more complex and depend on the more
+    fundamental areas (e.g. computational steering).
+    
+    Based upon the above, areas that were placed in the first tier: 
+      - jobs
+      - files (and logical files) 
+      - streams 
+      - tasks
+      - errors
+    
+    There now exists a strawman_x.txt file for each of the above
+    areas in the SAGA CVS.
+    
+    Other considerations: There are several groups in GGF that have
+    worked on high level interfaces and APIs; relevant APIs and
+    frameworks that have helped guide the scope and design of the
+    SAGA API can be found at:
+    http://wiki.cct.lsu.edu/saga/space/Related+Grid+APIs.  In
+    addition to these groups within the GGF, there are several
+    projects and groups that have worked on APIs and frameworks
+    that are similar in spirit to a SAGA API. These in turn have
+    helped motivate a SAGA API.  See the latter half of
+    http://wiki.cct.lsu.edu/saga/space/Related+Grid+APIs for a
+    partial listing.
+   
+   
+    Style and Design Issues: It was decided to go with an Object
+    Oriented (OO) approach.  OO is nice as it maps to different
+    styles.  Mapping from OO to non-OO is possible but not easy the
+    other way (and as long as it can map to Fortran and C all
+    should be OK). And although we will use a OO approach, we will
+
+
+
+
+
+
+
+  2005-04-22 20:44       === GGF SAGA-RG - Strawman API ===       Page 4
+
+
+    avoid complex OO features like mulitple inheritance and
+    polymorphism.
+    
+    It was agreed to use SIDL (Scientific Interface Definition
+    Language; http://www.llnl.gov/CASC/components/babel.html) to
+    specify the API. Of particular concern to SAGA, is that given
+    the language-neutral syntax of SIDL, it facilitates creating
+    specific language-bindings based upon the SIDL, but tailored to
+    the features available in specific languages.
+  
+    Although synchronous calls would be desirable, it isn't always
+    possible. Thus asynchronous calls need to be supported.  There
+    were discussions on call back versus polling mechanism.  It was
+    agreed that non-blocking versions would be used; blocking
+    versions of the calls can be derived from non-blocking
+    versions.
+    
+    It was decided not to have explicit security at the API level
+    calls, but to push security issues into a separate security
+    layer (which would be a tier II or later area).
+    
+  +---------------------------------------------------------------+
+  
+  
+  
+  +---------------------------------------------------------------+
+          
+                   #     #
+                   ##    #    ##    #    #  ######
+                   # #   #   #  #   ##  ##  #
+                   #  #  #  #    #  # ## #  #####
+                   #   # #  ######  #    #  #
+                   #    ##  #    #  #    #  #
+                   #     #  #    #  #    #  ######
+          
+           #####
+          #     #  #####     ##     ####   ######   ####
+          #        #    #   #  #   #    #  #       #
+           #####   #    #  #    #  #       #####    ####
+                #  #####   ######  #       #            #
+          #     #  #       #    #  #    #  #       #    #
+           #####   #       #    #   ####   ######   ####
+  
+  +---------------------------------------------------------------+
+  
+  
+  Summary:
+  ========
+  
+    This file describes interfaces which operate on arbitrary
+    hierarchical namespaces, such as those used in physical,
+    virtual and logical file systems, and information systems.  
+  
+    Several SAGA Subsystems share the notion of namespaces and
+    operations on these namespaces.  In order to increase
+    consistency in the API, those subsystems should share the same
+
+
+
+
+
+
+
+  2005-04-22 20:44       === GGF SAGA-RG - Strawman API ===       Page 5
+
+
+    API paradigm.
+    
+    The API is inspired by the POSIX standard, which defines tools
+    and calls to handle the name space of physical files
+    (directories).  The methods listed for the interfaces have
+    POSIX like syntax and semantics. 
+    
+    While POSIX has an iterative interface to directory listing
+    (i.e.., opendir, telldir, seekdir, readdir), the interface
+    included here deviates significantly from the POSIX version;
+    this interface has identical semantics, but has fewer calls,
+    with a different syntax, but identical semantics.  
+    
+    Also, this version of the interface definition only includes
+    methods with simple and clear arguments and return types;  for
+    example, no patterns are allowed for file names, no argumnents
+    and options are listed for 'ls', only a view recursive methods
+    are defined.  Those will be added in a later version of the
+    interface.
+  
+    Please note that 'stat' like API calls are _not_ covered here -
+    they are rather meaningless on a namespace per se, but belong
+    to the specific implementations, e.g.  physical files, which
+    implement the namespace interfaces.
+    
+  
+  +---------------------------------------------------------------+
+  
+  
+  Use Cases:
+  ==========
+  
+    The semantic scope of the presented interface covers: Access to
+    physical files, access to logical files, navigation through
+    (physical and logical) namespaces.  All of these have been
+    elements of various SAGA use cases:
+    
+      UC-1 :
+  
+  
+      UC-2 :
+  
+  
+      UC-3 :
+  
+  
+      UC-4 :
+  
+  
+      UC-5 :
+  
+  
+      UC-6 :
+  
+  
+      UC-8 :
+
+
+
+
+
+
+
+  2005-04-22 20:44       === GGF SAGA-RG - Strawman API ===       Page 6
+
+
+  
+  
+      UC-9 :
+  
+  
+      UC-10:
+  
+  
+  
+  
+  +---------------------------------------------------------------+
+  
+  
+  API Summary:
+  ============
+  
+  package SAGA version 0.1 {
+  
+    package NameSpace { 
+  
+      enum copyFlags {
+        NoOverwrite     = 0, 
+        Overwrite       = 1, 
+        NoRecursive     = 2, 
+        Recursive       = 3
+      };
+  
+      enum linkFlags {
+        NoOverwrite     = 0, 
+        Overwrite       = 1
+      };
+  
+      enum moveFlags {
+        NoOverwrite     = 0, 
+        Overwrite       = 1
+      };
+  
+      enum removeFlags {
+        NoRecursive     = 0, 
+        Recursive       = 1
+      };
+  
+      enum makeDirFlags {
+        NoCreateParents = 0,
+        CreateParents   = 1
+      };
+  
+      enum openDirFlags {
+        /* Placeholder */
+      };
+  
+      enum openFlags {
+        /* Placeholder */
+      };
+  
+      interface NSDir {
+
+
+
+
+
+
+
+  2005-04-22 20:44       === GGF SAGA-RG - Strawman API ===       Page 7
+
+
+  
+        /* basic propetries */
+        void getURL      (out string               name   );
+        void getName     (out string               name   );
+  
+        /* navigation/query methods */
+        void changeDir   (in  string               dir    );   
+        void list        (in string dir, 
+                          out array<string,1>      names  );
+        void readLink    (in  string               name,
+                          out string               link   );
+        void exists      (in  string               name,
+                          out boolean              exists );
+        void isDir       (in  string               name,
+                          out boolean              isDir  );
+        void isFile      (in  string               name,
+                          out boolean              isFile );
+        void isLink      (in  string               name,
+                          out boolean              isLink );
+  
+        /* Deal with entries by entry number */
+        void getNumEntries (out int                num    );
+        void getEntry      (in int entry,         
+                            out string             name   );
+                                                   
+        /* file management methods */              
+        void copy       (in  string                source,
+                         in  string                target,
+                         in  array<copyFlags,1>    flags  );  
+        void link       (in  string                source, 
+                         in  string                target, 
+                         in  array<linkFlags,1>    flags  );  
+        void move       (in  string                source, 
+                         in  string                target, 
+                         in  array<moveFlags,1>    flags  );  
+        void remove     (in  string                target,
+                         in  array<removeFlags,1>  flags  );  
+        void makeDir    (in  string                target,
+                         in  array<makeDirFlags,1> flags  ); 
+      }
+    }
+  }
+  
+  
+  +---------------------------------------------------------------+
+  
+  
+  API Detail:
+  ===========
+  
+     interface NSDir
+     
+       NSDir defines two sets of methods: one set to navigate in
+       the namespace hierarchy (e.g. cd, ls, find, ...), and one
+       set to handle entities in the namespace (e.g. copy, move,
+       open, ...)
+
+
+
+
+
+
+
+  2005-04-22 20:44       === GGF SAGA-RG - Strawman API ===       Page 8
+
+
+       
+       We do not have NSEntry 'open' and 'openDir' methods ---
+       these are deferred to an implementing class to allow
+       type-safe object creation.
+       /* FIXME: the open/openDir interface 'look alike' should be
+        * given here? */
+  
+       Instances of classes implementing this interface are only
+       created by a class constructor or an openDir method on such
+       a class.
+       
+       Closing is implicit on object destruction (the object is
+       always open).
+  
+       Methods for navigation in the namespace hierarchy:
+        - changeDir
+          Purpose: change the working directory         
+          Format:  void changeDir     (in string dir);
+          Inputs:  dir:                directory to change to
+          Outputs: none
+          Throws:  BadParameter:       directory name is invalid
+                   NoSuchFile:         directory does not exist
+          Notes:  - similar to the 'cd' command in Unix shells, 
+                    as defined by POSIX
+  
+  
+        - list
+          Purpose: list entries in this directory
+          Format:  void list          (in string           dir, 
+                                       out array<string,1> names);
+          Inputs:  dir:                directory to list
+          Outputs: names:              array of names existing in
+                                       the directory
+          Throws:  BadParameter:       directory name is invalid
+                   NoSuchFile:         directory does not exist
+          Notes:   - similar to 'ls' in Unix shells, as defined
+                     by POSIX
+          
+        - readLink       
+          Purpose: returns the name of the link target 
+          Format:  void readLink      (in  string name,
+                                       out string link);
+          Inputs:  name:               name to be resolved
+          Outputs: link:               resolved name
+          Throws:  BadParameter:       name invalid or not a link
+                   NoSuchFile:         name does not exist
+          Notes:   - link may be relative or absolute depending on 
+                     underlying implementation.  However, the 
+                     returned name MUST be sufficient to access 
+                     the target entry
+                   - resolves one link level only
+                   - inspired by 'ls -L' command in Unix shells, as 
+                     defined by POSIX
+  
+        - exists
+          Purpose: returns true if entry exists, false otherwise
+
+
+
+
+
+
+
+  2005-04-22 20:44       === GGF SAGA-RG - Strawman API ===       Page 9
+
+
+          Format:  void exists        (in  string  name,
+                                       out boolean exists );
+          Inputs:  name:               name to be tested for 
+                                       existence
+          Outputs: exists:             boolean indicating existence 
+                                       of name
+          Throws:  BadParameter:       name is invalid
+          Notes:   - as in 'test -e' in Unix shells, as defined 
+                     by POSIX
+  
+        - isDir          
+          Purpose: tests name for beeing a directory
+          Format: void isDir          (in  string  name,
+                                       out boolean isDir);
+          Inputs:  name:               name to be tested
+          Outputs: isDir:              boolean indicating if name 
+                                       is a directory
+          Throws:  BadParameter:       name is invalid
+                   NoSuchFile:         directory does not exist
+          Notes:   - returns true if entry is a directory, false 
+                     otherwise
+                   - as in 'test -d' in Unix shells, as defined 
+                     by POSIX
+  
+        - isFile         
+          Purpose: tests name for beeing a file
+          Format:  void isFile        (in  string  name,
+                                       out boolean isFile);
+          Inputs:  name:               name to be tested
+          Outputs: isFile:             boolean indicating if name 
+                                       is a file
+          Throws:  BadParameter:       name is invalid
+                   NoSuchFile:         directory does not exist
+          Notes:   - returns true if the entry is a file, false 
+                     otherwise
+                   - as in 'test -f' in Unix shells, as defined 
+                     by POSIX
+  
+        - isLink         
+          Purpose: tests name for beeing a link
+          Format:  void isLink        (in  string  name,
+                                       out boolean isLink);
+          Inputs:  name:               name to be tested
+          Outputs: isLink:             boolean indicating if name 
+                                       is a link
+          Throws:  BadParameter:       name is invalid
+                   NoSuchFile:         directory does not exist
+          Notes:   - returns true if the entry is a link, false 
+                     otherwise
+                   - as in 'test -l' Unix shells, as defined 
+                     by POSIX
+  
+        - getNumEntries    
+          Purpose: gives the number of entries in the directory
+          Format:  void getNumEntries (out int   num);
+          Inputs:  none
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 10
+
+
+          Outputs: num:                number of entries in the
+                                       directory
+          Throws:  nothing
+          Notes:   - can be used for iteration through large 
+                     directories (see getEntry)
+                   - at the time of using the result of this call, 
+                     the actual number of entries may already have 
+                     changed (no locking is implied)
+  
+        - getEntry
+          Purpose: gives the name of an entry in the directory 
+                   based upon the enumeration defined by 
+                   getNumEntries
+          Format:  void getEntry      (in  int    entry,         
+                                       out string name);
+          Inputs:  entry:              index of entry to get
+          Outputs: name:               name of entry at index
+          Notes:   - '0' is the first entry
+                   - there is no sort order implied by the 
+                     enumeration, however an underlying 
+                     implementation MAY choose to sort the entries
+                   - subsequent calls to getEntry and/or 
+                     getNumEntries may return inconsistent data 
+                     if there is no locking or state tracking in 
+                     the underlying implementation
+                   - can be used for iteration through large 
+                   directories
+  
+  
+        Methods for operation on namespace entities:
+        - copy
+          Purpose: copy the entry to another part of the namespace
+          Format:  void copy          (in  string         source,
+                                       in  string         target,
+                                       in  array<copyFlags,1> 
+                                                          flags);
+          Inputs:  source:             name to copy
+                   target:             name to copy to
+                   flags:              flags defining the operation 
+                                       modus
+          Outputs: none               
+          Throws:  BadParameter:       name(s) and/or flags are 
+                                       invalid
+                   NoSuchFile:         name(s) do(es) not exist
+                   NoSuccess:          flags inhibited successful
+                                       operation
+          Notes:   - if the target is a directory the source entry 
+                     is copied into the directory
+                   - it is an error if the source is a directory 
+                     and the 'Recursive' flag is not set.  
+                   - if the target already exists, it will be 
+                     overwritten if the 'Overwrite' flag is set, 
+                     otherwise it is an error
+                   - default flags set is 
+                     {NoOverwrite, NoRecursive}
+                   - Overwrite and NoOverwrite cannot be specified 
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 11
+
+
+                     at the same time
+                   - Recursive and NoRecursive cannot be specified 
+                     at the same time
+                   - similar to the 'cp' command in Unix shells, 
+                     as defined by POSIX
+           
+        - link
+          Purpose: create a symbolic link from the source entry to 
+                   the target entry so that any reference to the 
+                   target refers to the source entry
+          Format:  void link          (in  string          source, 
+                                       in  string          target, 
+                                       in  array<linkFlags,1> 
+                                                           flags);  
+          Inputs:  source:             name to link
+                   target:             name to link to
+                   flags:              flags defining the operation
+                                       modus
+          Outputs: none
+          Throws:  BadParameter:       name(s) and/or flags are 
+                                       invalid
+                   NoSuchFile:         name(s) do(es) not exist
+                   NoSuccess:          flags inhibited successful
+                                       operation
+          Notes:   - if the target is a directory the source entry 
+                     is linked into the directory.        
+                   - if the target already exists, it will be 
+                     overwritten if the 'Overwrite' flag is set, 
+                     otherwise it is an error
+                   - default flag set is {NoOverwrite}
+                   - Overwrite and NoOverwrite cannot be specified 
+                     at the same time
+                   - similar to the 'ln -s' command in Unix shells, 
+                     as defined by POSIX
+          
+        - move
+          Purpose: rename source to target, or move source to 
+                   target if target is an directory.
+          Format:  void move          (in  string         source, 
+                                       in  string         target, 
+                                       in  array<moveFlags,1> 
+                                                          flags);  
+          Inputs:  source:             name to move
+                   target:             name to move to
+                   flags:              flags defining the operation 
+                                       modus
+          Outputs: none
+          Throws:  BadParameter:       name(s) and/or flags are 
+                                       invalid
+                   NoSuchFile:         name(s) do(es) not exist
+                   NoSuccess:          flags inhibited successful
+                                       operation
+          Notes:   - if the target already exists, it will be 
+                     overwritten if the 'Overwrite' flag is set, 
+                     otherwise it is an error
+                   - default flag set is {NoOverwrite}
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 12
+
+
+                   - Overwrite and NoOverwrite cannot be specified 
+                     at the same time
+                   - similar to the 'mv' command in Unix shells, as 
+                     defined by POSIX
+          
+        - remove
+          Purpose: removes the entry
+          Format:  void remove        (in  string           target,
+                                       in  array<removeFlags,1> 
+                                                            flags);
+          Inputs:  target:             entry to be removed
+          Outputs: none
+          Throws:  BadParameter:       name(s) and/or flags are 
+                                       invalid
+                   NoSuccess:          flags inhibited successful
+                                       operation
+          Notes:   - if the entry is a directory the 'Recursive' 
+                     flag MUST be set or an exception will be 
+                     raised
+                   - default flag set is {NoRecursive}
+                   - Recursive and NoRecursive cannot be specified 
+                     at the same time
+                   - similar to the 'rm' command in unix shells, 
+                     as defined by POSIX
+  
+        - makeDir
+          Purpose: creates a new directory
+          Format:  void makeDir       (in  string         target,
+                                       in  array<makeDirFlags,1> 
+                                                          flags); 
+          Inputs:  target:             directory to create
+          Ouputs:  none
+          Throws:  BadParameter:       name(s) and/or flags are 
+                                       invalid
+                   AlreadyExists:      target already exists
+                   NoSuccess:          flags inhibited successful
+                                       operation
+          Notes:   - if the parent directory or directories do not 
+                     exist, 'CreateParents' flag MUST be set or an 
+                     exception will be raised.  If set, the parrent 
+                     directories are created as well
+                   - an exception MUST be raised if the directory 
+                     already exists
+                   - default flag set is {NoCreateParents}
+                   - CreateParents and NoCreateParents cannot be 
+                     specified at the same time
+                   - similar to the 'mkdir' (2) call, as defined by 
+                     POSIX
+          
+  
+      Any class xyzDir implementing this interface SHOULD also 
+      implement, if appropriate: 
+  
+        - openDir
+          Purpose: creates a new xyzDir instance
+          Format:  openDir            (in  string           name, 
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 13
+
+
+                                       in  array<xyzOpenDirFlags,1> 
+                                                            flags, 
+                                       out xyzDir           dir);
+          Inputs:  name:               directory to open
+                   flags:              flags definig the operation 
+                                       modus
+          Outputs: dir:                opened directory instance
+          Throws:  BadParameter:       name and/or flags are 
+                                       invalid
+                   NoSuchFile:         name does not exist
+                   NoSuccess:          flags inhibited successful
+                                       operation
+          Notes:   - flags are specific to the xyz class
+                   - similar to the 'opendir' (3) call in Unix, as 
+                     defined by POSIX
+        
+  
+        - open
+          Purpose: creates a new XxxFile instance
+          Format:  open               (in  string           name,
+                                       in  array<xyzOpenFlags,1> 
+                                                            flags,
+                                       out xyzFile          file);
+          Inputs:  name:               file
+                   flags:              flags definig the operation 
+                                       modus
+          Outputs: file:               opened file instance
+          Throws:  BadParameter:       name and/or flags are 
+                                       invalid
+                   NoSuchFile:         name does not exist
+                   NoSuccess:          flags inhibited successful
+                                       operation
+          Notes:   - similar to the 'open' (2) call in Unix, as 
+                     defined by POSIX
+  
+      Due to the specific flags, and potentially required
+      additional parameters, these calls are not specified in this
+      interface in more detail. 
+          
+  
+  +---------------------------------------------------------------+
+  
+  
+  Examples: 
+  =========
+  
+    The interfaces are not implemented directly - for more
+    examples, check out the physical and logical file
+    specifications.
+  
+    Example 1: provide recursive directory listing for a given 
+               directory
+  
+    Note:    - check for '.' and '..' resursion are left as an 
+               exercise to the reader...
+             - string operations and printf statements are 
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 14
+
+
+               obviously simplified...
+  
+     --------------------------------------------------------------
+     String indent (int indent)
+     {
+       String   s = "  ";
+       for (int i = 0; i < indent; i++, s += "  ") ;
+       return  (s);
+     }
+  
+     void list_dir (Context ctx, const String url, int indent = 0)
+     {
+       try {
+         // create directory and iterate over entries
+         NSDir dir  = new NSDir (url, ctx);
+  
+         printf ("\n%s ---> %s\n", indent (indent), url);
+         
+         for ( int i = 0; i < dir.NumEntries (); i++ )
+         {
+           char   type = '?';
+           String info = "";
+  
+           // get name of next entry
+           String name = dir.getEntry (i);
+  
+           // get type and other infos
+           if ( dir.isLink (name) ) 
+           {
+             if ( dir.exists (dir.readLink (name)) ){info="---> ";}
+             else                                   {info="-|-> ";} 
+  
+             info += dir.readLink (name); 
+             type  = 'l';
+           } 
+           else if ( dir.isFile (name) ) { type = 'f';            }
+           else if ( dir.isDir  (name) ) { type = 'd'; info = "/";}
+  
+           printf ("%s > %3d - %s - %s%s\n", indent (indent), i+1, 
+                                             type, name, info);
+  
+           // recursion on directories
+           if ( dir.isDir (name) )
+           {
+             list_dir (ctx, name, indent++);
+           }
+         }
+  
+         printf ("\n%s <--- %s\n", indent (indent), url);
+       }
+  
+       // catch all errors - see elsewhere for better examples
+       // of error handling in SAGA
+       catch (...) {
+         printf ("Oops!\n");
+       }
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 15
+
+
+  
+       return;
+     }
+     -------------------------------------------------------------
+  
+  
+  +---------------------------------------------------------------+
+  
+  
+  Notes, Issues and Known Limitations:
+  ====================================
+  
+    A useful extension to the presented interface is a find like
+    method.  However, the flags and options to find (1), are
+    manyfold, and it currently it is unclear how a good mapping to
+    an _simple_ SAGA API call might look like.
+  
+    An Directory can be seen as a container of DirectoryEntries,
+    which can be Files, Links, Directories etc.  That notion is not
+    reflected in this version of the interface, since no call is
+    taking such entities as arguemt, or is returning such entities.
+    However, a later version of this interface may introduce  this
+    distinction if necessary - it needs then to be reflected in all
+    classes implementing this interface.
+  
+    In the current version, it is not possible to (e.g.) copy Files
+    w/o creating a directory first.  That seems in particular
+    cumbersome if the source and target namespace of the file copy
+    are different.  However, we think that the presented approach
+    is more coherent than the alternatives.
+    
+    open and opendir calls are not parts of the specification of
+    this interface.  That makes this spec somewhat incomplete.
+    However, we feel that the signatures and in particular the
+    various flags and modes for opening files and directories are
+    best specified in the implementing classes, to avoid confusion,
+    and to allow easier extensions.  That may change in future
+    versions of the specification.
+  
+    Similarily, 'stat' like calls seem (semantically) to specific
+    to the specific namespace incarnation to get included in this
+    rather generic specification.  
+  
+    The notion of security, permissions, ACLs, ownership etc. is
+    missing from this version of the spec, but is crucial to it's
+    usability ans acception.  It will get added as soon as there is
+    an agreement on security in the SAGA API in general.
+  
+    It was commented, that 'isFile' is actually misleading, since
+    we do not have the notion of a File at this stage.  It should
+    be actually isNSEntity, and we should have an NSEntity.
+    However, which includes a new Object, seems only justified if
+    there is more to be gained from it.
+  
+    A find like method should be added, which (recursively)
+    searches for pattern (wildcard like?) matching name space
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 16
+
+
+    entries.
+  
+  
+  +-------------------------------------------------------------+
+  
+            #######
+            #           #    #       ######   ####
+            #           #    #       #       #
+            #####       #    #       #####    ####
+            #           #    #       #            #
+            #           #    #       #       #    #
+            #           #    ######  ######   ####
+  
+  +-------------------------------------------------------------+
+  
+  
+  Summary:
+  ========
+  
+     The ability to access files regardless of their location is
+     central to many of the SAGA use cases (see below).  This
+     interface addresses the most common operations detailed in the
+     use cases.
+  
+     The interfaces are syntacically and semantically POSIX
+     oriented, but also borrow some ideas from the GridFTP
+     specification, which is nowadays widely used for remote data
+     access.
+  
+     Please note that the interactions with files as opaque
+     entities (as entries in file name spaces) are covered by the
+     NameSpace package.  The interfaces presented here supplement
+     the namespace package with operations for the reading and
+     writing of files.
+     
+  
+  +-------------------------------------------------------------+
+  
+  
+  Use Cases:
+  ==========
+  
+     The semantic scope of the presented API covers access to data
+     in local and/or remote physical files, and has been an element
+     in the following SAGA use cases:
+  
+  
+  +-------------------------------------------------------------+
+  
+  
+  API Summary:
+  ============
+  
+  package SAGA version 0.1 {
+  
+    import SAGA.NameSpace;
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 17
+
+
+  
+    package File {
+   
+      enum openDirFlags {
+        /* Placeholder */
+      };
+  
+      enum openFlags {
+        Create     = 0,
+        NoCreate   = 1,
+        Excl       = 2,
+        NoExcl     = 3,
+        Truncate   = 4,
+        NoTruncate = 5,
+        Append     = 6,
+        NoAppend   = 7,
+        Lock       = 8,
+        NoLock     = 9
+      };
+  
+      enum SeekMode {
+        Start      = 0, 
+        End        = 1,
+        Current    = 2
+      };
+  
+  
+      class Directory implements-all NSDir {
+  
+        void getSize     (in  string                name,
+                          out long                  size  );
+  
+        /* open methods */
+        void openDir     (in  string                name,
+                          in  array<openDirFlags,1> flags,
+                          out Directory             dir   );
+  
+        void open        (in  string                name,
+                          in  array<openFlags,1>    flags,
+                          out File                  file  );
+      }
+  
+  
+      class File  {
+  
+        void read        (in  long            len_in,
+                          out string          buffer, 
+                          out long            len_out  );
+        void write       (in  long            len_in,
+                          in  string          buffer,
+                          out long            len_out  );
+        void seek        (in  long            offset, 
+                          in  SeekMode        whence,
+                          out long            position );  
+      }
+    }
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 18
+
+
+  } 
+  
+  
+  +-------------------------------------------------------------+
+  
+  
+  API Detail:
+  ===========
+  
+     The current description covers the ubiquitous
+     open/close/read/write/seek pattern, which is present in the
+     vast majority of remote file access providers.  
+  
+      class Directory
+  
+        This class represents a directory containing physical
+        files.
+  
+        
+        Methods giving information about files:
+        ---------------------------------------
+        
+        - getSize
+          Purpose: returns the number of bytes in the file
+          Format:  void getSize       (in  string  name,
+                                       out long    size);
+          Inputs:  name:               name of file to inspect
+          Outputs: size:               number of bytes in the file 
+          Throws:  BadParameter:       invalid file name
+                   NoSuchFile:         file does not exist
+          Notes:   - as 'st_size' field in the Unix call 'stat', 
+                     as defined by POSIX
+  
+        
+        Factory like methods for creating objects:
+        ------------------------------------------
+        (see note in SAGA.NameSpace specification):
+        
+        - openDir
+          Purpose: creates a directory object
+          Format:  void openDir       (in  string           name,
+                                       in  array<openDirFlags,1> 
+                                                            flags,
+                                       out Directory        dir)
+          Inputs:  name:               name of directory to open
+                   flags:              flags definition operation 
+                                       modus
+          Outputs: dir:                opened directory instance
+          Throws:  BadParameter:       name or flags are invalid
+                   NoSuchFile:         directory does not exist
+                   NoSuccess:          flags inhibited successful
+                                       operation
+          Notes:   - creates a new Directory instance
+                   - currently there are no supported flags (FIXME)
+                   - default flag set is empty (NULL)
+                   - similar to opendir (3), as defined by POSIX
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 19
+
+
+  
+        
+        - open
+          Purpose: creates a new File instance
+          Format:  void open          (in  string           name,
+                                       in  array<openFlags,1>    
+                                                            flags,
+                                       out File             file);
+          Inputs:  name:               file to be opened
+                   flags:              flags definition operation 
+                                       modus
+          Outputs: file:               opened file instance
+          Throws:  BadParameter:       name or flags are invalid
+                   NoSuchFile:         file does not exist
+                   NoSuccess:          flags inhibited successful
+                                       operation
+          Notes:   - if the file does not exist, it is created if 
+                     the 'Create' flag is given, otherwise it is 
+                     an error
+                   - it is an error if the file exists and both the
+                     'Create' and the 'Excl' flag are given.  
+                     Otherwise the 'Excl' flag is ignored
+                   - the file is truncated to length 0 on the open
+                     operation if the 'Trunc' flag is given
+                   - the file is in opened in append mode if the
+                     'Append' flag is given (a seek (0, End) is
+                     performed after the open)
+                   - the file is locked on open if the 'Lock' flag
+                     is given.  If the file is already in a locked
+                     state, the open will fail and a descriptive 
+                     error will be issued.  If a file is opened in 
+                     locked mode, any other open on that file MUST
+                     fail, with no respect to the given flags.
+                     Note that a file can be opened in normal mode,
+                     and then in locked mode, w/o an error getting
+                     raised.  The lock will get removed on 
+                     destruction of the file object (that is on
+                     close).  If an implementation does not
+                     support locking, an descriptive error MUST
+                     get issued if the 'Lock' flag is given.
+                   - default flag set is {NoCreate, NoExcl, 
+                     NoTrunc, NoAppend, NoLock}
+                   - similar to the open (2) call in Unix, as 
+                     specified by POSIX
+  
+  
+      class File:
+  
+        This class represents an open file descriptor for
+        read/write operations on a physical file.  It concept is
+        similar to the file descriptor returned by the open (2)
+        call in Unix.
+      
+        - read
+          Purpose: reads data from an open file
+          Format:  void read          (in  long   len_in,
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 20
+
+
+                                       in  string buffer, 
+                                       out long   len_out);
+          Inputs:  len_in:             length of data section to 
+                                       be read
+                   buffer:             buffer to read into
+          Outputs: len_out:            length of data read into 
+                                       buffer
+          Throws:  EndOfFile:          found end of file
+                   BadParameter:       len_in or buffer invalid
+                   ReadError:          read failed
+          Notes:   - reads up to len_in bytes from the file into 
+                     the buffer.     
+                   - the actually number of bytes read into buffer 
+                     is returned in len_out.  It is not an error 
+                     to read less bytes than requested, or in fact 
+                     zero bytes, eg. at the end of the file.
+                   - the file pointer is positioned at the end of 
+                     the byte area read during this call. 
+                   - the given buffer must be large enough to 
+                     store up to len_in bytes
+                   - similar to the read (2) call in Unix, as 
+                     specified by POSIX
+      
+        - write 
+          Purpose: write data into an open file
+          Format:  void write         (in  long   len_in,
+                                       in  string buffer,
+                                       out long   len_out);
+          Inputs:  len_in:             number of bytes to be 
+                                       written
+                   buffer:             bytes to be written
+          Outputs: len_out:            number of bytes written
+          Throws:  BadParameter:       len_in or buffer invalid
+                   WriteError:         write failed
+          Notes:   - writes up to len_in bytes from buffer into 
+                     the file at the current file position.
+                   - the file pointer is positioned at the end 
+                     of the byte area written during this call. 
+                   - similar to the write (2) call in Unix, as 
+                     specified by POSIX
+            
+        - seek
+          Purpose: reposition the file pointer
+          Format:  void seek          (in  long     offset, 
+                                       in  SeekMode whence,
+                                       out long     position);  
+          Inputs:  offset:             offset in bytes to move 
+                                       pointer
+                   whence:             offset is relative to 
+                                       'whence'
+          Outputs: position:           position of pointer after 
+                                       seek
+          Throws:  BadParameter:       len_in or buffer invalid
+                   WriteError:         write failed
+          Notes:   - seek repositions the file pointer for 
+                     subsequent read, write and seek calls.
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 21
+
+
+                   - initially (after open), the file pointer is
+                     positioned at the beginning of the file, 
+                     unless the 'Append' flag was given - the the 
+                     initial position is the end of the file.
+                   - the repositioning is done relative to the 
+                     position given in 'Whence', so relative to 
+                     the Begin or End of the file, or to the 
+                     current position.
+                   - the file pointer can be positioned after the 
+                     end of the file w/o extending it.  Reads 
+                     behind EOF return Zeros.
+                   - similar to the lseek (2) call in Unix, as 
+                     specified by POSIX.
+  
+        
+  +-------------------------------------------------------------+
+  
+  
+  Examples:
+  =========
+  
+    Example 1: open a file if its size is > 10, and read the first 
+               10 bytes into a string.
+  
+    Note:    - check for '.', '..', and link loops are left as an 
+               exercise to the reader...
+             - string operations and printf statements are 
+               obviously simplified...
+  
+     --------------------------------------------------------------
+     String indent (int indent)
+     {
+       String   s = "  ";
+       for (int i = 0; i < indent; i++, s += "  ") ;
+       return  (s);
+     }
+  
+     void list_dir (Context ctx, const String url, int indent = 0)
+     {
+       try {
+         // create directory and iterate over entries
+         NSDir dir  = new NSDir (url, ctx);
+  
+         printf ("\n%s ---> %s\n", indent (indent), url);
+         
+         for ( int i = 0; i < dir.NumEntries (); i++ )
+         {
+           char   type = '?';
+           String info = "";
+  
+           // get name of next entry
+           String name = dir.getEntry (i);
+  
+           // get type and other infos
+           if ( dir.isLink (name) ) 
+           {
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 22
+
+
+             if ( dir.exists (dir.readLink (name)) ){info="---> ";}
+             else                                   {info="-|-> ";}
+             info += dir.readLink (name); 
+             type  = 'l';
+           } 
+           else if ( dir.isFile (name) ) { type = 'f';            }
+           else if ( dir.isDir  (name) ) { type = 'd'; info = "/";}
+  
+           printf ("%s > %3d - %s - %s%s\n", indent (indent), i+1, 
+                                             type, name, info);
+  
+           // recursion on directories
+           if ( dir.isDir (name) )
+           {
+             list_dir (ctx, name, indent++);
+           }
+         }
+  
+         printf ("\n%s <--- %s\n", indent (indent), url);
+       }
+  
+       // catch any possible error - see elsewhere for better 
+       // examples of error handling in SAGA
+       catch (...) {
+         printf ("Oops!\n");
+       }
+  
+       return;
+     }
+     --------------------------------------------------------------
+  
+  
+  +---------------------------------------------------------------+
+  
+  
+  
+  Notes:
+  ======
+  
+    A 'stat' like method is not yet specified; the form of such an
+    interface needs further consideration. However, the 'getSize'
+    method provides the most frequent and well defined file size
+    for now (the call may be deprecated when a stat specification
+    is available).
+   
+    GridFTP introduces extended read and write modes (ERET/ESTO).
+    Similar mechanisms are widely used in other protocols to
+    optimize complex remote data access (minimize number of remote
+    operations).  Such mechanisms are not yet reflected in this
+    API, but may be introduced in a later version.
+  
+        future API version may have something like:
+        void stat        (in  string           name,
+                          out struct           statinfo );
+        void ls_emodes   (out array<string,1> emodes   );
+        void ewrite      (in  string          emode,
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 23
+
+
+                          in  string          spec,
+                          in  string          buffer
+                          out long            len_out  );
+        void eread       (in  string          emode,
+                          in  string          spec,
+                          out string          buffer, 
+                          out long            len_out  );
+  
+        - hooks for gridftp-like opaque ERET/ESTO features
+        - spec:  string for pattern as in GridFTP's ESTO/ERET
+        - emode: string for ident.  as in GridFTP's ESTO/ERET
+  
+  
+  +-------------------------------------------------------------+
+       
+      #
+      #         ####    ####      #     ####     ##    #
+      #        #    #  #    #     #    #    #   #  #   #
+      #        #    #  #          #    #       #    #  #
+      #        #    #  #  ###     #    #       ######  #
+      #        #    #  #    #     #    #    #  #    #  #
+      #######   ####    ####      #     ####   #    #  ######
+      
+           #######
+           #           #    #       ######   ####
+           #           #    #       #       #
+           #####       #    #       #####    ####
+           #           #    #       #            #
+           #           #    #       #       #    #
+           #           #    ######  ######   ####
+       
+  +-------------------------------------------------------------+
+       
+       
+  Summary:
+  ========
+       
+     There are a number of replica catalogue systems implemented or
+     in development.  This API is the intersection of features
+     common to these implementations.  (TODO: enumerate these
+     systems.)
+  
+     Please note that the interactions with logical files as opaque
+     entities (as entries in logical file name spaces) are covered
+     by the NameSpace package.  The interfaces presented here
+     supplement the namespace package with operations for operating
+     on entries in replica catalogues.
+  
+  +-------------------------------------------------------------+
+  
+  
+  Use Cases:
+  ==========
+  
+     The semantic scope of the presented API covers access to
+     logical files, and has been an element in the following SAGA
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 24
+
+
+     use cases:
+  
+     TODO.
+    
+  
+  +-------------------------------------------------------------+
+  
+  
+  API Summary:
+  ============
+  
+  package SAGA version 0.1 {
+  
+    import SAGA.NameSpace;
+  
+    package LogicalFile {
+   
+      enum openDirFlags {
+        /* Placeholder */
+      };
+  
+      enum openFlags {
+        Create     =  0,
+        NoCreate   =  1,
+        Excl       =  2,
+        NoExcl     =  3,
+        Truncate   =  4,
+        NoTruncate =  5,
+        Append     =  6,
+        NoAppend   =  7,
+        Lock       = 10,
+        NoLock     = 11
+      };
+  
+  
+      class LogicalDirectory implements-all NSDir {
+  
+        /* open methods */
+        void openDir     (in  string                name,
+                          in  array<openDirFlags,1> flags,
+                          out LogicalDirectory      dir   );
+  
+        void open        (in  string                name,
+                          in  array<openFlags,1>    flags,
+                          out LogicalFile           file  );
+      }
+  
+      class LogicalFile  {
+  
+        void addLocation    (in name                   );
+        void removeLocation (in name                   );
+        void listLocations  (out array<string,1> names );
+        void replicate      (in name                   );
+  
+      }
+    }
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 25
+
+
+  } 
+  +-------------------------------------------------------------+
+  
+  
+  API Detail:
+  ===========
+  
+      class LogicalDirectory
+  
+        This class represents a container for logical files in a
+        logical file catalog.  It allows traversal of the catalogs
+        name space, and the manipulation and creation (open) of
+        logical files in that name space.
+  
+        Factory like methods for creating objects representing
+        namespace entries:
+  
+        Factory like methods for creating objects (see note in
+        SAGA.NameSpace specification)
+        
+        - openDir
+          Purpose: creates a new LogicalDirectory instance
+          Format:  void openDir       (in  string           name,
+                                       in  array<openDirFlags,1> 
+                                                            flags,
+                                       out LogicalDirectory dir);
+          Inputs:  name:               name of directory to open
+                   flags:              flags definition operation 
+                                       modus
+          Outputs: dir:                opened directory instance
+          Throws:  BadParameter:       name or flags are invalid
+                   NoSuchFile:         directory does not exist
+                   NoSuccess:          flags inhibited successful
+                                       operation
+          Notes:   - currently there are no supported flags
+                   - default flag set is empty (NULL)
+                   - similar to opendir (3), as defined by POSIX
+  
+  
+        - open
+          Purpose: creates a new LogicalFile instance
+          Format:  void open          (in  string         name,
+                                       in  array<openFlags,1> 
+                                                          flags,
+                                       out LogicalFile    file);
+          Inputs:  name:               file to be opened
+                   flags:              flags definition operation 
+                                       modus
+          Outputs: file:               opened file instance
+          Throws:  BadParameter:       name or flags are invalid
+                   NoSuchFile:         file does not exist
+                   NoSuccess:          flags inhibited successful
+                                       operation
+          Notes:   - if the file does not exist, it is created if 
+                     the 'Create' flag is given, otherwise it is 
+                     an error
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 26
+
+
+                   - it is an error if the file exists and both the
+                     'Create' and the 'Excl' flag are given.  
+                     Otherwise the 'Excl' flag is ignored
+                   - the file is truncated to length 0 on the open
+                     operation if the 'Trunc' flag is given.  For
+                     logical files that means: no physical file 
+                     location is associated with the logical file.
+                   - the file is in opened in append mode if the
+                     'Append' flag is given.  For logical files 
+                     that means: newly added physical file 
+                     locations are appended to the set of known 
+                     locations.
+                   - the file is locked on open if the 'Lock' flag
+                     is given.  If the file is already in a locked
+                     state, the open will fail and a descriptive
+                     error will be issued.  If a file is opened in
+                     locked mode, any other open on that file MUST
+                     fail, with no respect to the given flags.
+                     Note that a file can be opened in normal mode,
+                     and then in locked mode, w/o an error getting
+                     raised.  The lock will get removed on
+                     destruction of the file object (that is on
+                     close).  If an implementation does not support
+                     locking, an descriptive error MUST get issued
+                     if the 'Lock' flag is given.
+                   - default flag set is {NoCreate, NoExcl,
+                     NoTrunc, Append, NoLock} Note that Append is
+                     default, unlike to the class SAGA::File.
+                   - similar to the open (2) call in Unix, as
+                     specified by POSIX
+  
+  
+  
+      class LogicalFile:
+        
+        This class provides means to handle the contents of Logical
+        Files.  
+        
+        That contents consists of strings representing locations of
+        physical files associated with the logical file.  In
+        general, these locations could be logical files as well.
+        In fact, they are usually handled as opaque strings, and no
+        assumption about validity or the nature of the target of
+        the location is made.  Exception: see the r eplicate and a
+        ddLocation method description.
+  
+        - addLocation
+          Purpose: add a name to the location set
+          Format:  void addLocation   (in string name);
+          Inputs:  name:               location to add to set
+          Outputs: none
+          Throws:  BadParameter:       name is invalid
+                   AlreadyExists:      name is already in set
+          Notes:   - this methods adds a given string  to the set 
+                     of locations associated with the logical file.
+                   - if the location is already in the set, no
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 27
+
+
+                     error is issued.
+                   - the implementation may choose to interpret the
+                     locations associated with the logical file
+                     instance.  It may return an error indicating
+                     an invalid location if it is unable or
+                     unwilling to handle that specific location.  
+                   - the documentation MUST specify how valid
+                     location are contructed.
+  
+        - removeLocation
+          Purpose: remove a name from location set
+          Format:  void removeLocation (in name);
+          Inputs:  name:               location to remove from set
+          Outputs: none
+          Throws:  BadParameter:       name is invalid
+                   DoesNotExist:       name is not in set
+          Notes:   - this method removes a given string from the 
+                     set of locations associated with the logical
+                     file.
+                   - if the location is not in the set of
+                     locations, an error is issued.
+                   - if the set of locations is empty after that
+                     operation, the logical file object is still a
+                     valid object (see replicate methos
+                     description).
+        
+        - listLocations
+          Purpose: list the locations in the location set
+          Format:  void listLocations (out array<string,1> names);
+          Inputs:  none
+          Outputs: names:              array of locations in set
+          Throws:  nothing
+          Notes:   - this method returns an array of strings
+                     containing the complete set of locations
+                     associated with the logical file.
+                   - an empty array returned is not an error - see
+                     description to the removeLocation method.
+  
+        - replicate
+          Purpose: replicate a file from any of the known 
+                   locations to a new location, and add the new 
+                   location to the location set on success.
+          Format:  void replicate     (in string name);
+          Inputs:  name:               location to replicate to
+          Outputs: none
+          Throws:  BadParameter:       name is invalid
+                   NoSuccess:          no successful operation
+          Notes:   - the method requests a two step operation: 
+                     1) copy an entity at any of the locations
+                        associated with the logical file to the
+                        given string, which represents a new
+                        location.
+                     2) perform an addLocation for the given
+                        string.
+                   - the method is not required to be atomic, but:
+                   - the method is required to be either
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 28
+
+
+                     successfull in both steps, or to issue an
+                     error indicating if both methods failed, or if
+                     only one of the methods succeeded (leaving the
+                     system in an inconsistent state).
+                   - a replicate call on an instance with empty
+                     location set results in an error.
+                   - this methods requires the implementation of
+                     the class to interpret the locations
+                     associated with the logical file instance.  If
+                     that is impossible, an error indicating an
+                     invalid location must be issued.
+  
+  
+  +-------------------------------------------------------------+
+  
+  
+  Examples:
+  =========
+  
+    <Examples in pseudocode>
+    <C++ ish with ellipsis>
+    <Maybe with some in Fortran or other languages>
+  
+  
+  +-------------------------------------------------------------+
+  
+  
+  Notes:
+  ======
+  
+    It is recommended to interpret the locations associated with
+    logical files with valid locations for SAGA::Files, and to have
+    the implementation using SAGA::Files.  That helps to program
+    coherently with the SAGA::NameSpace, SAGA::File and
+    SAGA::LogicalFile packages.
+  
+    LogicalFile and LogicalDirectory should implement the
+    SAGA::Attributes interface.
+  
+    LogicalDirectory should implement a find method searching on
+    SAGA::Attributes.
+  
+  
+  +-------------------------------------------------------------+
+  
+                   #####
+                       #   ####   #####    ####
+                       #  #    #  #    #  #
+                       #  #    #  #####    ####
+                 #     #  #    #  #    #       #
+                 #     #  #    #  #    #  #    #
+                  #####    ####   #####    ####
+  
+  +-------------------------------------------------------------+
+  
+  
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 29
+
+
+  Summary:
+  ========
+  
+    Many of the use cases provided to the SAGA-RG had either
+    explicit or implied requirements for submitting jobs to grid
+    resources, and for monitoring and controlling these submitted
+    jobs.
+  
+    This API provides an interface for submitting jobs to a grid
+    resource, either in batch mode, or in an interactive mode. It
+    also provides APIs for controlling these submitted jobs (e.g.
+    to terminate, suspend, or signal a running job), and APIs for
+    retrieving status information for both running and completed
+    jobs. 
+  
+    The goals of this API are to provide enough functionality to
+    satisfy the requirements of grid developers according to the
+    "80-20" rule.  This API is also intended to incorporate the
+    work of the DRMAA-WG, and to extend the API based on the
+    experience of implementing DRMAA.  Much of this specification
+    was taken directly from DRMAA, with many of the differences
+    arising from an attempt to make the job API consistent with the
+    overall SAGA API model. Note [1].
+  
+  +-------------------------------------------------------------+
+  
+  
+  Use Cases:
+  ==========
+  
+    <Enumeration of use cases which require this API>
+    <Optionally say context in which it is needed.>
+  
+  +-------------------------------------------------------------+
+  
+  
+  API Summary:
+  ============
+  
+    package SAGA version 0.1 {
+  
+      package JobManagement {
+  
+        class JobDefinition implements-all SAGA.Attribute {
+        /* This object encapsulates all the attributes which
+         * define a job to be run. (Controlled by attributes 
+         * interface.)
+         */
+        }
+  
+        class JobInfo implements-all SAGA.Attribute {
+        /* This object encapsulates the state of an existing job.
+         * (Controlled by attributes interface.)  
+         */
+            getStdinStream  (out opaque stdin);
+            getStdoutStream (out opaque stdout);
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 30
+
+
+            getStderrStream (out opaque stderr);
+        }
+  
+        class JobExitStatus implements-all SAGA.Attribute {
+        /* This object holds the state of a finished job.
+         * (Controlled by attributes interface.) 
+         */
+        }
+  
+        enum JobState {
+        /* See note [2] for a description of job states.
+         */
+            Unknown,
+            HoldSystem,
+            HoldUser,
+            Hold,
+            Queued,
+            Running,
+            SuspendSystem,
+            SuspendUser,
+            Suspend,
+            DoneOk,
+            DoneFail
+        };
+  
+        interface Job {
+            getJobId         (out string        jobId);
+            getJobState      (out JobState      state);
+            getJobInfo       (out JobInfo       info);
+            getJobDefinition (out JobDefinition jobDef);
+  	        getJobExitStatus (out JobExitStatus exitStatus);
+            suspend          ();
+            resume           ();
+            hold             ();
+            release          ();
+            checkpoint       ();
+            migrate          (in JobDefinition  jobDef);
+            terminate        ();
+            signal           (in int            signum);
+        }
+  
+        interface JobService {
+            submitJob (in  JobDefinition jobDef, 
+                       out Job           job);
+            runJob    (in  string        host, 
+                       in  string        commandline, 
+                       out opaque        stdin,
+                       out opaque        stdout,
+                       out opaque        stderr,
+                       out Job           job);
+            list      (out array<string,1> jobIdList);
+            getJob    (in  string        jobID, 
+                       out Job           job);
+        }
+      }
+    }		  
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 31
+
+
+  
+  
+  +-------------------------------------------------------------+
+  
+  
+  API Detail:
+  ===========
+  
+    class JobDefinition: 
+  
+      This object encapsulates all the attributes which define a
+      job to be run. It has no methods of its own, but implements
+      the SAGA_Attribute interface in order to provide access to
+      the job properties. The only required attribute in order to
+      perform a valid job submission is the SAGA_JobCmd. Given the
+      SAGA_JobCmd, a job can be instantiated in many existing back
+      end systems without any further specification. 
+  
+      There should be much overlap between the attributes defined
+      within SAGA and within the JSDL specification. This list,
+      however, will not be complete in cases where the JSDL was
+      deemed more complicated than was required for a simple API
+      (e.g. the notion of JSDL Profiles), or where an attribute was
+      needed to interact with a scheduler, which was not within the
+      stated scope of the JSDL working group (e.g. SAGA_Queue,
+      which is considered a "site" attribute, and thus not relevant
+      to the pure description of a job).
+  
+      At the end of the description of an attribute there is a bit
+      in parentheses that indicates whether a particular attribute
+      is supported within a particular system. Tokens include
+      DRMAA, JSDL, LSF, OpenPBS, PBSPro, SGE and Condor, and are
+      intended to be extended by members of the working group.
+  
+      The attributes encapsulated within this class are:
+  
+        SAGA_JobCmd 
+        - The command to execute. This is the only required
+          attribute.  Can be a full pathname, or a pathname
+          relative to the SAGA_JobCwd as evaluated on the execution
+          host. String.  (DRMAA, JSDL, LSF)
+        
+        SAGA_JobArgs 
+        - Positional parameters for the command. Vector of strings.
+          (DRMAA, JSDL, LSF)
+        
+        SAGA_JobState
+        - The job state at submission. Jobs can be submitted into a
+          hold state such that they need manual release before
+          being considered for scheduling. Type JobState. (DRMAA,
+          LSF)
+        
+        SAGA_JobEnv 
+        - The set of environment variables which will be exported
+          to the environment of the started job. The string format
+          is "name=value". Vector of strings. (DRMAA, JSDL)
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 32
+
+
+        
+        SAGA_JobCwd 
+        - The working directory for the job. If this is a relative
+          path, it will be treated as relative to the users home
+          directory on the system where the job runs. String.
+          (DRMAA, JSDL)
+        
+        SAGA_JobInteractive 
+        - Run the job in interactive mode. This means that stdio
+          streams will stay connected to the submitter after job
+          submission, and during job execution. The stdio streams
+          are retrieved by calling the getXStream methods of the
+          jobs JobInfo class.  Boolean. (LSF)
+        
+        SAGA_JobStdin 
+        - The pathname of the standard input file. If this is a
+          relative pathname, it will be treated as relative to the
+          users home directory on the system where the job runs.
+          String. (DRMAA, JSDL, LSF)
+        
+        SAGA_JobStdout 
+        - The pathname of the standard output file. If this is a
+          relative pathname, it will be treated as relative to the
+          users home directory on the system where the job runs.
+          String. (DRMAA, JSDL, LSF)
+        
+        SAGA_JobStderr 
+        - The pathname of the standard error file. If this is a
+          relative pathname, it will be treated as relative to the
+          users home directory on the system where the job runs.
+          String. (DRMAA, JSDL, LSF)
+        
+        SAGA_JobContact 
+        - A set of endpoints describing where to report job
+          completion status, as well as other resource manager
+          defined state transitions. The format of the string will
+          be that of a URI (e.g. fax:+123456789, sms:+123456789,
+          mailto:csmith@platform.com). Vector of strings. (DRMAA
+          (email addresses), LSF (email addresses)) 
+        
+        SAGA_JobNotification 
+        - A flag which indicates whether to send notifications to
+          endpoints listed in SAGA_JobContact. Mostly used to shut
+          off notifications if they are on by default. Boolean.
+          (DRMAA, LSF)
+        
+        SAGA_JobName 
+        - The job name to be attached to the job submission.
+          String.  (DRMAA, LSF)
+        
+        SAGA_JobNative 
+        - The native specification as described in the DRMAA
+          specification. Note [3]. This value is passed as is to
+          the backend without any meaning or semantics within the
+          SAGA API.String. (DRMAA)
+        
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 33
+
+
+        SAGA_FileTransfer 
+        - A list of file transfer directives which can be used to
+          transfer files to the execution host of the job before
+          the job is run, and to transfer files from the execution
+          host of the job when the job completes. Vector of
+          strings. (DRMAA (limited), JSDL (much enhanced), LSF)
+        
+          The syntax of a file transfer directive is modeled on the
+          LSF syntax, and has the general syntax:
+        
+            "local_file operator remote_file"
+        
+          Both the local_file and the remote_file can be URLs. If
+          they are not URLs, but full or relative pathnames, then
+          the local_file is relative to the host where the
+          submission is executed, and the remote_file is evaluated
+          on the execution host of the job. 
+        
+          The operator is one of the following four: 
+        
+          - '>' - copies the local file to the remote file before
+            the job starts. Overwrites the remote file if it
+            exists.
+          - '>>' - copies the local file to the remote file before
+            the job starts. Appends to the remote file if it
+            exists.
+          - '<' - copies the remote file to the local file after
+            the job finishes. Overwrites the local file if it
+            exists.
+          - '<<' - copies the remote file to the local file after
+            the job finishes. Appends to the local file if it
+            exists.
+        
+        SAGA_JobStartTime 
+        - The time after which a job is considered for scheduling.
+          Could be viewed as a desired job start time, but that is
+          up to the resource manager. Date/time. (DRMAA, LSF)
+        
+        SAGA_Deadline 
+        - Specifies a hard deadline after which the resource
+          manager should terminate the job. Date/time. (DRMAA, LSF) 
+        
+        SAGA_WallclockHardLimit
+        - Specifies a hard limit on the amount of wall clock time
+          in seconds that a job may consume, after which the
+          resource manager should terminate the job. Integer.
+          (DRMAA, JSDL, LSF)
+        
+        SAGA_WallclockSoftLimit
+        - Provides an estimate of the amount of wall clock time in
+          seconds which a job will require. This attribute is
+          intended to provide hints to the scheduler. If this time
+          limit is reached, the action taken is specific to the
+          resource manager and its scheduling policies. Integer.
+          (DRMAA, LSF)
+        
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 34
+
+
+        SAGA_Cputime 
+        - Estimated job runtime in CPU seconds. The CPU time is
+          aggregated across all processes/threads of the job.
+          Integer.  (LSF)
+        
+        SAGA_NumCpus 
+        - The total number of cpus requested for this job. How the
+          cpus are allocated is determined by the policy of the
+          resource manager, and can possibly be affected by the
+          SAGA_Native attribute if the resource manager supports
+          it. Integer. (JSDL, LSF)
+        
+        SAGA_Memory
+        - Estimated maximum amount of memory that the job requires
+          in Megabytes. The memory usage of the job is aggregated
+          across all processes of the job. Float. (JSDL, LSF)
+        
+        SAGA_ProcessorType
+        - Select compatible processor for job submission. The list
+          of allowed values is taken from the JSDL specification
+          jsdl:ProcessorArchitectureEnumeration. Note [4]. String.
+          (JSDL)
+        
+        SAGA_OperatingSystem
+        - Select compatible operating system for job submission.
+          The list of allowed values is taken from the JSDL
+          specifications jsdl:OperatingSystemTypeEnumeration. Note
+          [4]. String. (JSDL)
+        
+        SAGA_HostList
+        - A list of host names, or host group names, which can be
+          considered by the resource manager as candidate hosts for
+          the job. Whether or not the job actually ends up running
+          on one of the hosts in the list, is solely at the
+          discretion of the resource manager. Vector of strings.
+          (JSDL, LSF)
+        
+        SAGA_Queue
+        - The name of a queue to place the job into. While SAGA
+          itself does not define the semantics of "queue", many
+          back end systems can make use of this attribute. String.
+          (LSF)
+        
+       
+    class JobInfo:
+        
+      This object encapsulates the state of an existing job.
+      JobInfo implements the SAGA_Attribute interface, and
+      understands the following attribute names: 
+        
+        SAGA_ExecutionHosts
+        - The list of host names or IP addresses which were
+          allocated to run this job. Vector of strings.
+        
+        SAGA_Created 
+        - The time stamp of the job creation in the resource
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 35
+
+
+          manager (i.e. the submission time). Date/time.   
+        
+        SAGA_Started 
+        - The time stamp indicating when the job started running.
+          Date/time. 
+        
+        SAGA_Finished 
+        - The time stamp indicating when the job completed.
+          Date/time.
+        
+        SAGA_Cputime 
+        - The number of cpu seconds consumed by the job. The value
+          is aggregated across all processes/threads of the job.
+          Integer. 
+        
+        SAGA_MemoryUse 
+        - The current aggregate memory usage in megabytes of the
+          processes of this job, or the memory high water mark when
+          the job is complete. Integer.  
+        
+        SAGA_VmemoryUse 
+        - The current aggregate virtual memory usage in megabytes
+          of the processes of this job, or the virtual memory high
+          water mark when the job is complete. Integer. 
+        
+        - getStdinStream
+          Purpose: retrieve input stream for a job.
+          Format:  getStdinStream     (out opaque stdin)
+          Inputs:  none
+          Outputs: stdin:              standard input stream for 
+                                       the job
+          Throws:  nothing
+          Notes:   - If the job was submitted as interactive (the
+                   SAGA_JobInteractive attribute was set at job 
+                   submission), this method retrieves the standard 
+                   input stream for the job. The type of the 
+                   stream is indicated in SIDL as opaque, since 
+                   this type will be rendered differently based 
+                   on the language bindings, and will be made 
+                   concrete in another specification document 
+                   which describes language bindings. 
+        
+        - getStdoutStream
+          Purpose: retrieve output stream of job
+          Format:  getStdoutStream    (out opaque stdout)
+          Inputs:  none
+          Outputs: stdout:             standard output stream for 
+                                       the job
+          Throws:  nothing
+          Notes:   - If the job was submitted as interactive (the
+                     SAGA_JobInteractive attribute was set at job 
+                     submission), this method retrieves the 
+                     standard output stream for the job.  
+        
+        - getStderrStream
+          Purpose: retrieve error stream of job
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 36
+
+
+          Format:  getSterrtStream    (out opaque stderr)
+          Inputs:  none
+          Outputs: stderr:             standard error stream for 
+                                       the job
+          Throws:  nothing
+          Notes:   - If the job was submitted as interactive (the
+                     SAGA_JobInteractive attribute was set at job 
+                     submission), this method retrieves the 
+                     standard error stream for the job.  
+        
+    class JobExitStatus:
+        
+      This object holds the exit status of a finished job. It has
+      no methods, but implements SAGA_Attribute, and understands
+      the following attribute names.
+        
+        SAGA_ExitCode 
+        - The process exit code as collected by the wait(2) series
+          of system calls. The exit code is collected from the
+          process which was started from the SAGA_JobCmd attribute
+          of the JobDefinition object. Integer.   
+        
+        SAGA_Signaled 
+        - Indicates whether the job exited due to receipt of a
+          signal.  Boolean.  
+        
+        SAGA_Termsig 
+        - The signal number which caused the job to exit. Integer. 
+        
+        
+    interface Job:
+        
+      The Job provides the manageability interface to a job
+      submitted to a resource manager. There are two general types
+      of methods: those for retrieving job state and information,
+      and those for manipulating the submitted job. The methods
+      intended to manipulate jobs cannot make any guarantees about
+      how the resource manager will effect an action to be taken.
+      Please see note [5].
+        
+      - getJobId
+        Purpose: Get the resource managers representation of 
+                 the job identifier.
+        Format:  getJobId             (out string jobId);
+        Inputs:  none
+        Outputs: jobId:                job identifier string
+        Throws:  nothing
+        
+        
+      - getJobState
+        Purpose: Retrieve the current state of a submitted job.
+        Format:  getJobState          (out JobState state);
+        Inputs:  none: 
+        Outputs: state:                a JobState object
+        Throws:  nothing
+  
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 37
+
+
+        
+      - getJobInfo
+        Purpose: Retrieve information which is specific to this 
+                 particular job instance
+        Format:  getJobInfo           (out JobInfo info);
+        Inputs:  none
+        Outputs: info:                 a JobInfo object       
+        Throws:  nothing
+        Notes:   - this information is generally assigned by
+                   the resource manager after job submission.
+        
+      - getJobDefinition
+        Purpose: Retrieve the JobDefinition which was used to 
+                 submit this job instance. 
+        Format:  getJobDefinition     (out JobDefinition jobDef);
+        Inputs:  none
+        Outputs: jobDef:               a JobDefinition object
+        Throws:  nothing
+        Notes:   - There are cases when the JobDefinition is not 
+                   available, and thus this object will be null.
+                   These include cases when the job might not have
+                   been submitted through SAGA, and getJob() was
+                   used to retrieve a Job, or this state
+                   information has been lost (e.g. the client
+                   application restarts and the particular SAGA
+                   implementation did not persist the information).
+        
+      - getJobExitStatus
+        Purpose: Retrieve the exit status of the job. 
+        Format:  getJobExitStatus     (out JobExitStatus 
+                                                      exitStatus);
+        Inputs:  
+        Outputs: exitStatus:           a JobExitStatus object
+        Throws:  nothing
+        Notes:   - Should only be called when the JobState is 
+                   either DONE_OK or DONE_FAIL.  
+        
+      - suspend
+        Purpose: Ask the resource manager to perform a suspend 
+                 operation on the running job. 
+        Format:  suspend ();
+        Inputs:  none
+        Outputs: none
+        Throws:  nothing
+        Notes:   - The semantics of suspend, and the action taken 
+                   to suspend a job is resource manager specific. 
+        
+      - resume
+        Purpose: Ask the resource manager to perform a resume 
+                 operation on the running job. 
+        Format:  resume ();
+        Inputs:  none
+        Outputs: none
+        Throws:  nothing
+        Notes:   - The semantics of resume, and the action taken 
+                   to resume a job is resource manager specific. 
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 38
+
+
+        
+      - hold
+        Purpose: Ask the resource manager to put a hold on the job.
+        Format:  hold ();
+        Inputs:  none
+        Outputs: none
+        Throws:  nothing
+        Notes:   - This means that the job is not considered for 
+                   scheduling. This routine should only be called 
+                   when the job is in the QUEUED or HOLD_SYSTEM 
+                   state.
+        
+      - release
+        Purpose: Ask the resource manager to release a 
+                 previously held job.
+        Notes:   - 
+        Format:  release ();
+        Inputs:  none
+        Outputs: none
+        Throws:  nothing
+        
+      - checkpoint
+        Purpose: Ask th resource manager to initiate a checkpoint
+                 operation on a running job.
+        Format:  checkpoint ();
+        Inputs:  none
+        Outputs: none
+        Throws:  nothing
+        Notes:   - The semantics of checkpoint, and the actions 
+                   taken to initiate a checkpoint, are resource 
+                   manager specific.
+        
+      - migrate
+        Purpose: Ask the resource manager to migrate a running 
+                 job to another host.
+        Format:  migrate              (in JobDefinition jobDef);
+        Inputs:  jobDef:               new job parameters to apply 
+                                       when the job is migrated
+        Outputs: none
+        Throws:  nothing
+        Notes:   - The call may also be used to change some 
+                   parameters of a non-finished job (e.g. change
+                   runtime limit estimates, etc). The action of
+                   migration might change the job identifier within
+                   the resource manager.   
+                 - jobDef might indicate new resource requirements,
+                   for example.
+        
+      - terminate
+        Purpose: Ask th resource manager to terminate a dispatched 
+                 job
+        Format:  terminate ();
+        Inputs:  none
+        Outputs: none
+        Throws:  nothing
+        Notes:   - the job can be in in RUNNING or SUSPENDED state
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 39
+
+
+                 - the semantics of terminate, or the action taken,
+                   is specific to the resource manager.
+        
+      - signal
+        Purpose: Ask th resource manager to deliver an arbitrary 
+                 signal to a dispatched job.
+        Format:  signal               (in int signum);
+        Inputs:  none
+        Outputs: signum:               signal number to be 
+                                       delivered
+        Throws:  nothing
+        Notes:   - The semantics of signal, or the action taken, 
+                   is specific to the resource manager. There is no
+                   guarantee that the signal number specified is
+                   valid for the operating system on the execution
+                   host where the job is running. 
+        
+        
+    interface JobService:
+        
+      The JobService provides an interface for job creation and
+      discovery. 
+        
+      - submitJob
+        Purpose: Submit a job to a resource manager.
+        Format:  submitJob            (in  JobDefinition jobDef, 
+                                       out Job           job);
+        Inputs:  jobDef:               description of job to be 
+                                       submitted
+        Outputs: job:                  a Job object representing 
+                                       the submitted job instance
+        Throws:  nothing
+        
+      - runJob
+        Purpose: Run a comman synchronously.
+        Format:  runJob               (in  string host, 
+                                       in  string commandline,
+                                       out opaque stdin, 
+                                       out opaque stdout, 
+                                       out opaque stderr,
+                                       out Job    job);
+        Inputs:  host:                 host name or IP address of 
+                                       the endpoint which will 
+                                       accept and run the job
+                 commandline:          the command and arguments 
+                                       to be run
+        Outputs: stdin:                IO handle for the running 
+                                       jobs standard input stream
+                 stdout:               IO handle for the running 
+                                       jobs standard output
+                 stderr:               IO handle for the running 
+                                       jobs standard error
+                 job:                  a Job object representing 
+                                       the submitted job instance
+        Throws:  nothing
+        Notes:   - This is a convenience routine built on the 
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 40
+
+
+                   submitJob interface, and is intended to simplify
+                   the steps of creating a JobDefinition,
+                   submitting the job, and then querying the stdio
+                   streams.
+        
+      - list
+        Purpose: Get a list o jobs which are currently known by the
+                 resource manager.
+        Format:  list                 (out array<string,1> 
+                                                       jobIdList);
+        Inputs:  none
+        Outputs: jobIdList:            an array of job identifiers
+        Throws:  nothing
+        Notes:   - The semantics of which jobs are viewable by the 
+                   calling user context, or how long a resource 
+                   manager keeps job information are implementation
+                   dependent. 
+        
+      - getJob
+        Purpose: Given a job identifier, this method returns a 
+                 Job object representing this job.
+        Format:  getJob               (in  string jobId, 
+                                       out Job    job)
+        Inputs:  jobId:                job identifier as returned 
+                                       by the resource manager 
+        Outputs: job:                  a Job object representing 
+                                       the job identified by jobID
+        Throws:  nothing
+        
+        
+  +-------------------------------------------------------------+
+  
+  
+  Examples:
+  =========
+  
+    Example 1 : simple job submission and polling for finish.
+    
+    JobDefinition jobdef = new JobDefinition ();
+    jobdef.setAttribute ("SAGA_JobCmd", "myjob.sh");
+    jobdef.setAttribute ("SAGA_NumCpus", "16");
+    jobdef.setVectorAttribute ("SAGA_FileTransfer", 
+                               { "infile > infile", 
+           "gridftp://somehost/some/path/outputfile << outfile" });
+    
+    JobService myjs  = SomeJobServiceFactory (...);
+    Job        myjob = new Job ();
+    
+    myjs.submitJob (jobdef, myjob);
+    
+    while ( something ) 
+    {
+      JobState myjobstate;
+      myjob.getJobState (myjobstate);
+    
+      if ( myjobstate == Running ) 
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 41
+
+
+      {
+        array<string> hostlist;
+        JobInfo myjobinfo = myjob.getJobInfo (myjobinfo);
+        myjobinfo.getAttribute ("SAGA_ExecutionHosts", hostlist);
+    
+        /* do something with the hostlist */
+        /* and with other state information */
+      }
+      else if ( myjobstate == DoneOk ) 
+      {
+        print "Job completed successfully.";
+        exit;
+      }
+      else if ( myjobstate == DoneFail ) 
+      {
+        string        exitcode;
+        JobExitStatus myjobexit;
+      
+        myjob.getExitStatus    (myjobexit);
+        myjobexit.getAttribute ("SAGA_ExitCode", exitcode);
+        
+        print "Job failed with exit code" + exitcode;
+        exit;
+      }
+    }
+    
+  +-------------------------------------------------------------+
+    
+    
+  Notes:
+  ======
+    
+    [1] We expect that SAGA-API implementations may be implemented
+        using DRMAA or may produce JSDL documents to be passed to
+        underlying scheduling systems. 
+    
+    [2] The JobState enumerated type encapsulates the possible
+        states of a job. They are the following:
+    
+        Unknown: 
+          Some kind of error condition has occurred, and the job
+          is in no mans land.
+    
+        HoldSystem:
+          The system has put a hold on the job, such that it is 
+          not eligible for scheduling.
+        
+        HoldUser:
+          The user has put a hold on the job, and it is not 
+          eligible for scheduling.
+        
+        Hold:
+          The job is being held by both the system and the user.
+        
+        Queued:
+          The job has been accepted by the resource manager, and 
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 42
+
+
+          is eligible to be considered for scheduling to an 
+          execution host.
+        
+        Running:
+          The job has been accepted on an execution host, and is 
+          currently running.
+        
+        SuspendSystem:
+          The resource manager has suspended the job, most likely 
+          due to some scheduling constraint (e.g.  preemption).
+        
+        SuspendUser:
+          The user has issued a "suspend" action to the job, and 
+          the resource manager has applied it.
+        
+        Suspend:
+          Job has been suspended by both the user and the system.
+        
+        DoneOk:
+          The processes of the job have finished and a zero exit 
+          code was returned by the process started by the resource 
+          manager.
+        
+        DoneFail:
+          The processes of the job have finished and a non-zero 
+          exit code was returned by the process started by the 
+          resource manager. 
+    
+    [3] http://www.ggf.org/documents/GWD-R/GFD-R.022.pdf
+    
+    [4] https://forge.gridforum.org/projects/jsdl-wg
+    
+    [5] The API implementation is designed to be agnostic of the
+        back end implementation, such that any back end could be
+        implemented to perform an action. For example, the 
+        checkpoint routine might cause an application level 
+        checkpoint, or might use the services of GridCPR.
+    
+    [6] In attributes that take paths and pathnames, there was 
+        some discussion as to whether we should require the
+        implementation of placeholders which could represent things
+        like 'home directory', and that are not known until the job
+        is bound to an execution host. 
+    
+    [7] There is discussion as to which interfaces might be  
+        missing. One possibility was a job history retrieval
+        interface could be necessary. This could be used to map
+        state transitions of a job throughout its lifetime.
+    
+    [8] The DRMAA 'job category' attribute was left out of the   
+        strawman API. During the discussions of this attribute
+        within the design team meetings, it was deemed to simplify
+        the API at the expense of the implementor of the back end
+        system. Thus, it was left out pending discussion. 
+  
+  
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 43
+
+
+  +-------------------------------------------------------------+
+  
+       #####
+      #     #   #####  #####   ######    ##    #    #   ####
+      #           #    #    #  #        #  #   ##  ##  #
+       #####      #    #    #  #####   #    #  # ## #   ####
+            #     #    #####   #       ######  #    #       #
+      #     #     #    #   #   #       #    #  #    #  #    #
+       #####      #    #    #  ######  #    #  #    #   ####
+  
+  +-------------------------------------------------------------+
+  
+  
+  Summary:
+  ========
+  
+     A number of use cases involved launching of remotely located
+     components in order to create distributed applications. The
+     use cases require simple remote socket connections to be
+     established between these components and their control
+     interfaces.
+     
+     The target of this streams API is to establish the simplest
+     possible authenticated socket connections with hooks to
+     support authorization and encryption schemes.  The API is 
+       1) Not performance oriented:  If you need performance, then
+          it is better to program directly to the APIs of existing
+          performance oriented protocols like GridFTP or XIO.
+       2) Focused on TCP/IP socket connections.  There has been no
+          attempt to generalize this to arbitrary streaming
+          interfaces (although it does not prevent such things from
+          being supported).
+       3) Does not attempt to create a programming paradigm that
+          diverges very far from baseline BSD sockets, Winsock, or
+          Java Sockets interfaces.
+     
+     This API greatly reduces the complexity of establishing
+     authenticated socket connections in order to communicate with
+     remotely located components.  It, however, provides very
+     limited functionality suitable for applications that do not
+     have too sophisticated requirements (as per 80-20 rule).  As
+     applications become more sophisticated, they can graduate to
+     more sophisticated native APIs in order to support those
+     needs.
+  
+  +-------------------------------------------------------------+
+  
+  Use Cases:
+  ==========
+  
+     Relevant use cases
+     -------------------
+       UC-2  : DiVA
+       UC-3  : DRMAA
+       UC-4  : GridLab
+       UC-5  : KoDaVis
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 44
+
+
+       UC-7  : RealityGrid
+       UC-9  : Visit
+       UC-10 : VizService
+     
+     Summary of Requirements Extracted from these use cases
+     ------------------------------------------------------
+       UC-2 : DiVA
+              Usage:        For adjusting parameters on remotely 
+                            launched components
+              Funct. Req.:  - Simplify Authentication and 
+                              encryption of streams.
+              Sec. Model:   SSL and/or GSI
+              Stream Types: IP sockets
+              Languages:    Primarily C/C++ bindings (wrapped to 
+                            provide TCL and Python bindings)
+  
+       UC-3 : DRMAA
+              Usage:        Not certain (seems to have remote vis 
+                            requirement)
+              Funct. Req.:  remote viz?
+              Sec. Model:   ?
+              Stream Types: IP sockets (probably)
+              Languages:    Java/C/C++/Fortran
+  
+       UC-4 : GridLab
+              Usage:        Remote connect and steering of 
+                            applications
+              Funct. Req.:  - Authentication
+                            - tunnel through firewalls (not in use 
+                              case though)
+                            - substrate for higher level steering 
+                              interface abstraction
+              Sec. Model:   GSI ?
+              Stream Type:  IP sockets
+              Languages:    Java/C/C++/Fortran
+  
+       UC-5 : KoDaVis
+              Usage:        Remote connect for visualization of 
+                            large data.  Collaborative/multiuser/
+                            synchronized vis
+              Funct. Req.:  - Authentication and simpler 
+                              socket/stream abstraction, 
+                            - Support for multiuser/collaborative 
+                              interfaces
+                            - login mechanism for connecting to 
+                              data- and interaction-server
+                            - data exchange (send, receive) for 
+                              the scientific data
+                            - data exchange to synchronize the 
+                              collaborative, distributed session
+                            - naming mechanism to identify objects 
+                              which are shared between several 
+                              visualization systems
+              Sec. Model:   ?
+              Stream Type:  probably IP sockets
+              Languages:    Java/C++/C
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 45
+
+
+              
+       UC-7 : RealityGrid
+              Usage:        Remote steering/visualization of 
+                            running simulations
+              Funct. Req.:  - Authentication (potentially 
+                              encryption)
+                            - substrate for higher-level parameter/
+                              steering interface.
+              Sec. Model:   GSI  (embedded in tools layer)
+              Stream Type:  IP sockets
+              Languages:    JNI-Java C++.  
+                            Instrumenting C/C++/Fortran codes
+                            
+       UC-9 : Visit
+              Usage:        Remote monitoring and visualization of 
+                            running simulations using AVS/Express 
+                            (ParView)
+              Funct. Req.:  - Authentication
+                            - multiple connect/disconnect of 
+                              clients
+              Sec. Model:   Unicore
+              Stream Type:  IP sockets
+              Languages:    F90/C/C++, Interfaces to AVS/Express
+              
+       UC-10 : VizService
+              Usage:        Remote connect and visualization for 
+                            large scale simulations
+              Funct. Req.:  - authentication
+                            - authorization
+                            - multiple connect/disconnect of 
+                              multiple clients
+                            - targeting a higher-level steering 
+                              interface abstractions
+              Sec. Model:   Now Unicore and/or Globus as 
+                            middleware.  Later, any OGSA or WSRF 
+                            implementation will do.
+              Stream Type:  IP sockets
+              Lanaguages:   Fortran/C/Java
+     
+  +-------------------------------------------------------------+
+  
+  
+  API Summary:
+  ============
+  
+  package SAGA version 0.1 {
+    import SAGA.Attributes;
+  
+    package Stream {
+  
+      enum StreamState {
+        SAGA_Error        = 0,
+        SAGA_Open         = 1,
+        SAGA_Dropped      = 2,
+        SAGA_NotConnected = 3
+      };
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 46
+
+
+  
+      enum ActivityType {
+        SAGA_Any       = 7,
+        SAGA_Read      = 1,
+        SAGA_Write     = 2,
+        SAGA_Exception = 4
+      };
+  
+      interface Stream extends-all SAGA.Attributes {
+        /* constructor */
+        void open    (in  string url,
+                      out Stream s);
+        /* descructor */
+        void close   (in  Stream s);
+  
+        void connect ();
+        void read    (inout array<opaque,1>        buffer,
+                      in    long                   buffer_size,
+                      out   long                   bytes_read);
+        void write   (in    array<opaque>          buffer,
+                      in    long                   size,
+                      out   long                   bytes_written );
+        void status  (out   StreamState            state);
+        void wait    (in    ActivityType           what,
+                      in    double                 timeout,
+                      out   array<ActivityType,1>  activity);
+  
+        void getSecurityInfo (out SecurityInfo info);
+      }
+  
+      interface SecurityInfo extends-all SAGA.Attribute {
+        /* These methods are shortcuts for typical
+         * information that would be used to
+         * make authorization decisions based on
+         * connection information.  However, the
+         * the validity of the information is 
+         * dependent on the security model implementation.
+         * Typically, the information is stored using
+         * the SAGA.Attribute interface.  The data 
+         * returned by the sample methods below are
+         * also available via the Attribute interface.
+         */
+        void getSourceUserName   (out string name);
+        void getSourceDN         (out string DN);
+        void getSourceHost       (out string hostname);
+        void getSourcePort       (out int    port);
+      }
+  
+      interface StreamServer {
+        /* constructor */
+        void create            (in  string   channel_name_or_url,
+                                out StreamServer ss); 
+  
+        /* destructor */
+        void destroy           (in  StreamServer ss);
+  
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 47
+
+
+        void waitForConnection (in double  timeout,
+                                out Stream stream);
+        void getURL            (out string url);
+      }
+  
+      interface Multiplexer {
+        void watch   (in  Stream                s,
+                      in  array<ActivityType,1> activity);
+        void unwatch (in  Stream                s);
+        void wait    (in  ActivityType          what,
+                      in  double                timeout,
+                      out array<ActivityType,1> activity);
+      }
+    }
+  }
+  
+  +-------------------------------------------------------------+
+  
+  API Detail:
+  ===========
+  
+    interface Stream: 
+    
+      This is the object that encapsulates all "client" stream
+      objects.
+    
+      - open
+        Purpose: Constructor, initializes a client client stream, 
+                 for later connection to an server.
+        Format:  Stream open          (in  string  url,
+                                       in  Context ctx, 
+                                       out Stream  stream);
+        Inputs:  url:                  server location in URL 
+                                       syntax
+                 ctx:                  SAGA context used for 
+                                       stream setup
+        Outputs: stream:               new, unconnected "Stream" 
+                                       instance
+        Throws:  NoSuccess             stream creation failed
+        Notes:   - returned stream is NULL on error.
+                 - server location and possibly protocol is 
+                   described by the input URL.  
+                 - a SecurityContext is necessary to authenticate
+                   the socket.  
+                 - The socket is only connected after the "connect"
+                   method is called in order to support two-phase
+                   connections that appear in some authentication
+                   schemes.  The state of the socket upon
+                   construction is therefore "NotConnected".  Once
+                   the connect() method is sucessfully called, the
+                   state will change to "Open".
+    
+      - close
+        Purpose: Destructor, closes any active connection and 
+                 deallocates any memory consumed by the Stream 
+                 data structures.
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 48
+
+
+        Format:  void destroyStream   (in Stream stream)
+        Inputs:  stream:               Stream data structure that 
+                                       needs to be closed and 
+                                       deallocated.
+        Outputs:  none
+        Throws:   none
+        Notes:   - Because the data structures might consume some
+                   memory space internally, even closed, dropped, 
+                   or failed sockets must be deallocated using 
+                   the destroyStream method.
+    
+    
+      - connect
+        Purpose: Establishes a connection to the target defined 
+                 during the construction of the stream.
+        Format:  void connect         ();
+        Inputs:  none 
+        Outputs: none 
+        Throws:  IncorectState         stream not in "NotConnected"
+                                       state
+                 NoSuccess:            could not connect
+        Notes:   - on success, the streams state is changed to 
+                   "Open"
+    
+    
+      - read
+        Purpose: Read a raw buffer from socket.
+        Format:  read                 (inout array<opaque,1> 
+                                                           buffer,
+                                       in    long          size, 
+                                       out   long          nbytes);
+        Inputs:  buffer:               Empty buffer passed in to 
+                                       get filled
+                 size:                 Maximum number of bytes 
+                                       that can be copied in to 
+                                       the buffer.
+        Outputs: nbytes:               number of bytes read, if 
+                                       successful. (0 is also 
+                                       valid)
+        Throws:  IncorectState         stream not in "NotConnected"
+                                       state
+                 NoSuccess:            read error
+        Notes:   - This call is blocking.  Use "wait" or "poll" 
+                   methods to implement non-blocking reads.
+    
+      - write
+        Purpose: Write a raw buffer to socket.
+        Format:  write                (in  array<opaque> buffer,
+                                       in  long          size, 
+                                       out long          nbytes);
+        Inputs:  buffer:               raw array containing data 
+                                       that will be sent out via 
+                                       socket
+                 size:                 number of bytes of data in 
+                                       the buffer
+        Outputs: nbytes:               bytes written if successful
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 49
+
+
+        Throws:  IncorectState         stream not in "NotConnected"
+                                       state
+                 NoSuccess:            write error
+        Notes:   - This call is blocking.  Use "wait" method to
+                   implement polling for non-blocking writes.
+    
+      - status
+        Purpose: Check on the status of an active connection.  
+        Format:  status               (out StreamState state);
+        Inputs:  none
+        Outputs: state:                state of stream
+        Throws:  NoSuccess:            operation failed
+        Notes:   - the only valid states for a stream are:
+                   "Error": 
+                     The socket has entered a non-fatal error 
+                     state.  If the state is fatal, then the 
+                     status will be "Dropped".  The reason for 
+                     the error must be queried through a separate 
+                     interface (not yet defined).
+                   "NotConnected": 
+                     This the state for a newly created socket
+                     where the "connect" method has not been 
+                     invoked.
+                   "Open": 
+                     This is the state for an active/connected 
+                     socket.
+                   "Dropped": 
+                     This is the state for a socket where the 
+                     remote side of the socket connection has been 
+                     lost or some other error has broken the 
+                     connection.  A socket will enter the dropped 
+                     state if authentication fails for example.  
+                     The actual reason for the drop must be 
+                     queried through the error handling interface.
+                 - this method is only returning the *state* of the
+                   stream and not the reason it entered that state.
+                 - more states can be added as required
+    
+      - wait
+        Purpose: Allows the stream to be interrogated to find out
+                 if it is ready for reading/writing, or if it has
+                 entered an error state. 
+        Format:  wait                 (in  ActivityType what,
+                                       in  double       timeout,
+                                       out <array,1>ActivityType 
+                                                        cause);
+        Inputs:  what:                 parameter list of activity 
+                                       types to wait for
+                 timeout:              number of seconds to wait
+        Outputs: cause:                activity type causing the 
+                                       call to return
+        Throws:  IncorectState         stream not in "NotConnected"
+                                       state
+                 Timeout               timeout
+        Notes:   - wait will only check on the conditions specified
+                   in the "what" parameter list (a bitmask in some 
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 50
+
+
+                   language bindings).  The options are
+                     "Read": 
+                       The socket has pending data available for 
+                       reading.
+                     "Write": 
+                       The socket is available for writing.
+                     "Exception": 
+                       If the socket has entered an error state or
+                       the remote host has dropped the connection.
+                     "Any": 
+                       This is shorthand for "any of the above"
+                 - the call returns enum describing the 
+                   availability of the socket (eg. readable, 
+                   writable, or exception) masked against the 
+                   input "what" enum list.  
+                 - the call is blocking if the timeout is any 
+                   positive value.  It blocks forever (no timeout)
+                   if the timeout value is < 0.0.  The wait method
+                   can be used for polling if the timeout is set to
+                   zero.  The wait method will only check for the
+                   ActivityType that is specified in the call (and
+                   ignore all other issues).
+  
+  
+      - getSecurityInfo
+        Purpose: Gets a security info object from an OPEN 
+                 (connected) 
+        Format:  getSecurityInfo      (out SecurityInfo info);
+        Inputs:  none
+        Outputs: info:                 a SecurityInfo object.
+        Throws:  IncorrectState        no sec. info on that stream
+                 NoSuccess:            failure while obtaining 
+                                       sec. info
+        Notes:   - throws IncorrectState exception or <null> 
+                   SecurityInfo object returned if the security 
+                   info is inapplicable (non-authenticated sockets)
+  
+  
+    interface SecurityInfo:  
+        
+      SecurityInfo encapsulates information about the host or
+      authenticated user on the other end of a stream/socket
+      connection.
+      
+      The information encapsulated by this object can be used to
+      make authorization/access-control decisions based on the
+      identity of the remote user or host. 
+      
+      The SecurityInfo is an opaque structure that can be
+      interrogated (via a different api) to determine the identity
+      of the connected host.  This information is essential for
+      supporting Authorization and access control mechanisms.
+      convenience functions that encode some of the most commonly
+      required information used to make authorization decisions.
+      Additional information that can be used to make authorization
+      decisions or provide other identifying features for the
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 51
+
+
+      remotely connected host or user can be interrogated using the
+      SAGA "parameters" API that the SecurityInfo object
+      implements.  These parameters are always interrogated as
+      string-based Key-value pairs.
+  
+      - getSourceUserName
+        Purpose: Gets the username associated with the remotely
+                 connected socket (if available).  
+        Format:  getSourceUserName    (out string username);
+        Inputs:  none
+        Outputs: username:             username assoc with remote 
+                                       connection
+        Throws:  nothing
+        Notes:   - returns NULL string if UserName not available.
+    
+      - getSourceDN
+        Purpose: Gets the distinguished name associated with the 
+                 remotely connected socket (if available).  
+        Format:  getSourceDN          (out string dn);
+        Inputs:  none
+        Outputs: dn                    Distinguished Name assoc 
+                                       with remote connection
+        Throws:  nothing
+        Notes:   - returns NULL string if that information is not 
+                   available.
+    
+      - getSourceHost
+        Purpose: Gets the hostname of the other side of 
+                 connected stream (if available).  
+        Format:  getSourceHost        (out string hostname);
+        Inputs:  none
+        Outputs: hostname:             hostname assoc with remote 
+                                       connection
+        Throws:  nothing
+        Notes:   - returns NULL string if that information is not 
+                   available.
+    
+      - getSourcePort
+        Purpose: Gets the portnumber of the other side of 
+                 connected stream (if available).  
+        Format:  getSourcePort        (out int port);
+        Inputs:  none
+        Outputs: port:                 portnumber assoc with remote 
+                                       connection
+        Throws:  nothing
+        Notes:   - returns '0' if that information is not 
+                   available.
+    
+    
+    interface StreamServer: 
+    
+      The StreamServer object establishes a listening/server object
+      that waits for client connections.  It can *only* be used as
+      a factory for Server sockets.  It doesnt do any read/write
+      I/O.
+    
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 52
+
+
+      - create
+        Purpose: Constructor, to create a new StreamServer object
+        Format:  createStreamServer   (in  string       url,
+                                       in  Context      ctx,
+                                       out StreamServer stream); 
+        Inputs:  url:                  channel name or url, 
+                                       defines the source side 
+                                       binding for the stream 
+                                       (eg. the port number for 
+                                       the service)
+                 ctx:                  encapsulates the SAGA 
+                                       context information.   
+        Outputs: stream:               new StreamServer object
+        Throws:  NoSuccess:            stream creation failed
+        Notes:   - returns NULL StreamServer object on error
+                 - the context is primarily used to hide the 
+                   security information necessary to establish 
+                   authenticated connections.
+                 - Context is not yet defined in the SAGA Strawman
+                   API (TODO)
+  
+  
+      - destroy
+        Purpose: Destructor for StreamServer object.  
+        Format:  destroyStreamServer  (in StreamServer stream)
+        Inputs:  stream:               streamServer object to be
+                                       destroyed
+        Outputs: none
+        Throws:  nothing
+        Notes:   - the call cleans up any memory used by the 
+                   StreamServer object in addition to closing the 
+                   service port.
+  
+  
+      - waitForConnection
+        Purpose: wait for incoming client connections
+        Format:  waitForConnection    (in  double timeout, 
+                                       out Stream client);
+        Inputs:  timeout:              number of seconds to wait 
+                                       for client
+        Outputs: client:               new Connected Stream object 
+        Throws:  NoSuccess:            client stream creation 
+                                       failed
+                 IncorrectState        server stream is not able to
+                                       accept connections
+                 Timeout               timeout
+        Notes:   - supports either blocking or polling for new 
+                   client connections.  
+                 - if successful, it returns a new Stream object
+                   that is connected to the client.  
+                 - unlike new client streams, the new connection is
+                   return in the "Connected" state. 
+                 - returns NULL or equivalent if it times out.
+                 - returns NULL or equivalent if connection setup
+                   failed
+                 - timeout < 0.0 wait forever
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 53
+
+
+                 - timeout > 0.0 wait this number of seconds 
+                 - timeout = 0.0 poll and return immediately.
+        
+      - getURL
+        Purpose: get URL to be used to connect to serverStream
+        Format:  getURL               (pout String url);
+        Inputs:  none
+        Outputs: url:                  String containing the URL 
+                                       of the connection.
+        Thorws:  nothing 
+        Notes:   - this is the URL which can be passed to 
+                   Stream constructor to create a connection to 
+                   this StreamServer.
+            
+            
+    interface Stream.Multiplexer: 
+    
+      This is used to multiplex or gang-wait for activity on
+      multiple stream connections.
+    
+      - watch
+        Purpose: start watching for a particular kind of activity 
+                 on a given stream.
+        Format:  watch                (in Stream stream, 
+                                       in array<ActivityType,1> 
+                                                            what);
+        Inputs:  stream:               stream object to watch
+                 what:                'wait' will check on these 
+                                       conditions.
+        Outputs:  <nothing>
+        Throws:   Throws exception or returns error code if 
+                  multiplexor or stream is invalid
+        Notes:  - This adds the given stream to to the internal 
+                  list of streams that the Multiplexor is watching
+                - 'wait' will only check for conditions lited in
+                  the "what" parameter list (possibly a bitmask in
+                  some language bindings).  The options are "Read":
+                  The socket has pending data available for
+                  reading.  "Write": The socket is available for
+                  writing.  "Exception": If the socket has entered
+                  an error state or the remote host has dropped the
+                  connection.  "Any": This is shorthand for "any of
+                  the above"
+        
+      - unwatch      
+        Purpose: stop watching for activities on the given stream.
+        Format:  unwatch              (in Stream stream);
+        Inputs:  stream:               stream to remove from the 
+                                       watch list
+        Outputs: none
+        Throws:  NoExist               given stream is not watched
+        Notes:   - Remove this stream from the internal
+                   list of streams being watched by this particular
+                   multiplexor object.
+        
+      - wait
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 54
+
+
+        Purpose: Gang-wait for activity on any of the streams
+                 being watched by this multiplexor.
+        Format:  wait                 (in  double         timeout,
+                                       out array<Stream,1>streams);
+        Inputs:  timeout:              number of seconds to wait
+        Outputs: streams:              array of streams that have 
+                                       activity.
+        Throws:  NoSuccess:            error on 'select' etc.
+                 StreamDied:           one of the watched streams 
+                                       has died
+        Notes:   - timeout < 0.0 wait forever
+                 - timeout > 0.0 wait time for that many seconds
+                 - timeout = 0.0 poll and return immediately
+                 - streams array is empty on timeout
+      
+  +-------------------------------------------------------------+
+  
+  
+  Examples:
+  =========
+    Sample SSL/Secure Client:  
+      Opens a stream connection using native security Security 
+      context is passed in implicitly via a global SAGA Context 
+      (GSI or SSL security)
+      
+      // C++/JAVA Style
+         int recvlen;
+         SAGA::Stream s;
+         
+         Stream s("localhost:5000");
+         
+         s.connect ();
+         s.write   ("Hello World!", 12);
+         
+         // blocking read, read up to 128 bytes
+         recvlen = s.read (buffer, 128); 
+  
+      /* C Style */
+         int recvlen;
+         SAGAStream *s;
+  
+         SAGAStreamOpen ("localhost:5000", &s);
+  
+         SAGAStreamConnect (s);
+         SAGAStreamWrite   (s, "Hello World!", 12);
+         
+         /* blocking read, read up to 128 bytes */
+         recvlen = SAGAStreamRead (s,buffer,128); 
+  
+       c  Fortran Style */
+          INTEGER   err,SAGAStrRead,SAGAStrWrite,err
+          INTEGER*8 SAGAStrOpen,streamhandle
+          CHARACTER buffer(128)
+          SAGAStrOpen("localhost:5000",streamhandle)
+          call SAGAStrConnect(streamhandle)
+          err = SAGAStrWrite(streamhandle,"localhost:5000",12)
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 55
+
+
+          err = SAGAStrRead(streamhandle,buffer,128)
+  
+    Sample Secure Server:  
+      Once a connection is made, the server can use information 
+      about the authenticated client to make an authorization 
+      decision
+      
+       // C++/JAVA Style
+          SAGA::StreamServer server;
+          SAGA::Stream       client;
+          SAGA::SecurityInfo secinfo;
+          int done = 0;
+          
+          StreamServer server("5000");
+          
+          // now wait for a connection (normally in a loop)
+          do {
+            string value;
+            // wait forever for connection
+            server.waitForConnection (-1.0, client); 
+  
+            // get the distinguished name (DN)
+            client.getSecurityInfo (secinfo);
+            client.getAttribute    ("DN",value); 
+            
+            // and then use it to make an authorization decision
+            if ( value.size () <= 0 || 
+                 value != authorized_dn ) 
+            {
+              // not allowed
+              SAGA::StreamClose (client);
+            }
+            else 
+            { 
+              // allowed
+              done = 1;
+            }
+          } while ( ! done );
+  
+          // start activity on client socket...
+  
+    Sample Multiplexor Example
+    
+       // C++/JAVA Style
+          SAGA::Multiplexor         mux;
+          SAGA::Stream              clientA, clientB, clientC;
+          std::vector<SAGA::Stream> ready_clients;
+          
+          // assume that clients A, B, and C have been opened 
+          // and are active
+  
+          // watch to see if clientA is ready to write
+          mux.watch (clientA, SAGA::ActivityType::Write); 
+  
+          // watch to see if clientB is ready to read
+          mux.watch (clientB, SAGA::ActivityType::Read); 
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 56
+
+
+          
+          // watch if there is an exception or if client C is 
+          // ready to read or write
+          mux.watch (clientC, SAGA::ActivityType::Any); 
+          
+          // returns list of clients that are ready or nil if 
+          // the wait times out after 5.5 seconds.
+          mux.wait (5.5, ready_clients); 
+  
+  
+  +-------------------------------------------------------------+
+  
+  
+  Notes:
+  ======
+  
+    We need to do something with a SAGA context and security
+    contexts.
+  
+      SAGAcontext: This is an opaque datastructure that is used
+                   throughout the SAGA APIs.  It hides key state 
+                   information such as the security context and 
+                   other shared data.  It is passed in explicitly 
+                   in order to support thread safety.
+  
+  
+  +-------------------------------------------------------------+
+  
+     #
+    # #   ##### ##### #####   #  #####  #    # ##### ######  ####
+   #   #    #     #   #    #  #  #    # #    #   #   #      #
+  #     #   #     #   #    #  #  #####  #    #   #   #####   ####
+  #######   #     #   #####   #  #    # #    #   #   #           #
+  #     #   #     #   #   #   #  #    # #    #   #   #      #    #
+  #     #   #     #   #    #  #  #####   ####    #   ######  ####
+    
+  +-------------------------------------------------------------+
+  
+  
+  Summary:
+  ========
+  
+    There are various places in the SAGA APIs where attributes need
+    to be associated with objects, for instance job descriptions.
+    This API provides a common interface for storing and retrieving
+    attributes.
+  
+  +-------------------------------------------------------------+
+  
+  Use Cases:
+  ==========
+  
+    Not applicable here;  this is not a first class API.
+  
+  +-------------------------------------------------------------+
+  
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 57
+
+
+  
+  API Summary:
+  ============
+  
+  API Summary:
+  
+    package SAGA version 0.1 {
+  
+      interface Attribute {
+        setAttribute       (in  string key, in  string value);
+        getAttribute       (in  string key, out string value);
+        setVectorAttribute (in  string key, in  array<string,1> 
+                                                           values);
+        getVectorAttribute (in  string key, out array<string,1> 
+                                                           values);
+        listAttributes     (out array<string,1> keys);
+        removeAttribute    (in  string key);
+      }
+    }
+  
+  +-------------------------------------------------------------+
+  
+  
+  API Detail:
+  ===========
+  
+    interface Attribute:
+  
+      - setAttribute
+        Purpose: set an attribute to a value.
+        Format:  setAttribute         (in string key, 
+                                       in string value);
+        Inputs:  key:                  attribute key
+                 value:                value to set the attribute 
+                                       to,
+        Outputs: none
+        Throws:  ReadOnlyAttribute:    attribute is read-only,
+                                       e.g. it is provided for 
+                                       informational purposes
+                                       by the underlying 
+                                       implementation.
+        Notes:   - a value of NULL means to remove the attribute
+        
+      - getAttribute
+        Purpose: get an attributes value
+        Format:  getAttribute         (in  string key, 
+                                       out string value);
+        Inputs:  key:                  attribute key
+        Outputs: value:                value of the attribute
+        Throws:  NoSuchKey:            key does not exist
+        
+      - setVectorAttribute
+        Purpose: set an attribute to an array of values.
+        Format:  setVectorAttribute   (in string          key, 
+                                       in array<string,1> values);
+        Inputs:  key:                  attribute key
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 58
+
+
+                 values:               array of values for the 
+                                       attribute
+        Outputs: none
+        Throws:  nothing
+        
+      - getVectorAttribute
+        Purpose: get the array of values assocaited with an 
+                 attribute
+        Format:  getVectorAttribute   (in string           key, 
+                                       out array<string,1> values);
+        Inputs:  key:                  attribute key
+        Outputs: values:               array of values of the 
+                                       attribute. 
+        Throws:  NoSuchKey:            key does not exist
+        Notes:   - the returned array is NULL if key does not exist
+  
+      - listAttributes
+        Purpose: Get the list of attribute keys.
+        Format:  listAttributes       (out array<string,1> keys);
+        Inputs:  none
+        Outputs: keys:                 array containing all 
+                                       attribute keys
+        Throws:  nothing
+  
+  +-------------------------------------------------------------+
+  
+  
+  Examples:
+  =========
+  
+    JobDefinition definition;
+    
+    definition.setAttribute ("SAGA_JobCmd", "/bin/ls");
+  
+    Array env = {"a = b", "c = d"};
+  
+    definition.setVectorAttribute ("SAGA_JobEnv", env);
+  
+  +-------------------------------------------------------------+
+  
+  
+  Notes:
+  ======
+  
+    If the attribute system was required to maintain some
+    enumerated types we would need a sub-package to maintain the
+    types.
+    
+    We discussed two possible enumerated types:  mode, which would
+    say whether an attribute is writeable or not, and typeclass,
+    describing the basic type of an attribute.  These interfaces
+    were removed for the moment, in the interests of simplicity.
+    The behaviour of the attributes should be documented rather
+    than introspected or discovered at this stage of the API
+    evolution.
+  
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 59
+
+
+    package AttributeSystem version 0.1 {
+  
+      enum AttributeMode {
+        Read, Write
+       };
+  
+      getAttributeMode (in string key, out AttributeMode mode);
+  
+      enum AttributeTypeClass {
+         string,
+         int, 
+         real, 
+         date, 
+         boolean
+      };
+      
+      getAttributeTypeClass (in  string            key, 
+                             out AttributTypeClass type);
+    }
+  
+  
+  +-------------------------------------------------------------+
+  
+            #######
+            #        #####   #####    ####   #####
+            #        #    #  #    #  #    #  #    #
+            #####    #    #  #    #  #    #  #    #
+            #        #####   #####   #    #  #####
+            #        #   #   #   #   #    #  #   #
+            #######  #    #  #    #   ####   #    #
+  
+  +-------------------------------------------------------------+
+  
+  
+  Summary:
+  ========
+  
+    <What the target usage is for this interface>
+    <Motivation>
+    
+    Classify exceptions; language specific binding rep.
+  
+  +-------------------------------------------------------------+
+  
+  
+  Use Cases:
+  ==========
+    
+    <Enumeration of use cases which require this API>
+    <Optionally say context in which it is needed.>
+    
+  +-------------------------------------------------------------+
+  
+  
+  API Summary:
+  ============
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 60
+
+
+  
+    <What is currently in file>
+    <Use/consider SIDL>
+    
+    package SAGA version 0.1 {
+  
+      interface Exception extends sidl.SIDLException {
+      }
+    } 
+  
+  +-------------------------------------------------------------+
+  
+  
+  API Detail:
+  ===========
+    
+    <For every method call what it means from a semantic
+    standpoint> 
+    <Maybe notes about bindings>
+  
+  
+  +-------------------------------------------------------------+
+  
+  
+  Examples:
+  =========
+  
+    <Examples in pseudocode>
+    
+    <C++ ish with ellipsis>
+    
+    <Maybe with some in Fortran or other languages>
+  
+  
+  +-------------------------------------------------------------+
+  
+            #######
+               #       ##     ####   #    #   ####
+               #      #  #   #       #   #   #
+               #     #    #   ####   ####     ####
+               #     ######       #  #  #         #
+               #     #    #  #    #  #   #   #    #
+               #     #    #   ####   #    #   ####
+            
+  +-------------------------------------------------------------+
+  
+  
+  Summary:
+  ========
+  
+  Operations performed in widely distributed environments may take
+  a long time to complete, and thus it is desirable to have the
+  ability to perform operations in an asynchronous manner.  There
+  are many possible ways in which an asynchronous API may be
+  developed --- the notes for this API contain several
+  possibilities.
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 61
+
+
+  
+  The main requirements the SAGA design team faced were ease of
+  implementation in different languages, the ability to be
+  implemented in a single-threaded environment, generality and ease
+  of use.
+  
+  This document defines an API and a pattern which associates a
+  'task' with each outstanding asynchronous operation.  Each task
+  represents an asynchronous version of one SAGA API method, and
+  may have no one-to-one correspondence with any external process,
+  such as a job.
+  
+  +-------------------------------------------------------------+
+  
+  
+  Use Cases:
+  ==========
+  
+  <Enumeration of use cases which require this API>
+  <Optionally say context in which it is needed.>
+  
+  +-------------------------------------------------------------+
+  
+  
+  API Summary:
+  ============
+  
+    package SAGA version 0.1 {
+  
+      package TaskSubsystem {
+  
+        enum State {
+          Pending   = 0,
+          Running   = 1,
+          Finished  = 2,
+          Cancelled = 3
+        };
+  
+        interface Task {
+          run      ();
+          wait     (in  double  timeout,
+                    out boolean finished);
+          cancel   ();
+          getState (out State   state);
+        }
+  
+  
+        class TaskContainer {
+          addTask    (in  Task          task);
+          removeTask (in  Task          task);
+          wait       (in  double        timeout,
+                      out array<Task,1> finished);
+          listTasks  (out array<Task,1> tasks);
+        }
+      }
+    }
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 62
+
+
+  
+  +-------------------------------------------------------------+
+  
+  
+  API Detail:
+  ===========
+  
+    Each object in the SAGA API defines a createTaskFactory method,
+    which creates a corresponding factory object implementing the
+    same set of methods as the original object, but returning a
+    SAGA.TaskSubsystem.Task object.
+  
+    E.g. the SAGA.PhysicalFile.Directory class has a corresponding
+    SAGA.PhysicalFile.DirectoryTaskFactory class, objects of which
+    are instantiated by invoking Directory.createTaskFactory.  This
+    DirectoryTaskFactory object has the same methods as those of
+    the Directory object; invoking any of these methods creates a
+    Task object representing an asynchronous call.
+  
+    'Out' arguments of API calls should not be accessed until the
+    asynchronous task has successfully completed; i.e. until 'wait'
+    has been invoked on the Task object and returned that the Task
+    has finished.
+  
+    enum State:
+  
+    A task can be in one of several possible states:
+  
+      Pending
+        The task has been created but not yet started.
+        Tasks start in this state.
+      Running
+        The run() method has been invoked on the task.
+      Finished
+        The asynchronous operation has finished.
+      Cancelled
+        The task has been cancelled.
+  
+  
+    interface Task:
+  
+      Objects with this interface represent asynchronous API calls.
+      They are only created by invoking a method on a TaskFactory
+      object; the invocation, either implicitly or explicitly, of
+      the destructor of a Task object does not cancel the
+      operation, merely detaches it.
+  
+      - run
+        Purpose: Start the asynchronous operation.
+        Format:  run ();
+        Inputs:  none
+        Outputs: none
+        Throws:  NotPending:           task is not in pending state
+  
+      - wait
+        Purpose: Wait for the task to finish.
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 63
+
+
+        Format:  wait                 (in  double  timeout,
+                                       out boolean finished);
+        Inputs:  timeout:              number of seconds to wait
+        Outputs: finished:             indicating ifthe task is 
+                                       finished
+        Throws:  NotRunning:           Task is not in running 
+                                       state.
+        Notes:   - timeout < 0.0 wait forever
+                 - timeout = 0.0 return immediately
+                 - timeout > 0.0 wait for this number of seconds
+  
+      - cancel
+        Purpose: Cancel the asynchronous operation.
+        Format:  cancel ();
+        Inputs:  none
+        Outputs: none
+        Throws:  nothing
+  
+      - getState
+        Purpose: Get the state of the task.
+        Format:  getState             (out State state);
+        Inputs:  none
+        Outputs: state:                state of the task.
+        Throws:  nothing
+  
+  
+    class TaskContainer:
+  
+      When there are many asynchronous tasks it would be
+      inefficient to invoke the wait() method on each one
+      sequentially.  The TaskContainer class provides a mechanism
+      to wait for a set of tasks.
+  
+      - addTask
+        Purpose: Add a Task to a TaskContainer.
+        Format:  addTask              (in Task task);
+        Inputs:  task:                 task to add to the 
+                                       TaskContainer
+        Outputs:
+        Throws:
+  
+      - removeTask
+        Purpose: Remove a Task from a TaskContainer.
+        Format:  removeTask           (in Task task);
+        Inputs:  task:                 task to remove from the
+                                       TaskContainer
+        Outputs: none
+        Throws:  NoSuchTask:           task is not in container
+  
+      - wait
+        Purpose: Wait for one or more of the tasks to finish.
+        Format:  wait                 (in  double        timeout,
+                                       out array<Task,1> finished);
+        Inputs:  timeout:              number of seconds to wait
+        Outputs: finished:             array of tasks which have 
+                                       finished
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 64
+
+
+        Throws:  nothing
+        Notes:   - > 0.0 wait forever
+                 - = 0.0 return immediately
+                 - > 0.0 wait for this number of seconds
+  
+      - listTasks
+        Purpose: Get the tasks in the task TaskContainer.
+        Format:  getTasks             (out array<Task,1> tasks);
+        Outputs: tasks:                array of Tasks in 
+                                       TaskContainer
+        Throws:  nothing
+  
+  
+  +--------------------------------------------------------------+
+  
+  
+  Examples:
+  =========
+  
+    Directory dir;
+    Job job;
+  
+    ...
+  
+    /* Create Task factories */
+    DirectoryTaskFactory dtf = dir.createTaskFactory ();
+    JobTaskFactory jtf = job.createTaskFactory ();
+  
+    /* Create Tasks */
+    Task t1 = dtf.ls         (result);
+    Task t2 = dtf.copy       (source,target);
+    Task t3 = dtf.move       (source,target);
+    Task t4 = jtf.checkpoint ();
+    Task t5 = jtf.signal     (USR);
+  
+    /* Start Tasks */
+    t1.run ();
+    t2.run ();
+    t3.run ();
+    t4.run ();
+    t5.run ();
+  
+    TaskContainer tc;
+  
+    tc.addTask (t1);
+    tc.addTask (t2);
+    tc.addTask (t3);
+    tc.addTask (t4);
+    tc.addTask (t5);
+  
+    Array finished;
+  
+    tc.wait (timeout,finished);
+  
+    Array tasks;
+  
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 65
+
+
+    tc.listTasks(tasks);
+  
+    tc.removeTask (t5);
+  
+  
+  +-------------------------------------------------------------+
+  
+  
+  Notes:
+  ======
+  
+  We had six different task models, as shown in example form below.
+  Model (E) has no compile-time sanity checking.  Model (F) allows
+  only one asynchronous operation per object.  Once these models
+  were eliminated, the choice between the remaining four was a
+  matter of aesthetics as they all have equivalent functionality.
+  
+  The task container could have more methods to ease retrievel and
+  manipulation of tasks.  E.g. the ability to label tasks and
+  retrieve by label.
+  
+    -----------------------------
+    Directory dir = new SAGA_Directory ("foo://bar/baz")
+    Job       job = ...
+  
+    -----------------------------
+    Model A)
+  
+    In this model there is a Task class associated with each API
+    class, which is created by a createTask method.  Once a Task
+    object has been created the asynchronous operation is invoked
+    on it to associate an operation with the Task.
+  
+    /* Create Tasks */
+    DirTask dt1 = dir.createTask ();
+    DirTask dt2 = dir.createTask ();
+    DirTask dt3 = dir.createTask ();
+    JobTask jt1 = job.createTask ();
+    JobTask jt2 = job.createTask ();
+  
+    /* Invoke operations on Task Objects */
+    dt1.ls         ();
+    dt2.copy       (source,target);
+    dt3.move       (source,target);
+    jt1.checkpoint ();
+    jt2.signal     (USR);
+  
+    /* Start Tasks */
+    dt1.run ();
+    dt2.run ();
+    dt3.run ();
+    jt1.run ();
+    jt2.run ();
+  
+    -----------------------------
+    Model B)
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 66
+
+
+  
+    In this model there is a TaskFactory class associated with each
+    API class, which is created by a createTaskFactory method.
+    Once a TaskFactory object has been created the asynchronous
+    operation is invoked on it to create a Task object.
+  
+    /* Create Task factories */
+    DirTaskFactory dtf = dir.createTaskFactory ();
+    JobTaskFactory jtf = job.createTaskFactory ();
+  
+    /* Create Tasks */
+    Task t1 = dtf.ls         ();
+    Task t2 = dtf.copy       (source,target);
+    Task t3 = dtf.move       (source,target);
+    Task t4 = jtf.checkpoint ();
+    Task t5 = jtf.signal     (USR);
+  
+    /* Start Tasks */
+    t1.run ();
+    t2.run ();
+    t3.run ();
+    t4.run ();
+    t5.run ();
+  
+    -----------------------------
+    Model C)
+  
+    In this model there is an object as an attribute on each API
+    object.  Invoking an operation on this object creates a Task.
+  
+    /* Create Tasks */
+    Task t1 = dir.task.ls         ();
+    Task t2 = dir.task.copy       (source,target);
+    Task t3 = dir.task.move       (source,target);
+    Task t4 = job.task.checkpoint ();
+    Task t5 = job.task.signal     (USR);
+  
+    /* Start Tasks */
+    t1.run ();
+    t2.run ();
+    t3.run ();
+    t4.run ();
+    t5.run ();
+  
+    -----------------------------
+    Model D)
+  
+    In this model there is an equivalent for each API call which
+    creates an asynchronous task.
+  
+    /* Create Tasks */
+    Task t1 = dir.task_ls         ();
+    Task t2 = dir.task_copy       (source,target);
+    Task t3 = dir.task_move       (source,target);
+    Task t4 = job.task_checkpoint ();
+    Task t5 = job.task_signal     (USR);
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 67
+
+
+  
+    /* Start Tasks */
+    t1.run ();
+    t2.run ();
+    t3.run ();
+    t4.run ();
+    t5.run ();
+  
+    -----------------------------
+    Model E)
+  
+    In this model, there is a getTask method associated with each
+    API object, which creates a Task given a string argument
+    defining the operation.
+  
+    /* Create Tasks */
+    Task t1 = dir.getTask ("ls");
+    Task t2 = dir.getTask ("copy",source,target);
+    Task t3 = dir.getTask ("move",source,target);
+    Task t4 = job.getTask ("checkpoint");
+    Task t5 = job.getTask ("signal",USR);
+  
+    /* Start Tasks */
+    t1.run ();
+    t2.run ();
+    t3.run ();
+    t4.run ();
+    t5.run ();
+  
+    -----------------------------
+    Model F)
+  
+    In this model, there is an asynchronous version of each API
+    call, and each API class has a 'wait' method.  As there is no
+    Task object, only one asynchronous operation may be outstanding
+    on any object.
+  
+    dir.async_ls         ();
+    job.async_checkpoint ();
+    job.wait             ();
+    dir.wait             ();
+    dir.async_copy       (source,target);
+    dir.wait             ();
+    dir.async_move       (source,target);
+    job.async_signal     (USR);
+    job.wait             ();
+    dir.wait             ();
+  
+  
+  
+  General:
+          - discuss factory patterns as possible general design choice for all
+            classes (see former version of stream api)
+  
+  John  - 1) Streams
+          - create examples
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 68
+
+
+          - explain using attributes to adjust stream options
+          - completed by Feb 13th.
+          2) Audit Files.  Beginning 13th Feb.
+          3) Collating use cases.
+  
+  Chris - 1) Resource and jobs
+          - some syntactic cleanup
+          - update notes
+          - fill out attribute descriptions
+          - investigate how to model streams (SIDL syntax)
+          - placeholders
+            - where they might be used, e.g. cwd
+          - check with Craig on poliyical correctness of summary
+          - where possible note where each attribute is applicable, 
+            e.g. in PBS, or condor or SGE, ...
+          - completed by Feb 13th.
+          2) Audit namespace, and files. Beginning 13th Feb.
+  
+  Andre - 1) Files and logical files
+          - add in relevent use cases
+          - completed by Feb 13th.
+          2) Distill and polish related APIs document
+          - incorporate notes from first design team meeting
+          - done by 16th Feb.
+          3) Compare and check relevant info from related API doc in strawman
+            "use cases" sections
+          - analysis of which use cases are addressed by which SAGA API.
+          - done by 13th Feb.
+  
+  Tom   - 1) audit streams.  Beginning 13th February.
+          2) README for strawman
+          - general boiler-plate
+          - executive summary
+          - high level view; charter
+          - use cases
+          - intro to doc
+          - By 13th feb.
+          3) Tasks
+          - Summary
+          - examples
+          - Finish by 13th Feb.
+          4) Attributes
+          - create examples
+          - Finish by 13th Feb. 
+          5) context
+          6) notes on utility API
+          7) LaTeX format
+          - use attributes as an example
+          - by 13th feb. 
+          8) LaTex template for use case document
+          - by 8th Feb.
+  
+  Gab   - 1) Related APIs document
+  
+  Shantenu - 1) General summary - start on wiki, move to CVS and gridforge:           
+                What use cases
+
+
+
+
+
+
+
+  2005-04-22 20:44      === GGF SAGA-RG - Strawman API ===       Page 69
+
+
+                What APIs
+                What areas
+                Collate other docs
+             2) Audit jobs
+             3) Schedule sessions [3 sessions]
+             4) Assist Andre's 2) & 3) 
+             5)   "    John's 3)
+             6) Audit Tasks.
+  Timescales:
+  
+  Send doc to GGF on 18th Feb.
+    - text doc, perhaps latex, but definitely latex by GGF.
+  
+  Try to send at least collated use cases as 'use case and app scenarios' doc.
+  
+  Gab + Andre doc -> 'requirements doc'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

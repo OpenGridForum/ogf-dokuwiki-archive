@@ -1,0 +1,467 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true]{microtype}
+\usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{comment}
+\usepackage{occi}
+\usepackage{lineno}   % adds line numbers, may be removed for non draft versions
+\linenumbers          % adds line numbers, may be removed for non draft versions
+\usepackage{verbatim} % adds verbatim options
+\usepackage{tabularx} % adds extended tabular formatting options
+\usepackage{listings}
+\usepackage{color}
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+
+\lstdefinelanguage{json}{
+  ndkeywords={String, Number, Boolean, Null, Object, Array},
+  ndkeywordstyle=\itshape
+}
+\lstset{
+   language=json,
+   basicstyle=\footnotesize,
+}
+
+\setlength{\headheight}{13pt}
+\pagestyle{fancy}
+
+% default sans-serif
+\renewcommand{\familydefault}{\sfdefault}
+
+% no lines for headers and footers
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% header
+\fancyhf{}
+\lhead{GFD-R}
+\rhead{\today}
+
+% footer
+\lfoot{occi-wg@ogf.org}
+\rfoot{\thepage}
+
+% paragraphs need some space...
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+
+% some space between header and text...
+\headsep 13pt
+
+\setcounter{secnumdepth}{4}
+
+\begin{document}
+
+% header on first page is different
+\thispagestyle{empty}
+
+Draft \hfill Andy Edmons, ICCLab, ZHAW \\
+OCCI-WG \hfill Thijs Metsch, Intel\\
+\rightline {\today}
+
+\vspace*{0.5in}
+
+\begin{Large}
+\textbf{Open Cloud Computing Interface -- Text Rendering}
+\end{Large}
+
+\vspace*{0.5in}
+
+\underline{Status of this Document}
+
+\input{include/status}
+
+\underline{Copyright Notice}
+
+Copyright \copyright Open Grid Forum (2015). All Rights Reserved.
+
+\underline{Trademarks}
+
+OCCI is a trademark of the Open Grid Forum.
+
+\underline{Abstract}
+
+\input{include/abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\input{include/introduction}
+
+\section{Notational Conventions}
+\input{include/notational}
+
+\section{Text rendering}
+
+This document presents the text-based renderings. To be complaint, OCCI implementations
+MUST implement the three renderings defined in sections \ref{sec:text}, \ref{sec:header} and \ref{sec:urilist}.
+
+\emph{The following specification of the text-based renderings is in the process of being
+deprecated and will be removed or significantly changed in the next MAJOR release of the standard.}
+
+The document is structured by defining base ABNFs, which can then be combined into renderings, which will
+be rendered over a protocol (e.g., HTTP) by the specific rendering definitions.
+
+\section{ABNF Definitions}
+
+For the following section of \ref{sec:renderings} these ABNF notations will be used.
+Implementations MUST hence implement the renderings according to these definitions.
+
+\subsection{Category ABNF}
+
+The following syntax MUST be used for \hl{Category} renderings:
+
+\begin{verbatim}
+Category             = "Category" ":" #category-value
+  category-value     = term
+                      ";" "scheme" "=" <"> scheme <">
+                      ";" "class" "=" ( class | <"> class <"> )
+                      [ ";" "title" "=" quoted-string ]
+                      [ ";" "rel" "=" <"> type-identifier <"> ]
+                      [ ";" "location" "=" <"> URI <"> ]
+                      [ ";" "attributes" "=" <"> attribute-list <"> ]
+                      [ ";" "actions" "=" <"> action-list <"> ]
+  term               = ( ALPHA | DIGIT ) *( ALPHA | DIGIT | "-" | "_" | "." )
+  scheme             = URI
+  type-identifier    = scheme term
+  class              = "action" | "mixin" | "kind"
+  attribute-list     = attribute-def
+                     | attribute-def *( 1*SP attribute-def)
+  attribute-def      = attribute-name
+                     | attribute-name
+                       "{" attribute-property *( 1*SP attribute-property ) "}"
+  attribute-property = "immutable" | "required"
+  attribute-name     = term
+  action-list        = action
+                     | action *( 1*SP action )
+  action             = type-identifier
+\end{verbatim}
+
+\subsection{Link ABNF}
+
+The following syntax MUST be used to represent OCCI \hl{Link} type
+instance references:
+
+\begin{verbatim}
+Link               = "Link" ":" #link-value
+  link-value       = "<" URI-reference ">"
+                    ";" "rel" "=" <"> resource-type <">
+                    [ ";" "self" "=" <"> link-instance <"> ]
+                    [ ";" "category" "=" link-type
+                      *( ";" link-attribute ) ]
+  term             = ( ALPHA | DIGIT ) *( ALPHA | DIGIT | "-" | "_" | "." )
+  scheme           = URI
+  type-identifier  = scheme term
+  resource-type    = type-identifier *( 1*SP type-identifier )
+  link-type        = type-identifier *( 1*SP type-identifier )
+  link-instance    = URI-reference
+  link-attribute   = attribute-name "=" ( token | quoted-string )
+  attribute-name   = term
+\end{verbatim}
+
+The following syntax MUST be used to represent OCCI \hl{Action}
+instance references:
+
+\begin{verbatim}
+ActionLink         = "Link" ":" #link-value
+  link-value       = "<" action-uri ">"
+                    ";" "rel" "=" <"> action-type <">
+  term             = ( ALPHA | DIGIT ) *( ALPHA | DIGIT | "-" | "_" | "." )
+  scheme           = URI
+  type-identifier  = scheme term
+  action-type      = type-identifier
+  action-uri       = URI "?" "action=" term
+\end{verbatim}
+
+\subsection{Attribute ABNF}
+
+\begin{verbatim}
+Attribute          = "X-OCCI-Attribute" ":" #attribute-repr
+  attribute-repr   = attribute-name "=" attribute-value
+  attribute-name   = ( ALPHA | DIGIT ) *( ALPHA | DIGIT | "-" | "_" | "." )
+  attribute-value  = ( string | number | bool | enum-val )
+  string           = quoted-string
+  number           = (int | float)
+  int              = *DIGIT
+  float            = *DIGIT "." *DIGIT
+  bool             = ("true" | "false")
+  enum-val         = string
+\end{verbatim}
+
+\subsection{Location ABNF}
+
+\begin{verbatim}
+Location      = "X-OCCI-Location" ":" location-value
+  location-value  = URI-reference
+\end{verbatim}
+
+\section{Renderings}
+\label{sec:renderings}
+
+The renderings defined in this section will be used in the specific text rendering defined in section \ref{sec:text} and \ref{sec:header}
+
+\subsection{Entity Instance Rendering}
+
+Entity instances MUST be rendered according to the following definitions.
+
+\subsubsection{Resource Instance Rendering}
+
+A \hl{Resource} instance MUST be rendered using the following definition:
+
+\begin{verbatim}
+  resource_rendering = 1*( Category CRLF )
+                        *( Link CRLF )
+                        *( Attribute CRLF )
+\end{verbatim}
+
+The rendering of a \hl{Resource} instance MUST represent any associated Action instances using the {\tt ActionLink CRLF}.
+
+\paragraph{Action Invocation Rendering}
+
+Upon an \hl{Action} invocation the client MUST send along the following definition:
+
+\begin{verbatim}
+  action_definition = 1( Category CRLF )
+                      *( Attribute CRLF )
+\end{verbatim}
+
+\subsubsection{Link Instance Rendering}
+
+A \hl{Link} instance MUST be rendered using the following definition:
+
+\begin{verbatim}
+  link_rendering = 1*( Category CRLF )
+                    *( ActionLink CRLF )
+                    *( Attribute CRLF )
+\end{verbatim}
+
+% HERE I AM
+
+\subsection{Category Instance Rendering}
+\label{sec:format_category_instance_rendering}
+
+A \hl{Category} instances MUST be rendered as defined below.
+
+\subsubsection{Kind Instance Rendering}
+\label{sec:format_kind}
+
+A \hl{Kind} instance MUST be rendered as a {\tt Category CRLF}.
+
+\subsubsection{Mixin Instance Rendering}
+\label{sec:format_mixin}
+
+A \hl{Mixin} instance MUST be rendered as a {\tt Category CRLF}.
+
+\subsubsection{Action Instance Rendering}
+\label{sec:format_action}
+
+An \hl{Action} instance MUST be rendered as a {\tt Category CRLF}.
+
+Note that an \hl{Action} instance MUST NOT have \hl{Link} and \hl{Action}s references.
+
+\subsection{Entity Collection Rendering}
+
+A collection of \hl{Resource} or \hl{Link} instances MUST be rendered as following:
+
+\begin{verbatim}
+  entity_collection_rendering = *( Location CRLF )
+\end{verbatim}
+
+\subsubsection{Resource Collection Rendering}
+
+see above
+
+\subsubsection{Link Collection Rendering}
+
+see above
+
+\subsection{Category Collection Rendering}
+
+For the Query interface the following \hl{Category} instance rendering MUST be used:
+
+\begin{verbatim}
+  category_collection_rendering = *( Category CRLF )
+\end{verbatim}
+
+\subsubsection{Kind Collection Rendering}
+
+see above
+
+\subsubsection{Mixin Collection Rendering}
+
+see above
+
+\subsubsection{Action Collection Rendering}
+
+see above
+
+\subsection{Attributes Rendering}
+
+\subsubsection{Entity Instance Attribute Rendering Specifics}
+
+For Entity instances the following model attribute name to attribute name rendering mappings MUST be used:
+
+\mytablefloat{
+  \label{tbl:link}
+  Entity attribute naming convention } {
+  \begin{tabular}{ll}
+    \toprule
+      Attribute         & Attribute name once rendered \\
+    \colrule
+      Entity.id         & occi.core.id \\
+      Entity.title      & occi.core.title \\
+      Resource.summary  & occi.core.summary \\
+      Link.target       & occi.core.target \\
+      Link.target.kind  & occi.core.target.kind \\
+      Link.source       & occi.core.source \\
+      Link.source.kind  & occi.core.source.kind \\
+    \botrule
+  \end{tabular}
+}
+
+\subsubsection{Mixin Instance Attribute Rendering Specifics}
+
+When rendering {\tt Mixin.depends} and {\tt Mixin.applies} to the {\tt rel} attribute in the \hl{Category} instance rendering,
+only {\tt Mixin.depends} value MUST be used. If {\tt Mixin.depends} contains multiple values, only the first value MUST
+be used.
+
+\subsubsection{Attribute Description Rendering}
+\label{sec:format_attribute_description}
+
+\hl{Attributes} MUST be rendered as defined by the {\tt Attribute CRLF}. If used, the {\tt pattern} model attribute
+MUST be represented as a string in the ERE \cite{ere} format.
+
+\section{OCCI Text Plain rendering}
+\label{sec:text}
+The OCCI Text plain rendering specifies a rendering of OCCI instance types in a simple text format.
+
+The rendering can be used to render OCCI instances independently of the
+protocol being used. Thus messages can be delivered by, e.g., the HTTP
+protocol as specified in \cite{occi:http_protocol}.
+
+The following media-types MUST be used for the OCCI Text plain rendering:
+
+  {\tt text/occi+plain}
+
+and
+
+  {\tt text/plain}
+
+Each entry in the body consists of a name followed by a colon (``:'') and the field value.
+
+\subsection{Example}
+
+The following example show an \hl{Entity} instance rendering using the Text plain rendering.
+
+\begin{verbatim}
+< Category: compute; \
+<     scheme="http://schemas.ogf.org/occi/infrastructure#" \
+<     class="kind";
+< Link: </users/foo/compute/b9ff813e-fee5-4a9d-b839-673f39746096?action=start>; \
+<     rel="http://schemas.ogf.org/occi/infrastructure/compute/action#start"
+< X-OCCI-Attribute: occi.core.id="urn:uuid:b9ff813e-fee5-4a9d-b839-673f39746096"
+< X-OCCI-Attribute: occi.core.title="My Dummy VM"
+< X-OCCI-Attribute: occi.compute.architecture="x86"
+< X-OCCI-Attribute: occi.compute.state="inactive"
+< X-OCCI-Attribute: occi.compute.speed=1.33
+< X-OCCI-Attribute: occi.compute.memory=2.0
+< X-OCCI-Attribute: occi.compute.cores=2
+< X-OCCI-Attribute: occi.compute.hostname="dummy"
+\end{verbatim}
+
+\section{OCCI Header Rendering}
+\label{sec:header}
+The following media-type MUST be used for the OCCI header Rendering:
+
+{\tt text/occi}
+
+While using this rendering the HTTP Protocol \cite{occi:http_protocol} MUST be used and the renderings
+MUST be placed in the HTTP Header. The body MUST contain the string ``OK'' on successful operations.
+
+The HTTP header fields MUST follow the specification in RFC 7230 \cite{rfc7230}. A header field consists of a name followed by a colon (``:'') and the field value.
+
+\textbf{Limitations}: HTTP header fields MAY appear multiple times in a HTTP request or response. In order to be OCCI compliant, the specification of multiple message-header fields according to RFC 7230 MUST be fully supported. In essence there are two valid representations of multiple HTTP header field values. A header field might either appear several times or as a single header field with a comma-separated list of field values. Due to implementation issues in many web frameworks and client libraries it is RECOMMENDED to use the comma-separated list format for best interoperability.
+
+HTTP header field values, which contain separator characters, MUST be properly quoted according to RFC~7230.
+
+Space in the HTTP header section of a HTTP request is a limited resource. By this, it is noted that many HTTP servers limit the number of bytes that can be placed in the HTTP header area. Implementers MUST be aware of this limitation in their own implementations and take appropriate measures so that truncation of header data does NOT occur.
+
+\subsection{Example}
+
+The following example shows an \hl{Entity} instance rendering using the Text header rendering.
+
+\begin{verbatim}
+< Category: compute; \
+    scheme="http://schemas.ogf.org/occi/infrastructure#" \
+    class="kind";
+< Link: </users/foo/compute/b9ff813e-fee5-4a9d-b839-673f39746096?action=start>; \
+    rel="http://schemas.ogf.org/occi/infrastructure/compute/action#start"
+< X-OCCI-Attribute: occi.core.id="urn:uuid:b9ff813e-fee5-4a9d-b839-673f39746096", \
+ occi.core.title="My Dummy VM", occi.compute.architecture="x86", \
+ occi.compute.state="inactive", occi.compute.speed=1.33, \
+ occi.compute.memory=2.0, occi.compute.cores=2, \
+ occi.compute.hostname="dummy"
+< OK
+\end{verbatim}
+
+\section{URI Listing Rendering}
+\label{sec:urilist}
+The following media-types MUST be used for the URI Rendering:
+
+{\tt text/uri-list}
+
+This rendering cannot render resource instances or Kinds or Mixins directly but just links to them. For concrete rendering of Kinds and Categories the Content-types \texttt{text/occi}, \texttt{text/plain} MUST be used. If a request is done with the \texttt{text/uri-list} in the Accept header, while not requesting for a Listing a Bad Request MUST be returned. Otherwise a list of resources MUST be rendered in \texttt{text/uri-list} format as defined in \cite{rfc2483}, which can be used for listing resource in collections or the name-space of the OCCI implementation.
+
+\section{Security Considerations}
+OCCI does not require that an authentication mechanism be used nor
+does it require that client to service communications are secured. It
+does RECOMMEND that an authentication mechanism be used and that where
+appropriate, communications are encrypted using HTTP over TLS. The
+authentication mechanisms that MAY be used with OCCI are those that
+can be used with HTTP and TLS. For further discussion see the
+appropriate section in \cite{occi:http_protocol}.
+
+\section{Glossary}
+\label{sec:glossary}
+\input{include/glossary}
+
+\section{Contributors}
+\input{include/contributors}
+
+\section{Intellectual Property Statement}
+\input{include/ip}
+
+\section{Disclaimer}
+\input{include/disclaimer}
+
+\section{Full Copyright Notice}
+\input{include/copyright}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\appendix
+
+\newpage
+\section{Change Log}
+\label{sec:change_log}
+
+The corrections introduced by the {\today} update are summarized below.
+This section describes the possible impact of the corrections on existing
+implementations and associated dependent specifications.
+
+\begin{itemize}
+  \item Relaxed rules on {\tt term} values allowing the use of: alphanumerical characters (a-zA-Z0-9),
+        ``\_'', ``-'' and ``.''.
+  \item Explicitly stated how {\tt Mixin.depends} and {\tt Mixin.applies} should be rendered to {\tt rel}
+        on \hl{Mixin} instances.
+\end{itemize}
+
+\end{document}

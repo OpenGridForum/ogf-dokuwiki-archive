@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from redmine.ogf.org/projects/urn-ogf/repository/revisions/master/raw/urn-ogf-network/perfSONAR-URNs.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:41:42 GMT -->
+<head>
+ 
+ 
+ <title>URNs - 
+ perfsonar-ps -
+ 
+ A short description of the URN scheme - 
+ A federated network performance monitoring framework - Google Project Hosting
+ </title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+ 
+ <meta name="ROBOTS" content="NOARCHIVE">
+ 
+ <link type="text/css" rel="stylesheet" href="http://www.gstatic.com/codesite/ph/806273160146606062/css/ph_core.css">
+ 
+ <link type="text/css" rel="stylesheet" href="http://www.gstatic.com/codesite/ph/806273160146606062/css/ph_detail.css" >
+ 
+</head>
+<body>
+    
+<div id="maincol">
+
+<div id="wikipage">
+<table>
+ <tr>
+ 
+ 
+ <td style="vertical-align:top; padding-left:5px">
+ 
+ <div id="wikiheader">
+ 
+ 
+ <span style="font-size:120%;font-weight:bold">URNs</span>
+ &nbsp;
+ <div> 
+ 
+ <i>A short description of the URN scheme</i>
+ 
+ 
+ 
+ <div id="wikiauthor" style="float:right">
+ Updated <span title="Thu Feb  4 13:02:40 2010">
+ Feb 4, 2010</span>
+ 
+ by Aaron Matthew Brown
+ 
+ </div>
+ </div>
+ </div>
+ 
+ <div id="wikicontent">
+ <div class="vt" id="wikimaincol">
+ <h1><a name="Benefits"></a>Benefits<a href="#Benefits" class="section_anchor"></a></h1><p>Currently, each element has a global identifier of some kind. For example, layer3 Interfaces have IP addresses and E2EMon links have a global name. However, each new style of global identifier requires some added code in the LS to handle summarization. URNs offer a standard way to uniquely describe these resources without having each type of element or each project defining its own style of identifier. </p><h1><a name="Typical_Use-Case"></a>Typical Use-Case<a href="#Typical_Use-Case" class="section_anchor"></a></h1><p>A user wishes to know what&#x27;s occurring between two hosts. He looks up the traceroute between two hosts. He might then consult the gLS to find the TSs containing information about each of those IPs. Using the TS, he looks up the network resources that those links/interfaces depend on (e.g. the layer2 or layer1 elements under a layer3 link), grabbing the identifier for each resource. He can then look up which MAs contain information on each identifier. </p><h1><a name="URNs"></a>URNs<a href="#URNs" class="section_anchor"></a></h1><p>URNs are globally unique identifiers that can be used to identify network elements no matter what technology they are. </p><p>The identifiers are constructed as Uniform Resource Names (URNs) in the RFC 2141. The namespace for the URN is &quot;ogf&quot; and the subnamespace is &quot;network&quot;. All identifiers must begin with &quot;urn:ogf:network:&quot; in this format. The remainder of the identifier consists of a series of &quot;name&quot; and &quot;value&quot; pairs. These fields provide the hierarchy and the flexibility offered by this schema. </p><p>There are five major fields defined for network entities: </p><ul><li>domain </li><li>node </li><li>port </li><li>link </li><li>path </li><li>service </li></ul><p>The <i>domain</i> field describes the &quot;administrative domain&quot; in which the <i>network</i> element is located. If this field is included, it will always be positioned first. The value is the globally unique DNS name for the domain. While other options exist for this value (e.g. AS number), the simplicity and availability of the former makes this more desirable. </p><p>The <i>node</i> field may be a &quot;host&quot;, &quot;router&quot;, or even a larger  abstraction such as a &quot;site&quot;.  The position of this element will always be second with respect to the <i>domain</i>.  There are no specific rules governing value of this element, allowing maximum flexibility when encoding. </p><p>The <i>port</i> field describes the interface between a <i>node</i> and a <i>link</i> and commonly describes Ethernet interfaces, IP interfaces, names, or listening TCP sockets.  The overall structure of the identifier will be dictated based on whether the interface is physical, logical constructed inside a single device or logically constructed across multiple devices. If the interface is physical or logically inside a single device, the field will appear after the <i>node</i>. If the interface is a logical interface for a domain, the field will appear after the <i>domain</i>. A prudent choice for the value is the physical interface from a networked device in the case of an interface in a physical device or a logical name for logical interfaces in a domain. </p><p>The <i>link</i> field can describe logical or physical <i>link_s, regardless of direction.  Bidirectional </i>link_s (both physical and logical) must appear directly after the <i>domain</i> designation since they will logically connect multiple <i>node_s.  Unidirectional </i>link_s, regardless of direction, will appear after <i>port</i> that is able to &quot;write&quot; that link. As in previous descriptions there is no constraint placed on the value but care should be taken to select a name with meaning to the overall infrastructure. </p><p>The <i>path</i> field can be used for circuits or other named paths. A domain can create an identifier for a <i>path</i> that is completely contained within the domain, or spans multiple domains. In either case, the <i>path</i> field must appear immediately after the <i>domain</i> field of the domain creating the identifier. The value can be anything but must be unique in the domain. </p><p>The <i>service</i> field is used in identifiers for software services offered by network elements. These can be used to describe high-level services like Web Services or low-level services like ICMP responders or optical converters. This field will appear after the field for the element providing the service. For example, a service offered by a domain would appear immediately after the <i>domain</i> field. The value can be anything, but should be a human-readable description of the service provided. </p><h1><a name="Examples"></a>Examples<a href="#Examples" class="section_anchor"></a></h1><p><table class="wikitable"><tr><td style="border: 1px solid #ccc; padding: 5px;">Type</td><td style="border: 1px solid #ccc; padding: 5px;">URN</td></tr> <tr><td style="border: 1px solid #ccc; padding: 5px;">Domain</td><td style="border: 1px solid #ccc; padding: 5px;">urn:ogf:network:domain=internet2.edu</td></tr> <tr><td style="border: 1px solid #ccc; padding: 5px;">Host</td><td style="border: 1px solid #ccc; padding: 5px;">urn:ogf:network:domain=internet2.edu:node=packrat</td></tr> <tr><td style="border: 1px solid #ccc; padding: 5px;">Bidirectional Link</td><td style="border: 1px solid #ccc; padding: 5px;">urn:ogf:network:domain=internet2.edu:link=WASH_to_ATLA</td></tr> <tr><td style="border: 1px solid #ccc; padding: 5px;">Interface</td><td style="border: 1px solid #ccc; padding: 5px;">urn:ogf:network:domain=internet2.edu:node=packrat:port=eth0</td></tr> <tr><td style="border: 1px solid #ccc; padding: 5px;">Logical Interface</td><td style="border: 1px solid #ccc; padding: 5px;">urn:ogf:network:domain=internet2.edu:port=Interface_To_Geant</td></tr> <tr><td style="border: 1px solid #ccc; padding: 5px;">Service</td><td style="border: 1px solid #ccc; padding: 5px;">urn:ogf:network:domain=internet2.edu:node=packrat:service=Optical_Converter</td></tr> <tr><td style="border: 1px solid #ccc; padding: 5px;">Unidirectional Link</td><td style="border: 1px solid #ccc; padding: 5px;">urn:ogf:network:domain=internet2.edu:node=packrat:port=eth0:link=WASH_to_ATLA</td></tr> <tr><td style="border: 1px solid #ccc; padding: 5px;">Circuit</td><td style="border: 1px solid #ccc; padding: 5px;">urn:ogf:network:domain=internet2.edu:path=IN2P3_Circuit</td></tr> </table></p><h1><a name="Schema_Changes"></a>Schema Changes<a href="#Schema_Changes" class="section_anchor"></a></h1><p>Looking through the schema directory in the nmwg repo, I pulled out all the relevant subjects. There is a variety of ways to represent topology information in those files. There are two topology namespaces in use 2.0 and 3.0. None of the 2.0 elements have an identifier attribute. Most of the 3.0 elements have an &#x27;id&#x27; field that could contain a URN. The notable exception is the L4Endpoint. The E2EMon subjects may be problematic since they use the &#x27;id&#x27; field. </p><p>Examples of the various subjects are below. </p><p>From the look of it, an id attribute would be trivial to add to the 2.0 interface element. The endPoint element in the 2.0 schema could be extended to have an id attribute as well. </p><p>The 3.0 endPoint schema is a bit harder to modify since the contents of the endPoint can be either an address or a full interface. The interface already has an id attribute, but the address element does not. The address element appears in other locations so adding an id attribute to only that element would make it differ from any other address element in the namespace. I&#x27;m not sure if there&#x27;s a good way of saying &quot;an id attribute can exist in the endPoint element, but only if the contents are not an interface.  </p><p>Modified Instances: </p><p>2.0 - EndPoint </p><pre class="prettyprint">&lt;nmwgt:endPoint type=&quot;ipv4&quot; port=&quot;80&quot; value=&quot;10.0.0.51&quot; id=&quot;urn:ogf:network:domain=dcn.internet2.edu:node=packrat:port=eth0&quot; /&gt;</pre><p>2.0 - Interface </p><pre class="prettyprint">&lt;nmwgt:interface id=&quot;urn:ogf:network:domain=dcn.internet2.edu:node=packrat:port=eth0&quot;&gt;</pre><p>3.0 - endPoint </p><pre class="prettyprint">&lt;nmwgt:endPoint role=&quot;src&quot; port=&quot;80&quot; protocol=&quot;tcp&quot; id=&quot;urn:ogf:network:domain=dcn.internet2.edu:node=packrat:port=eth0&quot;&gt;
+  &lt;nmtl4:address type=&quot;ipv4&quot; value=&quot;10.0.0.61&quot; /&gt;
+&lt;/nmwgt:endPoint&gt;</pre><p>Normal Instances: </p><p>2.0 - EndPointPair </p><pre class="prettyprint">&lt;nmwgt:endPointPair&gt;
+  &lt;nmwgt:src type=&quot;ipv4&quot; value=&quot;10.0.1.50&quot; /&gt;
+  &lt;nmwgt:dst type=&quot;ipv4&quot; value=&quot;10.20.22.23&quot; /&gt;
+&lt;/nmwgt:endPointPair&gt;</pre><p>2.0 - EndPoint </p><pre class="prettyprint">&lt;nmwgt:endPoint type=&quot;ipv4&quot; port=&quot;80&quot; value=&quot;10.0.0.51&quot; /&gt;</pre><p>2.0 - Interface </p><pre class="prettyprint">&lt;nmwgt:interface&gt;
+  &lt;nmwgt:ipAddress type=&quot;ipv4&quot;&gt;10.0.0.1&lt;/nmwgt:ipAddress&gt;
+  &lt;nmwgt:hostName&gt;mit.edu&lt;/nmwgt:hostName&gt;
+  &lt;nmwgt:ifDescription&gt;OC129 to Internet2&lt;/nmwgt:ifDescription&gt;
+  &lt;nmwgt:ifAddress type=&quot;ipv4&quot;&gt;10.50.5.1&lt;/nmwgt:ifAddress&gt;
+  &lt;nmwgt:ifHostName&gt;something.es.net&lt;/nmwgt:ifHostName&gt;
+  &lt;nmwgt:ifIndex&gt;10&lt;/nmwgt:ifIndex&gt;
+  &lt;nmwgt:type&gt;?&lt;/nmwgt:type&gt;&gt;
+  &lt;nmwgt:direction&gt;?&lt;/nmwgt:direction&gt;
+  &lt;nmwgt:authRealm&gt;?&lt;/nmwgt:authRealm&gt;
+  &lt;nmwgt:classOfService&gt;?&lt;/nmwgt:classOfService&gt;
+  &lt;nmwgt:capacity&gt;1000000000000&lt;/nmwgt:capacity&gt;
+&lt;/nmwgt:interface&gt;</pre><p>3.0 - L4 EndPointPair (2 forms: 1 L3 interface, or 1 L4 address) </p><pre class="prettyprint">&lt;nmwgt:endPointPair&gt;
+  &lt;nmwgt:endPoint role=&quot;src&quot; port=&quot;80&quot; protocol=&quot;tcp&quot;&gt;
+    &lt;nmtl4:address type=&quot;ipv4&quot; value=&quot;10.0.0.61&quot; /&gt;
+  &lt;/nmwgt:endPoint&gt;
+  &lt;nmwgt:endPoint role=&quot;dst&quot; type=&quot;ipv4&quot; value=&quot;blah.mit.edu&quot;&gt;
+    &lt;nmtl3:interface id=&quot;&quot;&gt;
+      &lt;nmtl3:ipAddress type=&quot;ipv4&quot;&gt;10.0.0.1&lt;/nmtl3:ipAddress&gt;
+      &lt;nmtl3:netmask&gt;255.255.255.0&lt;/nmtl3:netmask&gt;
+      &lt;nmtl3:ifName&gt;eth0&lt;/nmtl3:ifName&gt;
+      &lt;nmtl3:ifDescription&gt;OC129 to Internet2&lt;/nmtl3:ifDescription&gt;
+      &lt;nmtl3:ifAddress type=&quot;ipv4&quot;&gt;10.50.5.1&lt;/nmtl3:ifAddress&gt;
+      &lt;nmtl3:ifHostName&gt;something.es.net&lt;/nmtl3:ifHostName&gt;
+      &lt;nmtl3:ifIndex&gt;10&lt;/nmtl3:ifIndex&gt;
+      &lt;nmtl3:type&gt;?&lt;/nmtl3:type&gt;
+      &lt;nmtl3:capacity&gt;1000000000000&lt;/nmtl3:capacity&gt;
+    &lt;/nmtl3:interface&gt;
+  &lt;/nmwgt:endPoint&gt;
+&lt;/nmwgt:endPointPair&gt;</pre><p>3.0 - L4Endpoint - Two Forms </p><pre class="prettyprint">&lt;nmwgt:endPoint role=&quot;src&quot; port=&quot;80&quot; protocol=&quot;tcp&quot;&gt;
+  &lt;nmtl4:address type=&quot;ipv4&quot; value=&quot;10.0.0.61&quot; /&gt;
+&lt;/nmwgt:endPoint&gt;</pre><blockquote>or 
+<pre class="prettyprint">&lt;nmwgt:endPoint role=&quot;dst&quot; type=&quot;ipv4&quot; value=&quot;blah.mit.edu&quot;&gt;
+  &lt;nmtl3:interface id=&quot;&quot;&gt;
+    &lt;nmtl3:ipAddress type=&quot;ipv4&quot;&gt;10.0.0.1&lt;/nmtl3:ipAddress&gt;
+    &lt;nmtl3:netmask&gt;255.255.255.0&lt;/nmtl3:netmask&gt;
+    &lt;nmtl3:ifName&gt;eth0&lt;/nmtl3:ifName&gt;
+    &lt;nmtl3:ifDescription&gt;OC129 to Internet2&lt;/nmtl3:ifDescription&gt;
+    &lt;nmtl3:ifAddress type=&quot;ipv4&quot;&gt;10.50.5.1&lt;/nmtl3:ifAddress&gt;
+    &lt;nmtl3:ifHostName&gt;something.es.net&lt;/nmtl3:ifHostName&gt;
+    &lt;nmtl3:ifIndex&gt;10&lt;/nmtl3:ifIndex&gt;
+    &lt;nmtl3:type&gt;?&lt;/nmtl3:type&gt;&gt;
+    &lt;nmtl3:capacity&gt;1000000000000&lt;/nmtl3:capacity&gt;
+  &lt;/nmtl3:interface&gt;
+&lt;/nmwgt:endPoint&gt;</pre></blockquote><p>3.0 - Base Interface </p><pre class="prettyprint">&lt;nmtb:interface id=&quot;&quot;&gt;
+  &lt;nmtb:name type=&quot;logical&quot;&gt;some port&lt;/nmtb:name&gt;
+  &lt;nmtb:type&gt;?&lt;/nmtb:type&gt;
+  &lt;nmtb:hostName&gt;something.es.net&lt;/nmtb:hostName&gt;
+  &lt;nmtb:ifName&gt;eth0&lt;/nmtb:ifName&gt;
+  &lt;nmtb:ifDescription&gt;OC129 to Internet2&lt;/nmtb:ifDescription&gt;
+  &lt;nmtb:ifIndex&gt;10&lt;/nmtb:ifIndex&gt;
+  &lt;nmtb:capacity&gt;1000000000000&lt;/nmtb:capacity&gt;
+&lt;/nmtb:interface&gt;</pre><p>3.0 - L2 Interface </p><pre class="prettyprint">&lt;nmtl2:interface id=&quot;&quot;&gt;
+  &lt;nmtl2:role&gt;?&lt;/nmtl2:role&gt;
+  &lt;nmtl2:type&gt;?&lt;/nmtl2:type&gt;
+  &lt;nmtl2:address type=&quot;ipv4&quot;&gt;10.0.0.1&lt;/nmtl2:address&gt;
+  &lt;nmtl2:name type=&quot;logical&quot;&gt;Some Port&lt;/nmtl2:name&gt;
+  &lt;nmtl2:description&gt;OC129 to Internet2&lt;/nmtl2:description&gt;
+  &lt;nmtl2:ifHostName&gt;something.es.net&lt;/nmtl2:ifHostName&gt;
+  &lt;nmtl2:ifIndex&gt;10&lt;/nmtl2:ifIndex&gt;
+  &lt;nmtl2:capacity&gt;1000000000000&lt;/nmtl2:capacity&gt;
+&lt;/nmtl2:interface&gt;</pre><p>3.0 - L3 Interface </p><pre class="prettyprint">&lt;nmtl3:interface id=&quot;&quot;&gt;
+  &lt;nmtl3:ipAddress type=&quot;ipv4&quot;&gt;10.0.0.1&lt;/nmtl3:ipAddress&gt;
+  &lt;nmtl3:netmask&gt;255.255.255.0&lt;/nmtl3:netmask&gt;
+  &lt;nmtl3:ifName&gt;eth0&lt;/nmtl3:ifName&gt;
+  &lt;nmtl3:ifDescription&gt;OC129 to Internet2&lt;/nmtl3:ifDescription&gt;
+  &lt;nmtl3:ifAddress type=&quot;ipv4&quot;&gt;10.10.20.1&lt;/nmtl3:ifAddress&gt;
+  &lt;nmtl3:ifHostName&gt;something.es.net&lt;/nmtl3:ifHostName&gt;
+  &lt;nmtl3:ifIndex&gt;10&lt;/nmtl3:ifIndex&gt;
+  &lt;nmtl3:type&gt;?&lt;/nmtl3:type&gt;
+  &lt;nmtl3:capacity&gt;1000000000000&lt;/nmtl3:capacity&gt;
+&lt;/nmtl3:interface&gt;</pre><p>Netflow Router </p><pre class="prettyprint">&lt;netflow:router id=&quot;&quot;&gt;
+  &lt;netflow:name&gt;some name&lt;/netflow:name&gt;
+  &lt;netflow:description&gt;some router description&lt;/netflow:description&gt;
+  &lt;!-- one or more base, l2 or l3 interfaces --&gt;
+&lt;/netflow:router&gt;</pre>
+ </div>
+ </div>
+ </td><tr>
+</table>
+ </div>
+
+
+ </div> 
+
+ </body>
+
+<!-- Mirrored from redmine.ogf.org/projects/urn-ogf/repository/revisions/master/raw/urn-ogf-network/perfSONAR-URNs.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:41:42 GMT -->
+</html>
+
+

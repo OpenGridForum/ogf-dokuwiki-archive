@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/graap-wg/2007-August/000670.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:41:08 GMT -->
+<HEAD>
+   <TITLE> [GRAAP-WG] Modification to the wiki Page on Renegotiating	an	established Agreement
+   </TITLE>
+   <LINK REL="Index" HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:graap-wg%40ogf.org?Subject=%5BGRAAP-WG%5D%20Modification%20to%20the%20wiki%20Page%20on%20Renegotiating%0A%09an%09established%20Agreement&In-Reply-To=000801c7e589%24c704f6a0%24b084380a%40Sakurai">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000672.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000673.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[GRAAP-WG] Modification to the wiki Page on Renegotiating	an	established Agreement</H1>
+    <B>Karl Czajkowski</B> 
+    <A HREF="mailto:graap-wg%40ogf.org?Subject=%5BGRAAP-WG%5D%20Modification%20to%20the%20wiki%20Page%20on%20Renegotiating%0A%09an%09established%20Agreement&In-Reply-To=000801c7e589%24c704f6a0%24b084380a%40Sakurai"
+       TITLE="[GRAAP-WG] Modification to the wiki Page on Renegotiating	an	established Agreement">karlcz at univa.com
+       </A><BR>
+    <I>Fri Aug 24 04:54:52 CDT 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000672.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating an	established Agreement
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000673.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating	anestablished Agreement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/date.html#670">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/thread.html#670">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/subject.html#670">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/author.html#670">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Aug 23, Toshiyuki Nakata modulated:
+&gt;<i> Hi Dominic:
+</I>&gt;<i> &gt; So, yes, there are problems but it looks like a lot of people want to
+</I>&gt;<i> &gt; have this extra commit message. Are there any written records on the
+</I>&gt;<i> &gt; pros and cons of having the 2PC?
+</I>&gt;<i> 
+</I>&gt;<i> I think this info. is very important.
+</I>&gt;<i> Unfortunately, I am not able to address this issue.
+</I>&gt;<i> 
+</I>&gt;<i> Karl or others, please respond..
+</I>
+I definitely don't want to repeat the debate which is in the GRAAP-WG
+email archives, but let me just summarize what I think were the final
+observations and conclusions.
+
+WS-Agreement is aimed at a distributed, soft real-time (one might say
+isochronous) environment with limited trust between peers with bounded
+rationality.  In other words, it is for establishing automated
+agreement between programmatic systems in an Internet-type environment
+where the agreement terms may involve wall-clock obligations which are
+at the root of the problem.
+
+When you boil it all down, there is always going to be a
+synchronization hazard where due to communication delays or faults, or
+even intentional decision delays, one party does not know whether the
+other has accepted the agreement and therefore is at risk to perform
+according to the terms of agreement when not necessary, or ignore the
+terms of agreement when bound by them.
+
+WS-Agreement formalizes this hazard to always place the burden on the
+agreement initiator who makes an offer and is bound by it if the
+responder accepts.  Early drafts, derived from our SNAP work, had an
+extra signalling step to allow a sort of &quot;pre-initiator&quot; called an
+invitation.  The group felt that this was too complicated to pursue,
+particularly because it could be approximated via advertisement.
+
+An invitation or advertisement would be a non-binding expression of
+interest in receiving agreement offers, so that the typical
+client-server roles could be reversed somewhat.  The only difference
+is that an invitation is seen as usually a 1:1 relationship while an
+advertisement is 1:many. However, due to the non-binding nature of
+these signals and the assumption of bounded rationality (we can ignore
+the possibility of bluffing and other psychological strategies), I am
+not sure these differences are significant.  For privacy, one could
+imagine secure advertisement channels (with authorization) to further
+blur the boundaries.
+
+Furthermore, 2PC can be synthesized with two WS-Agreement round-trips
+and an appropriate domain-specific agreement semantics. So, either
+advance reservation, combined with the right cost/penalty model, or
+the underlying invitation system can both look like 2PC in practice:
+
+ 1.a.  initiator offers advance reservation, OR
+ 1.b.  advertiser publishes interest
+
+after this first stage, both parties are aware of interest and primed
+to negotiate...
+
+ 2.a.  responder accepts (or rejects) reservation offer, OR
+ 2.b.  initiator offers against advertisement (or ignores it)
+
+after this stage, one party is obligated to satisfy and the other has
+a choice to make... (For the advance reservation, the initiator has a
+choice because the reservation includes a cost model with cheap
+cancellation under reasonable deadlines).
+
+ 3.a.  initiator offers claiming agreement (or cancels reservation), OR
+ 3.b.  responder accepts offer (or rejects it)
+
+after this stage, both parties are obligated to satisfy...
+
+ 4.a.  responder accepts claiming agreement (or acknowledges cancellation), OR
+ 4.b.  initiator acknowledges receipt (e.g. transport-level ACK)
+
+after this stage, both parties actually know what the other knows...
+
+In case it isn't obvious, advertisement is done via WS-Agreement
+templates and advance reservation followed by claiming is anticipated
+in the usage scenario examples as well.
+
+
+&gt;<i> Best Regards
+</I>&gt;<i> Toshi
+</I>&gt;<i> -----
+</I>&gt;<i> Toshiyuki Nakata &#20013;&#30000;&#12288;&#30331;&#24535;&#20043;
+</I>&gt;<i> Executive Chief Engineer, Central Research Lab. NEC
+</I>&gt;<i> 1753, Shimonumabe, Nakahara-Ku,
+</I>&gt;<i> Kawasaki,Kanagawa 211-8666,Japan
+</I>&gt;<i> Tel +81-44-431-7653 (NEC Internal 22-60035)
+</I>&gt;<i> Fax +81-44-431-7609 (NEC Internal 22-60509)
+</I>&gt;<i>  
+</I>
+
+karl
+
+p.s. I will add that the fundamental challenge I see for GRAAP-WG and
+WS-Agreement is that everyone approaches it with the same natural (but
+incorrect) intuitions about trust, signalling, and consensus.  I think
+there is still a large social experiment to see who can deploy systems
+which are actually performing distributed agreement without a central
+authority... economics and our real-life world says it should work,
+most of the time at least. :-)
+
+-- 
+Karl Czajkowski
+Software Architect
+
+Univa Corporation
+1001 Warrenville Road, Suite 550
+Lisle, IL 60532
+
+<A HREF="http://www.ogf.org/mailman/listinfo/graap-wg">karlcz at univa.com</A>
+www.univa.com
+________________________________________________________________
+www.univa.com.
+
+The Leaders of Open Source Cluster and Grid Software
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000672.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating an	established Agreement
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000673.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating	anestablished Agreement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/date.html#670">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/thread.html#670">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/subject.html#670">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/author.html#670">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/graap-wg">More information about the graap-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/graap-wg/2007-August/000670.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:41:08 GMT -->
+</html>

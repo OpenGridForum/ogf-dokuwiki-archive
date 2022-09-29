@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--
+ 
+ File:      nsi-ext.xsd - The NSI extension of NML 
+ Version:   $Id$
+ Purpose:   
+
+--> 
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://schemas.ogf.org/nsi/topology/2013/10#"
+           xmlns:nsi="http://schemas.ogf.org/nsi/topology/2013/10#"
+           xmlns:nml="http://schemas.ogf.org/nml/2012/10/base#"
+           elementFormDefault="qualified">
+
+  <xs:import schemaLocation="nmlbase.xsd" 
+             namespace="http://schemas.ogf.org/nml/2012/10/base#"/>
+
+
+  <xs:complexType name="NsaRelationType">
+    <xs:choice>
+      <xs:element  ref="nsi:Nsa"  minOccurs="1"  maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute  name="type"  use="required">
+      <xs:simpleType>
+        <xs:restriction  base="xs:string">
+          <xs:enumeration  value="http://schemas.ogf.org/nsi/topology/2013/10#managedBy"/>
+          <xs:enumeration  value="http://schemas.ogf.org/nsi/topology/2013/10#peersWith"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+
+  <xs:element name="Relation" type="nsi:NsaRelationType"/>
+
+
+  <!-- address: rfc6351 xCard: vCard XML Representation -->
+  <xs:element name="adminContact">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any namespace="##other"  processContents="lax"  minOccurs="1"  maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+  <xs:group name="BaseNsaContent">
+    <xs:sequence>
+      <xs:element  ref="nsi:adminContact"  minOccurs="0"  maxOccurs="unbounded"/>
+      <xs:element  name="csProviderEndPoint"  type="xs:anyURI"  minOccurs="0"  maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:group>
+
+
+  <xs:complexType name="NsaType">
+    <xs:complexContent>
+      <xs:extension  base="nml:NetworkObject">
+        <xs:sequence>
+          <xs:group  ref="nsi:BaseNsaContent"/>
+          <xs:element  ref="nsi:Relation"   minOccurs="0"  maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:element name="Nsa"  type="nsi:NsaType"/>
+
+
+
+</xs:schema>

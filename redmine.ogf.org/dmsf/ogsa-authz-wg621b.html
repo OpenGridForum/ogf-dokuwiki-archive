@@ -1,0 +1,1768 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/dmsf/ogsa-authz-wg?folder_id=6068 by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Sep 2022 15:30:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>DMSF - OGSA-AUTHZ WG - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI="/>
+<link rel='shortcut icon' href='../favicon4460.ico?1425381960' />
+<link href="../themes/ogf_redmine/stylesheets/application4460.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="../javascripts/prototype4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/effects4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/dragdrop4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/controls4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/application4460.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="../plugin_assets/extended_fields/stylesheets/extended_fields4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="../plugin_assets/wiking/stylesheets/wiking4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/jquery-ui/jquery-ui-1.8.134460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/plupload/jquery.ui.plupload4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/jquery.dataTables/jquery-ui.dataTables4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/dmsf4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery-1.6.1.min4460.js?1425381960" type="text/javascript"></script>
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery-ui-1.8.13.min4460.js?1425381960" type="text/javascript"></script>
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/jquery.dataTables.min4460.js?1425381960" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		jQuery(document).ready(function() {
+			jQuery("#browser").dataTable({
+				"bJQueryUI": true,
+				"oLanguage": {
+					'sUrl': '/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/en.json'	
+				},
+				"bAutoWidth": false,
+				"bPaginate": false,
+				"aaSorting": [[1,'asc']],
+				"aaSortingFixed": [[7,'asc']],
+				"aoColumnDefs": [
+					{ "bSearchable": false, "aTargets": [0, 6, 7, 8] },
+					{ "bSortable": false, "aTargets": [0, 6, 7] },
+					{ "iDataSort": 8, "aTargets": [ 2 ] }
+				],
+				"fnInitComplete": function() {
+					jQuery("div.controls").prependTo(jQuery("#browser_wrapper div.fg-toolbar")[0]);
+				},
+				"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+					return "Folders: 0, Documents: 38";
+				}
+			});
+			
+			jQuery("[data-downloadurl]").each(function() {
+		        var url = this.getAttribute("data-downloadurl");
+		        if (this.addEventListener) {
+		          this.addEventListener("dragstart", function(e) {
+		            if (e.dataTransfer) {
+		              e.dataTransfer.setData("DownloadURL", url);
+		            }
+		          },false);
+		        }
+	      	});
+		});
+		
+		function manipulation_link(action) {
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+		
+		function confirmation_link(action) {
+			if(!window.confirm("Do you really want to delete this entry?")) return;
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+	</script>
+</head>
+<body class="theme-Ogf redmine controller-dmsf action-show">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="../login.html" class="login">Login</a></li>
+<li><a href="../account/register.html" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="../index.html" class="home">Home</a></li>
+<li><a href="../projects.html" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/ogsa-authz-wg" method="get">
+        
+        <label for='q'>
+          <a href="../search/index/ogsa-authz-wg.html" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="standards.html?jump=dmsf" class="root">Standards</a> » <a href="security-area.html?jump=dmsf" class="ancestor">Security Area</a> » OGSA-AUTHZ WG</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="../projects/ogsa-authz-wg.html" class="overview">Overview</a></li>
+<li><a href="../tab/show/ogsa-authz-wg.html" class="tab">Project Info</a></li>
+<li><a href="../projects/ogsa-authz-wg/issues.html" class="issues">Issues</a></li>
+<li><a href="../projects/ogsa-authz-wg/issues/calendar.html" class="calendar">Calendar</a></li>
+<li><a href="../projects/ogsa-authz-wg/news.html" class="news">News</a></li>
+<li><a href="ogsa-authz-wg.html" class="dmsf selected">Documents</a></li>
+<li><a href="../projects/ogsa-authz-wg/wiki.html" class="wiki">Wiki</a></li>
+<li><a href="../projects/ogsa-authz-wg/files.html" class="files">Files</a></li>
+<li><a href="../projects/ogsa-authz-wg/repository.html" class="repository">Repository</a></li>
+<li><a href="../projects/ogsa-authz-wg/embedded/index.html" class="embedded">Mailing Lists</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+	
+</div>
+
+
+<h2>
+	<a href="ogsa-authz-wg.html">Documents</a>
+
+ / 
+ <a href="ogsa-authz-wg5f78.html?folder_id=789">gridforge</a>
+ 
+
+ / 
+ <a href="ogsa-authz-wg621b.html?folder_id=6068">Authz Service</a>
+ 
+
+
+</h2>
+
+<div class="wiki">
+
+</div>
+
+<form action="https://redmine.ogf.org/dmsf/entries_operation/ogsa-authz-wg?folder_id=6068" class="dmfs_entries" id="entries_form" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI=" /></div>
+	<input id="action" name="action" type="hidden" />
+	<div class="controls" style="float: left">
+		<input name="download_entries" title="Download checked in Zip archive" type="submit" value="Download" />
+		<input name="email_entries" title="Send checked by email" type="submit" value="Email" />
+		
+	</div> 
+	<table class="display entries" id="browser">
+		<thead>
+			<tr id="root">
+				<th class="check">
+					<input id="check_all_entries" title="Check/Uncheck all for zip download or email" type="checkbox" />
+				</th>
+				<th>Title</th>
+				<th>Size</th>
+				<th>Modified</th>
+				<th>Ver.</th>
+				<th>Author</th>
+				<th></th>
+				<th class="hidden"></th>
+				<th class="hidden"></th>
+			</tr>
+		</thead>
+	<tbody>
+	
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10479" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/AuthzFuncb4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Authz Functional Components 16 Oct:https://redmine.ogf.org/dmsf_files/10479?download=" title="Authz Functional Components 16 Oct version 1.0 download">Authz Functional Components 16 Oct</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Authz Functional Components 16 Oct</div>
+			</td>
+			<td class="size">354 kB</td>
+			<td class="modified">
+				2006-10-16 08:50
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10479.html" title="Authz Functional Components 16 Oct details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10479'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">362496</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10448" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/CVS%20Requirementsb4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:CVS Requirements:https://redmine.ogf.org/dmsf_files/10448?download=" title="CVS Requirements version 1.0 download">CVS Requirements</a>
+				<div class="filename" title="Filename used for download or in Zip archive">CVS Requirements</div>
+			</td>
+			<td class="size">28 kB</td>
+			<td class="modified">
+				2006-07-27 19:17
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10448.html" title="CVS Requirements details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10448'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">28672</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10478" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/CVS%20Requirementsb4d7-2.doc?download=" class="icon icon-file " data-downloadurl="application/msword:CVS Requirements v1.1:https://redmine.ogf.org/dmsf_files/10478?download=" title="CVS Requirements v1.1 version 1.0 download">CVS Requirements v1.1</a>
+				<div class="filename" title="Filename used for download or in Zip archive">CVS Requirements v1.1</div>
+			</td>
+			<td class="size">30 kB</td>
+			<td class="modified">
+				2006-10-16 08:31
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10478.html" title="CVS Requirements v1.1 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10478'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">30720</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10472" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/Comments_on_OGSA_SAML_Obligations-3b4d7.txt?download=" class="icon icon-file " data-downloadurl="text/plain:Comments on OGSA SAML Obligations:https://redmine.ogf.org/dmsf_files/10472?download=" title="Comments on OGSA SAML Obligations version 3.0 download">Comments on OGSA SAML Obligations</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Comments on OGSA SAML Obligations</div>
+			</td>
+			<td class="size">2.6 kB</td>
+			<td class="modified">
+				2005-02-22 00:00
+				
+				
+			</td>
+			<td class="version">
+				3.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10472.html" title="Comments on OGSA SAML Obligations details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10472'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2618</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10474" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/AuthzFunc0.6b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Functional Components of Grid SP Authz Service Middleware:https://redmine.ogf.org/dmsf_files/10474?download=" title="Functional Components of Grid SP Authz Service Middleware version 1.0 download">Functional Components of Grid SP Authz Service Middleware</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Functional Components of Grid SP Authz Service Middleware</div>
+			</td>
+			<td class="size">383 kB</td>
+			<td class="modified">
+				2008-04-06 18:13
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10474.html" title="Functional Components of Grid SP Authz Service Middleware details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10474'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">392192</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10450" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/AuthzFuncv1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Functional Components of Grid Service Provider Authorisation Service Middleware:https://redmine.ogf.org/dmsf_files/10450?download=" title="Functional Components of Grid Service Provider Authorisation Service Middleware version 1.0 download">Functional Components of Grid Service Provider Authorisation Service Middleware</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Functional Components of Grid Service Provider Authorisation Service Middleware</div>
+			</td>
+			<td class="size">384.5 kB</td>
+			<td class="modified">
+				2009-06-27 10:36
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10450.html" title="Functional Components of Grid Service Provider Authorisation Service Middleware details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10450'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">393728</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10477" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/OGSA_Attributes_Exchange_Profilev1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:OGSA Attribute Exchange Profile Version 1.0:https://redmine.ogf.org/dmsf_files/10477?download=" title="OGSA Attribute Exchange Profile Version 1.0 version 1.0 download">OGSA Attribute Exchange Profile Version 1.0</a>
+				<div class="filename" title="Filename used for download or in Zip archive">OGSA Attribute Exchange Profile Version 1.0</div>
+			</td>
+			<td class="size">71 kB</td>
+			<td class="modified">
+				2007-10-31 05:35
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10477.html" title="OGSA Attribute Exchange Profile Version 1.0 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10477'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">72704</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10446" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/OGSA_Attributes_Exchange_Profilev1.1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:OGSA Attribute Exchange Profile Version 1.1:https://redmine.ogf.org/dmsf_files/10446?download=" title="OGSA Attribute Exchange Profile Version 1.1 version 1.0 download">OGSA Attribute Exchange Profile Version 1.1</a>
+				<div class="filename" title="Filename used for download or in Zip archive">OGSA Attribute Exchange Profile Version 1.1</div>
+			</td>
+			<td class="size">82 kB</td>
+			<td class="modified">
+				2007-11-29 10:10
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10446.html" title="OGSA Attribute Exchange Profile Version 1.1 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10446'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">83968</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10449" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/OGSA_Attributes_Exchange_Profilev1.2b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:OGSA Attribute Exchange Profile Version 1.2:https://redmine.ogf.org/dmsf_files/10449?download=" title="OGSA Attribute Exchange Profile Version 1.2 version 1.0 download">OGSA Attribute Exchange Profile Version 1.2</a>
+				<div class="filename" title="Filename used for download or in Zip archive">OGSA Attribute Exchange Profile Version 1.2</div>
+			</td>
+			<td class="size">100 kB</td>
+			<td class="modified">
+				2007-12-11 09:10
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10449.html" title="OGSA Attribute Exchange Profile Version 1.2 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10449'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">102400</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10443" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/OGSA_Attributes_Exchange_Profilev1.3b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:OGSA Attribute Exchange Profile Version 1.3:https://redmine.ogf.org/dmsf_files/10443?download=" title="OGSA Attribute Exchange Profile Version 1.3 version 1.0 download">OGSA Attribute Exchange Profile Version 1.3</a>
+				<div class="filename" title="Filename used for download or in Zip archive">OGSA Attribute Exchange Profile Version 1.3</div>
+			</td>
+			<td class="size">103 kB</td>
+			<td class="modified">
+				2008-02-19 09:48
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10443.html" title="OGSA Attribute Exchange Profile Version 1.3 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10443'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">105472</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10467" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/SAML-Obligation-Extensions-used-in-OSG-3b4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:SAML-Obligation-Extensions-used-in-OSG:https://redmine.ogf.org/dmsf_files/10467?download=" title="SAML-Obligation-Extensions-used-in-OSG version 3.0 download">SAML-Obligation-Extensions-used-in-OSG</a>
+				<div class="filename" title="Filename used for download or in Zip archive">SAML-Obligation-Extensions-used-in-OSG</div>
+			</td>
+			<td class="size">51.1 kB</td>
+			<td class="modified">
+				2005-02-23 00:00
+				
+				
+			</td>
+			<td class="version">
+				3.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10467.html" title="SAML-Obligation-Extensions-used-in-OSG details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10467'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">52333</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10469" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/Use_of_SAML_for_OGSA_Authorization-1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Use of SAML for OGSA Authorization:https://redmine.ogf.org/dmsf_files/10469?download=" title="Use of SAML for OGSA Authorization version 1.0 download">Use of SAML for OGSA Authorization</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Use of SAML for OGSA Authorization</div>
+			</td>
+			<td class="size">199 kB</td>
+			<td class="modified">
+				2004-09-11 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10469.html" title="Use of SAML for OGSA Authorization details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10469'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">203776</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10465" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/Use_of_SAML_for_OGSA_Authorization_March_05_-1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Use of SAML for OGSA Authorization March 05:https://redmine.ogf.org/dmsf_files/10465?download=" title="Use of SAML for OGSA Authorization March 05 version 1.0 download">Use of SAML for OGSA Authorization March 05</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Use of SAML for OGSA Authorization March 05</div>
+			</td>
+			<td class="size">187 kB</td>
+			<td class="modified">
+				2005-03-16 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10465.html" title="Use of SAML for OGSA Authorization March 05 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10465'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">191488</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10459" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/Use_of_SAML_for_OGSA_Authorization_with_Obligations-1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Use of SAML for OGSA Authorization with Obligations:https://redmine.ogf.org/dmsf_files/10459?download=" title="Use of SAML for OGSA Authorization with Obligations version 1.0 download">Use of SAML for OGSA Authorization with Obligations</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Use of SAML for OGSA Authorization with Obligations</div>
+			</td>
+			<td class="size">199 kB</td>
+			<td class="modified">
+				2004-09-10 18:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10459.html" title="Use of SAML for OGSA Authorization with Obligations details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10459'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">203776</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10445" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/Attributes_Exchange_Profilev1.5-3b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Use of SAML to retrieve Authorization Credentials:https://redmine.ogf.org/dmsf_files/10445?download=" title="Use of SAML to retrieve Authorization Credentials version 4.0 download">Use of SAML to retrieve Authorization Credentials</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Use of SAML to retrieve Authorization Credentials</div>
+			</td>
+			<td class="size">233.5 kB</td>
+			<td class="modified">
+				2009-06-25 07:58
+				
+				
+			</td>
+			<td class="version">
+				4.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10445.html" title="Use of SAML to retrieve Authorization Credentials details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10445'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">239104</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10444" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/WS-TrustProfile0.5b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Use of WS-TRUST and SAML to access a CVS:https://redmine.ogf.org/dmsf_files/10444?download=" title="Use of WS-TRUST and SAML to access a CVS version 1.0 download">Use of WS-TRUST and SAML to access a CVS</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Use of WS-TRUST and SAML to access a CVS</div>
+			</td>
+			<td class="size">268.5 kB</td>
+			<td class="modified">
+				2008-06-13 11:17
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10444.html" title="Use of WS-TRUST and SAML to access a CVS details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10444'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">274944</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10475" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/WS-TrustProfile0.3b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Use of WS-TRUST and SAML to access a CVS v0.3:https://redmine.ogf.org/dmsf_files/10475?download=" title="Use of WS-TRUST and SAML to access a CVS v0.3 version 1.0 download">Use of WS-TRUST and SAML to access a CVS v0.3</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Use of WS-TRUST and SAML to access a CVS v0.3</div>
+			</td>
+			<td class="size">265.5 kB</td>
+			<td class="modified">
+				2007-10-31 11:21
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10475.html" title="Use of WS-TRUST and SAML to access a CVS v0.3 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10475'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">271872</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10480" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/WS-TrustProfilev1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Use of WS-TRUST and SAML to access a Credential Validation Service:https://redmine.ogf.org/dmsf_files/10480?download=" title="Use of WS-TRUST and SAML to access a Credential Validation Service version 1.0 download">Use of WS-TRUST and SAML to access a Credential Validation Service</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Use of WS-TRUST and SAML to access a Credential Validation Service</div>
+			</td>
+			<td class="size">277.5 kB</td>
+			<td class="modified">
+				2009-06-27 10:38
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10480.html" title="Use of WS-TRUST and SAML to access a Credential Validation Service details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10480'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">284160</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10473" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/XACMLContextProfile1.2b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Use of XACML Request Context to Obtain an Authorisation Decision:https://redmine.ogf.org/dmsf_files/10473?download=" title="Use of XACML Request Context to Obtain an Authorisation Decision version 1.0 download">Use of XACML Request Context to Obtain an Authorisation Decision</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Use of XACML Request Context to Obtain an Authorisation Decision</div>
+			</td>
+			<td class="size">299.5 kB</td>
+			<td class="modified">
+				2009-06-27 10:32
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10473.html" title="Use of XACML Request Context to Obtain an Authorisation Decision details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10473'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">306688</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10476" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/XACMLContextProfile0-4b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Use of XACML Request Context to Obtain an Authorisation Decision v0.4:https://redmine.ogf.org/dmsf_files/10476?download=" title="Use of XACML Request Context to Obtain an Authorisation Decision v0.4 version 1.0 download">Use of XACML Request Context to Obtain an Authorisation Decision v0.4</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Use of XACML Request Context to Obtain an Authorisation Decision v0.4</div>
+			</td>
+			<td class="size">252 kB</td>
+			<td class="modified">
+				2007-10-31 11:03
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10476.html" title="Use of XACML Request Context to Obtain an Authorisation Decision v0.4 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10476'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">258048</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10447" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/XACMLContextProfile0-2b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Use of XACML Request Context to access a PDP:https://redmine.ogf.org/dmsf_files/10447?download=" title="Use of XACML Request Context to access a PDP version 1.0 download">Use of XACML Request Context to access a PDP</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Use of XACML Request Context to access a PDP</div>
+			</td>
+			<td class="size">198.5 kB</td>
+			<td class="modified">
+				2006-07-19 09:48
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10447.html" title="Use of XACML Request Context to access a PDP details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10447'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">203264</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10453" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-dec14.doc-1b4d7.doc?download=" class="icon icon-file filetype-doc" data-downloadurl="application/msword:draft-ogsa-authz-saml-dec14.doc:https://redmine.ogf.org/dmsf_files/10453?download=" title="draft-ogsa-authz-saml-dec14.doc version 1.0 download">draft-ogsa-authz-saml-dec14.doc</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-dec14.doc</div>
+			</td>
+			<td class="size">195 kB</td>
+			<td class="modified">
+				2004-12-14 01:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10453.html" title="draft-ogsa-authz-saml-dec14.doc details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10453'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">199680</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10454" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-dec14.pdf-1b4d7.pdf?download=" class="icon icon-file application-pdf" data-downloadurl="application/pdf:draft-ogsa-authz-saml-dec14.pdf:https://redmine.ogf.org/dmsf_files/10454?download=" title="draft-ogsa-authz-saml-dec14.pdf version 1.0 download">draft-ogsa-authz-saml-dec14.pdf</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-dec14.pdf</div>
+			</td>
+			<td class="size">198.2 kB</td>
+			<td class="modified">
+				2004-12-14 01:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10454.html" title="draft-ogsa-authz-saml-dec14.pdf details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10454'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">202920</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10458" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-feb1-05-1b4d7-2.doc?download=" class="icon icon-file " data-downloadurl="application/msword:draft-ogsa-authz-saml-feb1-05:https://redmine.ogf.org/dmsf_files/10458?download=" title="draft-ogsa-authz-saml-feb1-05 version 1.0 download">draft-ogsa-authz-saml-feb1-05</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-feb1-05</div>
+			</td>
+			<td class="size">224 kB</td>
+			<td class="modified">
+				2005-02-01 01:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10458.html" title="draft-ogsa-authz-saml-feb1-05 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10458'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">229376</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10471" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-feb1-05.doc-1b4d7.doc?download=" class="icon icon-file filetype-doc" data-downloadurl="application/msword:draft-ogsa-authz-saml-feb1-05.doc:https://redmine.ogf.org/dmsf_files/10471?download=" title="draft-ogsa-authz-saml-feb1-05.doc version 1.0 download">draft-ogsa-authz-saml-feb1-05.doc</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-feb1-05.doc</div>
+			</td>
+			<td class="size">224 kB</td>
+			<td class="modified">
+				2005-02-01 01:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10471.html" title="draft-ogsa-authz-saml-feb1-05.doc details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10471'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">229376</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10460" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-jan-05.doc-1b4d7.doc?download=" class="icon icon-file filetype-doc" data-downloadurl="application/msword:draft-ogsa-authz-saml-jan-05.doc:https://redmine.ogf.org/dmsf_files/10460?download=" title="draft-ogsa-authz-saml-jan-05.doc version 1.0 download">draft-ogsa-authz-saml-jan-05.doc</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-jan-05.doc</div>
+			</td>
+			<td class="size">246.5 kB</td>
+			<td class="modified">
+				2005-01-15 01:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10460.html" title="draft-ogsa-authz-saml-jan-05.doc details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10460'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">252416</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10451" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-jan08-1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:draft-ogsa-authz-saml-jan08:https://redmine.ogf.org/dmsf_files/10451?download=" title="draft-ogsa-authz-saml-jan08 version 1.0 download">draft-ogsa-authz-saml-jan08</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-jan08</div>
+			</td>
+			<td class="size">334 kB</td>
+			<td class="modified">
+				2004-01-08 01:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10451.html" title="draft-ogsa-authz-saml-jan08 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10451'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">342016</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10457" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-june16-1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:draft-ogsa-authz-saml-june16:https://redmine.ogf.org/dmsf_files/10457?download=" title="draft-ogsa-authz-saml-june16 version 1.0 download">draft-ogsa-authz-saml-june16</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-june16</div>
+			</td>
+			<td class="size">171.5 kB</td>
+			<td class="modified">
+				2004-06-16 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10457.html" title="draft-ogsa-authz-saml-june16 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10457'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">175616</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10464" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-june8-05.doc-1b4d7.doc?download=" class="icon icon-file filetype-doc" data-downloadurl="application/msword:draft-ogsa-authz-saml-june8-05.doc:https://redmine.ogf.org/dmsf_files/10464?download=" title="draft-ogsa-authz-saml-june8-05.doc version 1.0 download">draft-ogsa-authz-saml-june8-05.doc</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-june8-05.doc</div>
+			</td>
+			<td class="size">287 kB</td>
+			<td class="modified">
+				2005-06-08 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10464.html" title="draft-ogsa-authz-saml-june8-05.doc details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10464'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">293888</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10468" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-june8-05.pdf-1b4d7.pdf?download=" class="icon icon-file application-pdf" data-downloadurl="application/pdf:draft-ogsa-authz-saml-june8-05.pdf:https://redmine.ogf.org/dmsf_files/10468?download=" title="draft-ogsa-authz-saml-june8-05.pdf version 1.0 download">draft-ogsa-authz-saml-june8-05.pdf</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-june8-05.pdf</div>
+			</td>
+			<td class="size">316.1 kB</td>
+			<td class="modified">
+				2005-06-08 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10468.html" title="draft-ogsa-authz-saml-june8-05.pdf details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10468'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">323638</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10462" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-may14.doc-1b4d7.doc?download=" class="icon icon-file filetype-doc" data-downloadurl="application/msword:draft-ogsa-authz-saml-may14.doc:https://redmine.ogf.org/dmsf_files/10462?download=" title="draft-ogsa-authz-saml-may14.doc version 1.0 download">draft-ogsa-authz-saml-may14.doc</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-may14.doc</div>
+			</td>
+			<td class="size">296 kB</td>
+			<td class="modified">
+				2004-05-14 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10462.html" title="draft-ogsa-authz-saml-may14.doc details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10462'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">303104</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10455" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-may14.pdf-1b4d7.pdf?download=" class="icon icon-file application-pdf" data-downloadurl="application/pdf:draft-ogsa-authz-saml-may14.pdf:https://redmine.ogf.org/dmsf_files/10455?download=" title="draft-ogsa-authz-saml-may14.pdf version 1.0 download">draft-ogsa-authz-saml-may14.pdf</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-may14.pdf</div>
+			</td>
+			<td class="size">244.1 kB</td>
+			<td class="modified">
+				2004-05-14 02:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10455.html" title="draft-ogsa-authz-saml-may14.pdf details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10455'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">249922</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10463" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-nov10-pdf-1b4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:draft-ogsa-authz-saml-nov10-pdf:https://redmine.ogf.org/dmsf_files/10463?download=" title="draft-ogsa-authz-saml-nov10-pdf version 1.0 download">draft-ogsa-authz-saml-nov10-pdf</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-nov10-pdf</div>
+			</td>
+			<td class="size">215.4 kB</td>
+			<td class="modified">
+				2003-11-11 01:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10463.html" title="draft-ogsa-authz-saml-nov10-pdf details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10463'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">220542</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10466" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsa-authz-saml-nov10-word-2b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:draft-ogsa-authz-saml-nov10-word:https://redmine.ogf.org/dmsf_files/10466?download=" title="draft-ogsa-authz-saml-nov10-word version 2.0 download">draft-ogsa-authz-saml-nov10-word</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsa-authz-saml-nov10-word</div>
+			</td>
+			<td class="size">320 kB</td>
+			<td class="modified">
+				2003-11-11 01:00
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10466.html" title="draft-ogsa-authz-saml-nov10-word details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10466'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">327680</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10461" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsi-authz-saml-aug15-05.doc-1b4d7.doc?download=" class="icon icon-file filetype-doc" data-downloadurl="application/msword:draft-ogsi-authz-saml-aug15-05.doc:https://redmine.ogf.org/dmsf_files/10461?download=" title="draft-ogsi-authz-saml-aug15-05.doc version 1.0 download">draft-ogsi-authz-saml-aug15-05.doc</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsi-authz-saml-aug15-05.doc</div>
+			</td>
+			<td class="size">231.5 kB</td>
+			<td class="modified">
+				2005-08-16 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10461.html" title="draft-ogsi-authz-saml-aug15-05.doc details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10461'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">237056</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10456" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ogsi-authz-saml-aug15-05.pdf-1b4d7.pdf?download=" class="icon icon-file application-pdf" data-downloadurl="application/pdf:draft-ogsi-authz-saml-aug15-05.pdf:https://redmine.ogf.org/dmsf_files/10456?download=" title="draft-ogsi-authz-saml-aug15-05.pdf version 1.0 download">draft-ogsi-authz-saml-aug15-05.pdf</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ogsi-authz-saml-aug15-05.pdf</div>
+			</td>
+			<td class="size">314.9 kB</td>
+			<td class="modified">
+				2005-08-16 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10456.html" title="draft-ogsi-authz-saml-aug15-05.pdf details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10456'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">322423</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10452" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-welch-ogsa-authz-saml-02-1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:draft-welch-ogsa-authz-saml-02:https://redmine.ogf.org/dmsf_files/10452?download=" title="draft-welch-ogsa-authz-saml-02 version 1.0 download">draft-welch-ogsa-authz-saml-02</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-welch-ogsa-authz-saml-02</div>
+			</td>
+			<td class="size">264 kB</td>
+			<td class="modified">
+				2003-09-18 15:37
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10452.html" title="draft-welch-ogsa-authz-saml-02 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10452'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">270336</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="10470" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-welch-ogsa-authz-saml-02-pdf-1b4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:draft-welch-ogsa-authz-saml-02-pdf:https://redmine.ogf.org/dmsf_files/10470?download=" title="draft-welch-ogsa-authz-saml-02-pdf version 1.0 download">draft-welch-ogsa-authz-saml-02-pdf</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-welch-ogsa-authz-saml-02-pdf</div>
+			</td>
+			<td class="size">203.4 kB</td>
+			<td class="modified">
+				2003-09-18 15:37
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/10470.html" title="draft-welch-ogsa-authz-saml-02-pdf details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/10470'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">208259</td>
+		</tr>
+	
+	</tbody>
+	</table>
+	<br />
+</form>
+
+<script type="text/javascript">
+	jQuery("#entries_delete_button").click(function(event) {
+		if(window.confirm("Do you really want to delete checked entries?")) {
+			jQuery("#entries_form").attr("action", "/dmsf/delete_entries/ogsa-authz-wg?folder_id=6068");
+			jQuery("#entries_form").submit();
+		}
+	})
+	
+	jQuery("#check_all_entries").click(function(event) {
+		var $this = jQuery(this);
+		if($this.prop("checked")) {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", true);
+		} else {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", false);
+		}
+	})			
+</script>
+
+
+
+
+
+
+<br />
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/dmsf/ogsa-authz-wg?folder_id=6068 by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Sep 2022 15:32:05 GMT -->
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:nsi="http://schemas.ogf.org/nsi/2013/09/topology#" xmlns:nml="http://schemas.ogf.org/nml/2013/05/base#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:nmleth="http://schemas.ogf.org/nml/2013/05/ethernet#">
+    <nsi:NSA rdf:about="urn:ogf:network:example.com:2013:nsa">
+        <nsi:hasService rdf:resource="urn:ogf:network:example.com:2013:nsa-provserv"/>
+        <nsi:peersWith rdf:resource="urn:ogf:network:example.org:2013:nsa"/>
+        <nml:manages rdf:resource="urn:ogf:network:example.com:2013:topology"/>
+        <nsi:hasService rdf:resource="urn:ogf:network:example.com:2013:nsa-discserv"/>
+    </nsi:NSA>
+    <nml:Location rdf:about="urn:ogf:network:example.com:2013:location">
+        <nml:long rdf:datatype="http://www.w3.org/2001/XMLSchema#float">12.641</nml:long>
+        <nml:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#float">55.637</nml:lat>
+    </nml:Location>
+    <nsi:Service rdf:about="urn:ogf:network:example.com:2013:disc-serv">
+        <nsi:providedBy rdf:resource="urn:ogf:network:example.com:2013:nsa"/>
+        <nsi:link>https://nsa.example.com/discovery/services/discovery</nsi:link>
+        <nsi:describedBy>http://nsa.example.com/discovery/wadl</nsi:describedBy>
+    </nsi:Service>
+    <nsi:Service rdf:about="urn:ogf:network:example.com:2013:nsa-provserv">
+        <nsi:describedBy>http://nsa.example.com/provisioning/wsdl</nsi:describedBy>
+        <nsi:providedBy rdf:resource="urn:ogf:network:example.com:2013:nsa"/>
+        <nsi:link>http://nsa.example.com/provisioning</nsi:link>
+    </nsi:Service>
+    <nml:Topology rdf:about="urn:ogf:network:example.com:2013:topology">
+        <nml:version>2013-05-29T12:11:12</nml:version>
+        <nml:name>ExampleA Topology</nml:name>
+        <nml:locatedAt rdf:resource="urn:ogf:network:example.com:2013:Location"/>
+        <nml:hasInboundPort>
+            <nml:PortGroup rdf:about="urn:ogf:network:example.com:2013:eth0-in">
+                <nml:isAlias rdf:resource="urn:ogf:network:example.org:2013:if0-out"/>
+                <nmleth:vlans>1780-1783</nmleth:vlans>
+            </nml:PortGroup>
+        </nml:hasInboundPort>
+        <nml:hasOutboundPort>
+            <nml:PortGroup rdf:about="urn:ogf:network:example.com:2013:eth0-out">
+                <nml:isAlias rdf:resource="urn:ogf:network:example.org:2013:if0-in"/>
+                <nmleth:vlans>1780-1783</nmleth:vlans>
+            </nml:PortGroup>
+        </nml:hasOutboundPort>
+    </nml:Topology>
+</rdf:RDF>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://schemas.ggf.org/rss/2006/00/eps"
+    xmlns:eps="http://schemas.ggf.org/rss/2006/00/eps"
+    attributeFormDefault="qualified" elementFormDefault="qualified"
+    xmlns:jsdl="http://schemas.ggf.org/jsdl/2005/11/jsdl"
+    xmlns:select="http://schemas.ggf.org/rss/2006/00/selection"
+    xmlns:tns="http://www.w3.org/2005/03/addressing">
+    <annotation>
+        <documentation>
+            This describes the types and elements used in the Execution
+            Planning Service at the abstract level. It does not describe
+            types and elements that are only used in a particular
+            rendering.
+
+            Copyright &#x00a9; 2006, Global Grid Forum
+        </documentation>
+        <!-- Need to check the copyright and get the full copyright statement in here. -->
+    </annotation>
+    <import namespace="http://schemas.ggf.org/jsdl/2005/11/jsdl"
+        schemaLocation="../jsdl/jsdl.xsd" />
+    <import namespace="http://schemas.ggf.org/rss/2006/00/selection"
+        schemaLocation="selection.xsd" />
+
+    <import namespace="http://www.w3.org/2005/03/addressing"
+        schemaLocation="../wsa/WS-Addressing.xsd" />
+
+    <complexType name="GetExecutionPlans">
+        <sequence>
+            <element name="Ordering" minOccurs="0">
+                <annotation>
+                    <documentation>
+                        An optional ordering function over the execution
+                        plans. If omitted, the service SHOULD use a
+                        default ordering. The ordering dialect should be
+                        specified if it is not the default (the RSS
+                        selection language); all compliant services MUST
+                        support the RSS selection language as an
+                        ordering language.
+                    </documentation>
+                </annotation>
+                <complexType>
+                    <sequence>
+                        <any namespace="##other" processContents="lax"
+                            maxOccurs="unbounded" minOccurs="1" />
+                    </sequence>
+                    <attribute name="orderingLanguage" type="anyURI"
+                        default="http://schemas.ggf.org/rss/2006/00/selection"
+                        use="optional" />
+                </complexType>
+            </element>
+            <element ref="jsdl:JobDefinition" minOccurs="1"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        This is a description of the job that we want to
+                        get execution plans for. Note that the job
+                        description SHOULD contain sufficient
+                        information to allow for filtering of outright
+                        unacceptable elements.
+                    </documentation>
+                </annotation>
+            </element>
+            <any namespace="##other" processContents="lax" minOccurs="0"
+                maxOccurs="unbounded">
+                <annotation>
+                    <documentation>
+                        Anything else MAY be ignored. It lies outside
+                        the essential remit of the EPS.
+                    </documentation>
+                </annotation>
+            </any>
+        </sequence>
+    </complexType>
+
+
+    <complexType name="ExecutionPlan">
+        <sequence>
+            <element name="Validity" minOccurs="1" maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        The validity of an execution plan describes a
+                        period of time during which the plan must be
+                        taken up (i.e. the job description submitted to
+                        the execution service) in order for the
+                        advertised level of quality-of-service to be
+                        guaranteed to be delivered.
+                    </documentation>
+                </annotation>
+                <complexType>
+                    <sequence />
+                    <attribute name="NotBefore" type="dateTime"
+                        use="required" />
+                    <attribute name="NotOnOrAfter" type="dateTime"
+                        use="required" />
+                </complexType>
+            </element>
+            <element ref="jsdl:JobDefinition" minOccurs="1">
+                <annotation>
+                    <documentation>
+                        This should either be the job document that was
+                        sent to the EPS, or a suggested alternative.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="ExecutionServiceReference"
+                type="tns:EndpointReferenceType" minOccurs="1"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        A reference to the execution service (expected
+                        to be a BES container for simple JSDL jobs) to
+                        execute the job at when following this plan.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="QoS" type="eps:QoSType" minOccurs="1"
+                maxOccurs="1">
+                <annotation>
+                    <documentation>
+                        A description of the quality of service to be
+                        provided to a job created as a result of using
+                        this execution plan.
+                    </documentation>
+                </annotation>
+            </element>
+            <any namespace="##other" processContents="lax" minOccurs="0"
+                maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="QoSType">
+        <annotation>
+            <documentation>
+                This describes the quality-of-service offered in
+                association with a particular plan.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="Price" minOccurs="0" maxOccurs="unbounded">
+                <annotation>
+                    <documentation>
+                        A charge associated with the offer. Although an
+                        unbounded number of charges may be associated
+                        witht he offer, they SHOULD have distinct
+                        Currency attributes or be distinguishable
+                        otherwise through their other attributes (whose
+                        meaning is outside this specification).
+                    </documentation>
+                </annotation>
+                <complexType>
+                    <attribute name="Currency" type="anyURI"
+                        use="required">
+                        <annotation>
+                            <documentation>
+                                What the currency associated with a
+                                particular price is.
+                            </documentation>
+                        </annotation>
+                    </attribute>
+                    <anyAttribute namespace="##other"
+                        processContents="lax" />
+                </complexType>
+            </element>
+            <choice>
+                <annotation>
+                    <documentation>
+                        Every quality-of-service offer MUST describe
+                        when the job will commence executing, but it
+                        MUST do so either by expressing when the job
+                        will start (useful for reservation) or by
+                        expressing how long you will have to wait after
+                        submission for the job to start (useful for
+                        batch queues).
+                    </documentation>
+                </annotation>
+                <element name="StartTime" type="eps:TimeSet">
+                    <annotation>
+                        <documentation>
+                            The start time describes (as a set of time
+                            intervals) when the job will commence
+                            executing if this offer is taken up.
+                        </documentation>
+                    </annotation>
+                </element>
+                <element name="StartDelay"
+                    type="jsdl:RangeValue_Type">
+                    <annotation>
+                        <documentation>
+                            The start delay describes how many seconds
+                            delay the job will experience between when
+                            it is submitted to the execution system and
+                            when the job will commence executing.
+                        </documentation>
+                    </annotation>
+                </element>
+            </choice>
+            <choice>
+                <annotation>
+                    <documentation>
+                        Every quality-of-service offer MUST describe
+                        when the job will finish executing, but it MUST
+                        do so either by expressing when the job will end
+                        (useful for reservations or, by setting the
+                        range very large, for 'fork' job managers) or by
+                        expressing how long you will have to wait for
+                        the job to finish after it starts (useful for
+                        situations where the amount of computation is
+                        well known but the time of commencement is not).
+                    </documentation>
+                </annotation>
+                <element name="EndTime" type="eps:TimeSet">
+                    <annotation>
+                        <documentation>
+                            The end time describes (as a set of time
+                            intervals) when the job will complete
+                            executing if this offer is taken up.
+                        </documentation>
+                    </annotation>
+                </element>
+                <element name="ExecutionTime"
+                    type="jsdl:RangeValue_Type">
+                    <annotation>
+                        <documentation>
+                            The execution time describes how many
+                            overall seconds the job will execute for
+                            once it starts executing.
+                        </documentation>
+                    </annotation>
+                </element>
+            </choice>
+            <any namespace="##other" processContents="lax" minOccurs="0"
+                maxOccurs="unbounded">
+                <annotation>
+                    <documentation>
+                        Anything not described above should go in here.
+                        This could include instructions for a deployment
+                        engine to help set the execution service up,
+                        descriptions of compensation to be awarded if
+                        the quality-of-service guarantee is not met,
+                        etc.
+                    </documentation>
+                </annotation>
+            </any>
+        </sequence>
+    </complexType>
+
+    <complexType name="TimeSet">
+        <annotation>
+            <documentation>
+                A time set describes a (possibly discontinuous) set of
+                times. It consists of an optional lower-unbounded
+                interval, an optional upper-unbounded interval, and an
+                arbitrary set of bounded continuous intervals.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="AnyBefore" type="dateTime" minOccurs="0" />
+            <element name="AnyAtOrAfter" type="dateTime" minOccurs="0" />
+            <element name="Period" type="eps:TimeInterval" minOccurs="0"
+                maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="TimeInterval">
+        <annotation>
+            <documentation>
+                A time interval describes the set of all time instants
+                between a start time and an end time.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="StartAt" type="dateTime" />
+            <element name="EndBefore" type="dateTime" />
+        </sequence>
+    </complexType>
+
+    <element name="ExecutionPlan" type="eps:ExecutionPlan" />
+
+</schema>

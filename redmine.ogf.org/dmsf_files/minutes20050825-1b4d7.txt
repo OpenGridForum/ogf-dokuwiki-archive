@@ -1,0 +1,47 @@
+Minutes for BES Telecon -- 25 August 2005
+
+Attendees
+---------------
+	Mark Morgan (Minutes)
+	Andrew Grimshaw
+	Steven Newhouse
+	Darren Pulshipher
+	Karl Czajkowski
+
+Looking at Draft Recommendatoin Document
+-----------------------------------------------------------------
+* Mostly going over things from the face to face meeting last week.
+* Would it have made sense to have only one createActivity method but to put a start in suspended state flag in the JSDL
+	- Yeah, change it to a flag in the JSDL
+* Darren to change state diagrams to a more UML style to indicate that the BES must keep track of the state from which a BES comes from (for like a suspend).
+* Should we deal with WS-Names or WS-Addressing EPRs?
+	- Should clients of a BES be able to tell if two returned "handles" refer to the same thing?
+	- What is the BES instance where this can happen (the ambiguity)?
+		- What if I am a client and I am managing a couple of jobs and I get an event from the BES about some job changing it's state.  How do I tell
+		  which one it's talking about.
+		- What if the activity gets restarted with a new EPR (migration, failure, etc.)
+	- ACTION ITEM -- Andrew to talk to OGSA group to make a more global statement about WS-Names as a requirement across all services.
+* We should probably get out of micro-managing the jobs.
+* During an exception, the BES will do best effort to cleanup, but any exceptions encountered during this process are not exposed.
+* Do we say that you have to transition through all states even if it is a no-op and then let's see what the response is from the community on this.
+	- Steven put a note in asking if the stage-in/state-out elements should be optional.
+* Subscription/Eventing Stuff
+	- Sub-activities?
+		-- Use extensibility mech. of JSDL to mark up what you want to get notified about.
+	- Part of the get-activity-document should include in the returned document the subscriptions that are active.
+	- If we embed the subscription in the JSDL, then you are essentially doing a bulk subscription operation and you'll return the individual handles or
+	  references to the individual subscriptions that you can then manage.  But you can do a bulk operation at startup and then do incremental changes
+	  from there on forward.
+	- Now we need normative text saying how to do that.  ACTION ITEM -- Karl to do this
+	- We agree that we want to have a bulk operation setup
+	- We need to come up with a more solid proposal on the next call
+	- Wouldn't be opposed to generating different WS-Names for the sub-activites, but we need to talk about this more
+* GGF Sessions in Boston
+	- You can only get two sessions now (45 minutes and 90 minutes).
+	- Should we get two 90 minute sessions
+		-- Need support of group's area (not Andrew)
+		-- Do we need three?
+			-- Nah, let's just get 2 90 minutes.
+			-- Say focused, not do much of a intro thing.
+* ACTION -- Darren to alter diagram
+* ACTION -- Steven to put in some text.

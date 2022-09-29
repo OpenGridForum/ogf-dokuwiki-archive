@@ -1,0 +1,3087 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/dmsf/migration-archive?folder_id=5767 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:40:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>DMSF - Migration-Archive - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/jquery-ui/jquery-ui-1.8.13.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/plupload/jquery.ui.plupload.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/jquery.dataTables/jquery-ui.dataTables.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/dmsf.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	
+	<script src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/javascripts/jquery-1.6.1.min.js?1425381960" type="text/javascript"></script>
+	<script src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/javascripts/jquery-ui-1.8.13.min.js?1425381960" type="text/javascript"></script>
+	<script src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/jquery.dataTables.min.js?1425381960" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		jQuery(document).ready(function() {
+			jQuery("#browser").dataTable({
+				"bJQueryUI": true,
+				"oLanguage": {
+					'sUrl': '/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/en.json'	
+				},
+				"bAutoWidth": false,
+				"bPaginate": false,
+				"aaSorting": [[1,'asc']],
+				"aaSortingFixed": [[7,'asc']],
+				"aoColumnDefs": [
+					{ "bSearchable": false, "aTargets": [0, 6, 7, 8] },
+					{ "bSortable": false, "aTargets": [0, 6, 7] },
+					{ "iDataSort": 8, "aTargets": [ 2 ] }
+				],
+				"fnInitComplete": function() {
+					jQuery("div.controls").prependTo(jQuery("#browser_wrapper div.fg-toolbar")[0]);
+				},
+				"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+					return "Folders: 0, Documents: 71";
+				}
+			});
+			
+			jQuery("[data-downloadurl]").each(function() {
+		        var url = this.getAttribute("data-downloadurl");
+		        if (this.addEventListener) {
+		          this.addEventListener("dragstart", function(e) {
+		            if (e.dataTransfer) {
+		              e.dataTransfer.setData("DownloadURL", url);
+		            }
+		          },false);
+		        }
+	      	});
+		});
+		
+		function manipulation_link(action) {
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+		
+		function confirmation_link(action) {
+			if(!window.confirm("Do you really want to delete this entry?")) return;
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+	</script>
+</head>
+<body class="theme-Ogf redmine controller-dmsf action-show">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/migration-archive" method="get">
+        
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/migration-archive" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=dmsf" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=dmsf" class="ancestor">IT</a> » <a href="https://redmine.ogf.org/projects/it-migration?jump=dmsf" class="ancestor">Migration</a> » Migration-Archive</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/migration-archive" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/migration-archive/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/migration-archive" class="dmsf selected">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/migration-archive/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/migration-archive/files" class="files">Files</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+	
+</div>
+
+
+<h2>
+	<a href="https://redmine.ogf.org/dmsf/migration-archive">Documents</a>
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/migration-archive?folder_id=45">gridforge</a>
+ 
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/migration-archive?folder_id=5763">gridforge-base-project</a>
+ 
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/migration-archive?folder_id=5767">Application Content Manager</a>
+ 
+
+
+</h2>
+
+<div class="wiki">
+
+</div>
+
+<form action="https://redmine.ogf.org/dmsf/entries_operation/migration-archive?folder_id=5767" class="dmfs_entries" id="entries_form" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI=" /></div>
+	<input id="action" name="action" type="hidden" />
+	<div class="controls" style="float: left">
+		<input name="download_entries" title="Download checked in Zip archive" type="submit" value="Download" />
+		<input name="email_entries" title="Send checked by email" type="submit" value="Email" />
+		
+	</div> 
+	<table class="display entries" id="browser">
+		<thead>
+			<tr id="root">
+				<th class="check">
+					<input id="check_all_entries" title="Check/Uncheck all for zip download or email" type="checkbox" />
+				</th>
+				<th>Title</th>
+				<th>Size</th>
+				<th>Modified</th>
+				<th>Ver.</th>
+				<th>Author</th>
+				<th></th>
+				<th class="hidden"></th>
+				<th class="hidden"></th>
+			</tr>
+		</thead>
+	<tbody>
+	
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9228" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9228?download=" class="icon icon-file " data-downloadurl="text/plain:403 Page Authorization Failed Message:https://redmine.ogf.org/dmsf_files/9228?download=" title="403 Page Authorization Failed Message version 2.0 download">403 Page Authorization Failed Message</a>
+				<div class="filename" title="Filename used for download or in Zip archive">403 Page Authorization Failed Message</div>
+			</td>
+			<td class="size">59 Bytes</td>
+			<td class="modified">
+				2003-04-17 15:21
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9228" title="403 Page Authorization Failed Message details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9228'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">59</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9284" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9284?download=" class="icon icon-file " data-downloadurl="text/html:404 Page Not Found Message:https://redmine.ogf.org/dmsf_files/9284?download=" title="404 Page Not Found Message version 2.0 download">404 Page Not Found Message</a>
+				<div class="filename" title="Filename used for download or in Zip archive">404 Page Not Found Message</div>
+			</td>
+			<td class="size">261 Bytes</td>
+			<td class="modified">
+				2003-04-17 15:21
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9284" title="404 Page Not Found Message details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9284'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">261</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9279" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9279?download=" class="icon icon-file " data-downloadurl="text/html:Account Welcome Message:https://redmine.ogf.org/dmsf_files/9279?download=" title="Account Welcome Message version 6.0 download">Account Welcome Message</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Account Welcome Message</div>
+			</td>
+			<td class="size">1.3 kB</td>
+			<td class="modified">
+				2003-10-22 23:00
+				
+				
+			</td>
+			<td class="version">
+				6.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9279" title="Account Welcome Message details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9279'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1371</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9234" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9234?download=" class="icon icon-file " data-downloadurl="text/html:All_Groups:https://redmine.ogf.org/dmsf_files/9234?download=" title="All_Groups version 9.0 download">All_Groups</a>
+				<div class="filename" title="Filename used for download or in Zip archive">All_Groups</div>
+			</td>
+			<td class="size">19.5 kB</td>
+			<td class="modified">
+				2005-05-21 23:00
+				
+				
+			</td>
+			<td class="version">
+				9.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9234" title="All_Groups details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9234'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">19920</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9269" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9269?download=" class="icon icon-file " data-downloadurl="text/html:Apache Software License:https://redmine.ogf.org/dmsf_files/9269?download=" title="Apache Software License version 1.0 download">Apache Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Apache Software License</div>
+			</td>
+			<td class="size">2.8 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9269" title="Apache Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9269'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2850</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9217" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9217?download=" class="icon icon-file " data-downloadurl="text/html:Apache Software License (Batik):https://redmine.ogf.org/dmsf_files/9217?download=" title="Apache Software License (Batik) version 1.0 download">Apache Software License (Batik)</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Apache Software License (Batik)</div>
+			</td>
+			<td class="size">2.6 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9217" title="Apache Software License (Batik) details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9217'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2624</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9256" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9256?download=" class="icon icon-file " data-downloadurl="text/html:Apache Software License (FOP):https://redmine.ogf.org/dmsf_files/9256?download=" title="Apache Software License (FOP) version 1.0 download">Apache Software License (FOP)</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Apache Software License (FOP)</div>
+			</td>
+			<td class="size">2.6 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9256" title="Apache Software License (FOP) details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9256'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2697</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9231" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9231?download=" class="icon icon-file " data-downloadurl="text/html:BeOpen Python Open Source License Agreement:https://redmine.ogf.org/dmsf_files/9231?download=" title="BeOpen Python Open Source License Agreement version 1.0 download">BeOpen Python Open Source License Agreement</a>
+				<div class="filename" title="Filename used for download or in Zip archive">BeOpen Python Open Source License Agreement</div>
+			</td>
+			<td class="size">2.4 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9231" title="BeOpen Python Open Source License Agreement details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9231'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2501</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9274" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9274?download=" class="icon icon-file " data-downloadurl="text/html:Berkeley DB Software License:https://redmine.ogf.org/dmsf_files/9274?download=" title="Berkeley DB Software License version 1.0 download">Berkeley DB Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Berkeley DB Software License</div>
+			</td>
+			<td class="size">6.2 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9274" title="Berkeley DB Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9274'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">6356</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9257" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9257?download=" class="icon icon-file " data-downloadurl="text/html:CNRI Open Source License Agreement:https://redmine.ogf.org/dmsf_files/9257?download=" title="CNRI Open Source License Agreement version 1.0 download">CNRI Open Source License Agreement</a>
+				<div class="filename" title="Filename used for download or in Zip archive">CNRI Open Source License Agreement</div>
+			</td>
+			<td class="size">3.5 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9257" title="CNRI Open Source License Agreement details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9257'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">3607</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9222" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9222?download=" class="icon icon-file " data-downloadurl="text/html:CWI Permissions Statement and Disclaimer:https://redmine.ogf.org/dmsf_files/9222?download=" title="CWI Permissions Statement and Disclaimer version 1.0 download">CWI Permissions Statement and Disclaimer</a>
+				<div class="filename" title="Filename used for download or in Zip archive">CWI Permissions Statement and Disclaimer</div>
+			</td>
+			<td class="size">1.2 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9222" title="CWI Permissions Statement and Disclaimer details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9222'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1238</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9282" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9282?download=" class="icon icon-file " data-downloadurl="text/html:Change Email Address Top Content:https://redmine.ogf.org/dmsf_files/9282?download=" title="Change Email Address Top Content version 1.0 download">Change Email Address Top Content</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Change Email Address Top Content</div>
+			</td>
+			<td class="size">205 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9282" title="Change Email Address Top Content details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9282'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">205</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9230" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9230?download=" class="icon icon-file " data-downloadurl="text/plain:Create Account Page Message:https://redmine.ogf.org/dmsf_files/9230?download=" title="Create Account Page Message version 5.0 download">Create Account Page Message</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Create Account Page Message</div>
+			</td>
+			<td class="size">429 Bytes</td>
+			<td class="modified">
+				2003-10-22 23:00
+				
+				
+			</td>
+			<td class="version">
+				5.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9230" title="Create Account Page Message details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9230'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">429</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9214" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9214?download=" class="icon icon-file " data-downloadurl="text/html:Docbok-XSL Copyright:https://redmine.ogf.org/dmsf_files/9214?download=" title="Docbok-XSL Copyright version 1.0 download">Docbok-XSL Copyright</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Docbok-XSL Copyright</div>
+			</td>
+			<td class="size">1.6 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9214" title="Docbok-XSL Copyright details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9214'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1684</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9223" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9223?download=" class="icon icon-file " data-downloadurl="text/html:Edit User Profile Message:https://redmine.ogf.org/dmsf_files/9223?download=" title="Edit User Profile Message version 1.0 download">Edit User Profile Message</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Edit User Profile Message</div>
+			</td>
+			<td class="size">133 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9223" title="Edit User Profile Message details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9223'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">133</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9245" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9245?download=" class="icon icon-file " data-downloadurl="text/html:Exim Software License:https://redmine.ogf.org/dmsf_files/9245?download=" title="Exim Software License version 1.0 download">Exim Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Exim Software License</div>
+			</td>
+			<td class="size">4.7 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9245" title="Exim Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9245'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">4787</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9232" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9232?download=" class="icon icon-file " data-downloadurl="text/plain:Forgot Password Page Message:https://redmine.ogf.org/dmsf_files/9232?download=" title="Forgot Password Page Message version 2.0 download">Forgot Password Page Message</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Forgot Password Page Message</div>
+			</td>
+			<td class="size">177 Bytes</td>
+			<td class="modified">
+				2003-04-17 15:22
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9232" title="Forgot Password Page Message details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9232'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">177</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9253" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9253?download=" class="icon icon-file " data-downloadurl="text/html:Fourthought Inc Software License:https://redmine.ogf.org/dmsf_files/9253?download=" title="Fourthought Inc Software License version 1.0 download">Fourthought Inc Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Fourthought Inc Software License</div>
+			</td>
+			<td class="size">1006 Bytes</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9253" title="Fourthought Inc Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9253'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1006</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9236" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9236?download=" class="icon icon-file " data-downloadurl="text/html:FreeType font driver for PCF fonts Software License:https://redmine.ogf.org/dmsf_files/9236?download=" title="FreeType font driver for PCF fonts Software License version 1.0 download">FreeType font driver for PCF fonts Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">FreeType font driver for PCF fonts Software License</div>
+			</td>
+			<td class="size">3.8 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9236" title="FreeType font driver for PCF fonts Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9236'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">3935</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9244" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9244?download=" class="icon icon-file " data-downloadurl="text/html:GNU General Public License:https://redmine.ogf.org/dmsf_files/9244?download=" title="GNU General Public License version 1.0 download">GNU General Public License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">GNU General Public License</div>
+			</td>
+			<td class="size">17.6 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9244" title="GNU General Public License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9244'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">18041</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9247" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9247?download=" class="icon icon-file " data-downloadurl="text/html:GNU Lesser General Public License:https://redmine.ogf.org/dmsf_files/9247?download=" title="GNU Lesser General Public License version 1.0 download">GNU Lesser General Public License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">GNU Lesser General Public License</div>
+			</td>
+			<td class="size">25.8 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9247" title="GNU Lesser General Public License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9247'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">26466</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9250" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9250?download=" class="icon icon-file " data-downloadurl="text/html:GNU Public License (psycopg):https://redmine.ogf.org/dmsf_files/9250?download=" title="GNU Public License (psycopg) version 1.0 download">GNU Public License (psycopg)</a>
+				<div class="filename" title="Filename used for download or in Zip archive">GNU Public License (psycopg)</div>
+			</td>
+			<td class="size">17.6 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9250" title="GNU Public License (psycopg) details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9250'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">18013</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9254" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9254?download=" class="icon icon-file " data-downloadurl="text/html:IO-stringy Additional Terms:https://redmine.ogf.org/dmsf_files/9254?download=" title="IO-stringy Additional Terms version 1.0 download">IO-stringy Additional Terms</a>
+				<div class="filename" title="Filename used for download or in Zip archive">IO-stringy Additional Terms</div>
+			</td>
+			<td class="size">1.6 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9254" title="IO-stringy Additional Terms details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9254'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1662</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9280" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9280?download=" class="icon icon-file " data-downloadurl="text/html:LibJPEG Software License:https://redmine.ogf.org/dmsf_files/9280?download=" title="LibJPEG Software License version 1.0 download">LibJPEG Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">LibJPEG Software License</div>
+			</td>
+			<td class="size">4.5 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9280" title="LibJPEG Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9280'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">4577</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9278" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9278?download=" class="icon icon-file " data-downloadurl="text/html:LibPNG Software License:https://redmine.ogf.org/dmsf_files/9278?download=" title="LibPNG Software License version 1.0 download">LibPNG Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">LibPNG Software License</div>
+			</td>
+			<td class="size">3.8 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9278" title="LibPNG Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9278'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">3843</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9277" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9277?download=" class="icon icon-file " data-downloadurl="text/html:LibXSLT Software License:https://redmine.ogf.org/dmsf_files/9277?download=" title="LibXSLT Software License version 1.0 download">LibXSLT Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">LibXSLT Software License</div>
+			</td>
+			<td class="size">2.9 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9277" title="LibXSLT Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9277'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2981</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9219" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9219?download=" class="icon icon-file " data-downloadurl="text/html:License Agreement for DBD::DB2:https://redmine.ogf.org/dmsf_files/9219?download=" title="License Agreement for DBD::DB2 version 1.0 download">License Agreement for DBD::DB2</a>
+				<div class="filename" title="Filename used for download or in Zip archive">License Agreement for DBD::DB2</div>
+			</td>
+			<td class="size">4.2 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9219" title="License Agreement for DBD::DB2 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9219'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">4336</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9220" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9220?download=" class="icon icon-file " data-downloadurl="text/html:License Agreement for the Open Source Python/Oracle Utility:https://redmine.ogf.org/dmsf_files/9220?download=" title="License Agreement for the Open Source Python/Oracle Utility version 1.0 download">License Agreement for the Open Source Python/Oracle Utility</a>
+				<div class="filename" title="Filename used for download or in Zip archive">License Agreement for the Open Source Python/Oracle Utility</div>
+			</td>
+			<td class="size">1.5 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9220" title="License Agreement for the Open Source Python/Oracle Utility details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9220'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1543</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9273" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9273?download=" class="icon icon-file " data-downloadurl="text/html:MIT/X-derivate license for Curl:https://redmine.ogf.org/dmsf_files/9273?download=" title="MIT/X-derivate license for Curl version 1.0 download">MIT/X-derivate license for Curl</a>
+				<div class="filename" title="Filename used for download or in Zip archive">MIT/X-derivate license for Curl</div>
+			</td>
+			<td class="size">1.5 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9273" title="MIT/X-derivate license for Curl details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9273'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1566</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9276" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9276?download=" class="icon icon-file " data-downloadurl="text/plain:Mail Index Page Top Content:https://redmine.ogf.org/dmsf_files/9276?download=" title="Mail Index Page Top Content version 1.0 download">Mail Index Page Top Content</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Mail Index Page Top Content</div>
+			</td>
+			<td class="size">56 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9276" title="Mail Index Page Top Content details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9276'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">56</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9221" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9221?download=" class="icon icon-file " data-downloadurl="text/html:Mozilla Public License:https://redmine.ogf.org/dmsf_files/9221?download=" title="Mozilla Public License version 1.0 download">Mozilla Public License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Mozilla Public License</div>
+			</td>
+			<td class="size">25.2 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9221" title="Mozilla Public License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9221'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">25768</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9227" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9227?download=" class="icon icon-file " data-downloadurl="text/plain:My Page Introduction:https://redmine.ogf.org/dmsf_files/9227?download=" title="My Page Introduction version 1.0 download">My Page Introduction</a>
+				<div class="filename" title="Filename used for download or in Zip archive">My Page Introduction</div>
+			</td>
+			<td class="size">2 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9227" title="My Page Introduction details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9227'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9249" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9249?download=" class="icon icon-file " data-downloadurl="text/html:OpenSSH Software License:https://redmine.ogf.org/dmsf_files/9249?download=" title="OpenSSH Software License version 1.0 download">OpenSSH Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">OpenSSH Software License</div>
+			</td>
+			<td class="size">10.5 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9249" title="OpenSSH Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9249'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">10781</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9235" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9235?download=" class="icon icon-file " data-downloadurl="text/html:PHP Software License:https://redmine.ogf.org/dmsf_files/9235?download=" title="PHP Software License version 1.0 download">PHP Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">PHP Software License</div>
+			</td>
+			<td class="size">3.2 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9235" title="PHP Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9235'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">3239</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9261" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9261?download=" class="icon icon-file " data-downloadurl="text/plain:People Index Page Top Content:https://redmine.ogf.org/dmsf_files/9261?download=" title="People Index Page Top Content version 1.0 download">People Index Page Top Content</a>
+				<div class="filename" title="Filename used for download or in Zip archive">People Index Page Top Content</div>
+			</td>
+			<td class="size">584 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9261" title="People Index Page Top Content details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9261'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">584</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9239" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9239?download=" class="icon icon-file " data-downloadurl="text/html:Perl Software License:https://redmine.ogf.org/dmsf_files/9239?download=" title="Perl Software License version 1.0 download">Perl Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Perl Software License</div>
+			</td>
+			<td class="size">2.6 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9239" title="Perl Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9239'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2679</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9237" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9237?download=" class="icon icon-file " data-downloadurl="text/plain:Personal Log Page Message:https://redmine.ogf.org/dmsf_files/9237?download=" title="Personal Log Page Message version 1.0 download">Personal Log Page Message</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Personal Log Page Message</div>
+			</td>
+			<td class="size">46 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9237" title="Personal Log Page Message details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9237'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">46</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9242" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9242?download=" class="icon icon-file " data-downloadurl="text/plain:Project Creation Confirmation:https://redmine.ogf.org/dmsf_files/9242?download=" title="Project Creation Confirmation version 1.0 download">Project Creation Confirmation</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Project Creation Confirmation</div>
+			</td>
+			<td class="size">2 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9242" title="Project Creation Confirmation details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9242'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9238" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9238?download=" class="icon icon-file " data-downloadurl="text/plain:Project Map Top Content:https://redmine.ogf.org/dmsf_files/9238?download=" title="Project Map Top Content version 1.0 download">Project Map Top Content</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Project Map Top Content</div>
+			</td>
+			<td class="size">213 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9238" title="Project Map Top Content details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9238'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">213</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9226" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9226?download=" class="icon icon-file " data-downloadurl="text/html:Project Registration - Complete:https://redmine.ogf.org/dmsf_files/9226?download=" title="Project Registration - Complete version 1.0 download">Project Registration - Complete</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Project Registration - Complete</div>
+			</td>
+			<td class="size">161 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9226" title="Project Registration - Complete details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9226'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">161</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9240" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9240?download=" class="icon icon-file " data-downloadurl="text/plain:Project Registration - Final Step:https://redmine.ogf.org/dmsf_files/9240?download=" title="Project Registration - Final Step version 1.0 download">Project Registration - Final Step</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Project Registration - Final Step</div>
+			</td>
+			<td class="size">110 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9240" title="Project Registration - Final Step details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9240'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">110</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9225" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9225?download=" class="icon icon-file " data-downloadurl="text/html:Project Web Server Frequently Asked Questions:https://redmine.ogf.org/dmsf_files/9225?download=" title="Project Web Server Frequently Asked Questions version 1.0 download">Project Web Server Frequently Asked Questions</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Project Web Server Frequently Asked Questions</div>
+			</td>
+			<td class="size">3.7 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9225" title="Project Web Server Frequently Asked Questions details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9225'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">3804</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9260" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9260?download=" class="icon icon-file " data-downloadurl="text/html:Python Software License:https://redmine.ogf.org/dmsf_files/9260?download=" title="Python Software License version 1.0 download">Python Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Python Software License</div>
+			</td>
+			<td class="size">11.5 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9260" title="Python Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9260'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">11827</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9229" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9229?download=" class="icon icon-file " data-downloadurl="text/html:Search Help -- Search Type:https://redmine.ogf.org/dmsf_files/9229?download=" title="Search Help -- Search Type version 1.0 download">Search Help -- Search Type</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Search Help -- Search Type</div>
+			</td>
+			<td class="size">829 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9229" title="Search Help -- Search Type details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9229'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">829</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9218" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9218?download=" class="icon icon-file " data-downloadurl="text/html:Search Help -- Weighted Order:https://redmine.ogf.org/dmsf_files/9218?download=" title="Search Help -- Weighted Order version 1.0 download">Search Help -- Weighted Order</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Search Help -- Weighted Order</div>
+			</td>
+			<td class="size">1.2 kB</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9218" title="Search Help -- Weighted Order details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9218'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1272</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9265" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9265?download=" class="icon icon-file " data-downloadurl="text/html:Site Footer:https://redmine.ogf.org/dmsf_files/9265?download=" title="Site Footer version 15.0 download">Site Footer</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Site Footer</div>
+			</td>
+			<td class="size">792 Bytes</td>
+			<td class="modified">
+				2005-11-21 00:00
+				
+				
+			</td>
+			<td class="version">
+				15.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9265" title="Site Footer details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9265'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">792</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9259" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9259?download=" class="icon icon-file " data-downloadurl="text/plain:Site Header:https://redmine.ogf.org/dmsf_files/9259?download=" title="Site Header version 1.0 download">Site Header</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Site Header</div>
+			</td>
+			<td class="size">2 Bytes</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9259" title="Site Header details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9259'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9216" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9216?download=" class="icon icon-file " data-downloadurl="text/html:Site Introduction:https://redmine.ogf.org/dmsf_files/9216?download=" title="Site Introduction version 26.0 download">Site Introduction</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Site Introduction</div>
+			</td>
+			<td class="size">4.4 kB</td>
+			<td class="modified">
+				2005-08-09 23:00
+				
+				
+			</td>
+			<td class="version">
+				26.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9216" title="Site Introduction details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9216'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">4545</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9270" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9270?download=" class="icon icon-file " data-downloadurl="text/plain:Site Left Side Menu:https://redmine.ogf.org/dmsf_files/9270?download=" title="Site Left Side Menu version 1.0 download">Site Left Side Menu</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Site Left Side Menu</div>
+			</td>
+			<td class="size">2 Bytes</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9270" title="Site Left Side Menu details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9270'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9266" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9266?download=" class="icon icon-file " data-downloadurl="text/plain:Site Right Side Menu:https://redmine.ogf.org/dmsf_files/9266?download=" title="Site Right Side Menu version 1.0 download">Site Right Side Menu</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Site Right Side Menu</div>
+			</td>
+			<td class="size">2 Bytes</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9266" title="Site Right Side Menu details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9266'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9275" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9275?download=" class="icon icon-file " data-downloadurl="text/plain:Site Sub-Header:https://redmine.ogf.org/dmsf_files/9275?download=" title="Site Sub-Header version 1.0 download">Site Sub-Header</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Site Sub-Header</div>
+			</td>
+			<td class="size">2 Bytes</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9275" title="Site Sub-Header details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9275'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9262" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9262?download=" class="icon icon-file " data-downloadurl="text/plain:Snippet Index Page Top:https://redmine.ogf.org/dmsf_files/9262?download=" title="Snippet Index Page Top version 2.0 download">Snippet Index Page Top</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Snippet Index Page Top</div>
+			</td>
+			<td class="size">220 Bytes</td>
+			<td class="modified">
+				2003-04-17 15:25
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9262" title="Snippet Index Page Top details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9262'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">220</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9258" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9258?download=" class="icon icon-file " data-downloadurl="text/plain:Snippet Submit Page Top:https://redmine.ogf.org/dmsf_files/9258?download=" title="Snippet Submit Page Top version 1.0 download">Snippet Submit Page Top</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Snippet Submit Page Top</div>
+			</td>
+			<td class="size">445 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9258" title="Snippet Submit Page Top details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9258'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">445</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9241" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9241?download=" class="icon icon-file " data-downloadurl="application/pdf:SourceForge 3.4 Installation and Administration Guide:https://redmine.ogf.org/dmsf_files/9241?download=" title="SourceForge 3.4 Installation and Administration Guide version 1.0 download">SourceForge 3.4 Installation and Administration Guide</a>
+				<div class="filename" title="Filename used for download or in Zip archive">SourceForge 3.4 Installation and Administration Guide</div>
+			</td>
+			<td class="size">2.4 MB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9241" title="SourceForge 3.4 Installation and Administration Guide details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9241'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2478359</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9267" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9267?download=" class="icon icon-file " data-downloadurl="application/pdf:SourceForge 3.4 User Guide:https://redmine.ogf.org/dmsf_files/9267?download=" title="SourceForge 3.4 User Guide version 1.0 download">SourceForge 3.4 User Guide</a>
+				<div class="filename" title="Filename used for download or in Zip archive">SourceForge 3.4 User Guide</div>
+			</td>
+			<td class="size">3.6 MB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9267" title="SourceForge 3.4 User Guide details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9267'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">3748267</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9233" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9233?download=" class="icon icon-file " data-downloadurl="text/html:Support Request Information:https://redmine.ogf.org/dmsf_files/9233?download=" title="Support Request Information version 5.0 download">Support Request Information</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Support Request Information</div>
+			</td>
+			<td class="size">1000 Bytes</td>
+			<td class="modified">
+				2003-04-16 16:50
+				
+				
+			</td>
+			<td class="version">
+				5.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9233" title="Support Request Information details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9233'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1000</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9215" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9215?download=" class="icon icon-file " data-downloadurl="text/html:The Artistic License:https://redmine.ogf.org/dmsf_files/9215?download=" title="The Artistic License version 1.0 download">The Artistic License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">The Artistic License</div>
+			</td>
+			<td class="size">6 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9215" title="The Artistic License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9215'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">6124</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9251" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9251?download=" class="icon icon-file " data-downloadurl="text/html:The FreeType Project LICENSE:https://redmine.ogf.org/dmsf_files/9251?download=" title="The FreeType Project LICENSE version 1.0 download">The FreeType Project LICENSE</a>
+				<div class="filename" title="Filename used for download or in Zip archive">The FreeType Project LICENSE</div>
+			</td>
+			<td class="size">6.8 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9251" title="The FreeType Project LICENSE details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9251'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">6986</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9283" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9283?download=" class="icon icon-file " data-downloadurl="text/html:The MIME-tools Perl5 kit Terms and Conditions:https://redmine.ogf.org/dmsf_files/9283?download=" title="The MIME-tools Perl5 kit Terms and Conditions version 1.0 download">The MIME-tools Perl5 kit Terms and Conditions</a>
+				<div class="filename" title="Filename used for download or in Zip archive">The MIME-tools Perl5 kit Terms and Conditions</div>
+			</td>
+			<td class="size">1.9 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9283" title="The MIME-tools Perl5 kit Terms and Conditions details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9283'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1934</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9246" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9246?download=" class="icon icon-file " data-downloadurl="text/html:The OpenLDAP Public License:https://redmine.ogf.org/dmsf_files/9246?download=" title="The OpenLDAP Public License version 1.0 download">The OpenLDAP Public License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">The OpenLDAP Public License</div>
+			</td>
+			<td class="size">2.2 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9246" title="The OpenLDAP Public License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9246'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2229</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9264" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9264?download=" class="icon icon-file " data-downloadurl="text/html:The OpenSSL toolkit dual license:https://redmine.ogf.org/dmsf_files/9264?download=" title="The OpenSSL toolkit dual license version 1.0 download">The OpenSSL toolkit dual license</a>
+				<div class="filename" title="Filename used for download or in Zip archive">The OpenSSL toolkit dual license</div>
+			</td>
+			<td class="size">6.1 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9264" title="The OpenSSL toolkit dual license details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9264'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">6292</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9281" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9281?download=" class="icon icon-file " data-downloadurl="text/html:Third Party Copyright Information:https://redmine.ogf.org/dmsf_files/9281?download=" title="Third Party Copyright Information version 1.0 download">Third Party Copyright Information</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Third Party Copyright Information</div>
+			</td>
+			<td class="size">39.8 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9281" title="Third Party Copyright Information details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9281'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">40749</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9272" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9272?download=" class="icon icon-file " data-downloadurl="text/plain:Top Ranked Project Index Page Top Content:https://redmine.ogf.org/dmsf_files/9272?download=" title="Top Ranked Project Index Page Top Content version 1.0 download">Top Ranked Project Index Page Top Content</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Top Ranked Project Index Page Top Content</div>
+			</td>
+			<td class="size">62 Bytes</td>
+			<td class="modified">
+				2003-04-11 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9272" title="Top Ranked Project Index Page Top Content details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9272'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">62</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9255" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9255?download=" class="icon icon-file " data-downloadurl="text/html:Zope Public License:https://redmine.ogf.org/dmsf_files/9255?download=" title="Zope Public License version 1.0 download">Zope Public License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Zope Public License</div>
+			</td>
+			<td class="size">3.4 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9255" title="Zope Public License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9255'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">3527</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9248" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9248?download=" class="icon icon-file " data-downloadurl="text/html:eGenix.com License Agreement:https://redmine.ogf.org/dmsf_files/9248?download=" title="eGenix.com License Agreement version 1.0 download">eGenix.com License Agreement</a>
+				<div class="filename" title="Filename used for download or in Zip archive">eGenix.com License Agreement</div>
+			</td>
+			<td class="size">3.7 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9248" title="eGenix.com License Agreement details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9248'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">3750</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9252" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9252?download=" class="icon icon-file " data-downloadurl="text/html:gd credits and license terms:https://redmine.ogf.org/dmsf_files/9252?download=" title="gd credits and license terms version 1.0 download">gd credits and license terms</a>
+				<div class="filename" title="Filename used for download or in Zip archive">gd credits and license terms</div>
+			</td>
+			<td class="size">2.2 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9252" title="gd credits and license terms details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9252'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2243</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9224" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9224?download=" class="icon icon-file " data-downloadurl="text/html:mod_dav Software License:https://redmine.ogf.org/dmsf_files/9224?download=" title="mod_dav Software License version 1.0 download">mod_dav Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">mod_dav Software License</div>
+			</td>
+			<td class="size">2 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9224" title="mod_dav Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9224'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2034</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9243" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9243?download=" class="icon icon-file " data-downloadurl="text/html:mod_ssl Software License:https://redmine.ogf.org/dmsf_files/9243?download=" title="mod_ssl Software License version 1.0 download">mod_ssl Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">mod_ssl Software License</div>
+			</td>
+			<td class="size">2.4 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9243" title="mod_ssl Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9243'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2453</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9268" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9268?download=" class="icon icon-file " data-downloadurl="text/html:schema/trex.py Software License:https://redmine.ogf.org/dmsf_files/9268?download=" title="schema/trex.py Software License version 1.0 download">schema/trex.py Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">schema/trex.py Software License</div>
+			</td>
+			<td class="size">1.4 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9268" title="schema/trex.py Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9268'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1463</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9263" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9263?download=" class="icon icon-file " data-downloadurl="text/html:setupext/install_data.py Software License:https://redmine.ogf.org/dmsf_files/9263?download=" title="setupext/install_data.py Software License version 1.0 download">setupext/install_data.py Software License</a>
+				<div class="filename" title="Filename used for download or in Zip archive">setupext/install_data.py Software License</div>
+			</td>
+			<td class="size">1 kB</td>
+			<td class="modified">
+				2003-10-02 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9263" title="setupext/install_data.py Software License details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9263'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1065</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9271" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/9271?download=" class="icon icon-file " data-downloadurl="text/html:support request:https://redmine.ogf.org/dmsf_files/9271?download=" title="support request version 11.0 download">support request</a>
+				<div class="filename" title="Filename used for download or in Zip archive">support request</div>
+			</td>
+			<td class="size">2.9 kB</td>
+			<td class="modified">
+				2003-10-13 23:00
+				
+				
+			</td>
+			<td class="version">
+				11.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/9271" title="support request details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9271'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2920</td>
+		</tr>
+	
+	</tbody>
+	</table>
+	<br />
+</form>
+
+<script type="text/javascript">
+	jQuery("#entries_delete_button").click(function(event) {
+		if(window.confirm("Do you really want to delete checked entries?")) {
+			jQuery("#entries_form").attr("action", "/dmsf/delete_entries/migration-archive?folder_id=5767");
+			jQuery("#entries_form").submit();
+		}
+	})
+	
+	jQuery("#check_all_entries").click(function(event) {
+		var $this = jQuery(this);
+		if($this.prop("checked")) {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", true);
+		} else {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", false);
+		}
+	})			
+</script>
+
+
+
+
+
+
+<br />
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/dmsf/migration-archive?folder_id=5767 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:40:13 GMT -->
+</html>

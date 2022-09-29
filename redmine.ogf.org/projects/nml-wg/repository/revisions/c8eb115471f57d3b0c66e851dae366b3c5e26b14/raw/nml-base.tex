@@ -1,0 +1,293 @@
+%!TEX TS-program = pdflatex
+
+%%%% Latex preamble and page formatting %%%%
+
+\documentclass[12pt]{article}  % larger font to compensate for long lines with fullpage
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[pdfborder={0 0 0}]{hyperref} % use hyperref without borders
+\hypersetup{
+    pdftitle = {Network Markup Language Base Schema version 1},
+    pdfauthor = {Jeroen van der Ham, Freek Dijkstra, Roman Łapacz, Jason Zurawski},
+    pdfsubject = {Schema for network topology specification},
+    pdfkeywords = {NML schema network topology}
+}
+\usepackage{ifpdf}
+\usepackage{ifthen}
+% mathabx used for \blacktriangleright
+\usepackage{mathabx} % may require a package like texlive-fonts-extra
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{color}
+\usepackage[title,titletoc]{appendix}
+% Read pictures from img/ and current directory
+\graphicspath{{img/}{./}}
+
+% Package for including code in the document
+\usepackage{listings}
+% The listing package has no Unicode support at all, but this a ugly way to get at least some latin-1 characters.
+\lstset{extendedchars=true,literate={ø}{{\o}}1 {É}{{\'E}}1 {è}{{\`e}}1}
+% \lstset{basicstyle=\ttfamily}
+\lstdefinelanguage[nml]{XML}[]{XML}{keywordsprefix={nml:}}
+\lstloadlanguages{XML,[nml]{XML}}
+\lstset{
+  language=[nml]XML,
+  basicstyle=\scriptsize,
+  breaklines=true,
+  % backgroundcolor=\color{gray},
+  tagstyle=\sffamily,
+  keywordstyle=\color{black}\bfseries,
+  stringstyle=\ttfamily,
+  numbers=left,
+  numberstyle=\tiny,
+  frame=single,
+  framesep=10pt,
+  framerule=0.0pt,
+  columns=fullflexible
+}
+
+
+% Allow bold typewriter font
+\DeclareFontShape{OT1}{cmtt}{bx}{n}{<5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
+
+
+%%% GWD/GFD header follows %%%
+% Feel free to make changes, as long as your document follows the guidelines of GFP.152
+
+\usepackage[numbers]{natbib} % Use [1] for references, 
+\bibliographystyle{plainnat} % References show full author name(s) and document URL
+
+\usepackage[sf,compact]{titlesec} % Use sans-serif for section headers
+
+\usepackage[titles]{tocloft} % Format table of contents
+% (tocloft is used, since titletoc is incompatible with xetex.)
+\renewcommand{\cftsecfont}{\sffamily}
+\renewcommand{\cftsubsecfont}{\sffamily}
+\renewcommand{\cftsubsubsecfont}{\sffamily}
+\renewcommand{\cftsecpagefont}{\sffamily}
+\renewcommand{\cftsubsecpagefont}{\sffamily}
+\renewcommand{\cftsubsubsecpagefont}{\sffamily}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsubsecdotsep}} % dots for sections the same as for subsections
+\setlength{\cftbeforesecskip}{0.5ex}
+
+\usepackage{parskip} % Blank lines between paragraphs, no indentation.
+
+% font style for headers and footers
+\newcommand{\headerstyle}{\sffamily} % sans-serif
+
+% Set page margins
+\usepackage{fancyhdr}
+\addtolength{\headheight}{15pt}
+\renewcommand{\headrulewidth}{0pt}
+% \setlength{\headrulewidth}{0pt}
+\setlength{\headsep}{20pt}
+\usepackage[headings]{fullpage}  % small margins
+
+% Macro to make some editorial notes
+\newenvironment{note}{\framebox{note:} \color[gray]{0.5}}{}
+
+% Macro to check if (optional) values above are defined or not.
+\newcommand{\ifnonempty}[2]{\ifthenelse{\isundefined{#1}}{}{\ifthenelse{\equal{#1}{}}{}{#2}}}
+
+% Macro to create nice diagrams showing domain and range of a relation, as well as the cardinality.
+\newlength{\rellength}
+\newcommand{\nmlrelation}[5]{
+\settowidth{\rellength}{#3 \hskip2.5em}%
+\framebox{\emph{#1}}%
+\lower1.2ex\vbox{\hbox to \rellength{\hfill\emph{#3} $\blacktriangleright$\hfill\vrule width0pt depth2pt}{\hrule height 0.4pt}\hbox to \rellength{\hskip2pt#2\vrule width0pt height1.5ex\hfill#4\hskip2pt}}%
+\framebox{\emph{#5}}
+}
+
+%%%% Document header and title page %%%%
+
+\title{Network Markup Language Base Schema version 1}
+\author{Jeroen van der Ham \and Freek Dijkstra \and Roman Łapacz \and Jason Zurawski}
+\newcommand{\shortdoctitle}{NML version 1}  % Title used in page header
+% \date{} and \author{} are currently ignored
+\newcommand{\authorsshort}{Jeroen van der Ham, UvA (editor)\\Freek Dijkstra, SURFsara\\Roman Łapacz, PSNC\\Jason Zurawski, Internet2}
+\newcommand{\publicationdate}{May 2013}  % Date of first publication of the document
+% \newcommand{\revisiondate}{August 2012}  % Optional: date of last revision of the document
+\newcommand{\copyrightyears}{2008-2013}  % Years used in copyright notice
+% \newcommand{\docseries}{GWD-R-P}  % GWD-R, GWD-I or GWD-C (for working drafts)
+\newcommand{\docseries}{GFD-R-P.206}  % GFD.000 (for approved documents)
+
+\ifpdf
+\hypersetup{
+    pdftitle = {Network Markup Language Base Schema version 1},
+    pdfauthor = {Jeroen van der Ham, Freek Dijkstra, Roman Łapacz, Jason Zurawski},
+    pdfsubject = {Schema for network topology specification},
+    pdfkeywords = {NML schema network topology}
+}
+\fi
+
+
+% Define page header and footers
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{\fancyplain{}{\headerstyle\docseries}}
+% use \revisiondate if defined, otherwise \publicationdate for right header:
+\rhead{\fancyplain{}{\headerstyle\ifthenelse{\isundefined{\revisiondate }}{\publicationdate}{\ifthenelse{\equal{\revisiondate}{}}{\publicationdate}{\revisiondate}}}}
+\lfoot{\headerstyle\ifnonempty{\groupurl}{\groupurl}}
+\rfoot{\headerstyle\thepage}
+\thispagestyle{plain}
+
+\begin{document}
+
+% Title page header
+{\noindent
+\begin{minipage}[t]{1.5in}
+\headerstyle
+\docseries \\
+NML-WG \\
+\href{mailto:nml-wg@ogf.org}{nml-wg@ogf.org}
+\end{minipage}
+\hfill
+\raggedleft
+\begin{minipage}[t]{4.5in}
+\raggedleft
+\headerstyle
+\authorsshort \\
+\vspace{1em}
+\publicationdate \\
+\ifnonempty{\revisiondate}{Revised \revisiondate \\}
+\end{minipage}
+}
+
+\vspace{1em}
+\begin{center}
+\makeatletter
+\Large\bf\textsf \@title
+\makeatother
+\end{center}
+
+
+\subsection*{Status of This Document}
+
+% Group Working Draft (GWD), candidate Recommendations Proposed (R-P).
+Grid Final Draft (GFD), Proposed Recommendation (R-P).
+
+
+% \subsection*{Document Change History}
+% 
+% Use this for formal revisions of this document
+
+\subsection*{Copyright Notice}
+
+Copyright \copyright \ Open Grid Forum (\copyrightyears).  Some Rights Reserved.  
+Distribution is unlimited.
+
+\phantomsection\addcontentsline{toc}{section}{Abstract}
+\section*{Abstract}
+
+This document describes a set of normative schemas which allow the
+description of computer network topologies.
+
+\phantomsection\addcontentsline{toc}{section}{Contents}
+\tableofcontents
+
+\newcommand{\qq}{\symbol{34}} % 34 is the decimal LaTeX code for "
+\newcommand{\q}{\symbol{39}} % 39 is the decimal LaTeX code for '
+\newcommand{\underscore}{\symbol{95}} % 39 is the decimal LaTeX code for _
+
+\newcommand{\MUST}{\textsc{must}}
+\newcommand{\MUSTNOT}{\textsc{must not}}
+\newcommand{\REQUIRED}{\textsc{required}}
+\newcommand{\SHALL}{\textsc{shall}}
+\newcommand{\SHALLNOT}{\textsc{shall not}}
+\newcommand{\SHOULD}{\textsc{should}}
+\newcommand{\SHOULDNOT}{\textsc{should not}}
+\newcommand{\RECOMMENDED}{\textsc{recommended}}
+\newcommand{\MAY}{\textsc{may}}
+\newcommand{\OPTIONAL}{\textsc{optional}}
+
+\newpage
+
+\include{introduction} 
+\include{schema}
+\include{identifiers}
+\include{syntax}
+\include{examples}
+\include{security}
+% \include{glossary}
+
+\section{Contributors}
+
+% Contact information for authors. You can also use this section to recognize contributions by other people who are not listed as authors, but made a useful contribution.
+% 
+% The title page should list the Corresponding Authors (or Editors), who are committed to taking permanent stewardship for this document – receiving communication in the future and otherwise being responsive to its content. Corresponding authors will be sought to process any error reports. The title page should contain at least one and at most three (Corresponding) Author/Editors, unless there are compelling reasons to list more.
+% 
+% Corresponding authors must be indicated as part of the Contributors or Authors section. Contributors are individuals who assisted with a document's preparation, and whose contributions are recognized in the document.
+% 
+% The OGF prefers the use of full first names (not initials). Complete contact information for authors must be included. Contributors are listed after authors, and do not need to have complete contact information. The nature of the contribution may be recognized.
+
+\textbf{Jeroen J. van der Ham (Editor)} \\
+Faculty of Science, Informatics Institute, University of Amsterdam \\
+Science Park 904, 1098 XH  Amsterdam  \\
+The Netherlands \\
+Email: vdham@uva.nl \\
+\\
+\textbf{Freek Dijkstra} \\
+SURFsara \\
+Science Park 140,  1098 XG  Amsterdam \\
+The Netherlands \\
+Email: freek.dijkstra@surfsara.nl \\
+\\
+\textbf{Roman Łapacz} \\
+PSNC \\
+ul. Noskowskiego 12/14,  61-704 Poznań \\
+Poland \\
+Email: romradz@man.poznan.pl \\
+\\
+\textbf{Jason Zurawski} \\
+Internet2 \\
+1150 18th Street, NW \\
+Suite 900 \\
+Washington, DC 20036 \\
+USA \\
+Email: zurawski@es.net % \\
+
+
+\section{Acknowledgments}
+
+The authors would like to thank the NML working group members for their patience.
+The NML group has operated in the web of infrastructure groups and is grateful for all the input from the NM, NMC and NSI working-groups.
+
+Financial support has been provided by several projects and institutions: 
+
+This work was partially supported by the European Commission, $7^{th}$ Framework Programme for Research and Technological Development, Capacities,  The GN3 project -- Grant No. 238875, GEYSERS -- Grant No. 248657 and NOVI -- Grant No. 257867.
+This project was also made possible by the support of SURF, the collaborative organisation for higher education institutes and research institutes aimed at breakthrough innovations in ICT. More information on SURF is available on the website www.surf.nl.
+Furthermore, this work was supported by the Dutch national program COMMIT.
+
+Jason Zurawski would like to thank Internet2, along with the National Science Foundation (NSF) for support through grants: \#0962704, \#1019008, and \#0721902.
+
+The authors are indebted to the many participants of working group sessions and on the mailing list, including the following contributors: 
+Aaron Brown,
+Jeff W. Boote, 
+Aur\'elien Cedeyn, 
+Evangelos Chaniotakis, 
+Chin Guok, 
+Paola Grosso, 
+Richard Hughes-Jones, 
+Houssem Medhioub, 
+Ralph Niederberger, 
+Anand Patil, 
+Victor Reijs, 
+Guy Roberts, 
+Jerry Sobieski, 
+Martin Swany, 
+Fausto Vetter, 
+Pascale Vicat-Blanc, and
+John Vollbrecht.
+
+
+\include{legal} 
+
+\begin{appendices}
+	\include{xmlschema}
+	\include{owlschema}
+	\include{g800terms}
+\end{appendices}
+
+\include{bibliography} 
+
+\end{document}

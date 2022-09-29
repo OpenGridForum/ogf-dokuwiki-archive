@@ -1,0 +1,1319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/28f0c4f131b02ab67bd9c254f9853168ec6a5b65/changes/test/unit/repository_mercurial_test.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:40:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>/test/unit/repository_mercurial_test.rb - Changes - Redmine - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+  <script src="https://redmine.ogf.org/javascripts/repository_navigation.js?1425381960" type="text/javascript"></script>
+</head>
+<body class="theme-Ogf redmine controller-repositories action-changes">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/redmine-og" method="get">
+        <input name="changesets" type="hidden" value="1" />
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/redmine-og" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=repository" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=repository" class="ancestor">IT</a> » Redmine</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/redmine-og" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/redmine-og" class="dmsf">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/repository" class="repository selected">Repository</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+  
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/statistics" class="icon icon-stats">Statistics</a>
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/changes/test/unit/repository_mercurial_test.rb?rev=" id="revision_selector" method="get">  <!-- Branches Dropdown -->
+      | Branch: 
+    <select id="branch" name="branch"><option value=""></option>
+<option value="1.3-stable">1.3-stable</option>
+<option value="devel">devel</option>
+<option value="master">master</option></select>
+  
+  
+  | Revision: 
+  <input id="rev" name="rev" size="8" type="text" value="28f0c4f131b02ab67bd9c254f9853168ec6a5b65" />
+</form>
+</div>
+
+<h2>
+  <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/28f0c4f131b02ab67bd9c254f9853168ec6a5b65/show">root</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/28f0c4f131b02ab67bd9c254f9853168ec6a5b65/show/test">test</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/28f0c4f131b02ab67bd9c254f9853168ec6a5b65/show/test/unit">unit</a>
+
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/28f0c4f131b02ab67bd9c254f9853168ec6a5b65/changes/test/unit/repository_mercurial_test.rb">repository_mercurial_test.rb</a>
+
+
+@ 28f0c4f1
+
+
+</h2>
+
+<p>
+
+<p>
+History |
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/28f0c4f131b02ab67bd9c254f9853168ec6a5b65/entry/test/unit/repository_mercurial_test.rb">View</a> |
+
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/28f0c4f131b02ab67bd9c254f9853168ec6a5b65/annotate/test/unit/repository_mercurial_test.rb">Annotate</a> |
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/28f0c4f131b02ab67bd9c254f9853168ec6a5b65/raw/test/unit/repository_mercurial_test.rb">Download</a>
+(13.5 kB)
+</p>
+
+
+</p>
+
+
+
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/diff/test/unit/repository_mercurial_test.rb" method="get">
+<table class="list changesets">
+<thead><tr>
+
+<th>#</th>
+<th></th>
+<th></th>
+<th>Date</th>
+<th>Author</th>
+<th>Comment</th>
+</tr></thead>
+<tbody>
+
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/41c16ecb2fed8be4f2eec2fac41cb054db986f7c" title="Revision 41c16ecb">41c16ecb</a></td>
+<td class="checkbox"><input checked="checked" id="cb-1" name="rev" onclick="$('cbto-2').checked=true;" type="radio" value="41c16ecb2fed8be4f2eec2fac41cb054db986f7c" /></td>
+<td class="checkbox"></td>
+<td class="committed_on">02/24/2012 07:38 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: remove unnecessary log_encoding from overriding human_attribute_name test</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8966 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/beb3b23fb63b4b796cc1633b9fe45c4beae9682f" title="Revision beb3b23f">beb3b23f</a></td>
+<td class="checkbox"><input id="cb-2" name="rev" onclick="$('cbto-3').checked=true;" type="radio" value="beb3b23fb63b4b796cc1633b9fe45c4beae9682f" /></td>
+<td class="checkbox"><input checked="checked" id="cbto-2" name="rev_to" onclick="if ($('cb-2').checked==true) {$('cb-1').checked=true;}" type="radio" value="beb3b23fb63b4b796cc1633b9fe45c4beae9682f" /></td>
+<td class="committed_on">02/24/2012 06:31 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: add test to override human_attribute_name of "path to repository"</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8964 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/d004d83183bee33f76ec839eb6c3609fe5034398" title="Revision d004d831">d004d831</a></td>
+<td class="checkbox"><input id="cb-3" name="rev" onclick="$('cbto-4').checked=true;" type="radio" value="d004d83183bee33f76ec839eb6c3609fe5034398" /></td>
+<td class="checkbox"><input id="cbto-3" name="rev_to" onclick="if ($('cb-3').checked==true) {$('cb-2').checked=true;}" type="radio" value="d004d83183bee33f76ec839eb6c3609fe5034398" /></td>
+<td class="committed_on">02/24/2012 06:18 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: split unit model test setup whether repository required or not</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8962 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/4a5a4bad971de24ad269b4b21ad1fe42bc9d8e8a" title="Revision 4a5a4bad">4a5a4bad</a></td>
+<td class="checkbox"><input id="cb-4" name="rev" onclick="$('cbto-5').checked=true;" type="radio" value="4a5a4bad971de24ad269b4b21ad1fe42bc9d8e8a" /></td>
+<td class="checkbox"><input id="cbto-4" name="rev_to" onclick="if ($('cb-4').checked==true) {$('cb-3').checked=true;}" type="radio" value="4a5a4bad971de24ad269b4b21ad1fe42bc9d8e8a" /></td>
+<td class="committed_on">11/03/2011 05:58 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: test: model: fix failing test_parents on PostgreSQL (#5501)</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7719 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/9129d116b299ae0dd3636baba49b579ccaec356e" title="Revision 9129d116">9129d116</a></td>
+<td class="checkbox"><input id="cb-5" name="rev" onclick="$('cbto-6').checked=true;" type="radio" value="9129d116b299ae0dd3636baba49b579ccaec356e" /></td>
+<td class="checkbox"><input id="cbto-5" name="rev_to" onclick="if ($('cb-5').checked==true) {$('cb-4').checked=true;}" type="radio" value="9129d116b299ae0dd3636baba49b579ccaec356e" /></td>
+<td class="committed_on">11/03/2011 04:03 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: test: model: add test of parents (#5501)</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7714 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/476c3d54b7118fdc9bc0acb3b58de781ef15d614" title="Revision 476c3d54">476c3d54</a></td>
+<td class="checkbox"><input id="cb-6" name="rev" onclick="$('cbto-7').checked=true;" type="radio" value="476c3d54b7118fdc9bc0acb3b58de781ef15d614" /></td>
+<td class="checkbox"><input id="cbto-6" name="rev_to" onclick="if ($('cb-6').checked==true) {$('cb-5').checked=true;}" type="radio" value="476c3d54b7118fdc9bc0acb3b58de781ef15d614" /></td>
+<td class="committed_on">10/27/2011 09:44 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: update test repository (#5501)</p>
+
+
+	<p>This test repository has one merged revision.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7662 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/520a8e6f15e2ff6b8b1ec207544815d90102ecf7" title="Revision 520a8e6f">520a8e6f</a></td>
+<td class="checkbox"><input id="cb-7" name="rev" onclick="$('cbto-8').checked=true;" type="radio" value="520a8e6f15e2ff6b8b1ec207544815d90102ecf7" /></td>
+<td class="checkbox"><input id="cbto-7" name="rev_to" onclick="if ($('cb-7').checked==true) {$('cb-6').checked=true;}" type="radio" value="520a8e6f15e2ff6b8b1ec207544815d90102ecf7" /></td>
+<td class="committed_on">10/25/2011 06:27 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: use NUM_REV instead of hard-coded number of revisions at "test_fetch_changesets_incremental" of unit model test</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7652 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/3a62c30f240b0080a76bb159faa2767b79aad49c" title="Revision 3a62c30f">3a62c30f</a></td>
+<td class="checkbox"><input id="cb-8" name="rev" onclick="$('cbto-9').checked=true;" type="radio" value="3a62c30f240b0080a76bb159faa2767b79aad49c" /></td>
+<td class="checkbox"><input id="cbto-8" name="rev_to" onclick="if ($('cb-8').checked==true) {$('cb-7').checked=true;}" type="radio" value="3a62c30f240b0080a76bb159faa2767b79aad49c" /></td>
+<td class="committed_on">10/24/2011 05:33 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: skip failing unit model tests on below Mercurial 1.5 (#9465)</p>
+
+
+	<p>Tests of non ASCII nor alphabetic nor numeric <strong>named branch</strong> fails on below Mercurial 1.5.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7643 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/4366112cfac1a5b0fbe43d54e46ff14f3f73534d" title="Revision 4366112c">4366112c</a></td>
+<td class="checkbox"><input id="cb-9" name="rev" onclick="$('cbto-10').checked=true;" type="radio" value="4366112cfac1a5b0fbe43d54e46ff14f3f73534d" /></td>
+<td class="checkbox"><input id="cbto-9" name="rev_to" onclick="if ($('cb-9').checked==true) {$('cb-8').checked=true;}" type="radio" value="4366112cfac1a5b0fbe43d54e46ff14f3f73534d" /></td>
+<td class="committed_on">09/11/2011 08:12 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: scm: mercurial: fix error of test_copied_files at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7117 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/51d14ea51113ded47285fc495c81397f6fbc6428" title="Revision 51d14ea5">51d14ea5</a></td>
+<td class="checkbox"><input id="cb-10" name="rev" onclick="$('cbto-11').checked=true;" type="radio" value="51d14ea51113ded47285fc495c81397f6fbc6428" /></td>
+<td class="checkbox"><input id="cbto-10" name="rev_to" onclick="if ($('cb-10').checked==true) {$('cb-9').checked=true;}" type="radio" value="51d14ea51113ded47285fc495c81397f6fbc6428" /></td>
+<td class="committed_on">09/11/2011 08:12 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: scm: mercurial: fix error of test_latest_changesets at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7116 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/eb6c6ef3581031c2590663ce042766fbdf5b1dde" title="Revision eb6c6ef3">eb6c6ef3</a></td>
+<td class="checkbox"><input id="cb-11" name="rev" onclick="$('cbto-12').checked=true;" type="radio" value="eb6c6ef3581031c2590663ce042766fbdf5b1dde" /></td>
+<td class="checkbox"><input id="cbto-11" name="rev_to" onclick="if ($('cb-11').checked==true) {$('cb-10').checked=true;}" type="radio" value="eb6c6ef3581031c2590663ce042766fbdf5b1dde" /></td>
+<td class="committed_on">09/11/2011 08:11 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: scm: mercurial: fix error of test_changeset_order_by_revision at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7115 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/edb5b069e74feb2001ea863c20943ddd60bc1fc3" title="Revision edb5b069">edb5b069</a></td>
+<td class="checkbox"><input id="cb-12" name="rev" onclick="$('cbto-13').checked=true;" type="radio" value="edb5b069e74feb2001ea863c20943ddd60bc1fc3" /></td>
+<td class="checkbox"><input id="cbto-12" name="rev_to" onclick="if ($('cb-12').checked==true) {$('cb-11').checked=true;}" type="radio" value="edb5b069e74feb2001ea863c20943ddd60bc1fc3" /></td>
+<td class="committed_on">09/11/2011 07:21 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: scm: mercurial: fix error of test_format_identifier at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7114 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c4618ec14117a4dc6bf0a5a77c8f70a4a281e446" title="Revision c4618ec1">c4618ec1</a></td>
+<td class="checkbox"><input id="cb-13" name="rev" onclick="$('cbto-14').checked=true;" type="radio" value="c4618ec14117a4dc6bf0a5a77c8f70a4a281e446" /></td>
+<td class="checkbox"><input id="cbto-13" name="rev_to" onclick="if ($('cb-13').checked==true) {$('cb-12').checked=true;}" type="radio" value="c4618ec14117a4dc6bf0a5a77c8f70a4a281e446" /></td>
+<td class="committed_on">09/11/2011 07:20 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: scm: mercurial: fix error of test_identifier at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7113 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0f43aaca0ef432f53ac5f7a0aa443e5f042c17a7" title="Revision 0f43aaca">0f43aaca</a></td>
+<td class="checkbox"><input id="cb-14" name="rev" onclick="$('cbto-15').checked=true;" type="radio" value="0f43aaca0ef432f53ac5f7a0aa443e5f042c17a7" /></td>
+<td class="checkbox"><input id="cbto-14" name="rev_to" onclick="if ($('cb-14').checked==true) {$('cb-13').checked=true;}" type="radio" value="0f43aaca0ef432f53ac5f7a0aa443e5f042c17a7" /></td>
+<td class="committed_on">09/11/2011 07:19 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: scm: mercurial: fix error of test_find_changeset_by_invalid_name at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7112 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/169cb86ce9461e88b7f7610fb10dca3dbb7b5f76" title="Revision 169cb86c">169cb86c</a></td>
+<td class="checkbox"><input id="cb-15" name="rev" onclick="$('cbto-16').checked=true;" type="radio" value="169cb86ce9461e88b7f7610fb10dca3dbb7b5f76" /></td>
+<td class="checkbox"><input id="cbto-15" name="rev_to" onclick="if ($('cb-15').checked==true) {$('cb-14').checked=true;}" type="radio" value="169cb86ce9461e88b7f7610fb10dca3dbb7b5f76" /></td>
+<td class="committed_on">09/11/2011 07:18 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: scm: mercurial: fix error of test_find_changeset_by_name at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7111 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/81f2cb00b61957628bc9d7628163ccac14048304" title="Revision 81f2cb00">81f2cb00</a></td>
+<td class="checkbox"><input id="cb-16" name="rev" onclick="$('cbto-17').checked=true;" type="radio" value="81f2cb00b61957628bc9d7628163ccac14048304" /></td>
+<td class="checkbox"><input id="cbto-16" name="rev_to" onclick="if ($('cb-16').checked==true) {$('cb-15').checked=true;}" type="radio" value="81f2cb00b61957628bc9d7628163ccac14048304" /></td>
+<td class="committed_on">09/11/2011 07:13 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: scm: mercurial: fix error of test_next_nil at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7106 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/db1d619a34b3e1fc066653abfb59e01467d6931a" title="Revision db1d619a">db1d619a</a></td>
+<td class="checkbox"><input id="cb-17" name="rev" onclick="$('cbto-18').checked=true;" type="radio" value="db1d619a34b3e1fc066653abfb59e01467d6931a" /></td>
+<td class="checkbox"><input id="cbto-17" name="rev_to" onclick="if ($('cb-17').checked==true) {$('cb-16').checked=true;}" type="radio" value="db1d619a34b3e1fc066653abfb59e01467d6931a" /></td>
+<td class="committed_on">09/11/2011 07:12 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: scm: mercurial: fix error of test_next at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7105 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8614f0afbf2ef7e0587a5a91c53589db1aa9eb7b" title="Revision 8614f0af">8614f0af</a></td>
+<td class="checkbox"><input id="cb-18" name="rev" onclick="$('cbto-19').checked=true;" type="radio" value="8614f0afbf2ef7e0587a5a91c53589db1aa9eb7b" /></td>
+<td class="checkbox"><input id="cbto-18" name="rev_to" onclick="if ($('cb-18').checked==true) {$('cb-17').checked=true;}" type="radio" value="8614f0afbf2ef7e0587a5a91c53589db1aa9eb7b" /></td>
+<td class="committed_on">09/11/2011 07:11 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: scm: mercurial: fix error of test_previous_nil at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7104 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/683ed49f15c289cfbe42698de3649b522cd8cf67" title="Revision 683ed49f">683ed49f</a></td>
+<td class="checkbox"><input id="cb-19" name="rev" onclick="$('cbto-20').checked=true;" type="radio" value="683ed49f15c289cfbe42698de3649b522cd8cf67" /></td>
+<td class="checkbox"><input id="cbto-19" name="rev_to" onclick="if ($('cb-19').checked==true) {$('cb-18').checked=true;}" type="radio" value="683ed49f15c289cfbe42698de3649b522cd8cf67" /></td>
+<td class="committed_on">09/11/2011 07:10 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: scm: mercurial: fix error of test_previous at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7103 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/264deedd82e63750c154114e0d2ab318909f141a" title="Revision 264deedd">264deedd</a></td>
+<td class="checkbox"><input id="cb-20" name="rev" onclick="$('cbto-21').checked=true;" type="radio" value="264deedd82e63750c154114e0d2ab318909f141a" /></td>
+<td class="checkbox"><input id="cbto-20" name="rev_to" onclick="if ($('cb-20').checked==true) {$('cb-19').checked=true;}" type="radio" value="264deedd82e63750c154114e0d2ab318909f141a" /></td>
+<td class="committed_on">09/11/2011 07:09 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: scm: mercurial: fix error of test_find_changeset_by_empty_name at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7102 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0130f6265115f14dae8907c6d4d8b6c66275911e" title="Revision 0130f626">0130f626</a></td>
+<td class="checkbox"><input id="cb-21" name="rev" onclick="$('cbto-22').checked=true;" type="radio" value="0130f6265115f14dae8907c6d4d8b6c66275911e" /></td>
+<td class="checkbox"><input id="cbto-21" name="rev_to" onclick="if ($('cb-21').checked==true) {$('cb-20').checked=true;}" type="radio" value="0130f6265115f14dae8907c6d4d8b6c66275911e" /></td>
+<td class="committed_on">09/11/2011 10:14 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: mercurial: git: fix error of test_isodatesec at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7101 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/743adeb55fa370f7c0db607201fe65df71a2186e" title="Revision 743adeb5">743adeb5</a></td>
+<td class="checkbox"><input id="cb-22" name="rev" onclick="$('cbto-23').checked=true;" type="radio" value="743adeb55fa370f7c0db607201fe65df71a2186e" /></td>
+<td class="checkbox"><input id="cbto-22" name="rev_to" onclick="if ($('cb-22').checked==true) {$('cb-21').checked=true;}" type="radio" value="743adeb55fa370f7c0db607201fe65df71a2186e" /></td>
+<td class="committed_on">09/11/2011 10:13 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: mercurial: git: fix error of test_fetch_changesets_incremental at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7100 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/9ed7bf1d7249702e375703063571a4ecf9f2c2d3" title="Revision 9ed7bf1d">9ed7bf1d</a></td>
+<td class="checkbox"><input id="cb-23" name="rev" onclick="$('cbto-24').checked=true;" type="radio" value="9ed7bf1d7249702e375703063571a4ecf9f2c2d3" /></td>
+<td class="checkbox"><input id="cbto-23" name="rev_to" onclick="if ($('cb-23').checked==true) {$('cb-22').checked=true;}" type="radio" value="9ed7bf1d7249702e375703063571a4ecf9f2c2d3" /></td>
+<td class="committed_on">09/11/2011 10:12 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: mercurial: git: fix error of test_fetch_changesets_from_scratch at unit model test</p>
+
+
+	<p>On Rails 3.1, ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection error raises.<br />For more details, see r7062.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7099 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/e772e9ea7bad74d1c2ccceeadc39c2b74c61e765" title="Revision e772e9ea">e772e9ea</a></td>
+<td class="checkbox"><input id="cb-24" name="rev" onclick="$('cbto-25').checked=true;" type="radio" value="e772e9ea7bad74d1c2ccceeadc39c2b74c61e765" /></td>
+<td class="checkbox"><input id="cbto-24" name="rev_to" onclick="if ($('cb-24').checked==true) {$('cb-23').checked=true;}" type="radio" value="e772e9ea7bad74d1c2ccceeadc39c2b74c61e765" /></td>
+<td class="committed_on">09/11/2011 10:11 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: define NUM_REV as the number of test repository revisions at unit model test</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7098 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7e38ccab55f5b7ae150833f5e4a39eecbb37839e" title="Revision 7e38ccab">7e38ccab</a></td>
+<td class="checkbox"><input id="cb-25" name="rev" onclick="$('cbto-26').checked=true;" type="radio" value="7e38ccab55f5b7ae150833f5e4a39eecbb37839e" /></td>
+<td class="checkbox"><input id="cbto-25" name="rev_to" onclick="if ($('cb-25').checked==true) {$('cb-24').checked=true;}" type="radio" value="7e38ccab55f5b7ae150833f5e4a39eecbb37839e" /></td>
+<td class="committed_on">06/10/2011 07:10 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: replace RAILS_ROOT to Rails.root in unit model test.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@6051 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f289d4e3542d0184446835809d8ab8eb967a800e" title="Revision f289d4e3">f289d4e3</a></td>
+<td class="checkbox"><input id="cb-26" name="rev" onclick="$('cbto-27').checked=true;" type="radio" value="f289d4e3542d0184446835809d8ab8eb967a800e" /></td>
+<td class="checkbox"><input id="cbto-26" name="rev_to" onclick="if ($('cb-26').checked==true) {$('cb-25').checked=true;}" type="radio" value="f289d4e3542d0184446835809d8ab8eb967a800e" /></td>
+<td class="committed_on">05/08/2011 01:10 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: remove trailing white-spaces from unit model test.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5704 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c17a78c771ad7506f85f76da2be67708882fc853" title="Revision c17a78c7">c17a78c7</a></td>
+<td class="checkbox"><input id="cb-27" name="rev" onclick="$('cbto-28').checked=true;" type="radio" value="c17a78c771ad7506f85f76da2be67708882fc853" /></td>
+<td class="checkbox"><input id="cbto-27" name="rev_to" onclick="if ($('cb-27').checked==true) {$('cb-26').checked=true;}" type="radio" value="c17a78c771ad7506f85f76da2be67708882fc853" /></td>
+<td class="committed_on">05/05/2011 12:23 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: fix unit model test fails if hg command is unavailable.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5649 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/94f71773b6438142cb5a18747b37e6a36fb96a06" title="Revision 94f71773">94f71773</a></td>
+<td class="checkbox"><input id="cb-28" name="rev" onclick="$('cbto-29').checked=true;" type="radio" value="94f71773b6438142cb5a18747b37e6a36fb96a06" /></td>
+<td class="checkbox"><input id="cbto-28" name="rev_to" onclick="if ($('cb-28').checked==true) {$('cb-27').checked=true;}" type="radio" value="94f71773b6438142cb5a18747b37e6a36fb96a06" /></td>
+<td class="committed_on">04/17/2011 05:33 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: add test of copied file from_revision node id at unit model test.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5481 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/b30ece064b8bdef15d09c2792e7dbaebea6cba95" title="Revision b30ece06">b30ece06</a></td>
+<td class="checkbox"><input id="cb-29" name="rev" onclick="$('cbto-30').checked=true;" type="radio" value="b30ece064b8bdef15d09c2792e7dbaebea6cba95" /></td>
+<td class="checkbox"><input id="cbto-29" name="rev_to" onclick="if ($('cb-29').checked==true) {$('cb-28').checked=true;}" type="radio" value="b30ece064b8bdef15d09c2792e7dbaebea6cba95" /></td>
+<td class="committed_on">04/08/2011 01:43 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: add scm command tests at unit model test (#4273).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5363 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/6702b265158812ff310df7d3db1ad3c9da25d608" title="Revision 6702b265">6702b265</a></td>
+<td class="checkbox"><input id="cb-30" name="rev" onclick="$('cbto-31').checked=true;" type="radio" value="6702b265158812ff310df7d3db1ad3c9da25d608" /></td>
+<td class="checkbox"><input id="cbto-30" name="rev_to" onclick="if ($('cb-30').checked==true) {$('cb-29').checked=true;}" type="radio" value="6702b265158812ff310df7d3db1ad3c9da25d608" /></td>
+<td class="committed_on">03/14/2011 09:41 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: add test of latest changesets support named branch in unit model test (#7246).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5128 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/59c791b2e1801ce9a4061aac362e4161cc8ea50a" title="Revision 59c791b2">59c791b2</a></td>
+<td class="checkbox"><input id="cb-31" name="rev" onclick="$('cbto-32').checked=true;" type="radio" value="59c791b2e1801ce9a4061aac362e4161cc8ea50a" /></td>
+<td class="checkbox"><input id="cbto-31" name="rev_to" onclick="if ($('cb-31').checked==true) {$('cb-30').checked=true;}" type="radio" value="59c791b2e1801ce9a4061aac362e4161cc8ea50a" /></td>
+<td class="committed_on">03/14/2011 07:15 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: add latest changesets supporting tag test in unit model test (#1981).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5126 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/081a90701a1bc91d20b7b1fdb704a167a9b22c51" title="Revision 081a9070">081a9070</a></td>
+<td class="checkbox"><input id="cb-32" name="rev" onclick="$('cbto-33').checked=true;" type="radio" value="081a90701a1bc91d20b7b1fdb704a167a9b22c51" /></td>
+<td class="checkbox"><input id="cbto-32" name="rev_to" onclick="if ($('cb-32').checked==true) {$('cb-31').checked=true;}" type="radio" value="081a90701a1bc91d20b7b1fdb704a167a9b22c51" /></td>
+<td class="committed_on">03/14/2011 07:03 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: add latest changesets improvement test in unit model test.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5125 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7e96ea617c89cd8f70718ff209d5b13099b2c0f0" title="Revision 7e96ea61">7e96ea61</a></td>
+<td class="checkbox"><input id="cb-33" name="rev" onclick="$('cbto-34').checked=true;" type="radio" value="7e96ea617c89cd8f70718ff209d5b13099b2c0f0" /></td>
+<td class="checkbox"><input id="cbto-33" name="rev_to" onclick="if ($('cb-33').checked==true) {$('cb-32').checked=true;}" type="radio" value="7e96ea617c89cd8f70718ff209d5b13099b2c0f0" /></td>
+<td class="committed_on">03/14/2011 04:15 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: prepare tests of named branch and tag in unit model test (#1981, #7246).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5117 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/620e428e95140b4bb3730251d7e08f761a712495" title="Revision 620e428e">620e428e</a></td>
+<td class="checkbox"><input id="cb-34" name="rev" onclick="$('cbto-35').checked=true;" type="radio" value="620e428e95140b4bb3730251d7e08f761a712495" /></td>
+<td class="checkbox"><input id="cbto-34" name="rev_to" onclick="if ($('cb-34').checked==true) {$('cb-33').checked=true;}" type="radio" value="620e428e95140b4bb3730251d7e08f761a712495" /></td>
+<td class="committed_on">03/14/2011 04:14 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: code clean up unit model test.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5116 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/cb8c2d59bf7569aa2e24ad5b79852a6a82217e88" title="Revision cb8c2d59">cb8c2d59</a></td>
+<td class="checkbox"><input id="cb-35" name="rev" onclick="$('cbto-36').checked=true;" type="radio" value="cb8c2d59bf7569aa2e24ad5b79852a6a82217e88" /></td>
+<td class="checkbox"><input id="cbto-35" name="rev_to" onclick="if ($('cb-35').checked==true) {$('cb-34').checked=true;}" type="radio" value="cb8c2d59bf7569aa2e24ad5b79852a6a82217e88" /></td>
+<td class="committed_on">03/11/2011 02:33 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: remove duplicates tests in unit model test.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5090 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/542e0cb88d2035049545f3c608af24a9065d4aea" title="Revision 542e0cb8">542e0cb8</a></td>
+<td class="checkbox"><input id="cb-36" name="rev" onclick="$('cbto-37').checked=true;" type="radio" value="542e0cb88d2035049545f3c608af24a9065d4aea" /></td>
+<td class="checkbox"><input id="cbto-36" name="rev_to" onclick="if ($('cb-36').checked==true) {$('cb-35').checked=true;}" type="radio" value="542e0cb88d2035049545f3c608af24a9065d4aea" /></td>
+<td class="committed_on">03/10/2011 11:38 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: fix unit model test fails on MySQL and remove duplicates tests.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5089 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/d5b268129c2642d0d93d753d74599a21f2d0ecd5" title="Revision d5b26812">d5b26812</a></td>
+<td class="checkbox"><input id="cb-37" name="rev" onclick="$('cbto-38').checked=true;" type="radio" value="d5b268129c2642d0d93d753d74599a21f2d0ecd5" /></td>
+<td class="checkbox"><input id="cbto-37" name="rev_to" onclick="if ($('cb-37').checked==true) {$('cb-36').checked=true;}" type="radio" value="d5b268129c2642d0d93d753d74599a21f2d0ecd5" /></td>
+<td class="committed_on">03/08/2011 05:35 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: add latin-1 encoding directory to test repository (#2664).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5059 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8d3773e0e1d0e259a2a193f31515ee910eb88626" title="Revision 8d3773e0">8d3773e0</a></td>
+<td class="checkbox"><input id="cb-38" name="rev" onclick="$('cbto-39').checked=true;" type="radio" value="8d3773e0e1d0e259a2a193f31515ee910eb88626" /></td>
+<td class="checkbox"><input id="cbto-38" name="rev_to" onclick="if ($('cb-38').checked==true) {$('cb-37').checked=true;}" type="radio" value="8d3773e0e1d0e259a2a193f31515ee910eb88626" /></td>
+<td class="committed_on">03/04/2011 09:03 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: add changesets order test in unit model test (#5357).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5002 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/17219baa626d8140d81749ab1e5b1ffb2090ed06" title="Revision 17219baa">17219baa</a></td>
+<td class="checkbox"><input id="cb-39" name="rev" onclick="$('cbto-40').checked=true;" type="radio" value="17219baa626d8140d81749ab1e5b1ffb2090ed06" /></td>
+<td class="checkbox"><input id="cbto-39" name="rev_to" onclick="if ($('cb-39').checked==true) {$('cb-38').checked=true;}" type="radio" value="17219baa626d8140d81749ab1e5b1ffb2090ed06" /></td>
+<td class="committed_on">03/04/2011 03:08 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: additional unit model tests for path encoding (#2664).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4999 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/53249469a074b9e2b970353082cc4bc39f788320" title="Revision 53249469">53249469</a></td>
+<td class="checkbox"><input id="cb-40" name="rev" onclick="$('cbto-41').checked=true;" type="radio" value="53249469a074b9e2b970353082cc4bc39f788320" /></td>
+<td class="checkbox"><input id="cbto-40" name="rev_to" onclick="if ($('cb-40').checked==true) {$('cb-39').checked=true;}" type="radio" value="53249469a074b9e2b970353082cc4bc39f788320" /></td>
+<td class="committed_on">03/04/2011 03:07 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: update test repository for path contains space (#2664, #4455).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4997 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/b7dffa44c92ce7a18f13504d5ad3f7b4d79ce57d" title="Revision b7dffa44">b7dffa44</a></td>
+<td class="checkbox"><input id="cb-41" name="rev" onclick="$('cbto-42').checked=true;" type="radio" value="b7dffa44c92ce7a18f13504d5ad3f7b4d79ce57d" /></td>
+<td class="checkbox"><input id="cbto-41" name="rev_to" onclick="if ($('cb-41').checked==true) {$('cb-40').checked=true;}" type="radio" value="b7dffa44c92ce7a18f13504d5ad3f7b4d79ce57d" /></td>
+<td class="committed_on">03/03/2011 11:25 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: update test repository for path encoding (#2664).</p>
+
+
+	<p>Mercurial (and also Git) treats file names as byte string.<br />This mercurial test repository contains Latin-1 encoding path.<br />Be careful on non Latin-1(CP1252) Windows.</p>
+
+
+	<p>If your Windows is not Latin-1 Windows,...</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/cc210c58a436c7166693a90cf0433c8278969951" title="Revision cc210c58">cc210c58</a></td>
+<td class="checkbox"><input id="cb-42" name="rev" onclick="$('cbto-43').checked=true;" type="radio" value="cc210c58a436c7166693a90cf0433c8278969951" /></td>
+<td class="checkbox"><input id="cbto-42" name="rev_to" onclick="if ($('cb-42').checked==true) {$('cb-41').checked=true;}" type="radio" value="cc210c58a436c7166693a90cf0433c8278969951" /></td>
+<td class="committed_on">03/02/2011 10:35 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: code clean up unit model test.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4991 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/5d0869bcde513f886fa552a89624a9d85c41ac94" title="Revision 5d0869bc">5d0869bc</a></td>
+<td class="checkbox"><input id="cb-43" name="rev" onclick="$('cbto-44').checked=true;" type="radio" value="5d0869bcde513f886fa552a89624a9d85c41ac94" /></td>
+<td class="checkbox"><input id="cbto-43" name="rev_to" onclick="if ($('cb-43').checked==true) {$('cb-42').checked=true;}" type="radio" value="5d0869bcde513f886fa552a89624a9d85c41ac94" /></td>
+<td class="committed_on">02/27/2011 08:50 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: change project id of unit app test from 1 to 3.</p>
+
+
+	<p>Project id 1 has Subversion fixtures.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4957 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0b19757303e1b12d33f48148f9032083d14e0839" title="Revision 0b197573">0b197573</a></td>
+<td class="checkbox"><input id="cb-44" name="rev" onclick="$('cbto-45').checked=true;" type="radio" value="0b19757303e1b12d33f48148f9032083d14e0839" /></td>
+<td class="checkbox"><input id="cbto-44" name="rev_to" onclick="if ($('cb-44').checked==true) {$('cb-43').checked=true;}" type="radio" value="0b19757303e1b12d33f48148f9032083d14e0839" /></td>
+<td class="committed_on">02/18/2011 12:55 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: unit app test for latest_changesets SQL "like" special character '%' and '_'.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4870 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0e0a8c01ea8683d451ec1a59608332c0a4b56641" title="Revision 0e0a8c01">0e0a8c01</a></td>
+<td class="checkbox"><input id="cb-45" name="rev" onclick="$('cbto-46').checked=true;" type="radio" value="0e0a8c01ea8683d451ec1a59608332c0a4b56641" /></td>
+<td class="checkbox"><input id="cbto-45" name="rev_to" onclick="if ($('cb-45').checked==true) {$('cb-44').checked=true;}" type="radio" value="0e0a8c01ea8683d451ec1a59608332c0a4b56641" /></td>
+<td class="committed_on">02/18/2011 12:55 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: unit app test for latest_changeset.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4869 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3a9661da6fc9c16ab2c0407249481ca047e378b" title="Revision a3a9661d">a3a9661d</a></td>
+<td class="checkbox"><input id="cb-46" name="rev" onclick="$('cbto-47').checked=true;" type="radio" value="a3a9661da6fc9c16ab2c0407249481ca047e378b" /></td>
+<td class="checkbox"><input id="cbto-46" name="rev_to" onclick="if ($('cb-46').checked==true) {$('cb-45').checked=true;}" type="radio" value="a3a9661da6fc9c16ab2c0407249481ca047e378b" /></td>
+<td class="committed_on">02/17/2011 11:13 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: move entries unit test from app to lib.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4863 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/700577c53399ca2e757a498a3dc85d74fedf9dcd" title="Revision 700577c5">700577c5</a></td>
+<td class="checkbox"><input id="cb-47" name="rev" onclick="$('cbto-48').checked=true;" type="radio" value="700577c53399ca2e757a498a3dc85d74fedf9dcd" /></td>
+<td class="checkbox"><input id="cbto-47" name="rev_to" onclick="if ($('cb-47').checked==true) {$('cb-46').checked=true;}" type="radio" value="700577c53399ca2e757a498a3dc85d74fedf9dcd" /></td>
+<td class="committed_on">02/16/2011 06:17 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: code clean up unit app test.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4852 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/89627d0334e567d1e52d7797badb169991e47992" title="Revision 89627d03">89627d03</a></td>
+<td class="checkbox"><input id="cb-48" name="rev" onclick="$('cbto-49').checked=true;" type="radio" value="89627d0334e567d1e52d7797badb169991e47992" /></td>
+<td class="checkbox"><input id="cbto-48" name="rev_to" onclick="if ($('cb-48').checked==true) {$('cb-47').checked=true;}" type="radio" value="89627d0334e567d1e52d7797badb169991e47992" /></td>
+<td class="committed_on">01/13/2011 07:04 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: fix error on revision page for empty revision (#7307).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4704 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/fdd0a2ca9b72687d6a22849c62c2868def1b8322" title="Revision fdd0a2ca">fdd0a2ca</a></td>
+<td class="checkbox"><input id="cb-49" name="rev" onclick="$('cbto-50').checked=true;" type="radio" value="fdd0a2ca9b72687d6a22849c62c2868def1b8322" /></td>
+<td class="checkbox"><input id="cbto-49" name="rev_to" onclick="if ($('cb-49').checked==true) {$('cb-48').checked=true;}" type="radio" value="fdd0a2ca9b72687d6a22849c62c2868def1b8322" /></td>
+<td class="committed_on">01/11/2011 11:03 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: use revision text mercurial style "2:400bb8672109" (#3724).</p>
+
+
+	<p>Contributed by Yuya Nishihara.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4697 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/d67185ec7e1aad57954633b70d71fc4c6a0ba58e" title="Revision d67185ec">d67185ec</a></td>
+<td class="checkbox"><input id="cb-50" name="rev" onclick="$('cbto-51').checked=true;" type="radio" value="d67185ec7e1aad57954633b70d71fc4c6a0ba58e" /></td>
+<td class="checkbox"><input id="cbto-50" name="rev_to" onclick="if ($('cb-50').checked==true) {$('cb-49').checked=true;}" type="radio" value="d67185ec7e1aad57954633b70d71fc4c6a0ba58e" /></td>
+<td class="committed_on">01/11/2011 11:03 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: use scmid as identifier (#3724).</p>
+
+
+	<p>Contributed by Yuya Nishihara.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4695 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a9eea27742ddf4b7ba8930d292ec2564417a72d1" title="Revision a9eea277">a9eea277</a></td>
+<td class="checkbox"><input id="cb-51" name="rev" onclick="$('cbto-52').checked=true;" type="radio" value="a9eea27742ddf4b7ba8930d292ec2564417a72d1" /></td>
+<td class="checkbox"><input id="cbto-51" name="rev_to" onclick="if ($('cb-51').checked==true) {$('cb-50').checked=true;}" type="radio" value="a9eea27742ddf4b7ba8930d292ec2564417a72d1" /></td>
+<td class="committed_on">01/09/2011 04:12 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixes random failure (database may not return changes in the order expected in the test).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4674 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7484096cdcaf936e4e29c45b5a8b64c3c60bc69a" title="Revision 7484096c">7484096c</a></td>
+<td class="checkbox"><input id="cb-52" name="rev" onclick="$('cbto-53').checked=true;" type="radio" value="7484096cdcaf936e4e29c45b5a8b64c3c60bc69a" /></td>
+<td class="checkbox"><input id="cbto-52" name="rev_to" onclick="if ($('cb-52').checked==true) {$('cb-51').checked=true;}" type="radio" value="7484096cdcaf936e4e29c45b5a8b64c3c60bc69a" /></td>
+<td class="committed_on">01/08/2011 03:45 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: fix assert_equal parameter order at app unit test_find_changeset_by_name().</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4655 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/e2df831b537c6a038a799e236cc497a59d3a79e7" title="Revision e2df831b">e2df831b</a></td>
+<td class="checkbox"><input id="cb-53" name="rev" onclick="$('cbto-54').checked=true;" type="radio" value="e2df831b537c6a038a799e236cc497a59d3a79e7" /></td>
+<td class="checkbox"><input id="cbto-53" name="rev_to" onclick="if ($('cb-53').checked==true) {$('cb-52').checked=true;}" type="radio" value="e2df831b537c6a038a799e236cc497a59d3a79e7" /></td>
+<td class="committed_on">01/08/2011 01:24 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: accept both of revision and nodeid as changeset id (#3724).</p>
+
+
+	<p>Contributed by Yuya Nishihara.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4654 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7620142b7015860e11afb696f67877f03323a8a0" title="Revision 7620142b">7620142b</a></td>
+<td class="checkbox"><input id="cb-54" name="rev" onclick="$('cbto-55').checked=true;" type="radio" value="7620142b7015860e11afb696f67877f03323a8a0" /></td>
+<td class="checkbox"><input id="cbto-54" name="rev_to" onclick="if ($('cb-54').checked==true) {$('cb-53').checked=true;}" type="radio" value="7620142b7015860e11afb696f67877f03323a8a0" /></td>
+<td class="committed_on">01/06/2011 02:50 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds assertion to prevent error in test.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4644 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1bf33bb619591b72ca1765345ce673902e3ae2e3" title="Revision 1bf33bb6">1bf33bb6</a></td>
+<td class="checkbox"><input id="cb-55" name="rev" onclick="$('cbto-56').checked=true;" type="radio" value="1bf33bb619591b72ca1765345ce673902e3ae2e3" /></td>
+<td class="checkbox"><input id="cbto-55" name="rev_to" onclick="if ($('cb-55').checked==true) {$('cb-54').checked=true;}" type="radio" value="1bf33bb619591b72ca1765345ce673902e3ae2e3" /></td>
+<td class="committed_on">01/05/2011 10:03 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: add unit test for copied file (#7064).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4636 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f4c5fe43cb0307573e09e973ec9510720380f986" title="Revision f4c5fe43">f4c5fe43</a></td>
+<td class="checkbox"><input id="cb-56" name="rev" onclick="$('cbto-57').checked=true;" type="radio" value="f4c5fe43cb0307573e09e973ec9510720380f986" /></td>
+<td class="checkbox"><input id="cbto-56" name="rev_to" onclick="if ($('cb-56').checked==true) {$('cb-55').checked=true;}" type="radio" value="f4c5fe43cb0307573e09e973ec9510720380f986" /></td>
+<td class="committed_on">01/05/2011 10:03 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: add some tests at unit and functional test.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4635 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/9ee02d04f370e9be1e29ebfd03b703d913900fe5" title="Revision 9ee02d04">9ee02d04</a></td>
+<td class="checkbox"><input id="cb-57" name="rev" onclick="$('cbto-58').checked=true;" type="radio" value="9ee02d04f370e9be1e29ebfd03b703d913900fe5" /></td>
+<td class="checkbox"><input id="cbto-57" name="rev_to" onclick="if ($('cb-57').checked==true) {$('cb-56').checked=true;}" type="radio" value="9ee02d04f370e9be1e29ebfd03b703d913900fe5" /></td>
+<td class="committed_on">01/05/2011 10:02 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: update test repository for following issues and fix tests.</p>
+
+
+	<ul>
+	<li>copied file (#7064)</li>
+		<li>branch, tag (#1981)</li>
+	</ul>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4634 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/e86b8febdc79626d441d958e56856ae22b7604ae" title="Revision e86b8feb">e86b8feb</a></td>
+<td class="checkbox"><input id="cb-58" name="rev" onclick="$('cbto-59').checked=true;" type="radio" value="e86b8febdc79626d441d958e56856ae22b7604ae" /></td>
+<td class="checkbox"><input id="cbto-58" name="rev_to" onclick="if ($('cb-58').checked==true) {$('cb-57').checked=true;}" type="radio" value="e86b8febdc79626d441d958e56856ae22b7604ae" /></td>
+<td class="committed_on">01/04/2011 11:34 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: mercurial: refactor mercurial unit test.</p>
+
+
+	<ul>
+	<li>lib unit test switches if repository exists.</li>
+		<li>move cat test from app to lib.</li>
+		<li>no need to run "hg update" in unit test (#3421).</li>
+	</ul>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4629 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ae2d3ef834c4d17b1c7a4e09f299b537f91d3cc" title="Revision 2ae2d3ef">2ae2d3ef</a></td>
+<td class="checkbox"><input id="cb-59" name="rev" onclick="$('cbto-60').checked=true;" type="radio" value="2ae2d3ef834c4d17b1c7a4e09f299b537f91d3cc" /></td>
+<td class="checkbox"><input id="cbto-59" name="rev_to" onclick="if ($('cb-59').checked==true) {$('cb-58').checked=true;}" type="radio" value="2ae2d3ef834c4d17b1c7a4e09f299b537f91d3cc" /></td>
+<td class="committed_on">01/02/2011 01:05 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Fixed: repository: mercurial: sort changesets by revision (#3449, #3567).</p>
+
+
+	<p>In DVCS, changesets are not in date order.<br />Because Mercurial backend inserts changesets from eariest, 'ORDER BY id'<br />means 'order by revision number'.</p>
+
+
+	<p>Contributed by Yuya Nishihara....</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/759048e73a9bef1569be51f1f0f1caf3b7a3e504" title="Revision 759048e7">759048e7</a></td>
+<td class="checkbox"><input id="cb-60" name="rev" onclick="$('cbto-61').checked=true;" type="radio" value="759048e73a9bef1569be51f1f0f1caf3b7a3e504" /></td>
+<td class="checkbox"><input id="cbto-60" name="rev_to" onclick="if ($('cb-60').checked==true) {$('cb-59').checked=true;}" type="radio" value="759048e73a9bef1569be51f1f0f1caf3b7a3e504" /></td>
+<td class="committed_on">12/23/2010 04:56 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixes: Mercurial adapter loses seconds of commit times (#6656).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4561 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/17f86d964fe05e677714baa35ec319abe13ae8bf" title="Revision 17f86d96">17f86d96</a></td>
+<td class="checkbox"><input id="cb-61" name="rev" onclick="$('cbto-62').checked=true;" type="radio" value="17f86d964fe05e677714baa35ec319abe13ae8bf" /></td>
+<td class="checkbox"><input id="cbto-61" name="rev_to" onclick="if ($('cb-61').checked==true) {$('cb-60').checked=true;}" type="radio" value="17f86d964fe05e677714baa35ec319abe13ae8bf" /></td>
+<td class="committed_on">12/12/2010 06:24 PM</td>
+<td class="author">Jean-Baptiste Barth </td>
+
+  <td class="comments"><p>Use absolute paths in test/**/* requires for Ruby 1.9.2 compatibility. #4050</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4509 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7b0cb6aba8715aff00519f200060fbf46ae9bb97" title="Revision 7b0cb6ab">7b0cb6ab</a></td>
+<td class="checkbox"><input id="cb-62" name="rev" onclick="$('cbto-63').checked=true;" type="radio" value="7b0cb6aba8715aff00519f200060fbf46ae9bb97" /></td>
+<td class="checkbox"><input id="cbto-62" name="rev_to" onclick="if ($('cb-62').checked==true) {$('cb-61').checked=true;}" type="radio" value="7b0cb6aba8715aff00519f200060fbf46ae9bb97" /></td>
+<td class="committed_on">09/13/2009 01:14 PM</td>
+<td class="author">Eric Davis </td>
+
+  <td class="comments"><p>Upgraded to Rails 2.3.4 (#3597)</p>
+
+
+	<ul>
+	<li>Ran the Rails upgrade</li>
+		<li>Upgraded to Rails Engines 2.3.2</li>
+		<li>Added a plugin to let Engines override application views.</li>
+		<li>Converted tests to use the new classes:
+	<ul>
+	<li>ActionController::TestCase for functional</li>
+		<li>ActiveSupport::TestCase for units...</li>
+	</ul></li>
+	</ul></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/aa9d04a4a7ec1232477f0823a584da49aae11d58" title="Revision aa9d04a4">aa9d04a4</a></td>
+<td class="checkbox"><input id="cb-63" name="rev" onclick="$('cbto-64').checked=true;" type="radio" value="aa9d04a4a7ec1232477f0823a584da49aae11d58" /></td>
+<td class="checkbox"><input id="cbto-63" name="rev_to" onclick="if ($('cb-63').checked==true) {$('cb-62').checked=true;}" type="radio" value="aa9d04a4a7ec1232477f0823a584da49aae11d58" /></td>
+<td class="committed_on">06/07/2008 05:19 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Mercurial adapter improvements (patch #1199 by Pierre Paysant-Le Roux).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1499">http://redmine.rubyforge.org/svn/trunk@1499</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ffbdc6b25bdce8abe83ee165b7a2ad6c7171f74b" title="Revision ffbdc6b2">ffbdc6b2</a></td>
+<td class="checkbox"><input id="cb-64" name="rev" onclick="$('cbto-65').checked=true;" type="radio" value="ffbdc6b25bdce8abe83ee165b7a2ad6c7171f74b" /></td>
+<td class="checkbox"><input id="cbto-64" name="rev_to" onclick="if ($('cb-64').checked==true) {$('cb-63').checked=true;}" type="radio" value="ffbdc6b25bdce8abe83ee165b7a2ad6c7171f74b" /></td>
+<td class="committed_on">04/26/2008 01:56 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Postgresql 8.3 compatibility fix (#834).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1363">http://redmine.rubyforge.org/svn/trunk@1363</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/47f399104b9c3062ea27d30146c1873df2efa750" title="Revision 47f39910">47f39910</a></td>
+<td class="checkbox"></td>
+<td class="checkbox"><input id="cbto-65" name="rev_to" onclick="if ($('cb-65').checked==true) {$('cb-64').checked=true;}" type="radio" value="47f399104b9c3062ea27d30146c1873df2efa750" /></td>
+<td class="committed_on">12/14/2007 12:46 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Added a Mercurial test repository with unit and functional tests.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@991">http://redmine.rubyforge.org/svn/trunk@991</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+</tbody>
+</table>
+<input type="submit" value="View differences" />
+</form>
+
+
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/28f0c4f131b02ab67bd9c254f9853168ec6a5b65/changes/test/unit/repository_mercurial_test.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:40:27 GMT -->
+</html>

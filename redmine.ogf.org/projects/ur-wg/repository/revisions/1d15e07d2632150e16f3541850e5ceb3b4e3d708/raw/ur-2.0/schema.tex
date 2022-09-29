@@ -1,0 +1,315 @@
+% !TeX root = draft-ur-v2.tex
+
+\section{XSD Schema}
+
+Please note that while the elements listed in this document are not explicitly required to appear within the usage record structure in the order in which they are defined, due to limitations in the XSD format, to support unbounded occurences of some of the elements the sequence indicator has been used. Technically, this imposes an order to the elements when using XSD for validation.
+
+\small\begin{verbatim}
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema attributeFormDefault="qualified" 
+	    elementFormDefault="qualified" targetNamespace="http://schema.ogf.org/urf/2013/04/urf" 
+	    xmlns:ur="http://schema.ogf.org/urf/2013/04/urf" 
+	    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">Usage Record 2.0 XML Schema definition
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:complexType name="UsageRecordType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:RecordIdentityBlock" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:SubjectIdentityBlock" />
+      <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ur:ComputeUsageBlock" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:JobUsageBlock" />
+      <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ur:MemoryUsageBlock" />
+      <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ur:StorageUsageBlock" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:CloudUsageBlock" />
+      <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ur:NetworkUsageBlock" />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:element abstract="true" name="Usage" type="ur:UsageRecordType" />
+  <xsd:element name="UsageRecord" substitutionGroup="ur:Usage"
+    type="ur:UsageRecordType" />
+  <xsd:element name="UsageRecords">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element maxOccurs="unbounded" minOccurs="0"
+          ref="ur:Usage" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="RecordIdentityBlock" type="ur:RecordIdentityBlockType" />
+  <xsd:element name="SubjectIdentityBlock" type="ur:SubjectIdentityBlockType" />
+  <xsd:element name="ComputeUsageBlock" type="ur:ComputeUsageBlockType" />
+  <xsd:element name="JobUsageBlock" type="ur:JobUsageBlockType" />
+  <xsd:element name="MemoryUsageBlock" type="ur:MemoryUsageBlockType" />
+  <xsd:element name="StorageUsageBlock" type="ur:StorageUsageBlockType" />
+  <xsd:element name="CloudUsageBlock" type="ur:CloudUsageBlockType" />
+  <xsd:element name="NetworkUsageBlock" type="ur:NetworkUsageBlockType" />
+  
+  <!-- RecordIdentityBlock definition -->
+  <xsd:complexType name="RecordIdentityBlockType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:RecordId" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:CreateTime" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:Site" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:Infrastructure" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="RecordId" type="xsd:string" />
+  <xsd:element name="CreateTime" type="xsd:dateTime" />
+  <xsd:element name="Site" type="xsd:string" />
+  <xsd:element name="Infrastructure" type="ur:InfrastructureType" />
+  
+  <xsd:complexType name="InfrastructureType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="description" type="xsd:string" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <!-- SubjectIdentityBlock definition -->
+  <xsd:complexType name="SubjectIdentityBlockType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:LocalUserId" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:LocalGroupId" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:GlobalUserId" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:GlobalGroupId" />
+      <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ur:GlobalGroupAttribute" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="LocalUserId" type="xsd:string" />
+  <xsd:element name="LocalGroupId" type="xsd:string" />
+  <xsd:element name="GlobalUserId" type="xsd:string" />
+  <xsd:element name="GlobalGroupId" type="xsd:string" />
+  <xsd:element name="GlobalGroupAttribute" type="ur:GlobalGroupAttributeType" />
+  
+  <xsd:complexType name="GlobalGroupAttributeType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <!-- ComputeUsageBlock definition -->
+  <xsd:complexType name="ComputeUsageBlockType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:CpuDuration" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:WallDuration" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:StartTime" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:EndTime" />
+      <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ur:ExecutionHost" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:HostType" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:Processors" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:NodeCount" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:ExitStatus" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:Charge" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="CpuDuration" type="xsd:duration" />
+  <xsd:element name="WallDuration" type="xsd:duration" />
+  <xsd:element name="StartTime" type="xsd:dateTime" />
+  <xsd:element name="EndTime" type="xsd:dateTime" />
+  <xsd:element name="ExecutionHost" type="ur:ExecutionHostType" />
+  <xsd:element name="HostType" type="xsd:string" />
+  <xsd:element name="Processors" type="xsd:positiveInteger" />
+  <xsd:element name="NodeCount" type="xsd:positiveInteger" />
+  <xsd:element name="ExitStatus" type="xsd:integer" />
+  <xsd:element name="Charge" type="xsd:decimal" />
+
+  <xsd:complexType name="ExecutionHostType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:Hostname" />
+      <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ur:ProcessId" />
+      <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ur:Benchmark" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="Hostname" type="ur:HostnameType" />
+  <xsd:element name="ProcessId" type="xsd:positiveInteger" />
+  <xsd:element name="Benchmark" type="ur:BenchmarkType" />
+
+  <xsd:complexType name="HostnameType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+	<xsd:attribute name="primary" type="xsd:boolean" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="BenchmarkType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:float">
+	<xsd:attribute name="type" type="xsd:string" use="required" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <!-- JobUsageBlock definition -->
+  <xsd:complexType name="JobUsageBlockType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:GlobalJobId" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:LocalJobId" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:JobName" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:MachineName" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:SubmitHost" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:SubmitType" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:Queue" />
+      <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ur:TimeInstant" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:ServiceLevel" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:Status" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="GlobalJobId" type="xsd:string" />
+  <xsd:element name="LocalJobId" type="xsd:string" />
+  <xsd:element name="JobName" type="xsd:string" />
+  <xsd:element name="MachineName" type="xsd:string" />
+  <xsd:element name="SubmitHost" type="xsd:string" />
+  <xsd:element name="SubmitType" type="ur:SubmitTypeType" />
+  <xsd:element name="Queue" type="ur:QueueType" />
+  <xsd:element name="TimeInstant" type="ur:TimeInstantType" />
+  <xsd:element name="ServiceLevel" type="xsd:string" />
+  <xsd:element name="Status" type="xsd:string" />
+
+  <xsd:complexType name="SubmitTypeType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+	<xsd:attribute name="description" type="xsd:string" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="QueueType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+	<xsd:attribute name="description" type="xsd:string" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="TimeInstantType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:dateTime">
+	<xsd:attribute name="type" type="xsd:string" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <!-- MemoryUsageBlock definition -->
+  <xsd:complexType name="MemoryUsageBlockType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:MemoryClass" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:MemoryResourceCapacityUsed" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:MemoryResourceCapacityAllocated" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:MemoryResourceCapacityRequested" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:StartTime" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:EndTime" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:ExecutionHost" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:HostType" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:Charge" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="MemoryClass" type="xsd:string" />
+  <xsd:element name="MemoryResourceCapacityUsed" type="xsd:nonNegativeInteger" />
+  <xsd:element name="MemoryResourceCapacityAllocated" type="xsd:nonNegativeInteger" />
+  <xsd:element name="MemoryResourceCapacityRequested" type="xsd:nonNegativeInteger" />
+
+  <!-- StorageUsageBlock definition -->
+  <xsd:complexType name="StorageUsageBlockType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:StorageShare" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:StorageMedia" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:StorageClass" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:DirectoryPath" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:FileCount" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:StorageResourceCapacityUsed" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:StorageLogicalCapacityUsed" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:StorageResourceCapacityAllocated" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:StartTime" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:EndTime" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:Host" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:HostType" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:Charge" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="StorageShare" type="xsd:string" />
+  <xsd:element name="StorageMedia" type="xsd:string" />
+  <xsd:element name="StorageClass" type="xsd:string" />
+  <xsd:element name="DirectoryPath" type="xsd:string" />
+  <xsd:element name="FileCount" type="xsd:positiveInteger" />
+  <xsd:element name="StorageResourceCapacityUsed" type="xsd:nonNegativeInteger" />
+  <xsd:element name="StorageLogicalCapacityUsed" type="xsd:nonNegativeInteger" />
+  <xsd:element name="StorageResourceCapacityAllocated" type="xsd:nonNegativeInteger" />
+  <xsd:element name="Host" type="xsd:string" />
+
+  <!-- CloudUsageBlock definition -->
+  <xsd:complexType name="CloudUsageBlockType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:LocalVirtualMachineId" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:GlobalVirtualMachineId" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:Status" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:SuspendDuration" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:ImageId" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:MachineName" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:SubmitHost" />
+      <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ur:TimeInstant" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:ServiceLevel" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="LocalVirtualMachineId" type="xsd:string" />
+  <xsd:element name="GlobalVirtualMachineId" type="xsd:string" />
+  <xsd:element name="SuspendDuration" type="xsd:duration" />
+  <xsd:element name="ImageId" type="xsd:string" />
+
+  <!-- NetworkUsageBlock definition -->
+  <xsd:complexType name="NetworkUsageBlockType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:NetworkClass" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:NetworkInboundUsed" />
+      <xsd:element maxOccurs="1" minOccurs="1" ref="ur:NetworkOutboundUsed" />
+      <xsd:element maxOccurs="1" minOccurs="0" ref="ur:Charge" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="NetworkClass" type="ur:NetworkClassType" />
+  <xsd:element name="NetworkInboundUsed" type="ur:NetworkInboundUsedType" />
+  <xsd:element name="NetworkOutboundUsed" type="ur:NetworkOutboundUsedType" />
+
+  <xsd:complexType name="NetworkClassType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+	<xsd:attribute name="NetworkResourceBandwidth" type="xsd:positiveInteger" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="NetworkInboundUsedType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:nonNegativeInteger">
+	<xsd:attribute name="SourceAddress" type="xsd:string" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="NetworkOutboundUsedType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:nonNegativeInteger">
+	<xsd:attribute name="DestinationAddress" type="xsd:string" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+</xsd:schema>
+\end{verbatim}\normalsize

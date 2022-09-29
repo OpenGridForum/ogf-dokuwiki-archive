@@ -1,0 +1,18 @@
+
+# export database passwords
+export FORGE_DB_PASS=secure
+export RMINE_DB_PASS=secure
+
+# make sure ssh works to forge.ogf.org
+eval `ssh-agent`
+ssh-add ~/.ssh/id_rsa_ogf
+
+# run the migration script for all project pairs from projects.map
+./forge2redmine.pl
+
+# this basically runs 
+#  ./forge2redmine_documents.pl archive      - 
+#  ./forge2redmine_documents.pl SAGA-WG      saga-wg
+#  ./forge2redmine_documents.pl saga-core-wg saga-wg
+#  ...
+

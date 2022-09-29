@@ -1,0 +1,972 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/dmsf/infod-wg?folder_id=5892 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Sep 2022 23:04:42 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>DMSF - INFOD-WG - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI="/>
+<link rel='shortcut icon' href='../favicon4460.ico?1425381960' />
+<link href="../themes/ogf_redmine/stylesheets/application4460.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="../javascripts/prototype4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/effects4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/dragdrop4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/controls4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/application4460.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="../plugin_assets/extended_fields/stylesheets/extended_fields4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="../plugin_assets/wiking/stylesheets/wiking4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/jquery-ui/jquery-ui-1.8.134460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/plupload/jquery.ui.plupload4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/jquery.dataTables/jquery-ui.dataTables4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/dmsf4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery-1.6.1.min4460.js?1425381960" type="text/javascript"></script>
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery-ui-1.8.13.min4460.js?1425381960" type="text/javascript"></script>
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/jquery.dataTables.min4460.js?1425381960" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		jQuery(document).ready(function() {
+			jQuery("#browser").dataTable({
+				"bJQueryUI": true,
+				"oLanguage": {
+					'sUrl': '/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/en.json'	
+				},
+				"bAutoWidth": false,
+				"bPaginate": false,
+				"aaSorting": [[1,'asc']],
+				"aaSortingFixed": [[7,'asc']],
+				"aoColumnDefs": [
+					{ "bSearchable": false, "aTargets": [0, 6, 7, 8] },
+					{ "bSortable": false, "aTargets": [0, 6, 7] },
+					{ "iDataSort": 8, "aTargets": [ 2 ] }
+				],
+				"fnInitComplete": function() {
+					jQuery("div.controls").prependTo(jQuery("#browser_wrapper div.fg-toolbar")[0]);
+				},
+				"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+					return "Folders: 2, Documents: 17";
+				}
+			});
+			
+			jQuery("[data-downloadurl]").each(function() {
+		        var url = this.getAttribute("data-downloadurl");
+		        if (this.addEventListener) {
+		          this.addEventListener("dragstart", function(e) {
+		            if (e.dataTransfer) {
+		              e.dataTransfer.setData("DownloadURL", url);
+		            }
+		          },false);
+		        }
+	      	});
+		});
+		
+		function manipulation_link(action) {
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+		
+		function confirmation_link(action) {
+			if(!window.confirm("Do you really want to delete this entry?")) return;
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+	</script>
+</head>
+<body class="theme-Ogf redmine controller-dmsf action-show">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="../login.html" class="login">Login</a></li>
+<li><a href="../account/register.html" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="../index.html" class="home">Home</a></li>
+<li><a href="../projects.html" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/infod-wg" method="get">
+        
+        <label for='q'>
+          <a href="../search/index/infod-wg.html" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="standards.html?jump=dmsf" class="root">Standards</a> » <a href="data-area.html?jump=dmsf" class="ancestor">Data Area</a> » INFOD-WG</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="../projects/infod-wg.html" class="overview">Overview</a></li>
+<li><a href="../tab/show/infod-wg.html" class="tab">Project Info</a></li>
+<li><a href="../projects/infod-wg/issues.html" class="issues">Issues</a></li>
+<li><a href="../projects/infod-wg/issues/calendar.html" class="calendar">Calendar</a></li>
+<li><a href="../projects/infod-wg/news.html" class="news">News</a></li>
+<li><a href="infod-wg.html" class="dmsf selected">Documents</a></li>
+<li><a href="../projects/infod-wg/wiki.html" class="wiki">Wiki</a></li>
+<li><a href="../projects/infod-wg/files.html" class="files">Files</a></li>
+<li><a href="../projects/infod-wg/repository.html" class="repository">Repository</a></li>
+<li><a href="../projects/infod-wg/embedded/index.html" class="embedded">Mailing Lists</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+	
+</div>
+
+
+<h2>
+	<a href="infod-wg.html">Documents</a>
+
+ / 
+ <a href="infod-wg4747.html?folder_id=690">gridforge</a>
+ 
+
+ / 
+ <a href="infod-wgb90e.html?folder_id=5892">Current Drafts</a>
+ 
+
+
+</h2>
+
+<div class="wiki">
+
+</div>
+
+<form action="https://redmine.ogf.org/dmsf/entries_operation/infod-wg?folder_id=5892" class="dmfs_entries" id="entries_form" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI=" /></div>
+	<input id="action" name="action" type="hidden" />
+	<div class="controls" style="float: left">
+		<input name="download_entries" title="Download checked in Zip archive" type="submit" value="Download" />
+		<input name="email_entries" title="Send checked by email" type="submit" value="Email" />
+		
+	</div> 
+	<table class="display entries" id="browser">
+		<thead>
+			<tr id="root">
+				<th class="check">
+					<input id="check_all_entries" title="Check/Uncheck all for zip download or email" type="checkbox" />
+				</th>
+				<th>Title</th>
+				<th>Size</th>
+				<th>Modified</th>
+				<th>Ver.</th>
+				<th>Author</th>
+				<th></th>
+				<th class="hidden"></th>
+				<th class="hidden"></th>
+			</tr>
+		</thead>
+	<tbody>
+	
+		<tr class="dir">
+			<td class="check"><input id="subfolders_" name="subfolders[]" title="Check for Zip download or email" type="checkbox" value="5893" /></td>
+			<td class="title">
+				<a href="infod-wgad31.html?folder_id=5893" class="icon icon-folder">Old drafts no longer in use</a>
+				<div class="filename" title="Number of files in directory">[55]</div>
+			</td>
+			<td></td>
+			<td class="modified">2012-10-31 22:08</td>
+			<td class="version"></td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					
+					
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">0</td>
+			<td></td>
+		</tr>
+	
+		<tr class="dir">
+			<td class="check"><input id="subfolders_" name="subfolders[]" title="Check for Zip download or email" type="checkbox" value="5894" /></td>
+			<td class="title">
+				<a href="infod-wg5f58.html?folder_id=5894" class="icon icon-folder">UT Implementation</a>
+				<div class="filename" title="Number of files in directory">[1]</div>
+			</td>
+			<td></td>
+			<td class="modified">2012-10-31 22:08</td>
+			<td class="version"></td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					
+					
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">0</td>
+			<td></td>
+		</tr>
+	
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9627" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/R-GMA-INFODb4d7.ppt?download=" class="icon icon-file " data-downloadurl="application/vnd.ms-powerpoint:&quot;Level 1&quot; ideas and R-GMA:https://redmine.ogf.org/dmsf_files/9627?download=" title="&quot;Level 1&quot; ideas and R-GMA version 1.0 download">&quot;Level 1&quot; ideas and R-GMA</a>
+				<div class="filename" title="Filename used for download or in Zip archive">&quot;Level 1&quot; ideas and R-GMA</div>
+			</td>
+			<td class="size">50 kB</td>
+			<td class="modified">
+				2006-08-10 12:17
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9627.html" title="&quot;Level 1&quot; ideas and R-GMA details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9627'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">51200</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9635" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/2008-INFODRestonDemo-Outlineb4d7.ppt?download=" class="icon icon-file " data-downloadurl="application/vnd.ms-powerpoint:2008-INFODRestonDemo:https://redmine.ogf.org/dmsf_files/9635?download=" title="2008-INFODRestonDemo version 1.0 download">2008-INFODRestonDemo</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2008-INFODRestonDemo</div>
+			</td>
+			<td class="size">212.5 kB</td>
+			<td class="modified">
+				2008-08-18 11:19
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9635.html" title="2008-INFODRestonDemo details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9635'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">217600</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9634" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/bae_pdf_eis_fri_safecom_scenariob4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:BAE's Safecom Scenario:https://redmine.ogf.org/dmsf_files/9634?download=" title="BAE's Safecom Scenario version 1.0 download">BAE's Safecom Scenario</a>
+				<div class="filename" title="Filename used for download or in Zip archive">BAE's Safecom Scenario</div>
+			</td>
+			<td class="size">322.8 kB</td>
+			<td class="modified">
+				2008-03-24 17:43
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9634.html" title="BAE's Safecom Scenario details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9634'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">330512</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9631" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/Use%20Case%20-%20First%20Respondersb4d7.ppt?download=" class="icon icon-file " data-downloadurl="application/vnd.ms-powerpoint:EPTS First Responder:https://redmine.ogf.org/dmsf_files/9631?download=" title="EPTS First Responder version 1.0 download">EPTS First Responder</a>
+				<div class="filename" title="Filename used for download or in Zip archive">EPTS First Responder</div>
+			</td>
+			<td class="size">854 kB</td>
+			<td class="modified">
+				2008-03-24 17:05
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9631.html" title="EPTS First Responder details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9631'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">874496</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9632" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/2008-FEB-25_OGF_ShankarEventUnderstandingb4d7.ppt?download=" class="icon icon-file " data-downloadurl="application/vnd.ms-powerpoint:First Responder Event Understanding:https://redmine.ogf.org/dmsf_files/9632?download=" title="First Responder Event Understanding version 1.0 download">First Responder Event Understanding</a>
+				<div class="filename" title="Filename used for download or in Zip archive">First Responder Event Understanding</div>
+			</td>
+			<td class="size">137 kB</td>
+			<td class="modified">
+				2008-03-24 17:18
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9632.html" title="First Responder Event Understanding details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9632'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">140288</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9624" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/Getting_UML_Tools_-2b4d7.txt?download=" class="icon icon-file " data-downloadurl="text/plain:Getting UML Tools:https://redmine.ogf.org/dmsf_files/9624?download=" title="Getting UML Tools version 2.0 download">Getting UML Tools</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Getting UML Tools</div>
+			</td>
+			<td class="size">1.9 kB</td>
+			<td class="modified">
+				2006-02-13 00:00
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9624.html" title="Getting UML Tools details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9624'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1950</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9623" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/INFOD%20Base%20Specification-14b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:INFOD Base Specification:https://redmine.ogf.org/dmsf_files/9623?download=" title="INFOD Base Specification version 14.0 download">INFOD Base Specification</a>
+				<div class="filename" title="Filename used for download or in Zip archive">INFOD Base Specification</div>
+			</td>
+			<td class="size">1.2 MB</td>
+			<td class="modified">
+				2007-05-06 11:28
+				
+				
+			</td>
+			<td class="version">
+				14.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9623.html" title="INFOD Base Specification details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9623'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1286144</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9622" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/INFOD%20Base%20Specification%20-%20V2b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:INFOD Base Specifications - V2:https://redmine.ogf.org/dmsf_files/9622?download=" title="INFOD Base Specifications - V2 version 2.0 download">INFOD Base Specifications - V2</a>
+				<div class="filename" title="Filename used for download or in Zip archive">INFOD Base Specifications - V2</div>
+			</td>
+			<td class="size">1.1 MB</td>
+			<td class="modified">
+				2008-09-28 13:41
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9622.html" title="INFOD Base Specifications - V2 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9622'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1141760</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9625" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/INFOD%20Current%20Actionsb4d7.txt?download=" class="icon icon-file " data-downloadurl="text/plain:INFOD Current Actions:https://redmine.ogf.org/dmsf_files/9625?download=" title="INFOD Current Actions version 83.0 download">INFOD Current Actions</a>
+				<div class="filename" title="Filename used for download or in Zip archive">INFOD Current Actions</div>
+			</td>
+			<td class="size">1.7 kB</td>
+			<td class="modified">
+				2008-05-19 11:00
+				
+				
+			</td>
+			<td class="version">
+				83.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9625.html" title="INFOD Current Actions details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9625'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1727</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9629" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/INFOD%20Extended%20Specificationb4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:INFOD Extended Specifications:https://redmine.ogf.org/dmsf_files/9629?download=" title="INFOD Extended Specifications version 15.0 download">INFOD Extended Specifications</a>
+				<div class="filename" title="Filename used for download or in Zip archive">INFOD Extended Specifications</div>
+			</td>
+			<td class="size">492.5 kB</td>
+			<td class="modified">
+				2007-12-12 19:16
+				
+				
+			</td>
+			<td class="version">
+				15.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9629.html" title="INFOD Extended Specifications details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9629'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">504320</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9626" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/INFOD%20Implementation%20Notesb4d7.doc?download=" class="icon icon-file filetype-doc" data-downloadurl="application/msword:INFOD Implementation Notes.doc:https://redmine.ogf.org/dmsf_files/9626?download=" title="INFOD Implementation Notes.doc version 1.0 download">INFOD Implementation Notes.doc</a>
+				<div class="filename" title="Filename used for download or in Zip archive">INFOD Implementation Notes.doc</div>
+			</td>
+			<td class="size">65.5 kB</td>
+			<td class="modified">
+				2006-12-21 09:30
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9626.html" title="INFOD Implementation Notes.doc details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9626'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">67072</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9630" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/INFOD_%20for_Sensor_Networks_v10-johnb4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:INFOD for Sensor Networks:https://redmine.ogf.org/dmsf_files/9630?download=" title="INFOD for Sensor Networks version 7.0 download">INFOD for Sensor Networks</a>
+				<div class="filename" title="Filename used for download or in Zip archive">INFOD for Sensor Networks</div>
+			</td>
+			<td class="size">2.3 MB</td>
+			<td class="modified">
+				2007-09-20 13:50
+				
+				
+			</td>
+			<td class="version">
+				7.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9630.html" title="INFOD for Sensor Networks details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9630'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2427392</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9621" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/setup-INFOD_GMEb4d7.exe?download=" class="icon icon-file " data-downloadurl="application/octet-stream:INFOD-GME-Setup:https://redmine.ogf.org/dmsf_files/9621?download=" title="INFOD-GME-Setup version 1.0 download">INFOD-GME-Setup</a>
+				<div class="filename" title="Filename used for download or in Zip archive">INFOD-GME-Setup</div>
+			</td>
+			<td class="size">33 MB</td>
+			<td class="modified">
+				2008-04-28 16:09
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9621.html" title="INFOD-GME-Setup details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9621'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">34626764</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9633" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/OaklandBridgeCollapseScenario_April2007b4d7.ppt?download=" class="icon icon-file " data-downloadurl="application/vnd.ms-powerpoint:Oakland Bridge collapse:https://redmine.ogf.org/dmsf_files/9633?download=" title="Oakland Bridge collapse version 1.0 download">Oakland Bridge collapse</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Oakland Bridge collapse</div>
+			</td>
+			<td class="size">10.2 MB</td>
+			<td class="modified">
+				2008-03-24 17:38
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9633.html" title="Oakland Bridge collapse details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9633'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">10704896</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9620" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/infodBaseNotificationb4d7.wsdl?download=" class="icon icon-file " data-downloadurl="application/octet-stream:WSDL File:https://redmine.ogf.org/dmsf_files/9620?download=" title="WSDL File version 2.0 download">WSDL File</a>
+				<div class="filename" title="Filename used for download or in Zip archive">WSDL File</div>
+			</td>
+			<td class="size">26.1 kB</td>
+			<td class="modified">
+				2006-06-20 17:43
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9620.html" title="WSDL File details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9620'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">26724</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9628" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/XML%20relationshipb4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:XML relationships:https://redmine.ogf.org/dmsf_files/9628?download=" title="XML relationships version 1.0 download">XML relationships</a>
+				<div class="filename" title="Filename used for download or in Zip archive">XML relationships</div>
+			</td>
+			<td class="size">347.5 kB</td>
+			<td class="modified">
+				2006-06-08 10:03
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9628.html" title="XML relationships details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9628'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">355840</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="9619" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/infodTypesb4d7.xsd?download=" class="icon icon-file " data-downloadurl="text/plain:XSD Schema:https://redmine.ogf.org/dmsf_files/9619?download=" title="XSD Schema version 2.0 download">XSD Schema</a>
+				<div class="filename" title="Filename used for download or in Zip archive">XSD Schema</div>
+			</td>
+			<td class="size">14.1 kB</td>
+			<td class="modified">
+				2006-06-20 17:42
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/9619.html" title="XSD Schema details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/9619'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">14443</td>
+		</tr>
+	
+	</tbody>
+	</table>
+	<br />
+</form>
+
+<script type="text/javascript">
+	jQuery("#entries_delete_button").click(function(event) {
+		if(window.confirm("Do you really want to delete checked entries?")) {
+			jQuery("#entries_form").attr("action", "/dmsf/delete_entries/infod-wg?folder_id=5892");
+			jQuery("#entries_form").submit();
+		}
+	})
+	
+	jQuery("#check_all_entries").click(function(event) {
+		var $this = jQuery(this);
+		if($this.prop("checked")) {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", true);
+		} else {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", false);
+		}
+	})			
+</script>
+
+
+
+
+
+
+<br />
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/dmsf/infod-wg?folder_id=5892 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Sep 2022 23:05:18 GMT -->
+</html>

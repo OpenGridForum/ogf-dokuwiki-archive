@@ -1,0 +1,38 @@
+<h3>My Projects</h3>
+
+<%
+  s = ''
+  @projects = Project.visible.all(:order => 'name')
+  if @projects.any?
+    s << '<table class="slist">'
+    @projects.each do |project|
+      if User.current.member_of?(project)
+        url  = url_for (:controller => 'projects', :id => project)
+        url  = url.gsub (/index\//, '')
+        dmsf = url
+        dmsf = dmsf.gsub (/projects/, 'dmsf')
+
+        s << '<tr>'
+        s << '<td>'          + link_to_project(project, {})                        + '</td>'
+        s << '<td><a href="' +  url.to_s + '/issues">            issues     </a>'  + '</td>'
+        s << '<td><a href="' +  url.to_s + '/issues/calendar">   calendar   </a>'  + '</td>'
+        s << '<td><a href="' +  url.to_s + '/news">              news       </a>'  + '</td>'
+        s << '<td><a href="' + dmsf.to_s + '">                   documents  </a>'  + '</td>'
+        s << '<td><a href="' +  url.to_s + '/wiki">              wiki       </a>'  + '</td>'
+        s << '<td><a href="' +  url.to_s + '/boards">            forums     </a>'  + '</td>'
+        s << '<td><a href="' +  url.to_s + '/files">             files      </a>'  + '</td>'
+        s << '<td><a href="' +  url.to_s + '/repository">        repository </a>'  + '</td>'
+        s << '<td><a href="' +  url.to_s + '/settings">          settings   </a>'  + '</td>'
+        s << '</tr>'
+      end
+    end
+    s << '</table>'
+  end
+%>
+<%=
+  s.html_safe
+%>
+<% if (@projects.empty?) %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+

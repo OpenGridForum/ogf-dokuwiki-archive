@@ -1,0 +1,648 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/dmsf/nsi-wg?folder_id=6615 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Sep 2022 23:35:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>DMSF - NSI WG - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI="/>
+<link rel='shortcut icon' href='../favicon4460.ico?1425381960' />
+<link href="../themes/ogf_redmine/stylesheets/application4460.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="../javascripts/prototype4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/effects4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/dragdrop4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/controls4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/application4460.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="../plugin_assets/extended_fields/stylesheets/extended_fields4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="../plugin_assets/wiking/stylesheets/wiking4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/jquery-ui/jquery-ui-1.8.134460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/plupload/jquery.ui.plupload4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/jquery.dataTables/jquery-ui.dataTables4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/dmsf4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery-1.6.1.min4460.js?1425381960" type="text/javascript"></script>
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery-ui-1.8.13.min4460.js?1425381960" type="text/javascript"></script>
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/jquery.dataTables.min4460.js?1425381960" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		jQuery(document).ready(function() {
+			jQuery("#browser").dataTable({
+				"bJQueryUI": true,
+				"oLanguage": {
+					'sUrl': '/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/en.json'	
+				},
+				"bAutoWidth": false,
+				"bPaginate": false,
+				"aaSorting": [[1,'asc']],
+				"aaSortingFixed": [[7,'asc']],
+				"aoColumnDefs": [
+					{ "bSearchable": false, "aTargets": [0, 6, 7, 8] },
+					{ "bSortable": false, "aTargets": [0, 6, 7] },
+					{ "iDataSort": 8, "aTargets": [ 2 ] }
+				],
+				"fnInitComplete": function() {
+					jQuery("div.controls").prependTo(jQuery("#browser_wrapper div.fg-toolbar")[0]);
+				},
+				"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+					return "Folders: 0, Documents: 10";
+				}
+			});
+			
+			jQuery("[data-downloadurl]").each(function() {
+		        var url = this.getAttribute("data-downloadurl");
+		        if (this.addEventListener) {
+		          this.addEventListener("dragstart", function(e) {
+		            if (e.dataTransfer) {
+		              e.dataTransfer.setData("DownloadURL", url);
+		            }
+		          },false);
+		        }
+	      	});
+		});
+		
+		function manipulation_link(action) {
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+		
+		function confirmation_link(action) {
+			if(!window.confirm("Do you really want to delete this entry?")) return;
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+	</script>
+</head>
+<body class="theme-Ogf redmine controller-dmsf action-show">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="../login.html" class="login">Login</a></li>
+<li><a href="../account/register.html" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="../index.html" class="home">Home</a></li>
+<li><a href="../projects.html" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/nsi-wg" method="get">
+        
+        <label for='q'>
+          <a href="../search/index/nsi-wg.html" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="standards.html?jump=dmsf" class="root">Standards</a> » <a href="infrastructure-area.html?jump=dmsf" class="ancestor">Infrastructure Area</a> » NSI WG</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="../projects/nsi-wg.html" class="overview">Overview</a></li>
+<li><a href="../tab/show/nsi-wg.html" class="tab">Project Info</a></li>
+<li><a href="../projects/nsi-wg/issues.html" class="issues">Issues</a></li>
+<li><a href="../projects/nsi-wg/issues/calendar.html" class="calendar">Calendar</a></li>
+<li><a href="../projects/nsi-wg/news.html" class="news">News</a></li>
+<li><a href="nsi-wg.html" class="dmsf selected">Documents</a></li>
+<li><a href="../projects/nsi-wg/wiki.html" class="wiki">Wiki</a></li>
+<li><a href="../projects/nsi-wg/files.html" class="files">Files</a></li>
+<li><a href="../projects/nsi-wg/repository.html" class="repository">Repository</a></li>
+<li><a href="../projects/nsi-wg/embedded/index.html" class="embedded">Mailing Lists</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+	
+</div>
+
+
+<h2>
+	<a href="nsi-wg.html">Documents</a>
+
+ / 
+ <a href="nsi-wg2685.html?folder_id=6527">Meeting minutes</a>
+ 
+
+ / 
+ <a href="nsi-wg7962.html?folder_id=6615">2016</a>
+ 
+
+
+</h2>
+
+<div class="wiki">
+
+</div>
+
+<form action="https://redmine.ogf.org/dmsf/entries_operation/nsi-wg?folder_id=6615" class="dmfs_entries" id="entries_form" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI=" /></div>
+	<input id="action" name="action" type="hidden" />
+	<div class="controls" style="float: left">
+		<input name="download_entries" title="Download checked in Zip archive" type="submit" value="Download" />
+		<input name="email_entries" title="Send checked by email" type="submit" value="Email" />
+		
+	</div> 
+	<table class="display entries" id="browser">
+		<thead>
+			<tr id="root">
+				<th class="check">
+					<input id="check_all_entries" title="Check/Uncheck all for zip download or email" type="checkbox" />
+				</th>
+				<th>Title</th>
+				<th>Size</th>
+				<th>Modified</th>
+				<th>Ver.</th>
+				<th>Author</th>
+				<th></th>
+				<th class="hidden"></th>
+				<th class="hidden"></th>
+			</tr>
+		</thead>
+	<tbody>
+	
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="13533" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/minutesNSI_01Jun2016b4d7.docx?download=" class="icon icon-file filetype-docx" data-downloadurl="application/vnd.openxmlformats-officedocument.wordprocessingml.document:minutesNSI_01Jun2016.docx:https://redmine.ogf.org/dmsf_files/13533?download=" title="NSI conf call minutes 01 Jun 2016 version 0.2 download">NSI conf call minutes 01 Jun 2016</a>
+				<div class="filename" title="Filename used for download or in Zip archive">minutesNSI_01Jun2016.docx</div>
+			</td>
+			<td class="size">21.5 kB</td>
+			<td class="modified">
+				2016-06-01 10:54
+				
+				
+			</td>
+			<td class="version">
+				0.2
+				
+			</td>
+			<td class="author">Chin Guok</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/13533.html" title="NSI conf call minutes 01 Jun 2016 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/13533'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">21993</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="13529" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/minutesNSI_04May2016b4d7.docx?download=" class="icon icon-file filetype-docx" data-downloadurl="application/vnd.openxmlformats-officedocument.wordprocessingml.document:minutesNSI_04May2016.docx:https://redmine.ogf.org/dmsf_files/13529?download=" title="NSI conf call minutes 04 May 2016 version 0.1 download">NSI conf call minutes 04 May 2016</a>
+				<div class="filename" title="Filename used for download or in Zip archive">minutesNSI_04May2016.docx</div>
+			</td>
+			<td class="size">18.3 kB</td>
+			<td class="modified">
+				2016-05-04 10:22
+				
+				
+			</td>
+			<td class="version">
+				0.1
+				
+			</td>
+			<td class="author">Guy Roberts</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/13529.html" title="NSI conf call minutes 04 May 2016 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/13529'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">18743</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="13513" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/minutesNSI_6Jan2015b4d7.docx?download=" class="icon icon-file filetype-docx" data-downloadurl="application/vnd.openxmlformats-officedocument.wordprocessingml.document:minutesNSI_6Jan2015.docx:https://redmine.ogf.org/dmsf_files/13513?download=" title="NSI conf call minutes 06 Jan 2016 version 0.2 download">NSI conf call minutes 06 Jan 2016</a>
+				<div class="filename" title="Filename used for download or in Zip archive">minutesNSI_6Jan2015.docx</div>
+			</td>
+			<td class="size">17.8 kB</td>
+			<td class="modified">
+				2016-01-06 11:24
+				
+				
+			</td>
+			<td class="version">
+				0.2
+				
+			</td>
+			<td class="author">Guy Roberts</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/13513.html" title="NSI conf call minutes 06 Jan 2016 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/13513'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">18189</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="13547" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/minutesNSI_14Dec2016b4d7.docx?download=" class="icon icon-file filetype-docx" data-downloadurl="application/vnd.openxmlformats-officedocument.wordprocessingml.document:minutesNSI_14Dec2016.docx:https://redmine.ogf.org/dmsf_files/13547?download=" title="NSI conf call minutes 14 Dec 2016 version 0.1 download">NSI conf call minutes 14 Dec 2016</a>
+				<div class="filename" title="Filename used for download or in Zip archive">minutesNSI_14Dec2016.docx</div>
+			</td>
+			<td class="size">19.7 kB</td>
+			<td class="modified">
+				2016-12-14 11:01
+				
+				
+			</td>
+			<td class="version">
+				0.1
+				
+			</td>
+			<td class="author">Guy Roberts</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/13547.html" title="NSI conf call minutes 14 Dec 2016 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/13547'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">20131</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="13527" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/minutesNSI_20Apr2016b4d7.docx?download=" class="icon icon-file filetype-docx" data-downloadurl="application/vnd.openxmlformats-officedocument.wordprocessingml.document:minutesNSI_20Apr2016.docx:https://redmine.ogf.org/dmsf_files/13527?download=" title="NSI conf call minutes 20 Apr 2016 version 0.1 download">NSI conf call minutes 20 Apr 2016</a>
+				<div class="filename" title="Filename used for download or in Zip archive">minutesNSI_20Apr2016.docx</div>
+			</td>
+			<td class="size">21.4 kB</td>
+			<td class="modified">
+				2016-04-20 12:57
+				
+				
+			</td>
+			<td class="version">
+				0.1
+				
+			</td>
+			<td class="author">Chin Guok</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/13527.html" title="NSI conf call minutes 20 Apr 2016 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/13527'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">21937</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="13516" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/minutesNSI_20Jan2016b4d7.docx?download=" class="icon icon-file filetype-docx" data-downloadurl="application/vnd.openxmlformats-officedocument.wordprocessingml.document:minutesNSI_20Jan2016.docx:https://redmine.ogf.org/dmsf_files/13516?download=" title="NSI conf call minutes 20 Jan 2016 version 0.1 download">NSI conf call minutes 20 Jan 2016</a>
+				<div class="filename" title="Filename used for download or in Zip archive">minutesNSI_20Jan2016.docx</div>
+			</td>
+			<td class="size">17.4 kB</td>
+			<td class="modified">
+				2016-01-20 10:54
+				
+				
+			</td>
+			<td class="version">
+				0.1
+				
+			</td>
+			<td class="author">Guy Roberts</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/13516.html" title="NSI conf call minutes 20 Jan 2016 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/13516'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">17868</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="13525" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/minutesNSI_23Mar2016b4d7.docx?download=" class="icon icon-file filetype-docx" data-downloadurl="application/vnd.openxmlformats-officedocument.wordprocessingml.document:minutesNSI_23Mar2016.docx:https://redmine.ogf.org/dmsf_files/13525?download=" title="NSI conf call minutes 23 Mar 2016 version 0.1 download">NSI conf call minutes 23 Mar 2016</a>
+				<div class="filename" title="Filename used for download or in Zip archive">minutesNSI_23Mar2016.docx</div>
+			</td>
+			<td class="size">18 kB</td>
+			<td class="modified">
+				2016-03-29 05:04
+				
+				
+			</td>
+			<td class="version">
+				0.1
+				
+			</td>
+			<td class="author">Guy Roberts</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/13525.html" title="NSI conf call minutes 23 Mar 2016 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/13525'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">18438</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="13518" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/minutesNSI_24Feb2016b4d7.docx?download=" class="icon icon-file filetype-docx" data-downloadurl="application/vnd.openxmlformats-officedocument.wordprocessingml.document:minutesNSI_24Feb2016.docx:https://redmine.ogf.org/dmsf_files/13518?download=" title="NSI conf call minutes 24 Feb 2016 version 0.1 download">NSI conf call minutes 24 Feb 2016</a>
+				<div class="filename" title="Filename used for download or in Zip archive">minutesNSI_24Feb2016.docx</div>
+			</td>
+			<td class="size">18.3 kB</td>
+			<td class="modified">
+				2016-02-24 10:41
+				
+				
+			</td>
+			<td class="version">
+				0.1
+				
+			</td>
+			<td class="author">Guy Roberts</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/13518.html" title="NSI conf call minutes 24 Feb 2016 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/13518'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">18746</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="13540" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/minutesNSI_25Aug2016b4d7.docx?download=" class="icon icon-file filetype-docx" data-downloadurl="application/vnd.openxmlformats-officedocument.wordprocessingml.document:minutesNSI_25Aug2016.docx:https://redmine.ogf.org/dmsf_files/13540?download=" title="NSI conf call minutes 25 Aug 2016 version 0.1 download">NSI conf call minutes 25 Aug 2016</a>
+				<div class="filename" title="Filename used for download or in Zip archive">minutesNSI_25Aug2016.docx</div>
+			</td>
+			<td class="size">18.6 kB</td>
+			<td class="modified">
+				2016-08-24 10:42
+				
+				
+			</td>
+			<td class="version">
+				0.1
+				
+			</td>
+			<td class="author">Guy Roberts</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/13540.html" title="NSI conf call minutes 25 Aug 2016 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/13540'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">19059</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="13535" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/minutesNSI_29Jun2016b4d7.docx?download=" class="icon icon-file filetype-docx" data-downloadurl="application/vnd.openxmlformats-officedocument.wordprocessingml.document:minutesNSI_29Jun2016.docx:https://redmine.ogf.org/dmsf_files/13535?download=" title="NSI conf call minutes 29 Jun 2016 version 0.1 download">NSI conf call minutes 29 Jun 2016</a>
+				<div class="filename" title="Filename used for download or in Zip archive">minutesNSI_29Jun2016.docx</div>
+			</td>
+			<td class="size">18.2 kB</td>
+			<td class="modified">
+				2016-06-29 12:08
+				
+				
+			</td>
+			<td class="version">
+				0.1
+				
+			</td>
+			<td class="author">Guy Roberts</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/13535.html" title="NSI conf call minutes 29 Jun 2016 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/13535'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">18644</td>
+		</tr>
+	
+	</tbody>
+	</table>
+	<br />
+</form>
+
+<script type="text/javascript">
+	jQuery("#entries_delete_button").click(function(event) {
+		if(window.confirm("Do you really want to delete checked entries?")) {
+			jQuery("#entries_form").attr("action", "/dmsf/delete_entries/nsi-wg?folder_id=6615");
+			jQuery("#entries_form").submit();
+		}
+	})
+	
+	jQuery("#check_all_entries").click(function(event) {
+		var $this = jQuery(this);
+		if($this.prop("checked")) {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", true);
+		} else {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", false);
+		}
+	})			
+</script>
+
+
+
+
+
+
+<br />
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/dmsf/nsi-wg?folder_id=6615 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Sep 2022 23:35:37 GMT -->
+</html>

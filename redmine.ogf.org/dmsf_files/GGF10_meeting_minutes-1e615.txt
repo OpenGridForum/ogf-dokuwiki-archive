@@ -1,0 +1,153 @@
+GGF10 CA Ops WG Meeting
+Wed Mar 10 2004 1530-1700
+
+Agenda (http://forge.gridforum.org/projects/caops-wg/document/GGF10_Agenda/):
+
+1. Review minutes of GGF9, 5 minutes,
+   Tony Genovese
+2. PKI Disclosure Statement update, 15 minutes,
+   Tony Genovese
+3. Grid PMA Model Charter discussion, 30 minutes,
+   Tony Genovese, Peter Gietz
+   http://forge.gridforum.org/projects/caops-wg/document/Grid_PMA_model_charter/
+4. New proposed document, OCSP Requirements, 30 minutes,
+   Milan Sova, Tony Genovese
+   http://forge.gridforum.org/projects/caops-wg/document/OCSP_Requirements_for_Grids/
+5. Open discussion and next steps, 10 minutes
+6. International efforts
+   EGEE - Florence
+   TERENA - Top level registry
+
+Summary:
+
+- PKI Disclosure Statement document should be up for public review
+  within the next few weeks.
+- WG members please review PMA Model Charter document within the next
+  two weeks and submit statements of support if your community is
+  using this document.  Plan to submit after that to secretariate.
+- OCSP requirements document was accepted as a new work item for this
+  working group.  Draft will be ready for GGF11.  Target last call on
+  this document for GGF13 (one year).
+- Note EGEE kick-off meeting this month in Florence.  See eugridpma.org.
+- Note TERENA top-level CA registry:
+  http://www.terena.nl/tech/task-forces/tf-aace/tacar/
+- Dane is looking for authors for a GGF standards document on
+  credential management / renewal for long-running jobs.  Please
+  contact dane@fnal.gov if you're interested.
+- Note DOE Grids CA advisory committee formed.
+  See http://dsd.lbl.gov/DOEGridsCA_UAC/
+- Security Area meeting Friday 0830 (room 3075).
+
+Minutes:
+
+Tony asked for comments on the GGF9 minutes.  There were none.
+Tony reviewed the GGF IP policy and passed around the sign up sheet.
+
+Two active papers in the WG:
+- PKI disclosure statement
+  - In the editor and up for steering group review.  Should be
+    reviewed within weeks.
+- PMA model charter
+  - DOE grids is an example PMA using this charter.
+  - EG PMA basing their charter on this document.
+  - Community best practice document.
+  - Reviewed in Tokyo GGF7.  Update reviewed at GGF9.  Tony updated
+    recently to address all outstanding comments.
+  - Ready for last call?  Tony recommends we give the working group 2
+    weeks to review the final draft.  If no comments, submit to
+    steering group.
+  - How many have read last update?  Only Tony.
+  - Dane commented that GFSG has concerns about community practice
+    documents.  Intended to have broad adoption by community.  Must
+    have evidence that this describes broad community practice.
+    Otherwise, should be informational.
+    - Two PMAs (EDG, DOE Grids) using it should document their support.
+
+Discussion of OCSP requirements document:
+New submission.
+WG should decide whether to take on this document (and update charter).
+Current practice in grids is for relying parties to retrieve
+certificate revocation lists (CRLs) periodically (daily/weekly/monthly).
+OCSP protocol supported by DOE Grids CA.
+OpenSSL 0.9.7 and later supports OCSP.
+  http://www.openssl.org/docs/apps/ocsp.html
+Globus Toolkit 3.2 supports OpenSSL 0.9.7.
+Netscape supports OCSP.
+Internet Explorer doesn't support OCSP currently but there are 3rd
+party plugins and the next version of IE will support it.
+Java 1.4.2 supports it.
+Comment from Frank: How does it relate to XKMS?
+Problems with CRLs: Authentication fails if can't retrieve CRL.
+Who signs CRL response?  DOE Grids subordinate CA.
+Responder's certificate contains a key usage extension that authorizes it?
+A community practice document?  Not being practiced yet.
+Work that out after the paper is written.
+Implementation issues:
+- OCSP service discovery (DNS SRV? AIA extension in EE certs?)
+  - See RFC 3280
+- Configuration of servers
+  - OCSP proxy to cross firewalls
+- Web service / OGSA wrapper (???)
+  - Could help with firewalls?
+  - Certificate validation service (XKMS?)
+    - XKMS server is an OCSP client
+- Reliability, fault handling
+- Good software defaults and configuration file
+- How to choose among multiple services?  Making client more complicated?
+- How to deal with OCSP "unknown" response?
+  - Fail safe?
+- Caching, chaining, referrals
+- How do you validate the OCSP response?  Signed by subordinate CA?
+  - Ask OCSP responder for revocation status of OCSP certificate?
+  - How to you revoke OCSP certificate?
+    - Higher level CA with CRL.
+    - Short-lived OCSP responder certificates
+  - Do you trust a responder for other CA's CRLs?
+ESnet now providing experimental OCSP service at https://amethyst.es.net/ocsp
+- responds using CRLs from CAs at
+  http://marianne.in2p3.fr/datagrid/ca/ca-table-ca.html
+- Pulls CRLs nightly
+Is a push model better?  Push CRLs to OCSP responders?  Allows
+faster update.
+Document currently in outline form.  3 authors identified.
+Tony asked, does WG object to taking this document on?
+Would specify requirements above RFC 2560 for OCSP use in grids.
+Intention is to provide OCSP as a grid-level (VO level?) service.
+Each PMA provides the service?  gridpma.org?
+An OCSP profile for grids?
+A grid-wide CRL distribution mechanism?
+Provide rules for every CA running an OCSP?  OCSP operational requirements.
+No objections raised.  Added as new work item.
+No objections fitting this document in this WG.
+Target last call in 3 GGF meetings (one year).
+Draft by Honolulu.
+Is XKMS related?  XKMS allows you to outsource complete certificate
+validation to a service (path validation, obtain attribute
+certificates).  Path validation is very complicated, with bridge CAs,
+etc.  XKMS service can be an OCSP client.
+XKMS outside of scope for CA ops?
+XKMS is separate from OCSP question.  Should proceed with OCSP work in
+any case.  Perhaps create a new working group for XKMS?
+
+Note EGEE kick-off meeting this month in Florence.
+See eugridpma.org for information.
+
+Note TERENA top-level CA registry.
+Just lists CAs and certificates without any auditing or requirements.
+Only academic CAs can join.
+http://www.terena.nl/tech/task-forces/tf-aace/tacar/
+Comment: Also include signing policies, i.e., register CA namespace,
+to detect accidental namespace collisions.
+
+Dane: No standard for managing credentials for long-running jobs and
+credential renewal.  Looking for authors.
+How does this relate to robot certificates?
+Robots expected to have access to long-term certificate and key.
+Robot certificate draft put out for last call.
+
+Mary: Advisory committee formed for DOE Grids CA.
+Please see http://dsd.lbl.gov/DOEGridsCA_UAC/.
+Do other CAs have user advisory panels?  What input are they getting?
+Thinking of setting one up for GridCanada.
+
+Meeting adjourned.

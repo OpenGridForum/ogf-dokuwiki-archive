@@ -1,0 +1,90 @@
+BES Telecon
+
+Minutes 28 July 2005
+
+Attendees
+---------------
+	Mark Morgan (Minutes)
+	Andrew Grimshaw
+	Steven Newhouse
+	Darren Pulsipher
+	Chris Smith
+	Michel Dreischer
+
+Agenda Bashing
+-----------------------
+	Andrew wants to add two things
+		- Brief Discussion of possibly having option on create activity or a new one that takes the abstract name in as well
+		- Are we going to define notifications or events for state changes, accounting information, etc.
+
+Review of Text from Document (section 3.2)
+---------------------------------------------------------------
+	- Review of last week's discussion and of execution state model
+	- As per document.
+	- Clarifications on state diagrams needed.
+	- Removed faults from getActivtyStatus -- a document will always be returned.
+    (section 4)
+    (section 5)
+
+	- CIM State Model
+		-- No notion of staging in or out
+		-- Are there common terms that should be the same
+		-- Do we want to change the names of some of our states to match theirs
+		-- Arrived is that same as New in the CIM model
+		-- Pending doesn't exist in the CIM model
+		-- Starting is Pending
+			-- no, it isn't -- it's a transitional state.
+		-- Is NotStarted equivalent to New
+			-- Yes
+		-- A new action make go into pending or active
+	- Would the CIM guys argue that each stage in and stage out activity be a separate activity.
+	- What does blocked mean?
+		-- It's like a system hold
+	- Both pending and blocked don't exist in CIM
+		-- Question is, how close to really doing things were they
+		-- Can we go back to them and say, "Hey, this state model isn't rich enough -- would you consider this more complex one."
+		-- We're not going to be able to shoehorn ours into theirs
+		-- But the question is should we try to use common names when we can.
+	- What is the difference between terminated and killed?
+		-- There are also some operations on the CIM concrete job
+	- There's a different between the end state
+	- We can give feedback to them
+	- Might want to change the names of staging in and out
+		-- Could staging in also apply to moving something off of tape and onto disk
+		-- Then, that's something that their job model has got to support
+		-- In the real world, you often have to move things up and down the storage heirarchy
+	- Why don't we take this offline with those guys and assign someone to talk with them about it.
+	- We can go through Fred or Tom Maguire, or Andrea -- Tom seems like a good choice
+    (section 3.4)
+	- Do we need a suspend operation in the BES
+	- We have a suspend state
+	- Yeah, put it into the container just like terminate, but it's a suspend operation (takes in a vector of WS-Names)
+	- If we do this, why do we need to have any interfaces on the job itself.
+	- We also need to put resume in.
+	- CIM has a generic change state routine.
+	- Then terminate would be redundant
+		-- Maybe not -- if terminate is more forceful then just a state change.
+		-- What if someone tries to change state in a way that is invalid	
+			-- You would have to have an invalid state transition exception
+		-- Do you want change state with a vector of WS-Names to one state, or a vector of WS-Names with a vector of state changes
+		-- Vector of pairs is better and you pass back a vector of results
+	- The descriptive part should say that you can only move forward in the state diagram.
+	- Re-drafting of those activities into one meta-operationis needed
+	- We need to recognize that the start and stop accepting new activities MAY need in the future to be replaced by generic management capabilities, but for now we don't have that option.
+   (section 3.6 -- shutdownContainer)
+	- Should this be called shutdownBESService
+	- Unconvinced about this operation
+	- Is this relevant to just execution services, or to all services
+		-- Should be all services
+	- If we take the function out, do we still want to have text that says that if you are using some kind of destroy operation (like lifetimes), then what happens when the container goes away.
+	- The dissapearance of the container does not imply that the jobs that were started have gone
+	- We should have a section about management issues
+	- The Job Manager in the EMS arch. may re-write the JSDL before submitting it to the BES
+	- Should the WS-Name be inesrted into the JSDL documented submitted to the BES container.
+
+* Andrew to write something about Notifications/Events
+* Next week, Andrew is on vacation
+* OGSA F2F
+	- Is 3.5 hours enough time
+		-- No, but the meeting is so packed
+	- We may need to start multi-track the OGSA F2F's and Andreas is looking into getting another room

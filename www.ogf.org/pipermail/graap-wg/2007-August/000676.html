@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/graap-wg/2007-August/000676.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:41:08 GMT -->
+<HEAD>
+   <TITLE> [GRAAP-WG] Modification to the wiki Page on Renegotiating	an	established Agreement
+   </TITLE>
+   <LINK REL="Index" HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:graap-wg%40ogf.org?Subject=%5BGRAAP-WG%5D%20Modification%20to%20the%20wiki%20Page%20on%20Renegotiating%0A%09an%09established%20Agreement&In-Reply-To=61673AE7-4829-4E26-8D07-A002966284DF%40cs.man.ac.uk">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000675.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000679.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[GRAAP-WG] Modification to the wiki Page on Renegotiating	an	established Agreement</H1>
+    <B>Karl Czajkowski</B> 
+    <A HREF="mailto:graap-wg%40ogf.org?Subject=%5BGRAAP-WG%5D%20Modification%20to%20the%20wiki%20Page%20on%20Renegotiating%0A%09an%09established%20Agreement&In-Reply-To=61673AE7-4829-4E26-8D07-A002966284DF%40cs.man.ac.uk"
+       TITLE="[GRAAP-WG] Modification to the wiki Page on Renegotiating	an	established Agreement">karlcz at univa.com
+       </A><BR>
+    <I>Fri Aug 24 07:57:26 CDT 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000675.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating	an	established Agreement
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000679.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating	anestablished Agreement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/date.html#676">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/thread.html#676">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/subject.html#676">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/author.html#676">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Aug 24, Michael Parkin modulated:
+&gt;<i> Hi Karl,
+</I>&gt;<i> 
+</I>&gt;<i> Sorry, I have a couple of quick questions/observations... Apologies  
+</I>&gt;<i> in advance if I have misunderstood anything in your email as  
+</I>&gt;<i> sometimes happens.
+</I>&gt;<i> 
+</I>&gt;<i> On 24 Aug 2007, at 11:54, Karl Czajkowski wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &lt;snip/&gt;
+</I>&gt;<i> 
+</I>&gt;<i> &gt;... However, due to the non-binding nature of
+</I>&gt;<i> &gt;these signals and the assumption of bounded rationality (we can ignore
+</I>&gt;<i> &gt;the possibility of bluffing and other psychological strategies), I am
+</I>&gt;<i> &gt;not sure these differences are significant.  For privacy, one could
+</I>&gt;<i> &gt;imagine secure advertisement channels (with authorization) to further
+</I>&gt;<i> &gt;blur the boundaries.
+</I>&gt;<i> 
+</I>&gt;<i> Are you saying that 'bluffing and other psychological strategies' can  
+</I>&gt;<i> be ignored in the negotiation protocol that is used or in the  
+</I>&gt;<i> negotiation strategy of each participant? For me, these two aspects  
+</I>&gt;<i> of reaching agreement are orthogonal, just like they are in (for  
+</I>&gt;<i> example) contract law.
+</I>&gt;<i> 
+</I>
+I am saying that we were not considering such strategies as relevant
+and therefore did not care to have multi-round negotiation to try to
+support them.  It was assumed that someone who did care about these
+might propose further specifications that might reuse some of the
+agreement data models from WS-Agreement.
+
+
+&gt;<i> So far you have the messages: offer, advert, cancel, accept and  
+</I>&gt;<i> reject... all of which are clear to me.
+</I>&gt;<i> 
+</I>&gt;<i> But can you explain what the 'offers claiming agreement' step (3a)  
+</I>&gt;<i> is? I'm sorry, I don't understand what this means - is it an offer,  
+</I>&gt;<i> accept or another message being sent from the initiator to the  
+</I>&gt;<i> responder?
+</I>&gt;<i> 
+</I>
+We have always assumed a notion of chaining agreements, e.g. part of
+the context of an agreement could be another agreement. In the fully
+agreement-based advance reservation case, the idiom is that you first
+get an 'advance reservation' agreement and you then follow it up with
+one or more 'claiming' agreements.  The claiming agreement binds the
+reservation of resource capabilities to a particular use.  There are
+other usage scenarios where the claiming/binding occurs in other
+domain-specific protocols instead of via claiming agreements.
+
+So it is another offer, with agreement terms which reference the
+existing reservation agreement.  It is implicitly understood that the
+reservation agreement gives you the &quot;right&quot; to make these claims,
+subject to the finite capacity limits of the reservation.  In essence,
+the entire reserve+claim process is the 2PC protocol for the actual
+domain specific agreement on the consumption of resources.
+
+You might note, this does imply a general form of multi-round
+negotiation, if you were to construct domain-specific terms which
+could refine or augment an existing agreement with more
+information. Once you had an agreement which could claim on an
+existing agreement and add more agreeable terms, you could converge
+towards the point of maximum/optimal agreement, starting with more
+conservative terms... however, no effort has been put into formalizing
+such term languages, outside the conventional advance reservation
+models we inherited into this work.
+
+
+&gt;<i> &lt;snip/&gt;
+</I>&gt;<i> 
+</I>&gt;<i> &gt;p.s. I will add that the fundamental challenge I see for GRAAP-WG and
+</I>&gt;<i> &gt;WS-Agreement is that everyone approaches it with the same natural (but
+</I>&gt;<i> &gt;incorrect) intuitions about trust, signalling, and consensus.
+</I>&gt;<i> 
+</I>&gt;<i> Can you explain some more about what you think these shared (but  
+</I>&gt;<i> incorrect) intuitions are?
+</I>&gt;<i> 
+</I>&gt;<i> My intuition is to a) trust no-one, b) assume messages ('signals')  
+</I>&gt;<i> can be lost, duplicated and re-ordered and c) assume that consensus  
+</I>&gt;<i> may or not be reached - it depends :-). Are these the same as yours  
+</I>&gt;<i> and/or GRAAP-WG's?
+</I>&gt;<i> 
+</I>
+You're ahead of the game, I'd say. :-)
+
+The typical intuition people have is that consensus can be reached
+easily, discounting the byzantine faults of the Internet environment,
+and having a naive understanding of what agreement and commitment
+really mean.  I have lost track of the number of times people have
+wanted to jump into the most elaborate negotiation strategies they've
+ever witnessed in real life, without considering:
+
+  1. The messaging (un)reliability model you mention.
+
+  2. The difference between intelligent and machine agents in terms
+     of their ability to reason and game one another.
+
+  3. The difference between contracts signed by legally responsible
+     entities and the automatic decisions of machines.
+
+  4. The realities of over-subscription and risk balancing in
+     realistic economic environments (e.g. dealing in real numbered
+     costs and benefits instead of hard absolutes).
+
+  5. The desired/expected/acceptable behavior for a large-scale system
+     with many of their proposed agents functioning simultaneously.
+
+What I see is that people who focus on this area intensely will all
+eventually start to see the same general solutions, but these are not
+very compatible with what the naive user wants.  So real deployment
+faces the challenge of users who do not appreciate the value of these
+systems nor the theoretical impossibility of what they desire.
+
+
+&gt;<i> 
+</I>&gt;<i> Michael.
+</I>&gt;<i> 
+</I>
+
+karl
+
+-- 
+Karl Czajkowski
+Software Architect
+
+Univa Corporation
+1001 Warrenville Road, Suite 550
+Lisle, IL 60532
+
+<A HREF="http://www.ogf.org/mailman/listinfo/graap-wg">karlcz at univa.com</A>
+www.univa.com
+________________________________________________________________
+www.univa.com.
+
+The Leaders of Open Source Cluster and Grid Software
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000675.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating	an	established Agreement
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000679.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating	anestablished Agreement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/date.html#676">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/thread.html#676">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/subject.html#676">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/author.html#676">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/graap-wg">More information about the graap-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/graap-wg/2007-August/000676.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:41:08 GMT -->
+</html>

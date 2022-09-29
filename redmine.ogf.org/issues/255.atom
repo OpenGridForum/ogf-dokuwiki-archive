@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title></title>
+  <link rel="self" href="https://redmine.ogf.org/issues/255.atom"/>
+  <link rel="alternate" href="https://redmine.ogf.org/"/>
+  <id>https://redmine.ogf.org/</id>
+  <updated>2015-02-03T04:47:47-05:00</updated>
+  <author>
+    <name>Open Grid Forum</name>
+  </author>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #255: enums must include DRMAA2_UNSET_ENUM</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/255"/>
+    <id>https://redmine.ogf.org/issues/255?journal_id=699</id>
+    <updated>2015-02-03T04:47:47-05:00</updated>
+    <author>
+      <name>Daniel Gruber</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;/ul&gt;&lt;p&gt;I meant the compiler chooses an unsigned int since all values are positive.&lt;/p&gt;
+
+
+	&lt;p&gt;/libs/drmaa2/drmaa2_types.c:95:21: error: comparison of constant -1 with expression of type 'const drmaa2_os' (aka 'const enum drmaa2_os') is always&lt;br /&gt;      true [-Werror,-Wtautological-constant-out-of-range-compare]
+             || (os != DRMAA2_UNSET_ENUM &amp;#38;&amp;#38; architectures[i].os == os)) {&lt;/p&gt;    </content>
+  </entry>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #255: enums must include DRMAA2_UNSET_ENUM</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/255"/>
+    <id>https://redmine.ogf.org/issues/255?journal_id=700</id>
+    <updated>2015-02-03T08:29:24-05:00</updated>
+    <author>
+      <name>Daniel Gruber</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;/ul&gt;&lt;p&gt;Changing this for the next Univa Grid Engine release. Should be backward compatible since&lt;br /&gt;DRMAA2_UNSET_ENUM is still defined and -1.&lt;/p&gt;
+
+
+	&lt;p&gt;/* Constants for boolean values. */&lt;br /&gt;typedef enum drmaa2_bool {&lt;br /&gt;   DRMAA2_FALSE                       =  0,&lt;br /&gt;   DRMAA2_TRUE                        =  1&lt;br /&gt;} drmaa2_bool;&lt;/p&gt;
+
+
+	&lt;p&gt;/* Constants for capabilities. */&lt;br /&gt;typedef enum drmaa2_capability {&lt;br /&gt;   DRMAA2_UNSET_CAPABILITY            = -1,&lt;br /&gt;   DRMAA2_ADVANCE_RESERVATION         =  0,&lt;br /&gt;   DRMAA2_RESERVE_SLOTS               =  1,&lt;br /&gt;   DRMAA2_CALLBACK                    =  2,&lt;br /&gt;   DRMAA2_BULK_JOBS_MAXPARALLEL       =  3,&lt;br /&gt;   DRMAA2_JT_EMAIL                    =  4,&lt;br /&gt;   DRMAA2_JT_STAGING                  =  5,&lt;br /&gt;   DRMAA2_JT_DEADLINE                 =  6,&lt;br /&gt;   DRMAA2_JT_MAXSLOTS                 =  7,&lt;br /&gt;   DRMAA2_JT_ACCOUNTINGID             =  8,&lt;br /&gt;   DRMAA2_RT_STARTNOW                 =  9,&lt;br /&gt;   DRMAA2_RT_DURATION                 = 10,&lt;br /&gt;   DRMAA2_RT_MACHINEOS                = 11,&lt;br /&gt;   DRMAA2_RT_MACHINEARCH              = 12&lt;br /&gt;} drmaa2_capability;&lt;/p&gt;
+
+
+	&lt;p&gt;/* Constants for the CPU type. */&lt;br /&gt;typedef enum drmaa2_cpu {&lt;br /&gt;   DRMAA2_UNSET_CPU = -1,&lt;br /&gt;   DRMAA2_OTHER_CPU =  0,&lt;br /&gt;   DRMAA2_ALPHA     =  1,&lt;br /&gt;   DRMAA2_ARM       =  2,&lt;br /&gt;   DRMAA2_ARM64     =  3,&lt;br /&gt;   DRMAA2_CELL      =  4,&lt;br /&gt;   DRMAA2_PARISC    =  5,&lt;br /&gt;   DRMAA2_PARISC64  =  6,&lt;br /&gt;   DRMAA2_X86       =  7,&lt;br /&gt;   DRMAA2_X64       =  8,&lt;br /&gt;   DRMAA2_IA64      =  9,&lt;br /&gt;   DRMAA2_MIPS      = 10,&lt;br /&gt;   DRMAA2_MIPS64    = 11,&lt;br /&gt;   DRMAA2_PPC       = 12,&lt;br /&gt;   DRMAA2_PPC64     = 13,&lt;br /&gt;   DRMAA2_SPARC     = 14,&lt;br /&gt;   DRMAA2_SPARC64   = 15&lt;br /&gt;} drmaa2_cpu;&lt;/p&gt;
+
+
+	&lt;p&gt;/* Constants for errors. */&lt;br /&gt;typedef enum drmaa2_error {&lt;br /&gt;   DRMAA2_UNSET_ERROR             = -1,&lt;br /&gt;   DRMAA2_SUCCESS                 =  0,&lt;br /&gt;   DRMAA2_DENIED_BY_DRMS          =  1,&lt;br /&gt;   DRMAA2_DRM_COMMUNICATION       =  2,&lt;br /&gt;   DRMAA2_TRY_LATER               =  3,&lt;br /&gt;   DRMAA2_SESSION_MANAGEMENT      =  4,&lt;br /&gt;   DRMAA2_TIMEOUT                 =  5,&lt;br /&gt;   DRMAA2_INTERNAL                =  6,&lt;br /&gt;   DRMAA2_INVALID_ARGUMENT        =  7,&lt;br /&gt;   DRMAA2_INVALID_SESSION         =  8,&lt;br /&gt;   DRMAA2_INVALID_STATE           =  9,&lt;br /&gt;   DRMAA2_OUT_OF_RESOURCE         = 10,&lt;br /&gt;   DRMAA2_UNSUPPORTED_ATTRIBUTE   = 11,&lt;br /&gt;   DRMAA2_UNSUPPORTED_OPERATION   = 12,&lt;br /&gt;   DRMAA2_IMPLEMENTATION_SPECIFIC = 13,&lt;br /&gt;   DRMAA2_LASTERROR               = 14&lt;br /&gt;} drmaa2_error;&lt;/p&gt;
+
+
+	&lt;p&gt;/* Constants for the event interface. */&lt;br /&gt;typedef enum drmaa2_event {&lt;br /&gt;   DRMAA2_UNSET_EVEMT      = -1,&lt;br /&gt;   DRMAA2_NEW_STATE        =  0,&lt;br /&gt;   DRMAA2_MIGRATED         =  1,&lt;br /&gt;   DRMAA2_ATTRIBUTE_CHANGE =  2&lt;br /&gt;} drmaa2_event;&lt;/p&gt;
+
+
+	&lt;p&gt;/* Constants for list types. */&lt;br /&gt;typedef enum drmaa2_listtype {&lt;br /&gt;   DRMAA2_UNSET_LISTTYPE       = -1,&lt;br /&gt;   DRMAA2_STRINGLIST       = 0,&lt;br /&gt;   DRMAA2_JOBLIST          = 1,&lt;br /&gt;   DRMAA2_QUEUEINFOLIST    = 2,&lt;br /&gt;   DRMAA2_MACHINEINFOLIST  = 3,&lt;br /&gt;   DRMAA2_SLOTINFOLIST     = 4,&lt;br /&gt;   DRMAA2_RESERVATIONLIST  = 5&lt;br /&gt;} drmaa2_listtype;&lt;/p&gt;
+
+
+	&lt;p&gt;/* Constants for the operating system name. */&lt;br /&gt;typedef enum drmaa2_os {&lt;br /&gt;   DRMAA2_UNSET_OS = -1,&lt;br /&gt;   DRMAA2_OTHER_OS =  0,&lt;br /&gt;   DRMAA2_AIX      =  1,&lt;br /&gt;   DRMAA2_BSD      =  2,&lt;br /&gt;   DRMAA2_LINUX    =  3,&lt;br /&gt;   DRMAA2_HPUX     =  4,&lt;br /&gt;   DRMAA2_IRIX     =  5,&lt;br /&gt;   DRMAA2_MACOS    =  6,&lt;br /&gt;   DRMAA2_SUNOS    =  7,&lt;br /&gt;   DRMAA2_TRU64    =  8,&lt;br /&gt;   DRMAA2_UNIXWARE =  9,&lt;br /&gt;   DRMAA2_WIN      = 10,&lt;br /&gt;   DRMAA2_WINNT    = 11&lt;br /&gt;} drmaa2_os;&lt;/p&gt;
+
+
+	&lt;p&gt;/* Constants for the job state. */&lt;br /&gt;typedef enum drmaa2_jstate {&lt;br /&gt;   DRMAA2_UNSET_JSTATE   = -1,&lt;br /&gt;   DRMAA2_UNDETERMINED   =  0,&lt;br /&gt;   DRMAA2_QUEUED         =  1,&lt;br /&gt;   DRMAA2_QUEUED_HELD    =  2,&lt;br /&gt;   DRMAA2_RUNNING        =  3,&lt;br /&gt;   DRMAA2_SUSPENDED      =  4,&lt;br /&gt;   DRMAA2_REQUEUED       =  5,&lt;br /&gt;   DRMAA2_REQUEUED_HELD  =  6,&lt;br /&gt;   DRMAA2_DONE           =  7,&lt;br /&gt;   DRMAA2_FAILED         =  8&lt;br /&gt;} drmaa2_jstate;&lt;/p&gt;    </content>
+  </entry>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #255: enums must include DRMAA2_UNSET_ENUM</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/255"/>
+    <id>https://redmine.ogf.org/issues/255?journal_id=711</id>
+    <updated>2015-02-20T09:13:31-05:00</updated>
+    <author>
+      <name>Peter Tr&#246;ger</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;/ul&gt;&lt;p&gt;This seems to be a very reasonable approach for the (gcc-implementation-specific) problem. Completely agreed.&lt;/p&gt;    </content>
+  </entry>
+  <entry>
+    <title>DRMAAv2 C Binding - bug #255: enums must include DRMAA2_UNSET_ENUM</title>
+    <link rel="alternate" href="https://redmine.ogf.org/issues/255"/>
+    <id>https://redmine.ogf.org/issues/255?journal_id=802</id>
+    <updated>2015-07-14T17:15:52-04:00</updated>
+    <author>
+      <name>Peter Tr&#246;ger</name>
+    </author>
+    <content type="html">
+&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Status&lt;/strong&gt; changed from &lt;i&gt;submitted&lt;/i&gt; to &lt;i&gt;closed&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Fixed in July 2015 errata.&lt;/p&gt;    </content>
+  </entry>
+</feed>

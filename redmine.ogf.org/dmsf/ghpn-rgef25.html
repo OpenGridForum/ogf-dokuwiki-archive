@@ -1,0 +1,767 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/dmsf/ghpn-rg?folder_id=5646 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Sep 2022 23:44:07 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>DMSF - GHPN RG - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI="/>
+<link rel='shortcut icon' href='../favicon4460.ico?1425381960' />
+<link href="../themes/ogf_redmine/stylesheets/application4460.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="../javascripts/prototype4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/effects4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/dragdrop4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/controls4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/application4460.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="../plugin_assets/extended_fields/stylesheets/extended_fields4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="../plugin_assets/wiking/stylesheets/wiking4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/jquery-ui/jquery-ui-1.8.134460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/plupload/jquery.ui.plupload4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/jquery.dataTables/jquery-ui.dataTables4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/dmsf4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery-1.6.1.min4460.js?1425381960" type="text/javascript"></script>
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery-ui-1.8.13.min4460.js?1425381960" type="text/javascript"></script>
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/jquery.dataTables.min4460.js?1425381960" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		jQuery(document).ready(function() {
+			jQuery("#browser").dataTable({
+				"bJQueryUI": true,
+				"oLanguage": {
+					'sUrl': '/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/en.json'	
+				},
+				"bAutoWidth": false,
+				"bPaginate": false,
+				"aaSorting": [[1,'asc']],
+				"aaSortingFixed": [[7,'asc']],
+				"aoColumnDefs": [
+					{ "bSearchable": false, "aTargets": [0, 6, 7, 8] },
+					{ "bSortable": false, "aTargets": [0, 6, 7] },
+					{ "iDataSort": 8, "aTargets": [ 2 ] }
+				],
+				"fnInitComplete": function() {
+					jQuery("div.controls").prependTo(jQuery("#browser_wrapper div.fg-toolbar")[0]);
+				},
+				"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+					return "Folders: 0, Documents: 13";
+				}
+			});
+			
+			jQuery("[data-downloadurl]").each(function() {
+		        var url = this.getAttribute("data-downloadurl");
+		        if (this.addEventListener) {
+		          this.addEventListener("dragstart", function(e) {
+		            if (e.dataTransfer) {
+		              e.dataTransfer.setData("DownloadURL", url);
+		            }
+		          },false);
+		        }
+	      	});
+		});
+		
+		function manipulation_link(action) {
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+		
+		function confirmation_link(action) {
+			if(!window.confirm("Do you really want to delete this entry?")) return;
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+	</script>
+</head>
+<body class="theme-Ogf redmine controller-dmsf action-show">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="../login.html" class="login">Login</a></li>
+<li><a href="../account/register.html" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="../index.html" class="home">Home</a></li>
+<li><a href="../projects.html" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/ghpn-rg" method="get">
+        
+        <label for='q'>
+          <a href="../search/index/ghpn-rg.html" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="standards.html?jump=dmsf" class="root">Standards</a> » <a href="infrastructure-area.html?jump=dmsf" class="ancestor">Infrastructure Area</a> » GHPN RG</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="../projects/ghpn-rg.html" class="overview">Overview</a></li>
+<li><a href="../tab/show/ghpn-rg.html" class="tab">Project Info</a></li>
+<li><a href="../projects/ghpn-rg/issues.html" class="issues">Issues</a></li>
+<li><a href="../projects/ghpn-rg/issues/calendar.html" class="calendar">Calendar</a></li>
+<li><a href="../projects/ghpn-rg/news.html" class="news">News</a></li>
+<li><a href="ghpn-rg.html" class="dmsf selected">Documents</a></li>
+<li><a href="../projects/ghpn-rg/wiki.html" class="wiki">Wiki</a></li>
+<li><a href="../projects/ghpn-rg/files.html" class="files">Files</a></li>
+<li><a href="../projects/ghpn-rg/embedded/index.html" class="embedded">Mailing Lists</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+	
+</div>
+
+
+<h2>
+	<a href="ghpn-rg.html">Documents</a>
+
+ / 
+ <a href="ghpn-rgbbf3.html?folder_id=354">gridforge</a>
+ 
+
+ / 
+ <a href="ghpn-rgef25.html?folder_id=5646">Old Drafts</a>
+ 
+
+
+</h2>
+
+<div class="wiki">
+
+</div>
+
+<form action="https://redmine.ogf.org/dmsf/entries_operation/ghpn-rg?folder_id=5646" class="dmfs_entries" id="entries_form" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI=" /></div>
+	<input id="action" name="action" type="hidden" />
+	<div class="controls" style="float: left">
+		<input name="download_entries" title="Download checked in Zip archive" type="submit" value="Download" />
+		<input name="email_entries" title="Send checked by email" type="submit" value="Email" />
+		
+	</div> 
+	<table class="display entries" id="browser">
+		<thead>
+			<tr id="root">
+				<th class="check">
+					<input id="check_all_entries" title="Check/Uncheck all for zip download or email" type="checkbox" />
+				</th>
+				<th>Title</th>
+				<th>Size</th>
+				<th>Modified</th>
+				<th>Ver.</th>
+				<th>Author</th>
+				<th></th>
+				<th class="hidden"></th>
+				<th class="hidden"></th>
+			</tr>
+		</thead>
+	<tbody>
+	
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8780" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/Grid_Issues_with_Network_Infrastructure-1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:Grid Issues with Network Infrastructure:https://redmine.ogf.org/dmsf_files/8780?download=" title="Grid Issues with Network Infrastructure version 1.0 download">Grid Issues with Network Infrastructure</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Grid Issues with Network Infrastructure</div>
+			</td>
+			<td class="size">107.5 kB</td>
+			<td class="modified">
+				2003-07-28 04:59
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8780.html" title="Grid Issues with Network Infrastructure details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8780'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">110080</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8777" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/JC-draft-net-issues-with-grids-1b4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:JC-draft-net-issues-with-grids:https://redmine.ogf.org/dmsf_files/8777?download=" title="JC-draft-net-issues-with-grids version 1.0 download">JC-draft-net-issues-with-grids</a>
+				<div class="filename" title="Filename used for download or in Zip archive">JC-draft-net-issues-with-grids</div>
+			</td>
+			<td class="size">80.7 kB</td>
+			<td class="modified">
+				2003-07-21 08:39
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8777.html" title="JC-draft-net-issues-with-grids details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8777'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">82686</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8774" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ggf-ghpn-netissues-0-1b4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:draft-ggf-ghpn-netissues-0:https://redmine.ogf.org/dmsf_files/8774?download=" title="draft-ggf-ghpn-netissues-0 version 1.0 download">draft-ggf-ghpn-netissues-0</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ggf-ghpn-netissues-0</div>
+			</td>
+			<td class="size">66.4 kB</td>
+			<td class="modified">
+				2003-07-21 08:38
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8774.html" title="draft-ggf-ghpn-netissues-0 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8774'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">67979</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8772" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ggf-ghpn-netissues-1-1b4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:draft-ggf-ghpn-netissues-1:https://redmine.ogf.org/dmsf_files/8772?download=" title="draft-ggf-ghpn-netissues-1 version 1.0 download">draft-ggf-ghpn-netissues-1</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ggf-ghpn-netissues-1</div>
+			</td>
+			<td class="size">211.9 kB</td>
+			<td class="modified">
+				2003-09-23 09:37
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8772.html" title="draft-ggf-ghpn-netissues-1 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8772'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">217004</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8775" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ggf-ghpn-netissues-2-1b4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:draft-ggf-ghpn-netissues-2:https://redmine.ogf.org/dmsf_files/8775?download=" title="draft-ggf-ghpn-netissues-2 version 1.0 download">draft-ggf-ghpn-netissues-2</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ggf-ghpn-netissues-2</div>
+			</td>
+			<td class="size">153.2 kB</td>
+			<td class="modified">
+				2004-02-22 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8775.html" title="draft-ggf-ghpn-netissues-2 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8775'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">156864</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8771" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ggf-ghpn-netissues-3-1b4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:draft-ggf-ghpn-netissues-3:https://redmine.ogf.org/dmsf_files/8771?download=" title="draft-ggf-ghpn-netissues-3 version 1.0 download">draft-ggf-ghpn-netissues-3</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ggf-ghpn-netissues-3</div>
+			</td>
+			<td class="size">290.8 kB</td>
+			<td class="modified">
+				2004-05-13 17:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8771.html" title="draft-ggf-ghpn-netissues-3 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8771'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">297785</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8779" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ggf-ghpn-netissues-pre3-1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:draft-ggf-ghpn-netissues-pre3:https://redmine.ogf.org/dmsf_files/8779?download=" title="draft-ggf-ghpn-netissues-pre3 version 1.0 download">draft-ggf-ghpn-netissues-pre3</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ggf-ghpn-netissues-pre3</div>
+			</td>
+			<td class="size">2.6 MB</td>
+			<td class="modified">
+				2004-05-01 23:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8779.html" title="draft-ggf-ghpn-netissues-pre3 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8779'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2735104</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8768" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ggf-ghpn-netissues-pre3-travos-1b4d7.doc?download=" class="icon icon-file " data-downloadurl="application/msword:draft-ggf-ghpn-netissues-pre3-travos:https://redmine.ogf.org/dmsf_files/8768?download=" title="draft-ggf-ghpn-netissues-pre3-travos version 1.0 download">draft-ggf-ghpn-netissues-pre3-travos</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ggf-ghpn-netissues-pre3-travos</div>
+			</td>
+			<td class="size">3.7 MB</td>
+			<td class="modified">
+				2004-05-01 23:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8768.html" title="draft-ggf-ghpn-netissues-pre3-travos details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8768'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">3905536</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8773" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ggf-ghpn-netservices-0.pdf-1b4d7.pdf?download=" class="icon icon-file application-pdf" data-downloadurl="application/pdf:draft-ggf-ghpn-netservices-0.pdf:https://redmine.ogf.org/dmsf_files/8773?download=" title="draft-ggf-ghpn-netservices-0.pdf version 1.0 download">draft-ggf-ghpn-netservices-0.pdf</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ggf-ghpn-netservices-0.pdf</div>
+			</td>
+			<td class="size">537.8 kB</td>
+			<td class="modified">
+				2004-02-25 18:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8773.html" title="draft-ggf-ghpn-netservices-0.pdf details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8773'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">550715</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8770" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ggf-ghpn-netservices-usecase-0-4b4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:draft-ggf-ghpn-netservices-usecase-0:https://redmine.ogf.org/dmsf_files/8770?download=" title="draft-ggf-ghpn-netservices-usecase-0 version 4.0 download">draft-ggf-ghpn-netservices-usecase-0</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ggf-ghpn-netservices-usecase-0</div>
+			</td>
+			<td class="size">212.7 kB</td>
+			<td class="modified">
+				2004-05-17 17:00
+				
+				
+			</td>
+			<td class="version">
+				4.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8770.html" title="draft-ggf-ghpn-netservices-usecase-0 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8770'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">217786</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8776" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ggf-ghpn-opticalnets-0-1b4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:draft-ggf-ghpn-opticalnets-0:https://redmine.ogf.org/dmsf_files/8776?download=" title="draft-ggf-ghpn-opticalnets-0 version 1.0 download">draft-ggf-ghpn-opticalnets-0</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ggf-ghpn-opticalnets-0</div>
+			</td>
+			<td class="size">284.2 kB</td>
+			<td class="modified">
+				2003-09-23 08:27
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8776.html" title="draft-ggf-ghpn-opticalnets-0 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8776'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">290979</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8778" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ggf-ghpn-opticalnets-1-1b4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:draft-ggf-ghpn-opticalnets-1:https://redmine.ogf.org/dmsf_files/8778?download=" title="draft-ggf-ghpn-opticalnets-1 version 1.0 download">draft-ggf-ghpn-opticalnets-1</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ggf-ghpn-opticalnets-1</div>
+			</td>
+			<td class="size">324.7 kB</td>
+			<td class="modified">
+				2004-02-20 00:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8778.html" title="draft-ggf-ghpn-opticalnets-1 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8778'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">332512</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="8769" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/draft-ggf-ghpn-opticalnets-1.pdf-1b4d7.pdf?download=" class="icon icon-file application-pdf" data-downloadurl="application/pdf:draft-ggf-ghpn-opticalnets-1.pdf:https://redmine.ogf.org/dmsf_files/8769?download=" title="draft-ggf-ghpn-opticalnets-1.pdf version 1.0 download">draft-ggf-ghpn-opticalnets-1.pdf</a>
+				<div class="filename" title="Filename used for download or in Zip archive">draft-ggf-ghpn-opticalnets-1.pdf</div>
+			</td>
+			<td class="size">324.7 kB</td>
+			<td class="modified">
+				2004-05-16 17:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/8769.html" title="draft-ggf-ghpn-opticalnets-1.pdf details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/8769'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">332512</td>
+		</tr>
+	
+	</tbody>
+	</table>
+	<br />
+</form>
+
+<script type="text/javascript">
+	jQuery("#entries_delete_button").click(function(event) {
+		if(window.confirm("Do you really want to delete checked entries?")) {
+			jQuery("#entries_form").attr("action", "/dmsf/delete_entries/ghpn-rg?folder_id=5646");
+			jQuery("#entries_form").submit();
+		}
+	})
+	
+	jQuery("#check_all_entries").click(function(event) {
+		var $this = jQuery(this);
+		if($this.prop("checked")) {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", true);
+		} else {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", false);
+		}
+	})			
+</script>
+
+
+
+
+
+
+<br />
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/dmsf/ghpn-rg?folder_id=5646 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Sep 2022 23:44:41 GMT -->
+</html>

@@ -1,0 +1,118 @@
+Review of GLUE2.1 part 1/2 (J Jensen, UKRI-STFC-RAL)
+
+
+General comment: in a few places you make reference to grid
+environments, e.g. in the introduction and the beginning of section
+6.  However, I am wondering if that is too limiting; it might put
+someone off who is not building a grid.  You do mention cloud with the
+first occurrence, though.  Maybe it would be useful for distributed
+computing more generally.
+
+As another general comment, some of the descriptions of the schema
+also touch on how the schema is intended to be used; like in 6.12.1
+which says that certain Endpoints SHOULD NOT be selected, or 7.10
+which talks about AppNames.  Service (pre-)selection is touched upon
+several times.  There's nothing wrong with that, but it makes it
+harder to distinguish the normative (Schema) from the non-normative
+(usage and implementation cf section 1 3rd para).
+
+
+
+Section 1.  Nitpick: renderings are in separate documents? not a
+separate document (more than one rendering.) There's some repetition
+as the third para talks about rendering to concrete data models as
+well.
+
+Section 5. " .. even though this MAY be measured"?  I don't
+understand.
+
+What's an "association end"?  It's not clear at this stage.
+
+Section 6.1.  Oops.  Did you mean "The specialized classes will
+inherit both the associations and the attributes of the _Entity_
+class"?
+
+Section 6.2.  What's a Container class? (not mentioned before)
+
+In 6.3 is the country name free format?  There might be a use case for
+a controlled vocabulary country format (e.g. service selection), even
+for services spanning countries using ISO3166 (say) - e.g. a service
+is in "ES,DE,DK,NL,FR,BE" (with no meaning assigned to the ordering.)
+Name of country could be a bit of a mouthful, like "United Kingdom of
+Great Britain and Northern Ireland".
+
+In 6.5.1-2, why is the AdminDomain.ID (resp UserDomain.ID) both * and
+0..1? - I understand at a handwavy level how domains could participate
+in other domains, but not how it is modelled in this way when the
+attributes have the same name (and different multiplicities).
+
+6.6. I don't understand the "Complexity" and it's not mentioned
+previously.
+
+6.7. "OGSA architecture specification" probably needs a reference or a
+footnote.
+
+I seem to remember there is an equivalent of WSDL for REST web
+services but I can't remember what it's called.  WSDL is specific to
+SOAP?
+
+6.12 in the third para, what defines a set of policies?  It is hard to
+parse this paragraph.
+
+7.1 For the last Para I suggest adding a diagram showing the two
+situations - again the para requires some patience to parse.  But
+unlike the one in 6.12, it does make sense.
+
+7.2 what is a measurable attribute?
+
+If by Quality_Level you mean TRL, there are quite a few definitions.
+
+7.3 I find it slightly unhelpful that some memory units (RAM) are in
+MB, and others (disk) are in GB.  I know that disks usually have more
+capacity than RAM but given the blurring of the boundary between them
+with NVM, fast disk, slow cache, etc., it seems unhelpful.
+
+7.4 what's an "accelerator slot"?  Is it how many jobs can share an
+accelerator?  Or how many jobs can share all accelerators?  For
+example, on a large GPU system, we would typically have at most one
+job per GPU but there will be several GPUs.  The matching system might
+look for a resource where its job can get a dedicated GPU.  I guess
+my point is similar to your discussion of the working area allocation
+in Table 1.
+
+On 7.8, I noted that sometimes an execution environment could have a
+non-integer number of CPUs, like if it runs in a container with
+restricted CPU.  Not everything in life is HPC...
+
+8.1 "weak aggregation"?
+
+End of 8.1 eek- this is the same as the 7.1 - diagram would be
+helpful.
+
+
+
+
+Language nitpicks:
+
+enables to link -> enables linking
+easy of reading -> ease of reading
+
+"the value of zero means that it is allowed to refrain from publishing
+a value for the related attribute" - it would be more readable to say
+"it is allowed to omit the attribute" - and later that sentence, "even
+though this MAY be measured" - what does this mean?
+
+For "global unique id" I'd suggest "globally unique id"
+
+6.5.2 inconsistent spelling "A User Domain" and "An User Domain"
+
+6.12 "We RECOMMEND to not represent the association [..] explicitly"
+-> "the association [..] SHOULD NOT be represented explicitly" or
+"representing the association [..] explicitly is NOT RECOMMENDED"
+(using SHOULD NOT would be better)
+
+Section 8. "leverages on" -> "leverages" (if you *must* use that
+word.)
+
+Also section 8, "bed in Chapter 7" ????
+

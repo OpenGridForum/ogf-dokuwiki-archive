@@ -1,0 +1,692 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/dmsf/dais-wg?folder_id=5427 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:41:14 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>DMSF - DAIS WG - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/jquery-ui/jquery-ui-1.8.13.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/plupload/jquery.ui.plupload.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/jquery.dataTables/jquery-ui.dataTables.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/dmsf.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	
+	<script src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/javascripts/jquery-1.6.1.min.js?1425381960" type="text/javascript"></script>
+	<script src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/javascripts/jquery-ui-1.8.13.min.js?1425381960" type="text/javascript"></script>
+	<script src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/jquery.dataTables.min.js?1425381960" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		jQuery(document).ready(function() {
+			jQuery("#browser").dataTable({
+				"bJQueryUI": true,
+				"oLanguage": {
+					'sUrl': '/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/en.json'	
+				},
+				"bAutoWidth": false,
+				"bPaginate": false,
+				"aaSorting": [[1,'asc']],
+				"aaSortingFixed": [[7,'asc']],
+				"aoColumnDefs": [
+					{ "bSearchable": false, "aTargets": [0, 6, 7, 8] },
+					{ "bSortable": false, "aTargets": [0, 6, 7] },
+					{ "iDataSort": 8, "aTargets": [ 2 ] }
+				],
+				"fnInitComplete": function() {
+					jQuery("div.controls").prependTo(jQuery("#browser_wrapper div.fg-toolbar")[0]);
+				},
+				"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+					return "Folders: 0, Documents: 11";
+				}
+			});
+			
+			jQuery("[data-downloadurl]").each(function() {
+		        var url = this.getAttribute("data-downloadurl");
+		        if (this.addEventListener) {
+		          this.addEventListener("dragstart", function(e) {
+		            if (e.dataTransfer) {
+		              e.dataTransfer.setData("DownloadURL", url);
+		            }
+		          },false);
+		        }
+	      	});
+		});
+		
+		function manipulation_link(action) {
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+		
+		function confirmation_link(action) {
+			if(!window.confirm("Do you really want to delete this entry?")) return;
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+	</script>
+</head>
+<body class="theme-Ogf redmine controller-dmsf action-show">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/dais-wg" method="get">
+        
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/dais-wg" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/standards?jump=dmsf" class="root">Standards</a> » <a href="https://redmine.ogf.org/projects/data-area?jump=dmsf" class="ancestor">Data Area</a> » DAIS WG</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/dais-wg" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/tab/show/dais-wg" class="tab">Project Info</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/dais-wg" class="dmsf selected">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/repository" class="repository">Repository</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/embedded" class="embedded">Mailing Lists</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+	
+</div>
+
+
+<h2>
+	<a href="https://redmine.ogf.org/dmsf/dais-wg">Documents</a>
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/dais-wg?folder_id=163">gridforge</a>
+ 
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/dais-wg?folder_id=5425">Face-to-face Meetings</a>
+ 
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/dais-wg?folder_id=5427">RedwoodShores-Jan04</a>
+ 
+
+
+</h2>
+
+<div class="wiki">
+
+</div>
+
+<form action="https://redmine.ogf.org/dmsf/entries_operation/dais-wg?folder_id=5427" class="dmfs_entries" id="entries_form" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI=" /></div>
+	<input id="action" name="action" type="hidden" />
+	<div class="controls" style="float: left">
+		<input name="download_entries" title="Download checked in Zip archive" type="submit" value="Download" />
+		<input name="email_entries" title="Send checked by email" type="submit" value="Email" />
+		
+	</div> 
+	<table class="display entries" id="browser">
+		<thead>
+			<tr id="root">
+				<th class="check">
+					<input id="check_all_entries" title="Check/Uncheck all for zip download or email" type="checkbox" />
+				</th>
+				<th>Title</th>
+				<th>Size</th>
+				<th>Modified</th>
+				<th>Ver.</th>
+				<th>Author</th>
+				<th></th>
+				<th class="hidden"></th>
+				<th class="hidden"></th>
+			</tr>
+		</thead>
+	<tbody>
+	
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7983" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7983?download=" class="icon icon-file " data-downloadurl="application/pdf:DAIS Request Aggregation:https://redmine.ogf.org/dmsf_files/7983?download=" title="DAIS Request Aggregation version 1.0 download">DAIS Request Aggregation</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS Request Aggregation</div>
+			</td>
+			<td class="size">194.8 kB</td>
+			<td class="modified">
+				2004-02-04 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7983" title="DAIS Request Aggregation details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7983'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">199477</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7981" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7981?download=" class="icon icon-file " data-downloadurl="application/pdf:Data Service Semantics:https://redmine.ogf.org/dmsf_files/7981?download=" title="Data Service Semantics version 1.0 download">Data Service Semantics</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Data Service Semantics</div>
+			</td>
+			<td class="size">135 kB</td>
+			<td class="modified">
+				2004-02-04 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7981" title="Data Service Semantics details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7981'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">138260</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7988" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7988?download=" class="icon icon-file " data-downloadurl="application/pdf:DataDistributionJan27:https://redmine.ogf.org/dmsf_files/7988?download=" title="DataDistributionJan27 version 1.0 download">DataDistributionJan27</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DataDistributionJan27</div>
+			</td>
+			<td class="size">259.4 kB</td>
+			<td class="modified">
+				2004-02-08 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7988" title="DataDistributionJan27 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7988'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">265628</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7987" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7987?download=" class="icon icon-file " data-downloadurl="application/pdf:DataManagementUseCasesForCGS-WG:https://redmine.ogf.org/dmsf_files/7987?download=" title="DataManagementUseCasesForCGS-WG version 1.0 download">DataManagementUseCasesForCGS-WG</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DataManagementUseCasesForCGS-WG</div>
+			</td>
+			<td class="size">56.6 kB</td>
+			<td class="modified">
+				2004-02-16 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7987" title="DataManagementUseCasesForCGS-WG details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7987'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">57994</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7984" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7984?download=" class="icon icon-file " data-downloadurl="application/pdf:File Access in OGSA-DAI:https://redmine.ogf.org/dmsf_files/7984?download=" title="File Access in OGSA-DAI version 1.0 download">File Access in OGSA-DAI</a>
+				<div class="filename" title="Filename used for download or in Zip archive">File Access in OGSA-DAI</div>
+			</td>
+			<td class="size">989.5 kB</td>
+			<td class="modified">
+				2004-02-04 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7984" title="File Access in OGSA-DAI details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7984'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1013238</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7986" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7986?download=" class="icon icon-file " data-downloadurl="application/pdf:Initial_Impressions_on_WS-Resource_Framework:https://redmine.ogf.org/dmsf_files/7986?download=" title="Initial_Impressions_on_WS-Resource_Framework version 1.0 download">Initial_Impressions_on_WS-Resource_Framework</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Initial_Impressions_on_WS-Resource_Framework</div>
+			</td>
+			<td class="size">2.1 MB</td>
+			<td class="modified">
+				2004-02-09 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7986" title="Initial_Impressions_on_WS-Resource_Framework details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7986'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2164441</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7991" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7991?download=" class="icon icon-file " data-downloadurl="application/pdf:Positioning_of_Data_Distribution_with_WSRF_And_WS-NotificationFramework:https://redmine.ogf.org/dmsf_files/7991?download=" title="Positioning_of_Data_Distribution_with_WSRF_And_WS-NotificationFramework version 1.0 download">Positioning_of_Data_Distribution_with_WSRF_And_WS-NotificationFramework</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Positioning_of_Data_Distribution_with_WSRF_And_WS-NotificationFramework</div>
+			</td>
+			<td class="size">35.2 kB</td>
+			<td class="modified">
+				2004-02-08 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7991" title="Positioning_of_Data_Distribution_with_WSRF_And_WS-NotificationFramework details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7991'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">36031</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7985" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7985?download=" class="icon icon-file " data-downloadurl="text/plain:RedwoodShores-f2f-Minutes:https://redmine.ogf.org/dmsf_files/7985?download=" title="RedwoodShores-f2f-Minutes version 1.0 download">RedwoodShores-f2f-Minutes</a>
+				<div class="filename" title="Filename used for download or in Zip archive">RedwoodShores-f2f-Minutes</div>
+			</td>
+			<td class="size">11 kB</td>
+			<td class="modified">
+				2004-03-15 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7985" title="RedwoodShores-f2f-Minutes details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7985'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">11225</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7990" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7990?download=" class="icon icon-file " data-downloadurl="application/pdf:Relational and XML Realizations:https://redmine.ogf.org/dmsf_files/7990?download=" title="Relational and XML Realizations version 1.0 download">Relational and XML Realizations</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Relational and XML Realizations</div>
+			</td>
+			<td class="size">127.3 kB</td>
+			<td class="modified">
+				2004-02-04 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7990" title="Relational and XML Realizations details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7990'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">130334</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7989" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7989?download=" class="icon icon-file " data-downloadurl="application/pdf:WSRF_And_WS-Notification_Technical_Overview:https://redmine.ogf.org/dmsf_files/7989?download=" title="WSRF_And_WS-Notification_Technical_Overview version 1.0 download">WSRF_And_WS-Notification_Technical_Overview</a>
+				<div class="filename" title="Filename used for download or in Zip archive">WSRF_And_WS-Notification_Technical_Overview</div>
+			</td>
+			<td class="size">1.6 MB</td>
+			<td class="modified">
+				2004-02-05 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7989" title="WSRF_And_WS-Notification_Technical_Overview details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7989'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1657259</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7982" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7982?download=" class="icon icon-file " data-downloadurl="application/pdf:XML_Realisation_RedwoodShores:https://redmine.ogf.org/dmsf_files/7982?download=" title="XML_Realisation_RedwoodShores version 1.0 download">XML_Realisation_RedwoodShores</a>
+				<div class="filename" title="Filename used for download or in Zip archive">XML_Realisation_RedwoodShores</div>
+			</td>
+			<td class="size">43.9 kB</td>
+			<td class="modified">
+				2004-02-04 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7982" title="XML_Realisation_RedwoodShores details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7982'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">44911</td>
+		</tr>
+	
+	</tbody>
+	</table>
+	<br />
+</form>
+
+<script type="text/javascript">
+	jQuery("#entries_delete_button").click(function(event) {
+		if(window.confirm("Do you really want to delete checked entries?")) {
+			jQuery("#entries_form").attr("action", "/dmsf/delete_entries/dais-wg?folder_id=5427");
+			jQuery("#entries_form").submit();
+		}
+	})
+	
+	jQuery("#check_all_entries").click(function(event) {
+		var $this = jQuery(this);
+		if($this.prop("checked")) {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", true);
+		} else {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", false);
+		}
+	})			
+</script>
+
+
+
+
+
+
+<br />
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/dmsf/dais-wg?folder_id=5427 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:41:14 GMT -->
+</html>

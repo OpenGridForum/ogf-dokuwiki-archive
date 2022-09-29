@@ -1,0 +1,15 @@
+#!/bin/sh
+
+rm -rf input_*
+
+CHGS=$1
+WAYS=$2
+
+make_runs $CHGS $WAYS input
+
+for way in `seq 1 $WAYS`; do
+echo --- $way
+  update_file input_${CHGS}_${way}.in input_${CHGS}_${way}.out
+done
+
+compile_results $CHGS $WAYS input

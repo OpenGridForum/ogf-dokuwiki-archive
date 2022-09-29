@@ -1,0 +1,1292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/dmsf/dais-wg?folder_id=5378 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:41:14 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>DMSF - DAIS WG - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/jquery-ui/jquery-ui-1.8.13.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/plupload/jquery.ui.plupload.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/jquery.dataTables/jquery-ui.dataTables.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/dmsf.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	
+	<script src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/javascripts/jquery-1.6.1.min.js?1425381960" type="text/javascript"></script>
+	<script src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/javascripts/jquery-ui-1.8.13.min.js?1425381960" type="text/javascript"></script>
+	<script src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/jquery.dataTables.min.js?1425381960" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		jQuery(document).ready(function() {
+			jQuery("#browser").dataTable({
+				"bJQueryUI": true,
+				"oLanguage": {
+					'sUrl': '/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/en.json'	
+				},
+				"bAutoWidth": false,
+				"bPaginate": false,
+				"aaSorting": [[1,'asc']],
+				"aaSortingFixed": [[7,'asc']],
+				"aoColumnDefs": [
+					{ "bSearchable": false, "aTargets": [0, 6, 7, 8] },
+					{ "bSortable": false, "aTargets": [0, 6, 7] },
+					{ "iDataSort": 8, "aTargets": [ 2 ] }
+				],
+				"fnInitComplete": function() {
+					jQuery("div.controls").prependTo(jQuery("#browser_wrapper div.fg-toolbar")[0]);
+				},
+				"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+					return "Folders: 0, Documents: 26";
+				}
+			});
+			
+			jQuery("[data-downloadurl]").each(function() {
+		        var url = this.getAttribute("data-downloadurl");
+		        if (this.addEventListener) {
+		          this.addEventListener("dragstart", function(e) {
+		            if (e.dataTransfer) {
+		              e.dataTransfer.setData("DownloadURL", url);
+		            }
+		          },false);
+		        }
+	      	});
+		});
+		
+		function manipulation_link(action) {
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+		
+		function confirmation_link(action) {
+			if(!window.confirm("Do you really want to delete this entry?")) return;
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+	</script>
+</head>
+<body class="theme-Ogf redmine controller-dmsf action-show">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/dais-wg" method="get">
+        
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/dais-wg" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/standards?jump=dmsf" class="root">Standards</a> » <a href="https://redmine.ogf.org/projects/data-area?jump=dmsf" class="ancestor">Data Area</a> » DAIS WG</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/dais-wg" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/tab/show/dais-wg" class="tab">Project Info</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/dais-wg" class="dmsf selected">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/repository" class="repository">Repository</a></li>
+<li><a href="https://redmine.ogf.org/projects/dais-wg/embedded" class="embedded">Mailing Lists</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+	
+</div>
+
+
+<h2>
+	<a href="https://redmine.ogf.org/dmsf/dais-wg">Documents</a>
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/dais-wg?folder_id=163">gridforge</a>
+ 
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/dais-wg?folder_id=5372">Telcon Minutes</a>
+ 
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/dais-wg?folder_id=5378">2009</a>
+ 
+
+
+</h2>
+
+<div class="wiki">
+
+</div>
+
+<form action="https://redmine.ogf.org/dmsf/entries_operation/dais-wg?folder_id=5378" class="dmfs_entries" id="entries_form" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI=" /></div>
+	<input id="action" name="action" type="hidden" />
+	<div class="controls" style="float: left">
+		<input name="download_entries" title="Download checked in Zip archive" type="submit" value="Download" />
+		<input name="email_entries" title="Send checked by email" type="submit" value="Email" />
+		
+	</div> 
+	<table class="display entries" id="browser">
+		<thead>
+			<tr id="root">
+				<th class="check">
+					<input id="check_all_entries" title="Check/Uncheck all for zip download or email" type="checkbox" />
+				</th>
+				<th>Title</th>
+				<th>Size</th>
+				<th>Modified</th>
+				<th>Ver.</th>
+				<th>Author</th>
+				<th></th>
+				<th class="hidden"></th>
+				<th class="hidden"></th>
+			</tr>
+		</thead>
+	<tbody>
+	
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7765" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7765?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-01Jul09:https://redmine.ogf.org/dmsf_files/7765?download=" title="DAIS-telcon-minutes-01Jul09 version 1.0 download">DAIS-telcon-minutes-01Jul09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-01Jul09</div>
+			</td>
+			<td class="size">2.6 kB</td>
+			<td class="modified">
+				2009-07-02 07:06
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7765" title="DAIS-telcon-minutes-01Jul09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7765'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2657</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7778" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7778?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-04Jun09:https://redmine.ogf.org/dmsf_files/7778?download=" title="DAIS-telcon-minutes-04Jun09 version 1.0 download">DAIS-telcon-minutes-04Jun09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-04Jun09</div>
+			</td>
+			<td class="size">1.9 kB</td>
+			<td class="modified">
+				2009-06-04 07:43
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7778" title="DAIS-telcon-minutes-04Jun09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7778'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1915</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7788" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7788?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-04Sep09:https://redmine.ogf.org/dmsf_files/7788?download=" title="DAIS-telcon-minutes-04Sep09 version 1.0 download">DAIS-telcon-minutes-04Sep09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-04Sep09</div>
+			</td>
+			<td class="size">1.5 kB</td>
+			<td class="modified">
+				2009-09-04 06:53
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7788" title="DAIS-telcon-minutes-04Sep09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7788'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1522</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7787" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7787?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-05Oct09:https://redmine.ogf.org/dmsf_files/7787?download=" title="DAIS-telcon-minutes-05Oct09 version 1.0 download">DAIS-telcon-minutes-05Oct09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-05Oct09</div>
+			</td>
+			<td class="size">2.8 kB</td>
+			<td class="modified">
+				2009-10-05 04:01
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7787" title="DAIS-telcon-minutes-05Oct09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7787'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2826</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7785" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7785?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-07Aug09:https://redmine.ogf.org/dmsf_files/7785?download=" title="DAIS-telcon-minutes-07Aug09 version 1.0 download">DAIS-telcon-minutes-07Aug09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-07Aug09</div>
+			</td>
+			<td class="size">4.1 kB</td>
+			<td class="modified">
+				2009-08-07 05:35
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7785" title="DAIS-telcon-minutes-07Aug09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7785'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">4150</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7774" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7774?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-07May09:https://redmine.ogf.org/dmsf_files/7774?download=" title="DAIS-telcon-minutes-07May09 version 1.0 download">DAIS-telcon-minutes-07May09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-07May09</div>
+			</td>
+			<td class="size">2.5 kB</td>
+			<td class="modified">
+				2009-05-07 12:24
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7774" title="DAIS-telcon-minutes-07May09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7774'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2528</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7789" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7789?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-08Sep09:https://redmine.ogf.org/dmsf_files/7789?download=" title="DAIS-telcon-minutes-08Sep09 version 1.0 download">DAIS-telcon-minutes-08Sep09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-08Sep09</div>
+			</td>
+			<td class="size">1.6 kB</td>
+			<td class="modified">
+				2009-09-08 04:07
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7789" title="DAIS-telcon-minutes-08Sep09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7789'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1647</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7770" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7770?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-09Apr09:https://redmine.ogf.org/dmsf_files/7770?download=" title="DAIS-telcon-minutes-09Apr09 version 1.0 download">DAIS-telcon-minutes-09Apr09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-09Apr09</div>
+			</td>
+			<td class="size">2.5 kB</td>
+			<td class="modified">
+				2009-04-09 07:26
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7770" title="DAIS-telcon-minutes-09Apr09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7770'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2608</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7779" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7779?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-10Jun09:https://redmine.ogf.org/dmsf_files/7779?download=" title="DAIS-telcon-minutes-10Jun09 version 1.0 download">DAIS-telcon-minutes-10Jun09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-10Jun09</div>
+			</td>
+			<td class="size">902 Bytes</td>
+			<td class="modified">
+				2009-06-10 06:46
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7779" title="DAIS-telcon-minutes-10Jun09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7779'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">902</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7766" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7766?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-13Aug09:https://redmine.ogf.org/dmsf_files/7766?download=" title="DAIS-telcon-minutes-13Aug09 version 1.0 download">DAIS-telcon-minutes-13Aug09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-13Aug09</div>
+			</td>
+			<td class="size">1.4 kB</td>
+			<td class="modified">
+				2009-08-13 03:40
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7766" title="DAIS-telcon-minutes-13Aug09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7766'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1460</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7775" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7775?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-13May09:https://redmine.ogf.org/dmsf_files/7775?download=" title="DAIS-telcon-minutes-13May09 version 1.0 download">DAIS-telcon-minutes-13May09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-13May09</div>
+			</td>
+			<td class="size">1.7 kB</td>
+			<td class="modified">
+				2009-05-13 04:29
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7775" title="DAIS-telcon-minutes-13May09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7775'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1743</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7786" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7786?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-15Sep09:https://redmine.ogf.org/dmsf_files/7786?download=" title="DAIS-telcon-minutes-15Sep09 version 1.0 download">DAIS-telcon-minutes-15Sep09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-15Sep09</div>
+			</td>
+			<td class="size">1.4 kB</td>
+			<td class="modified">
+				2009-09-15 04:35
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7786" title="DAIS-telcon-minutes-15Sep09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7786'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1383</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7771" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7771?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-16Apr09:https://redmine.ogf.org/dmsf_files/7771?download=" title="DAIS-telcon-minutes-16Apr09 version 1.0 download">DAIS-telcon-minutes-16Apr09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-16Apr09</div>
+			</td>
+			<td class="size">3 kB</td>
+			<td class="modified">
+				2009-04-16 05:53
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7771" title="DAIS-telcon-minutes-16Apr09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7771'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">3113</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7782" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7782?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-16Jul09:https://redmine.ogf.org/dmsf_files/7782?download=" title="DAIS-telcon-minutes-16Jul09 version 1.0 download">DAIS-telcon-minutes-16Jul09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-16Jul09</div>
+			</td>
+			<td class="size">2.5 kB</td>
+			<td class="modified">
+				2009-07-16 10:49
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7782" title="DAIS-telcon-minutes-16Jul09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7782'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2538</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7767" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7767?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-18Aug09:https://redmine.ogf.org/dmsf_files/7767?download=" title="DAIS-telcon-minutes-18Aug09 version 1.0 download">DAIS-telcon-minutes-18Aug09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-18Aug09</div>
+			</td>
+			<td class="size">1.7 kB</td>
+			<td class="modified">
+				2009-08-18 04:36
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7767" title="DAIS-telcon-minutes-18Aug09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7767'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1765</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7780" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7780?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-18Jun09:https://redmine.ogf.org/dmsf_files/7780?download=" title="DAIS-telcon-minutes-18Jun09 version 1.0 download">DAIS-telcon-minutes-18Jun09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-18Jun09</div>
+			</td>
+			<td class="size">2.2 kB</td>
+			<td class="modified">
+				2009-06-18 03:56
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7780" title="DAIS-telcon-minutes-18Jun09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7780'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2298</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7776" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7776?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-21May09:https://redmine.ogf.org/dmsf_files/7776?download=" title="DAIS-telcon-minutes-21May09 version 1.0 download">DAIS-telcon-minutes-21May09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-21May09</div>
+			</td>
+			<td class="size">2.1 kB</td>
+			<td class="modified">
+				2009-05-21 03:47
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7776" title="DAIS-telcon-minutes-21May09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7776'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2128</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7772" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7772?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-23Apr09:https://redmine.ogf.org/dmsf_files/7772?download=" title="DAIS-telcon-minutes-23Apr09 version 1.0 download">DAIS-telcon-minutes-23Apr09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-23Apr09</div>
+			</td>
+			<td class="size">2.5 kB</td>
+			<td class="modified">
+				2009-04-23 12:03
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7772" title="DAIS-telcon-minutes-23Apr09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7772'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2533</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7768" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7768?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-23Mar09:https://redmine.ogf.org/dmsf_files/7768?download=" title="DAIS-telcon-minutes-23Mar09 version 1.0 download">DAIS-telcon-minutes-23Mar09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-23Mar09</div>
+			</td>
+			<td class="size">968 Bytes</td>
+			<td class="modified">
+				2009-03-24 05:25
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7768" title="DAIS-telcon-minutes-23Mar09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7768'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">968</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7784" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7784?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-24Jul09:https://redmine.ogf.org/dmsf_files/7784?download=" title="DAIS-telcon-minutes-24Jul09 version 1.0 download">DAIS-telcon-minutes-24Jul09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-24Jul09</div>
+			</td>
+			<td class="size">2.1 kB</td>
+			<td class="modified">
+				2009-07-24 04:46
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7784" title="DAIS-telcon-minutes-24Jul09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7784'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2120</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7781" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7781?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-24Jun09:https://redmine.ogf.org/dmsf_files/7781?download=" title="DAIS-telcon-minutes-24Jun09 version 1.0 download">DAIS-telcon-minutes-24Jun09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-24Jun09</div>
+			</td>
+			<td class="size">1.2 kB</td>
+			<td class="modified">
+				2009-06-24 05:26
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7781" title="DAIS-telcon-minutes-24Jun09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7781'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1229</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7790" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7790?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-25Sep09:https://redmine.ogf.org/dmsf_files/7790?download=" title="DAIS-telcon-minutes-25Sep09 version 1.0 download">DAIS-telcon-minutes-25Sep09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-25Sep09</div>
+			</td>
+			<td class="size">2.4 kB</td>
+			<td class="modified">
+				2009-09-25 04:15
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7790" title="DAIS-telcon-minutes-25Sep09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7790'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2416</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7773" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7773?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-27Apr09:https://redmine.ogf.org/dmsf_files/7773?download=" title="DAIS-telcon-minutes-27Apr09 version 1.0 download">DAIS-telcon-minutes-27Apr09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-27Apr09</div>
+			</td>
+			<td class="size">4 kB</td>
+			<td class="modified">
+				2009-04-27 05:11
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7773" title="DAIS-telcon-minutes-27Apr09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7773'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">4072</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7783" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7783?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-27Jul09:https://redmine.ogf.org/dmsf_files/7783?download=" title="DAIS-telcon-minutes-27Jul09 version 1.0 download">DAIS-telcon-minutes-27Jul09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-27Jul09</div>
+			</td>
+			<td class="size">1.2 kB</td>
+			<td class="modified">
+				2009-07-27 03:52
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7783" title="DAIS-telcon-minutes-27Jul09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7783'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1203</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7777" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7777?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-27May09:https://redmine.ogf.org/dmsf_files/7777?download=" title="DAIS-telcon-minutes-27May09 version 1.0 download">DAIS-telcon-minutes-27May09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-27May09</div>
+			</td>
+			<td class="size">2.8 kB</td>
+			<td class="modified">
+				2009-05-27 04:42
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7777" title="DAIS-telcon-minutes-27May09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7777'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2898</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="7769" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/7769?download=" class="icon icon-file " data-downloadurl="text/plain:DAIS-telcon-minutes-31Mar09:https://redmine.ogf.org/dmsf_files/7769?download=" title="DAIS-telcon-minutes-31Mar09 version 1.0 download">DAIS-telcon-minutes-31Mar09</a>
+				<div class="filename" title="Filename used for download or in Zip archive">DAIS-telcon-minutes-31Mar09</div>
+			</td>
+			<td class="size">4.5 kB</td>
+			<td class="modified">
+				2009-04-03 04:16
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/7769" title="DAIS-telcon-minutes-31Mar09 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/7769'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">4560</td>
+		</tr>
+	
+	</tbody>
+	</table>
+	<br />
+</form>
+
+<script type="text/javascript">
+	jQuery("#entries_delete_button").click(function(event) {
+		if(window.confirm("Do you really want to delete checked entries?")) {
+			jQuery("#entries_form").attr("action", "/dmsf/delete_entries/dais-wg?folder_id=5378");
+			jQuery("#entries_form").submit();
+		}
+	})
+	
+	jQuery("#check_all_entries").click(function(event) {
+		var $this = jQuery(this);
+		if($this.prop("checked")) {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", true);
+		} else {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", false);
+		}
+	})			
+</script>
+
+
+
+
+
+
+<br />
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/dmsf/dais-wg?folder_id=5378 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:41:14 GMT -->
+</html>

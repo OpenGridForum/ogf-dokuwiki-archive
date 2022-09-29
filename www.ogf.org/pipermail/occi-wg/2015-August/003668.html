@@ -1,0 +1,399 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2015-August/003668.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Sep 2022 21:16:08 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Typed Link Kind
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=Re%3A%20%5Bocci-wg%5D%20Typed%20Link%20Kind&In-Reply-To=%3C1438603131.3876.58.camel%40free.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2015-August/003667.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2015-August/003669.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Typed Link Kind</H1>
+    <B>Jean Parpaillon</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=Re%3A%20%5Bocci-wg%5D%20Typed%20Link%20Kind&In-Reply-To=%3C1438603131.3876.58.camel%40free.fr%3E"
+       TITLE="[occi-wg] Typed Link Kind">jean.parpaillon at free.fr
+       </A><BR>
+    <I>Mon Aug  3 07:58:51 EDT 2015</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2015-August/003667.html">[occi-wg] Typed Link Kind
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2015-August/003669.html">[occi-wg] Typed Link Kind
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2015-August/date.html#3668">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2015-August/thread.html#3668">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2015-August/subject.html#3668">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2015-August/author.html#3668">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Boris,
+
+Le lundi 03 ao&#251;t 2015 &#224; 13:24 +0200, Boris Parak a &#233;crit :
+&gt;<i> Hi Jean,
+</I>&gt;<i> 
+</I>&gt;<i> that's a very good point. Thanks! I will explore erocci a little bit 
+</I>&gt;<i> :-)
+</I>&gt;<i> 
+</I>&gt;<i> However, there is one problem we did not discuss yet (AFAIK). I've
+</I>&gt;<i> seen the unfinished DRMAA&lt;-&gt;OCCI document and Peter is using complex
+</I>&gt;<i> instance attributes, such as:
+</I>&gt;<i> 
+</I>&gt;<i> &lt; X-OCCI-Attribute: occi.drmaa2.drmsName=&quot;Platform LSF&quot;
+</I>&gt;<i> &lt; X-OCCI-Attribute: occi.drmaa2.drmsVersion={&quot;major&quot;:&quot;42&quot;, 
+</I>&gt;<i> &quot;minor&quot;:&quot;0&quot;}
+</I>&gt;<i> &lt; X-OCCI-Attribute: occi.drmaa2.drmaaName=&quot;Thijs&#8217;s OCCI-DRMAA 
+</I>&gt;<i> backend&quot;
+</I>&gt;<i> &lt; X-OCCI-Attribute: occi.drmaa2.drmaaVersion={&quot;major&quot;:&quot;2&quot;, 
+</I>&gt;<i> &quot;minor&quot;:&quot;17&quot;}
+</I>&gt;<i> 
+</I>&gt;<i> or
+</I>&gt;<i> 
+</I>&gt;<i> &gt; X-OCCI-Attribute: occi.drmaa2.remoteCommand=&quot;/bin/date&quot;
+</I>&gt;<i> &gt; X-OCCI-Attribute: occi.drmaa2.machineOS=&quot;LINUX&quot;
+</I>&gt;<i> &gt; X-OCCI-Attribute: occi.drmaa2.email=[&quot;<A HREF="https://www.ogf.org/mailman/listinfo/occi-wg">peter at troeger.eu</A>&quot;,&quot;
+</I>&gt;<i> &gt; <A HREF="https://www.ogf.org/mailman/listinfo/occi-wg">tmetsch at platform.com</A>&quot;]
+</I>&gt;<i> &gt; X-OCCI-Attribute: occi.drmaa2.emailOnTerminated=true
+</I>&gt;<i> 
+</I>&gt;<i> As far as I know, this is not something we explored in the main OCCI
+</I>&gt;<i> specification and we need to address it for OCCI 1.2. The Core
+</I>&gt;<i> document is talking about possible attribute types Object, Array, 
+</I>&gt;<i> Hash
+</I>&gt;<i> ... but the rendering documents (Text or JSON) do not specify how to
+</I>&gt;<i> render/parse these without ambiguity. Especially in JSON, as you
+</I>&gt;<i> pointed out, complex instance attribute values cannot be parsed
+</I>&gt;<i> without the accompanying attribute definitions ... and even with 
+</I>&gt;<i> that,
+</I>&gt;<i> there is still some ambiguity there due to the unknown structure of
+</I>&gt;<i> the particular instance attribute value.
+</I>&gt;<i> 
+</I>&gt;<i> Let's say we have two instance attributes with Hash values:
+</I>&gt;<i> 
+</I>&gt;<i> occi.test.case.attr1 = { &quot;subattr1&quot;: { &quot;value1&quot;: &quot;something_here&quot; } }
+</I>&gt;<i> 
+</I>&gt;<i> occi.test.case.attr1.subattr1 = { &quot;value1&quot; : 
+</I>&gt;<i> &quot;something_different_here&quot; }
+</I>&gt;<i> 
+</I>&gt;<i> Once rendered into JSON, these two are indistinguishable despite the
+</I>&gt;<i> fact that they are technically two different attributes with two
+</I>&gt;<i> different values. This is a major problem, especially with the
+</I>&gt;<i> intended degree of extensibility of OCCI.
+</I>&gt;<i> 
+</I>&gt;<i> Therefore I propose to modify the JSON rendering specification and 
+</I>&gt;<i> use
+</I>&gt;<i> the attribute name as an identifier without any internal structure,
+</I>&gt;<i> i.e. no splitting on '.'.
+</I>&gt;<i> 
+</I>&gt;<i> Am I completely wrong here? Does anyone else think this is a problem?
+</I>
+&gt;<i>From to the discussion in January 2014 (still), we agreed this was not
+</I>an issue until attribute values are all scalar (string, number,
+boolean).
+Some thoughts: 
+1/ DRMAA spec is incorrect wrt actuel OCCI specifications
+2/ do we want to allow complex attribute value types:
+   Yes -&gt; requires to explicit these types: dictionaries ? list ?
+tuples ? etc. ? and update all renderings in consequence
+   No -&gt; DRMAA spec remains incorrect, but how many future spec will be
+more complex because of that restriction...
+
+IMHO: whatever we decide to allow complex attributes in a future Core
+spec, JSON rendering should not be a limitation for that.
+
+-&gt; I support your modification to JSON rendering.
+
+
+&gt;<i> 
+</I>&gt;<i> Thanks!
+</I>&gt;<i> 
+</I>&gt;<i> Cheers, Boris
+</I>
+Jean
+
+&gt;<i> 
+</I>&gt;<i> On Mon, Aug 3, 2015 at 12:46 PM, Jean Parpaillon
+</I>&gt;<i> &lt;<A HREF="https://www.ogf.org/mailman/listinfo/occi-wg">jean.parpaillon at free.fr</A>&gt; wrote:
+</I>&gt;<i> &gt; Hi Boris,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Le vendredi 31 juillet 2015 &#224; 23:08 +0200, Boris Parak a &#233;crit :
+</I>&gt;<i> &gt; &gt; On Fri, Jul 31, 2015 at 5:01 PM, Jean Parpaillon
+</I>&gt;<i> &gt; &gt; &lt;<A HREF="https://www.ogf.org/mailman/listinfo/occi-wg">jean.parpaillon at free.fr</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt; &gt; Hi Boris,
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Le vendredi 31 juillet 2015 &#224; 11:48 +0200, Boris Parak a &#233;crit 
+</I>&gt;<i> &gt; &gt; &gt; :
+</I>&gt;<i> &gt; &gt; &gt; &gt; Hi Jean,
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; On Fri, Jul 31, 2015 at 10:49 AM, Jean Parpaillon
+</I>&gt;<i> &gt; &gt; &gt; &gt; &lt;<A HREF="https://www.ogf.org/mailman/listinfo/occi-wg">jean.parpaillon at free.fr</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; Hi all,
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; With Olivier Barais, in CC, with which I am working on the
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; OCCIware
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; project, we would like to enhance the core specification 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; with a
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; way
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; to
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; constrain the Category of resources pointed out by
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; occi.core.src
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; and
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; occi.core.target attributes of a link.
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; For instance, in the infrastructure extension, while it is
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; specified
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; (and easily make sense) a NetworkInterface link must be 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; linked
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; to a
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; compute and a network instance, there is no formal way to
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; define
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; this
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; constraint.
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; A proposal would be to add new type of Category, sub-type 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; of
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; Kind,
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; with
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; following attributes:
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; - parent: instantiated as 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; <A HREF="http://schemas.ogf.org/occi/core#link">http://schemas.ogf.org/occi/core#link</A>
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; - occi.core.src.type: additional attribute, type category 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; id
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; - occi.core.target.type: additional attribute, type 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; category id
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; The name of this type of Category could be &quot;TypedLinkKind&quot;.
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; What do you think of this ?
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; at first glance, it looks like a reasonable request ... it 
+</I>&gt;<i> &gt; &gt; &gt; &gt; would
+</I>&gt;<i> &gt; &gt; &gt; &gt; definitely improve automated validation and modeling in OCCI.
+</I>&gt;<i> &gt; &gt; &gt; &gt; Especially with previously unknown extensions.
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; 'occi.core.target' will be a bit problematic, because it can
+</I>&gt;<i> &gt; &gt; &gt; &gt; point
+</I>&gt;<i> &gt; &gt; &gt; &gt; &quot;outside&quot; the local domain. But we could easily cover that by
+</I>&gt;<i> &gt; &gt; &gt; &gt; making
+</I>&gt;<i> &gt; &gt; &gt; &gt; these attributes optional.
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; So, I would consider dropping the TypedLinkKind and include 
+</I>&gt;<i> &gt; &gt; &gt; &gt; these
+</I>&gt;<i> &gt; &gt; &gt; &gt; two
+</I>&gt;<i> &gt; &gt; &gt; &gt; attributes in the existing Link kind, as optional. That way 
+</I>&gt;<i> &gt; &gt; &gt; &gt; we
+</I>&gt;<i> &gt; &gt; &gt; &gt; get a
+</I>&gt;<i> &gt; &gt; &gt; &gt; typed link, partially typed link and &quot;legacy&quot; link all-in
+</I>&gt;<i> &gt; &gt; &gt; &gt; -one.
+</I>&gt;<i> &gt; &gt; &gt; &gt; While
+</I>&gt;<i> &gt; &gt; &gt; &gt; keeping it all backwards compatible. If the type attribute is
+</I>&gt;<i> &gt; &gt; &gt; &gt; present,
+</I>&gt;<i> &gt; &gt; &gt; &gt; you can use it, if not ... well ... you are out of luck :-)
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; As a side note, I would very much like to avoid introducing
+</I>&gt;<i> &gt; &gt; &gt; &gt; attribute
+</I>&gt;<i> &gt; &gt; &gt; &gt; names with matching prefixes:
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; occi.core.target = &quot;value&quot;
+</I>&gt;<i> &gt; &gt; &gt; &gt; occi.core.target.type = &quot;value&quot;
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; This makes JSON rendering really difficult. Would you be OK 
+</I>&gt;<i> &gt; &gt; &gt; &gt; with
+</I>&gt;<i> &gt; &gt; &gt; &gt; &quot;target_type&quot; &amp; &quot;source_type&quot;?
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; I would prefer the former one, but I can accept the second one.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I know ... 'target.type' makes more sense and is much prettier to
+</I>&gt;<i> &gt; &gt; look at.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; BTW, here is the algortihm I use for inserting any dot
+</I>&gt;<i> &gt; &gt; &gt; -separated
+</I>&gt;<i> &gt; &gt; &gt; attribute name into the JSON tree of attributes, would you be
+</I>&gt;<i> &gt; &gt; &gt; interested in implementing it into rocci:
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="https://github.com/erocci/erocci/blob/master/apps/erocci_core/s">https://github.com/erocci/erocci/blob/master/apps/erocci_core/s</A>
+</I>&gt;<i> &gt; &gt; &gt; rc/r
+</I>&gt;<i> &gt; &gt; &gt; ende
+</I>&gt;<i> &gt; &gt; &gt; ring/occi_renderer_json.erl#L194
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I have to admit that my basic understanding of functional 
+</I>&gt;<i> &gt; &gt; languages
+</I>&gt;<i> &gt; &gt; is
+</I>&gt;<i> &gt; &gt; a problem here :-)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; The occi_rendering_json.code file contains a &quot;pseudo-code&quot; version 
+</I>&gt;<i> &gt; of
+</I>&gt;<i> &gt; the algorithm, without pattern matching, which is maybe what's
+</I>&gt;<i> &gt; confusion there.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; How do you deal with complex attribute values? Let's say we have 
+</I>&gt;<i> &gt; &gt; an
+</I>&gt;<i> &gt; &gt; attribute
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; occi.test.target = { ... Hash Here ... } // hash has &quot;type&quot; =&gt;
+</I>&gt;<i> &gt; &gt; &quot;StringHere&quot; inside it
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; and an attribute
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; occi.test.target.type = &quot;StringHere&quot;
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; How would you distinguish between the value for key 'type' in the
+</I>&gt;<i> &gt; &gt; attribute value (Hash) of 'occi.test.target' and the attribute 
+</I>&gt;<i> &gt; &gt; value
+</I>&gt;<i> &gt; &gt; of 'occi.test.target.type'? How would these be rendered in JSON
+</I>&gt;<i> &gt; &gt; together?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I suppose it is related in some way to the discussion we've had in
+</I>&gt;<i> &gt; January 2014 ;)
+</I>&gt;<i> &gt; <A HREF="https://www.ogf.org/pipermail/occi-wg/2014-January/003438.html">https://www.ogf.org/pipermail/occi-wg/2014-January/003438.html</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; You will find in attachment an XML description of such complex
+</I>&gt;<i> &gt; attributes with the JSON output from erocci. Would you like to test
+</I>&gt;<i> &gt; other cases, you can use the erocci docker, as described here,
+</I>&gt;<i> &gt; replacing occi.xml with your own schema (like ext1.xml in 
+</I>&gt;<i> &gt; attachment):
+</I>&gt;<i> &gt; <A HREF="https://github.com/erocci/docker-erocci">https://github.com/erocci/docker-erocci</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Rendering the JSON is fine with the above algorithm. Parsing is
+</I>&gt;<i> &gt; unambiguous but parsing may be tough to implement:
+</I>&gt;<i> &gt; - when parsing the attribute definition, if &quot;type&quot; value is a 
+</I>&gt;<i> &gt; string,
+</I>&gt;<i> &gt; it is the type of the attribute, if &quot;type&quot; value is an object, it 
+</I>&gt;<i> &gt; is a
+</I>&gt;<i> &gt; component of the attribute name.
+</I>&gt;<i> &gt; - when parsing the attribute instance, &quot;type&quot; can be only an 
+</I>&gt;<i> &gt; attribute
+</I>&gt;<i> &gt; name component.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; At the end, implementation concerns may be a valid reason for
+</I>&gt;<i> &gt; forbidding some attribute names, but we must explicit it in the
+</I>&gt;<i> &gt; specification.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Could you give me the rendered JSON as an example?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; See attachment.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; Also, could you, please, include this as a comment here [1], 
+</I>&gt;<i> &gt; &gt; &gt; &gt; then
+</I>&gt;<i> &gt; &gt; &gt; &gt; we
+</I>&gt;<i> &gt; &gt; &gt; &gt; can discuss it as a part of public comment on OCCI 1.2 and
+</I>&gt;<i> &gt; &gt; &gt; &gt; possibly
+</I>&gt;<i> &gt; &gt; &gt; &gt; include it :-)
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Done, last minute before end of comments ;)
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; Thanks!
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; You're welcome.
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Jean
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Cheers, Boris
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Cheers,
+</I>&gt;<i> &gt; Jean
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; [1] <A HREF="https://redmine.ogf.org/boards/26/topics/429">https://redmine.ogf.org/boards/26/topics/429</A>
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; Regards,
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; --
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; Jean Parpaillon
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; --
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; Cheers, Boris
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; Open Source Consultant
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; OW2 Technology Council Chairman
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; Director @ OW2 Consortium
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; OCCIware Strategic Orientation Committee Chairman
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; Research Engineer @ Inria
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; --
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; Phone: +33 6 30 10 92 86
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; im: <A HREF="https://www.ogf.org/mailman/listinfo/occi-wg">jean.parpaillon at gmail.com</A>
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; skype: jean.parpaillon
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; linkedin: <A HREF="http://www.linkedin.com/in/jeanparpaillon/en">http://www.linkedin.com/in/jeanparpaillon/en</A>
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; occi-wg mailing list
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; <A HREF="https://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; <A HREF="https://www.ogf.org/mailman/listinfo/occi-wg">https://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i> &gt; &gt; &gt; --
+</I>&gt;<i> &gt; &gt; &gt; Jean Parpaillon
+</I>&gt;<i> &gt; &gt; &gt; --
+</I>&gt;<i> &gt; &gt; &gt; Open Source Consultant
+</I>&gt;<i> &gt; &gt; &gt; OW2 Technology Council Chairman
+</I>&gt;<i> &gt; &gt; &gt; Director @ OW2 Consortium
+</I>&gt;<i> &gt; &gt; &gt; OCCIware Strategic Orientation Committee Chairman
+</I>&gt;<i> &gt; &gt; &gt; Research Engineer @ Inria
+</I>&gt;<i> &gt; &gt; &gt; --
+</I>&gt;<i> &gt; &gt; &gt; Phone: +33 6 30 10 92 86
+</I>&gt;<i> &gt; &gt; &gt; im: <A HREF="https://www.ogf.org/mailman/listinfo/occi-wg">jean.parpaillon at gmail.com</A>
+</I>&gt;<i> &gt; &gt; &gt; skype: jean.parpaillon
+</I>&gt;<i> &gt; &gt; &gt; linkedin: <A HREF="http://www.linkedin.com/in/jeanparpaillon/en">http://www.linkedin.com/in/jeanparpaillon/en</A>
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; Jean Parpaillon
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; Open Source Consultant
+</I>&gt;<i> &gt; OW2 Technology Council Chairman
+</I>&gt;<i> &gt; Director @ OW2 Consortium
+</I>&gt;<i> &gt; OCCIware Strategic Orientation Committee Chairman
+</I>&gt;<i> &gt; Research Engineer @ Inria
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; Phone: +33 6 30 10 92 86
+</I>&gt;<i> &gt; im: <A HREF="https://www.ogf.org/mailman/listinfo/occi-wg">jean.parpaillon at gmail.com</A>
+</I>&gt;<i> &gt; skype: jean.parpaillon
+</I>&gt;<i> &gt; linkedin: <A HREF="http://www.linkedin.com/in/jeanparpaillon/en">http://www.linkedin.com/in/jeanparpaillon/en</A>
+</I>-- 
+Jean Parpaillon
+--
+Open Source Consultant
+OW2 Technology Council Chairman
+Director @ OW2 Consortium
+OCCIware Strategic Orientation Committee Chairman
+Research Engineer @ Inria
+--
+Phone: +33 6 30 10 92 86
+im: <A HREF="https://www.ogf.org/mailman/listinfo/occi-wg">jean.parpaillon at gmail.com</A>
+skype: jean.parpaillon
+linkedin: <A HREF="http://www.linkedin.com/in/jeanparpaillon/en">http://www.linkedin.com/in/jeanparpaillon/en</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2015-August/003667.html">[occi-wg] Typed Link Kind
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2015-August/003669.html">[occi-wg] Typed Link Kind
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2015-August/date.html#3668">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2015-August/thread.html#3668">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2015-August/subject.html#3668">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2015-August/author.html#3668">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2015-August/003668.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Sep 2022 21:16:08 GMT -->
+</html>

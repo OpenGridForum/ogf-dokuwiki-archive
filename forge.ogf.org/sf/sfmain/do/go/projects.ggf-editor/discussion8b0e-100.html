@@ -1,0 +1,1605 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- title -->
+
+
+<!-- bread crumb -->
+
+
+
+
+<!-- content -->
+
+
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<!-- Mirrored from forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_pagesize=45 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:39:52 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+  <title>SourceForge : Topic Summary</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  
+  <link rel="stylesheet" type="text/css" href="https://forge.ogf.org/css/styles_new.css" />
+  <link rel="shortcut icon" href="https://forge.ogf.org/sf-images/icons/favicon.ico" />
+  <script language="JavaScript" src="https://forge.ogf.org/sf/js/sf_functions.js" type="text/javascript"></script>
+  
+
+
+  <script type="text/javascript" src="https://forge.ogf.org/sf/include/calendar/calendar.js"></script>
+  <script type="text/javascript" src="https://forge.ogf.org/sf/include/calendar/lang/calendar-en.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://forge.ogf.org/sf/include/calendar/calendar-system.css"/>
+
+  <script language="JavaScript">
+  // calendar /////////////////////////////////////////////////////////////////
+  //
+  var calendar = null;
+
+  function calSelected(cal, date) {
+    cal.sel.value = date;
+
+    var updateFlexElements = document.getElementsByName('updateF' + cal.sel.name.substring(1));
+    if ((typeof updateFlexElements != "undefined") && (updateFlexElements.length > 0)) {
+	var elem = updateFlexElements[0];
+	if (elem.type == "checkbox") {
+	   elem.checked = true;
+	}
+    }
+    cal.callCloseHandler();
+  } // calSelected
+
+  function calCloseHandler(cal) {
+   cal.hide();
+  } // calCloseHandler
+
+  function calShow(id) {
+    var el = document.getElementById(id);
+    if (calendar != null) {
+      calendar.hide();		// hide the existing calendar
+      calendar.parseDate(el.value); // set it to a new date
+    } else {
+      var cal = new Calendar(false, null, calSelected, calCloseHandler);
+      var now = new Date();
+      calendar = cal;
+      calendar.setDateFormat('mm/dd/y');
+      calendar.setRange(now.getFullYear() - 10, now.getFullYear() + 10);
+      calendar.weekNumbers = false;
+      calendar.create();
+    }
+    calendar.sel = el;
+    calendar.showAtElement(el);
+    //calendar.addEvent(document, "mousedown", checkCalendar);
+    return false;
+  } // calShow
+  </script>
+  
+  
+  
+
+  
+
+
+
+
+
+
+
+<script type="text/javascript" language="JavaScript">
+function openWinForId() {
+
+    var checkboxes = document.forms['selectTopicsForm']['_listItem'];
+
+    var val;
+
+    if (checkboxes.length == null) {
+        if (checkboxes.checked) {
+            val = checkboxes.value;
+        }
+    } else {
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                val = checkboxes[i].value;
+                break;
+            }
+        }
+    }
+
+    NewWindow('/sf/sfmain/do/listMonitoringUsers/?id=' + val, 'monusers', 540, 425, 'no');
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="MonitorMenu_selectTopicsForm" class="menu">
+  <div id="selectTopicsForm_monitor"><a href="javascript:submitForm(document.selectTopicsForm, 'Monitor');" class="menuItem">Monitor Selected</a></div>
+  <div id="selectTopicsForm_unmonitor"><a href="javascript:submitForm(document.selectTopicsForm, 'UnMonitor');" class="menuItem">Stop Monitoring Selected</a></div>
+  <div id="selectTopicsForm_who"><a href="javascript:openWinForId();" class="menuItem">Users Monitoring Selected</a></div>
+  
+    <div class="menuItemSep"></div>
+    <a href="https://forge.ogf.org/sf/sfmain/do/monitor/projects.ggf-editor/discussion.info_conceptual_grid_auth?monitorReturnTo=http%3A%2F%2Flocalhost%3A8080%2Fsf%2Fsfmain%2Fdo%2Fgo%2Fprojects.ggf-editor%2Fdiscussion.info_conceptual_grid_auth%3F_pagesize%3D45" class="menuItem" id="monitor_current_folder">Monitor Current Folder</a>
+    <a href="javascript:NewWindow('/sf/sfmain/do/listMonitoringUsers/projects.ggf-editor/discussion.info_conceptual_grid_auth', 'monusers', 540, 425, 'no');" class="menuItem">Users Monitoring Folder</a>
+  
+</div>
+
+<script language="JavaScript">
+  setMenuEntryPreference('MonitorMenu_selectTopicsForm', 'selectTopicsForm_monitor', 'selectTopicsForm', 1, -1);
+  setMenuEntryPreference('MonitorMenu_selectTopicsForm', 'selectTopicsForm_unmonitor', 'selectTopicsForm', 1, -1);
+  setMenuEntryPreference('MonitorMenu_selectTopicsForm', 'selectTopicsForm_who', 'selectTopicsForm', 1, 1);
+</script>
+
+
+</head>
+
+  <body>
+
+
+<!-- SourceForge masthead begin -->
+
+
+<script type="text/javascript" src="https://forge.ogf.org/sf-help/RoboHelp_CSH.js"></script>
+<script type="text/javascript">
+                      var helpRoot = '/sf-help/en/index.htm>HelpWin';
+    
+    // show help for a topic
+    function showTopicHelp(topicId) {
+	// First, close the help menu
+	closeMenu(activeButton);
+	RH_ShowHelp(0, helpRoot, HH_HELP_CONTEXT, topicId);
+    }
+
+    // show help for a topic
+    function showTopicHelpDirectly(topicId) {
+	RH_ShowHelp(0, helpRoot, HH_HELP_CONTEXT, topicId);
+    }
+
+    // show the help table of contents
+    function showHelpContents() {
+	// First, close the help menu
+	closeMenu(activeButton);
+	RH_ShowHelp(0, helpRoot, HH_DISPLAY_TOC, 0);
+    }
+
+    // show the help index
+    function showHelpIndex() {
+	// First, close the help menu
+	closeMenu(activeButton);
+	RH_ShowHelp(0, helpRoot, HH_DISPLAY_INDEX, 0);
+    }
+
+    // show the help index (not from a menu)
+    function showHelpIndexFromLink() {
+	RH_ShowHelp(0, helpRoot, HH_DISPLAY_INDEX, 0);
+    }
+</script>
+
+<div id="ProjectMenu" class="menu">
+    <a class="menuItem" href="https://forge.ogf.org/sf/sfmain/do/myProjects?selectedTab=my">My Projects</a>
+    <a class="menuItem" href="https://forge.ogf.org/sf/sfmain/do/myProjects?selectedTab=all">All Projects</a>
+</div>
+
+<div id="SearchMenu" class="menu">
+  <a class="menuItem" href="https://forge.ogf.org/sf/search/do/quickJump" onClick="window.open('https://forge.ogf.org/sf/search/do/quickJump', 'quickjumpwindow', 'width=540,height=263'); closeMenu(activeButton); return false">Quick Jump</a>
+  <a class="menuItem" id="search" href="https://forge.ogf.org/sf/search/do/search">Search</a>
+</div>
+
+<div id="HelpMenu2" class="menu">
+<a class="menuItem" href="https://forge.ogf.org/sf/wiki/do/viewPage/projects.ggf-info/wiki/HomePage">GridForge  Help</a>
+
+    <a class="menuItem" href="javascript:showTopicHelp(146)">Help for this Page</a>
+<a class="menuItem" href="javascript:showHelpContents()">Help Contents</a>
+<a class="menuItem" href="javascript:showHelpIndex()">Help Index</a>
+<a class="menuItem" href="https://forge.ogf.org/sf-help/en/doc/User_Guide.pdf">User Guide</a>
+<div class="menuItemSep"></div>
+<a class="menuItem" href="https://forge.ogf.org/sf/global/do/about" onclick="javascript:closeMenu(activeButton); window.open('https://forge.ogf.org/sf/global/do/about','sfpabout','height=450,width=600'); return false;">About SourceForge</a>
+</div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="mastHeadBackground">
+ <tr>
+  <td>
+   <table width="300" border="0" cellpadding="0" cellspacing="0" class="mastHeadLink">
+     <tr class="mastHeadLinkSpacing">
+       <td nowrap="nowrap" valign="middle"><a href="https://forge.ogf.org/sf/sfmain/do/home" target="_top"><img src="https://forge.ogf.org/sf-images/masthead/logo-custom.gif" border="0" align="absmiddle"><img src="https://forge.ogf.org/ogf-it/gf_masthead.gif" border="0" align="absmiddle"></a></td>
+                    <td nowrap="nowrap" class="mastHeadLink"><a href="https://forge.ogf.org/sf/sfmain/do/home" target="_top">Home</a></td>
+       <td nowrap="nowrap" class="mastHeadLinkSpacing"> </td>
+                      <td nowrap="nowrap" class="mastHeadLink"><a href="https://forge.ogf.org/sf/sfmain/do/listProjects" target="_top">Projects</a></td>
+       <td nowrap="nowrap" class="mastHeadLinkSpacing"> </td>
+               <td nowrap="nowrap" class="mastHeadLink"><a href="#" onclick="return buttonClick(this, 'SearchMenu');">Search<img src="https://forge.ogf.org/sf-images/masthead/dropdown.gif" width="7" height="4" hspace="2" border="0"></a></td>
+     
+          
+     
+     </tr>
+   </table>
+  </td>
+  <td align="right">
+    <table border="0" cellspacing="0" cellpadding="0" class="mastHeadLink">
+      <tr class="mastHeadLink">
+                              <form action="https://forge.ogf.org/sf/sfmain/do/login" method="POST" id="globalLogin" name="login">
+<INPUT type="HIDDEN" name="sfsubmit">
+
+              <input type="hidden" name="returnToUrl" value="http://localhost:8080/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_pagesize=45"/>
+              <td nowrap="nowrap">User</td>
+              <td nowrap="nowrap"><input type="text" name="username" class="inputfield" size="8"/></td>
+              <td nowrap="nowrap">Password</td>
+              <td nowrap="nowrap"><input type="password" name="password" class="inputfield" size="8" onkeypress="javascript:submitLoginOnEnter(event)" /></td>
+              <td nowrap="nowrap"><a href="javascript:submitForm(document.getElementById('globalLogin'), 'submit');">Log In</a></td>
+            </form>
+            <td nowrap="nowrap"><img src="https://forge.ogf.org/sf-images/masthead/vertical_line.gif" width="1" height="19" hspace="4"></td>
+                    <td nowrap="nowrap"><a href="#" onclick="return buttonClick(this, 'HelpMenu2');">Help<img src="https://forge.ogf.org/sf-images/masthead/dropdown.gif" width="7" height="4" hspace="2" border="0"></a></a></td>
+              </tr>
+    </table>
+  </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="black"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" width="1" height="1"></td>
+  </tr>
+</table>
+
+<!-- SourceForge masthead end -->
+
+<!-- SourceForge buttonbar begin -->
+<table class="TopMenu">
+    <tr class="ButtonRow">
+        <td class="VerticalSeparatorNoBorder"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                   <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/projects/ggf-editor'; return false;"><a href="https://forge.ogf.org/sf/projects/ggf-editor" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-homeicon.gif" width="25" height="20" border="0"><br>Project&nbsp;Home</a></td>
+                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/tracker/do/listTrackers/projects.ggf-editor/tracker'; return false;"><a href="https://forge.ogf.org/sf/tracker/do/listTrackers/projects.ggf-editor/tracker" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-trackericon.gif" width="25" height="20" border="0"><br>Tracker</a></td>
+                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/docman/do/listDocuments/projects.ggf-editor/docman.root'; return false;"><a href="https://forge.ogf.org/sf/docman/do/listDocuments/projects.ggf-editor/docman.root" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-documentsicon.gif" width="25" height="20" border="0"><br>Documents</a></td>
+                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/taskmgr/do/viewSummary/projects.ggf-editor/taskmgr'; return false;"><a href="https://forge.ogf.org/sf/taskmgr/do/viewSummary/projects.ggf-editor/taskmgr" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-tasksicon.gif" width="25" height="20" border="0"><br>Tasks</a></td>
+                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/scm/do/listRepositories/projects.ggf-editor/scm'; return false;"><a href="https://forge.ogf.org/sf/scm/do/listRepositories/projects.ggf-editor/scm" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-scmicon.gif" width="25" height="20" border="0"><br>Source&nbsp;Code</a></td>
+                                    <td class="SelectedLeft"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" border="0" height="1" width="4"></td>
+           <td class="Button Selected" onclick="window.location = 'https://forge.ogf.org/sf/discussion/do/listForums/projects.ggf-editor/discussion'; return false;"><a href="https://forge.ogf.org/sf/discussion/do/listForums/projects.ggf-editor/discussion" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-forumsicon.gif" width="25" height="20" border="0"><br>Discussions</a></td>
+                 <td class="SelectedRight"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" border="0" height="1" width="4"></td>
+                 <td class="VerticalSeparatorNoBorder"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+
+                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/frs/do/viewSummary/projects.ggf-editor/frs'; return false;"><a href="https://forge.ogf.org/sf/frs/do/viewSummary/projects.ggf-editor/frs" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-releasesicon.gif" width="25" height="20" border="0"><br>File Releases</a></td>
+                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/wiki/do/viewPage/projects.ggf-editor/wiki/HomePage'; return false;"><a href="https://forge.ogf.org/sf/wiki/do/viewPage/projects.ggf-editor/wiki/HomePage" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-wikiicon.gif" width="25" height="20" border="0"><br>Wiki</a></td>
+                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/sfmain/do/projectAdmin/projects.ggf-editor'; return false;"><a href="https://forge.ogf.org/sf/sfmain/do/projectAdmin/projects.ggf-editor" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-projectadminicon.gif" width="25" height="20" border="0"><br>Project&nbsp;Admin</a></td>
+                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                           <td class="ButtonEnd"></td>
+             </tr>
+
+  <tr class="ShadowRow">
+        
+                  <td colspan="10"></td>
+            <td class="SelectedLeft"></td>
+      <td class="Selected"></td>
+      <td class="SelectedRight"></td>
+              <td colspan="8"></td>
+  </tr>
+  </table>
+
+<!-- SourceForge buttonbar end -->
+
+<!-- SourceForge content-area begin -->
+<div class="contentArea">
+
+<!-- SourceForge crumbs begin -->
+<div style="padding-bottom: 2px;"><span class="mainnavHeader"><strong class="ProjectProminent">Project: Editor</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://forge.ogf.org/sf/go/projects.ggf-editor/discussion">Discussion</a>&nbsp;&gt;&nbsp;<a href="https://forge.ogf.org/sf/go/projects.ggf-editor/discussion.info_conceptual_grid_auth">INFO: Conceptual Grid Auth</a>&nbsp;&gt;&nbsp;</span><strong>Topic Summary</strong></div>
+<!-- SourceForge crumbs end -->
+
+<!-- SourceForge messages begin -->
+
+
+
+
+
+
+
+<div style="padding-bottom: 2px; padding-top: 6px;">
+
+
+
+</div>
+<!-- SourceForge messages end -->
+
+<!-- SourceForge content begin -->
+<div style="padding-top: 10px; width: auto;">
+
+<!--Items per Page -->
+<div id="configureTableMenu" class="menu">
+<span class="menuHeader"><strong>Items per page</strong></span>
+<div class="menu3d">
+        <a id="ipp_15" class="menuItem" href="https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_pagesize=15"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;15</a>        <a id="ipp_25" class="menuItem" href="https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_pagesize=25"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;25</a>        <a id="ipp_35" class="menuItem" href="https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_pagesize=35"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;35</a>        <a id="ipp_45" class="menuItem" href="https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_pagesize=45"><img src="https://forge.ogf.org/sf-images/icons/check_11_by_11.gif" width="11" border="0" align="absmiddle">&nbsp;45</a>        <a id="ipp_55" class="menuItem" href="https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_pagesize=55"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;55</a>        <a id="ipp_75" class="menuItem" href="https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_pagesize=75"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;75</a>        <a id="ipp_100" class="menuItem" href="https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_pagesize=100"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;100</a>        <a id="ipp_9999" class="menuItem" href="https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_pagesize=9999"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;All</a></div>
+</div>
+
+
+
+
+
+
+
+<table class="Container">
+  <tr class="WidgetHeader">
+    <td>Topics</td>
+  </tr>
+  <tr>
+    <td class="ContainerBody">
+        
+        <table class="CategoryListTable">
+          <tr>
+            
+            <td class="CategoryListBody">
+              
+              <div class="ImageListParent">
+                <img src="https://forge.ogf.org/sf-images/icons/bullet.gif">
+                <a href="https://forge.ogf.org/sf/discussion/do/listForums/projects.ggf-editor">Forum Summary</a>
+              </div>
+
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_hpc_job_scheduling_use_case">INFO:HPC Job Scheduling Use Cases</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_distributed_computing_at_sc">INFO:Distributed Computing at Scale - overview of Grid &amp; OGF</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_saga_service_discovery_api">REC:SAGA Service Discovery API</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.exp_event_dissemination_for_sens">EXP:Event Dissemination for Sensor Network</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_jsdl_hpc_profile_extension_v">REC:JSDL HPC Profile Extension v 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_jsdl_spmd_extension_v_1_0">REC:JSDL SPMD Extension v 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_xacml_request_context_for_au">REC:XACML Request Context for Authorisation Decision</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_hpc_file_staging_profile">REC:HPC File Staging Profile v1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ogsa_dmi_functional_spec_1_0">REC:OGSA-DMI Functional Spec 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ogsa_basic_security_profile">REC:OGSA Basic Security Profile v2.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_policy_for_grid_and_escienc">INFO:Policy for Grid and eScience Education + Training</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogf22_data_workshop_report">INFO:OGF22 Data Workshop Report</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_glue_2_0_rendering">REC:GLUE 2.0 Rendering</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_glue_specification_v2_0">REC:GLUE Specification v2.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_authorisation_service_funct">INFO:Authorisation Service Functional Components</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogsa_data_architecture">INFO:OGSA Data Architecture</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.exp_drmaa_v1_0_condor_experience">EXP:DRMAA v1.0 - Condor Experience</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.exp_drmaa_v1_0_gridway_experienc">EXP:DRMAA v1.0 - GridWay Experience</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.exp_drmaa_v1_0_n1_grid_engine_ex">EXP:DRMAA v1.0 - N1 Grid Engine Experience</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.cp_nomcom_process_charter">CP:NOMCOM Process Charter</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ogsa_basic_execution_service">REC:OGSA Basic Execution Service v 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_firewall_issues_overview">INFO:Firewall Issues Overview</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_secure_communication_profile">REC:Secure Communication Profile 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_cddlm_wg_final_report">INFO:CDDLM-WG Final Report</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.cp_standardized_xml_namespaces_u">CP:Standardized XML Namespaces (Updated)</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_secure_addressing_profile_1">REC:Secure Addressing Profile 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.cp_ogf_document_process">CP:OGF Document Process</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_grid_optical_burst_switched">INFO:Grid Optical Burst Switched Networks</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogsa_glossary_v1_6">INFO:OGSA Glossary v1.6</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_srm_interface_spec_v2_2">REC:SRM Interface Spec v2.2</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_jsdl_1_0_errata">REC: JSDL Spec v1.0 Errata</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_gridrpc_api_interop_testing">INFO:GridRPC API Interop Testing</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_byteio_interop_testing">INFO:ByteIO Interop Testing</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.exp_hpcp_basic_profile_experienc">EXP:HPCP Basic Profile Experience 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_infod_base_specifications">REC:INFOD Base Specifications</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_info_data_modeling_in_ogsa">INFO:Info &amp; Data Modeling in OGSA Grids</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_hpc_basic_profile_v1_0">REC:HPC Basic Profile v1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_technical_strategy_document">INFO:Technical Strategy Document v1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_survey_ipv4_dependencies">INFO:Survey IPv4 Dependencies</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ws_dair_relational_1_0">REC:WS-DAIR Relational 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_persistent_archive_cap">INFO: Persistent Archive Cap.</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.cp_working_group_formation">CP: Working Group Formation</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogsa_glossary_v1_5">INFO:OGSA Glossary v1.5</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_authority_recognition">INFO:Authority Recognition</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ogsa_bsp_core">REC:OGSA BSP-Core</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_cddlm_smartfrog_based_lan">REC: CDDLM SmartFrog-Based Lan</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_operations_for_access">INFO:Operations for Access....</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_saml_for_ogsi_authz">REC:SAML for OGSI Authz</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.exp_gir_wg_reconfigurable_vo">EXP:GIR-WG Reconfigurable VO</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_certs_for_auto_clients">REC: Certs for Auto. Clients</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_rus_on_ws_i_profile_v1_0">REC:RUS on WS-I Profile v1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_analysis_top_n_events">INFO: Analysis &#034;Top N&#034; Events</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_cddlm_cdl_spec_v1_0">REC:CDDLM CDL Spec v1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.exp_saga_use_cases">EXP:SAGA Use Cases</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ws_agreement_spec">REC: WS-Agreement spec</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_cddlm_deployment_api">REC:CDDLM Deployment API</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_gsi_message_spec">INFO:GSI Message Spec</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_gridcpr_architecture_api">INFO:GridCPR Architecture, API</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_interop_testing_for_dais">INFO:Interop Testing for DAIS</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_usage_record_xml_fmt">REC: Usage Record - XML Fmt</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ogsa_wsrf_basicprofile_1_0">REC:OGSA WSRF BasicProfile 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_drmaa_api_spec_1_0">REC: DRMAA API Spec. 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_usage_record_format_recs">REC:Usage Record Format Recs</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.cp_standardized_xml_namespaces">CP:Standardized XML Namespaces</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_leveraging_infrastruture">INFO:Leveraging Infrastruture</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_networking_issues">INFO:Networking Issues</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.cp_copyright_ip_statements">CP: Copyright, IP statements..</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogsa_v1">INFO: OGSA v1</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ws_agreement_spec_1">REC: WS-Agreement Spec</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.admin_editor_feedback">ADMIN: Editor Feedback</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_optical_network_infra">INFO: Optical Network Infra...</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_grid_scheduling_use_cases">INFO:Grid Scheduling Use Cases</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_byteio_wsrf_profile_1_0">REC:ByteIO WSRF Profile 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ogsa_authorization_attrib">REC: OGSA Authorization Attrib</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_authorization_glossary">INFO: Authorization Glossary</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_a_gridrpc_model_and_api">REC:A GridRPC Model and API...</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ws_dai_core_spec_1_0">REC:WS-DAI Core Spec 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_peer_to_peer_requirements">INFO:Peer-To-Peer Requirements</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_saaar_reqs">INFO: SAAAR-Reqs</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_grid_app_programming">INFO:Grid App. &amp; Programming</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_graap_usage_senarios">INFO:GRAAP Usage Senarios</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.cp_grid_pma_model_charter">CP: Grid PMA Model Charter</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_gridftp_v2_protocol_des">REC:GridFTP v2 Protocol Des...</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_cddlm_foundation">INFO: CDDLM Foundation</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogsa_roadmap">INFO: OGSA Roadmap</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_acctg_int_natural_lang">REC: Acctg Int. Natural Lang.</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogsa_profile_def_v1_0">INFO:OGSA Profile Def. v1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_p2p_and_grids">INFO: P2P and Grids</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_gridcpr_use_cases">INFO:GridCPR Use Cases</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ip_version_spec_ipv6_wg">INFO: IP version Spec IPv6-WG</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ws_daix_xml_spec_v_1_0">REC:WS-DAIX XML Spec v 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogsa_v1_5">INFO:OGSA v1.5</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ogsa_bsp_secure_channel">REC:OGSA BSP-Secure Channel</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_cddlm_component_model_v1_0">REC:CDDLM Component Model v1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_saga_requirements">INFO:SAGA Requirements</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.exp_gss_api_extensions">EXP: GSS-API Extensions</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ggf16_shib_bof_report">INFO:GGF16 Shib BOF Report</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.exp_myproxy_protocol">EXP:MyProxy Protocol</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_jsim_specification">INFO: JSIM Specification</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_grid_economy_use_cases">INFO:Grid Economy Use Cases</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_grid_apps_workshop">INFO:Grid Apps Workshop</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_gfs_arch_design_workbook">INFO:GFS Arch Design Workbook</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_security_req_aces">INFO:Security Req... (ACEs)</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.cp_policy_mgmt_auth_model">CP: Policy Mgmt Auth Model</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_jsdl_spec_v1_0">REC:  JSDL Spec v1.0</a>
+                </div>
+              
+                
+                
+                  
+                
+
+                <div class="ImageListChildSelected">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_conceptual_grid_auth">INFO: Conceptual Grid Auth</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_pgm_workshop_proceedings">INFO: PGM-Workshop Proceedings</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogsa_glosary_of_terms">INFO: OGSA: Glosary of Terms</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_updt_user_development">INFO: UPDT User Development</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_survey_of_transport">INFO: Survey of Transport...</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_resource_mgmt_in_ogsa">INFO:Resource Mgmt in OGSA</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_acs_specification_1_0">REC:ACS Specification 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogsi_authorization_reqs">INFO:OGSI Authorization Reqs</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogsa_tier_1_use_cases">INFO: OGSA Tier 1 Use Cases</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_byteio_specification_1_0">REC:ByteIO Specification 1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ws_naming_specification">REC:WS-Naming Specification</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_grid_network_service_use_ca">INFO:Grid Network Service Use Cases</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.exp_ogsa_rss_specification">EXP:OGSA RSS Specification</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_drmaa_1_0_idl_specification">REC:DRMAA 1.0 IDL Specification</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_2nd_campus_community_grids">INFO:2nd Campus Community Grids Workshop</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.exp_drmaa_v_1_0_pbs_torque_exper">EXP:DRMAA v 1.0 - PBS/Torque Experience</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_drmaa_api_spec_1_0_full_rec">REC:DRMAA API Spec 1.0 Full Rec</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_bes_model_in_ogsa_grids">INFO:BES Model in OGSA Grids</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_guidelines_for_ogsa_info_mo">INFO:Guidelines for OGSA Info Modeling</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.cp_grid_certificate_profile">CP:Grid Certificate Profile</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogsa_roadmap_v_1_1">INFO:OGSA Roadmap v 1.1</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_ws_agreement_spec_0">REC:WS-Agreement Spec</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_ogsa_ems_architecture_scena">INFO:OGSA EMS Architecture Scenarios v1.0</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_resource_namespace_service_s">REC:Resource Namespace Service Spec</a>
+                </div>
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="https://forge.ogf.org/sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.ggf-editor/discussion.rec_saga_spec">REC:SAGA Spec</a>
+                </div>
+              
+            </td>
+            
+
+            
+            <td class="ContainerBodyWithPaddedBorder" width="90%" >
+              <table class="ItemDetailContainer">
+                <tr class="ContainerHeader" >
+                  <td colspan="2">
+                    INFO: Conceptual Grid Auth - Topic Summary
+                  </td>
+                </tr>
+		      
+                <tr>
+                  <td class="ItemDetailContainerCell" width="50%">
+                    <table class="ItemDetailTable">
+                      <tr>
+                        <td class="ItemDetailName">Name:</td>
+                        <td class="ItemDetailValue">INFO: Conceptual Grid Auth</td>
+                      </tr>
+                      <tr>
+                        <td class="ItemDetailName">Description:</td>
+                        <td class="ItemDetailValue">Conceptual Grid Authorization Framework and Classification</td>
+                      </tr>
+		      
+                    </table>
+                  </td>
+                  <td class="ItemDetailContainerCell" width="50%">
+                    <table class="ItemDetailTable">
+                      <tr>
+                        <td class="ItemDetailName">Participants:</td>
+                        <td class="ItemDetailValue">6</td>
+                      </tr>
+                      <tr>
+                        <td class="ItemDetailName">Topics:</td>
+                        <td class="ItemDetailValue">2</td>
+                      </tr>
+                      <tr>
+                        <td class="ItemDetailName">Posts:</td>
+                        <td class="ItemDetailValue">47</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr class="ContainerFooter">
+                <td colspan="2">
+                  <div class="AlignRight">
+                    <div class="ButtonSpace"></div>
+                    
+                  </div>
+                </td>
+              </tr>
+              </table>
+              
+
+              <br>
+
+              
+              <form action="https://forge.ogf.org/sf/discussion/do/selectTopics/projects.ggf-editor/discussion.info_conceptual_grid_auth" name="selectTopicsForm" method="POST">
+<INPUT type="HIDDEN" name="sfsubmit" />
+<INPUT type="HIDDEN" name="_submitterURL" value="http://localhost:8080/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_pagesize=45" />
+              <table class="ItemListTable" id="TopicListTable">
+                <thead><tr class="ContainerHeader"><td colspan="9"><a href="#" onclick="return buttonClick(this, 'configureTableMenu');"><img border="0" width="16" height="16" src="https://forge.ogf.org/sf-images/icons/configure_table.gif" /></a><a href="javascript:collapseRow()"><img border="0" src="https://forge.ogf.org/sf-images/misc/filter_plus.gif" id="filtericon" /></a>
+                  
+
+
+
+
+
+                  Topics<span class="ItemCount">&nbsp;(1 Item)</span>
+                </td></tr></thead>
+
+                <tr class="ItemListHeader" >
+                  <td width="2%"><INPUT type="CHECKBOX" onClick="toggleSelectItems(this, 'selectTopicsForm', '_listItem');"  name="_listCheckAll" /></td>
+                  <td width="30%"><a id='_sort_topicList_title' href='https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_sortby=topicList%28title%29&amp;_sorder=topicList%28asc%29'><img src='https://forge.ogf.org/sf-images/icons/sort_up_down.gif'  width='8' height='9' hspace='2' border='0'></a>Topic Name</td>
+                  <td width="12%"><a id='_sort_topicList_postCount' href='https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_sortby=topicList%28postCount%29&amp;_sorder=topicList%28desc%29'><img src='https://forge.ogf.org/sf-images/icons/sort_down.gif'  width='8' height='9' hspace='2' border='0'></a>Posts</td>
+                  <td width="10%"><a id='_sort_topicList_viewCount' href='https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_sortby=topicList%28viewCount%29&amp;_sorder=topicList%28asc%29'><img src='https://forge.ogf.org/sf-images/icons/sort_up_down.gif'  width='8' height='9' hspace='2' border='0'></a>Views</td>
+                  <td width="8%"><a id='_sort_topicList_createdByFullName' href='https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_sortby=topicList%28createdByFullName%29&amp;_sorder=topicList%28asc%29'><img src='https://forge.ogf.org/sf-images/icons/sort_up_down.gif'  width='8' height='9' hspace='2' border='0'></a>Created By</td>
+                  <td width="17%"><a id='_sort_topicList_createdDate' href='https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_sortby=topicList%28createdDate%29&amp;_sorder=topicList%28asc%29'><img src='https://forge.ogf.org/sf-images/icons/sort_up_down.gif'  width='8' height='9' hspace='2' border='0'></a>Created On</td>
+                  <td width="8%"><a id='_sort_topicList_lastPostByFullName' href='https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_sortby=topicList%28lastPostByFullName%29&amp;_sorder=topicList%28asc%29'><img src='https://forge.ogf.org/sf-images/icons/sort_up_down.gif'  width='8' height='9' hspace='2' border='0'></a>Last Post By</td>
+                  <td width="8%"><a id='_sort_topicList_lastPostDate' href='https://forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_sortby=topicList%28lastPostDate%29&amp;_sorder=topicList%28asc%29'><img src='https://forge.ogf.org/sf-images/icons/sort_up_down.gif'  width='8' height='9' hspace='2' border='0'></a>Last Post On</td>
+                  <td>&nbsp;</td>
+                </tr>
+
+                <tr id="filter" class="OddRow" style="display: none">
+                  <td><strong>Filter:</strong></td>
+                  <td><input type="text" id="_filter!!contains!!title" name="_filter!!contains!!title" value="" class="InputField" /></td>
+                  <td></td>
+                  <td></td>
+                  <td><input type="text" id="_filter!!contains!!createdByFullName" name="_filter!!contains!!createdByFullName" value="" class="InputField" /></td>
+                  <td><input type="text" id="_filter!!date!!createdDate" name="_filter!!date!!createdDate" value="" class="InputField" /><img src="https://forge.ogf.org/sf-images/icons/date_popup.gif" align="absmiddle" width="16" height="16" onclick="return calShow('_filter!!date!!createdDate');" /></td>
+                  <td><select id="_filter!!string!!lastPostByFullName" name="_filter!!string!!lastPostByFullName" class="InputField"><option selected="true" value="">Any</option><option value="Alan Sill">Alan Sill</option><option value="Andre Merzky">Andre Merzky</option><option value="Andrew Grimshaw">Andrew Grimshaw</option><option value="Chris Smith">Chris Smith</option><option value="Craig Lee">Craig Lee</option><option value="Daniel S. Katz">Daniel S. Katz</option><option value="David E Martin">David E Martin</option><option value="David Snelling">David Snelling</option><option value="David Wallom">David Wallom</option><option value="Dennis Gannon">Dennis Gannon</option><option value="Dieter Kranzlmueller">Dieter Kranzlmueller</option><option value="Erwin Laure">Erwin Laure</option><option value="Franco Travostino">Franco Travostino</option><option value="Greg Newby">Greg Newby</option><option value="Hiro Kishimoto">Hiro Kishimoto</option><option value="Jens Jensen">Jens Jensen</option><option value="Joel Replogle">Joel Replogle</option><option value="Ramin Yahyapour">Ramin Yahyapour</option><option value="Richard Hughes-Jones">Richard Hughes-Jones</option><option value="Stacey Giannese(disabled)">Stacey Giannese(disabled)</option><option value="Steven Newhouse">Steven Newhouse</option><option value="Thilo Kielmann">Thilo Kielmann</option><option value="Wolfgang Ziegler">Wolfgang Ziegler</option></select></td>
+                  <td><input type="text" id="_filter!!date!!lastPostDate" name="_filter!!date!!lastPostDate" value="" class="InputField" /><img src="https://forge.ogf.org/sf-images/icons/date_popup.gif" align="absmiddle" width="16" height="16" onclick="return calShow('_filter!!date!!lastPostDate');" /></td>
+                  <td>&nbsp;</td>
+                </tr>
+
+                  
+                  
+                  <tr class="OddRow">
+                    <td><INPUT type="CHECKBOX" onClick="toggleButtons(this);" value="topc3197"  name="_listItem" /></td>
+                    <td >topc3197:&nbsp;<a href="https://forge.ogf.org/sf/discussion/do/listPosts/projects.ggf-editor/discussion.info_conceptual_grid_auth.welcome_to_info_conceptual_grid">Welcome to INFO: Conceptual Grid Auth</a></td>
+                    <td >1</td>
+                    <td >1523</td>
+                    <td><a href="https://forge.ogf.org/sf/global/do/viewUser/bruno">Stacey Giannese(disabled)</a></td>
+                    <td>06/29/2004 9:52 AM</td>
+                    <td><a href="https://forge.ogf.org/sf/global/do/viewUser/bruno">Stacey Giannese(disabled)</a></td>
+                    <td>06/29/2004 9:52 AM</td>
+                    <td>
+                      
+                        
+                        
+                          &nbsp;
+                        
+                      
+                    </td>
+                  </tr>
+                  
+                
+                
+
+              <tr class="ContainerFooter">
+                <td colspan="9">
+                  <div class="AlignLeft">
+                    
+                  </div>
+                  <div class="AlignRight">
+                    <div class="Button" id="removefilter" style="display: none"><div class="Left">&nbsp;</div><div class="Middle"><a href="javascript:setFormAction('selectTopicsForm', '/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_conceptual_grid_auth') && submitForm(document.selectTopicsForm, '_filterRemove');">Remove Filter</a></div><div class="Right">&nbsp;</div></div>
+<div class="ButtonSpace"></div><div class="Button" id="applyfilter" style="display: none"><div class="Left">&nbsp;</div><div class="Middle"><a href="javascript:setFormAction('selectTopicsForm', '/sf/discussion/do/listTopics/projects.ggf-editor/discussion.info_conceptual_grid_auth') && submitForm(document.selectTopicsForm, '_filterApply');">Apply Filter</a></div><div class="Right">&nbsp;</div></div>
+<div class="ButtonSpaceSeparator" id="divider" style="display: none"><img src="https://forge.ogf.org/sf-images/misc/button_divider.gif" height="20" width="2"></div>
+                    
+                    <div class="ButtonSpace"></div>
+                    
+                    <div class="ButtonSpace"></div>
+                    
+                  </div>
+                </td>
+              </tr>
+
+              </table>
+              </form>
+              
+
+            </td>
+          </tr>
+        </table>
+        
+    </td>
+  </tr>
+</table>
+
+</div>
+<!-- SourceForge content end -->
+
+</div>
+<!-- SourceForge content-area end -->
+
+<div id="PageLoaded" style="display: none;"></div>
+
+
+<!-- forge.gridforum.org footer.html -->
+<br> <hr>
+<table width='100%'> 
+ <tr>
+  <td align='left'>   <a href='http://www.ogf.org/' target='_blank' style='border: 0 px;'><img src='https://forge.ogf.org/ogf-it/opengridforum.gif' alt='The Open Grid Forum' style='border:0px white solid;'></a><td>
+  <td align='center'> <a href='mailto:webmaster@ogf.org'>Contact Webmaster</a> 
+                    | <a href="https://forge.ogf.org/sf/tracker/do/createArtifact/projects.ggf-info/tracker.bug_reports">Report a problem</a>
+                    | <a href="https://forge.ogf.org/sf/wiki/do/viewPage/projects.ggf-info/wiki/HomePage">GridForge Help</a>
+                    </td>
+  <td align='right'>  
+<!--		<img src='/ogf-it/powered_by_dell.gif' alt='Powered by Dell'> -->
+<!-- Begin DigiCert/ClickID site seal HTML and JavaScript -->
+<div id="DigiCertClickID_sxSDRU4L">
+  <a href="http://www.digicert.com/">SSL Certificates</a>
+</div>
+<script type="text/javascript">
+var __dcid = __dcid || [];__dcid.push(["DigiCertClickID_sxSDRU4L", "10", "m", "black", "sxSDRU4L"]);(function(){var cid=document.createElement("script");cid.type="text/javascript";cid.async=true;cid.src=("https:" === document.location.protocol ? "https://" : "http://")+"seal.digicert.com/seals/cascade/seal.min.js";var s = document.getElementsByTagName("script");var ls = s[(s.length - 1)];ls.parentNode.insertBefore(cid, ls.nextSibling);}());
+</script>
+<!-- End DigiCert/ClickID site seal HTML and JavaScript -->
+  </td>
+ </tr>
+</table>
+<!-- google analytics code -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6775861-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+</body>
+
+<!-- Mirrored from forge.ogf.org/sf/sfmain/do/go/projects.ggf-editor/discussion.info_conceptual_grid_auth?_pagesize=45 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:39:52 GMT -->
+</html>
+
+

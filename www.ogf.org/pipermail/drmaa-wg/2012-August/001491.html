@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/drmaa-wg/2012-August/001491.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Sep 2022 18:04:23 GMT -->
+<HEAD>
+   <TITLE> [DRMAA-WG] Meeting minutes - conference call - August 22
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:drmaa-wg%40ogf.org?Subject=Re%3A%20%5BDRMAA-WG%5D%20Meeting%20minutes%20-%20conference%20call%20-%20August%2022&In-Reply-To=%3C3B9EE49F-AB00-448F-87DA-99CAB791A6A9%40troeger.eu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/drmaa-wg/2012-August/001490.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[DRMAA-WG] Meeting minutes - conference call - August 22</H1>
+    <B>Peter Tr&#246;ger</B> 
+    <A HREF="mailto:drmaa-wg%40ogf.org?Subject=Re%3A%20%5BDRMAA-WG%5D%20Meeting%20minutes%20-%20conference%20call%20-%20August%2022&In-Reply-To=%3C3B9EE49F-AB00-448F-87DA-99CAB791A6A9%40troeger.eu%3E"
+       TITLE="[DRMAA-WG] Meeting minutes - conference call - August 22">peter at troeger.eu
+       </A><BR>
+    <I>Tue Aug 28 07:38:20 EDT 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/drmaa-wg/2012-August/001490.html">[DRMAA-WG] Conference call - August 22 - 19:00 UTC
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/drmaa-wg/2012-August/date.html#1491">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/drmaa-wg/2012-August/thread.html#1491">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/drmaa-wg/2012-August/subject.html#1491">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/drmaa-wg/2012-August/author.html#1491">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Am 20.08.2012 um 12:17 schrieb Peter Tr&#246;ger &lt;<A HREF="https://www.ogf.org/mailman/listinfo/drmaa-wg">peter at troeger.eu</A>&gt;:
+
+&gt;<i> Dear all,
+</I>&gt;<i> 
+</I>&gt;<i> since the public comment period for DRMAAv2 C-binding is over, we need to
+</I>&gt;<i> discuss our reaction on the comments. The next DRMAA conf call is
+</I>&gt;<i> therefore scheduled for Wednesday, August 22, 19:00 UTC - 20:00 UTC.
+</I>&gt;<i> 
+</I>&gt;<i> 1. Meeting secretary for this meeting?
+</I>
+Participants: Andre, Daniel, Mariusz, Roger, Stephan Klauck, Peter
+Meeting secretary: Peter
+
+&gt;<i> 2. Status report by the participants
+</I>
+All in good health, some reporting from Peter about OGF35 in Delft
+
+&gt;<i> 3. Public comments on DRMAAv2 C-binding
+</I>&gt;<i> (<A HREF="http://ogf.org/gf/docs/comment.php?id=388">http://ogf.org/gf/docs/comment.php?id=388</A>)
+</I>&gt;<i>   - pointer NULLing by the library ? What it means for the interface ?
+</I>
+- No decision at OGF35, voting needed
+- Roger, Peter: &quot;principle of least astonishment, no NULLing in the library&quot;
+- Andre, Daniel, Mariusz: &quot;security problem, asynchronous free problem, OpenMPI example&quot;
+- 3:2 voting result for changing the API -&gt; free* functions get pointer variable reference and assign NULL to it
+- Voting also clarified that no other API changes are made
+
+&gt;<i>   - Problems with OStype and CPUtype enumerations
+</I>
+- No decision at OGF35, voting needed
+- 5:0 voting result for keeping MACOS identifier - OS version is already a separate concept in the API
+- 5:0 voting result for changing TRUE64 to TRU64
+- 5:0 voting result for adding 64bit variations of all instruction set architectures
+- These changes demand an errata for the DRMAAv2 root specification
+
+&gt;<i>   - Semantics of DRMAA2_DATA_SEG_SIZE
+</I>
+- No decision at OGF35, voting needed
+- 5:0 voting result for the proposal by Rayson Ho: DATA_SEG_SIZE is renamed to DATA_SIZE
+- Explanation must extended - this value refers to 'initialized data, uninitialized data and heap'
+- These changes demand an errata for the DRMAAv2 root specification
+
+&gt;<i>   - Additional free functions needed
+</I>
+- No decision at OGF35, voting needed
+- 5:0 voting result for adding them
+
+&gt;<i>   - Return type for wait functions
+</I>
+- OGF35 decision acknowledged by Roger
+- IDL spec should have void return type for wait() functions
+- Additionally, language bindings should be allowed to change the return type for chaining support
+- These changes demand an errata for the DRMAAv2 root specification
+
+&gt;<i>   - _j_ vs. _job_
+</I>
+- 4:1 voting result: Keep it as it is now
+
+&gt;<i>   - Small issues   
+</I>
+-  jobCategories should be accessible outside the job session
+     - Daniel: Need scheduler connection for fetching the information, and then again in the reservation session
+     - Mariusz: Making a reservation without some job submission afterwards is very unlikely
+     - 5:0 voting for keeping it as it is now
+- Native drmaa2_string type, instead of char* pointers
+     - OGF35 decision acknowledged by Roger
+- UNSET for JobInfo: 5:0 voting for adding it
+- Remove endIndex upper limit specification demand from the root spec
+     - Demands an errata for the DRMAAv2 root specification
+
+I will now start to prepare both the errata document and the final C binding for the editors. 
+
+Best regards,
+Peter.
+
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 4343 bytes
+Desc: not available
+URL: &lt;<A HREF="http://www.ogf.org/pipermail/drmaa-wg/attachments/20120828/5882e8f1/attachment.bin">http://www.ogf.org/pipermail/drmaa-wg/attachments/20120828/5882e8f1/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/drmaa-wg/2012-August/001490.html">[DRMAA-WG] Conference call - August 22 - 19:00 UTC
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/drmaa-wg/2012-August/date.html#1491">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/drmaa-wg/2012-August/thread.html#1491">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/drmaa-wg/2012-August/subject.html#1491">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/drmaa-wg/2012-August/author.html#1491">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://www.ogf.org/mailman/listinfo/drmaa-wg">More information about the drmaa-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/drmaa-wg/2012-August/001491.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Sep 2022 18:04:24 GMT -->
+</html>

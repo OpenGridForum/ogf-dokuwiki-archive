@@ -1,0 +1,77 @@
+OGSA Naming Telecon -- 28 April 2006
+
+Attendees
+---------------
+	Mark Morgan (minutes)
+	Andrew Grimshaw
+	Frank Siebenlist
+	Dave Snelling
+	Mike Behrens
+	Chris Jordan
+
+
+Agenda
+-----------
+	* 5 minutes -- agenda bashing
+	* 30 minutes -- Discuss draft requirements document
+	* 30 minutes -- Discuss approval of DRAFT WS-Names document to send to GFSG for GFSG approval.
+	* 25 minutes -- Attempt to come to closure on working group consensus regarding WS-Directory, RNS.
+
+* Requirements Document
+	- pointer to the pieces that Dave and Frank believe need to be there
+	- highlights the properties that need to be addressed
+	- a few other use cases that motivate naming
+		-- Migration and recovery
+		-- Should be added to the document
+	- Overall perspective comment by Andrew
+		-- Taking this document as a document for requirements and suggestions for how those requirements might be filled, it's good.  Andrew has 
+		   identified 1-to-1 maps between that document and what WS-Naming already has and he'll point those out as we go.
+	- Frank wants to revisit the "names" of elements in the current document
+	- 5.1 -- Unambiguous Web Service Endpoint Profile
+		-- Good profile
+		-- WS-Names does not address this at all because the authors assumed this but it should probably be added
+		-- Should this profile be a product of the OGSA-Naming working group
+			> Not against this, esp. if Dave Snelling and Frank want to take the lead on it.
+	- 5.2 -- Web Service Endpoint Name Specification
+		-- This is exactly what the AbstractName component of WS-Names is (according to Andrew).
+			> Can we meet this reqiurement by WS-Name's AbstractName
+			> We say that the endpoint name is an IRI and that the EPR minter has to adhere to 5.1
+			> Where does the IRI go in the "to" field
+				--- Yes, that's indicated in the 5.3
+			> This section says nothing about Unique in Space and Time
+			> Can you use this IRI to compare?
+			> Is there any reason why what we call AbstractName in WS-Naming is any different from this IRI?
+				--- With a few additional words in the spec (about how the minter of the EPR has to adhere to 5.1), then there is a match.
+	- 5.3 -- Endpoint Address Identifier Profile
+		-- We don't have a problem with this one as long as it's clear that the address and whatever we call the abstractname are not equivalent
+			> they might be the same element, but don't have to be.
+			> if my address field adheres to 5.2, and also happens to be sufficient for 5.1, then it can be in the address field, and it can be
+			> additionally placed in the metadata
+		- Could see choosing to do this, but not making it a requirement
+		- We still need to talk about this
+	- 5.4 -- Resolution Specification
+		- provide a service that maps an IRI to an EPR
+		- similar to, but not the same as the WS-Naming resolution function
+		- if we refer to 5.1 and change the name of the resolution function to resolve, and change the text to only talk about returning EPRs, then we
+		  have consensus that this makes 5.4 and WS-Naming equivalent.
+	- 5.4.2 -- Renewable Reference Interface
+		- The two resolve functions should be two seperate port types.
+
+* RNS
+	- Mark to send Manuel requirements on hierarchical naming
+	- GFSG had call with chairs and all to try and get requirements and trying to reduce the RNS draft down to basically minimal set of functionallity that
+	  that provides something similar to what WS-Directory provides.
+
+Action Items
+-------------------
+	* Mark to add Frank's comments as trackers/tracker comments
+	* Frank agrees that he and Dave Snelling will take on the responsibility of authoring the "Unambiguous Web Service Endpoint Profile"
+	* Frank and Dave to write profile document for section 5.3
+	* Mark Morgan to change spec. with a few words indicating that the minter of an EPR following 5.1 produces an abstractname that makes 5.2 and 
+	  WS-Naming abstract names equivalent.
+	* Change spec so that text about resolve refers to 5.1 document and that it returns an EPR (not a WS-Name), then change name to "eprResolve"
+	* Mark Morgan to change naming document so that the two resolve port types should be in seperate port types.  And change the name to "renew".
+	  To satisfy all parties, we also need to add an optional EPR to the eprResolve port type.  As long as the spec. makes it clear what the purposes of
+	  the optional EPR and that the client may have to loop a few times to deal with this.
+	* Andrew to send out to list an attempt to get a call before GGF-Tokyo
+		-- Next agenda items to approve minutes and to finish up discussion -- also to go through tracker comments.

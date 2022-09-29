@@ -1,0 +1,113 @@
+
+Wrong structure of a request
+---------------------------------
+
+  Existing result codes:
+
+  MDM Java RRD MA:
+  query_exception - "no data trigger"
+  query_exception - "getting the key is impossible "
+  query_exception - "no subject element in metadata id=[...]"
+  query_exception - "no eventType or key element in metadata id=[...]
+  query_exception - "can not find any metadatas with a valid content"
+  query_exception - "can not find eventType in metadata element"
+  query_exception - "no interface element in metadata element"
+  query_exception - "no subject element in metadata element"
+  query_exception - "There is no key."
+
+  PSPS common result codes:
+  error.common.merge                 - "Attempting to merge a parameter with a missing 'name' attribute" 
+  error.common.merge                 - "Merged metadata from chain beginning at $baseId have multiple, inconsistent subject metadataIdRefs" 
+  error.common.merge                 - "Merging with a key metadata is invalid" 
+  error.common.merge                 - "Metadata " . $child->getAttribute( "id" ) . " and " . $parent->getAttribute( "id" ) . " have no eventTypes in common" 
+  error.common.merge                 - "Metadata " . $child->getAttribute( "id" ) . " and " . $parent->getAttribute( "id" ) . " have subjects with different namespaces." 
+  error.common.merge                 - "Metadata " . $child->getAttribute( "id" ) . " has multiple subjects" 
+  error.common.merge                 - "Metadata $nextMdId appears multiple times in the chain" 
+  error.common.merge                 - "Metadata $nextMdId does not exist" 
+  error.common.merge                 - "Metadata " . $parent->getAttribute( "id" ) . " has multiple subjects" 
+  error.common.no_metadata_data_pair - "There were no metadata/data pairs found in the message" 
+  error.common.action_not_supported  - "No message type specified"
+
+  PSPS LS:
+  error.ls.data_trigger                     - "Matching metadata not found for data trigger '" . $d->getAttribute( "id" ) . "'"
+  error.ls.deregister.key_not_found         - "Key not found in message."
+  error.ls.keepalive.key_not_found          - "Key not found in message.
+  error.ls.key.service_missing              - "Cannont find data, service element was not found."
+  error.ls.query.subject_not_found          - "Summary subject not found in metadata."
+  error.ls.register.data_trigger_missing    - "No data triggers found in request." ) unless $counter
+
+
+  Proposal of new result code replacing all above (only description would be different and give more datails):
+
+    http://perfsonar.net/status/clienterror/wrong_message_structure/
+
+
+
+EventType in a request is not supported
+--------------------------------------------
+
+  MDM Java RRD MA:
+  query_exception - "eventType [...] in metadata id= [...] is not supported"
+  query_exception - "can not find correct eventType in metadata element"
+
+  PSPS common result codes:
+  error.common.event_type_not_supported - "Event type '$eventType' is not yet supported for messages with type '$messageType'"
+
+  PSPS LS:
+  error.ls.deregister.eventType  - "Incorrect eventType for LSDeregisterRequest." 
+  error.ls.keepalive.eventType   - "Incorrect eventType for LSKeepaliveRequest." ) if $eventType;"
+  error.ls.query.eventType       - "Sent eventType not supported."
+
+
+  Proposal of new result code replacing all above (only description would be different and give more datails):
+
+    http://perfsonar.net/status/clienterror/event_type_not_supported/
+
+
+
+Request is not supported
+---------------------------
+
+  PSPS common result codes:
+  error.common.action_not_supported    - "Messages of type $messageType are unsupported"
+  error.ma.message_type                - "Invalid Message Type"
+
+  PSPS LS:
+  error.gls.register        - "Root gLS servers can only accept registration and synchronization of hLS summaries." 
+  error.hls.register        - "hLS servers can not accept summary registration."
+  error.ls.messages         - "Unrecognized message type"
+  error.ls.query.eventType  - "Given query type is missing or not supported."
+
+
+  Proposal of new result code replacing all above (only description would be different and give more datails):
+
+    http://perfsonar.net/status/clienterror/message_not_supported
+
+
+
+Elements of a request are not supported
+----------------------------------------
+
+  MDM Java RRD MA:
+  query_exception   - "wrong ipAddress"
+  query_exception   - "wrong hostName"
+  query_exception   - "wrong ifName"  
+  query_exception   - "wrong ifDescription"
+  query_exception   - "wrong ifAddress"
+  query_exception   - "wrong ifIndex"
+  query_exception   - "wrong type"
+  query_exception   - "wrong direction"
+  query_exception   - "wrong classOfService"
+  query_exception   - "wrong capacity"
+
+
+  Proposal of new result code replacing all above (only description would be different and give more datails):
+
+    http://perfsonar.net/status/clienterror/message_element_not_supported
+
+
+
+XXXXXXXXXXXXXXXX
+------------------------------------
+
+TBD

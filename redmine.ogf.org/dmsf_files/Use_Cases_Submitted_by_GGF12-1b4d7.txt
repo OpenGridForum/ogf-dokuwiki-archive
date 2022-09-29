@@ -1,0 +1,1920 @@
+Order:
+
+1. GridLab
+2. DRMAA
+3. Collaborative visualization of atmospherical data, Juelich 
+4. "Computational steering of a ground water pollution simulation", Juelich
+5. RealityGrid
+
+--------------------------------------------------------------------
+
+Name of use case:                Applicaation Migration.............
+Contact (name and address):      Andre Merzky <merzky@cs.vu.nl>.....
+
+
+1. General Information:
+-----------------------
+
+  This section consists of check-boxes to provide some context in
+  which to evaluate the use case.
+  
+  1.1 Which best describes your organisation:
+  
+    Industry                     [ ]
+    Academic                     [x]
+    Other                        [ ]
+       Please specify:           ...................................
+                       
+                       
+  1.2 Application area:    
+                       
+    Astronomy                    [ ]
+    Particle physics             [ ]
+    Bio-informatics              [ ]
+    Environmental Sc.            [ ]
+    Image analysis               [ ]
+    Other                        [ ]
+       Please specify:           astrophisics, but the use case is generic
+  
+  
+  1.3 Which of the following apply to or best describe this use case
+      Multiple selections are possible, please prioritize with numbers
+      from 1 (low) to 5 (high):
+  
+    Database                     [ ]
+    Remote steering              [3]
+    Visualization                [1]
+    Security                     [1]
+    Resource discovery           [5]
+    Resource scheduling          [5]
+    Workflow                     [3]
+    Data movement                [5]
+    High Throughput Computing    [ ]
+    High Performance Computing   [1]
+    Other                        [ ]
+        Please specify:          ...................................
+  
+  
+  1.4 Are you an:
+  
+    Application user             [ ]
+    Application developer        [ ]
+    System administrator         [ ]
+    Service developer            [ ]
+    Computer science researcher  [ ]
+    Other                        [ ]
+        Please specify:          Middleware Developer (higher levels)
+  
+
+        
+2. Introduction:
+----------------
+  
+  2.1 Provide a paragraph introduction to your use case.  Background
+      to the project is another alternative. (E.g. 100 words).
+
+    One of the major scenarios targeted by the GridLab project is the ability
+    to migrate a running application in a VO.  The migration process may get
+    triggered by various means:
+
+      - running out of time on the original resource
+      - a more powerful resource comes available
+      - a resource with more memory or local disk space is needed
+      - user prefers a  different resource and triggers migration
+      - migration as part of a larger work flow scenario
+
+    The migrations includes following well defined steps:
+
+      - trigger migration
+      - discover new resource
+      - perform application level checkpointing
+      - move checkpoint data to new resource
+      - schedule application on new resource
+      - continue computation (and discontinue old job)
+
+    Several of these operations need to be done on application level - the use
+    cases specifically describes those operations in respect to an Grid API.
+
+
+  2.2 Is there a URL with more information about the project ?
+
+    http://www.gridlab.org/
+  
+  
+3. Use Case to Motivate Functionality Within a Simple API:
+----------------------------------------------------------  
+  
+  Provide a scenario description to explain customers' needs.  E.g. "move
+  a file from A to B," "start a job."
+  
+  Please include figures if possible.
+
+  If your use case requires multiple components of functionality, please  
+  provide separate descriptions for each component, bullet points of 50
+  words per functionality are acceptable.
+  
+    Following the list from 2.1:
+
+      - trigger migration
+        
+        If the application triggers the migration process itself, it needs
+        means to communicate with the resource management system it got started
+        with, or with any other one which knows about its execution environment
+        requirements (exe, input files, output files... -> job description).
+        The request basically is:
+      
+          rms  = Grid.getResourceManagementSystem ();
+          self = rms.getMyJobDescription ();
+          // perform checkpoint
+          // save state
+        
+      
+        If the application migration gets triggered from outside the
+        application, the application needs to have means to getified about
+        this - it needs to know when to perform checkpointing and to shut down.
+        There are many ways to do that - application steering like mechanisms
+        seem the most convenient ones:
+      
+          sub mycallback (userdata) {
+            // perform checkpoint
+            // save state
+          }
+          result = Grid.announceCheckpointCallback (mycallback, userdata);
+      
+      
+      - discover new resource
+      
+        If that operation is not performed by the resource management system
+        itself, the application needs to discover new resources where itself
+        can run on.  It needs to provide its own job description.
+        
+        host = GriResourceManager.discoverNewHost (self);
+
+        
+      - perform application level checkpointing
+      
+        The checkpointing process itslef does not need Grid support per se, but
+        the application needs to be able to announce the location of it's
+        checkpoint files.  These could be put into a replica catalog, or onto a
+        global file system - but the resource manager needs to know about them,
+        in order to make them available on the new resource:
+      
+        app.checkpoint (filename);
+        grid.replicaCatalog.addFile (replicaname, filename);
+        rms.announceCheckpointFile  (replicaname);
+
+        
+      - move checkpoint data to new resource
+
+        If that operation is not performed by the resource management system
+        itself, the application needs to be able to mograte its checkpoint
+        files to the new resource:
+
+        grid.copyFiles (filename, host);
+
+        or
+
+        grid.replicate (replicaname, host);
+        
+
+      - schedule application on new resource
+
+        If that operation is not performed by the resource management system
+        itself, the application needs to be able to start a copy of itself on
+        the remore resource:
+        
+        copy = GriResourceManager.runJobOnHost (self, host);
+
+     
+      - continue computation (and discontinue old job)
+
+        Both are straight forward.
+        
+  
+4. Customers:
+-------------
+
+  Describe customers of this use case and their needs. In particular,
+  where and how the use case occurs "in nature" and for whom it occurs.  
+  E.g. max 40 words
+
+    The cusomers of the use case are scientific communities with jobs
+    a) running for a very long time (~weeks)
+    b) with varying comuting demands (peeks requiring more powerful resource,
+       or more disk space)
+    c) which are part of larger dynamic systems
+
+    Grand Challenge Simulations are specific target applications for that use
+    case.
+
+  
+5. Involved Resources:
+----------------------
+
+  5.1 List all the resources needed: e.g. what hardware, data,
+      software might be involved.
+
+        - compute resources
+        - data storage systems  
+        - resoure management systems
+        - data replication/movement systems
+        - remote steering or monitoring systems
+
+  
+  5.2 Are these resources geographically distributed?
+
+        potentially yes.
+
+  
+  5.3 How many resources are involved in the use case?  E.g. how
+      many remote tasks are executing at the same time?
+
+        minimum: 2, maximum: unlimited, only one compute resource 
+        at the same time.
+
+  
+  5.4 Describe your codes and tools: what sort of license is
+      available, e.g. open or closed source license; what sort 
+      of third party tools and libraries do you use, and what is 
+      their availablility;  do you regularly work from source 
+      code, or use pre-compiled applications; what languages 
+      are your applications developed in (if relevant), e.g. 
+      Fortran, C, C++, Java, Perl, or Python.
+
+        Application: C/Fortran code under open source (http://www.cactuscode.org)
+        API:         C api binding to Grdi Services under open source (http://www.gridlab.org/gat/)
+        Services:    C and Java Services, open source, mostly basing on globus (http://www.gridlab.org/)
+
+  
+  5.5 What information sources do you require, e.g. certificate
+      authorities, or registries.
+
+        Resource Discovery and state preservation (repolica systems or
+        similar) are the main requirements to information management.
+      
+  
+  5.6 Do you use any resources other than traditional compute 
+      or data resources, e.g. telescopes, microscopes, medical 
+      imaging instruments.
+
+        No.
+
+  
+  5.7 Please link all the above back to the functionalities
+      described in the use case section where possible.
+
+        ...
+
+
+  5.8 How often is your application used on the grid or grid-like 
+      systems?
+
+      [ ] Exclusively
+      [ ] Often (say 50-50)
+      [x] Ocassionally on the grid, but mostly stand-alone
+      [ ] Not at all yet, but the plan is to.
+
+      The application is actually used in Grids, but does not make full use of
+      Grid capabilities (as the one described here).
+      
+
+  
+6. Environment:
+---------------
+
+  Provide a description of the environment your scenario runs in,
+  for example the languages used, the tool-sets used, and the user
+  environments (e.g. shell, scripting language, or portal).
+
+    Users work mostly on shells, portals are uder development.
+    Programmers work on open source solutions, unix only, C, C++, Fortran.
+
+
+  
+7. How the resources are selected:
+----------------------------------
+
+  7.1 Which resources are selected by users, which are inherent 
+      in the application, and which are chosen by system
+      administrators, or by other means?  E.g. who is specifying 
+      the architecture and memory to run the remote tasks?  
+
+        Compute Resources are selected manually or automatically (job
+        description by users).
+  
+  
+  7.2 How are the resources selected? E.g. by OS, by CPU power,
+      by memory, don't care, by cost, frequency of availability
+      of information, size of datasets?
+
+        OS, Architecture, Memory, disk space, runtime (when, how long)
+  
+  
+  7.3 Are the resource requirements dynamic or static?
+
+        Vary from run to run, but mostly static, sometimes dynamic.
+        In the future more dynamic.
+  
+  
+8. Security Considerations:
+---------------------------
+
+  8.1 What things are sensitive in this scenario: executable code, 
+      data, computer hardware?  I.e. at what level are security 
+      measures used to determine access, if any?
+
+        Data should get only accessed by owner or group.
+        Resources are not to be compromised of course.
+        --> standard academic security requirements.
+
+  
+  8.2 Do you have any existing security framework, e.g. Kerberos 5,
+      Unicore, GSI, SSH, smartcards?
+  
+        GSI for all communication and resource access.
+  
+  
+  8.3 What are your security needs: authentication, authorisation,
+      message protection, data protection, anonymisation, audit 
+      trail, or others?
+
+        authentication, authorisation, basic data protection
+
+  
+  8.4 What are the most important issues which would simplify your
+      security solution?  Simple API, simple deployment, integration
+      with commodity technologies.  
+
+        simple deployment
+  
+9. Scalability:
+---------------
+
+  What are the things which are important to scalability and to what
+  scale - compute resources, data, networks ?
+
+    The scenario is not bound by scalability (the application of course is).
+
+
+  
+10. Performance Considerations:
+-------------------------------
+
+  Explain any relevant performance considerations of the use case.
+
+    Full time to migrate to a better must result in a benefit if compared to
+    having the computation simply continue on the old resource.  However, on
+    ocasions where simply continuation is not possible, performance penalties
+    are acceptable.
+
+    In general: performance requirements depend on specific
+    application/simulation.
+
+  
+11. Grid Technologies currently used:
+-------------------------------------
+
+  If you are currently using or developing this scenario, which grid
+  technologies are you using or considering?
+
+    - globus based services from the GridLab project
+    - Grid Application Toolkit from the GridLab project
+
+  
+12. What Would You Like an API to Look Like?
+--------------------------------------------  
+  
+  Suggest some functions and their prototypes which you would like
+  in an API which would support your scenario.
+
+    An example of a migtration in GAT is included in the GAT release.
+  
+  
+13. References:
+---------------
+
+  List references for further reading.
+
+    http://www.gridlab.org/gat/
+
+
+  
+--------------------------------------------------------------------
+
+
+
+--------------------------------------------------------------------
+
+Name of use case:                Bulk job submission
+Contact (name and address):      Hrabri Rajic (hrabri.rajic@intel.com)
+                                 
+
+
+1. General Information:
+-----------------------
+
+  This section consists of check-boxes to provide some context in
+  which to evaluate the use case.
+  
+  1.1 Which best describes your organisation:
+  
+    Industry                     [x]
+    Academic                     [ ]
+    Other                        [ ]
+       Please specify:           ...................................
+                       
+                       
+  1.2 Application area:    
+                       
+    Astronomy                    [ ]
+    Particle physics             [ ]
+    Bio-informatics              [ ]
+    Environmental Sc.            [ ]
+    Image analysis               [ ]
+    Other                        [ ]
+       Please specify:           Not tied to any area .............
+  
+  
+  1.3 Which of the following apply to or best describe this use case
+      Multiple selections are possible, please prioritize with numbers
+      from 1 (low) to 5 (high):
+  
+    Database                     [2]
+    Remote steering              [ ]
+    Visualization                [ ]
+    Security                     [ ]
+    Resource discovery           [ ]
+    Resource scheduling          [ ]
+    Workflow                     [ ]
+    Data movement                [ ]
+    High Throughput Computing    [ ]
+    High Performance Computing   [5]
+    Other                        [ ]
+        Please specify:          ...................................
+  
+  
+  1.4 Are you an:
+  
+    Application user             [ ]
+    Application developer        [ ]
+    System administrator         [ ]
+    Service developer            [ ]
+    Computer science researcher  [x]
+    Other                        [ ]
+        Please specify:          ...................................
+  
+
+        
+2. Introduction:
+----------------
+  
+  2.1 Provide a paragraph introduction to your use case.  Background
+      to the project is another alternative. (E.g. 100 words).
+
+      Very often in certain industries, like in financial, bioinformatics,
+      computational chemistry, or optimization there is a need to submit a set
+      of parametric jobs which differ in just few parameters.  Few DRM systems
+      have a direct support for this kind of calculations via an array job
+      mechanism.
+      Abstracted layers on top of a DRM or Grid systems have additional ways
+      of optimizing the execution of these parametric jobs.
+
+
+  2.2 Is there a URL with more information about the project ?
+
+  ...
+  
+  
+3. Use Case to Motivate Functionality Within a Simple API:
+----------------------------------------------------------  
+  
+     Few years ago we were involved in a large database calculations of different
+     molecular characteristics for drug design.  It is basically a parametric
+     submission of a large number of jobs doing the same set of calculations.
+
+  
+4. Customers:
+-------------
+
+  chemists, pharmacologists
+
+  
+5. Involved Resources:
+----------------------
+
+  5.1 List all the resources needed: e.g. what hardware, data,
+      software might be involved.
+
+      There were 120 remote computational nodes and few client nodes with
+      good graphics support.
+
+  
+  5.2 Are these resources geographically distributed?
+
+      Yes, absolutely.  One of the runs involved several sites across USA.
+
+  
+  5.3 How many resources are involved in the use case?  E.g. how
+      many remote tasks are executing at the same time?
+
+      130 tasks at one time any there was a need for doing more.
+
+  
+  5.4 Describe your codes and tools: what sort of license is
+      available, e.g. open or closed source license; what sort 
+      of third party tools and libraries do you use, and what is 
+      their availablility;  do you regularly work from source 
+      code, or use pre-compiled applications; what languages 
+      are your applications developed in (if relevant), e.g. 
+      Fortran, C, C++, Java, Perl, or Python.
+
+      The study was doen in collaboration with the software maker, so we
+      had no licence needs.  The application was done in Fortran and C. 
+      Part of the distributed solution was implemented in Java.
+      There was also a high troughput database requirement.
+      Typical use site would need licences on the remote nodes and graphical
+      viewer licences on the client side.
+
+  
+  5.5 What information sources do you require, e.g. certificate
+      authorities, or registries.
+
+  ...
+
+  
+  5.6 Do you use any resources other than traditional compute 
+      or data resources, e.g. telescopes, microscopes, medical 
+      imaging instruments.
+
+      No.
+
+  
+  5.7 Please link all the above back to the functionalities
+      described in the use case section where possible.
+
+  ...
+
+
+  5.8 How often is your application used on the grid or grid-like 
+      systems?
+
+      [ ] Exclusively
+      [x] Often (say 50-50)
+      [ ] Ocassionally on the grid, but mostly stand-alone
+      [ ] Not at all yet, but the plan is to.
+
+
+
+  
+6. Environment:
+---------------
+
+  Provide a description of the environment your scenario runs in,
+  for example the languages used, the tool-sets used, and the user
+  environments (e.g. shell, scripting language, or portal).
+
+  ...
+
+
+  
+7. How the resources are selected:
+----------------------------------
+
+  7.1 Which resources are selected by users, which are inherent 
+      in the application, and which are chosen by system
+      administrators, or by other means?  E.g. who is specifying 
+      the architecture and memory to run the remote tasks?  
+
+      The runs were performed by the developers.  The administrators had
+      to set up the Grid as specified by the devlopers.
+  
+  
+  7.2 How are the resources selected? E.g. by OS, by CPU power,
+      by memory, don't care, by cost, frequency of availability
+      of information, size of datasets?
+
+      It was mostly "don't care" selection of the compute nodes.
+      There was a requiremnt on the scheduler node to support large
+      number of tasks at the time, necessitating fine tuning of the OS.
+  
+  
+  7.3 Are the resource requirements dynamic or static?
+
+      Doesn't matter.
+  
+
+  
+8. Security Considerations:
+---------------------------
+
+  8.1 What things are sensitive in this scenario: executable code, 
+      data, computer hardware?  I.e. at what level are security 
+      measures used to determine access, if any?
+
+      In a non-demo like situation there is a concern about the nature of the
+      calculations and the results.
+  
+  8.2 Do you have any existing security framework, e.g. Kerberos 5,
+      Unicore, GSI, SSH, smartcards?
+  
+  No.
+  
+  
+  8.3 What are your security needs: authentication, authorisation,
+      message protection, data protection, anonymisation, audit 
+      trail, or others?
+
+  Authentication mostly.
+
+  
+  8.4 What are the most important issues which would simplify your
+      security solution?  Simple API, simple deployment, integration
+      with commodity technologies.  
+
+       Simple API and deployment. 
+
+  
+9. Scalability:
+---------------
+
+  What are the things which are important to scalability and to what
+  scale - compute resources, data, networks ?
+
+   The biggest if not the only bottleneck was the scheduler and then number
+   of processes OS limitations.
+
+  
+10. Performance Considerations:
+-------------------------------
+
+  Explain any relevant performance considerations of the use case.
+
+   Access to a database was closely monitored.  Large number of independent 
+   tasks was an issue on the scheduler node.
+
+  
+11. Grid Technologies currently used:
+-------------------------------------
+
+  If you are currently using or developing this scenario, which grid
+  technologies are you using or considering?
+
+  ...
+
+  
+  
+12. What Would You Like an API to Look Like?
+--------------------------------------------  
+  
+  Suggest some functions and their prototypes which you would like
+  in an API which would support your scenario.
+
+    There is a need for efficient submisison of bulk jobs.
+  
+  
+13. References:
+---------------
+
+  List references for further reading.
+
+  ...
+
+
+  
+--------------------------------------------------------------------
+
+
+--------------------------------------------------------------------
+
+Name of use case:                Collaborative visualization of 
+                                 atmospherical data
+Contact (name and address):      Herwig Zilken (h.zilken@fz-juelich.de)
+                                 
+
+
+1. General Information:
+-----------------------
+
+  This section consists of check-boxes to provide some context in
+  which to evaluate the use case.
+  
+  1.1 Which best describes your organisation:
+  
+    Industry                     [ ]
+    Academic                     [X]
+    Other                        [ ]
+       Please specify:           ...................................
+                       
+                       
+  1.2 Application area:    
+                       
+    Astronomy                    [ ]
+    Particle physics             [ ]
+    Bio-informatics              [ ]
+    Environmental Sc.            [X]
+    Image analysis               [ ]
+    Other                        [ ]
+       Please specify:           ...................................
+  
+  
+  1.3 Which of the following apply to or best describe this use case
+      Multiple selections are possible, please prioritize with numbers
+      from 1 (low) to 5 (high):
+  
+    Database                     [ ]
+    Remote steering              [3]
+    Visualization                [5]
+    Security                     [ ]
+    Resource discovery           [ ]
+    Resource scheduling          [ ]
+    Workflow                     [ ]
+    Data movement                [ ]
+    High Throughput Computing    [ ]
+    High Performance Computing   [3]
+    Other                        [ ]
+        Please specify:          ...................................
+  
+  
+  1.4 Are you an:
+  
+    Application user             [ ]
+    Application developer        [ ]
+    System administrator         [ ]
+    Service developer            [ ]
+    Computer science researcher  [X]
+    Other                        [ ]
+        Please specify:          ...................................
+  
+
+        
+2. Introduction:
+----------------
+  
+  2.1 Provide a paragraph introduction to your use case.  Background
+      to the project is another alternative. (E.g. 100 words).
+
+In a joint project, the institute of chemistry and dynamics of the
+geosphere (ICG2) of the Research Centre Juelich together with
+the Max-Planck-Institute for Meteorology (Hamburg) are using the
+transport model MOZART to calculate the distribution of chemical
+tracers and other physical properties (temperature, pressure) of the
+troposphere of the earth. Because the resulting dataset is very big,
+(about 1GB) it cannot be stored locally but only at one or more central 
+servers.
+There is a demand to visualize this data to analyse it. To do this, the
+visualization systems must be coupled to the data servers by a fast network
+to get online access to the data.
+If the central data servers have enough computing power, also the post-
+processing of the data could be done there, e.g. to generate graphical 
+primitives (iso-surfaces, streamlines) to speed up the process of 
+visualization.
+Because the analysis of the data should be done by a distributed team of
+scientists located in Juelich and in Hamburg, also the visualization-
+systems
+should be coupled and synchronized to allow collaborative
+visualization sessions. It is intended to use a video conference system to
+support the direct communication of participating scientist.
+
+
+
+  2.2 Is there a URL with more information about the project ?
+
+  ...
+  
+  
+3. Use Case to Motivate Functionality Within a Simple API:
+----------------------------------------------------------  
+  
+Scientists from Juelich and from Hamburg want to do a collaborative
+analysis of their atmospherical data. At each site, visualization systems 
+are used to explore the data.
+The visualization systems will load an initial scene, connect to the data-
+servers and request a portion of the data, e.g. a time interval of interest 
+or data for a selection of chemical tracers.
+The visualization systems also connect to an interaction server, which is 
+responsible for the synchronization of the visualization. Furthermore a 
+video conference system is started.
+While the visualization session is running, the scientists interact with 
+the data, e.g. they rotate and translate the scene, decide to load 
+additional data or to use several visualization techniques like cutting 
+planes, iso-surfaces, streamlines, trajectories and so on.
+All changes in the scene are synchronized online by the interaction server 
+which guarantees a consistent visualization to allow a well coordinated 
+collaborative work session.
+It also could happen that an additional scientist will enter a running 
+session. In this case the actual scene has to be distributed to this new 
+client.
+
+
+  
+4. Customers:
+-------------
+
+  The users (ICG2, Max-Planck-Institute for Meteorology) are 'topical' 
+scientists
+  (chemist, physicists).  
+
+  
+5. Involved Resources:
+----------------------
+
+  5.1 List all the resources needed: e.g. what hardware, data,
+      software might be involved.
+
+  - visualization-systems hardware: a broad range of systems from
+    high-end (special graphics workstations, Virtual-Reality-Systems)
+    to low-end (e.g. laptop) should be supported
+  - visualization-systems software: as the involved community of scientists 
+is very heterogeneous, a wide variety of graphics software should be used, 
+e.g. AVS/Express, VTK, VR-software.
+  - data-servers: need to have big storage capacity. If the data-server is 
+also used as a preprocessor, it should be a high performance parallel 
+computer.
+  - interaction-server: stores information of running visualization 
+sessions. No big storage capacity needed here.
+  - fast network
+    
+
+  
+  5.2 Are these resources geographically distributed?
+
+Yes, absolutely. Alls parts of the system (several visualization 
+facilities, data-servers, interaction server) are distributed 
+geographically.
+
+  
+  5.3 How many resources are involved in the use case?  E.g. how
+      many remote tasks are executing at the same time?
+
+3 main tasks are running simultaneously:
+  - data-server activities
+  - interaction server
+  - visualization stations, in a collaborative session one at each site
+
+  
+  5.4 Describe your codes and tools: what sort of license is
+      available, e.g. open or closed source license; what sort 
+      of third party tools and libraries do you use, and what is 
+      their availablility;  do you regularly work from source 
+      code, or use pre-compiled applications; what languages 
+      are your applications developed in (if relevant), e.g. 
+      Fortran, C, C++, Java, Perl, or Python.
+
+Visualization systems: AVS/Express, VTK, VR-Software, e.g. Vista 
+(WorldToolkit based VR-Software developed at University Aachen)
+The Visit-Library (http://www.fz-juelich.de/zam/visit)
+should be used for communication.
+Own developments (implementation of data- and interaction-server) are done 
+in C++.
+
+
+  
+  5.5 What information sources do you require, e.g. certificate
+      authorities, or registries.
+
+  ...
+
+  
+  5.6 Do you use any resources other than traditional compute 
+      or data resources, e.g. telescopes, microscopes, medical 
+      imaging instruments.
+
+No.
+
+  
+  5.7 Please link all the above back to the functionalities
+      described in the use case section where possible.
+
+  ...
+
+
+  5.8 How often is your application used on the grid or grid-like 
+      systems?
+
+      [ ] Exclusively
+      [ ] Often (say 50-50)
+      [ ] Ocassionally on the grid, but mostly stand-alone
+      [X] Not at all yet, but the plan is to.
+
+
+
+  
+6. Environment:
+---------------
+
+  Provide a description of the environment your scenario runs in,
+  for example the languages used, the tool-sets used, and the user
+  environments (e.g. shell, scripting language, or portal).
+
+  ...
+
+
+  
+7. How the resources are selected:
+----------------------------------
+
+  7.1 Which resources are selected by users, which are inherent 
+      in the application, and which are chosen by system
+      administrators, or by other means?  E.g. who is specifying 
+      the architecture and memory to run the remote tasks?  
+
+The user can select all resources on his own. He can choose the servers and
+visualization systems.
+
+  
+  
+  7.2 How are the resources selected? E.g. by OS, by CPU power,
+      by memory, don't care, by cost, frequency of availability
+      of information, size of datasets?
+
+  ...
+  
+  
+  7.3 Are the resource requirements dynamic or static?
+
+The network load is highly dynamic because it depends on user-interaction
+and the (dynamic) number of visualization systems in a collaborative 
+session.
+
+  
+
+  
+8. Security Considerations:
+---------------------------
+
+  8.1 What things are sensitive in this scenario: executable code, 
+      data, computer hardware?  I.e. at what level are security 
+      measures used to determine access, if any?
+
+The data which is send over the network is sensitive.
+There should be access restrictions and authentication.
+
+  
+  8.2 Do you have any existing security framework, e.g. Kerberos 5,
+      Unicore, GSI, SSH, smartcards?
+  
+  No.
+  
+  
+  8.3 What are your security needs: authentication, authorisation,
+      message protection, data protection, anonymisation, audit 
+      trail, or others?
+
+  Authentication.
+
+  
+  8.4 What are the most important issues which would simplify your
+      security solution?  Simple API, simple deployment, integration
+      with commodity technologies.  
+
+An api which provides a reliable certification mechanism to authenticate a 
+user who connects to the system.
+  
+
+  
+9. Scalability:
+---------------
+
+  What are the things which are important to scalability and to what
+  scale - compute resources, data, networks ?
+
+Network is very important to scale up the number of possible participants
+of a collaborative visualization session.
+Also compute and storage resources are critical.
+
+
+  
+10. Performance Considerations:
+-------------------------------
+
+  Explain any relevant performance considerations of the use case.
+
+Because the visualized data is very large, the necessary postprocessing
+(surface extraction, ...) could be a bottleneck.
+Furthermore heavy network traffic is concentrated at the central severs,
+especially at the data servers. 
+
+
+  
+11. Grid Technologies currently used:
+-------------------------------------
+
+  If you are currently using or developing this scenario, which grid
+  technologies are you using or considering?
+
+  ...
+
+  
+  
+12. What Would You Like an API to Look Like?
+--------------------------------------------  
+  
+  Suggest some functions and their prototypes which you would like
+  in an API which would support your scenario.
+
+No details can be given now because the project is in an early stage of 
+development.
+The API should have the following functionality:
+- login mechanism for connecting to data- and interaction-server
+- data exchange (send, receive) for the scientific data
+- data exchange to synchronize the collaborative, distributed session
+- naming mechanism to identify objects which are shared between several
+  visualization systems
+
+  
+  
+13. References:
+---------------
+
+  List references for further reading.
+
+  ...
+
+
+  
+--------------------------------------------------------------------
+
+
+Name of use case:                Computational steering of a
+                                 ground water pollution simulation
+Contact (name and address):      Wolfgang Frings (w.frings@fz-juelich.de)
+		                 Research Centre Juelich
+				 Central Institute for Applied Mathematics
+                                 D-52425 Juelich
+
+1. General Information:
+-----------------------
+
+  This section consists of check-boxes to provide some context in
+  which to evaluate the use case.
+  
+  1.1 Which best describes your organisation:
+  
+    Industry                     [ ]
+    Academic                     [X]
+    Other                        [ ]
+       Please specify:           ...................................
+                       
+                       
+  1.2 Application area:    
+                       
+    Astronomy                    [ ]
+    Particle physics             [ ]
+    Bio-informatics              [ ]
+    Environmental Sc.            [X]
+    Image analysis               [ ]
+    Other                        [ ]
+       Please specify:           ...................................
+  
+  
+  1.3 Which of the following apply to or best describe this use case
+      Multiple selections are possible, please prioritize with numbers
+      from 1 (low) to 5 (high):
+  
+    Database                     [ ]
+    Remote steering              [5]
+    Visualization                [5]
+    Security                     [ ]
+    Resource discovery           [ ]
+    Resource scheduling          [ ]
+    Workflow                     [ ]
+    Data movement                [ ]
+    High Throughput Computing    [ ]
+    High Performance Computing   [4]
+    Other                        [ ]
+        Please specify:          ...................................
+  
+  
+  1.4 Are you an:
+  
+    Application user             [ ]
+    Application developer        [ ]
+    System administrator         [ ]
+    Service developer            [ ]
+    Computer science researcher  [X]
+    Other                        [ ]
+        Please specify:          ...................................
+  
+
+        
+2. Introduction:
+----------------
+  
+  2.1 Provide a paragraph introduction to your use case.  Background
+      to the project is another alternative. (E.g. 100 words).
+
+  At the Institute of Petroleum and Organic Geochemistry (ICG-4) of
+  the Research Centre Juelich two parallel codes (TRACE and PARTRACE)
+  for the simulation of solute transport in heterogeneous soil-aquifer
+  systems (e.g. pollutants in ground water) have been developed and
+  are subject to continuous enhancements. The codes TRACE (ground
+  water flow) and PARTRACE (solute transport) can run independently or
+  as a coupled MPI-application. The progress of the running simulation
+  can be monitored by ParView, an AVS/Express based application that
+  allows an online-visualization of the coupled simulation. Among the
+  steering capabilities of ParView are the ability to insert solutants
+  into running simulations and the ability to select 3D-points in the
+  simulated area for which more detailed data analysis and recording
+  is required (so called break-through curves - BTC).  ParView uses
+  VISIT, a library for online visualization and computation steering
+  for its connection to TRACE and PARTRACE.
+
+  2.2 Is there a URL with more information about the project ?
+
+  http://www.fz-juelich.de/zam/visit
+  (--> 'Projects using VISIT' --> ParView)
+  
+3. Use Case to Motivate Functionality Within a Simple API:
+----------------------------------------------------------  
+
+  The parallel simulations TRACE (A) and PARTRACE (B) are submitted as
+  a single batch-job to the batch-system of an HPC-system.
+  Occasionally, a visualization/steering application (C) is
+  attached to (A) and (B) with separate connections.
+  (A) and (B) send data (large arrays and small parameter sets) to
+  (C) and upon request receive steering parameters back from (C).
+  Eventually, (C) detaches from (A) and (B).
+   
+4. Customers:
+-------------
+
+  The users (ICG-4) are 'topical' scientists (chemist, physicists)
+  that use TRACE/PARTRACE to treat their scientific problems, like
+  calculating transport properties of the ground or compare their
+  models and simulations with real-life experiments. The simulations
+  are mostly performed on the IBM supercomputer in Juelich. They use
+  the visualization/steering capabilities mainly to save computer (and
+  their own) time by stopping simulations that go wrong and by
+  adjusting the BTCs during the simulation according to intermediate
+  results.
+  
+5. Involved Resources:
+----------------------
+
+  5.1 List all the resources needed: e.g. what hardware, data,
+      software might be involved.
+
+  parallel computer,
+  local computer with visualization capabilities (from Laptop to Cave),
+  sufficient network bandwidth
+  
+
+  5.2 Are these resources geographically distributed?
+
+  most of the time no, since supercomputer and user are located on the
+  campus of the Research Centre Juelich, but occasionally yes, when a
+  researcher is visiting remote collaboration partners or conferences.
+
+  In metacomputing experiments that are conducted within the project
+  VIOLA, TRACE and PARTRACE are running on two or more parallel
+  computers which are geographically distributed. In that case, the
+  visualization is also running at a different location.
+
+  5.3 How many resources are involved in the use case?  E.g. how
+      many remote tasks are executing at the same time?
+
+  typically a single parallel computer, on which TRACE and/or PARTRACE
+  is running, plus the users visualization-device.
+
+  In metacomputing experiments (e.g. in the VIOLA project), the
+  simulations may be distributed over two or more parallel computers.
+
+  
+  5.4 Describe your codes and tools: what sort of license is
+      available, e.g. open or closed source license; what sort 
+      of third party tools and libraries do you use, and what is 
+      their availablility;  do you regularly work from source 
+      code, or use pre-compiled applications; what languages 
+      are your applications developed in (if relevant), e.g. 
+      Fortran, C, C++, Java, Perl, or Python.
+
+  - TRACE (Fortran 90), PARTRACE (C++) are own developments of ICG-4
+    and undergo frequent enhancements
+  - VISIT (C) and ParView (AVS/Express) are being developed by ZAM
+  - no proprietary software except Fortran and C/C++ compilers
+    and AVS/Express are needed
+
+  
+  5.5 What information sources do you require, e.g. certificate
+      authorities, or registries.
+
+  A registry is required that allows the components of the system to
+  find each other. With VISIT, the visualization/steering application
+  registers its service (being able to steer a specific
+  application) and the simulation queries the registry for possible
+  steerers.
+
+  
+  5.6 Do you use any resources other than traditional compute 
+      or data resources, e.g. telescopes, microscopes, medical 
+      imaging instruments.
+
+  no.
+
+  
+  5.7 Please link all the above back to the functionalities
+      described in the use case section where possible.
+
+  Section 3. lists the minimal functionally required to realize the
+  above. 
+
+
+  5.8 How often is your application used on the grid or grid-like 
+      systems?
+
+      [ ] Exclusively
+      [ ] Often (say 50-50)
+      [X] Ocassionally on the grid, but mostly stand-alone
+      [ ] Not at all yet, but the plan is to.
+
+
+
+  
+6. Environment:
+---------------
+
+  Provide a description of the environment your scenario runs in,
+  for example the languages used, the tool-sets used, and the user
+  environments (e.g. shell, scripting language, or portal).
+
+  Simulations coded in FORTRAN90 and C++, running on UNIX/AIX-systems
+  under control of a batch-system
+  Visualization coded in AVS/Express, running on Linux or Windows-systems
+
+  
+7. How the resources are selected:
+----------------------------------
+
+  7.1 Which resources are selected by users, which are inherent 
+      in the application, and which are chosen by system
+      administrators, or by other means?  E.g. who is specifying 
+      the architecture and memory to run the remote tasks?  
+
+  The user selects all resources:
+  - the HPC-system by submitting the simulation to a particular batch-system
+    (which chooses when and on which CPUs to run the job)
+  - the visualization-system, which is typically his workstation
+  
+  
+  7.2 How are the resources selected? E.g. by OS, by CPU power,
+      by memory, don't care, by cost, frequency of availability
+      of information, size of datasets?
+
+  depending on the batch-system, typically by specifying number of
+  CPUs and maximum runtime
+  
+  
+  7.3 Are the resource requirements dynamic or static?
+
+  static during a single run (simulation)
+  visualization can be dynamic, attachment to a simulation from
+  different systems with different capabilities (performance,
+  network bandwidth)
+
+  
+8. Security Considerations:
+---------------------------
+
+  8.1 What things are sensitive in this scenario: executable code, 
+      data, computer hardware?  I.e. at what level are security 
+      measures used to determine access, if any?
+
+  The simulation establishes a network connection to an external
+  application (the visualization/steering application) and is
+  controlled by it. Therefore the steerer needs to authenticate
+  properly. Besides that, there are no special security
+  considerations.
+
+  
+  8.2 Do you have any existing security framework, e.g. Kerberos 5,
+      Unicore, GSI, SSH, smartcards?
+  
+  UNICORE
+  
+  
+  8.3 What are your security needs: authentication, authorisation,
+      message protection, data protection, anonymisation, audit 
+      trail, or others?
+
+  authentication and authorisation of the steerer.
+
+  
+  8.4 What are the most important issues which would simplify your
+      security solution?  Simple API, simple deployment, integration
+      with commodity technologies.  
+
+  a simple API for the simulation and the visualization/steering application
+  that is mostly independent of the underlying Grid system (like specifying
+  a certificate or password to use/accept)
+
+  
+9. Scalability:
+---------------
+
+  What are the things which are important to scalability and to what
+  scale - compute resources, data, networks ?
+
+  Large parallel simulations may produce huge amounts of data. Therefore
+  the system must scale with respect to:
+  - number of CPUs/tasks of the simulation
+  - volume of data to be transferred to visualization
+  - volume of data to be visualised
+
+  
+10. Performance Considerations:
+-------------------------------
+
+  Explain any relevant performance considerations of the use case.
+
+  for visualization and steering, latency and data throughput of the
+  system may be an issue. Aspects that influence that, are:
+  - simulation performance:
+    interaction with the visualization only takes place at certain
+    times, typically once per simulation time-step. To get some
+    interactivity, such a time-step should not take to long
+  - network bandwidth for large bulk transfers of simulation data
+    may be required
+  - visualization capability 
+
+  In total, the simulation uses an expensive resource (HPC-time) and
+  should be slowed down as little as possible by the interaction with
+  the visualization/steering application.
+
+  
+11. Grid Technologies currently used:
+-------------------------------------
+
+  If you are currently using or developing this scenario, which grid
+  technologies are you using or considering?
+
+  We have build a version of VISIT, which uses UNICORE to access the
+  parallel computer through a firewall and are currently working on
+  an integration with the new Web-Services based UNICORE being
+  developed in the UniGrids project.
+  
+  
+12. What Would You Like an API to Look Like?
+--------------------------------------------  
+  
+  Suggest some functions and their prototypes which you would like
+  in an API which would support your scenario.
+
+  Here an example of the simulation (client) API of VISIT:
+ 
+  /* attach to a visualization, using a service-name and a password */
+  vcd = visit_connect_seap(servicename, password, timeout);
+
+  /* send some data */
+  visit_send(vcd, tag, timestanp, data, datatype, dimensions);
+
+  /* receive some data */
+  visit_recv(vcd, tag, &timestamp, data, &datatype, &dimensions);
+  
+  /* detach from visualization */
+  visit_disconnect(vcd);
+
+  For higher-level functions that provide more options and parameters
+  (e.g. complex data-structures to be exchanged, distributed
+  data-arrays in a parallel application) a static API could end up in
+  a large number of functions with complex parameter-lists. An
+  alternative is a simple specification-language for the data to be
+  exchanged and a code-generator that generate wrapper-functions with
+  an application-specific API. Here is an example code:
+
+  /* init connection for application 'trace' */
+  lvisit_trace_init(); 
+
+  while (SimTime) {
+
+	/* test connection, open a new one if necessary  */
+	lvisit_trace_check_connection();
+	
+	/* receive parameters from visualization in application structure 'parm' */
+	lvisit_trace_parm_recv(&parm)
+
+	/* send 3d vector data 'velo' (which is distributed) to visualization */
+	lvisit_trace_velo_send(&velo,nx,ny,nz,3);
+  }
+
+  /* close the connection */
+  lvisit_trace_close()
+
+  Here an excerpt of the corresponding definition in the specification-language:
+  ...
+  dataset velo:
+	  datatype     = double
+	  direction    = sim -> vis
+	  dimension    = 3 
+	  veclen       = 3
+	  compression  = wavelet
+	  distribution = domain
+  ... 
+
+13. References:
+---------------
+
+  List references for further reading.
+
+  http://www.fz-juelich.de/zam/visit
+
+  J.Brooke, T.Eickermann, and U.Woessner: Application Steering in a
+  Collaborative Enviroment, Proceedings of the ACME/IEEE SC 2003
+  Conference, Phoenix, 2003.
+
+
+  
+--------------------------------------------------------------------
+
+--------------------------------------------------------------------
+
+Name of use case:           RealityGrid: Real Scientific Computing on
+the Grid
+
+Contact (name and address):     
+                            Shantenu Jha  [s.jha@ucl.ac.uk]
+                            Centre for Computational Science
+                            University College London
+
+                            Stephen Pickles [stephen.pickles@man.ac.uk]
+                            Manchester Computing
+                            The University of Manchester
+
+1. General Information:
+-----------------------
+
+  This section consists of check-boxes to provide some context in
+  which to evaluate the use case.
+  
+  1.1 Which best describes your organisation:
+  
+    Industry                     [ ]
+    Academic                     [X]
+    Other                        [ ]
+       Please specify:           ...................................
+                       
+                       
+  1.2 Application area:    
+                       
+    Astronomy                    [ ]
+    Particle physics             [ ]
+    Bio-informatics              [ ]
+    Environmental Sc.            [ ]
+    Image analysis               [ ]
+    Other                        [X]
+       Please specify:           Condensed-matter Physics
+					- Complex fluid dynamics
+					- Biomolecular systems
+					- Polymer physics
+  
+  1.3 Which of the following apply to or best describe this use case
+      Multiple selections are possible, please prioritize with numbers
+      from 1 (low) to 5 (high):
+  
+    Database                     [ ]
+    Remote steering              [5]
+    Visualization                [5]
+    Security                     [4]
+    Resource discovery           [1]
+    Resource scheduling          [4]
+    Workflow                     [ ]
+    Data movement                [4]
+    High Throughput Computing    [3]
+    High Performance Computing   [5]
+    Other                        [ ]
+        Please specify:           Checkpoint, Migration
+  
+  
+  1.4 Are you an:
+  
+    Application user             [X]
+    Application developer        [X]
+    System administrator         [ ]
+    Service developer            [X]
+    Computer science researcher  [ ]
+    Other                        [ ]
+        Please specify:          ...................................
+  
+
+        
+2. Introduction:
+----------------
+  
+  2.1 Provide a paragraph introduction to your use case.  Background
+      to the project is another alternative. (E.g. 100 words).
+
+   The RealityGrid project is about enabling the use of high-end
+   scientific codes on a computational grid.  The project involves a
+   wide range of application codes spanning a large number of areas 
+   of physics. Most of the applications are tightly-coupled parallel
+   simulations written in MPI or OpenMP. 
+
+   The  use case common to all applications is the "computational
+   steering" of the code. However "computational steering" is a broad
+   term and incorporates many ideas.
+   
+   At the simplest level, computational steering involves the ability to
+   monitor the evolution of the system under study, and to manipulate
+   parameters that affect the system's behaviour.
+
+   The usefulness of computational steering is enhanced by the ability
+   to take a checkpoint of the simulation, spawn a new simulation
+   (possibly on a different number of processors on a different
+   computational resource) from an existing checkpoint, and sometimes
+   to rewind a running simulation to the state defined in a previous 
+   checkpoint.
+
+   The ability to visualize aspects of the simulation as it evolves is
+   a frequent requirement. In a subset of applications, it is more
+natural
+   to influence the behaviour of the simulation by interacting with the
+   visualization. 
+   
+  2.2 Is there a URL with more information about the project ?
+
+  http://www.realitygrid.org/
+  http://www.sve.man.ac.uk/Research/AtoZ/RealityGrid/
+ 
+http://www.sve.man.ac.uk/Research/AtoZ/RealityGrid/Steering/ReG_steering
+_api.pdf
+  
+  
+3. Use Case to Motivate Functionality Within a Simple API:
+----------------------------------------------------------  
+  
+  Provide a scenario description to explain customers' needs.  E.g.
+"move
+  a file from A to B," "start a job."
+  
+  Please include figures if possible.
+
+  If your use case requires multiple components of functionality, please
+
+  provide separate descriptions for each component, bullet points of 50
+  words per functionality are acceptable.
+
+ a. Locate a resource to host a simulation or visualization code
+    (currently done manually)
+ b. Launch a simulation or visualization on an appropriate resource 
+ c. Stage input files (including checkpoint files) and retrieve or
+archive
+    output files
+ d. Monitor and steer the simulation as it runs through user-friendly
+GUIs.
+    We regard pause and resume as steering operations.
+ e. Dynamically connect/disconnect the steering GUI to/from the
+simulation
+ f. Visualize one or more aspects (e.g. physical fields) of the running
+    simulation - on-line visualization
+ g. Dynamically connect/disconnect the visualization to/from the
+simulation
+ h. Take a checkpoint of the status of the simulation
+ i. Discover and manage checkpoint files and associated metadata
+ k. Rewind to a previously taken checkpoint and/or spawn a new
+simulation
+    from an existing checkpoint (using functionality in i-iii)
+ l. Co-allocation and advance reservation of resources to host
+simulation
+    and visualization components
+ m. Realtime analysis of live streams of data emitted from a simulation
+    (this is a generalization of the concurrent visualization
+requirement
+    in (f)).
+ 
+4. Customers:
+-------------
+
+  Describe customers of this use case and their needs. In particular,
+  where and how the use case occurs "in nature" and for whom it occurs.
+
+  E.g. max 40 words
+
+  The customers of this use case are computational scientists,
+  with reasonably mature and sophisticated codes, and are looking
+towards
+  the Grid for faster, more efficient and effective environments to
+support
+  in silico scientific investigations. 
+
+5. Involved Resources:
+----------------------
+
+  5.1 List all the resources needed: e.g. what hardware, data,
+      software might be involved.
+
+     Hardware: High end computers for both simulations and visualization
+     Data:     No specific data requirements
+     Software: Application codes instrumented with the RealityGrid
+Steering
+               library. Currently we also depend on:
+	       - OGSI/WSRF::Lite as a hosting environment for our
+services
+	       - globus for file transfer and job submission
+  
+  5.2 Are these resources geographically distributed?
+
+      Yes. Application scientist often use machines on the TeraGrid and
+NGS for
+      simulations as part of the same calculation.
+  
+  5.3 How many resources are involved in the use case?  E.g. how
+      many remote tasks are executing at the same time?
+      
+      Possibly many. They may be homogenous tasks (e.g. several
+      replica of a similar simulation) or heteregenous tasks
+      (visualization + simulation).
+  
+  5.4 Describe your codes and tools: what sort of license is
+      available, e.g. open or closed source license; what sort 
+      of third party tools and libraries do you use, and what is 
+      their availablility;  do you regularly work from source 
+      code, or use pre-compiled applications; what languages 
+      are your applications developed in (if relevant), e.g. 
+      Fortran, C, C++, Java, Perl, or Python.
+
+      Within the RealityGrid project, there are several different
+      application codes, which may be open-source, close-sourced
+      or third-party codes under license/agreement.
+
+      Currently all tools used are publically available.
+      
+      All applications involve compiling from source code,
+      as we modify them to interface with the RealityGrid steering
+library. 
+      
+      Application codes are written in different languages-
+      Fortran, C, C++, and are mostly parallel (MPI,OpenMP). 
+      
+      Tools and "glue layer" are written primarily in C, C++ and Perl.
+
+  
+  5.5 What information sources do you require, e.g. certificate
+      authorities, or registries.
+
+      We require digitial certificates. We get these from the UK
+      e-Science CA. Some collaborators use the DOE CA.
+      
+      We use our own registry (implemented using OGSI service
+      group constructs) to discover running simulations.
+      We do not currently use registries such as GIIS or UDDI
+      for resource discovery - the set of resources which
+      have sufficient capability for our purposes, and to which
+      we have access, and on which our applications have been
+      deployed is small enough that configuration files are
+      adequate. 
+    
+  5.6 Do you use any resources other than traditional compute 
+      or data resources, e.g. telescopes, microscopes, medical 
+      imaging instruments.
+      
+      A "sister" project which will be launched soon, will 
+      involve instrumentation.
+  
+  5.7 Please link all the above back to the functionalities
+      described in the use case section where possible.
+
+      ???
+
+  5.8 How often is your application used on the grid or grid-like 
+      systems?
+
+      [ ] Exclusively
+      [ ] Often (say 50-50)
+      [X] Occasionally on the grid, but mostly stand-alone
+      [ ] Not at all yet, but the plan is to.
+
+      The primary reasons for the above:
+       - Overhead and "grid" stability reasons 
+         If we had a persistent, stable and usable grid [24/7, 365]
+         we would probably migrate to category 1 (i.e exclusively) for
+certain 
+	 applications.
+       - Not all problems addressed simulations require
+         features which come as value-added on the grid
+       
+6. Environment:
+---------------
+
+  Provide a description of the environment your scenario runs in,
+  for example the languages used, the tool-sets used, and the user
+  environments (e.g. shell, scripting language, or portal).
+
+  Simulation codes are written in Fortran90 and C, and instrumented
+  using server-side functions of the RealityGrid steering library.
+
+  Steering clients exist in several flavours:
+  * The Qt/C++ GUI for workstations uses the client-side functions of
+    the RealityGrid Steering Library.
+  * A .NET client suitable for PDAs is tooled against the WSDL
+    description of the RealityGrid Steering Grid Service and
+    Service Registry.
+  * A Java client packaged as a GridSphere Portlet is tooled
+    against WSDL.
+  * A Java client in the ICENI framework has been built against
+    the Steering Library using JNI.
+
+  Job launching and migration is treated separately to computational
+  steering. We use a graphical "wizard" for these purposes;
+  it is written in Qt/C++ and shells out to Globus commands
+  (using either commands in the Globus client distribution, or
+  available with the Java CoG kit). The wizard uses gsoap to
+  communicate with the RealityGrid services (registry, checkpoint tree,
+  and steering grid services).
+
+7. How the resources are selected:
+----------------------------------
+
+  7.1 Which resources are selected by users, which are inherent 
+      in the application, and which are chosen by system
+      administrators, or by other means?  E.g. who is specifying 
+      the architecture and memory to run the remote tasks?  
+
+      Hardware resources are chosen by the user,
+      As well as which grid-service container to use (in turn	
+      partly determined by resources chosen).
+      The location of the RealityGrid registry is pre-determined.
+
+  7.2 How are the resources selected? E.g. by OS, by CPU power,
+      by memory, don't care, by cost, frequency of availability
+      of information, size of datasets?
+
+      Resources used are determined by:
+	i.  availability
+       ii.  compatibility with requirements, e.g. 
+	    there are some problem sizes which can run only on the
+largest
+	    possible machines
+           
+            The decision as to which resource to use is made by the
+	    application scientist based upon i + ii. Currently there are
+	    just a handful of resources typically accessible, but at
+some stage
+	    (e.g. as the number of choices increase) a resource broker
+may 
+	    become critical.
+  
+  7.3 Are the resource requirements dynamic or static?
+  
+	  ReG Applications fall in both categories
+	  i.e. dynamic and static.
+
+	  A fundamental premise of computational steering on the grid, 
+	  is that while interacting with a live simulation, if the
+	  analysis requires further investigation, the infrastructure
+	  exists to do so (this may involve spawning simulations,
+	  starting and connecting a visualization, or just simply
+rewinding). 
+	  Thus the hardware resources are in general dynamic.
+	  The RealityGrid computational steering system provides the
+	  tools and software infrastructure required to use the
+	  hardware resources. 
+  
+8. Security Considerations:
+---------------------------
+
+  8.1 What things are sensitive in this scenario: executable code, 
+      data, computer hardware?  I.e. at what level are security 
+      measures used to determine access, if any?
+
+      As our use-case is exclusively academic, security is 
+      a lesser priority than simple and efficient utilization.
+      Theft or malicious tampering of data would be an inconvenience
+      (and embarrassment) but wouldn't be the end of the world.
+
+      As typically hardware platforms used are externally maintained and
+      owned, security concern is that of a "responsible user".
+      
+  8.2 Do you have any existing security framework, e.g. Kerberos 5,
+      Unicore, GSI, SSH, smartcards?
+  
+      GSI (but this is not built into the application, but into 
+      the tools layer).
+  
+  8.3 What are your security needs: authentication, authorisation,
+      message protection, data protection, anonymisation, audit 
+      trail, or others?
+
+      Authentication and authorisation on the end resource is adequately
+      provided by GSI for the purposes of job launching and file
+transfer.
+      Security of the middle-tier services used for computational
+steering
+      is currently lacking, due largely to the absence of a standardised
+      security model that supports delegation in a Web service world.
+      Message and data protection matter, but are not urgent
+      (however some industrial collaborators take a different view).
+      Anonymisation is a non-requirement for us. Audit trail is
+      important as a piece of the larger provenance puzzle.
+
+  8.4 What are the most important issues which would simplify your
+      security solution?  Simple API, simple deployment, integration
+      with commodity technologies.  
+
+      All of these are important. Also important are the ease of
+      management of private keys for mobile users.
+
+  
+9. Scalability:
+---------------
+
+  What are the things which are important to scalability and to what
+  scale - compute resources, data, networks ?
+
+  Compute resources: the more the merrier. Both in terms of 
+  the number of resources as well as the performance
+  (CPU and interconnect) of the resource.
+
+  Networks: Some applications can require signficant amounts of
+  data being shipped around; larger the physical system, larger
+  will be the requirement. Also, if real-time vizualization is used,
+  the network capacity should scale while the reliabilty must
+  remain high
+
+  Our approach for computational steering introduces an overhead
+  that can diminish scalability due to the implied synchronisation
+  of the parallel simulation code and serialisation of output data
+  streams through a single processor. However, the impact on scalability
+  is acceptably small in most cases of interest to us.
+
+  Scalability of visualization software and hardware as the size of
+  the dataset increases is important - we need visualizations that
+  can keep up with the simulation.
+
+  Arguably our most important scalability concern relates to the
+  human effort involved in porting and deploying applications
+  (and the middleware stacks they depend on) to an increasing variety
+  of Grid resources.
+
+10. Performance Considerations:
+-------------------------------
+
+  Explain any relevant performance considerations of the use case.
+
+  Performance of 
+  i. High-end computational/visualization resources is critical. 
+ ii. Data transfer rates between distributed resources
+
+11. Grid Technologies currently used:
+-------------------------------------
+  If you are currently using or developing this scenario, which grid
+  technologies are you using or considering?
+
+  Currently using: gsissh, globus-url-copy, globus-job-run, GSI,
+  WSDL, Grid Services (OGSI::Lite), SOAP, XML, GridSphere, Access Grid,
+  VizServer, Chromium, gsoap.
+
+  Currently considering WS-RF, WS-Notification, WS-Security,
+  SRB, JSDL, UNICORE, Sakai.
+  
+12. What Would You Like an API to Look Like?
+--------------------------------------------  
+  Suggest some functions and their prototypes which you would like
+  in an API which would support your scenario.
+
+  When talking about APIs, it maybe helpful to differentiate
+  between application level API and tool level API.
+
+  In developing tools for job management and data transfer,
+  we would welcome simple APIs that provide:
+  - the ability to define and launch a job on a Grid resource
+  - copy a file from one remote machine to another
+  - sufficient abstraction to future proof our codes
+    from changes in fashion.
+
+  We would also welcome convergence on a standard API
+  for instrumenting a code for computational steering and
+  on-line visualization. This would increase the motivation
+  for computational scientists to adopt computational steering
+  techniques.  
+
+13. References:
+---------------
+
+  List references for further reading.
+
+  i. Shantenu Jha, Stephen Pickles and Andrew Porter
+     A Computational Steering API for Scientific Grid Applications: 
+     Design, Implementation and Lessons
+     
+     GGF12 Workshop on Grid Application Programming Interfaces.
+
+  ii. Stephen Pickles, Robin Pinning, Andrew Porter, Graham Riley,
+  Rupert Ford, Ken Mayes,  David Snelling, Jim Stanton, Steven Kenny,
+  Shantenu  Jha,  The RealityGrid Computational  Steering API
+  Version 1.1, RealityGrid technical report, 2004,
+ 
+(http://www.sve.man.ac.uk/Research/AtoZ/RealityGrid/Steering/RealityGrid
+_steering_
+  api.pdf). 
+
+  iii. The Use of Recovery and Checkpoint in RealityGrid
+    Stephen Pickles for GridCPR WG
+    http://gridcpr.psc.edu/GGF/
+    http://gridcpr.psc.edu/GGF/docs/ReG-GridCPR-use-cases.pdf
+
+  iv. S.M. Pickles, R. Haines, R.L. Pinning and A.R.Porter,
+    Practical Tools for Computational Steering,
+    Proceedings of the UK e-Science All Hands Meeting, 2004.
+    http://www.allhands.org.uk/proceedings/papers/201.pdf
+    
+--------------------------------------------------------------------
+

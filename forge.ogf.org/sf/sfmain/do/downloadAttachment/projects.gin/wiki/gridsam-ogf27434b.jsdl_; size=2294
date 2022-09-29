@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<JobDefinition xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl">
+    <JobDescription>
+        <Application>
+            <POSIXApplication xmlns="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+                <Executable>/usr/local/Minem/update_file</Executable>
+                <Argument>input.txt</Argument>
+                <Argument>output.txt</Argument>
+                <Output>stdout.txt</Output>
+                <Error>stderr.txt</Error>
+                <WorkingDirectory>/home/ngs0268/minem_working</WorkingDirectory>
+            </POSIXApplication>
+        </Application>
+
+        <DataStaging>
+            <FileName>input.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Source>
+                <URI>gsiftp://ngs.oerc.ox.ac.uk/test_2_1.in</URI>
+            </Source>
+        </DataStaging>
+        <DataStaging>
+            <FileName>output.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Target>
+                <URI>gsiftp://ngs.oerc.ox.ac.uk/test_2_1.out</URI>
+            </Target>
+        </DataStaging>
+
+        <DataStaging>
+            <FileName>stdout.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Target>
+                <URI>gsiftp://ngs.oerc.ox.ac.uk/stdout.txt</URI>
+            </Target>
+        </DataStaging>
+        <DataStaging>
+            <FileName>stderr.txt</FileName>
+            <CreationFlag>overwrite</CreationFlag>
+            <Target>
+                <URI>gsiftp://ngs.oerc.ox.ac.uk/stderr.txt</URI>
+            </Target>
+        </DataStaging>
+
+    </JobDescription>
+
+    <myproxy:MyProxy xmlns:myproxy="urn:gridsam:myproxy">
+        <myproxy:ProxyServer>myproxy.grid-support.ac.uk</myproxy:ProxyServer>
+        <myproxy:ProxyServerDN>/C=UK/O=eScience/OU=CLRC/L=RAL/CN=myproxy.grid-support.ac.uk/E=sct-certificates@stfc.ac.uk</myproxy:ProxyServerDN>
+        <myproxy:ProxyServerPort>7512</myproxy:ProxyServerPort>
+        <myproxy:ProxyServerUserName>stc</myproxy:ProxyServerUserName>
+        <myproxy:ProxyServerPassPhrase>somepassword</myproxy:ProxyServerPassPhrase>
+        <myproxy:ProxyServerLifetime>1000</myproxy:ProxyServerLifetime>
+    </myproxy:MyProxy>
+
+</JobDefinition>

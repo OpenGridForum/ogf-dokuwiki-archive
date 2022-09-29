@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsi:NSA      xmlns:nml="http://schemas.ogf.org/nml/2013/05/base#" 
+              xmlns:nsi="http://schemas.ogf.org/nsi/2013/09/topology#" 
+              xmlns:vc="urn:ietf:params:xml:ns:vcard-4.0"
+              id="urn:ogf:network:example.org:2013:nsa"
+              version="2013-05-29T12:11:12Z">
+
+    <nml:Location id="urn:ogf:network:example.com:2013:location">
+      <nml:lat>55.637</nml:lat>
+      <nml:long>12.641</nml:long>
+    </nml:Location>
+    
+    
+    <nsi:Interface id="urn:ogf:network:example.com:2013:nsa-provserv">
+        <nsi:link>http://nsa.example.com/provisioning</nsi:link>
+        <nsi:describedBy>http://nsa.example.com/provisioning/wsdl</nsi:describedBy>
+        <nsi:type>application/vnd.org.ogf.nsi.cs.v2+soap</nsi:type>
+        <nsi:Relation type="http://schemas.ogf.org/nsi/2013/09/topology#providedBy">
+            <nsi:NSA id="urn:ogf:network:example.com:2013:nsa"/>
+        </nsi:Relation>
+    </nsi:Interface>
+
+    <nsi:Interface id="urn:ogf:network:example.com:2013:disc-serv">
+        <nsi:link>http://nsa.example.com/discovery/services/discovery</nsi:link>
+        <nsi:describedBy>http://nsa.example.com/discovery/wadl</nsi:describedBy>
+        <nsi:type>application/vnd.org.ogf.nsi.discovery.v1+xml</nsi:type>
+        <nsi:Relation type="http://schemas.ogf.org/nsi/2013/09/topology#providedBy">
+            <nsi:NSA id="urn:ogf:network:example.com:2013:nsa"/>
+        </nsi:Relation>
+    </nsi:Interface>
+    
+    <nsi:Relation type="http://schemas.ogf.org/nsi/2013/09/topology#adminContact">
+      <vc:vcard>
+        <vc:fn><vc:text>Example Adminstrator</vc:text></vc:fn>
+        <vc:n>
+          <vc:surname>Administrator</vc:surname>
+          <vc:given>Example</vc:given>
+          <vc:suffix>ing. jr</vc:suffix>
+          <vc:suffix>M.Sc.</vc:suffix>
+        </vc:n>
+        <vc:org>
+          <vc:parameters><vc:type><vc:text>work</vc:text></vc:type></vc:parameters>
+          <vc:text>Example.com Ltd.</vc:text>
+        </vc:org>
+        <vc:adr>
+          <vc:parameters>
+            <vc:type><vc:text>work</vc:text></vc:type>
+          </vc:parameters>
+          <vc:street>Imaginary Street 1</vc:street>
+          <vc:locality>Somewhere</vc:locality>
+          <vc:region>ST</vc:region>
+          <vc:code>123 ABC</vc:code>
+          <vc:country>Counrty</vc:country>
+        </vc:adr>
+        <vc:tel>
+          <vc:parameters>
+            <vc:type>
+              <vc:text>work</vc:text>
+              <vc:text>voice</vc:text>
+            </vc:type>
+          </vc:parameters>
+          <vc:uri>tel:+31-123-456-7892</vc:uri>
+        </vc:tel>
+        <vc:email>
+          <vc:parameters><vc:type><vc:text>work</vc:text></vc:type></vc:parameters>
+          <vc:text>bofh@example.com</vc:text>
+        </vc:email>
+        <vc:tz><vc:text>Europe/Amsterdam</vc:text></vc:tz>
+        <vc:geo>
+          <vc:parameters><vc:type><vc:text>work</vc:text></vc:type></vc:parameters>
+          <vc:uri>geo:52.357,4.953</vc:uri>
+        </vc:geo>
+      </vc:vcard>
+    </nsi:Relation>    
+    
+    <nsi:Relation type="http://schemas.ogf.org/nsi/2013/09/topology#peersWith">
+        <nsi:NSA id="urn:ogf:network:example.org:2013:nsa"/>
+        <nsi:NSA id="urn:ogf:network:example.net:2013:nsa"/>
+    </nsi:Relation>
+    
+    <nml:Topology id="urn:ogf:network:example.org:2013:topology">
+        <nml:name>ExampleA Topology</nml:name>
+        
+        <nml:SwitchingService id="urn:ogf:network:example.net:2012:nodeA:switchingService"
+        	      labelSwapping="true"
+    		      labelType="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">
+          <nml:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+            <nml:Port id="urn:ogf:network:example.com:2012:nodeA:eth0-in" />
+            <nml:Port id="urn:ogf:network:example.com:2012:nodeA:eth1-in" />
+          </nml:Relation> 
+          <nml:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+            <nml:Port id="urn:ogf:network:example.com:2012:nodeA:eth0-out"/>
+            <nml:Port id="urn:ogf:network:example.com:2012:nodeA:eth1-out"/>
+          </nml:Relation>
+      </nml:SwitchingService>
+        
+        <nml:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+            <nml:PortGroup id="urn:ogf:network:example.com:2013:eth0-out">
+                <nml:LabelGroup labeltype="http://schemas.ogf.org/nml/2013/05/ethernet#vlan">1780-1783</nml:LabelGroup>
+                <nml:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                    <nml:PortGroup id="urn:ogf:network:example.org:2013:eth0-in"/>
+                </nml:Relation>
+            </nml:PortGroup>
+            <nml:PortGroup id="urn:ogf:network:example.com:2013:eth1-out">
+                <nml:LabelGroup labeltype="http://schemas.ogf.org/nml/2013/05/ethernet#vlan">1780-1783</nml:LabelGroup>
+                <nml:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                    <nml:PortGroup id="urn:ogf:network:example.net:2013:eth0-in"/>
+                </nml:Relation>
+            </nml:PortGroup>
+        </nml:Relation>
+
+        <nml:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+            <nml:PortGroup id="urn:ogf:network:example.com:2013:eth0-in">
+                <nml:LabelGroup labeltype="http://schemas.ogf.org/nml/2013/05/ethernet#vlan">1780-1783</nml:LabelGroup>
+                <nml:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                    <nml:PortGroup id="urn:ogf:network:example.org:2013:eth0-out"/>
+                </nml:Relation>
+            </nml:PortGroup>
+            <nml:PortGroup id="urn:ogf:network:example.com:2013:eth1-in">
+                <nml:LabelGroup labeltype="http://schemas.ogf.org/nml/2013/05/ethernet#vlan">1780-1783</nml:LabelGroup>
+                <nml:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                    <nml:PortGroup id="urn:ogf:network:example.net:2013:eth0-out"/>
+                </nml:Relation>
+            </nml:PortGroup>
+        </nml:Relation>
+        
+    </nml:Topology>
+    
+</nsi:NSA>

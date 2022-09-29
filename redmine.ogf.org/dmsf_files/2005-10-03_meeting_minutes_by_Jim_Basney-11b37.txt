@@ -1,0 +1,125 @@
+GGF15 CAOPS-WG meeting
+October 3, 2005
+6-7:30pm
+
+Agenda:
+OCSP Update - Olle Mulmo
+1SCP - Milan Sova
+OCSP Policy - Milan Sova
+Namespace Policy - David Groep
+
+Olle reviewed the OCSP document
+(https://forge.gridforum.org/projects/caops-wg/document/OCSP_Requirements_for_Grids).
+The status is unchanged since Chicago.  At Chicago the consensus was
+that the document should address proxy certificates, but no progress
+has been made on this.  Suggested approach is to encode OCSP AIA in
+the first-level proxy certificate (branch-level pruning and control).
+
+Which OCSP responder to trust?  Options:
+
+  - Same as user cert?
+  - Associate responder by way of AIA URL
+  - OCSP signing policy delegated to responder (best way)
+
+How do we register proxy certificates and report them as revoked?
+This is a management-level interface required at the OCSP service.
+
+There can be multiple AIA URLs in a certificate.  AIA is a bucket of
+information, including OCSP responders, CA issuing certificates, etc.
+(CRL distribution point is a separate certificate field.)  Typically
+clients take the first good response from any of the listed OCSP
+responders, but this is uncovered territory.  The requirements
+document says to process them until the first good or revoked
+response.
+
+Next step is to add text for proxy certificates and request final
+comments on the list.  Then move to public comment period.  No
+objections were raised.
+
+CAOPS is now under the community area rather than the security area.
+Ken Klingenstein is the Grid Operations Community Area Director.
+
+Milan gave an update on one statement certificate policies (for
+example, "This certificate was issued to a software agent.").  The
+policy OIDs for these one statement policies would be encoded in the
+certificate.  EUGridPMA has documented a template for these policies.
+A first policy draft will be ready by January.  Should these documents
+be submitted to GGF CAOPS and/or IGTF/EUGridPMA/TAGPMA?  The policies
+should be managed by PMAs.  There should be an informational
+document to GGF.  Agreement on the policies would happen at the Intl
+Grid Trust Federation (IGTF).
+
+Milan led a discussion on where OCSP policies should be documented.
+Given that OCSP policies are experimental, we don't want to document
+these policies in the CP.  Around January, Milan plans to provide a
+specification for policies for experimental services.  The OCSP policy
+should be published along with the CP.  Milan will plan to make a
+presentation at GGF16 on this.
+
+David led a discussion of CA namespace constraints policies.  We've
+had signing policies for ages that limit CA namespaces.  A CA took
+C=CH, but we already have C=CH,O=CERN.  Policy states that namespaces
+can't overlap.
+
+Why namespace constraints?
+
+  - After the collapse of X.500, RPs need a means to enforce the
+    policy statements made by ID providers and federations.
+
+  - For existing CAs, only a specific branch of their namespace may be
+    subject to the policy the RP wants to accept.
+
+  - Should we also constrain the intended use of the certificate?
+
+Current implementation:
+  - Globus Toolkit C components have limited support for
+    signing_policy file.  Only support wildcards at the end of names.
+  - No Java implementation is available.
+
+Why not define a new format now rather than implementing the old
+(problematic) format?
+
+Requirements:
+1. Assign multiple namespaces to a CA
+2. Allow wildcards anywhere in names
+3. Allow for dynamic hierarchies of issuers
+   (Needs deployment of OCSP as well...)
+4. Subordinates must be replaceable without modifying namespace
+   constraints for any superiors
+5. RFC2253 compliant string renderings of all DNs
+6. Issuers without constraints must be able to co-exist
+7. Must be human readable
+
+Please review the document.  We need wide community buy-in.  Is it
+simple enough to implement in all languages?  Do you want to spend
+effort in implementing this?
+
+Once the format is agreed, the IGTF will distribute the new and old
+formats in parallel.  IGTF will support the old format as long as
+needed.  The new language will be more expressive than the old.
+
+For example, UID versus UserID in different OpenSSL versions.
+Everyone had to enter both in their VOMS servers.  Would RFC2253
+compliant string renderings resolve this?
+
+Is this grid-specific?  Should this go to IETF?  Let's start here and
+see where it goes.  Follow the example of proxy certificates.
+
+These policies address what certificates will be accepted for
+authentication.  This is path validation.
+
+Why isn't this fully expressed / vetted by the PMAs in the CP/CPS?
+The CP/CPS doesn't provide the needed granularity of control.
+
+How does this relate to the one-statement policies?  We want local
+control over the policy.
+
+Do we really need this?  Not clear.  Needs further discussion and
+buy-in.
+
+Could we address this by cross-certification / bridging?
+There are implementation issues today.
+
+Please read this document, on GridForge at
+<https://forge.gridforum.org/projects/caops-wg/document/Namespace_Policy>,
+and discuss on the mailing list.

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://schemas.ggf.org/rss/2006/00/eps-wsrf"
+    xmlns:eps="http://schemas.ggf.org/rss/2006/00/eps"
+    xmlns:eps-wsrf="http://schemas.ggf.org/rss/2006/00/eps-wsrf"
+    xmlns:wsa="http://www.w3.org/2005/03/addressing"
+    xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-1"
+    xmlns:wsrf-rl="http://docs.oasis-open.org/wsrf/rl-1">
+    <annotation>
+        <documentation>
+            This describes the types and elements used in the Execution
+            Planning Service at the concrete level when rendered using
+            the WS-ResourceFramework. It does not describe types and
+            elements that are generic.
+
+            Copyright &#x00a9; 2006, Global Grid Forum
+        </documentation>
+        <!-- Need to check the copyright and get the full copyright statement in here. -->
+    </annotation>
+    <import namespace="http://schemas.ggf.org/rss/2006/00/eps"
+        schemaLocation="eps.xsd" />
+
+    <import namespace="http://www.w3.org/2005/03/addressing"
+        schemaLocation="../wsa/WS-Addressing.xsd" />
+
+    <import namespace="http://docs.oasis-open.org/wsrf/bf-1"
+        schemaLocation="../wsrf/basefaults/bf-1.xsd" />
+
+    <import namespace="http://docs.oasis-open.org/wsrf/rl-1"
+        schemaLocation="../wsrf/resourcelifetime/rl-1.xsd" />
+
+    <element name="MaxPlansPerTransfer" type="positiveInteger" />
+    <element name="SupportedOrderingLanguages" type="anyURI" />
+    <element name="PlansTransferredSoFar" type="nonNegativeInteger" />
+    <element name="AnyMorePlansToTransfer" type="boolean" />
+    <element name="DefaultPartialResultLifespan" type="duration" />
+
+    <element name="EPSProperties">
+        <complexType>
+            <sequence>
+                <element ref="eps-wsrf:SupportedOrderingLanguages"
+                    minOccurs="1" maxOccurs="unbounded">
+                    <annotation>
+                        <documentation>
+                            Describes what ordering languages are
+                            supported by this EPS. Every EPS MUST
+                            support the RSS Selection language; this
+                            must not be an empty set.
+                        </documentation>
+                    </annotation>
+                </element>
+                <element ref="eps-wsrf:MaxPlansPerTransfer"
+                    minOccurs="1" maxOccurs="1">
+                    <annotation>
+                        <documentation>
+                            Describes the maximum number of plans that
+                            may be transferred in any single response
+                            message from the EPS (or the EPSResult
+                            resources it creates).
+                        </documentation>
+                    </annotation>
+                </element>
+                <element ref="eps-wsrf:DefaultPartialResultLifespan"
+                    minOccurs="1" maxOccurs="1">
+                    <annotation>
+                        <documentation>
+                            Describes the default length of time that
+                            EPSResult resources will live.
+                        </documentation>
+                    </annotation>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="GetExecutionPlans">
+        <annotation>
+            <documentation>
+                A request to an EPS to get execution plans. The majority
+                of the request is a specification of what to generate
+                execution plans for, but control over additional fine
+                details may be given.
+            </documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="eps:GetExecutionPlans">
+                    <sequence>
+                        <element name="MaxPlansPerTransfer"
+                            type="positiveInteger" minOccurs="0">
+                            <annotation>
+                                <documentation>
+                                    Allows the caller to further
+                                    restrict the number of plans to be
+                                    retrieved per invocation.
+                                </documentation>
+                            </annotation>
+                        </element>
+                        <element name="MaxPlansTotal"
+                            type="positiveInteger" minOccurs="0">
+                            <annotation>
+                                <documentation>
+                                    Allows the caller to specify the
+                                    maximum number of plans that they
+                                    wish to receive. The EPS may use
+                                    this to optimize the management of
+                                    resources.
+                                </documentation>
+                            </annotation>
+                        </element>
+                        <element name="PartialResultLifespan"
+                            type="duration" minOccurs="0">
+                            <annotation>
+                                <documentation>
+                                    Allows the user to set the lifespan
+                                    of any EPSResult resources created.
+                                    If absent, the EPS SHOULD use the
+                                    current default specified in the
+                                    DefaultPartialResultLifespan
+                                    resource property.
+                                </documentation>
+                            </annotation>
+                        </element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+    <element name="GetExecutionPlansResult">
+        <complexType>
+            <choice>
+                <element name="IncrementalTransfer"
+                    type="wsa:EndpointReferenceType">
+                    <annotation>
+                        <documentation>
+                            If the EPS decides to transfer the plans
+                            partially, it should create an instance of
+                            an EPSResult resource and use this to return
+                            the endpoint of that created resource.
+                        </documentation>
+                    </annotation>
+                </element>
+                <element ref="eps:ExecutionPlan" minOccurs="1"
+                    maxOccurs="unbounded">
+                    <annotation>
+                        <documentation>
+                            If the EPS decides to transfer the plans
+                            immediately (there MUST be no more than the
+                            specified maximum plan count if this is
+                            true) it MUST place them here to transfer
+                            them.
+                        </documentation>
+                    </annotation>
+                </element>
+            </choice>
+        </complexType>
+    </element>
+
+    <complexType name="UnsupportedOrderingLanguageFaultType">
+        <annotation>
+            <documentation>
+                Describes a fault that is thrown when the ordering
+                language used is one not supported by the execution
+                planning service.
+            </documentation>
+        </annotation>
+        <complexContent>
+            <extension base="wsrf-bf:BaseFaultType" />
+        </complexContent>
+    </complexType>
+    <element name="UnsupportedOrderingLanguageFault"
+        type="eps-wsrf:UnsupportedOrderingLanguageFaultType" />
+
+    <complexType name="UnableToGeneratePlansFaultType">
+        <annotation>
+            <documentation>
+                Describes a fault that is thrown when something goes
+                wrong that is not covered by the other faults.
+            </documentation>
+        </annotation>
+        <complexContent>
+            <extension base="wsrf-bf:BaseFaultType" />
+        </complexContent>
+    </complexType>
+    <element name="UnableToGeneratePlansFault"
+        type="eps-wsrf:UnableToGeneratePlansFaultType" />
+
+    <complexType name="NoPlansAvailableFaultType">
+        <annotation>
+            <documentation>
+                Describes a fault that is thrown when everything is
+                valid and correct, but no execution plans are available
+                anyway.
+            </documentation>
+        </annotation>
+        <complexContent>
+            <extension base="wsrf-bf:BaseFaultType" />
+        </complexContent>
+    </complexType>
+    <element type="eps-wsrf:NoPlansAvailableFaultType"
+        name="NoPlansAvailableFault" />
+
+    <complexType name="BadPlanCardinalityRulesFaultType">
+        <annotation>
+            <documentation>
+                Describes a fault that is thrown to indicate that the
+                user's requested rules on the number of plans to
+                transfer (both per transfer and in total) specify values
+                not supported by this service.
+            </documentation>
+        </annotation>
+        <complexContent>
+            <extension base="wsrf-bf:BaseFaultType" />
+        </complexContent>
+    </complexType>
+    <element name="BadPlanCardinalityRulesFault"
+        type="eps-wsrf:BadPlanCardinalityRulesFaultType" />
+
+    <element name="EPSResultProperties">
+        <complexType>
+            <sequence>
+                <element ref="wsrf-rl:CurrentTime" maxOccurs="1"
+                    minOccurs="1" />
+                <element ref="wsrf-rl:TerminationTime" maxOccurs="1"
+                    minOccurs="1" />
+                <element ref="eps-wsrf:PlansTransferredSoFar"
+                    minOccurs="0" maxOccurs="1">
+                    <annotation>
+                        <documentation>
+                            The number of execution plans that have been
+                            transferred so far from this resource. Note
+                            that the resource is not required to know
+                            the number of execution plans that exist in
+                            total.
+                        </documentation>
+                    </annotation>
+                </element>
+                <element ref="eps-wsrf:AnyMorePlansToTransfer"
+                    minOccurs="1" maxOccurs="1">
+                    <annotation>
+                        <documentation>
+                            An indication whether more plans exist. If
+                            not, all future requests for more plans will
+                            fault.
+                        </documentation>
+                    </annotation>
+                </element>
+                <element ref="eps-wsrf:MaxPlansPerTransfer"
+                    minOccurs="0" maxOccurs="1">
+                    <annotation>
+                        <documentation>
+                            The maximum number of plans that will be
+                            transferred in response to each GetMorePlans
+                            invocation.
+                        </documentation>
+                    </annotation>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="GetMorePlans">
+        <annotation>
+            <documentation>
+                Asks for more execution plans. Response is either up to
+                Count plans, or a fault if either Count is too large or
+                no further plans are available. Note that fewer than
+                Count plans may be sent.
+            </documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="Count" type="positiveInteger">
+                    <annotation>
+                        <documentation>
+                            A count of plans to transfer. The EPSResult
+                            resource may transfer fewer than this (and
+                            will always transfer less than the maximum).
+                        </documentation>
+                    </annotation>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="GetMorePlansResult">
+        <annotation>
+            <documentation>
+                The execution plans transferred in response to the
+                GetMorePlans call. Always has at least one plan (zero
+                plans are never returned; the resource faults instead).
+            </documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="eps:ExecutionPlan" minOccurs="1"
+                    maxOccurs="unbounded" />
+            </sequence>
+        </complexType>
+    </element>
+
+</schema>

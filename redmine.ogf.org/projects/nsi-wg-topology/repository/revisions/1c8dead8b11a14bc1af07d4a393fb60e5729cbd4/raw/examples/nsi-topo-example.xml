@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsi:NSA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:nml="http://schemas.ogf.org/nml/2013/05/base#" 
+              xmlns:nsi="http://schemas.ogf.org/nml/2013/09/topology#" 
+              xsi:schemaLocation="http://schemas.ogf.org/nsi/2013/09/topology#nsi-ext.xsd"
+              xmlns:vc="urn:ietf:params:xml:ns:vcard-4.0"
+              id="urn:ogf:network:example.org:2013:nsa"
+              version="2013-05-29T12:11:12">
+
+    <nml:Location id="urn:ogf:network:example.com:2013:location">
+      <nml:lat>55.637</nml:lat>
+      <nml:long>12.641</nml:long>
+    </nml:Location>
+    
+    <nsi:Relation type="http://schemas.ogf.org/nsi/2013/09/topology#peersWith">
+        <nsi:NSA id="urn:ogf:network:example.org:2013:nsa"/>
+    </nsi:Relation>
+    
+    <nml:Topology id="urn:ogf:network:example.org:2013:topology">
+        <nml:name>ExampleA Topology</nml:name>
+        <nml:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+            <nml:PortGroup id="urn:ogf:network:example.com:2013:eth0-out">
+                <nml:LabelGroup labeltype="http://schemas.ogf.org/nml/2013/05/ethernet#vlan">1780-1783</nml:LabelGroup>
+                <nml:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                    <nml:PortGroup id="urn:ogf:network:example.org:2013:eth0-in"/>
+                </nml:Relation>
+            </nml:PortGroup>
+        </nml:Relation>
+
+        <nml:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+            <nml:PortGroup id="urn:ogf:network:example.com:2013:eth0-in">
+                <nml:LabelGroup labeltype="http://schemas.ogf.org/nml/2013/05/ethernet#vlan">1780-1783</nml:LabelGroup>
+                <nml:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                    <nml:PortGroup id="urn:ogf:network:example.org:2013:eth0-out"/>
+                </nml:Relation>
+            </nml:PortGroup>
+        </nml:Relation>
+    </nml:Topology>
+    
+    <nsi:Service id="urn:ogf:network:example.com:2013:nsa-provserv">
+        <nsi:link>http://nsa.example.com/provisioning</nsi:link>
+        <nsi:Relation type="http://schemas.ogf.org/nml/2013/09/topology#providedBy">
+            <nsi:NSA id="urn:ogf:network:example.com:2013:nsa"/>
+        </nsi:Relation>
+        <nsi:describedBy>http://nsa.example.com/provisioning/wsdl</nsi:describedBy>
+        <nsi:type>application/vnd.org.ogf.nsi.cs.v2+soap</nsi:type>
+    </nsi:Service>
+
+    <nsi:Service id="urn:ogf:network:example.com:2013:disc-serv">
+        <nsi:link>http://nsa.example.com/discovery/services/discovery</nsi:link>
+        <nsi:Relation type="http://schemas.ogf.org/nml/2013/09/topology#providedBy">
+            <nsi:NSA id="urn:ogf:network:example.com:2013:nsa"/>
+        </nsi:Relation>
+        <nsi:describedBy>http://nsa.example.com/discovery/wadl</nsi:describedBy>
+        <nsi:type>application/vnd.org.ogf.nsi.discovery.v1+xml</nsi:type>
+    </nsi:Service>
+</nsi:NSA>

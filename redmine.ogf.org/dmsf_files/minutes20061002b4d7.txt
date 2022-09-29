@@ -1,0 +1,60 @@
+OGSA Naming Telecon, 2 October 2006
+Minutes taken by Mark Morgan
+
+Attendees
+---------------
+	Mark Morgan (minutes)
+	Andrew Grimshaw
+	Glenn Wasson
+	Dave Snelling
+	Marty Humphrey
+	Frank Siebenlist
+
+* Agenda Bashing 
+* Discuss, approve/disaspprove Frank's Suggestion
+	- Andrew going through his slides
+	- If you have two EPI's which are aliases to the same thing, then the objective is to get a reference to communicate with the thing.
+		-- Frank says that the solution works, but don't forget that the resolution information is located in two resolution services
+		-- Yeah, but when you resolve the EPI to a new EPR, you can change the resolution information
+		-- Remember that EPIs are unique, but not exclusive.
+	- There will be cases where you will have two or more identifiers for the same identity
+		-- Presumably you'll have environments where one EPI works better than the other.
+		-- Yeah, but you should mint an EPR that works better, not change the EPI
+		-- If you take the reference resolver EPR that you get back, and you go get the EPR for the resource, the you'll have EPI number 2
+			--- Who says it'll end up with EPI-2?
+	- Why can't you simply have the resolution service for A return an EPR that refers to B, but includes A (and possibly B as well in reference parameters).
+	- Should the resolver service be aware of aliases?
+	- If you have two abstract names that refer to the same tihng, the only authoritative source is the target itself.
+	- Is Frank suggesting that resolvers should provide that authoritative answer?
+		-- Yes, he is.  You have to trust the resolver service.
+	- What we are really getting at is two things...
+		-- Given that we have allowed aliases, how do we determine if two EPRs refer to the same resource
+		-- Given that I have aliases, how can I get rid of these aliases, in otherwords, can I ask someone, what is the preferred name that I call you?
+			--- I also want to know, "Here, I have this name for you, is this the name that you want me to use going forward?"
+	- It's not a question of trust
+		-- We have a genuine use case from Frank, how do we solve it.
+			--- Another spec. needs to be written so that you can ask a service, are you the same thing as this other EPI/EPR
+				> Currently outside of scope for WS-Naming
+			--- We have a mechanism already which supports this use case until this new spec. is written.
+			--- If you think about when the resolve operation finishes and fails, the resolver service might have other information that might
+				be useful.  The two solutions to resolve this are
+					> Do nothing
+					> Extend the capabilities of the fault we send back to include all three types of metadata.
+			--- But you can handle this use case without generating a fault.
+		-- If you have enough informatoin to know that A and B are the same, why can't you just return the EPR
+	- Remember that the EPI (which is a URI) can ONLY be interpreted by the resolver service -- no one else.
+	- Clients can look in the URI all they want, but we want to prevent the from having to look in there.  If we say that there is underlying structure in that
+		EPR, then we constrain that use and generation.
+	- Andrew's solution is to return an EPR with the correct address to it.
+	- What about the resolution services moving?
+		-- Well, the new EPR can contain the new resolution services.
+	- We do need a way of asking if two EPIs refer to the same resource, but that is out of scope for this ws-naming.
+	- Approve or disapprove adding a fault type that would include an EPI with the intention that the new EPI is the new identity
+	- Dave Snelling believes that we should NOT approve this
+	- Mark believes that we should NOT approve this
+	- Andrew believes that we should NOT approve this
+	- Frank believes that we should approve this
+	- Frank dissaproves of Dave's proposal, everyone else approves
+		-- The text schema is not clear that it can return resolvers (Michel volunteered to tidy of the schema)
+* Trackers
+	- As per tracker resolutions.

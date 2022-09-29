@@ -1,0 +1,35 @@
+BES Telecon, 27 Oct. 2005
+
+Attendees
+---------------
+	Mark Morgan (minutes)
+	Andrew Grimshaw
+	John Karpovich
+	Darren Pulsipher
+	Stephen Newhouse
+
+* Darren made some updates to the document and posted them back up to gridforge.
+	- Primarily focused on state transitions
+	- The concept of doing blind suspends is gone.
+		-- Suggest we put back in a way of doing generic suspend/resume activities.
+		-- Why did we get rid of resume?
+			-- Part of the problem is that you can get into suspend from a lot of different places.
+	- Let's say that a client can ask for a move from one state to another.  If the BES can do that action, it will.  Otherwise, it won't.
+		-- Terminate is the same
+		-- Interface stays the same
+* When an activity enters an exception state, does it move to a cleaning up state.
+* We're not going to require any clean up activity.
+* If the thing fails on a stage out, the result on the external state is indeterminate.
+* If any one of the actions in stage in or stage out ends up an exception state, then the transition from stage-in or stage-out will be to the exception state.
+	- What happens to other stage-in's and outs?
+		-- indeterminate -- up to implementation.
+* What happens when you get terminated?
+	- Move to "cleaning-up"?
+* Chris had originally wanted to have the ability to stop things between stages.  For example, get everything staged in and then stop....etc.
+* Doing we want to turn running into a composite state?
+	- A lot of people felt that JSDL short-changed the MPI groups.
+	- We don't want to provide the ways to individually manipulate mpi process.  That's a higher level thing.  We should be dealing with the simple stuff like mpi run.
+* Let's post for last call in the group soon.
+* Darren to send to Andrew, Stephen, and Chris by end of the week.
+* Mark to do WSRF Profile Rendering, Stephen to do WS-I Rendering.
+* Stephen to send WSDL that William did.

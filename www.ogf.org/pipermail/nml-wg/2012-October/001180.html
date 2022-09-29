@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2012-October/001180.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Sep 2022 15:02:42 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] References
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=Re%3A%20%5BNml-wg%5D%20References&In-Reply-To=%3C6CD0E94B-B82E-4F89-A5A7-0409D2FD6593%40internet2.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2012-October/001179.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2012-October/001181.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] References</H1>
+    <B>Aaron Brown</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=Re%3A%20%5BNml-wg%5D%20References&In-Reply-To=%3C6CD0E94B-B82E-4F89-A5A7-0409D2FD6593%40internet2.edu%3E"
+       TITLE="[Nml-wg] References">aaron at internet2.edu
+       </A><BR>
+    <I>Wed Oct 17 07:10:50 EDT 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-October/001179.html">[Nml-wg] References
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-October/001181.html">[Nml-wg] layerencoding vs. encoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/date.html#1180">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/thread.html#1180">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/subject.html#1180">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/author.html#1180">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I wasn't being clear with my idRef case. It wasn't specifically about having an 'idRef' syntax. It was about whether the elements defined in relationships can be defined with references to existing elements instead of being another definition of that element. If we're going to go this route, i'd vote for completely axing the idRef syntax completely. The &quot;experimental&quot; draft can define the &quot;is-defined-by&quot; relationship, and then we can talk about references there, and when the time comes, allow using anonymous elements with &quot;is-defined-by&quot; relations in them inside relations. However, if we're not going to have references, we have to include text to the effect that &quot;if there are multiple definitions of A, including every relation definition of A, and the results of combining all definitions of A into one monster 'A' are ambiguous, that's your own fault&quot;, because every time there is a relation pointing to A, it creates a new definition of A to which attributes can be added, and the result of combining all the various A's can easily become ambiguous (e.g. my previous example where there are 3 &quot;definitions&quot; of A (i.e. 1 real definition, and 2 relation definitions), all with a different description attribute because each is looking at A from the perspective of a different network element).
+
+All I really wanted was that there be *some* method for defining references, and allowing their use in relations to be able to remove the above ambiguity. i.e. to allow network elements to say &quot;i'm telling you about A from my perspective&quot; vs. &quot;I'm telling you about A&quot;. This could even be orthogonal to Jeroen's proposal insofar as you could still have the rule &quot;everything with an id=A gets combined into one huge thing&quot; because the references could be in anonymous elements. At that point, there are just become 2 methods of defining references: define an element with id=A, define an anonymous element with an explicit reference to A.
+
+Cheers,
+Aaron
+
+On Oct 17, 2012, at 6:23 AM, Freek Dijkstra wrote:
+
+&gt;<i> Hi all,
+</I>&gt;<i> 
+</I>&gt;<i> The WG has been discussing the id/idRef/isReference last week at OGF36,
+</I>&gt;<i> with valuable input from Aaron by email.
+</I>&gt;<i> 
+</I>&gt;<i> Unfortunately, there still does not seem a clear consensus.
+</I>&gt;<i> 
+</I>&gt;<i> This means that I feel forced to move this issue to the experimental
+</I>&gt;<i> draft. If you disagree, please read the rest of this email and reply
+</I>&gt;<i> before the Oct 25 conference call.
+</I>&gt;<i> 
+</I>&gt;<i> Since nearly all participants agree that the discussed concepts are
+</I>&gt;<i> useful, I do suggest to continue to discussion. We do need this in the
+</I>&gt;<i> experimental document, not drop it altogether.
+</I>&gt;<i> 
+</I>&gt;<i> It seems that there are three overlapping use cases: authority
+</I>&gt;<i> (distinguishing between something defined by the sender, or defined by a
+</I>&gt;<i> third party), reference (pointing to the location -third party, or other
+</I>&gt;<i> place in the document-) and finally verification (making sure that a
+</I>&gt;<i> definition is complete, and uniquely defined).
+</I>&gt;<i> 
+</I>&gt;<i> Most proposal I've seen dealt with syntax, some with logic, but none
+</I>&gt;<i> really started with a requirement based on these use cases. That leads
+</I>&gt;<i> me to believe that this issue is not fully understood and belongs in the
+</I>&gt;<i> experimental document.
+</I>&gt;<i> 
+</I>&gt;<i> These topics have one thing in common: they all are part of the control
+</I>&gt;<i> plane of the NML protocol, rather than issues dealing with actually
+</I>&gt;<i> Topology description. For example, the authority use case ultimately
+</I>&gt;<i> deals with trust. Jeroen's proposal is to basically accept all messages
+</I>&gt;<i> as authoritative and combine them in a single object, regardless of
+</I>&gt;<i> origin of the message and how it is described (or at least deal with
+</I>&gt;<i> this sort of logic on the application layer). Aaron's proposal is more
+</I>&gt;<i> elaborate, and does allow the sender to make a distinction between a
+</I>&gt;<i> full definition and a object reference. This might allow syntax checks
+</I>&gt;<i> or change the confidentiality level that a NML recipient may have in a
+</I>&gt;<i> statement (compare &quot;here a full description of a Port&quot; to &quot;I *think*
+</I>&gt;<i> this link ends up at this-and-that 3rd party Port, but I don't know the
+</I>&gt;<i> details of that port&quot;). If I was recipient, I would place more
+</I>&gt;<i> confidentiality in the first message than the second statement, and if
+</I>&gt;<i> the conflict, I would drop the second statement in favour of the first.
+</I>&gt;<i> 
+</I>&gt;<i> I still feel that Aaron's proposal has a good potential. However, I'm
+</I>&gt;<i> still not 100% sure about the logic -- is it only about verification, or
+</I>&gt;<i> also authority? Despite the subject line in this email thread, it
+</I>&gt;<i> doesn't seem to be about reference (after all, an idRef means the id may
+</I>&gt;<i> either be defined elsewhere in the document, or it may be defined by a
+</I>&gt;<i> third party, but it doesn't tell me who that third party is or where in
+</I>&gt;<i> the document the definition can be found).
+</I>&gt;<i> 
+</I>&gt;<i> Hence, I'm going with the most simple (and IMHO less elegant) proposal
+</I>&gt;<i> by Jeroen which doesn't make any statement about any of the above, and
+</I>&gt;<i> just uses &quot;id&quot; all the time. No idRef, no isReference, no isDefinedBy.
+</I>&gt;<i> 
+</I>&gt;<i> One thing we still want to consider is to include idRef in the NML-base
+</I>&gt;<i> document, and say that NML compatible parsers SHOULD also accept the
+</I>&gt;<i> &quot;idRef&quot; in addition to the &quot;id&quot; parameter. A parser SHOULD treat them
+</I>&gt;<i> equally. This would at least allow us to later differentiate between id
+</I>&gt;<i> and idRef. This may help prevent backward incompatibility if we decide
+</I>&gt;<i> to add idRef later.
+</I>&gt;<i> 
+</I>&gt;<i> This issue has some strong opponents, so if you feel that I as co-chair
+</I>&gt;<i> made the wrong decision here, please let me know off-list of on-list.
+</I>&gt;<i> I'm always open to suggestions and improvement. And please, do not stop
+</I>&gt;<i> discussing this issue. We should pursue it; it is just that at the
+</I>&gt;<i> current state of discussion I see no other option to move it to
+</I>&gt;<i> experimental not to unduly delay publication of the base document.
+</I>&gt;<i> 
+</I>&gt;<i> Regards,
+</I>&gt;<i> Freek
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> nml-wg mailing list
+</I>&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">nml-wg at ogf.org</A>
+</I>&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">https://www.ogf.org/mailman/listinfo/nml-wg</A>
+</I>
+TIP2013, University of Hawaii M&#257;noa
+January 13 - January 17, 2013, Honolulu, HI
+<A HREF="http://events.internet2.edu/2013/tip/">http://events.internet2.edu/2013/tip/</A>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://www.ogf.org/pipermail/nml-wg/attachments/20121017/156dad05/attachment.html">http://www.ogf.org/pipermail/nml-wg/attachments/20121017/156dad05/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-October/001179.html">[Nml-wg] References
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-October/001181.html">[Nml-wg] layerencoding vs. encoding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/date.html#1180">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/thread.html#1180">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/subject.html#1180">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-October/author.html#1180">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2012-October/001180.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Sep 2022 15:02:42 GMT -->
+</html>

@@ -1,0 +1,225 @@
+Certificate Authority Operations Working Group
+Global Grid Forum 11
+Honolulu, Hawaii
+Monday, June 7, 2004
+10am - 11:30am
+
+Agenda:
+
+- Review minutes of session at GGF10
+- Status update of PDS and PMA documents (Tony)
+- Discuss the OCSP document (Olle)
+- What is needed in a Grid PKI? (Ayoko Komatsu)
+  Experience with the Japanese National Grid Initiative
+- Discuss new Authentication Profiles document (Tony)
+  A draft of the Authentication Profiles document is now available
+  (but may change location).
+ http://forge.gridforum.org/projects/caops-wg/document/Authentication_profiles/
+- Other business?
+
+Meeting Summary:
+
+The PKI Disclosure Statement document is on hold awaiting copyright
+release from the American Bar Association.  The Policy Management
+Authority Model Charter document is ready to submit as an
+informational draft.  The group will work on a document on Online
+Certificate Status Protocol (OCSP) requirements for grids.  The group
+will also work on a CA Profile document covering classic PKI, online
+CAs, and credential repositories.  Volunteer authors are solicited.
+Ayoko Komatsu presented experience with the Japanese National Grid
+Initiative.
+
+Minutes:
+
+No objections to GGF10 minutes.
+
+PDS document is on hold awaiting release of copyright on American Bar
+Association's PKI disclosure statement, since our PDS document is a
+derived work of the ABA's document.
+
+PMA document is finished.  Debating whether it should be informational
+or community practice.  The concern is that the document reflects
+academic communities but not commercial, so the document does not
+reflect the scope of the whole GGF community.  Tony will raise this
+issue on the mailing list, proposing that it be informational.
+
+Olle Mulmo presented "OCSP Confessions".
+Goal: sort-out mysteries surrounding OCSP.
+Overview:
+- Online Certificate Status Protocol (RFC 2560)
+- Lightweight request/response protocol (HTTP)
+- Removes burden of CRL distribution and update
+- Clients still have to do path validation
+Trust model alternatives:
+- CA signs responses (rare)
+- Dedicated OCSP signing key certified by CA (extKeyUsage) (common)
+- Other trusted party (local trust configuration)
+How do you check status of OCSP responder?
+- Problem: could get infinite loop!
+- Option #1:
+  - Don't
+  - OCSP-no-check extension
+  - Short-lived signature certificates
+    (online CA or CA pre-signs certificates).
+- Option #2: (not covered by RFC)
+  - Parent CA signs CA certificate and OCSP's certificate
+  - Used in some financial sector PKIs
+  - RFC compliant in an odd kind of way?
+  - Go to parent CA to check revocation status of OCSP certificate
+  - Requires local configuration to trust OCSP's certificate as a
+    responder for this CA
+Typical deployment:
+- Client has its trust anchors (trusted CA certificates) plus local
+  trusted OCSP responder which provides a CRL cache or OCSP
+  forwarding service.  Client configured with one trusted OCSP key.
+Document status:
+- Aiming for a requirements document.
+- Eliminate some of the options OCSP offers, i.e., provide a profile.
+- No content yet.
+OCSP over HTTPS?
+- Don't want to disclose what certificates you are validating?
+- Responses are signed by OCSP responder but not error messages.
+- Easy to shoot yourself in the foot: HTTPS service certificate
+  probably needs no-check extension or you will get an infinite loop.
+- Are there concerns/opinions in the community about this?
+Verisign has a huge OCSP responder.  Used everywhere.
+- How is Verisign's OCSP responder configured?  Probably with no-check.
+  Easy to find out.  Mike Helm will check.
+- Also talk to Entrust?
+- What kind of clients are using their OCSP responder?
+State of client support:
+  - Mozilla support
+  - IE plugins available (non-free?)
+  - OpenSSL 0.9.7 has support for a while.  Not in common use for many
+    Globus Toolkit deployments but latest GT/VDT/NMI releases include
+    it.
+Dane: Current model is pull CRL update.  CAs could push CRLs to OCSP
+  responders, like DNS?  Will be discussed in the paper.  Avoid
+  having all relying parties running cron jobs to update CRLs.
+Have a PMA repository containing all CA certificates with CRL updates.
+
+Mike Helm presented more details about OCSP.
+Requirements gathering:
+- Announced at EGEE Apr 2004
+- DOE Science Grid
+  - NERSC
+    - Support for local lists
+      - Special case: local proxy certs
+    - Support cert suspension (really a CRL issue)
+    - Direction is toward a real-time validation
+  - Mention in Steve Chan's OTP Requirements document (NERSC)
+  - DOE SG not re-funded
+- Slow progress: but no opportunity cost yet since many grids not
+  using latest software that supports OCSP yet
+Request for advice/assistance on this work.
+How does this fit with Site Integrated Proxy Servers (SIPS)?
+- like KCA, MyProxy
+- Check the CRL in a credential store for proxy retrieval/renewal?
+- Use certificate extensions to point to OCSP responder?
+OCSP has the ability for a client to ask for an updated response with
+nonces.  Caching responses is valuable.  Need to address this in the
+paper.  See:
+  Lightweight OCSP Profile for High Volume Environments
+  http://www.ietf.org/internet-drafts/draft-deacon-lightweight-ocsp-profile-00.txt
+
+Ayoko Komatsu presented experience with the Japanese National Grid
+Initiative.
+Naregi: National Research Grid Initiative in Japan
+- Organized by gov't sector (National Institute of Information)
+Naregi PKI service
+- Start this march
+- (Currently) Single PKI domain architecture
+- Issue certificates for Globus and Unicore separately
+- Initially based on GGF CP/CPS (GFD-C.16 June 1, 2003)
+Issues
+- Different policy for Globus and Unicore but users want a common
+  certificate
+- Different organizations with different ID and authentication policy
+- Certificate Profile
+  - CA certificate
+  - Globus certificate
+  - Unicore certificate
+  - Required KeyUsage extensions need to be specified.
+Unicore vs. Globus
+- UNICORE (GFD.18 An Analysis of the UNICORE Security Model)
+- Users want a common certificate for Globus and Unicore
+- Unicore and Globus policies differ.
+Is UNICORE in any existing Grid PMA?  Don't think so.
+What is the incompatibility?
+Issue: Keyusage?
+- GGF CP Model
+  - Key usage extension is critical
+- UNICORE could use extent-key-usage, code-signing (id-kp, 3)
+  specified in RFC3280.
+Ayoko will publish Naregi's certificate profile.
+Mike did a survey of SSL certificates and didn't find extensions in
+wide use.
+Issue: Certificate/CRL Profile?
+- Need the CP/CPS reference model
+  - Key usage as described
+  - CA certificate profile
+  - need another keyusage or policy for Globus
+Issue: Multiple PKI domain?
+- Naregi needs a multi-domain PKI
+  - Which architecture is desirable?
+  - Multiple trust point for user?
+  - Single trust point and cross certification?
+- What are restrictions or conditions for interoperability?
+What is Globus Toolkit support for bridging?
+We should gather these issues into a document.
+Naregi has developed an open source CA and will release soon (for GGF12).
+Publishing experience on developing an open source CA would be valuable.
+
+Tony presented the new Authentication Profiles document.
+How do we build trust domains?
+How do we compare trust domains?
+Trust can be built around shared responsibility and common goals.
+We currently have two profiles and a third is on the way.
+- Classic PKI: EGEE
+- Site integrated proxy services (SIPS): FNAL KCA
+- Credential stores: NERSC
+KCA not accepted by EGEE PMA.
+What is required for a profile?
+- Minimum requirements specification for the community
+- Publiishing methods for community access (example: Terena)
+- Published set of policies (using template CP)
+- Auditable infrastructure
+- Other?
+Is this list sufficient to build trust?
+Very distributed PKI model like with DOE Grids becomes a challenge
+when a site has a security breach.  How do we locate certificates?
+Credentials stores and online CAs help with this problem.
+Is this a valuable tool for the community?  Is this list sufficient?
+Mike Helm says experience with European Data Grid is that very long
+CPSs aren't very useful.  Can we assign OIDs to profiles?
+This is an informational document.
+Where can we publish these profiles?  In GGF?
+Why not just include profile in the CP/CPS?
+Provide profiles for CP/CPSs for different types of services.
+Profiles contain minimum requirements and meta-content (issues to address).
+Next steps:
+- Gather current profile definitions and information
+- Research process for registering or publishing profiles
+- draft informational doc
+Agreed that profiling is of use.
+Tony requested volunteers for authors.  Tony volunteers to edit.
+Steve Chan will write credential store section.
+KCA deployments at ISI, Pittsburgh, and Fermi.  Dane will try to find
+a volunteer.
+
+Any other business?
+
+Mike Helm has received a request for more script-based and email based
+CA processing.
+Grid Canada CA is all email and script based.
+How do you deal with email problems?
+Is bounced email evidence that the registration is no good?
+Grid Canada CA revokes certificate if email bounces.
+Is this something the WG should document?
+The Globus grid-cert-request doesn't meet es.net's needs.
+Doesn't provide enough information for registration authorities.
+Would it be worthwhile writing a description of what the certificate
+request format should be?  What attributes need to be in the request?
+Must say who you are, your affiliation.
+
+Meeting adjourned.

@@ -1,0 +1,70 @@
+ Minutes for BES Telecon, 10 August 2006
+
+Attendees
+---------------
+	Mark Morgan (Minutes)
+	Andrew Grimshaw
+	Glenn Wasson
+	Darren Pulsipher
+	Marvin Theimer
+	Jay Unger
+	Stephen Newhouse
+	Chris Smith
+
+Agenda
+-----------
+	* Assign a notetaker (Mark to do it)
+	* Modify the agenda to insert quick document status review
+	* Attributes and Attribute Model
+	  	-- Try to come to closure on what the attributes are going to be.
+	* Do we want to talk about Base Faults?
+		-- Not here -- do on email
+	
+* Status Review
+	* Ian took the pen on the document and now we can't get ahold of him
+		-- Time constraints are starting to approach for the HPC profile.
+		-- Andrew to be a little more agressive working through Argon to get ahold of him and then Andrew will take the pen back.
+	* Confirmed with Dave Snelling just before this call that the State Model representation decision at the F2F (The Marvin Plan) that he had come over to that side.
+* Info model and attributes
+	* The types are in-precise (that should be precise such as xsd:integer)
+	* Flat vs. Hierarchical
+		-- May need to go flat for now and go to something else later.
+		-- We're going to need to settle for flat but write into the document that future versions may change the cardinality or other aspects of this.
+		-- There is a consensus that the specialization things such as posix or the WSRF attributes do NOT belong in the base specification, but they do make a lot of sense in extensions and in particular a POSIX extension in the appendix of this document.
+		-- If I have a schema for these attributes, then we can make the multiplicity correct for a more hierarchical system.
+		-- We're going to go with Andrew's suggestion of
+			Container Attributes
+			Vector of resource specific attributes (such as OS, num processors, etc.)
+			Make sure that the resource document MAY be a BES document, but doesn't have to be.
+	* Attributes
+		Common Name should be a MAY (BES Level)
+		LocalResourceManagerType MUST be a QName (both a BES one, and inside the resource document).
+		TotalNumberOfActivities (Mandatory at the top level, but optional at the bottom level)
+
+*** Discussion ***
+Are we talking about:
+	BR = Base Resource
+	BES = <
+		Whatever for the BES itself
+		Array of BR | BES
+
+	* So, instead, we will label things as BES or BR
+Define BR as BES minus the web service specific things.
+
+Need more pictures.
+		-- Total number of activities is BES only
+		-- Activity Reference is BES only
+		-- Description (BES)
+		-- Execution Service Location (remove)
+		-- Job Credential Service and File Credential Service should be removed -- no one knows what they are and they seem specific to certain implementations.
+		-- Proposal to nuke (OperatingSystemVersion as it is included in jsdl:OperatingSystem)
+		-- OperatingSystem is a BR thing
+		-- MaxProcessesPerUser -- what is this?  Belongs in an extension?  Yes, consensus on this
+		-- CPUArchitecture is BR
+		-- CPUCount is BR
+		-- CPUSpeed is BR
+		-- PhysicalMemory is BR
+		-- VirtualMemory is BR
+		-- Writeable File Space -- consensus is to take out.
+		-- Network Bandwidth -- consensus is to take out.
+		-- Library -- a VERY good extension, but doesn't belong here.  Belongs with deployment, but not here.

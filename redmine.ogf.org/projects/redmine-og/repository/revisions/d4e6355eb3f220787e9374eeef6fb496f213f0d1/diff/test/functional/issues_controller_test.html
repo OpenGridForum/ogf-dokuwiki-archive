@@ -1,0 +1,1418 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/d4e6355eb3f220787e9374eeef6fb496f213f0d1/diff/test/functional/issues_controller_test.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:42:28 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>/test/functional/issues_controller_test.rb - Diff - Redmine - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+<link href="https://redmine.ogf.org/stylesheets/scm.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body class="theme-Ogf redmine controller-repositories action-diff">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/redmine-og" method="get">
+        <input name="changesets" type="hidden" value="1" />
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/redmine-og" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=repository" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=repository" class="ancestor">IT</a> » Redmine</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/redmine-og" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/redmine-og" class="dmsf">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/repository" class="repository selected">Repository</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        <h2>Revision d4e6355e test/functional/issues_controller_test.rb</h2>
+
+<!-- Choose view type -->
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/diff/test/functional/issues_controller_test.rb" method="get">
+  <input id="rev" name="rev" type="hidden" value="d4e6355eb3f220787e9374eeef6fb496f213f0d1" />
+  
+  <p>
+    <label>View differences</label>
+    <select id="type" name="type" onchange="if (this.value != '') {this.form.submit()}"><option value="inline" selected="selected">inline</option>
+<option value="sbs">side by side</option></select>
+  </p>
+</form>
+
+
+<div class="autoscroll">
+<table class="filecontent">
+<thead>
+  <tr>
+    <th colspan="3" class="filename">
+      b/test/functional/issues_controller_test.rb
+    </th>
+  </tr>
+</thead>
+<tbody>
+
+<tr>
+  <th class="line-num">1663</th>
+  <th class="line-num">1663</th>
+  <td class="line-code ">
+    <pre>    assert_equal 59, File.size(attachment.diskfile)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1664</th>
+  <th class="line-num">1664</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1665</th>
+  <th class="line-num">1665</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1666</th>
+  <td class="line-code diff_in">
+    <pre>  def test_post_create_with_failure_should_save_attachments
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1667</th>
+  <td class="line-code diff_in">
+    <pre>    set_tmp_attachments_directory
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1668</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1669</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1670</th>
+  <td class="line-code diff_in">
+    <pre>    assert_no_difference 'Issue.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1671</th>
+  <td class="line-code diff_in">
+    <pre>      assert_difference 'Attachment.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1672</th>
+  <td class="line-code diff_in">
+    <pre>        post :create, :project_id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1673</th>
+  <td class="line-code diff_in">
+    <pre>          :issue =&gt; { :tracker_id =&gt; '1', :subject =&gt; '' },
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1674</th>
+  <td class="line-code diff_in">
+    <pre>          :attachments =&gt; {'1' =&gt; {'file' =&gt; uploaded_test_file('testfile.txt', 'text/plain'), 'description' =&gt; 'test file'}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1675</th>
+  <td class="line-code diff_in">
+    <pre>        assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1676</th>
+  <td class="line-code diff_in">
+    <pre>        assert_template 'new'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1677</th>
+  <td class="line-code diff_in">
+    <pre>      end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1678</th>
+  <td class="line-code diff_in">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1679</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1680</th>
+  <td class="line-code diff_in">
+    <pre>    attachment = Attachment.first(:order =&gt; 'id DESC')
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1681</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal 'testfile.txt', attachment.filename
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1682</th>
+  <td class="line-code diff_in">
+    <pre>    assert File.exists?(attachment.diskfile)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1683</th>
+  <td class="line-code diff_in">
+    <pre>    assert_nil attachment.container
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1684</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1685</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'input', :attributes =&gt; {:name =&gt; 'attachments[p0][token]', :value =&gt; attachment.token}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1686</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'span', :content =&gt; /testfile.txt/
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1687</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1688</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1689</th>
+  <td class="line-code diff_in">
+    <pre>  def test_post_create_with_failure_should_keep_saved_attachments
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1690</th>
+  <td class="line-code diff_in">
+    <pre>    set_tmp_attachments_directory
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1691</th>
+  <td class="line-code diff_in">
+    <pre>    attachment = Attachment.create!(:file =&gt; uploaded_test_file(&quot;testfile.txt&quot;, &quot;text/plain&quot;), :author_id =&gt; 2)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1692</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1693</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1694</th>
+  <td class="line-code diff_in">
+    <pre>    assert_no_difference 'Issue.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1695</th>
+  <td class="line-code diff_in">
+    <pre>      assert_no_difference 'Attachment.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1696</th>
+  <td class="line-code diff_in">
+    <pre>        post :create, :project_id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1697</th>
+  <td class="line-code diff_in">
+    <pre>          :issue =&gt; { :tracker_id =&gt; '1', :subject =&gt; '' },
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1698</th>
+  <td class="line-code diff_in">
+    <pre>          :attachments =&gt; {'p0' =&gt; {'token' =&gt; attachment.token}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1699</th>
+  <td class="line-code diff_in">
+    <pre>        assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1700</th>
+  <td class="line-code diff_in">
+    <pre>        assert_template 'new'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1701</th>
+  <td class="line-code diff_in">
+    <pre>      end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1702</th>
+  <td class="line-code diff_in">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1703</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1704</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'input', :attributes =&gt; {:name =&gt; 'attachments[p0][token]', :value =&gt; attachment.token}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1705</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'span', :content =&gt; /testfile.txt/
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1706</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1707</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1708</th>
+  <td class="line-code diff_in">
+    <pre>  def test_post_create_should_attach_saved_attachments
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1709</th>
+  <td class="line-code diff_in">
+    <pre>    set_tmp_attachments_directory
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1710</th>
+  <td class="line-code diff_in">
+    <pre>    attachment = Attachment.create!(:file =&gt; uploaded_test_file(&quot;testfile.txt&quot;, &quot;text/plain&quot;), :author_id =&gt; 2)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1711</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1712</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1713</th>
+  <td class="line-code diff_in">
+    <pre>    assert_difference 'Issue.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1714</th>
+  <td class="line-code diff_in">
+    <pre>      assert_no_difference 'Attachment.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1715</th>
+  <td class="line-code diff_in">
+    <pre>        post :create, :project_id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1716</th>
+  <td class="line-code diff_in">
+    <pre>          :issue =&gt; { :tracker_id =&gt; '1', :subject =&gt; 'Saved attachments' },
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1717</th>
+  <td class="line-code diff_in">
+    <pre>          :attachments =&gt; {'p0' =&gt; {'token' =&gt; attachment.token}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1718</th>
+  <td class="line-code diff_in">
+    <pre>        assert_response 302
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1719</th>
+  <td class="line-code diff_in">
+    <pre>      end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1720</th>
+  <td class="line-code diff_in">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1721</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1722</th>
+  <td class="line-code diff_in">
+    <pre>    issue = Issue.first(:order =&gt; 'id DESC')
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1723</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal 1, issue.attachments.count
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1724</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1725</th>
+  <td class="line-code diff_in">
+    <pre>    attachment.reload
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1726</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal issue, attachment.container
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1727</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1728</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1666</th>
+  <th class="line-num">1729</th>
+  <td class="line-code ">
+    <pre>  context &quot;without workflow privilege&quot; do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1667</th>
+  <th class="line-num">1730</th>
+  <td class="line-code ">
+    <pre>    setup do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1668</th>
+  <th class="line-num">1731</th>
+  <td class="line-code ">
+    <pre>      Workflow.delete_all([&quot;role_id = ?&quot;, Role.anonymous.id])
+</pre>
+  </td>
+</tr>
+
+<tr class="spacing">
+  <th class="line-num">...</th><th class="line-num">...</th><td></td>
+</tr>
+<tr>
+  <th class="line-num">2301</th>
+  <th class="line-num">2364</th>
+  <td class="line-code ">
+    <pre>    assert mail.body.include?('testfile.txt')
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2302</th>
+  <th class="line-num">2365</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2303</th>
+  <th class="line-num">2366</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2367</th>
+  <td class="line-code diff_in">
+    <pre>  def test_put_update_with_failure_should_save_attachments
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2368</th>
+  <td class="line-code diff_in">
+    <pre>    set_tmp_attachments_directory
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2369</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2370</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2371</th>
+  <td class="line-code diff_in">
+    <pre>    assert_no_difference 'Journal.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2372</th>
+  <td class="line-code diff_in">
+    <pre>      assert_difference 'Attachment.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2373</th>
+  <td class="line-code diff_in">
+    <pre>        put :update, :id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2374</th>
+  <td class="line-code diff_in">
+    <pre>          :issue =&gt; { :subject =&gt; '' },
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2375</th>
+  <td class="line-code diff_in">
+    <pre>          :attachments =&gt; {'1' =&gt; {'file' =&gt; uploaded_test_file('testfile.txt', 'text/plain'), 'description' =&gt; 'test file'}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2376</th>
+  <td class="line-code diff_in">
+    <pre>        assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2377</th>
+  <td class="line-code diff_in">
+    <pre>        assert_template 'edit'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2378</th>
+  <td class="line-code diff_in">
+    <pre>      end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2379</th>
+  <td class="line-code diff_in">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2380</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2381</th>
+  <td class="line-code diff_in">
+    <pre>    attachment = Attachment.first(:order =&gt; 'id DESC')
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2382</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal 'testfile.txt', attachment.filename
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2383</th>
+  <td class="line-code diff_in">
+    <pre>    assert File.exists?(attachment.diskfile)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2384</th>
+  <td class="line-code diff_in">
+    <pre>    assert_nil attachment.container
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2385</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2386</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'input', :attributes =&gt; {:name =&gt; 'attachments[p0][token]', :value =&gt; attachment.token}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2387</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'span', :content =&gt; /testfile.txt/
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2388</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2389</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2390</th>
+  <td class="line-code diff_in">
+    <pre>  def test_put_update_with_failure_should_keep_saved_attachments
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2391</th>
+  <td class="line-code diff_in">
+    <pre>    set_tmp_attachments_directory
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2392</th>
+  <td class="line-code diff_in">
+    <pre>    attachment = Attachment.create!(:file =&gt; uploaded_test_file(&quot;testfile.txt&quot;, &quot;text/plain&quot;), :author_id =&gt; 2)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2393</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2394</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2395</th>
+  <td class="line-code diff_in">
+    <pre>    assert_no_difference 'Journal.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2396</th>
+  <td class="line-code diff_in">
+    <pre>      assert_no_difference 'Attachment.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2397</th>
+  <td class="line-code diff_in">
+    <pre>        put :update, :id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2398</th>
+  <td class="line-code diff_in">
+    <pre>          :issue =&gt; { :subject =&gt; '' },
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2399</th>
+  <td class="line-code diff_in">
+    <pre>          :attachments =&gt; {'p0' =&gt; {'token' =&gt; attachment.token}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2400</th>
+  <td class="line-code diff_in">
+    <pre>        assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2401</th>
+  <td class="line-code diff_in">
+    <pre>        assert_template 'edit'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2402</th>
+  <td class="line-code diff_in">
+    <pre>      end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2403</th>
+  <td class="line-code diff_in">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2404</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2405</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'input', :attributes =&gt; {:name =&gt; 'attachments[p0][token]', :value =&gt; attachment.token}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2406</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'span', :content =&gt; /testfile.txt/
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2407</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2408</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2409</th>
+  <td class="line-code diff_in">
+    <pre>  def test_put_update_should_attach_saved_attachments
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2410</th>
+  <td class="line-code diff_in">
+    <pre>    set_tmp_attachments_directory
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2411</th>
+  <td class="line-code diff_in">
+    <pre>    attachment = Attachment.create!(:file =&gt; uploaded_test_file(&quot;testfile.txt&quot;, &quot;text/plain&quot;), :author_id =&gt; 2)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2412</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2413</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2414</th>
+  <td class="line-code diff_in">
+    <pre>    assert_difference 'Journal.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2415</th>
+  <td class="line-code diff_in">
+    <pre>      assert_difference 'JournalDetail.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2416</th>
+  <td class="line-code diff_in">
+    <pre>        assert_no_difference 'Attachment.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2417</th>
+  <td class="line-code diff_in">
+    <pre>          put :update, :id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2418</th>
+  <td class="line-code diff_in">
+    <pre>            :notes =&gt; 'Attachment added',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2419</th>
+  <td class="line-code diff_in">
+    <pre>            :attachments =&gt; {'p0' =&gt; {'token' =&gt; attachment.token}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2420</th>
+  <td class="line-code diff_in">
+    <pre>          assert_redirected_to '/issues/1'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2421</th>
+  <td class="line-code diff_in">
+    <pre>        end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2422</th>
+  <td class="line-code diff_in">
+    <pre>      end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2423</th>
+  <td class="line-code diff_in">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2424</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2425</th>
+  <td class="line-code diff_in">
+    <pre>    attachment.reload
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2426</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal Issue.find(1), attachment.container
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2427</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2428</th>
+  <td class="line-code diff_in">
+    <pre>    journal = Journal.first(:order =&gt; 'id DESC')
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2429</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal 1, journal.details.size
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2430</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal 'testfile.txt', journal.details.first.value
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2431</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2432</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2304</th>
+  <th class="line-num">2433</th>
+  <td class="line-code ">
+    <pre>  def test_put_update_with_attachment_that_fails_to_save
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2305</th>
+  <th class="line-num">2434</th>
+  <td class="line-code ">
+    <pre>    set_tmp_attachments_directory
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2306</th>
+  <th class="line-num">2435</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+<p class="other-formats">(Other formats not available in this archive.</p>
+
+
+
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/d4e6355eb3f220787e9374eeef6fb496f213f0d1/diff/test/functional/issues_controller_test.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:42:28 GMT -->
+</html>

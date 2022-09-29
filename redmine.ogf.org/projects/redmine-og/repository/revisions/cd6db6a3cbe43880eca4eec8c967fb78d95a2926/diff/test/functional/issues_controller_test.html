@@ -1,0 +1,2597 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/cd6db6a3cbe43880eca4eec8c967fb78d95a2926/diff/test/functional/issues_controller_test.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:40:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>/test/functional/issues_controller_test.rb - Diff - Redmine - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="7RiXtn8JMoxXZTBSrtL64n0O2gGmxf69GTM4qjOvQSI="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+<link href="https://redmine.ogf.org/stylesheets/scm.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body class="theme-Ogf redmine controller-repositories action-diff">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/redmine-og" method="get">
+        <input name="changesets" type="hidden" value="1" />
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/redmine-og" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=repository" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=repository" class="ancestor">IT</a> » Redmine</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/redmine-og" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/redmine-og" class="dmsf">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/repository" class="repository selected">Repository</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        <h2>Revision cd6db6a3 test/functional/issues_controller_test.rb</h2>
+
+<!-- Choose view type -->
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/diff/test/functional/issues_controller_test.rb" method="get">
+  <input id="rev" name="rev" type="hidden" value="cd6db6a3cbe43880eca4eec8c967fb78d95a2926" />
+  
+  <p>
+    <label>View differences</label>
+    <select id="type" name="type" onchange="if (this.value != '') {this.form.submit()}"><option value="inline" selected="selected">inline</option>
+<option value="sbs">side by side</option></select>
+  </p>
+</form>
+
+
+<div class="autoscroll">
+<table class="filecontent">
+<thead>
+  <tr>
+    <th colspan="3" class="filename">
+      b/test/functional/issues_controller_test.rb
+    </th>
+  </tr>
+</thead>
+<tbody>
+
+<tr>
+  <th class="line-num">625</th>
+  <th class="line-num">625</th>
+  <td class="line-code ">
+    <pre>      :ancestor =&gt; {:tag =&gt; 'table', :attributes =&gt; {:class =&gt; /issues/}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">626</th>
+  <th class="line-num">626</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">627</th>
+  <th class="line-num">627</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">628</th>
+  <td class="line-code diff_in">
+    <pre>  def test_index_with_multi_custom_field_column
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">629</th>
+  <td class="line-code diff_in">
+    <pre>    field = CustomField.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">630</th>
+  <td class="line-code diff_in">
+    <pre>    field.update_attribute :multiple, true
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">631</th>
+  <td class="line-code diff_in">
+    <pre>    issue = Issue.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">632</th>
+  <td class="line-code diff_in">
+    <pre>    issue.custom_field_values = {1 =&gt; ['MySQL', 'Oracle']}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">633</th>
+  <td class="line-code diff_in">
+    <pre>    issue.save!
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">634</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">635</th>
+  <td class="line-code diff_in">
+    <pre>    get :index, :set_filter =&gt; 1, :c =&gt; %w(tracker subject cf_1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">636</th>
+  <td class="line-code diff_in">
+    <pre>    assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">637</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">638</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag :td,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">639</th>
+  <td class="line-code diff_in">
+    <pre>      :attributes =&gt; {:class =&gt; /cf_1/},
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">640</th>
+  <td class="line-code diff_in">
+    <pre>      :content =&gt; 'MySQL, Oracle'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">641</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">642</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">643</th>
+  <td class="line-code diff_in">
+    <pre>  def test_index_with_multi_user_custom_field_column
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">644</th>
+  <td class="line-code diff_in">
+    <pre>    field = IssueCustomField.create!(:name =&gt; 'Multi user', :field_format =&gt; 'user', :multiple =&gt; true,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">645</th>
+  <td class="line-code diff_in">
+    <pre>      :tracker_ids =&gt; [1], :is_for_all =&gt; true)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">646</th>
+  <td class="line-code diff_in">
+    <pre>    issue = Issue.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">647</th>
+  <td class="line-code diff_in">
+    <pre>    issue.custom_field_values = {field.id =&gt; ['2', '3']}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">648</th>
+  <td class="line-code diff_in">
+    <pre>    issue.save!
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">649</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">650</th>
+  <td class="line-code diff_in">
+    <pre>    get :index, :set_filter =&gt; 1, :c =&gt; ['tracker', 'subject', &quot;cf_#{field.id}&quot;]
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">651</th>
+  <td class="line-code diff_in">
+    <pre>    assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">652</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">653</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag :td,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">654</th>
+  <td class="line-code diff_in">
+    <pre>      :attributes =&gt; {:class =&gt; /cf_#{field.id}/},
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">655</th>
+  <td class="line-code diff_in">
+    <pre>      :child =&gt; {:tag =&gt; 'a', :content =&gt; 'John Smith'}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">656</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">657</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">628</th>
+  <th class="line-num">658</th>
+  <td class="line-code ">
+    <pre>  def test_index_with_date_column
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">629</th>
+  <th class="line-num">659</th>
+  <td class="line-code ">
+    <pre>    Issue.find(1).update_attribute :start_date, '1987-08-24'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">630</th>
+  <th class="line-num">660</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr class="spacing">
+  <th class="line-num">...</th><th class="line-num">...</th><td></td>
+</tr>
+<tr>
+  <th class="line-num">1032</th>
+  <th class="line-num">1062</th>
+  <td class="line-code ">
+    <pre>    assert_no_tag 'a', :content =&gt; /Next/
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1033</th>
+  <th class="line-num">1063</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1034</th>
+  <th class="line-num">1064</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1065</th>
+  <td class="line-code diff_in">
+    <pre>  def test_show_with_multi_custom_field
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1066</th>
+  <td class="line-code diff_in">
+    <pre>    field = CustomField.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1067</th>
+  <td class="line-code diff_in">
+    <pre>    field.update_attribute :multiple, true
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1068</th>
+  <td class="line-code diff_in">
+    <pre>    issue = Issue.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1069</th>
+  <td class="line-code diff_in">
+    <pre>    issue.custom_field_values = {1 =&gt; ['MySQL', 'Oracle']}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1070</th>
+  <td class="line-code diff_in">
+    <pre>    issue.save!
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1071</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1072</th>
+  <td class="line-code diff_in">
+    <pre>    get :show, :id =&gt; 1
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1073</th>
+  <td class="line-code diff_in">
+    <pre>    assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1074</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1075</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag :td, :content =&gt; 'MySQL, Oracle'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1076</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1077</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1078</th>
+  <td class="line-code diff_in">
+    <pre>  def test_show_with_multi_user_custom_field
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1079</th>
+  <td class="line-code diff_in">
+    <pre>    field = IssueCustomField.create!(:name =&gt; 'Multi user', :field_format =&gt; 'user', :multiple =&gt; true,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1080</th>
+  <td class="line-code diff_in">
+    <pre>      :tracker_ids =&gt; [1], :is_for_all =&gt; true)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1081</th>
+  <td class="line-code diff_in">
+    <pre>    issue = Issue.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1082</th>
+  <td class="line-code diff_in">
+    <pre>    issue.custom_field_values = {field.id =&gt; ['2', '3']}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1083</th>
+  <td class="line-code diff_in">
+    <pre>    issue.save!
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1084</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1085</th>
+  <td class="line-code diff_in">
+    <pre>    get :show, :id =&gt; 1
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1086</th>
+  <td class="line-code diff_in">
+    <pre>    assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1087</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1088</th>
+  <td class="line-code diff_in">
+    <pre>    # TODO: should display links
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1089</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag :td, :content =&gt; 'John Smith, Dave Lopper'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1090</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1091</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1035</th>
+  <th class="line-num">1092</th>
+  <td class="line-code ">
+    <pre>  def test_show_atom
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1036</th>
+  <th class="line-num">1093</th>
+  <td class="line-code ">
+    <pre>    get :show, :id =&gt; 2, :format =&gt; 'atom'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1037</th>
+  <th class="line-num">1094</th>
+  <td class="line-code ">
+    <pre>    assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr class="spacing">
+  <th class="line-num">...</th><th class="line-num">...</th><td></td>
+</tr>
+<tr>
+  <th class="line-num">1104</th>
+  <th class="line-num">1161</th>
+  <td class="line-code ">
+    <pre>    assert_no_tag 'input', :attributes =&gt; {:name =&gt; 'issue[watcher_user_ids][]'}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1105</th>
+  <th class="line-num">1162</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1106</th>
+  <th class="line-num">1163</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1164</th>
+  <td class="line-code diff_in">
+    <pre>  def test_get_new_with_multi_custom_field
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1165</th>
+  <td class="line-code diff_in">
+    <pre>    field = IssueCustomField.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1166</th>
+  <td class="line-code diff_in">
+    <pre>    field.update_attribute :multiple, true
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1167</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1168</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1169</th>
+  <td class="line-code diff_in">
+    <pre>    get :new, :project_id =&gt; 1, :tracker_id =&gt; 1
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1170</th>
+  <td class="line-code diff_in">
+    <pre>    assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1171</th>
+  <td class="line-code diff_in">
+    <pre>    assert_template 'new'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1172</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1173</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'select',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1174</th>
+  <td class="line-code diff_in">
+    <pre>      :attributes =&gt; {:name =&gt; 'issue[custom_field_values][1][]', :multiple =&gt; 'multiple'},
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1175</th>
+  <td class="line-code diff_in">
+    <pre>      :children =&gt; {:count =&gt; 3},
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1176</th>
+  <td class="line-code diff_in">
+    <pre>      :child =&gt; {:tag =&gt; 'option', :attributes =&gt; {:value =&gt; 'MySQL'}, :content =&gt; 'MySQL'}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1177</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'input',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1178</th>
+  <td class="line-code diff_in">
+    <pre>      :attributes =&gt; {:name =&gt; 'issue[custom_field_values][1][]', :value =&gt; ''}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1179</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1180</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1181</th>
+  <td class="line-code diff_in">
+    <pre>  def test_get_new_with_multi_user_custom_field
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1182</th>
+  <td class="line-code diff_in">
+    <pre>    field = IssueCustomField.create!(:name =&gt; 'Multi user', :field_format =&gt; 'user', :multiple =&gt; true,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1183</th>
+  <td class="line-code diff_in">
+    <pre>      :tracker_ids =&gt; [1], :is_for_all =&gt; true)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1184</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1185</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1186</th>
+  <td class="line-code diff_in">
+    <pre>    get :new, :project_id =&gt; 1, :tracker_id =&gt; 1
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1187</th>
+  <td class="line-code diff_in">
+    <pre>    assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1188</th>
+  <td class="line-code diff_in">
+    <pre>    assert_template 'new'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1189</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1190</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'select',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1191</th>
+  <td class="line-code diff_in">
+    <pre>      :attributes =&gt; {:name =&gt; &quot;issue[custom_field_values][#{field.id}][]&quot;, :multiple =&gt; 'multiple'},
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1192</th>
+  <td class="line-code diff_in">
+    <pre>      :children =&gt; {:count =&gt; Project.find(1).users.count},
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1193</th>
+  <td class="line-code diff_in">
+    <pre>      :child =&gt; {:tag =&gt; 'option', :attributes =&gt; {:value =&gt; '2'}, :content =&gt; 'John Smith'}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1194</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'input',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1195</th>
+  <td class="line-code diff_in">
+    <pre>      :attributes =&gt; {:name =&gt; &quot;issue[custom_field_values][#{field.id}][]&quot;, :value =&gt; ''}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1196</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1197</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1107</th>
+  <th class="line-num">1198</th>
+  <td class="line-code ">
+    <pre>  def test_get_new_without_default_start_date_is_creation_date
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1108</th>
+  <th class="line-num">1199</th>
+  <td class="line-code ">
+    <pre>    Setting.default_issue_start_date_to_creation_date = 0
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1109</th>
+  <th class="line-num">1200</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr class="spacing">
+  <th class="line-num">...</th><th class="line-num">...</th><td></td>
+</tr>
+<tr>
+  <th class="line-num">1303</th>
+  <th class="line-num">1394</th>
+  <td class="line-code ">
+    <pre>    assert_redirected_to :controller =&gt; 'issues', :action =&gt; 'show', :id =&gt; Issue.last.id
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1304</th>
+  <th class="line-num">1395</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1305</th>
+  <th class="line-num">1396</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1397</th>
+  <td class="line-code diff_in">
+    <pre>  def test_post_create_with_multi_custom_field
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1398</th>
+  <td class="line-code diff_in">
+    <pre>    field = IssueCustomField.find_by_name('Database')
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1399</th>
+  <td class="line-code diff_in">
+    <pre>    field.update_attribute(:multiple, true)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1400</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1401</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1402</th>
+  <td class="line-code diff_in">
+    <pre>    assert_difference 'Issue.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1403</th>
+  <td class="line-code diff_in">
+    <pre>      post :create, :project_id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1404</th>
+  <td class="line-code diff_in">
+    <pre>                 :issue =&gt; {:tracker_id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1405</th>
+  <td class="line-code diff_in">
+    <pre>                            :subject =&gt; 'This is the test_new issue',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1406</th>
+  <td class="line-code diff_in">
+    <pre>                            :description =&gt; 'This is the description',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1407</th>
+  <td class="line-code diff_in">
+    <pre>                            :priority_id =&gt; 5,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1408</th>
+  <td class="line-code diff_in">
+    <pre>                            :custom_field_values =&gt; {'1' =&gt; ['', 'MySQL', 'Oracle']}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1409</th>
+  <td class="line-code diff_in">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1410</th>
+  <td class="line-code diff_in">
+    <pre>    assert_response 302
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1411</th>
+  <td class="line-code diff_in">
+    <pre>    issue = Issue.first(:order =&gt; 'id DESC')
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1412</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal ['MySQL', 'Oracle'], issue.custom_field_value(1).sort
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1413</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1414</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1415</th>
+  <td class="line-code diff_in">
+    <pre>  def test_post_create_with_empty_multi_custom_field
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1416</th>
+  <td class="line-code diff_in">
+    <pre>    field = IssueCustomField.find_by_name('Database')
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1417</th>
+  <td class="line-code diff_in">
+    <pre>    field.update_attribute(:multiple, true)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1418</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1419</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1420</th>
+  <td class="line-code diff_in">
+    <pre>    assert_difference 'Issue.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1421</th>
+  <td class="line-code diff_in">
+    <pre>      post :create, :project_id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1422</th>
+  <td class="line-code diff_in">
+    <pre>                 :issue =&gt; {:tracker_id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1423</th>
+  <td class="line-code diff_in">
+    <pre>                            :subject =&gt; 'This is the test_new issue',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1424</th>
+  <td class="line-code diff_in">
+    <pre>                            :description =&gt; 'This is the description',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1425</th>
+  <td class="line-code diff_in">
+    <pre>                            :priority_id =&gt; 5,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1426</th>
+  <td class="line-code diff_in">
+    <pre>                            :custom_field_values =&gt; {'1' =&gt; ['']}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1427</th>
+  <td class="line-code diff_in">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1428</th>
+  <td class="line-code diff_in">
+    <pre>    assert_response 302
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1429</th>
+  <td class="line-code diff_in">
+    <pre>    issue = Issue.first(:order =&gt; 'id DESC')
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1430</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal [''], issue.custom_field_value(1).sort
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1431</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1432</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1433</th>
+  <td class="line-code diff_in">
+    <pre>  def test_post_create_with_multi_user_custom_field
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1434</th>
+  <td class="line-code diff_in">
+    <pre>    field = IssueCustomField.create!(:name =&gt; 'Multi user', :field_format =&gt; 'user', :multiple =&gt; true,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1435</th>
+  <td class="line-code diff_in">
+    <pre>      :tracker_ids =&gt; [1], :is_for_all =&gt; true)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1436</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1437</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1438</th>
+  <td class="line-code diff_in">
+    <pre>    assert_difference 'Issue.count' do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1439</th>
+  <td class="line-code diff_in">
+    <pre>      post :create, :project_id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1440</th>
+  <td class="line-code diff_in">
+    <pre>                 :issue =&gt; {:tracker_id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1441</th>
+  <td class="line-code diff_in">
+    <pre>                            :subject =&gt; 'This is the test_new issue',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1442</th>
+  <td class="line-code diff_in">
+    <pre>                            :description =&gt; 'This is the description',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1443</th>
+  <td class="line-code diff_in">
+    <pre>                            :priority_id =&gt; 5,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1444</th>
+  <td class="line-code diff_in">
+    <pre>                            :custom_field_values =&gt; {field.id.to_s =&gt; ['', '2', '3']}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1445</th>
+  <td class="line-code diff_in">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1446</th>
+  <td class="line-code diff_in">
+    <pre>    assert_response 302
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1447</th>
+  <td class="line-code diff_in">
+    <pre>    issue = Issue.first(:order =&gt; 'id DESC')
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1448</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal ['2', '3'], issue.custom_field_value(field).sort
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1449</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1450</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1306</th>
+  <th class="line-num">1451</th>
+  <td class="line-code ">
+    <pre>  def test_post_create_with_required_custom_field_and_without_custom_fields_param
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1307</th>
+  <th class="line-num">1452</th>
+  <td class="line-code ">
+    <pre>    field = IssueCustomField.find_by_name('Database')
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1308</th>
+  <th class="line-num">1453</th>
+  <td class="line-code ">
+    <pre>    field.update_attribute(:is_required, true)
+</pre>
+  </td>
+</tr>
+
+<tr class="spacing">
+  <th class="line-num">...</th><th class="line-num">...</th><td></td>
+</tr>
+<tr>
+  <th class="line-num">1822</th>
+  <th class="line-num">1967</th>
+  <td class="line-code ">
+    <pre>    assert_tag :input, :attributes =&gt; { :name =&gt; 'time_entry[comments]', :value =&gt; 'test_get_edit_with_params' }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1823</th>
+  <th class="line-num">1968</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1824</th>
+  <th class="line-num">1969</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1970</th>
+  <td class="line-code diff_in">
+    <pre>  def test_get_edit_with_multi_custom_field
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1971</th>
+  <td class="line-code diff_in">
+    <pre>    field = CustomField.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1972</th>
+  <td class="line-code diff_in">
+    <pre>    field.update_attribute :multiple, true
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1973</th>
+  <td class="line-code diff_in">
+    <pre>    issue = Issue.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1974</th>
+  <td class="line-code diff_in">
+    <pre>    issue.custom_field_values = {1 =&gt; ['MySQL', 'Oracle']}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1975</th>
+  <td class="line-code diff_in">
+    <pre>    issue.save!
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1976</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1977</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1978</th>
+  <td class="line-code diff_in">
+    <pre>    get :edit, :id =&gt; 1
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1979</th>
+  <td class="line-code diff_in">
+    <pre>    assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1980</th>
+  <td class="line-code diff_in">
+    <pre>    assert_template 'edit'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1981</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1982</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'select', :attributes =&gt; {:name =&gt; 'issue[custom_field_values][1][]', :multiple =&gt; 'multiple'}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1983</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'select', :attributes =&gt; {:name =&gt; 'issue[custom_field_values][1][]'},
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1984</th>
+  <td class="line-code diff_in">
+    <pre>      :child =&gt; {:tag =&gt; 'option', :attributes =&gt; {:value =&gt; 'MySQL', :selected =&gt; 'selected'}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1985</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'select', :attributes =&gt; {:name =&gt; 'issue[custom_field_values][1][]'},
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1986</th>
+  <td class="line-code diff_in">
+    <pre>      :child =&gt; {:tag =&gt; 'option', :attributes =&gt; {:value =&gt; 'PostgreSQL', :selected =&gt; nil}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1987</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag 'select', :attributes =&gt; {:name =&gt; 'issue[custom_field_values][1][]'},
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1988</th>
+  <td class="line-code diff_in">
+    <pre>      :child =&gt; {:tag =&gt; 'option', :attributes =&gt; {:value =&gt; 'Oracle', :selected =&gt; 'selected'}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1989</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">1990</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1825</th>
+  <th class="line-num">1991</th>
+  <td class="line-code ">
+    <pre>  def test_update_edit_form
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1826</th>
+  <th class="line-num">1992</th>
+  <td class="line-code ">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1827</th>
+  <th class="line-num">1993</th>
+  <td class="line-code ">
+    <pre>    xhr :put, :new, :project_id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr class="spacing">
+  <th class="line-num">...</th><th class="line-num">...</th><td></td>
+</tr>
+<tr>
+  <th class="line-num">1979</th>
+  <th class="line-num">2145</th>
+  <td class="line-code ">
+    <pre>    assert mail.body.include?(&quot;Searchable field changed from 125 to New custom value&quot;)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1980</th>
+  <th class="line-num">2146</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1981</th>
+  <th class="line-num">2147</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2148</th>
+  <td class="line-code diff_in">
+    <pre>  def test_put_update_with_multi_custom_field_change
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2149</th>
+  <td class="line-code diff_in">
+    <pre>    field = CustomField.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2150</th>
+  <td class="line-code diff_in">
+    <pre>    field.update_attribute :multiple, true
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2151</th>
+  <td class="line-code diff_in">
+    <pre>    issue = Issue.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2152</th>
+  <td class="line-code diff_in">
+    <pre>    issue.custom_field_values = {1 =&gt; ['MySQL', 'Oracle']}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2153</th>
+  <td class="line-code diff_in">
+    <pre>    issue.save!
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2154</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2155</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2156</th>
+  <td class="line-code diff_in">
+    <pre>    assert_difference('Journal.count') do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2157</th>
+  <td class="line-code diff_in">
+    <pre>      assert_difference('JournalDetail.count', 3) do
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2158</th>
+  <td class="line-code diff_in">
+    <pre>        put :update, :id =&gt; 1,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2159</th>
+  <td class="line-code diff_in">
+    <pre>          :issue =&gt; {
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2160</th>
+  <td class="line-code diff_in">
+    <pre>            :subject =&gt; 'Custom field change',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2161</th>
+  <td class="line-code diff_in">
+    <pre>            :custom_field_values =&gt; { '1' =&gt; ['', 'Oracle', 'PostgreSQL'] }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2162</th>
+  <td class="line-code diff_in">
+    <pre>          }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2163</th>
+  <td class="line-code diff_in">
+    <pre>      end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2164</th>
+  <td class="line-code diff_in">
+    <pre>    end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2165</th>
+  <td class="line-code diff_in">
+    <pre>    assert_redirected_to :action =&gt; 'show', :id =&gt; '1'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2166</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal ['Oracle', 'PostgreSQL'], Issue.find(1).custom_field_value(1).sort
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2167</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2168</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1982</th>
+  <th class="line-num">2169</th>
+  <td class="line-code ">
+    <pre>  def test_put_update_with_status_and_assignee_change
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1983</th>
+  <th class="line-num">2170</th>
+  <td class="line-code ">
+    <pre>    issue = Issue.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">1984</th>
+  <th class="line-num">2171</th>
+  <td class="line-code ">
+    <pre>    assert_equal 1, issue.status_id
+</pre>
+  </td>
+</tr>
+
+<tr class="spacing">
+  <th class="line-num">...</th><th class="line-num">...</th><td></td>
+</tr>
+<tr>
+  <th class="line-num">2283</th>
+  <th class="line-num">2470</th>
+  <td class="line-code ">
+    <pre>      }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2284</th>
+  <th class="line-num">2471</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2285</th>
+  <th class="line-num">2472</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2473</th>
+  <td class="line-code diff_in">
+    <pre>  def test_get_bulk_edit_with_multi_custom_field
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2474</th>
+  <td class="line-code diff_in">
+    <pre>    field = CustomField.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2475</th>
+  <td class="line-code diff_in">
+    <pre>    field.update_attribute :multiple, true
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2476</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2477</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2478</th>
+  <td class="line-code diff_in">
+    <pre>    get :bulk_edit, :ids =&gt; [1, 2]
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2479</th>
+  <td class="line-code diff_in">
+    <pre>    assert_response :success
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2480</th>
+  <td class="line-code diff_in">
+    <pre>    assert_template 'bulk_edit'
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2481</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2482</th>
+  <td class="line-code diff_in">
+    <pre>    assert_tag :select,
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2483</th>
+  <td class="line-code diff_in">
+    <pre>      :attributes =&gt; {:name =&gt; &quot;issue[custom_field_values][1][]&quot;},
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2484</th>
+  <td class="line-code diff_in">
+    <pre>      :children =&gt; {
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2485</th>
+  <td class="line-code diff_in">
+    <pre>        :only =&gt; {:tag =&gt; 'option'},
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2486</th>
+  <td class="line-code diff_in">
+    <pre>        :count =&gt; 3
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2487</th>
+  <td class="line-code diff_in">
+    <pre>      }
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2488</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2489</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2286</th>
+  <th class="line-num">2490</th>
+  <td class="line-code ">
+    <pre>  def test_bulk_update
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2287</th>
+  <th class="line-num">2491</th>
+  <td class="line-code ">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2288</th>
+  <th class="line-num">2492</th>
+  <td class="line-code ">
+    <pre>    # update issues priority
+</pre>
+  </td>
+</tr>
+
+<tr class="spacing">
+  <th class="line-num">...</th><th class="line-num">...</th><td></td>
+</tr>
+<tr>
+  <th class="line-num">2463</th>
+  <th class="line-num">2667</th>
+  <td class="line-code ">
+    <pre>    assert_equal '777', journal.details.first.value
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2464</th>
+  <th class="line-num">2668</th>
+  <td class="line-code ">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2465</th>
+  <th class="line-num">2669</th>
+  <td class="line-code ">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2670</th>
+  <td class="line-code diff_in">
+    <pre>  def test_bulk_update_multi_custom_field
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2671</th>
+  <td class="line-code diff_in">
+    <pre>    field = CustomField.find(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2672</th>
+  <td class="line-code diff_in">
+    <pre>    field.update_attribute :multiple, true
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2673</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2674</th>
+  <td class="line-code diff_in">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2675</th>
+  <td class="line-code diff_in">
+    <pre>    post :bulk_update, :ids =&gt; [1, 2, 3], :notes =&gt; 'Bulk editing multi custom field',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2676</th>
+  <td class="line-code diff_in">
+    <pre>                                     :issue =&gt; {:priority_id =&gt; '',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2677</th>
+  <td class="line-code diff_in">
+    <pre>                                                :assigned_to_id =&gt; '',
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2678</th>
+  <td class="line-code diff_in">
+    <pre>                                                :custom_field_values =&gt; {'1' =&gt; ['MySQL', 'Oracle']}}
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2679</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2680</th>
+  <td class="line-code diff_in">
+    <pre>    assert_response 302
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2681</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2682</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal ['MySQL', 'Oracle'], Issue.find(1).custom_field_value(1).sort
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2683</th>
+  <td class="line-code diff_in">
+    <pre>    assert_equal ['MySQL', 'Oracle'], Issue.find(3).custom_field_value(1).sort
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2684</th>
+  <td class="line-code diff_in">
+    <pre>    # the custom field is not associated with the issue tracker
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2685</th>
+  <td class="line-code diff_in">
+    <pre>    assert_nil Issue.find(2).custom_field_value(1)
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2686</th>
+  <td class="line-code diff_in">
+    <pre>  end
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num"></th>
+  <th class="line-num">2687</th>
+  <td class="line-code diff_in">
+    <pre>
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2466</th>
+  <th class="line-num">2688</th>
+  <td class="line-code ">
+    <pre>  def test_bulk_update_unassign
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2467</th>
+  <th class="line-num">2689</th>
+  <td class="line-code ">
+    <pre>    assert_not_nil Issue.find(2).assigned_to
+</pre>
+  </td>
+</tr>
+
+<tr>
+  <th class="line-num">2468</th>
+  <th class="line-num">2690</th>
+  <td class="line-code ">
+    <pre>    @request.session[:user_id] = 2
+</pre>
+  </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+<p class="other-formats">(Other formats not available in this archive.</p>
+
+
+
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/cd6db6a3cbe43880eca4eec8c967fb78d95a2926/diff/test/functional/issues_controller_test.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Sep 2022 22:40:18 GMT -->
+</html>

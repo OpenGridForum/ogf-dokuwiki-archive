@@ -1,0 +1,161 @@
+% save trees by replacing OGF-mandated 12pt with 10pt
+\documentclass{article} 
+
+\sloppy
+
+% OGF-defined document template stuff 
+\usepackage{ifpdf}
+\usepackage[utf8]{inputenc}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage{url}
+\usepackage{authblk}
+\usepackage[numbers]{natbib} 
+\bibliographystyle{plainnat} 
+\usepackage[sf,compact]{titlesec} 
+\usepackage[titles]{tocloft}
+\usepackage{parskip} 
+\newcommand{\headerstyle}{\sffamily}
+\usepackage{fancyhdr}
+\addtolength{\headheight}{15pt}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headsep}{20pt}
+\usepackage[headings]{fullpage}  
+\graphicspath{{img/}{./}}
+\renewcommand{\cftsecfont}{\sffamily}
+\renewcommand{\cftsubsecfont}{\sffamily}
+\renewcommand{\cftsubsubsecfont}{\sffamily}
+\renewcommand{\cftsecpagefont}{\sffamily}
+\renewcommand{\cftsubsecpagefont}{\sffamily}
+\renewcommand{\cftsubsubsecpagefont}{\sffamily}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsubsecdotsep}} 
+\setlength{\cftbeforesecskip}{0.5ex}
+\newcommand{\ifnonempty}[2]{\ifthenelse{\isundefined{#1}}{}{\ifthenelse{\equal{#1}{}}{}{#2}}}
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{\fancyplain{}{\headerstyle\docseries}}
+\rhead{\fancyplain{}{\headerstyle\ifthenelse{\isundefined{\revisiondate}}{\publicationdate}{\ifthenelse{\equal{\revisiondate}{}}{\publicationdate}{\revisiondate}}}}
+\lfoot{\headerstyle\ifnonempty{\groupurl}{\groupurl}}
+\rfoot{\headerstyle\thepage}
+\thispagestyle{plain}
+
+% OGF-defined meta data 
+\title{Distributed Resource Management Application API Version 2 (DRMAA) \\ Errata}  
+\newcommand{\shortdoctitle}{DRMAA}  
+\newcommand{\authorsshort}{Peter Tröger, Hasso Plattner Institute}  
+\newcommand{\publicationdate}{September 2012}  
+%\newcommand{\revisiondate}{December 2010}  % Optional: date of last revision of the document
+\newcommand{\copyrightyears}{2012-2012}  
+\newcommand{\docseries}{Errata}  % GWD-R, GWD-I or GWD-C (for working drafts), GFD-I, GFD-R, or GFD-C
+\newcommand{\groupname}{DRMAA-WG} 
+\newcommand{\groupurl}{\href{mailto:drmaa-wg@ogf.org}{drmaa-wg@ogf.org}}  
+\newcommand{\documenturl}{\href{http://www.drmaa.org/}}
+
+% Our additional Latex stuff
+\usepackage{todonotes}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{framed}
+\lstset{language=[CORBA]IDL, tabsize=2, keywordstyle=\bfseries, basicstyle=\ttfamily,  rangeprefix=////,rangesuffix=////,includerangemarker=false}
+\newcommand{\h}[1]{\lstinline|#1|}
+\setcounter{tocdepth}{2}
+\definecolor{shadecolor}{gray}{0.8}
+\newcommand{\langbind}[1]{\begin{shaded}#1\end{shaded}}
+\usepackage{csquotes}
+
+%%%%%%%% Enable this block for the annotaed version
+%\newcommand{\rat}[1]{ {\tiny(See footnote)}\footnote{#1} }
+%\interfootnotelinepenalty=10000
+%\newcommand{\tbd}[2][] {\todo[caption={#2}, size=\small, #1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2\par}}
+%\usepackage{lineno}
+%\linenumbers
+%%%%%%% Enable this block for the official version
+\newcommand{\rat}[1]{}
+\newcommand{\tbd}[2][] {}
+
+\begin{document}
+
+% OGF-defined title page rendering 
+{\noindent
+\begin{minipage}[t]{3.0in}
+\headerstyle
+\docseries \\
+\ifnonempty{\groupname}{\groupname \\}
+\ifnonempty{\groupurl}{\groupurl \\}
+\ifnonempty{\documenturl}{\documenturl \\}
+\end{minipage}
+\hfill
+\raggedleft
+\begin{minipage}[t]{3.0in}
+\raggedleft
+\headerstyle
+\authorsshort \\
+\publicationdate \\
+\ifnonempty{\revisiondate}{Revised \revisiondate \\}
+\end{minipage}
+}
+
+\begin{center}
+\makeatletter
+\Large\bf\textsf \@title
+\makeatother
+\end{center}
+
+\subsection*{Copyright Notice}
+
+Copyright \copyright \ Open Grid Forum (\copyrightyears).  Some Rights Reserved.  
+Distribution is unlimited.
+
+\subsection*{Trademark}
+
+All company, product or service names referenced in this document are used for identification purposes only and may be trademarks of their respective owners. 
+
+\section{Introduction}
+
+The Distributed Resource Management Application API Version 2 (DRMAA) was published in January 2012 as GFD.194 \cite{gfd194} in the OGF document standardization process. Based on this document, the DRMAA working group developed the first language binding specification for C.
+
+The creation of this language binding and a reference implementation lead to the identification of several minor technical flaws in the GFD.194 document. In adherence to the Open Grid Forum document process \cite{citemaster_9398}, this document serves as errata report for fixes necessary in the root specification.  
+
+Implementors of DRMAA need to have both the root specification and some language binding specification before they can start their work. For this reason, we see no danger of having multiple different versions of GFD.194 being used by different people after the application of the fixes.
+
+\section{Errata}
+
+
+\newpage
+
+\section{Contributors}
+
+This errata is a collaborative effort of the DRMAA working group. Special thanks go to Rayson Ho for the initial identification of most of these issues.
+
+\textbf{Peter Tröger (Corresponding Author)} \\
+Hasso Plattner Institute at University of Potsdam \\
+Prof.-Dr.-Helmert-Str. 2-3 \\
+14482 Potsdam, Germany \\
+Email: peter@troeger.eu \\
+
+\section{Intellectual Property Statement}
+
+The OGF takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use of the technology described in this document or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any effort to identify any such rights.  Copies of claims of rights made available for publication and any assurances of licenses to be made available, or the result of an attempt made to obtain a general license or permission for the use of such proprietary rights by implementers or users of this specification can be obtained from the OGF Secretariat.
+
+The OGF invites any interested party to bring to its attention any copyrights, patents or patent applications, or other proprietary rights which may cover technology that may be required to practice this recommendation.  Please address the information to the OGF Executive Director.
+
+\section{Disclaimer}
+
+This document and the information contained herein is provided on an \enquote{as-is} basis and the OGF disclaims all warranties, express or implied, including but not limited to any warranty that the use of the information herein will not infringe any rights or any implied warranties of merchantability or fitness for a particular purpose.
+
+\section{Full Copyright Notice}
+
+Copyright \copyright \ Open Grid Forum (\copyrightyears). Some Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this paragraph are included on all such copies and derivative works. However, this document itself may not be modified in any way, such as by removing the copyright notice or references to the OGF or other organizations, except as needed for the purpose of developing Grid Recommendations in which case the procedures for copyrights defined in the OGF Document process must be followed, or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by the OGF or its successors or assignees.
+
+% \phantomsection\addcontentsline{toc}{section}{References}
+\section{References}
+\renewcommand{\refname}{}
+\vspace*{-3em}
+\bibliography{bibliography}
+\end{document}
+

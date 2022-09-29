@@ -1,0 +1,123 @@
+NML changes between Group Last Call and Public Last Call
+========================================================
+
+Changes in the schema
+---------------------
+• version attribute is a datetime stamp. It can be used as the default start time in case a Lifetime object is not specified.
+• The address property of a Location now points to "a ADR property in a vCard", instead of "a vCard". The syntax of the address property is not defined, to later allow a XML or RDF representation instead of the default (string-based) syntax of RFC 6350.
+• define cardinality for all relations
+• Add new relation "canProvidePort":
+  For AdaptationService (add canProvidePort):
+  - associate with static component:
+    Port --(hasService)--> AdaptationService
+  - associate which (client layer) ports CAN be created:
+    AdaptationService --canProvidePort--> Port|PortGroup
+  - associate which ports are already configured:
+    AdaptationService --(providesPort)--> Port|PortGroup
+• Remove all references to idRef
+• Objects SHOULD have an id, instead of MUST have an id.
+• Add description for all relations
+• Cleaned definition of Label and hasLabel
+• isAlias SHOULD only be between objects of the same concrete class (was: MUST). (I personally prefer MUST, but this brings the text in line with the shemas and text elsewhere).
+• Section describing how to combine multiple descriptions of the same object.
+• Text about unnamed objects (without id) (see issue #45)
+• Allow encoding attribute for Bidirectional Port and Bidirectional Link
+
+Editorial changes
+-----------------
+• ISO 8601 -> ISO 8601 combined date/timestamp in basic format (preferred over extended format), UTC ("Zulu") time.
+• Add references to ISO 8601:2004, UN/LOCODE, WGS84, vCard.
+• Add reference to Unicode for case folding, and note that it differs from case mapping.
+• Each relation described in a subsection.
+• Inconsistencies in relations: 
+  "hasNode relates a Network Object to a Node" (relates from .. to ..)
+  "existsDuring relates a LifeTime object to a Network Object" (relates to .. from ..)
+• Incomplete relations: "hasNode relates a Network Object to a Node, meaning that a Node is part of a Topology." What Topology?
+• An AdaptationServices describe that it can not describe an inverse multiplexing adaptation, use parallelCompoundLink for that.
+• Use keywords for MUST, SHOULD and MAY in Identifiers section
+• Use URI http://schemas.ogf.org/nml/2012/10/base# everywhere
+• Added reference to G.800
+• Relation names in italic instead of bold (as noted in the Notational Conventions)
+• Check if OWL schema (for RDF) is complete (all Objects, relations, attributes and parameters)
+• Reference to GFD.165 document (the NML context document)
+• Add list of all attributes with pointer to where they are defined.
+• Add list of all parameters with pointer to where they are defined.
+• Explain how objects, attributes, parameters and relations are represented in XML
+• Explain how objects, attributes, parameters and relations are represented in OWL
+• Add internal links for most object. Especially for a "see ... section"
+• Move Syntax section to a new chapter and extend it a bit.
+• Consistent naming: List / Ordered List -> OrderedList
+• Consistent naming: but UnidirectionalPort -> Unidirectional Port
+• Consistent naming: "NetworkObject" -> "Network Object"
+
+NML changes between Group Last Call and Public Last Call
+========================================================
+
+Changes in the schema
+---------------------
+• Add encoding to to SwitchingService
+• start and end attributes in Lifetime are now optional
+• 'choice' instead of 'sequence' in PortGroupRelationType in XSD schema
+• Fix LabelGroup representation in OWL and describe this in the Syntax section. Previously, Label and LabelGroup in the examples used the same identifier, which may lead to naming conflicts.
+
+Changes in the Examples
+-----------------------
+• New Example: distinction between Topology and Node (Topology is geographically disperse)
+• New Example: VLAN description with noReturnTraffic
+• New Example: subTopology
+• New Example: patch panel & media convertor
+• New Example: serial compound links
+• New Example: example explaining the relation between version and Lifetime.
+• New Example: Explaining how to distinguish between what is configured and what can be configured (for both Switching Service and Adaptation Service)
+• Example: Add diagram for the syntax examples.
+• Example: change port_X and port_X:1501 for crossconnect in link (more natural)
+• Updated identifiers to match current date (schema URL, example URN and version number)
+• Changed isSource & isSink for internal Link
+• Added definition of external Link (linkB:YZ)
+• linkA:XY transports data from X to Y instead of the other way around
+• Fix rdf:about to rdf:resource for references
+• Add adaptationFunction to AdaptionServices
+• Update LabelGroup OWL example. This was previously a copy of the XML example.
+
+Editorial Changes
+-----------------
+• Textual clarifications
+• Change email address of Jason (keeping Internet2 affiliation)
+• Update Acknowledgements
+
+Open Issues
+===========
+• Check if XSD schema (for XML) is complete (all Objects, relations, attributes and parameters)
+• More references to G.800
+• Appendix with relation NML-G.800 terms
+• Acknowledgements
+
+
+
+Aaron Brown
+Anand Patil
+Chin Guok
+Evangelos Chaniotakis
+Fausto Vetter
+Guy Roberts
+Jeff W. Boote
+Jerry Sobieski
+John Vollbrecht
+Martin Swany
+Paola Grosso
+Pascale Vicat-Blanc
+Richard Hughes-Jones
+Ralph Niederberger
+Victor Reijs
+Houssem Medhioub
+Aurélien Cedeyn
+
+
+
+- Port = Unidirectional Port
+- Link = link connection / network connection / link
+- SwitchingService = subnetwork
+- AdaptationService = combined adaptation and termination function
+- BidirectionalPort = Port
+- Label = Resource label
+
