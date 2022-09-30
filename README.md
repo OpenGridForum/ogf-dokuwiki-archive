@@ -1,6 +1,8 @@
 This repository hosts a static converted version of the Open Grid Forum web
 historical assets intended for archive purposes. Web content available includes
-the following assets, archived in read-only mode.
+the following assets, archived in read-only mode. Current active content that replaces 
+these historical archives is hosted on the [OpenGridForum](https://github.com/opengridforum)
+organizational pages here on GitHub.
 
 -   [Archived Main OGF Dokuwiki WebSite 
     content](http://archive.ogf.org/www.ogf.org/dokuwiki/doku.php/start.html)
