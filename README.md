@@ -6,9 +6,9 @@ the following assets, archived in read-only mode.
     content](http://archive.ogf.org/www.ogf.org/dokuwiki/doku.php/start.html)
     (2013 - 2022)
     
-   This site supported the front-facing main web content for overall information about OGF
-   from 2013 - late 2022, including announcements, event pages, news, organizational information,
-   and details about OGF areas, groups, and officers. 
+    This site supported the front-facing main web content for overall information about OGF
+    from 2013 - late 2022, including announcements, event pages, news, organizational information,
+    and details about OGF areas, groups, and officers. 
     
 -   [Archived OGF Redmine Project Pages content](https://archive.ogf.org/redmine.ogf.org/projects.html)
     (2012 - 2020)
