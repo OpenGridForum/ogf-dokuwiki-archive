@@ -4,7 +4,7 @@ the following assets, archived in read-only mode.
 
  
 
--   [Main OGF web site dokuwiki
+-   [Archived main OGF web site dokuwiki
     content](http://archive.ogf.org/www.ogf.org/dokuwiki/doku.php/start.html)
     (2013 - 2022)
     
