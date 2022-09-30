@@ -19,12 +19,12 @@ the following assets, archived in read-only mode.
     
 -   [Archived GridForge project pages content](https://archive.ogf.org/forge.ogf.org/sf/sfmain/do/home.html) (2003 - 2013)
 
-    This served as the primary content manager for individual projects and their
+    The GridForge site served as the primary content manager for individual projects and their
     associated community and working groups from early in the formation of the Grid Forum through its 
     transition to the Global Grid Forum and eventually the Open Grid Forum. 
     It supported repositories for ongoing products of these
     groups as well as action trackers, meeting notes pages, comments, and other day-to-day content.
-    It was replaced in 2013 with the newr Redmine content manager mentioned above, after a short overlap period.
+    It was replaced in 2013 with the newer Redmine content manager mentioned above, after a short overlap period.
 
 Except where otherwise noted, content on this archive is licensed under the
 following license: [CC Attribution-Share Alike 4.0
