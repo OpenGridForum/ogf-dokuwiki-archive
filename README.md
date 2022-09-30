@@ -8,7 +8,7 @@ the following assets, archived in read-only mode.
     content](http://archive.ogf.org/www.ogf.org/dokuwiki/doku.php/start.html)
     (2013 - 2022)
     
--   [Archived GridForge content](https://archive.ogf.org/forge.ogf.org/sf/sfmain/do/home.html) (2003 - 2013)
+-   [Archived GridForge project pages content](https://archive.ogf.org/forge.ogf.org/sf/sfmain/do/home.html) (2003 - 2013)
 
  
 
