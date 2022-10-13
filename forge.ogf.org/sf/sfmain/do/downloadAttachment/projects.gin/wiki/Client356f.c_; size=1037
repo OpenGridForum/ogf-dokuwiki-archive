@@ -1,0 +1,41 @@
+/*
+ compile with
+-DWITH_OPENSSL -lssl -lcrypto
+
+*/
+
+#include "soapH.h"
+#include "GINServiceHttpBinding.nsmap"
+#include <unistd.h>             /* defines _POSIX_THREADS if pthreads are available */
+#ifdef _POSIX_THREADS
+# include <pthread.h>
+#endif
+#include <signal.h>             /* defines SIGPIPE */
+
+const char server[] = "http://gin.deisa.org/ginservice/services/GINService";
+
+
+
+void sigpipe_handle(int);
+
+int main(){
+   int i;
+   struct soap *soap = soap_new(); 
+   struct _ns1__DeisaGridDescription  ns1__DeisaGridDescription;
+
+
+   printf("Connecting to server %s ... ", soap->endpoint);
+   if(soap_call___ns1__getDeisaGridDescription(soap,server,NULL,&ns1__DeisaGridDescription) == SOAP_OK){
+   printf("done.\n");
+
+   printf("Number of sites: %d\n",ns1__DeisaGridDescription.__sizeSite);
+   for(i=0;i<ns1__DeisaGridDescription.__sizeSite;i++)
+      printf("Site name: %s\n",ns1__DeisaGridDescription.ns2__Site[i].Name);
+   } else {
+      soap_print_fault(soap, stderr);
+   }
+   soap_end(soap);
+   soap_done(soap);
+   return 0;
+}
+

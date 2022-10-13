@@ -1,0 +1,118 @@
+
+Interoperability Testing for DAIS Working Group Specifications
+https://forge.gridforum.org/tracker/index.php?aid=1768
+
+
+#1 Steve Crumb, 2006-03-30
+
+Issue:
+
+I wish to encourage those responsible for carrying out these tests that
+a watchful eye is kept on process capture and improvement, so as to
+serve the broader community as a proposed best practice for future
+interoperability testing. I also agree with others' comments that this
+document should be more carefully reviewed by and agreed to by all
+Standards ADs as an appropriate methodology for testing the DAIS specs.
+
+Response: 
+
+We hope that the document provides some clear principles that will be of
+help to others developing interoperability testing strategies; we will
+seek to ensure that the follow-up community practice document relating 
+the results of the interoperability tests can be easily related back to
+this document.  We will also make the actual tests available at that time.
+
+We are happy for all standards based ADs to comment on the document, but
+don't want there to be lengthy delays while this happens.  As the presence
+of this document was flagged to all members of the GFSG early in the public
+comment period, I suggest that everyone has now had an appropriate chance 
+to comment.  We are keen to proceed to implement the strategy described 
+here within the lifetime of current limited project funding.
+
+--
+
+#2 Malcolm Atkinson, 2006-04-04
+
+Issue:
+
+The only question that occured to me, was who adjudicates whether the
+expected return message is correct, as many of the query languages
+hosted through DAI are not so specific that simple textual comparison
+will demonstrate equivalence, e.g. numbers may be in a different form,
+terms or sibling document branches may be in a different order.
+
+Response:
+
+Where the tests are sensitive to such problems, textual comparisons must
+be avoided. In some cases it will not be possible to specify the exactly
+what an operation should return, as this reflects a property of the data
+resource accessed by the data service. In such a case, the response message 
+should be validated against its schema, and the existence of specific values 
+should be tested, regardless of order and wherever possible taking into 
+account different formats etc. This is practical to implement because of 
+the availability of tools such as Axis which marshal XML responses into 
+Java objects which can be manipulated more easily regardless of such
+problems. It is proposed that changes are made to section 4.1 to state
+this explicitly in the document.
+
+#3 Dave Berry, 2006-04-05
+
+Issue:
+
+It seems implicit in this document that complete interoperability
+testing of the specification is not practical. I think it would be
+useful to state this explicitly in the introduction. At present the
+document seems to skirt around the issue.
+
+Response:
+
+We propose adding the following text at the end of section 1 to address
+this comment: "The DAIS specifications define behaviors that may vary 
+between different valid implementations of the specifications; such
+differences principally reflect variety in the data resources to 
+which the services provide access.  It is therefore not practical
+to test every behavior that could possibly be exhibited by a DAIS 
+service without implementing or emulating large numbers of data 
+resource management systems. However, the testing process detailed in 
+this document aims to test all mandatory features of the specifications 
+and as many optional features as is practical given the capabilities
+of the resource management systems accessed by the services that are
+bring tested."
+
+#4 Dave Berry, 2006-04-05
+
+Issue:
+
+The document suggests that WSRF properties should not be tested. This
+seems odd to me. While the base WSRF functionality will no doubt be
+tested elsewhere, shouldn't the DAIS tests check that an implementation
+is returning the correct properties?
+
+Response:
+
+The WS-DAI specifications allow properties to be accessed in two ways:
+through mandatory operations defined by the WS-DAI specification, and 
+optionally via WS-Resource Properties. Regardless of the method used, 
+access is to the same property values.  The objective of the tests is 
+principally to determine whether or not property values are correct.  
+Therefore we propose only to test for the correctness of property values
+via the mandatory property access operations, and not to test additional
+operations defined in other specifications that may be used alongside 
+the DAIS specifications.
+
+#5 Malcolm Atkinson, 2006-04-11
+
+Issue:
+
+I believe that the intention is to verify that correct information is
+returned, e.g. for a request for ResourceProperties. I believe that all
+of the functions that can be checked for consistence should be verified
+and I think that was the intention of the document.
+
+Response:
+
+Agreed, however, we suggest that we can test for the correctness of
+property values using the messages defined in the DAIS specifications
+without providing large numbers of additional tests using operations
+from other specifications that may not be used with DAIS.
+

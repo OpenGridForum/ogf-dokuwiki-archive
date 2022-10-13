@@ -1,0 +1,1225 @@
+%!TEX TS-program = pdflatex
+\documentclass[12pt]{article}  % larger font to compensate for long lines with fullpage
+\usepackage{ifpdf,ifxetex}
+\ifxetex
+% \usepackage{CJK} % Chinese/Japanese/Korean language support for single line of Japanese
+\usepackage{fontspec}
+\usepackage[nospace]{xeCJK}
+% \setCJKfamilyfont
+% \setCJKmainfont{Osaka}
+\setmainfont[Mapping=tex-text]{Times New Roman}
+\setCJKmainfont{STSong}
+\setCJKsansfont{STSong}
+\setCJKmonofont{STSong}
+% \setCJKmainfont{FZKaiTi}
+\else % inputenc is incompatible with xetex (which always takes UTF-8 as input)
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8} % Chinese/Japanese/Korean language support for single line of Japanese
+\fi
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage[pdfborder={0 0 0}]{hyperref} % use hyperref without borders
+\usepackage{url}
+\usepackage{authblk}
+\usepackage{framed}  % frames sections with page breaks
+\usepackage{soul} % for strike-through text (provides \st)
+% Define some basics for your document:
+
+\title{Procedure for Registration of Subnamespace Identifiers in the URN:OGF Hierarchy}
+\author{Freek Dijkstra \and Richard Hughes-Jones \and Gregory B.\ Newby \and Joel Replogle}
+\newcommand{\shortdoctitle}{URN:OGF Subnamespace registration}  % Title used in page header
+% \date{} and \author{} are currently ignored
+\newcommand{\authorsshort}{Freek Dijkstra, SARA\\Richard Hughes-Jones, DANTE\\Gregory B.\ Newby, Arctic Region Supercomputing Center\\Joel Replogle, Open Grid Forum}
+\newcommand{\publicationdate}{December 2011}  % Date of first publication of the document
+% \newcommand{\revisiondate}{August 2012}  % Optional: date of last revision of the document
+\newcommand{\copyrightyears}{2011}  % Years used in copyright notice
+% \newcommand{\docseries}{GWD-C}  % GWD-R, GWD-I or GWD-C (for working drafts)
+\newcommand{\docseries}{GFD.191}  % GFD.000 (for approved documents)
+\newcommand{\groupname}{GFSG}  % Optional: name of the authoring working or research group
+%\newcommand{\groupurl}{\href{mailto:example-wg@ogf.org}{example-wg@ogf.org}}  % Optional: URL or email address of the authoring working or research group
+%\newcommand{\documenturl}{}  % Optional: URL of this document
+
+
+% Read pictures from img/ and current directory
+\graphicspath{{img/}{./}}
+
+%%% GWD/GFD header follows %%%
+% Feel free to make changes, as long as your document follows the guidelines of GFP.152
+
+\usepackage[numbers]{natbib} % Use [1] for references, 
+\bibliographystyle{plainnat} % References show full author name(s) and document URL
+
+\usepackage[sf,compact]{titlesec} % Use sans-serif for section headers
+
+\usepackage[titles]{tocloft} % Format table of contents
+% (tocloft is used, since titletoc is incompatible with xetex.)
+\renewcommand{\cftsecfont}{\sffamily}
+\renewcommand{\cftsubsecfont}{\sffamily}
+\renewcommand{\cftsubsubsecfont}{\sffamily}
+\renewcommand{\cftsecpagefont}{\sffamily}
+\renewcommand{\cftsubsecpagefont}{\sffamily}
+\renewcommand{\cftsubsubsecpagefont}{\sffamily}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsubsecdotsep}} % dots for sections the same as for subsections
+\setlength{\cftbeforesecskip}{0.5ex}
+
+
+\usepackage{parskip} % Blank lines between paragraphs, no indentation.
+
+% font style for headers and footers
+\newcommand{\headerstyle}{\sffamily} % sans-serif
+
+% Set page margins
+\usepackage{fancyhdr}
+\addtolength{\headheight}{15pt}
+\renewcommand{\headrulewidth}{0pt}
+% \setlength{\headrulewidth}{0pt}
+\setlength{\headsep}{20pt}
+\usepackage[headings]{fullpage}  % small margins
+
+% Macro to check if (optional) values above are defined or not.
+\newcommand{\ifnonempty}[2]{\ifthenelse{\isundefined{#1}}{}{\ifthenelse{\equal{#1}{}}{}{#2}}}
+
+% Define page header and footers
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{\fancyplain{}{\headerstyle\docseries}}
+% use \revisiondate if defined, otherwise \publicationdate for right header:
+\rhead{\fancyplain{}{\headerstyle\ifthenelse{\isundefined{\revisiondate }}{\publicationdate}{\ifthenelse{\equal{\revisiondate}{}}{\publicationdate}{\revisiondate}}}}
+\lfoot{\headerstyle\ifnonempty{\groupurl}{\groupurl}}
+\rfoot{\headerstyle\thepage}
+\thispagestyle{plain}
+
+\ifpdf
+\hypersetup{
+    pdftitle = {Procedure for Registration of Subnamespace Identifiers in the URN:OGF Hierarchy},
+    pdfauthor = {Freek Dijkstra, Richard Hughes-Jones, Gregory B. Newby, and Joel Replogle},
+    pdfsubject = {urn:ogf subnamespace delegation procedure},
+    pdfkeywords = {URN OGF procedure namespace}
+}
+
+\fi
+
+\begin{document}
+
+% Title page header
+{\noindent
+\begin{minipage}[t]{1.5in}
+\headerstyle
+\docseries \\
+\ifnonempty{\groupname}{\groupname \\}
+\ifnonempty{\groupurl}{\groupurl \\}
+\ifnonempty{\documenturl}{\documenturl \\}
+\end{minipage}
+\hfill
+\raggedleft
+\begin{minipage}[t]{4.5in}
+\raggedleft
+\headerstyle
+\authorsshort \\
+\vspace{1em}
+\publicationdate \\
+\ifnonempty{\revisiondate}{Revised \revisiondate \\}
+\end{minipage}
+}
+
+\vspace{1em}
+\begin{center}
+\makeatletter
+\Large\bf\textsf \@title
+\makeatother
+\end{center}
+
+\newcommand{\qq}{\symbol{34}} % 34 is the decimal LaTeX code for "
+\newcommand{\q}{\symbol{39}} % 39 is the decimal LaTeX code for '
+\newcommand{\underscore}{\symbol{95}} % 39 is the decimal LaTeX code for '
+
+%%% End of header, insert content below this line %%%
+
+\subsection*{Status of This Document}
+
+Community Practice (CP)
+
+% \subsection*{Document Change History}
+% 
+% This template has been updated to confirm to GFD-C.152~\cite{gfd152}.
+
+\subsection*{Copyright Notice}
+
+Copyright \copyright \ Open Grid Forum (\copyrightyears).  Some Rights Reserved.  
+Distribution is unlimited.
+
+\phantomsection\addcontentsline{toc}{section}{Abstract}
+\section*{Abstract}
+
+URNs in the OGF namespace take the form 
+\\\hspace*{1cm}\texttt{urn:ogf:<snid>:<subnamespace-specific-string>}.
+
+This document describes the procedure how to register subnamespace 
+identifiers (\texttt{<snid>}) in the \texttt{urn:ogf:} namespace.
+
+\phantomsection\addcontentsline{toc}{section}{Contents}
+\tableofcontents
+
+\newpage
+
+\section{introduction}%
+\label{sec:introduction}
+
+Uniform Resource Names (URNs) are persistent, globally unique 
+identifiers~\cite{rfc2141,rfc3406}.
+
+An identifier labels a resource, which facilitates unambiguous identification 
+of that resource. 
+Any resource can be named, including a work, an instance of a work, an entry in 
+an ontology or the ontology as a whole.
+
+\subsection{Notational Conventions}
+\label{sec:rfc2119}
+
+\newcommand{\MUST}{\textsc{must}}
+\newcommand{\MUSTNOT}{\textsc{must not}}
+\newcommand{\REQUIRED}{\textsc{required}}
+\newcommand{\SHALL}{\textsc{shall}}
+\newcommand{\SHALLNOT}{\textsc{shall not}}
+\newcommand{\SHOULD}{\textsc{should}}
+\newcommand{\SHOULDNOT}{\textsc{should not}}
+\newcommand{\RECOMMENDED}{\textsc{recommended}}
+\newcommand{\MAY}{\textsc{may}}
+\newcommand{\OPTIONAL}{\textsc{optional}}
+
+The keywords “\MUST{}”, “\MUSTNOT{}”, “\REQUIRED{}”, “\SHALL{}”, “\SHALLNOT{}”, 
+“\SHOULD{}”, “\SHOULDNOT{}”, “\RECOMMENDED{}”, “\MAY{}”,  and “\OPTIONAL{}” are 
+to be interpreted as described in \cite{rfc2119}.
+% except that the words do not appear in uppercase. 
+
+\subsection{Globally Uniqueness of URNs}%
+\label{sec:uniqueness}
+
+\cite{rfc3406} stipulates:
+\begin{itemize}
+  \item A URN \MUSTNOT{} be assigned to more than one resource. 
+  \item A URN \MUSTNOT{} be re-assigned to a different resource.
+  \item A single resource \MAY{} have more than one URN assigned to it for different purposes.
+\end{itemize}
+
+For the purpose of this document, we will call an identifier \emph{unique} if
+adheres to the first two requirements above. So a unique identifier
+identifies only one resource, although one resource does not have to be
+represented by a single identifier.
+
+Any organisation that assigns identifiers to its resources (the \emph{assigning 
+organisation}) must adhere to the
+above requirements. This ensures that the identifiers assigned by this
+organisation are unique. However, this only ensures that the identifier is
+locally unique, but does not yet guarantee that the identifier is globally
+unique.
+
+To ensure global uniqueness of identifiers, each local identifier is
+prepended with a \emph{prefix} that in itself is a unique identifier of the
+organisation that assigns the local identifiers. In the context of URNs, this
+prefix is often referred to as a \emph{namespace identifier}. The group of
+all identifiers that start with a certain prefix is called a
+\emph{namespace}. 
+A second purpose of a prefix is to provide a cue for the
+type of resource being identified.
+
+For example, a working group in the OGF may define an ontology with three
+terms, identified by their names \emph{Grid}, \emph{Cloud}, and
+\emph{Cluster}. A different organisation may use the same terms, but with
+different meaning. To prevent ambiguity when using these terms, the working
+group may register the namespace identifier \path{urn:ogf:example}, and
+use the identifiers \path{urn:ogf:example:grid},
+\path{urn:ogf:example:cloud} and \path{urn:ogf:example:cluster}.
+When these identifiers are used, it is unambiguous which concept is 
+referred to.
+
+This document describes the procedure to register a namespace identifier
+within the \texttt{urn:ogf:} namespace.
+
+\subsection{Persistency of URNs}%
+\label{sec:persistency}
+
+The goal of URNs is to provide persistent identification of resources. An
+identifier must remain valid and unmodified from its creation to well beyond
+the lifespan of the resource it identifies. (The identifier may still be used 
+for archived information, like monitoring data, even after the resource itself 
+is disbanded.) This persistency is the
+responsibility of the organisation maintaining the URN namespace as well as
+the delegate organisation(s) that assign the identifier.
+
+The requirement that a URN \MUSTNOT{} be re-assigned only partly ensures longevity.
+An identifier \MUSTNOT{} change name, and (where applicable) validation and 
+resolution procedures \SHOULD{} still yield results, even after the following events:
+\begin{itemize}
+  \item the resource ceases to exist; 
+  \item the properties of the resource change; 
+  \item a new version of the resource is created; 
+  \item the namespace organisation ceases to exist; 
+  \item the organisation that assigned the identifier ceases to exist; or 
+  \item the organisation that assigned the identifier changes its name.
+\end{itemize}
+
+For example, the Open Grid Forum (OGF) emerged from the merger of the Global
+Grid Forum (GGF) and Enterprise Grid Alliance (EGA) in 2006. URI namespaces
+created before that time still have \texttt{ggf.org} in their prefix, and this
+has not changed. If the Open Grid Forum (OGF) would change name, for example to 
+Open Cloud Forum (OCF), the prefix \texttt{urn:ogf} of existing identifiers 
+\MUSTNOT{} change, as not to break the persistency of the identifiers.
+
+\section{Selecting a Namespace}%
+\label{sec:namespace_selection}
+
+This document describes how to register a prefix in the \texttt{urn:ogf:} namespace.
+OGF working groups or interested third parties that wish to assign identifiers must 
+first determine if the \texttt{urn:ogf:} namespace is the most suitable namespace.
+
+Potential namespaces include:
+\begin{itemize}
+  \item \texttt{urn:ogf:} namespace, as described in this document.
+  \item \texttt{urn:} namespace, as maintained by the IETF and IANA~\cite{rfc3406}.
+  \item \texttt{http://schemas.ogf.org/} namespace~\cite{gfd84}
+    (a location identifier that also serves as a resource identifier).
+  \item A namespace in the handle system~\cite{rfc3650}.
+  \item Non-prefixed namespaces, such as UUIDs~\cite{x.667} or hash values.
+\end{itemize}
+
+URNs in the \texttt{urn:ogf:} namespace may be suitable for identifying individual 
+grid resources.
+
+URNs in the \texttt{urn:} namespace may be suitable for identifying resources other 
+than grid resources.
+
+A URL may be suitable as identifier for ontologies and schemata,
+as the URL can double as the location where the normative schemata definition
+can be found. URLs may not be suitable to identify individual resources, as the
+same resource may be available from multiple locations, or may not be accessible 
+via a protocol with an associated URL scheme, or the resource may outlive the 
+lifetime of a given scheme (e.g. a resource which is now accessible with the HTTP 
+scheme may later be accessible with the HTTPS scheme).
+
+Systems that like to integrate with the handle system for resource resolution
+of digital resources should consider using the (non-URN) identifiers defined in 
+the handle system.
+
+A non-prefixed system may be a suitable identifier namespace if a centrally 
+maintained registry is considered a drawback.
+
+DNS-based identifiers are generally \textsc{not recommended} for persistent 
+identifiers.
+
+\section{Canonical Syntax of URN:OGF identifiers}%
+\label{sec:syntax}
+
+The canonical syntax of URNs in the \texttt{urn:ogf:} namespace is specified 
+in sections 2.4 and 2.11 of \cite{rfc6453}. 
+The sections of this RFC are replicated below.
+
+\begin{quote}
+  \texttt{OGF-URN  =  \qq{}urn:ogf:\qq{} SNID \qq{}:\qq{} SUBNAMESPACE-SPECIFIC-STRING}
+\end{quote}
+
+where \texttt{<SNID>} is a unique subnamespace identifier, and 
+\texttt{<SUBNAMESPACE-SPECIFIC-STRING>} is a unique local identifier within the 
+namespace with the prefix \texttt{\qq{}urn:ogf:\qq{} SNID \qq{}:\qq{}}.
+
+Clearly, each \texttt{SNID \qq{}:\qq{} SUBNAMESPACE-SPECIFIC-STRING} \MUST{} be unique.
+
+\texttt{<SNID>} has the same syntax as a namespace identifier \texttt{<NID>} 
+as defined in \cite{rfc2141}:
+
+\begin{quote}
+  \texttt{SNID  =  ( ALPHA / DIGIT )  *31( ALPHA / DIGIT / \qq{}-\qq{} )}
+\end{quote}
+
+\texttt{<ALPHA>} and \texttt{<DIGIT>} are defined in Appendix B of \cite{rfc5234}.
+
+Both \texttt{\qq{}urn:ogf:\qq{}} and the subnamespace identifiers are case insensitive.
+
+Section~\ref{sec:procedure} of this document describes the procedure how subnamespace 
+identifiers are assigned by the OGF.
+
+The syntax of \texttt{<SUBNAMESPACE-SPECIFIC-STRING>} is dependent on the \texttt{<SNID>}.
+\cite{rfc6453} does not pose any additional restrictions to the
+\texttt{<SUBNAMESPACE-SPECIFIC-STRING>} other than what is defined in the
+\texttt{<NSS>} syntax as defined by \cite{rfc2141}:
+
+\begin{quote}
+  \texttt{SUBNAMESPACE-SPECIFIC-STRING  =  1*<URN chars>}
+\end{quote}
+
+\texttt{<URN chars>} is defined in Section 2.2 of \cite{rfc2141}.
+
+Documents defining a subnamespace identifier \SHOULD{} specify further
+syntactic restrictions in \texttt{<SUBNAMESPACE-SPECIFIC-STRING>}.  It is
+\RECOMMENDED{} that these documents forbid the assignment of URNs
+containing characters in the \texttt{<reserved>} set (\texttt{\qq{}\%\qq{}}, 
+\texttt{\qq{}/\qq{}}, \texttt{\qq{}?\qq{}} and \texttt{\qq{}\#\qq{}})
+as defined in \cite{rfc2141}. This is in accordance with section 2.2 of
+\cite{rfc3986}.
+
+For forward compatibility (e.g. updates in the URN syntax~\cite{rfc2141bis}), 
+it is \RECOMMENDED{} that software
+implementations that don't validate specific subnamespace-specific 
+strings, validate the syntax according to the generic rules for validating
+URIs, as defined in \cite{rfc3986}.  URIs may contain all characters
+defined in \texttt{<URN chars>}, including the characters in \texttt{<reserved>}
+(albeit they have a special meaning), as well as the characters \texttt{\qq{}\&\qq{}}
+and \texttt{\qq{}\textasciitilde\qq{}}.
+
+\section{Procedure for Registering a Namespace Identifier}%
+\label{sec:procedure}
+
+The Open Grid Forum delegates parts of its namespace \texttt{urn:ogf:} by
+assigning subnamespace identifiers (\texttt{SNID}s). The formal application
+for an SNID is made via publication of a Grid Forum Document (GFD). The GFD
+\SHOULD{} be an Informational Document, and \MUST{} be published according to the
+normal procedure as described in \cite{gfd152} or its successor.
+
+A GFD that registers a namespace \MUST{} at least include the following sections:
+\begin{itemize}
+    \item The prefix to register
+    \item The version of the specification (usually starting with version 1)
+    \item Syntax of URNs in the registered namespace
+    \item Rules for lexical equivalence of two URNs in the namespace
+    \item Procedure for assignment of identifiers (and possible further subdelegation of the registered namespace)
+    \item Identifier immutability considerations
+    \item Intended use and application area for URNs in the namespace
+\end{itemize}
+The template defined in section~\ref{sec:template} \MAY{} be used as
+(part of) an GFD that registers a namespace.
+
+The Open Grid Forum maintains a registry of namespace identifiers in the 
+\texttt{urn:ogf:} namespace at the URL \url{http://www.ogf.org/urn/}.
+
+The OGF \MUST{} be notified of any (proposed) use of a namespace identifier in the 
+\texttt{urn:ogf:} namespace, by contacting \href{mailto:urn@ogf.org}{urn@ogf.org}.
+The OGF grid forum steering group may, at their discretion “reserve” a
+subnamespace identifier for a limited period of time prior to approval of
+an Informational GFD document describing the namespace.
+
+This document does not describe the resolution procedure of any namespace
+conflicts.
+
+\section{Review Criteria for SNID Proposals}%
+\label{sec:review}
+
+The editor of the GFD series \SHOULD{} make the following checks before assigning 
+a subnamespace identifier (SNID):
+\begin{itemize}
+    \item Is there a grid working document that includes all required sections (as listed above)?
+    \item Does the intended use fall within scope of the OGF?
+    \item Is the application technically sound?
+    \begin{itemize}
+        \item Is the SNID well-chosen? Does it still make sense in 10 years if the 
+          working group is disbanded?
+        \item Is the syntax unambiguous? Is the allowed character set defined? 
+          What is the maximum length of a URN?
+        \item If subdelegation within an SNID is allowed: how is uniqueness and immutability ensured 
+          for third parties (who may be less versed in the process of assignment of 
+          \emph{globally unique} and \emph{persistent} identifiers).
+        \item If percentage-escaping is allowed, is a normalization function defined for the 
+          lexical equivalence?
+        \item How is immutability ensured? Does the URN contain attributes? Can these 
+          attributes change within the lifetime of the identifier (see also 
+          section~\ref{sec:persistency})? If so, what measures are in place to ensure 
+          immutability?
+    \end{itemize}
+\end{itemize}
+
+\section{Template for Registering a Namespace Identifier}%
+\label{sec:template}
+
+\newenvironment{example}[1][]
+{
+\begin{leftbar}\begin{sloppypar}\noindent
+    Example{#1}:
+}{
+\end{sloppypar}\end{leftbar}
+}
+
+In this section, vertical solid bars at the left hand side indicate text given as 
+illustrative examples.
+
+\hrulefill\hspace{1ex} \textsf{Begin of Template} \hspace{1ex}\hrulefill
+
+\subsection*{1. Registration}
+
+\subsubsection*{1.1. Namespace Identifier}
+
+The subnamespace identifier.
+
+\begin{example}
+“\texttt{urn:ogf:example:}”
+\end{example}
+
+Consideration: This namespace is likely to exist for a prolonged period of
+time. It \MUSTNOT{} include volatile data, such as a working group name
+(\texttt{example-wg}), although a name of a protocol created by the working 
+group is acceptable. 
+\texttt{urn:ogf:} is a formal namespace, subnamespace identifiers \MUSTNOT{} 
+start with \texttt{x-}.
+
+\subsubsection*{1.2. Document Version}
+
+Registration version number: starting with 1, incrementing by 1 with each new version of the GFD. \\
+Registration date: date of publication of the GFD.
+
+Consideration: The version number only increases for approved GFD documents, not for each revision of the working draft.
+
+\subsubsection*{1.3. Declared Registrant}
+
+The name and address of the namespace organisation and/or contact person that
+is responsible for making the registration.
+
+This section may be omitted if the registrant is the same as the authors of the GFD.
+
+\subsection*{2. Syntax}
+
+\subsubsection*{2.1. Syntactic Structure}
+
+This section should outline any structural features of identifiers in this namespace.  
+It must describe the syntax of all current and future URNs within this namespace 
+that are considered valid.
+This description may be used to introduce terminology used in other sections.
+
+\begin{example}
+\begin{quote}
+  \texttt{EXAMPLE-URN = \qq{}urn:ogf:\qq{} SNID \qq{}:\qq{} TYPE \qq{}:\qq{} YEAR \qq{}:\qq{} DOMAIN} \\
+  \hspace*{2cm}\texttt{\qq{}:\qq{} INDEX *1(QUERY) *1(FRAGMENT) } \\
+  \texttt{SNID = \qq{}example\qq{}} \\
+  \texttt{TYPE = ALPHA *15( ALPHA / DIGIT / \qq{}-\qq{} )} \\
+  \texttt{YEAR = 4DIGIT} ; Year in Gregorian calendar \\
+  \texttt{DOMAIN = LDH-LABEL *( \qq{}.\qq{} LDH-LABEL )} ; domain name. \\
+  \texttt{LDH-LABEL = *63( ALPHA / DIGIT / \qq{}-\qq{} )} ; part of a domain name. \\
+  \texttt{INDEX = 1*DIGIT} ; Identifier of a historic supercomputer \\
+  \texttt{QUERY = \qq{}?\qq{} 1*<URN chars>} \\
+  \texttt{FRAGMENT = \qq{}\#\qq{} 1*<URN chars>}
+\end{quote}
+
+The total length of a \texttt{<EXAMPLE-URN>} \MUSTNOT{} exceed 255 bytes.
+If a recipient receives a \texttt{<EXAMPLE-URN>} of longer length, it \MUST{} be discarded 
+as invalid.
+
+Example-URNs that are assigned to a resource \MUST{} set \texttt{<YEAR>} 
+to the year of assignment. \texttt{<DOMAIN>} \MUST{} be a fully 
+qualified domain name. The domain name \MAY{} not contain a record 
+in the DNS systems, but the domain \MUST{} be under control of the 
+assigning organisation at the time of the assignment.
+\end{example}
+
+Consideration: The specification may use the augmented BFR format \cite{rfc5234}.
+
+This section may be combined with section 2.2 or 2.3.
+
+\subsubsection*{2.2. Reserved Use}
+
+This section should outline which of valid URNs \MAY{} be assigned, and which URNs 
+\MUSTNOT{} (yet) be assigned, but are reserved for future use.
+
+\begin{example}
+For current assignments, \texttt{<TYPE>} \MUST{} be either “\texttt{supercomputer}” or “\texttt{cluster}”:
+
+\begin{quote}
+  \texttt{TYPE = (\qq{}cluster\qq{} / \qq{}supercomputer\qq{})}
+\end{quote}
+
+The \texttt{<QUERY>} and \texttt{<FRAGMENT>} part \MUSTNOT{} be included in
+assigned URNs, until its use is documented by a revision of this document.
+\end{example}
+
+Considerations: \cite{rfc2141} does not allow query or fragment identifiers,
+but they may be allowed in the future. It is recommended to explicitly
+note if query or fragment identifiers are allowed in the namespace.
+
+This section may be combined with section 2.1 or 2.3.
+
+\subsubsection*{2.3. Encoding}
+
+This section should specify the encoding or decoding algorithms. 
+This is particularly applicable in the case (a part of) a URN maps to a 
+external naming system.
+
+This section \MUST{} specify if percent-escaping as defined in \cite{rfc2141}
+is allowed, and if so, what the binary code represents. This section \MUST{}
+specify if the \texttt{<reserved>} characters as defined in \texttt{<URN
+chars>} in \cite{rfc2141} are allowed (it is \textsc{recommended} that they are \textsc{not} allowed).
+
+\begin{example}
+\texttt{<DOMAIN>} \MAY{} be an internationalized domain name. All labels 
+of the domain must be written in classic LDH (letter, digit, hyphen) format.
+International labels must be converted to an A-label (starting with 
+\texttt{xn-{}-})~\cite{rfc5890}.
+
+Percentage-escaped strings \MUSTNOT{} be used in \texttt{<EXAMPLE-URN>}. 
+It is \RECOMMENDED{} that for display purposes, protocols that exchange 
+URNs include an attribute of the URN that is the human readable name 
+which may include Unicode characters. The definition of such attribute 
+is out of scope of this specification.
+\end{example}
+
+\begin{example}[ where a URN contains a reference to a external naming system]
+\begin{itemize}
+    \item The \texttt{<LOCODE>} part of the URN \MUST{} map to a valid 
+    UN/LOCODE string~\cite{unlocode}, with the \texttt{\qq{} \qq{}} 
+    (space) in the UN/LOCODE mapped to a \texttt{\qq{}-\qq{}} in the \texttt{<LOCODE>} 
+    part of the URN. Since no \texttt{\qq{}-\qq{}} can occur in UN/LOCODE identifiers, 
+    the inverse mapping is also one-to-one.
+\end{itemize}
+\end{example}
+\begin{example}[ where a URN may contain percentage-escaped characters]
+\begin{itemize}
+    \item The \texttt{<NAME>} part of the URN \MAY{} contain percent-escaped 
+    characters (\texttt{\qq{}\%\qq{} <hex> <hex>}) as described in \cite{rfc2141}. 
+    The percentage-decoded \texttt{<NAME>} \MUST{} be a valid UTF-8 
+    encoded byte sequence.
+    \item Assigning organisations \SHOULD{} only assign \texttt{<NAME>}
+    whose Unicode code points are NFKD-normalised according to the Unicode 5 
+    specification)\cite{uax15} and are allowed by 
+    the rules stipulated in \cite{rfc5892} (no upper case or control code points).
+    \item Receiving software \SHOULD{} accept URNs that are valid UTF-8 encoded, 
+    even if it contains disallowed code points. Receiving software \SHOULDNOT{} 
+    accept URNs that are not valid UTF-8 encoded.
+    \item Receiving software \SHOULDNOT{} display the percentage-decoded URN if it contains 
+    disallowed code points. This prevents ambiguity if these URNs are copied and 
+    pasted by a user.
+\end{itemize}
+\end{example}
+
+This section may be combined with section 2.1 or 2.2.
+
+\subsubsection*{2.4. Rules for Lexical Equivalence}
+
+This section should list the algorithm for determining lexical equivalence 
+between two identifiers in the underlying namespace.
+
+\begin{example}
+URNs are lexical equivalent if and only if they are byte-equivalent after case 
+normalisation.
+\end{example}
+
+\begin{example}[ where a URN may contain percentage-escaped characters]
+
+Interpretation or normalisation of percentage-escaped characters must not take place.
+\end{example}
+
+Considerations: \cite{rfc2141,rfc6453} specify that the
+\texttt{\qq{}urn:ogf:\qq{}} part and the \texttt{<SNID>} are case insensitive and that
+hex-encoding in a percentage-escaped character is case insensitive. The
+lexical equivalence algorithm defined in this section \MUST{} comply with
+these requirements. Typical normalisation functions to consider are case
+normalisation, percentage-encoding using UTF-8, diacritical normalisation 
+using canonical (de)composition (e.g. NFC and NFD in Unicode \cite{uax15}), 
+and ligature normalisation using compatibility (de)composition (e.g. NFKC 
+and NFKD in Unicode \cite{uax15}). If Unicode normalisation is to occur, 
+the specification \SHOULD{} list a specific Unicode version (e.g. Unicode 
+2.0 or Unicode 6.0) since this function may change between versions 
+(e.g. there is no pre-composed character for Y-caron in Unicode version 6, 
+but this may be created in a future version).
+
+It is recommended to list a few examples.
+
+\begin{example}
+The following two Example-URNs are equivalent to each other:
+
+  1- \texttt{urn:ogf:example:cluster:2009:example.net:42} \\
+  2- \texttt{URN:OGF:Example:CLUSTER:2009:EXAMPLE.net:42}
+\end{example}
+
+\subsection*{3. Services}
+
+\subsubsection*{3.1. Validation mechanism}
+
+A URN namespace may provide mechanisms for “validating” a URN -- 
+i.e., determining whether a given string is currently an assigned URN 
+or a non-assigned URN.
+For example, even if a telephone number-based URN namespace was
+created, it is not clear that all possible telephone numbers would
+immediately become “valid” URNs.
+
+Where applicable, this section should describe if the operation of 
+validation servers is an open process, or that it is subject to 
+some authoritative delegation procedure.
+
+Considerations: If such mechanism exists, this section may describe 
+this mechanism, or may refer to a document that does describe it.
+This section may contain requirement how a recipient of a malformed 
+URN should act: e.g. accept the URN as-is, attempt to normalise it, or 
+reject it.
+
+\begin{example}
+The Example-URN namespace has a Dynamic Delegation Discovery System 
+(DDDS)~\cite{rfc3402}. The DDDS is a lookup service where applications 
+can verify the validity of a given Example-URN.
+
+The DDDS for the Example-URN namespace uses DNS as the lookup database.
+For persistency reasons, the first lookup is done within the specially 
+registered grid.example.net domain, which services as a persistent entry 
+point, even if the domain names that are part of Example-URNs are no longer 
+in use.
+
+The Application Unique String is the full Example-URN, and the First Well 
+Known Rule (as per \cite{rfc3402}) is:
+
+\begin{quote}
+\texttt{/urn:ogf:example:([a-z0-9\textbackslash{}-]+):([0-9]+):([a-z0-9\textbackslash{}-\textbackslash{}.]+):([0-9]+)/ \textbackslash{}2.\textbackslash{}3.\textbackslash{}1.grid.example.net/i}
+\end{quote}
+
+A lookup client \SHOULD{} apply the above First Well Know Rule to the full 
+Example-URN, and do a DNS lookup for a NAPTR record for the resulting DNS 
+record. The result is a rule set, which \MUST{} be applied to the full 
+Example-URN as described in~\cite{rfc3402}.
+
+A URN is considered valid if a record with a NAPTR record is found that 
+terminates the lookup sequence (thus with the S, A, U or P flag set) 
+within at most 8 iterations.
+\end{example}
+
+This section is optional. It may be combined with section 3.2.
+
+\subsubsection*{3.2. Process for identifier resolution}
+
+A URN namespace may provide mechanisms for “resolving” a URN -- 
+i.e., determining attributes of the resources that is described, 
+such as metadata or the location(s) where the resource can be retrieved.
+A resolver may also be used to point to related URNs -- i.e. URNs that 
+refer to the server resource, or URNs that refer to a more general or 
+more specific part of the resource.
+
+Where applicable, this section should describe if the operation of resolution 
+servers is an open process, or that it is subject to some authoritative 
+delegation procedure.
+
+Considerations: If such mechanism exists, this section may describe this 
+mechanism, or may refer to a document that does describe it.
+This section may contain an estimate of the volatility of the resource 
+attributes and a reasonable caching time for these attributes, or it could 
+dictate that any resolution mechanism contains caching time-outs.
+
+\begin{example}
+The URN-Example namespace does currently not define a Resolution Discovery 
+System (RDS), but clients \MAY{} translate an Example-URN to a identifier in 
+the handle systems\cite{rfc3650} using a yet-to-be-defined mapping, and use 
+the handle system to query information about the Example-URN.
+\end{example}
+
+This section is optional. It may be combined with section 3.1.
+
+\subsection*{4. Namespace Considerations}
+
+\subsubsection*{4.1. Scope}
+
+This section should address the type of resource to be identified in 
+the proposed namespace.
+
+It is recommended that a namespace is limited in scope.  
+For example, a namespace claiming to deal in “computers” must 
+have a global scope and address all computers, which is unlikely.
+On the other hand, a namespace claiming to deal with only top500 
+supercomputers is more reasonable. It is expected that more than one 
+namespace may serve the same “functional” purpose.
+
+This section should also make it clear which version of the resource is 
+identified. For example, the namespace could deal with a general
+resource (e.g. “the weather in Seattle”), a particular manifestation or
+version (e.g. “the weather in Seattle on May 1st, 2011”) or a dynamic
+manifestation (e.g. “the current weather in Seattle”).
+
+\begin{example}
+The following resource types for bibliographic records exist:
+\begin{description}
+    \item [work] e.g. Jane Austin's “Gone with the Wind”, or the 
+    \item [expression] e.g. the Swedish translation of the work
+    \item [manifestation] e.g. a hard cover of the expression
+    \item [item] e.g. an actual book on a shelf
+\end{description}
+The Example-URN namespace only deals with manifestations, but not with works, expressions or individual items.
+\end{example}
+
+
+% If desired, the URN
+% syntax may include a part which specifies the version of the resource (e.g.
+% \path{urn:ogf:example:cluster:2009-10:example.net:42} or \path{urn:ogf:example:cluster:2011-08:example.net:42})
+
+\begin{example}
+The Example-URN namespace only deals with top500 supercomputers and equally 
+large scale grid clusters. The namespace is intended for supercomputers 
+and clusters for scientific use, though there are 
+no technical or organisational limitations for other use 
+(e.g. clusters at large corporations or military).
+
+Each Example-URN refers to the hardware of the supercomputer 
+or cluster in its latest operational state. An assigning organisation 
+\MAY{} assign a new identifier if a significant hardware update is made. 
+(In which case, any \emph{status} attribute of the old identifier \SHOULD{} 
+be set to \emph{decommissioned}.)
+
+Clients that process Example-URNs \SHOULD{} consider attributes such 
+as the size of the cluster or supercomputer to be dynamic, and \SHOULD{} 
+regularly query the assigning organisation for changes in these properties.
+\end{example}
+
+This section may be combined with sections 4.2 and/or 4.3.
+
+\subsubsection*{4.2. Identifier uniqueness considerations}
+
+This section should address the requirement that URN identifiers be assigned 
+uniquely -- they are assigned to at most one resource, and are not reassigned.
+
+\begin{example}
+An Example-URN always refers to the latest version (latest operational state) of 
+a resource. Attributes of Example-URNs are considered dynamic. Example-URNs can 
+not refer to earlier states of a cluster of supercomputer, unless the 
+assigning organisation deliberately created a different URN for each version.
+
+Domain names are volatile for the duration of persistent URNs. The \texttt{<YEAR>} 
+part in the Example-URN makes sure that the assigning organisations never re-use the 
+same identifier, even if the domain is transferred to a different assigning organisation.
+This assumes that an assigning organisation \SHOULD{} retain control of a domain 
+name for one year after the last identifier was assigned
+\end{example}
+
+Considerations: non-reassignment does not prevent all situations where a single 
+URN refers to multiple resources. Another risk is that a single URN indadvertedly 
+refers to multiple versions of the same resource, where each version has 
+different properties. A common solution to this potential problem is to either 
+limiting the scope of the URN namespace (e.g. a URN always refers to the latest 
+version, and it is not possible to refer to an earlier version), or adding a 
+version part to the URN syntax.
+
+This section may be combined with sections 4.1 and/or 4.3.
+
+\subsubsection*{4.3. Exposition of Structure}
+
+This section should include any other considerations dealing with the
+interpretation the of URNs in the namespace, in addition to the syntactic checks 
+that are described before.
+
+Considerations: If part of the structure is opaque in meaning (the meaning 
+is not exposed), this should be noted. 
+
+\begin{example}
+\begin{itemize}
+    \item The \texttt{<INDEX>} part of an Example-URN is opaque; 
+      clients \MUSTNOT{} infer any attributes about the resource being 
+      identified from this index.
+    \item Clients \MAY{} infer the assigning organisation from the combination 
+      of \texttt{<DOMAIN>} and \texttt{<YEAR>} (but \SHOULDNOT{} infer that 
+      from the \texttt{<DOMAIN>} part alone).
+\end{itemize}
+\end{example}
+
+This section may be combined with sections 4.1 and/or 4.2.
+
+\subsection*{5. Community Considerations}
+
+\subsubsection*{5.1. Process of identifier assignment}
+
+This section should detail the mechanisms and/or authorities for
+assigning URNs to resources.  It should make clear whether
+assignment is completely open, or if limited, how to become an
+assigner of identifiers, and/or get one assigned by existing
+assignment authorities.
+
+Answers could include, but are not limited to:
+\begin{itemize}
+    \item assignment is completely open, following a particular algorithm
+    \item assignment is delegated to authorities recognised by a particular 
+      organisation
+    \item identifiers are assigned sequentially by some automate process
+    \item assignment is handled on a per-identifier basis by community consensus 
+      (e.g. by publication of a community reviewed Grid Forum Document.)
+\end{itemize}
+
+\begin{example}
+Assignment of Example-URN is open to all interested parties. The requirement 
+to become an Assigning Organisation is to be the administrative owner of a fully 
+qualified domain name (FQDN). The administrative owner picks a domain or 
+(sub)domain thereof (e.g. the administrative owner of \texttt{example.net} 
+may choose \texttt{example.net} or a subdomain such as \texttt{sc.example.net}). 
+The assigning organisation is free to choose any \texttt{<INDEX>}, as long as 
+it is syntactically correct, and the resulting URN has never been assigned 
+before.
+
+If third parties should be able to verify the validity of Example-URN 
+and retrieve basic attributes, the assigning organisation \MUST{} register the 
+combination of the \texttt{<DOMAIN>} and \texttt{<YEAR>} with the Grid Lookup 
+Organisation that provides the lookup service at grid.example.net.
+\end{example}
+
+\subsubsection*{5.2. Identifier immutability considerations}
+
+A URN scheme \MUST{} be designed such that even in rare events, the identifiers 
+never need to be changed. This section should include the considerations why 
+this given syntax of the URN is most likely to remain stable.
+
+The desire to change an URN may occur when the URN contains attributes which have 
+changed. The easiest way to avoid this is to avoid the inclusion of volatile or 
+dynamic attributes in the URN syntax.
+
+\begin{example}
+Example-URNs are assigned with the \texttt{<YEAR>} and \texttt{<DOMAIN>} as 
+it exist \emph{at the time of assignment}. When the year changes or if the domain 
+changes, \emph{the URN \MUSTNOT{} change}.
+
+The \texttt{<INDEX>} has a very limited set of allowed characters (only digits), 
+to prevent assigning organisations from encoding (potentially volatile) 
+attributes in the URN.
+\end{example}
+
+Considerations: 
+While the following events rarely occur, their occurrence may still be more 
+frequent than the anticipated lifetime of the resource identifier. 
+Thus, they should be considered in this section.
+\begin{itemize}
+    \item The prefix contains the name of assigning organisation, and the 
+      assigning organisation merges, ceases to exists or changes name.
+    \item The identifier contains certain attributes of the resource, and 
+      these attributes change.
+    \item The resource changes.
+    \item Seemingly stable properties (such as a location) may change name 
+      (e.g. countries may be split, merged or change name).
+\end{itemize}
+
+% For example, the identifier
+% \path{urn:ogf:example:supercomputer:2011:colossus.bletchleypark.org.uk:1} 
+% contains the domain “colossus.bletchleypark.org.uk”, as well as the year 2011. 
+% The Bletchley Park trust could file for bankrupcy; a marketing decision was 
+% made to change the name; the community of Bletchley could be annexed by the 
+% city of London, etcetera. 
+
+The section may contain a realistic estimate of the maximum lifetime of the resource%
+\footnote{Among URN experts, it is uncommon to make estimates of the 
+lifetime of \emph{persistent} identifiers. Theoretically, they should last 
+indefinitely. It is the believe of the authors that a good estimate of the 
+maximum lifetime of a resource identifier (e.g. 50 years, 2000 years, ...) 
+helps reviewers evaluate the SNID registration.}%
+, a maximum lifetime of the resource \emph{identifier}%
+\footnote{the \textbf{maximum} lifetime of a resource \textbf{identifier} is 
+usually significantly longer than the \textbf{average} lifetime of a resource 
+identifier, and also significantly longer than the maximum lifetime of a 
+resource itself.}%
+, and thus the minimum time that the resource identifier \MUSTNOT{} change.
+This section \SHOULD{} explain the organisational requirements how
+this minimum time is ensured.
+
+\subsection*{6. Examples}
+
+This section may list a few example identifiers.
+
+\begin{example}
+The following four URNs are syntactically valid Example-URNs:
+These examples are informative only. They may not actually exist:
+
+  1- \texttt{urn:ogf:example:cluster:2009:example.net:42} \\
+  2- \texttt{urn:ogf:example:cluster:2010:example.net:00784505476220484608} \\
+  3- \texttt{urn:ogf:example:supercomputer:2011:colossus.bletchleypark.org.uk:1} \\
+  4- \texttt{urn:ogf:example:supercomputer:2011:xn-{}-tcklt4eq6h7d1cbe.example.org:1}
+
+\ifxetex
+(Punycode \texttt{tcklt4eq6h7d1cbe} translates to スーパーコンピュータ, Japanese for \emph{supercomputer}.)
+\else
+(Punycode \texttt{tcklt4eq6h7d1cbe} translates to \begin{CJK}{UTF8}{min}スーパーコンピュータ\end{CJK}, Japanese for \emph{supercomputer}.)
+\fi
+
+The following four URNs are syntactically \textbf{invalid} Example-URNs:
+
+  5- \texttt{\st{urn:ogf:example:supercomputer:2011:colossus.bletchleypark.org.uk:mark1}} \\
+  6- \texttt{\st{urn:ogf:example:supercomputer:2011:colossus.bletchleypark.org.uk}} \\
+  7- \texttt{\st{urn:ogf:example:supercomputer:1949:colossus.bletchleypark.org.uk:1}} \\
+  8- \texttt{\st{urn:ogf:example:supercomputer:2000:\%e3\%82\%b9\%e3\%83\%bc\%e3\%83\%91\%e3\%83\%bc} \\
+\hspace*{1cm}\st{\%e3\%82\%b3\%e3\%83\%b3\%e3\%83\%94\%e3\%83\%a5\%e3\%83\%bc\%e3\%82\%bf.example.org:1}}
+
+URN 5 has invalid characters in the \texttt{<INDEX>}; URN 6 has no \texttt{<INDEX>}; URN 7 has an invalid \texttt{<YEAR>} (the domain name certainly did not exist in 1949); URN 8 has a \texttt{<LDH-LABEL>} in percentage encoded UTF-8, instead of the required Punycode.
+\end{example}
+
+\subsection*{7. Relevant Ancillary Documentation}
+
+This section should list any GFDs, RFCs, standards, or other published
+documentation that defines or explains all or part of the
+namespace structure.
+
+This section is optional and may be replaced with in-line bibliography references.
+
+\subsection*{8. Changes from Previous Versions / Prior Usage}
+
+This section \SHOULD{} include changes to previous versions of the document, 
+or list prior (undocumented) use of the namespace.
+
+This section is optional.
+
+\hrulefill\hspace{1ex} \textsf{End of Template} \hspace{1ex}\hrulefill
+
+\section{Security Considerations}
+
+There are no additional security considerations other than those
+normally associated with the use and resolution of URNs in general.
+
+Implementors are recommended to check the OGF registry and documentation 
+at \url{http://www.ogf.org/urn/} before assuming that a given identifier 
+is valid or has a certain meaning.
+
+\section{Glossary}
+
+\begin{description}
+
+  \item[Assigning Organisation] A namespace organisation that assigns unique 
+    identifiers to resources.
+  
+  \item[Cool URI] A URL (!) that is persistent and is used as both a locator 
+    and an identifier.
+
+  \item[Fragment Identifier] The part of a URN that follows a pound sign 
+    (\qq{}\texttt{\#}\qq{}).
+
+  \item[Globally Unique Identifier] An identifier which identifies at most one 
+    resource worldwide. A global identifier typically consists of a prefix and 
+    a local identifier.
+
+  \item[Identifier] A label (string or byte sequence) that identifies a resource.
+
+  \item[Locally Unique Identifier] An identifier assigned by an assigning organisation, 
+    that identifies at most than one resource.
+
+  \item[Namespace] A set of all possible identifiers with the same namespace identifier.
+
+  \item[Namespace Identifier] A unique identifier of a namespace organisation, 
+    often used as a prefix.
+
+  \item[Namespace Organisation] An organisation maintaining a namespace. 
+    A namespace organisation may delegate part of their namespace to another 
+    namespace organisation.
+
+  \item[Prefix] A namespace identifier, which is prepended to a local identifier 
+    to form a globally unique identifier.
+
+  \item[Question Identifier] The part of a URN that follows a question mark 
+    (\qq{}\texttt{?}\qq{}), but excluding the Fragment Identifier.
+
+  \item[Subnamespace Identifier] A word that identifies a part of a a larger 
+    namespace. The string \qq{}urn:ogf:\qq{} followed by a subnamespace identifier 
+    forms the prefix of a namespace that is subject of the registration procedure 
+    as described in this document.
+  
+  \item[Unique Identifier] An identifier that identifies at most one resource, 
+    and is never re-assigned.
+
+  \item[URI] A string that adheres to the URI syntax~\cite{rfc3986}, such as a URL or URN.
+
+  \item[URL] The location where a resource can be found.
+
+  \item[URN] A globally unique identifier that adheres to the URN syntax described 
+    in \cite{rfc2141}.
+\end{description}
+
+\section{Contributors}
+
+\textbf{Freek Dijkstra (Editor)} \\
+SARA \\
+Science Park 121 \\
+1098 XG\ \  Amsterdam \\
+The Netherlands \\
+Email: Freek.Dijkstra@sara.nl
+
+\textbf{Richard Hughes-Jones} \\
+DANTE \\
+City House \\
+126-130 Hills Road \\
+Cambridge\ \ CB2 1PQ \\
+United Kingdom \\
+Email: Richard.Hughes-Jones@dante.net
+
+\textbf{Gregory B.\ Newby} \\
+Arctic Region Supercomputing Center \\
+P.O.\ Box 756020 \\
+Fairbanks, Alaska\ \ 99775 \\
+USA \\
+Email: gbnewby@alaska.edu
+
+\textbf{Joel Replogle (Corresponding Author)} \\
+Open Grid Forum Office \\
+P.O.\ Box 1738 \\
+Muncie, Indiana\ \ 47308 \\
+USA \\
+Email: replogle@ogf.org
+
+\section{Acknowledgments}
+
+This document is based on the best practice of delegation in the URN hierarchy, 
+as described in RFC 3406.
+
+\phantomsection\addcontentsline{toc}{section}{Intellectual Property Statement}
+\section*{Intellectual Property Statement}
+
+The OGF takes no position regarding the validity or scope of any intellectual
+property or other rights that might be claimed to pertain to the
+implementation or use of the technology described in this document or the
+extent to which any license under such rights might or might not be
+available; neither does it represent that it has made any effort to identify
+any such rights. Copies of claims of rights made available for publication
+and any assurances of licenses to be made available, or the result of an
+attempt made to obtain a general license or permission for the use of such
+proprietary rights by implementers or users of this specification can be
+obtained from the OGF Secretariat.
+
+The OGF invites any interested party to bring to its attention any
+copyrights, patents or patent applications, or other proprietary rights which
+may cover technology that may be required to practice this recommendation.
+Please address the information to the OGF Executive Director.
+
+\phantomsection\addcontentsline{toc}{section}{Disclaimer}
+\section*{Disclaimer}
+
+This document and the information contained herein is provided on an ``As
+Is'' basis and the OGF disclaims all warranties, express or implied,
+including but not limited to any warranty that the use of the information
+herein will not infringe any rights or any implied warranties of
+merchantability or fitness for a particular purpose.
+
+\phantomsection\addcontentsline{toc}{section}{Full Copyright Notice}
+\section*{Full Copyright Notice}
+
+Copyright \copyright \ Open Grid Forum (\copyrightyears). Some Rights Reserved.
+
+This document and translations of it may be copied and furnished to others,
+and derivative works that comment on or otherwise explain it or assist in its
+implementation may be prepared, copied, published and distributed, in whole
+or in part, without restriction of any kind, provided that the above
+copyright notice and this paragraph are included on all such copies and
+derivative works. However, this document itself may not be modified in any
+way, such as by removing the copyright notice or references to the OGF or
+other organizations, except as needed for the purpose of developing Grid
+Recommendations in which case the procedures for copyrights defined in the
+OGF Document process must be followed, or as required to translate it into
+languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked 
+by the OGF or its successors or assignees.
+
+
+\phantomsection\addcontentsline{toc}{section}{References}
+\section*{References}
+% 
+% Define heading of bibliography to be empty, since we already have a heading above the text.
+\renewcommand{\refname}{}
+
+\phantomsection\addcontentsline{toc}{subsection}{Normative References}
+\subsection*{Normative References}
+\begin{thebibliography}{10}
+\vspace*{-3em}
+
+\bibitem[GFD.152]{gfd152}
+Charlie Catlett, Cees de Laat, David Martin, Gregory B.\ Newby and Dane Skow.
+\newblock {Open Grid Forum Document Process and Requirements}.
+\newblock GFD.152 (Community Practice), 24 June 2009.
+\newblock URL \url{http://www.ogf.org/documents/GFD.152.pdf}.
+
+\bibitem[RFC 2119]{rfc2119}
+Scott Bradner.
+\newblock {Key words for use in RFCs to Indicate Requirement Levels}.
+\newblock RFC 2119 (Best Current Practice), March 1997.
+\newblock URL \url{http://tools.ietf.org/html/rfc2119}.
+
+\bibitem[RFC 2141]{rfc2141}
+Ryan Moats.
+\newblock {URN Syntax}.
+\newblock RFC 2141 (Standards Track), May 1997.
+\newblock URL \url{http://tools.ietf.org/html/rfc214}.
+
+\bibitem[RFC 3406]{rfc3406}
+Leslie L.\ Daigle, Dirk-Willem van Gulik, Renato Iannella and Patrik Fältström.
+\newblock {Uniform Resource Names (URN) Namespace Definition Mechanisms}.
+\newblock RFC 3406 (Best Current Practice), October 2002.
+\newblock URL \url{http://tools.ietf.org/html/rfc3406}.
+
+\bibitem[RFC 3986]{rfc3986}
+Tim Berners-Lee, Roy T. Fielding, and Larry Masinter.
+\newblock {Uniform Resource Identifier (URI): Generic Syntax}
+\newblock RFC 3986 (Standards Track), January 2005.
+\newblock URL \url{http://tools.ietf.org/html/rfc3986}.
+
+\bibitem[RFC 5234]{rfc5234}
+Dave Crocker and Paul Overell.
+\newblock {Augmented BNF for Syntax Specifications: ABNF}.
+\newblock RFC 5234 (Standards Track), January 2008.
+\newblock URL \url{http://tools.ietf.org/html/rfc5234}.
+
+\bibitem[RFC 6453]{rfc6453}
+Freek Dijkstra and Richard Hughes-Jones.
+\newblock {A URN Namespace for the Open Grid Forum (OGF)}.
+\newblock RFC 6453 (Informational), December 2011.
+\newblock URL \url{http://tools.ietf.org/html/rfc6453}.
+
+\end{thebibliography}
+
+\phantomsection\addcontentsline{toc}{subsection}{Informative References}
+\subsection*{Informative References}
+
+\begin{thebibliography}{10}
+\vspace*{-3em}
+
+\bibitem[GFD.084]{gfd84}
+Michel Drescher and Ali Anjomshoaa.
+\newblock {Standardised Namespaces for XML infosets in OGF}.
+\newblock GFD.084 (Community Practice), 31 October 2006.
+\newblock URL \url{http://www.ogf.org/documents/GFD.84.pdf}.
+
+\bibitem[LOCODE]{unlocode}
+United Nations Economic Commission for Europe (UNECE).
+\newblock {United Nations Code for Trade and Transport Locations}.
+\newblock UN/LOCODE 2010-2, December 2010.
+\newblock URL \url{http://www.unece.org/cefact/locode/}.
+
+\bibitem[RFC2141bis]{rfc2141bis}
+Alfred Hoenes (Editor).
+\newblock {Uniform Resource Name (URN) Syntax}.
+\newblock draft-ietf-urnbis-rfc2141bis-urn (Standards Track, if approved), October 2011.
+\newblock URL \url{http://tools.ietf.org/html/draft-ietf-urnbis-rfc2141bis-urn}.
+
+% \bibitem[RFC 3305]{rfc3305}
+% Michael Mealling and Ray Denenberg.
+% \newblock {Report from the Joint W3C/IETF URI Planning Interest Group: Uniform Resource Identifiers (URIs), URLs, and Uniform Resource Names (URNs): Clarifications and Recommendations}.
+% \newblock RFC 3305 (Informational), November 2003.
+% \newblock URL \url{http://tools.ietf.org/html/rfc3650}.
+
+\bibitem[RFC 3402]{rfc3402}
+Michael Mealling.
+\newblock {Dynamic Delegation Discovery System (DDDS) - Part Two: The Algorithm}.
+\newblock RFC 3402 (Standards Track), October 2002.
+\newblock URL \url{http://tools.ietf.org/html/rfc3402}.
+
+\bibitem[RFC 3650]{rfc3650}
+Sam Sun, Larry Lannom and Brian Boesch.
+\newblock {Handle System Overview}.
+\newblock RFC 3650 (Informational), August 2002.
+\newblock URL \url{http://tools.ietf.org/html/rfc3305}.
+
+\bibitem[RFC 5890]{rfc5890}
+John C. Klensin.
+\newblock {Internationalized Domain Names for Applications (IDNA): Definitions and Document Framework}.
+\newblock RFC 5890 (Standards Track), August 2010.
+\newblock URL \url{http://tools.ietf.org/html/rfc5890}.
+
+\bibitem[RFC 5892]{rfc5892}
+Patrik Fältström (editor).
+\newblock {The Unicode Code Points and Internationalized Domain Names for Applications (IDNA)}.
+\newblock RFC 5892 (Standards Track), August 2010.
+\newblock URL \url{http://tools.ietf.org/html/rfc5892}.
+
+\bibitem[UAX\#15]{uax15}
+Mark Davis and Ken Whistler.
+\newblock {Unicode Normalization Forms}.
+\newblock Unicode 6.0, Unicode Standard Annex \#15, September 2010.
+\newblock URL \url{http://www.unicode.org/reports/tr15/}.
+
+\bibitem[X.667]{x.667}
+Information technology - Open Systems Interconnection.
+\newblock {Generation and registration of Universally Unique Identifiers (UUIDs) 
+and their use as ASN.1 object identifier components}.
+\newblock ITU-T Recommendation X.667 / ISO/IEC 9834-8, August 2008.
+\newblock URL \url{http://www.itu.int/rec/T-REC-X.667}.
+
+\end{thebibliography}
+
+
+\end{document}
