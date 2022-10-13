@@ -11,19 +11,19 @@
         <description></description>
         <link>https://www.ogf.org/ogf/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-23T20:16:12+0000</dc:date>
+       <dc:date>2022-09-28T07:48:34+0000</dc:date>
         <items>
             <rdf:Seq>
-                <rdf:li rdf:resource="doku.php/events/eventsd5d5.html?rev=1441717549&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-38a078c.html?rev=1368998849&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-38bdfff.html?rev=1369348079&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-39216b.html?rev=1379411767&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-40f439.html?rev=1389131083&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-411727.html?rev=1404935044&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-4259a8.html?rev=1410114529&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-43a62c.html?rev=1424819721&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-441d2b.html?rev=1432136888&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/sidebar6b8b.html?rev=1429913633&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/events?rev=1441717549&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-38a?rev=1368998849&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-38b?rev=1369348079&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-39?rev=1379411767&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-40?rev=1389131083&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-41?rev=1404935044&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-42?rev=1410114529&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-43?rev=1424819721&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-44?rev=1432136888&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/sidebar?rev=1429913633&amp;do=diff"/>
             </rdf:Seq>
         </items>
     </channel>
@@ -32,7 +32,7 @@
         <link>https://www.ogf.org/ogf/</link>
         <url>https://www.ogf.org/ogf/lib/tpl/ogf/images/favicon.ico</url>
     </image>
-    <item rdf:about="doku.php/events/eventsd5d5.html?rev=1441717549&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/events?rev=1441717549&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-09-08T13:05:49+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -42,7 +42,7 @@
 
 OGF’s most recent event in 2015 was OGF 44, which took place May 21-22, 2015 as part of the EGI Spring Conference 2015, May 18-22, 2015 in Lisbon, Portugal. This event also included a Cloud Interoperability Plugfest for active hands-on standards and software API testing and several related co-organized meetings.</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-38a078c.html?rev=1368998849&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-38a?rev=1368998849&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-19T21:27:29+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -55,7 +55,7 @@ Venue
 
 OGF-38a focuses explicitly on our Networking Community, under the umbrella of the Terena 2013 Networking Conference (TNC'2013): a full day is scheduled for a joint meeting of the GLIF Technical Working Group and the OGF Networking Working Groups, to progress work on common service specifications for lambda grids, as well as the AutoGOLE pilot.</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-38bdfff.html?rev=1369348079&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-38b?rev=1369348079&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-23T22:27:59+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -65,7 +65,7 @@ OGF-38a focuses explicitly on our Networking Community, under the umbrella of th
 
 XSEDE13, which takes place July 22-25, 2013 in San Diego, is the second annual conference for the international XSEDE community. This event will showcase the discoveries, innovations, and achievements of those who use, build, and support XSEDE resources and other cyberinfrastructure resources around the world.</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-39216b.html?rev=1379411767&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-39?rev=1379411767&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-09-17T09:56:07+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -77,7 +77,7 @@ OGF 39: co-located with EGI Technical Forum and Cloud Interoperability Week
 
 OGF's third major event of 2013 will be OGF 39, which will take place in Madrid, Spain co-located with the EGI Technical Forum. The OGF 39 sessions will be followed by a Cloud Interoperability Workshop and Cloud Plugfest, which are co-sponsored by OGF in cooperation with several other important cloud standards organizations, and together with the co-timed SNIA Storage Developers …</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-40f439.html?rev=1389131083&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-40?rev=1389131083&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2014-01-07T21:44:43+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -93,7 +93,7 @@ Mathematical Institute
 
 University of Oxford</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-411727.html?rev=1404935044&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-41?rev=1404935044&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2014-07-09T19:44:04+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -103,7 +103,7 @@ University of Oxford</description>
 
 This very large and diverse conference should be a good meeting location for OGF work and community groups working on topics related to engagement of multi-scale user technologies (such as GLUE, BES, JSDL and other workflow and scheduling technologies) as well as Security, Federated Identity Management and other topics of interest to campus and community engagement.</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-4259a8.html?rev=1410114529&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-42?rev=1410114529&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2014-09-07T18:28:49+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -113,7 +113,7 @@ This very large and diverse conference should be a good meeting location for OGF
 
 Other co-located conferences for this event include the</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-43a62c.html?rev=1424819721&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-43?rev=1424819721&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-02-24T23:15:21+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -121,7 +121,7 @@ Other co-located conferences for this event include the</description>
         <link>https://www.ogf.org/ogf/doku.php/events/ogf-43?rev=1424819721&amp;do=diff</link>
         <description>OGF 43 will be held March 25-27, 2015 co-located with the GENI Engineering Conference 22 (GEC22) and US Ignite Application Summit that will be held March 23-26, 2015 at the Hilton Crystal City Hotel at Washington Reagan National Airport in Crystal City, Virginia near Washington DC, USA. The OGF group meetings will run from Wednesday through Friday and will highlight mutual topics between the networking, security, applications and</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-441d2b.html?rev=1432136888&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-44?rev=1432136888&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-05-20T15:48:08+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -129,7 +129,7 @@ Other co-located conferences for this event include the</description>
         <link>https://www.ogf.org/ogf/doku.php/events/ogf-44?rev=1432136888&amp;do=diff</link>
         <description>OGF 44 will be held May 21-22, 2015 co-located with the EGI Conference 2015 that will be held May 18-22, 2015 in Lisbon, Portugal. The OGF group meetings will run from Thursday through Friday and will all topics topics of general interest to the OGF community, including meetings of the cloud, grid, networking, security, applications and</description>
     </item>
-    <item rdf:about="doku.php/events/sidebar6b8b.html?rev=1429913633&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/sidebar?rev=1429913633&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-04-24T22:13:53+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>

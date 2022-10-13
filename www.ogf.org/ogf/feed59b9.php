@@ -11,11 +11,11 @@
         <description></description>
         <link>https://www.ogf.org/ogf/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-23T20:32:23+0000</dc:date>
+       <dc:date>2022-09-28T08:00:54+0000</dc:date>
         <items>
             <rdf:Seq>
-                <rdf:li rdf:resource="doku.php/nomcom/nominationsea88.html?rev=1435883031&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/nomcom/sidebarbd1a.html?rev=1373293392&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/nomcom/nominations?rev=1435883031&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/nomcom/sidebar?rev=1373293392&amp;do=diff"/>
             </rdf:Seq>
         </items>
     </channel>
@@ -24,7 +24,7 @@
         <link>https://www.ogf.org/ogf/</link>
         <url>https://www.ogf.org/ogf/lib/tpl/ogf/images/favicon.ico</url>
     </image>
-    <item rdf:about="doku.php/nomcom/nominationsea88.html?rev=1435883031&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/nomcom/nominations?rev=1435883031&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-07-03T00:23:51+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -34,7 +34,7 @@
 
 A nominating committee was approved for initiation of current nominations for open positions at OGF 40. At this time, the NomCom is recruiting nominations for Area Directors as listed in our page on OGF Areas and Groups to fill open positions.</description>
     </item>
-    <item rdf:about="doku.php/nomcom/sidebarbd1a.html?rev=1373293392&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/nomcom/sidebar?rev=1373293392&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-07-08T14:23:12+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>

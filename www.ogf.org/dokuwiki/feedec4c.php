@@ -11,24 +11,24 @@
         <description></description>
         <link>https://www.ogf.org/dokuwiki/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-23T20:41:46+0000</dc:date>
+       <dc:date>2022-09-28T08:08:28+0000</dc:date>
         <items>
             <rdf:Seq>
-                <rdf:li rdf:resource="doku.php/about/advisory_committee0b24.html?rev=1373290346&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/copyright5066.html?rev=1411511271&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/elastic_hosts_statement_on_patent_licensing_relating_to_occi93a5.html?rev=1368995992&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/introduction2e99.html?rev=1435882803&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/ipr93a5.html?rev=1368995992&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/liaisons1795.html?rev=1435882584&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/mission2690.html?rev=1435886829&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/nomcomac3d.html?rev=1391718425&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/ogf_board5a8e.html?rev=1571841691&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/operations15e2.html?rev=1436300849&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/organizationae13.html?rev=1435883515&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/sidebar1ede.html?rev=1435877662&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/steering_group2310.html?rev=1435871137&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/sun_microsystems_statement_on_patent_licensing_relating_to_ogsi_v._193a5.html?rev=1368995992&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/unordered_list_item_ibm_statement_on_patent_licensing_relating_to_ogsa93a5.html?rev=1368995992&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/advisory_committee?rev=1373290346&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/copyright?rev=1411511271&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/elastic_hosts_statement_on_patent_licensing_relating_to_occi?rev=1368995992&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/introduction?rev=1435882803&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/ipr?rev=1368995992&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/liaisons?rev=1435882584&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/mission?rev=1435886829&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/nomcom?rev=1391718425&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/ogf_board?rev=1571841691&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/operations?rev=1436300849&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/organization?rev=1435883515&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/sidebar?rev=1435877662&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/steering_group?rev=1435871137&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/sun_microsystems_statement_on_patent_licensing_relating_to_ogsi_v._1.0?rev=1368995992&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/unordered_list_item_ibm_statement_on_patent_licensing_relating_to_ogsa?rev=1368995992&amp;do=diff"/>
             </rdf:Seq>
         </items>
     </channel>
@@ -37,7 +37,7 @@
         <link>https://www.ogf.org/dokuwiki/</link>
         <url>https://www.ogf.org/dokuwiki/lib/tpl/ogf/images/favicon.ico</url>
     </image>
-    <item rdf:about="doku.php/about/advisory_committee0b24.html?rev=1373290346&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/advisory_committee?rev=1373290346&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-07-08T13:32:26+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -53,7 +53,7 @@
 
 	*  Frederica Darema, US National Science Foundation (fdarema@nsf.gov)</description>
     </item>
-    <item rdf:about="doku.php/about/copyright5066.html?rev=1411511271&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/copyright?rev=1411511271&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2014-09-23T22:27:51+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -61,7 +61,7 @@
         <link>https://www.ogf.org/dokuwiki/doku.php/about/copyright?rev=1411511271&amp;do=diff</link>
         <description>Explanatory note: The OGF copyright and intellectual property rights statements, along with the associated disclaimers set out below, exist to ensure that the output documents produced through the open public process that is used by the OGF community remain available and useful to that community and that further work can be developed from published OGF documents with appropriate reference. These policies and procedures have been developed over time from extensive experience, and are similar to t…</description>
     </item>
-    <item rdf:about="doku.php/about/elastic_hosts_statement_on_patent_licensing_relating_to_occi93a5.html?rev=1368995992&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/elastic_hosts_statement_on_patent_licensing_relating_to_occi?rev=1368995992&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-19T20:39:52+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -71,7 +71,7 @@
 
 Elastic Hosts is pleased to announce that any patent claims held by Elastic Hosts which are necessary to implement the “Open Cloud Computing Interface” (OCCI) as designed by the OGF Open Cloud Computing Interface Working Group will be licensed on a royalty-free basis.</description>
     </item>
-    <item rdf:about="doku.php/about/introduction2e99.html?rev=1435882803&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/introduction?rev=1435882803&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-07-03T00:20:03+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -79,7 +79,7 @@ Elastic Hosts is pleased to announce that any patent claims held by Elastic Host
         <link>https://www.ogf.org/dokuwiki/doku.php/about/introduction?rev=1435882803&amp;do=diff</link>
         <description>The Open Grid Forum (OGF) is the global forum in which people in science, business, and government work to ensure that IT infrastructures can meet the needs of today's knowledge-based economy through the use of open and barrier-free computing technologies. OGF fosters adoption of advanced computing by developing open standards for software interoperability and by providing an open forum for innovation. The people supporting OGF believe that standards-based computing is critical to meeting the bu…</description>
     </item>
-    <item rdf:about="doku.php/about/ipr93a5.html?rev=1368995992&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/ipr?rev=1368995992&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-19T20:39:52+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -89,7 +89,7 @@ Elastic Hosts is pleased to announce that any patent claims held by Elastic Host
 
 This page contains information pertaining to Grid Recommendations (draft or final) for which intellectual Property Rights have been asserted or conveyed in some manner. The OGF takes no position regarding the validity or scope of any intellectual property right or other rights that might be claimed to pertain to the implementation or use of the technology, or the extent to which any license under such rights might or might not be available.</description>
     </item>
-    <item rdf:about="doku.php/about/liaisons1795.html?rev=1435882584&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/liaisons?rev=1435882584&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-07-03T00:16:24+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -99,7 +99,7 @@ This page contains information pertaining to Grid Recommendations (draft or fina
 
 The Open Grid Forum (OGF) works closely with other standards organizations to increase collaboration throughout the industry through our liaison area. Liaisons enable OGF to work more effectively to better define the overall grid standards landscape including developing more consistent definitions and taxonomy. As standards organizations, we realize that the pervasive adoption and standardization of grid computing takes 'a community'. This forms the basis for exploring communicatio…</description>
     </item>
-    <item rdf:about="doku.php/about/mission2690.html?rev=1435886829&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/mission?rev=1435886829&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-07-03T01:27:09+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -117,7 +117,7 @@ by providing open processes for developing open documentation and standards for 
 OGF provides an open forum that brings together key individuals and organizations from the advanced computing community 
 to align requirements; identify and remove barriers; test and develop best practices that will expedite their adoption.</description>
     </item>
-    <item rdf:about="doku.php/about/nomcomac3d.html?rev=1391718425&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/nomcom?rev=1391718425&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2014-02-06T20:27:05+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -133,7 +133,7 @@ About the NOMCOM
 
 The NOMCOM solicits and selects or recommends candidates to fill OGF leadership positions, such as Vice Presidents, Area Directors and at-large Board Members. It gives the OGF community a way to influence who serves in these positions and also gives the chosen members a community mandate.</description>
     </item>
-    <item rdf:about="doku.php/about/ogf_board5a8e.html?rev=1571841691&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/ogf_board?rev=1571841691&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2019-10-23T14:41:31+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -154,7 +154,7 @@ Former Board Members:
 
 	*  Cees de Laat, University of Amsterdam</description>
     </item>
-    <item rdf:about="doku.php/about/operations15e2.html?rev=1436300849&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/operations?rev=1436300849&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-07-07T20:27:29+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -166,7 +166,7 @@ President
 
  Alan Sill directs the U.S. National Science Foundation Cloud and Autonomic Computing industry/university cooperative research center at Texas Tech University and serves as President for OGF. He has been involved in scientific computing for more than 40 years, having gravitated toward this topic as an undergraduate student and has been on the computing side of science ever since. His formal training is as a physicist and has done work at several national labs …</description>
     </item>
-    <item rdf:about="doku.php/about/organizationae13.html?rev=1435883515&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/organization?rev=1435883515&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-07-03T00:31:55+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -183,7 +183,7 @@ promoting enterprise grid solutions. Together, we have the opportunity
 to deliver faster results, communicate more clearly and collaborate
 more effectively with…</description>
     </item>
-    <item rdf:about="doku.php/about/sidebar1ede.html?rev=1435877662&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/sidebar?rev=1435877662&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-07-02T22:54:22+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -217,7 +217,7 @@ Copyright
 
 IPR</description>
     </item>
-    <item rdf:about="doku.php/about/steering_group2310.html?rev=1435871137&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/steering_group?rev=1435871137&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-07-02T21:05:37+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -231,7 +231,7 @@ IPR</description>
 
 	*  Vice President of Community: Wolfgang Ziegler, Fraunhofer SCAI, (Wolfgang.Ziegler@scai.fraunhofer.de) (Also AD Applications)</description>
     </item>
-    <item rdf:about="doku.php/about/sun_microsystems_statement_on_patent_licensing_relating_to_ogsi_v._193a5.html?rev=1368995992&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/sun_microsystems_statement_on_patent_licensing_relating_to_ogsi_v._1.0?rev=1368995992&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-19T20:39:52+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -241,7 +241,7 @@ IPR</description>
 
 Sun wishes to make clear that if and when it is determined that Sun owns patent claims which would necessarily be infringed by any implementation of the Open Grid Services Infrastructure (OGSI) Specification 1.0 (</description>
     </item>
-    <item rdf:about="doku.php/about/unordered_list_item_ibm_statement_on_patent_licensing_relating_to_ogsa93a5.html?rev=1368995992&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/unordered_list_item_ibm_statement_on_patent_licensing_relating_to_ogsa?rev=1368995992&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-19T20:39:52+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>

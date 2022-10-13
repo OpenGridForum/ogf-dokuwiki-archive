@@ -11,16 +11,16 @@
         <description></description>
         <link>https://www.ogf.org/ogf/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-23T20:44:50+0000</dc:date>
+       <dc:date>2022-09-28T08:10:54+0000</dc:date>
         <items>
             <rdf:Seq>
-                <rdf:li rdf:resource="doku.php/events/ogf-38b/call_for_session_proposals9db3.html?rev=1369070944&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-38b/lodging719d.html?rev=1369337680&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-38b/registrationc57f.html?rev=1369336738&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-38b/scheduleca6e.html?rev=1369336830&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-38b/sidebar93a5.html?rev=1368995992&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-38b/travelc4ec.html?rev=1369337547&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-38b/venueefae.html?rev=1369337769&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-38b/call_for_session_proposals?rev=1369070944&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-38b/lodging?rev=1369337680&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-38b/registration?rev=1369336738&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-38b/schedule?rev=1369336830&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-38b/sidebar?rev=1368995992&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-38b/travel?rev=1369337547&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-38b/venue?rev=1369337769&amp;do=diff"/>
             </rdf:Seq>
         </items>
     </channel>
@@ -29,7 +29,7 @@
         <link>https://www.ogf.org/ogf/</link>
         <url>https://www.ogf.org/ogf/lib/tpl/ogf/images/favicon.ico</url>
     </image>
-    <item rdf:about="doku.php/events/ogf-38b/call_for_session_proposals9db3.html?rev=1369070944&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-38b/call_for_session_proposals?rev=1369070944&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-20T17:29:04+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -44,7 +44,7 @@ The OGF-38b program committee seeks active participation from the community, and
 
 	*  OGF Chartered Group Sessions</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-38b/lodging719d.html?rev=1369337680&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-38b/lodging?rev=1369337680&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-23T19:34:40+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -63,7 +63,7 @@ The special XSEDE13 conference room rates are:
 
 According to the XSEDE 13 lodging page, group room rates will be honored three (3) days post program dates, based on availability. Book by June 21 to receive the conference room rate. Hotel room rates are subject to applicable state and …</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-38b/registrationc57f.html?rev=1369336738&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-38b/registration?rev=1369336738&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-23T19:18:58+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -71,7 +71,7 @@ According to the XSEDE 13 lodging page, group room rates will be honored three (
         <link>https://www.ogf.org/ogf/doku.php/events/ogf-38b/registration?rev=1369336738&amp;do=diff</link>
         <description>For registration information, see the event home page.</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-38b/scheduleca6e.html?rev=1369336830&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-38b/schedule?rev=1369336830&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-23T19:20:30+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -79,7 +79,7 @@ According to the XSEDE 13 lodging page, group room rates will be honored three (
         <link>https://www.ogf.org/ogf/doku.php/events/ogf-38b/schedule?rev=1369336830&amp;do=diff</link>
         <description>The schedule will be set based on the session requests from the Call for Session Proposals. Please fill out your requests as soon as possible so that the schedule can be posted.</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-38b/sidebar93a5.html?rev=1368995992&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-38b/sidebar?rev=1368995992&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-19T20:39:52+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -105,7 +105,7 @@ OGF-38b
 
 - Schedule</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-38b/travelc4ec.html?rev=1369337547&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-38b/travel?rev=1369337547&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-23T19:32:27+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -113,7 +113,7 @@ OGF-38b
         <link>https://www.ogf.org/ogf/doku.php/events/ogf-38b/travel?rev=1369337547&amp;do=diff</link>
         <description>For information about travel to the event, please see the XSEDE 13 Hotel and Travel page.</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-38b/venueefae.html?rev=1369337769&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-38b/venue?rev=1369337769&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-23T19:36:09+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>

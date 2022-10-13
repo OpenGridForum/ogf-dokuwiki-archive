@@ -11,11 +11,11 @@
         <description></description>
         <link>https://www.ogf.org/dokuwiki/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-24T03:33:37+0000</dc:date>
+       <dc:date>2022-09-28T12:11:37+0000</dc:date>
         <items>
             <rdf:Seq>
-                <rdf:li rdf:resource="doku.php/events/ogf39/call_for_session_proposalsf2a5.html?rev=1373008744&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf39/event_home185c.html?rev=1372884612&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/events/ogf39/call_for_session_proposals?rev=1373008744&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/events/ogf39/event_home?rev=1372884612&amp;do=diff"/>
             </rdf:Seq>
         </items>
     </channel>
@@ -24,7 +24,7 @@
         <link>https://www.ogf.org/dokuwiki/</link>
         <url>https://www.ogf.org/dokuwiki/lib/tpl/ogf/images/favicon.ico</url>
     </image>
-    <item rdf:about="doku.php/events/ogf39/call_for_session_proposalsf2a5.html?rev=1373008744&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/events/ogf39/call_for_session_proposals?rev=1373008744&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-07-05T07:19:04+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -39,7 +39,7 @@ The OGF-39 program committee seeks active participation from the community, and 
 
 	*  OGF Chartered Group Sessions</description>
     </item>
-    <item rdf:about="doku.php/events/ogf39/event_home185c.html?rev=1372884612&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/events/ogf39/event_home?rev=1372884612&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-07-03T20:50:12+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>

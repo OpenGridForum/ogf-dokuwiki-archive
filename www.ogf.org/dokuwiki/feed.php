@@ -11,18 +11,18 @@
         <description></description>
         <link>https://www.ogf.org/dokuwiki/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-23T20:41:45+0000</dc:date>
+       <dc:date>2022-09-28T08:08:27+0000</dc:date>
         <items>
             <rdf:Seq>
-                <rdf:li rdf:resource="doku.php/sidebara259.html?rev=1639165714&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/standards/dfdl/dfdl7076.html?rev=1629899194&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/standards/dfdl/sidebar25a2.html?rev=1627391934&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/startbe3e.html?rev=1615220993&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/documents/documents0dc6.html?rev=1614790588&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/contact9ae0.html?rev=1581100326&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/about/ogf_board5a8e.html?rev=1571841691&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/members/membersb7a4.html?rev=1567786217&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/aboutd77d.html?rev=1527288550&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/sidebar?rev=1639165714&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/standards/dfdl/dfdl?rev=1629899194&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/standards/dfdl/sidebar?rev=1627391934&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/start?rev=1615220993&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/documents/documents?rev=1614790588&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/contact?rev=1581100326&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about/ogf_board?rev=1571841691&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/members/members?rev=1567786217&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/about?rev=1527288550&amp;do=diff"/>
                 <rdf:li rdf:resource="doku.php/index65ce.html?image=about%3Awolfgangz.jpg&amp;ns=about&amp;rev=1436218484&amp;tab_details=history&amp;mediado=diff&amp;do=media"/>
                 <rdf:li rdf:resource="doku.php/index546b.html?image=about%3Ajensen.jpg&amp;ns=about&amp;rev=1436218454&amp;tab_details=history&amp;mediado=diff&amp;do=media"/>
                 <rdf:li rdf:resource="doku.php/index6733.html?image=events%3Aegi_conference_2015_medium.png&amp;ns=events&amp;rev=1424472789&amp;tab_details=history&amp;mediado=diff&amp;do=media"/>
@@ -56,7 +56,7 @@
         <link>https://www.ogf.org/dokuwiki/</link>
         <url>https://www.ogf.org/dokuwiki/lib/tpl/ogf/images/favicon.ico</url>
     </image>
-    <item rdf:about="doku.php/sidebara259.html?rev=1639165714&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/sidebar?rev=1639165714&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2021-12-10T19:48:34+0000</dc:date>
         <dc:creator>alan.sill (alan.sill@undisclosed.example.com)</dc:creator>
@@ -103,7 +103,7 @@ Logout
 
 ----------</description>
     </item>
-    <item rdf:about="doku.php/standards/dfdl/dfdl7076.html?rev=1629899194&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/standards/dfdl/dfdl?rev=1629899194&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2021-08-25T13:46:34+0000</dc:date>
         <dc:creator>mike.beckerle (mike.beckerle@undisclosed.example.com)</dc:creator>
@@ -115,7 +115,7 @@ This is a tutorial page for the DFDL standard of the Open Grid Forum. The base d
 
 The DFDL group also hosts internal working group pages on the OGF Github and helps to maintain a</description>
     </item>
-    <item rdf:about="doku.php/standards/dfdl/sidebar25a2.html?rev=1627391934&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/standards/dfdl/sidebar?rev=1627391934&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2021-07-27T13:18:54+0000</dc:date>
         <dc:creator>mike.beckerle (mike.beckerle@undisclosed.example.com)</dc:creator>
@@ -129,7 +129,7 @@ The DFDL group also hosts internal working group pages on the OGF Github and hel
 
  Current Documents and Tutorials</description>
     </item>
-    <item rdf:about="doku.php/startbe3e.html?rev=1615220993&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/start?rev=1615220993&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2021-03-08T16:29:53+0000</dc:date>
         <dc:creator>gregory.newby (gregory.newby@undisclosed.example.com)</dc:creator>
@@ -141,7 +141,7 @@ An Open Global Forum for Advanced Distributed Computing
 
 OGF is an open global community committed to driving the rapid evolution and adoption of modern advanced applied distributed computing, including cloud, grid and associated storage, networking and workflow methods. OGF is focused on developing and promoting innovative scalable techniques, applications and infrastructures to improve productivity in the enterprise and within the international research, science and business c…</description>
     </item>
-    <item rdf:about="doku.php/documents/documents0dc6.html?rev=1614790588&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/documents/documents?rev=1614790588&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2021-03-03T16:56:28+0000</dc:date>
         <dc:creator>gregory.newby (gregory.newby@undisclosed.example.com)</dc:creator>
@@ -152,7 +152,7 @@ OGF is an open global community committed to driving the rapid evolution and ado
 OGF documents are developed according to an open public process as described at this link.
  GFD   Type   Area   Group   Publication  Title   Authors RECDataDFDL-WG2021-02-28Data Format Description Language (DFDL) v1.0 SpecificationM. Beckerle, S. Hanson INFOInfrastructure</description>
     </item>
-    <item rdf:about="doku.php/contact9ae0.html?rev=1581100326&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/contact?rev=1581100326&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2020-02-07T18:32:06+0000</dc:date>
         <dc:creator>alan.sill (alan.sill@undisclosed.example.com)</dc:creator>
@@ -161,7 +161,7 @@ OGF documents are developed according to an open public process as described at 
         <description>Contact OGF
  OGF Membership			 &lt;membership@ogf.org&gt;	 OGF Student Scholarship	 &lt;student-info@ogf.org&gt;		 OGF Operations			 &lt;operations@ogf.org&gt;		 OGF Standards Activities	 &lt;standards@ogf.org&gt;		 OGF Communities			 &lt;communities@ogf.org&gt;	 OGF Events				 &lt;events@ogf.org&gt;			 OGF Finance				 &lt;finance@ogf.org&gt;		 OGF Marketing			 &lt;marketing@ogf.org&gt;		 Media and Analyst Inquiries	 &lt;media@ogf.org&gt;			 News Submission			 &lt;news@ogf.org&gt;			 Advisory Committee Chair</description>
     </item>
-    <item rdf:about="doku.php/about/ogf_board5a8e.html?rev=1571841691&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about/ogf_board?rev=1571841691&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2019-10-23T14:41:31+0000</dc:date>
         <dc:creator>alan.sill (alan.sill@undisclosed.example.com)</dc:creator>
@@ -182,7 +182,7 @@ Former Board Members:
 
 	*  Cees de Laat, University of Amsterdam</description>
     </item>
-    <item rdf:about="doku.php/members/membersb7a4.html?rev=1567786217&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/members/members?rev=1567786217&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2019-09-06T16:10:17+0000</dc:date>
         <dc:creator>alan.sill (alan.sill@undisclosed.example.com)</dc:creator>
@@ -198,7 +198,7 @@ employees and affiliates. Working together, we share information,
 prioritize requirements, develop standards and best practices, and
 champion the application and adoption of grid worldwide.</description>
     </item>
-    <item rdf:about="doku.php/aboutd77d.html?rev=1527288550&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/about?rev=1527288550&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2018-05-25T22:49:10+0000</dc:date>
         <dc:creator>alan.sill (alan.sill@undisclosed.example.com)</dc:creator>

@@ -11,12 +11,12 @@
         <description></description>
         <link>https://www.ogf.org/ogf/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-23T19:57:08+0000</dc:date>
+       <dc:date>2022-09-28T07:29:33+0000</dc:date>
         <items>
             <rdf:Seq>
-                <rdf:li rdf:resource="doku.php/structure/applications93a5.html?rev=1368995992&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/structure/areas_and_groupse851.html?rev=1436829697&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/structure/sidebarb864.html?rev=1389869553&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/structure/applications?rev=1368995992&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/structure/areas_and_groups?rev=1436829697&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/structure/sidebar?rev=1389869553&amp;do=diff"/>
             </rdf:Seq>
         </items>
     </channel>
@@ -25,7 +25,7 @@
         <link>https://www.ogf.org/ogf/</link>
         <url>https://www.ogf.org/ogf/lib/tpl/ogf/images/favicon.ico</url>
     </image>
-    <item rdf:about="doku.php/structure/applications93a5.html?rev=1368995992&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/structure/applications?rev=1368995992&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-05-19T20:39:52+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -33,7 +33,7 @@
         <link>https://www.ogf.org/ogf/doku.php/structure/applications?rev=1368995992&amp;do=diff</link>
         <description>The Applications Area explores grid application development issues and programming interfaces required by grid applications.</description>
     </item>
-    <item rdf:about="doku.php/structure/areas_and_groupse851.html?rev=1436829697&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/structure/areas_and_groups?rev=1436829697&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-07-13T23:21:37+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -43,7 +43,7 @@
 
 The Open Grid Forum is led by the Grid Forum Steering Group (GFSG), consisting of the Area Directors for each of the areas listed below plus other organizational, operations and at-large members, which are nominated by the community according to a defined process and approved by the OGF Board of Directors. The GFSG itself is led by the OGF</description>
     </item>
-    <item rdf:about="doku.php/structure/sidebarb864.html?rev=1389869553&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/structure/sidebar?rev=1389869553&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2014-01-16T10:52:33+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>

@@ -11,13 +11,13 @@
         <description></description>
         <link>https://www.ogf.org/ogf/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-23T19:57:21+0000</dc:date>
+       <dc:date>2022-09-28T07:29:45+0000</dc:date>
         <items>
             <rdf:Seq>
-                <rdf:li rdf:resource="doku.php/documents/documents0dc6.html?rev=1614790588&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/documents/documents28106.html?rev=1387812369&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/documents/sidebarb84b.html?rev=1389013066&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/documents/test-22d31.html?rev=1387812417&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/documents/documents?rev=1614790588&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/documents/documents2?rev=1387812369&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/documents/sidebar?rev=1389013066&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/documents/test-2?rev=1387812417&amp;do=diff"/>
             </rdf:Seq>
         </items>
     </channel>
@@ -26,7 +26,7 @@
         <link>https://www.ogf.org/ogf/</link>
         <url>https://www.ogf.org/ogf/lib/tpl/ogf/images/favicon.ico</url>
     </image>
-    <item rdf:about="doku.php/documents/documents0dc6.html?rev=1614790588&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/documents/documents?rev=1614790588&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2021-03-03T16:56:28+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -37,7 +37,7 @@
 OGF documents are developed according to an open public process as described at this link.
  GFD   Type   Area   Group   Publication  Title   Authors RECDataDFDL-WG2021-02-28Data Format Description Language (DFDL) v1.0 SpecificationM. Beckerle, S. Hanson INFOInfrastructure</description>
     </item>
-    <item rdf:about="doku.php/documents/documents28106.html?rev=1387812369&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/documents/documents2?rev=1387812369&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-12-23T15:26:09+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -48,7 +48,7 @@ OGF documents are developed according to an open public process as described at 
 &lt;sortable&gt;
  GFD Date Type Area Group Title Authors</description>
     </item>
-    <item rdf:about="doku.php/documents/sidebarb84b.html?rev=1389013066&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/documents/sidebar?rev=1389013066&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2014-01-06T12:57:46+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -58,7 +58,7 @@ OGF documents are developed according to an open public process as described at 
 
 Public Comments</description>
     </item>
-    <item rdf:about="doku.php/documents/test-22d31.html?rev=1387812417&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/documents/test-2?rev=1387812417&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-12-23T15:26:57+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>

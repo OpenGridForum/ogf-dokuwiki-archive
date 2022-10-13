@@ -11,12 +11,12 @@
         <description></description>
         <link>https://www.ogf.org/dokuwiki/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-24T01:51:37+0000</dc:date>
+       <dc:date>2022-09-28T11:18:37+0000</dc:date>
         <items>
             <rdf:Seq>
-                <rdf:li rdf:resource="doku.php/standards/dfdl/dfdl7076.html?rev=1629899194&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/standards/dfdl/sidebar25a2.html?rev=1627391934&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/standards/dfdl/specification_web1622.html?rev=1420552265&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/standards/dfdl/dfdl?rev=1629899194&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/standards/dfdl/sidebar?rev=1627391934&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/standards/dfdl/specification_web?rev=1420552265&amp;do=diff"/>
             </rdf:Seq>
         </items>
     </channel>
@@ -25,7 +25,7 @@
         <link>https://www.ogf.org/dokuwiki/</link>
         <url>https://www.ogf.org/dokuwiki/lib/tpl/ogf/images/favicon.ico</url>
     </image>
-    <item rdf:about="doku.php/standards/dfdl/dfdl7076.html?rev=1629899194&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/standards/dfdl/dfdl?rev=1629899194&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2021-08-25T13:46:34+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -37,7 +37,7 @@ This is a tutorial page for the DFDL standard of the Open Grid Forum. The base d
 
 The DFDL group also hosts internal working group pages on the OGF Github and helps to maintain a</description>
     </item>
-    <item rdf:about="doku.php/standards/dfdl/sidebar25a2.html?rev=1627391934&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/standards/dfdl/sidebar?rev=1627391934&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2021-07-27T13:18:54+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -51,7 +51,7 @@ The DFDL group also hosts internal working group pages on the OGF Github and hel
 
  Current Documents and Tutorials</description>
     </item>
-    <item rdf:about="doku.php/standards/dfdl/specification_web1622.html?rev=1420552265&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/standards/dfdl/specification_web?rev=1420552265&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-01-06T13:51:05+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>

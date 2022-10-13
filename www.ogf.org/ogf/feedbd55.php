@@ -11,10 +11,10 @@
         <description></description>
         <link>https://www.ogf.org/ogf/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-23T20:44:27+0000</dc:date>
+       <dc:date>2022-09-28T08:10:36+0000</dc:date>
         <items>
             <rdf:Seq>
-                <rdf:li rdf:resource="doku.php/events/ogf-41/call_for_session_proposals4ab9.html?rev=1395671821&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-41/call_for_session_proposals?rev=1395671821&amp;do=diff"/>
             </rdf:Seq>
         </items>
     </channel>
@@ -23,7 +23,7 @@
         <link>https://www.ogf.org/ogf/</link>
         <url>https://www.ogf.org/ogf/lib/tpl/ogf/images/favicon.ico</url>
     </image>
-    <item rdf:about="doku.php/events/ogf-41/call_for_session_proposals4ab9.html?rev=1395671821&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/events/ogf-41/call_for_session_proposals?rev=1395671821&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2014-03-24T14:37:01+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>

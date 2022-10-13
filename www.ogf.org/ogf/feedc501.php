@@ -11,11 +11,11 @@
         <description></description>
         <link>https://www.ogf.org/ogf/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-23T20:16:02+0000</dc:date>
+       <dc:date>2022-09-28T07:48:26+0000</dc:date>
         <items>
             <rdf:Seq>
-                <rdf:li rdf:resource="doku.php/standards/sidebar4914.html?rev=1389012923&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/standards/standards9876.html?rev=1424901721&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/standards/sidebar?rev=1389012923&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/standards/standards?rev=1424901721&amp;do=diff"/>
             </rdf:Seq>
         </items>
     </channel>
@@ -24,7 +24,7 @@
         <link>https://www.ogf.org/ogf/</link>
         <url>https://www.ogf.org/ogf/lib/tpl/ogf/images/favicon.ico</url>
     </image>
-    <item rdf:about="doku.php/standards/sidebar4914.html?rev=1389012923&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/standards/sidebar?rev=1389012923&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2014-01-06T12:55:23+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -36,7 +36,7 @@ OCCI
 
 SAGA</description>
     </item>
-    <item rdf:about="doku.php/standards/standards9876.html?rev=1424901721&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/ogf/doku.php/standards/standards?rev=1424901721&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2015-02-25T22:02:01+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>

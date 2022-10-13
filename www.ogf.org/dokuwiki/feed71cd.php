@@ -11,14 +11,14 @@
         <description></description>
         <link>https://www.ogf.org/dokuwiki/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-24T03:33:53+0000</dc:date>
+       <dc:date>2022-09-28T12:11:44+0000</dc:date>
         <items>
             <rdf:Seq>
-                <rdf:li rdf:resource="doku.php/events/ogf-40/call_for_session_proposals3cab.html?rev=1385448203&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-40/lodgingc27c.html?rev=1385448360&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-40/registrationd467.html?rev=1387303266&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-40/schedule32d1.html?rev=1389270415&amp;do=diff"/>
-                <rdf:li rdf:resource="doku.php/events/ogf-40/travel6a7f.html?rev=1388922654&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/events/ogf-40/call_for_session_proposals?rev=1385448203&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/events/ogf-40/lodging?rev=1385448360&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/events/ogf-40/registration?rev=1387303266&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/events/ogf-40/schedule?rev=1389270415&amp;do=diff"/>
+                <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/events/ogf-40/travel?rev=1388922654&amp;do=diff"/>
             </rdf:Seq>
         </items>
     </channel>
@@ -27,7 +27,7 @@
         <link>https://www.ogf.org/dokuwiki/</link>
         <url>https://www.ogf.org/dokuwiki/lib/tpl/ogf/images/favicon.ico</url>
     </image>
-    <item rdf:about="doku.php/events/ogf-40/call_for_session_proposals3cab.html?rev=1385448203&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/events/ogf-40/call_for_session_proposals?rev=1385448203&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-11-26T06:43:23+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -41,7 +41,7 @@ The OGF-40 program committee seeks active participation from the community, and 
 
 	*  OGF Chartered Group Sessions</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-40/lodgingc27c.html?rev=1385448360&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/events/ogf-40/lodging?rev=1385448360&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-11-26T06:46:00+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -55,7 +55,7 @@ College Rooms:
 
 Oxford Rooms is an agency working with the colleges in Oxford who offer a bed and breakfast service between terms. The rooms are basic, clean and comfortable but do not have facilities such as TV, trouser press or room service. They are mostly en-suite, and breakfast is taken in the Co…</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-40/registrationd467.html?rev=1387303266&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/events/ogf-40/registration?rev=1387303266&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2013-12-17T18:01:06+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -70,7 +70,7 @@ The event starts at 9.00 on 15th January 2014 and finishes at 14.00 on 17th Janu
 
 Register online here.</description>
     </item>
-    <item rdf:about="doku.php/events/ogf-40/schedule32d1.html?rev=1389270415&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/events/ogf-40/schedule?rev=1389270415&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2014-01-09T12:26:55+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
@@ -78,7 +78,7 @@ Register online here.</description>
         <link>https://www.ogf.org/dokuwiki/doku.php/events/ogf-40/schedule?rev=1389270415&amp;do=diff</link>
         <description></description>
     </item>
-    <item rdf:about="doku.php/events/ogf-40/travel6a7f.html?rev=1388922654&amp;do=diff">
+    <item rdf:about="https://www.ogf.org/dokuwiki/doku.php/events/ogf-40/travel?rev=1388922654&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2014-01-05T11:50:54+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
