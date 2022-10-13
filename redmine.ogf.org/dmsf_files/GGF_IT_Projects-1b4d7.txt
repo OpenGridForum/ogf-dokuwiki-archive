@@ -1,0 +1,318 @@
+
+\documentclass[11pt,a4paper]{article}
+\pagestyle{plain}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ignore this part
+% 
+
+\newcommand{\B}{\textbf} % bold font
+\newcommand{\I}{\textit} % italic font
+\newcommand{\T}{\texttt} % typewrite
+
+% define a simple list
+\newenvironment{mylist}{
+ \begin{itemize}
+ \setlength{\itemsep}{0em}
+}{
+ \end{itemize}
+}
+    
+% same for the project tables
+\newcommand{\mytlist}[1]{
+ \vspace*{-1.8em}
+ \begin{mylist}
+ #1
+ \end{mylist}
+ \vspace*{-2.4em}
+}
+    
+% and a simple enum
+\newenvironment{mynum}{
+ \begin{enumerate}
+ \setlength{\itemsep}{0em}
+}{
+ \end{enumerate}
+}
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+ \begin{center}
+ 
+  {\LARGE IT Area Projects -- first draft}\\[4em]
+ 
+  \begin{tabbing}
+       XXXXXXXXXXXXX \= XXXXXXXXXXXXXX \= \kill
+   \B{Author:}       \> Andre Merzky   \> \T{<merzky@cs.vu.nl>}\\
+   \B{Contributors:} \> Joel Reploge   \> \T{<replogle@ggf.org>}\\
+                     \> Kevin Drew     \> \T{<kdrew@uchicago.edu>}\\
+                     \> Steve Crumb    \> \T{<scrumb@ggf.org>}\\[2em]
+  \end{tabbing}
+
+ \end{center}
+
+ \begin{abstract}
+  This text documents the ongoing projects of the GGF IT area.
+ \end{abstract}
+
+ \section{Intro}
+
+  The GGF IT area supports the GGF administration (office) and
+  community (areas, groups and members) with IT infrastructure.  That
+  infrastructure aims at providing help for communication, document
+  management, archiving, presentation etc.
+
+  Currently, the central pieces of the GGF infrastructure are:
+
+  \begin{mylist}
+   \item GridForge, a Source Forge Enterprise Software installation,
+         which allows document management, group and area representation,
+         and, to some extent, communication (discussions, trackers).
+   \item Majordomo, a mailing list server, which provides group, area
+         and member communication
+   \item A web server, for www representation and ftp service
+   \item a number of home grown tools which help with various tasks,
+         such as meeting planning, session scheduling, archiving etc.
+  \end{mylist}
+
+  Although that infrastructure is functioning and in heavy use (GGF
+  office and community rely on it), it has a number of shortcomings:
+
+  \begin{mynum}
+   \item GridForge, in its current version, is slow and not easily maintained
+   \item GridForge user interface is not intuitive
+   \item Mailing Lists are not integrated in GridForge
+   \item GridForge group and area pages are not extensible
+   \item document archiving is not covering BoFs
+   \item GGF has limited data collection capabilities for group management
+  \end{mynum}
+
+  This document describes the currently ongoing projects to improve
+  the IT infrastructure, and to address the listed problems.
+
+  There are additional projects which address community requests for
+  additional IT infrastructure, e.g. for a global GGF use case
+  repository
+
+ \section{Projects}
+
+ \subsection{GridForge update}
+
+  As stated above, GridForge provides the major toolset for ggf
+  community and office work: document management (editing), group
+  representation, and communication.
+
+  However, there are many complaints about GridForge usability.  The
+  next version of the SourceForge (SF) software is promised to address
+  these issues, and to improve performance and usability, while
+  providing the same or better functionality.
+  
+  Even with the new SF interface, the project must consider better and
+  more manageable representation of the group via some sort of ?fa?ade?
+  interface. The two options to be assessed are WIKIs and basic HTML
+  pages.
+
+  This project is responsible for assessing the new SF software, plans
+  for the technical requirements of the upgrade, and performs the
+  upgrade.\\
+
+  \begin{tabular}{|lp{8cm}|}
+   \hline
+   \B{responsible: } & Steve Crumb\\ 
+   \B{deliverables:}
+      & \mytlist{
+         \item evaluate new SF release
+	   \item evaluate/prototype fa?ade options
+         \item estimate effort for migration
+         \item ensure that essential (old) tools are still available
+         \item upgrade GridForge
+         }\\ 
+   \B{status:     } & ongoing\\ 
+   \B{deadline:   } & end 2005\\
+   \hline
+  \end{tabular}\\
+
+
+ \subsection{Session Scheduling Request Form}
+
+  Group session requests for GGF meetings are currently either
+  submitted per mail to office, or by using a GridForge tracker.  For
+  scheduling, this information must be copied (manually) to a
+  common format, and schedules created manually.  Feedback loops with
+  group chairs, scheduling constraints, and conflict avoidance make
+  this a cumbersome process.
+
+  The first step for improvement in this project is to simplify session
+  request and scheduling feedback.  The received requests are
+  automatically stored into a database backend.  A later step will 
+  address the scheduling process itself.\\
+
+  \begin{tabular}{|lp{8cm}|}
+   \hline
+   \B{responsible: } & Joel Replogle\\ 
+   \B{deliverables:}
+      & \mytlist{
+         \item form prototype
+         \item data base backend
+         \item form online
+         }\\ 
+   \B{status:     } & prototype\\ 
+   \B{deadline:   } & mid August 2005 (for GGF15)\\
+   \hline
+  \end{tabular}\\
+
+
+ \subsection{Use Case Repository}
+
+  Several GGF groups have collected sets of use cases, in order to
+  scope their work.  However, use case collections are not centrally
+  maintained by GGF, and it is difficult to have a coherent picture
+  about existing use cases in GGF.  Also, use cases of past groups are
+  not maintained anymore, use cases have different format and layout,
+  they are not searchable, and, in general, difficult to reuse.
+
+  This project will support current community efforts by providing a 
+  common repository for use cases.  It will try to provide basic 
+  functionality soon, in form of a simple sortable repository, but 
+  ultimately will provide means to integrate and maintain all types 
+  of GGF use cases and use case templates.\\
+
+  \begin{tabular}{|lp{8cm}|}
+   \hline
+   \B{responsible: } & Andre Merzky (\& Craig Lee)\\ 
+   \B{deliverables:}
+      & \mytlist{
+         \item use case submission prototype
+         \item use case table prototype, sortable
+         \item wiki prototype for use case maintenance
+         \item data base backend for archiving
+         \item integration of use case templates
+         \item complex search and combination tools
+         \item progressive deployment
+         }\\ 
+   \B{status:     } & prototype\\ 
+   \B{deadline:   } & mid August 2005 (for GGF15)\\
+   \hline
+  \end{tabular}\\
+
+
+ \subsection{Group and Area Representation}
+
+  Group and Area descriptions are currently maintained on the entry
+  page of the respective GridForge projects.  That entry page has
+  limited design and no extension possibilities.  The community wishes
+  to have more (and more traditional) control over group
+  representation, and also wishes to be able to use HTTP pages for
+  group work and dissemination.
+
+  This project tries to provide that infrastructure, in
+  synchronization with the planned GridForge update.  The current
+  plans focus on Wiki technology or standard web pages.  The best 
+  integrated solution would be to have Wikis natively integrated 
+  into GridForge, and indeed that possibility seems available in the
+  next version of SF, due late in 2005.\\
+
+  \begin{tabular}{|lp{8cm}|}
+   \hline
+   \B{responsible: } & Andre Merzky\\ 
+   \B{deliverables:}
+      & \mytlist{
+         \item assess wiki integration in GridForge
+         \item design wiki based group and area representation
+         \item migrate current group info to that representation
+         }\\ 
+   \B{status:     } & planning\\ 
+   \B{deadline:   } & with or shortly after GridForge update\\
+   \hline
+  \end{tabular}\\
+
+
+ \subsection{GGF Liason Representation}
+
+  GGF as standardization body is in contact with other standardization
+  bodies.  The people/groups maintaining these contacts are named
+  'Liaisons', and are to be represented on the GGF web space.  That
+  representation exists, but needs improvements.\\
+
+  \begin{tabular}{|lp{8cm}|}
+   \hline
+   \B{responsible: } & Joel Replogle\\ 
+   \B{deliverables:}
+      & \mytlist{
+         \item prototype liaison pages
+         \item get feedback from Liaisons
+         \item iterate...
+         }\\ 
+   \B{status:     } & prototype, waiting for feedback\\ 
+   \B{deadline:   } & before GGF15 (?)\\
+   \hline
+  \end{tabular}\\
+
+
+ \subsection{GGF Group Chartering}
+
+  This project is essentially a data collection project to
+  ``standardize'' the activities surrounding the submission of a
+  finalized charter for group approval.  The charter contains
+  key management information, like group milestones, expected
+  documents, expected workshops,  which need to be collected and
+  stored in a db.  A next step will provide some mining tools that 
+  allow querying the data to answer questions like: 
+  \begin{mylist}
+   \item What groups are on schedule with their milestones and which are not?  
+   \item What groups are intending to submit a draft at the next GGF event?  
+   \item What groups a nearing their fulfillment of their charter?  
+   \item ... and questions deemed appropriate by the GFSG.\\
+  \end{mylist}
+
+  \begin{tabular}{|lp{8cm}|}
+   \hline
+   \B{responsible: } & Steve Crumb\\ 
+   \B{deliverables:}
+      & \mytlist{
+         \item identify requirements for data collection/query
+   \item collect charter from existing groups
+         \item prototype charter submission for new groups
+         \item deploy charter collection
+         \item prototype related query tools
+         \item deploy related query tools
+         }\\ 
+   \B{status:     } & planning\\ 
+   \B{deadline:   } & (?)\\
+   \hline
+  \end{tabular}\\
+
+
+ \subsection{GGF Standards Roadmap}
+
+  This project aims at a standards roadmap for GGF.  That roadmap is
+  supposed to serve two goals: firstly, it will help the community and
+  visitors to navigate the web page, to understand the GGF process,
+  and to get a quick assessement of GGF progress (current and
+  future).  Second, it will help GGF (office and community) to have a
+  coherent work plan in terms of standards, and will allow more 
+  effective coordination of existing and upcoming standards.
+
+  The work in this project covers both the collection and creation of
+  the roadmap, and the presentation on WWW.\\
+
+  \begin{tabular}{|lp{8cm}|}
+   \hline
+   \B{responsible: } & Joel Replogle\\ 
+   \B{deliverables:}
+      & \mytlist{
+         \item collect data from areas/groups (office, GFSG, groups)
+         \item prototype presentation
+         \item link to existing standards/groups
+         \item allow maintenance
+         }\\ 
+   \B{status:     } & GFSG started to collect data\\ 
+   \B{deadline:   } & (?)\\
+   \hline
+  \end{tabular}\\
+
+\end{document}
+
+

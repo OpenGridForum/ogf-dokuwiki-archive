@@ -1,0 +1,2011 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/dmsf/migration-archive?folder_id=6318 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:41:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>DMSF - Migration-Archive - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="rsvo5Uvs/OHqzq9AZjxgQ/1mtk/oY58g0kQJMlDTftw="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/jquery-ui/jquery-ui-1.8.13.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/plupload/jquery.ui.plupload.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/jquery.dataTables/jquery-ui.dataTables.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="https://redmine.ogf.org/plugin_assets/redmine_dmsf/stylesheets/dmsf.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	
+	<script src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/javascripts/jquery-1.6.1.min.js?1425381960" type="text/javascript"></script>
+	<script src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/javascripts/jquery-ui-1.8.13.min.js?1425381960" type="text/javascript"></script>
+	<script src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/jquery.dataTables.min.js?1425381960" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		jQuery(document).ready(function() {
+			jQuery("#browser").dataTable({
+				"bJQueryUI": true,
+				"oLanguage": {
+					'sUrl': '/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/en.json'	
+				},
+				"bAutoWidth": false,
+				"bPaginate": false,
+				"aaSorting": [[1,'asc']],
+				"aaSortingFixed": [[7,'asc']],
+				"aoColumnDefs": [
+					{ "bSearchable": false, "aTargets": [0, 6, 7, 8] },
+					{ "bSortable": false, "aTargets": [0, 6, 7] },
+					{ "iDataSort": 8, "aTargets": [ 2 ] }
+				],
+				"fnInitComplete": function() {
+					jQuery("div.controls").prependTo(jQuery("#browser_wrapper div.fg-toolbar")[0]);
+				},
+				"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+					return "Folders: 0, Documents: 44";
+				}
+			});
+			
+			jQuery("[data-downloadurl]").each(function() {
+		        var url = this.getAttribute("data-downloadurl");
+		        if (this.addEventListener) {
+		          this.addEventListener("dragstart", function(e) {
+		            if (e.dataTransfer) {
+		              e.dataTransfer.setData("DownloadURL", url);
+		            }
+		          },false);
+		        }
+	      	});
+		});
+		
+		function manipulation_link(action) {
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+		
+		function confirmation_link(action) {
+			if(!window.confirm("Do you really want to delete this entry?")) return;
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+	</script>
+</head>
+<body class="theme-Ogf redmine controller-dmsf action-show">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/migration-archive" method="get">
+        
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/migration-archive" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=dmsf" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=dmsf" class="ancestor">IT</a> » <a href="https://redmine.ogf.org/projects/it-migration?jump=dmsf" class="ancestor">Migration</a> » Migration-Archive</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/migration-archive" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/migration-archive/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/migration-archive" class="dmsf selected">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/migration-archive/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/migration-archive/files" class="files">Files</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+	
+</div>
+
+
+<h2>
+	<a href="https://redmine.ogf.org/dmsf/migration-archive">Documents</a>
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/migration-archive?folder_id=45">gridforge</a>
+ 
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/migration-archive?folder_id=6307">ogsi-wg</a>
+ 
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/migration-archive?folder_id=6315">Archives</a>
+ 
+
+ / 
+ <a href="https://redmine.ogf.org/dmsf/migration-archive?folder_id=6318">Minutes 2003</a>
+ 
+
+
+</h2>
+
+<div class="wiki">
+
+</div>
+
+<form action="https://redmine.ogf.org/dmsf/entries_operation/migration-archive?folder_id=6318" class="dmfs_entries" id="entries_form" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="rsvo5Uvs/OHqzq9AZjxgQ/1mtk/oY58g0kQJMlDTftw=" /></div>
+	<input id="action" name="action" type="hidden" />
+	<div class="controls" style="float: left">
+		<input name="download_entries" title="Download checked in Zip archive" type="submit" value="Download" />
+		<input name="email_entries" title="Send checked by email" type="submit" value="Email" />
+		
+	</div> 
+	<table class="display entries" id="browser">
+		<thead>
+			<tr id="root">
+				<th class="check">
+					<input id="check_all_entries" title="Check/Uncheck all for zip download or email" type="checkbox" />
+				</th>
+				<th>Title</th>
+				<th>Size</th>
+				<th>Modified</th>
+				<th>Ver.</th>
+				<th>Author</th>
+				<th></th>
+				<th class="hidden"></th>
+				<th class="hidden"></th>
+			</tr>
+		</thead>
+	<tbody>
+	
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12295" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12295?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-01-15_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12295?download=" title="2003-01-15_teleconference_minutes.txt version 1.0 download">2003-01-15_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-01-15_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">5.1 kB</td>
+			<td class="modified">
+				2003-08-11 08:56
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12295" title="2003-01-15_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12295'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">5244</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12301" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12301?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-01-24_meeting_minutes.txt:https://redmine.ogf.org/dmsf_files/12301?download=" title="2003-01-24_meeting_minutes.txt version 1.0 download">2003-01-24_meeting_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-01-24_meeting_minutes.txt</div>
+			</td>
+			<td class="size">16.5 kB</td>
+			<td class="modified">
+				2003-08-11 08:58
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12301" title="2003-01-24_meeting_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12301'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">16870</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12293" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12293?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-01-27_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12293?download=" title="2003-01-27_teleconference_minutes.txt version 1.0 download">2003-01-27_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-01-27_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">2.1 kB</td>
+			<td class="modified">
+				2003-08-11 08:58
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12293" title="2003-01-27_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12293'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2198</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12305" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12305?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-01-29_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12305?download=" title="2003-01-29_teleconference_minutes.txt version 1.0 download">2003-01-29_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-01-29_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">5.3 kB</td>
+			<td class="modified">
+				2003-08-11 08:58
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12305" title="2003-01-29_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12305'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">5431</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12328" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12328?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-02-03_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12328?download=" title="2003-02-03_teleconference_minutes.txt version 1.0 download">2003-02-03_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-02-03_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">6.2 kB</td>
+			<td class="modified">
+				2003-08-11 08:58
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12328" title="2003-02-03_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12328'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">6353</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12327" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12327?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-02-05_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12327?download=" title="2003-02-05_teleconference_minutes.txt version 1.0 download">2003-02-05_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-02-05_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">2.8 kB</td>
+			<td class="modified">
+				2003-08-11 08:58
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12327" title="2003-02-05_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12327'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2852</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12334" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12334?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-02-07_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12334?download=" title="2003-02-07_teleconference_minutes.txt version 1.0 download">2003-02-07_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-02-07_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">9.7 kB</td>
+			<td class="modified">
+				2003-08-11 08:58
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12334" title="2003-02-07_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12334'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">9904</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12306" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12306?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-02-10_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12306?download=" title="2003-02-10_teleconference_minutes.txt version 1.0 download">2003-02-10_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-02-10_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">7 kB</td>
+			<td class="modified">
+				2003-08-11 09:03
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12306" title="2003-02-10_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12306'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">7212</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12329" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12329?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-02-11_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12329?download=" title="2003-02-11_teleconference_minutes.txt version 1.0 download">2003-02-11_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-02-11_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">9.6 kB</td>
+			<td class="modified">
+				2003-08-11 09:03
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12329" title="2003-02-11_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12329'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">9787</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12324" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12324?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-02-12_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12324?download=" title="2003-02-12_teleconference_minutes.txt version 1.0 download">2003-02-12_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-02-12_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">8.7 kB</td>
+			<td class="modified">
+				2003-08-11 09:03
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12324" title="2003-02-12_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12324'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">8951</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12335" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12335?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-02-13_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12335?download=" title="2003-02-13_teleconference_minutes.txt version 1.0 download">2003-02-13_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-02-13_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">5.2 kB</td>
+			<td class="modified">
+				2003-08-11 09:03
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12335" title="2003-02-13_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12335'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">5334</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12314" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12314?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-02-14_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12314?download=" title="2003-02-14_teleconference_minutes.txt version 1.0 download">2003-02-14_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-02-14_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">6.1 kB</td>
+			<td class="modified">
+				2003-08-11 09:03
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12314" title="2003-02-14_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12314'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">6266</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12298" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12298?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-02-15_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12298?download=" title="2003-02-15_teleconference_minutes.txt version 1.0 download">2003-02-15_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-02-15_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">9.4 kB</td>
+			<td class="modified">
+				2003-08-11 09:03
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12298" title="2003-02-15_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12298'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">9667</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12292" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12292?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-02-17_teleconference_minutes.txt:https://redmine.ogf.org/dmsf_files/12292?download=" title="2003-02-17_teleconference_minutes.txt version 1.0 download">2003-02-17_teleconference_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-02-17_teleconference_minutes.txt</div>
+			</td>
+			<td class="size">4.1 kB</td>
+			<td class="modified">
+				2003-08-11 09:03
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12292" title="2003-02-17_teleconference_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12292'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">4207</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12325" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12325?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-03-05_ggf7_minutes.txt:https://redmine.ogf.org/dmsf_files/12325?download=" title="2003-03-05_ggf7_minutes.txt version 1.0 download">2003-03-05_ggf7_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-03-05_ggf7_minutes.txt</div>
+			</td>
+			<td class="size">3.8 kB</td>
+			<td class="modified">
+				2003-08-11 08:36
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12325" title="2003-03-05_ggf7_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12325'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">3932</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12300" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12300?download=" class="icon icon-file text-plain" data-downloadurl="text/plain:2003-03-06_ggf7_minutes.txt:https://redmine.ogf.org/dmsf_files/12300?download=" title="2003-03-06_ggf7_minutes.txt version 1.0 download">2003-03-06_ggf7_minutes.txt</a>
+				<div class="filename" title="Filename used for download or in Zip archive">2003-03-06_ggf7_minutes.txt</div>
+			</td>
+			<td class="size">2.9 kB</td>
+			<td class="modified">
+				2003-08-11 08:37
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12300" title="2003-03-06_ggf7_minutes.txt details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12300'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2997</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12317" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12317?download=" class="icon icon-file " data-downloadurl="text/plain:GGF8 WG Agenda -  Overflow Session:https://redmine.ogf.org/dmsf_files/12317?download=" title="GGF8 WG Agenda -  Overflow Session version 1.0 download">GGF8 WG Agenda -  Overflow Session</a>
+				<div class="filename" title="Filename used for download or in Zip archive">GGF8 WG Agenda -  Overflow Session</div>
+			</td>
+			<td class="size">205 Bytes</td>
+			<td class="modified">
+				2003-05-28 07:19
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12317" title="GGF8 WG Agenda -  Overflow Session details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12317'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">205</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12326" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12326?download=" class="icon icon-file " data-downloadurl="text/plain:GGF8 WG Agenda - Planning For Future Work:https://redmine.ogf.org/dmsf_files/12326?download=" title="GGF8 WG Agenda - Planning For Future Work version 3.0 download">GGF8 WG Agenda - Planning For Future Work</a>
+				<div class="filename" title="Filename used for download or in Zip archive">GGF8 WG Agenda - Planning For Future Work</div>
+			</td>
+			<td class="size">628 Bytes</td>
+			<td class="modified">
+				2003-06-02 04:50
+				
+				
+			</td>
+			<td class="version">
+				3.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12326" title="GGF8 WG Agenda - Planning For Future Work details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12326'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">628</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12299" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12299?download=" class="icon icon-file " data-downloadurl="text/plain:GGF8 WG Agenda - Primer Update and Discussion:https://redmine.ogf.org/dmsf_files/12299?download=" title="GGF8 WG Agenda - Primer Update and Discussion version 4.0 download">GGF8 WG Agenda - Primer Update and Discussion</a>
+				<div class="filename" title="Filename used for download or in Zip archive">GGF8 WG Agenda - Primer Update and Discussion</div>
+			</td>
+			<td class="size">1.1 kB</td>
+			<td class="modified">
+				2003-06-14 06:45
+				
+				
+			</td>
+			<td class="version">
+				4.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12299" title="GGF8 WG Agenda - Primer Update and Discussion details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12299'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1110</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12312" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12312?download=" class="icon icon-file " data-downloadurl="text/plain:GGF8 WG Agenda - Review Of 60 Day Comment Issues For OGSI V1.0 Spec:https://redmine.ogf.org/dmsf_files/12312?download=" title="GGF8 WG Agenda - Review Of 60 Day Comment Issues For OGSI V1.0 Spec version 4.0 download">GGF8 WG Agenda - Review Of 60 Day Comment Issues For OGSI V1.0 Spec</a>
+				<div class="filename" title="Filename used for download or in Zip archive">GGF8 WG Agenda - Review Of 60 Day Comment Issues For OGSI V1.0 Spec</div>
+			</td>
+			<td class="size">366 Bytes</td>
+			<td class="modified">
+				2003-06-18 14:37
+				
+				
+			</td>
+			<td class="version">
+				4.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12312" title="GGF8 WG Agenda - Review Of 60 Day Comment Issues For OGSI V1.0 Spec details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12312'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">366</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12303" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12303?download=" class="icon icon-file " data-downloadurl="text/plain:GGF8_Minutes_OGSI-WG_60_Day_and_Future:https://redmine.ogf.org/dmsf_files/12303?download=" title="GGF8_Minutes_OGSI-WG_60_Day_and_Future version 1.0 download">GGF8_Minutes_OGSI-WG_60_Day_and_Future</a>
+				<div class="filename" title="Filename used for download or in Zip archive">GGF8_Minutes_OGSI-WG_60_Day_and_Future</div>
+			</td>
+			<td class="size">2.9 kB</td>
+			<td class="modified">
+				2003-06-26 15:40
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12303" title="GGF8_Minutes_OGSI-WG_60_Day_and_Future details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12303'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2922</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12323" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12323?download=" class="icon icon-file " data-downloadurl="text/plain:GGF8_Minutes_OGSI-WG_Primer_Session:https://redmine.ogf.org/dmsf_files/12323?download=" title="GGF8_Minutes_OGSI-WG_Primer_Session version 1.0 download">GGF8_Minutes_OGSI-WG_Primer_Session</a>
+				<div class="filename" title="Filename used for download or in Zip archive">GGF8_Minutes_OGSI-WG_Primer_Session</div>
+			</td>
+			<td class="size">5.5 kB</td>
+			<td class="modified">
+				2003-06-26 15:37
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12323" title="GGF8_Minutes_OGSI-WG_Primer_Session details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12323'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">5669</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12313" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12313?download=" class="icon icon-file " data-downloadurl="text/plain:GGF9 Session Agendas:https://redmine.ogf.org/dmsf_files/12313?download=" title="GGF9 Session Agendas version 2.0 download">GGF9 Session Agendas</a>
+				<div class="filename" title="Filename used for download or in Zip archive">GGF9 Session Agendas</div>
+			</td>
+			<td class="size">2 kB</td>
+			<td class="modified">
+				2003-09-23 02:22
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12313" title="GGF9 Session Agendas details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12313'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2053</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12319" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12319?download=" class="icon icon-file " data-downloadurl="text/plain:GGF9_Minutes_OGSI-WG_GWSDL_Session:https://redmine.ogf.org/dmsf_files/12319?download=" title="GGF9_Minutes_OGSI-WG_GWSDL_Session version 1.0 download">GGF9_Minutes_OGSI-WG_GWSDL_Session</a>
+				<div class="filename" title="Filename used for download or in Zip archive">GGF9_Minutes_OGSI-WG_GWSDL_Session</div>
+			</td>
+			<td class="size">9.7 kB</td>
+			<td class="modified">
+				2003-10-06 18:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12319" title="GGF9_Minutes_OGSI-WG_GWSDL_Session details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12319'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">9956</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12330" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12330?download=" class="icon icon-file " data-downloadurl="text/plain:Primer Conference Call Minutes August 13 2003:https://redmine.ogf.org/dmsf_files/12330?download=" title="Primer Conference Call Minutes August 13 2003 version 1.0 download">Primer Conference Call Minutes August 13 2003</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer Conference Call Minutes August 13 2003</div>
+			</td>
+			<td class="size">1.5 kB</td>
+			<td class="modified">
+				2003-09-01 05:38
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12330" title="Primer Conference Call Minutes August 13 2003 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12330'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1486</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12294" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12294?download=" class="icon icon-file " data-downloadurl="text/plain:Primer Conference Call Minutes August 20 2003:https://redmine.ogf.org/dmsf_files/12294?download=" title="Primer Conference Call Minutes August 20 2003 version 1.0 download">Primer Conference Call Minutes August 20 2003</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer Conference Call Minutes August 20 2003</div>
+			</td>
+			<td class="size">1.3 kB</td>
+			<td class="modified">
+				2003-09-01 05:39
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12294" title="Primer Conference Call Minutes August 20 2003 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12294'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1297</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12321" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12321?download=" class="icon icon-file " data-downloadurl="text/plain:Primer Conference Call Minutes August 6 2003:https://redmine.ogf.org/dmsf_files/12321?download=" title="Primer Conference Call Minutes August 6 2003 version 1.0 download">Primer Conference Call Minutes August 6 2003</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer Conference Call Minutes August 6 2003</div>
+			</td>
+			<td class="size">2 kB</td>
+			<td class="modified">
+				2003-09-01 05:37
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12321" title="Primer Conference Call Minutes August 6 2003 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12321'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2007</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12322" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12322?download=" class="icon icon-file " data-downloadurl="text/plain:Primer Conference Call Minutes November 12th 2003:https://redmine.ogf.org/dmsf_files/12322?download=" title="Primer Conference Call Minutes November 12th 2003 version 1.0 download">Primer Conference Call Minutes November 12th 2003</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer Conference Call Minutes November 12th 2003</div>
+			</td>
+			<td class="size">1.5 kB</td>
+			<td class="modified">
+				2003-11-18 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12322" title="Primer Conference Call Minutes November 12th 2003 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12322'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1515</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12318" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12318?download=" class="icon icon-file " data-downloadurl="text/plain:Primer Conference Call Minutes November 19th 2003:https://redmine.ogf.org/dmsf_files/12318?download=" title="Primer Conference Call Minutes November 19th 2003 version 3.0 download">Primer Conference Call Minutes November 19th 2003</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer Conference Call Minutes November 19th 2003</div>
+			</td>
+			<td class="size">1.6 kB</td>
+			<td class="modified">
+				2003-11-25 19:00
+				
+				
+			</td>
+			<td class="version">
+				3.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12318" title="Primer Conference Call Minutes November 19th 2003 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12318'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1634</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12311" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12311?download=" class="icon icon-file " data-downloadurl="text/plain:Primer Conference Call Minutes November 26th 2003:https://redmine.ogf.org/dmsf_files/12311?download=" title="Primer Conference Call Minutes November 26th 2003 version 1.0 download">Primer Conference Call Minutes November 26th 2003</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer Conference Call Minutes November 26th 2003</div>
+			</td>
+			<td class="size">401 Bytes</td>
+			<td class="modified">
+				2003-12-04 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12311" title="Primer Conference Call Minutes November 26th 2003 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12311'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">401</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12304" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12304?download=" class="icon icon-file " data-downloadurl="text/plain:Primer Conference Call Minutes November 5th 2003:https://redmine.ogf.org/dmsf_files/12304?download=" title="Primer Conference Call Minutes November 5th 2003 version 1.0 download">Primer Conference Call Minutes November 5th 2003</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer Conference Call Minutes November 5th 2003</div>
+			</td>
+			<td class="size">2 kB</td>
+			<td class="modified">
+				2003-11-18 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12304" title="Primer Conference Call Minutes November 5th 2003 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12304'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2047</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12332" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12332?download=" class="icon icon-file " data-downloadurl="text/plain:Primer Conference Call Minutes October 15th 2003:https://redmine.ogf.org/dmsf_files/12332?download=" title="Primer Conference Call Minutes October 15th 2003 version 1.0 download">Primer Conference Call Minutes October 15th 2003</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer Conference Call Minutes October 15th 2003</div>
+			</td>
+			<td class="size">1.9 kB</td>
+			<td class="modified">
+				2003-11-18 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12332" title="Primer Conference Call Minutes October 15th 2003 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12332'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1914</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12308" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12308?download=" class="icon icon-file " data-downloadurl="text/plain:Primer Conference Call Minutes October 22nd 2003:https://redmine.ogf.org/dmsf_files/12308?download=" title="Primer Conference Call Minutes October 22nd 2003 version 1.0 download">Primer Conference Call Minutes October 22nd 2003</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer Conference Call Minutes October 22nd 2003</div>
+			</td>
+			<td class="size">1.6 kB</td>
+			<td class="modified">
+				2003-11-18 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12308" title="Primer Conference Call Minutes October 22nd 2003 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12308'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1655</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12331" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12331?download=" class="icon icon-file " data-downloadurl="text/plain:Primer Conference Call Minutes October 29th 2003:https://redmine.ogf.org/dmsf_files/12331?download=" title="Primer Conference Call Minutes October 29th 2003 version 1.0 download">Primer Conference Call Minutes October 29th 2003</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer Conference Call Minutes October 29th 2003</div>
+			</td>
+			<td class="size">1.5 kB</td>
+			<td class="modified">
+				2003-11-18 19:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12331" title="Primer Conference Call Minutes October 29th 2003 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12331'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1537</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12333" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12333?download=" class="icon icon-file " data-downloadurl="text/plain:Primer Conference Call Minutes September 17 2003:https://redmine.ogf.org/dmsf_files/12333?download=" title="Primer Conference Call Minutes September 17 2003 version 1.0 download">Primer Conference Call Minutes September 17 2003</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer Conference Call Minutes September 17 2003</div>
+			</td>
+			<td class="size">2.5 kB</td>
+			<td class="modified">
+				2003-10-05 18:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12333" title="Primer Conference Call Minutes September 17 2003 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12333'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2540</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12320" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12320?download=" class="icon icon-file " data-downloadurl="text/plain:Primer GGF9 Minutes October 8 2003:https://redmine.ogf.org/dmsf_files/12320?download=" title="Primer GGF9 Minutes October 8 2003 version 1.0 download">Primer GGF9 Minutes October 8 2003</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer GGF9 Minutes October 8 2003</div>
+			</td>
+			<td class="size">720 Bytes</td>
+			<td class="modified">
+				2003-10-07 18:00
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12320" title="Primer GGF9 Minutes October 8 2003 details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12320'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">720</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12307" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12307?download=" class="icon icon-file " data-downloadurl="text/plain:Primer conference call minutes 13th August:https://redmine.ogf.org/dmsf_files/12307?download=" title="Primer conference call minutes 13th August version 1.0 download">Primer conference call minutes 13th August</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer conference call minutes 13th August</div>
+			</td>
+			<td class="size">1.4 kB</td>
+			<td class="modified">
+				2003-09-03 09:29
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12307" title="Primer conference call minutes 13th August details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12307'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1484</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12315" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12315?download=" class="icon icon-file " data-downloadurl="text/plain:Primer conference call minutes 23rd July:https://redmine.ogf.org/dmsf_files/12315?download=" title="Primer conference call minutes 23rd July version 2.0 download">Primer conference call minutes 23rd July</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer conference call minutes 23rd July</div>
+			</td>
+			<td class="size">2 kB</td>
+			<td class="modified">
+				2003-07-25 04:31
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12315" title="Primer conference call minutes 23rd July details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12315'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2053</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12316" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12316?download=" class="icon icon-file " data-downloadurl="text/plain:Primer conference call minutes 27th August:https://redmine.ogf.org/dmsf_files/12316?download=" title="Primer conference call minutes 27th August version 1.0 download">Primer conference call minutes 27th August</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer conference call minutes 27th August</div>
+			</td>
+			<td class="size">1.7 kB</td>
+			<td class="modified">
+				2003-09-03 09:25
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12316" title="Primer conference call minutes 27th August details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12316'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1741</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12302" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12302?download=" class="icon icon-file " data-downloadurl="text/plain:Primer conference call minutes 2nd July:https://redmine.ogf.org/dmsf_files/12302?download=" title="Primer conference call minutes 2nd July version 1.0 download">Primer conference call minutes 2nd July</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer conference call minutes 2nd July</div>
+			</td>
+			<td class="size">2.3 kB</td>
+			<td class="modified">
+				2003-07-08 05:08
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12302" title="Primer conference call minutes 2nd July details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12302'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2372</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12309" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12309?download=" class="icon icon-file " data-downloadurl="text/plain:Primer conference call minutes 30th  July:https://redmine.ogf.org/dmsf_files/12309?download=" title="Primer conference call minutes 30th  July version 1.0 download">Primer conference call minutes 30th  July</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer conference call minutes 30th  July</div>
+			</td>
+			<td class="size">1.8 kB</td>
+			<td class="modified">
+				2003-08-01 10:23
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12309" title="Primer conference call minutes 30th  July details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12309'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1823</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12310" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12310?download=" class="icon icon-file " data-downloadurl="text/plain:Primer conference call minutes 3rd September:https://redmine.ogf.org/dmsf_files/12310?download=" title="Primer conference call minutes 3rd September version 1.0 download">Primer conference call minutes 3rd September</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer conference call minutes 3rd September</div>
+			</td>
+			<td class="size">1.9 kB</td>
+			<td class="modified">
+				2003-09-10 05:08
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12310" title="Primer conference call minutes 3rd September details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12310'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1926</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12296" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12296?download=" class="icon icon-file " data-downloadurl="text/plain:Primer conference call minutes 6th August:https://redmine.ogf.org/dmsf_files/12296?download=" title="Primer conference call minutes 6th August version 1.0 download">Primer conference call minutes 6th August</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer conference call minutes 6th August</div>
+			</td>
+			<td class="size">1.7 kB</td>
+			<td class="modified">
+				2003-08-13 08:30
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12296" title="Primer conference call minutes 6th August details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12296'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">1714</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12297" /></td>
+			<td class="title">
+				
+				<a href="https://redmine.ogf.org/dmsf_files/12297?download=" class="icon icon-file " data-downloadurl="text/plain:Primer conference call minutes 9th July:https://redmine.ogf.org/dmsf_files/12297?download=" title="Primer conference call minutes 9th July version 2.0 download">Primer conference call minutes 9th July</a>
+				<div class="filename" title="Filename used for download or in Zip archive">Primer conference call minutes 9th July</div>
+			</td>
+			<td class="size">2.4 kB</td>
+			<td class="modified">
+				2003-07-11 03:26
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="https://redmine.ogf.org/dmsf_files/12297" title="Primer conference call minutes 9th July details"><img alt="Filedetails" class="detail_icon" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/filedetails.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12297'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="https://redmine.ogf.org/plugin_assets/redmine_dmsf/images/lock.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">2506</td>
+		</tr>
+	
+	</tbody>
+	</table>
+	<br />
+</form>
+
+<script type="text/javascript">
+	jQuery("#entries_delete_button").click(function(event) {
+		if(window.confirm("Do you really want to delete checked entries?")) {
+			jQuery("#entries_form").attr("action", "/dmsf/delete_entries/migration-archive?folder_id=6318");
+			jQuery("#entries_form").submit();
+		}
+	})
+	
+	jQuery("#check_all_entries").click(function(event) {
+		var $this = jQuery(this);
+		if($this.prop("checked")) {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", true);
+		} else {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", false);
+		}
+	})			
+</script>
+
+
+
+
+
+
+<br />
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/dmsf/migration-archive?folder_id=6318 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:41:38 GMT -->
+</html>

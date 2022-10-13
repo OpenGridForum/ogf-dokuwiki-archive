@@ -1,0 +1,281 @@
+Charter v.1.4
+Grid Checkpoint Recovery Working Group (GridCPR)
+February 14, 2005
+Derek Simmel <dsimmel@psc.edu>
+Paul Stodghill <stodghil@cs.cornell.edu>
+Thilo Kielmann <kielmann@cs.vu.nl>
+Nathan Stone <nstone@psc.edu>
+Niraj Srivastava <niraj.srivastava@hp.com>
+
+
+[5.3.1] Administrative:
+
+[5.3.1.1] Group Name:
+
+Grid Checkpoint Recovery Working Group
+
+Group Acronym: GridCPR
+
+
+[5.3.1.2] Chairs:
+
+Derek Simmel <dsimmel@psc.edu>
+Paul Stodghill <stodghil@cs.cornell.edu>
+
+(Additional founding participants)
+(Emeritus Chair) Thilo Kielmann <kielmann@cs.vu.nl>
+Nathan Stone <nstone@psc.edu>
+J. Ray Scott <scott@psc.edu>
+Massimo Sgaravatto <massimo.sgaravatto@pd.infn.it>
+Tom Goodale <goodale@aei-potsdam.mpg.de>
+Ignacio M. Llorente <llorente@dacya.ucm.es>
+M. Rubens <rubensm@dacya.ucm.es>
+Jim Smith <jim.smith@ncl.ac.uk>
+H. J. Kim <hjkim@arirang.snu.ac.kr>
+Connor Park <chan@hpcnet.ne.kr>
+Nam Yoon Woo <nywoo@arirang.snu.ac.kr>
+Seung Hun An <shahn@arirang.snu.ac.kr>
+Douglas Thain <thain@cs.wisc.edu>
+
+
+[5.3.1.3] Secretary:
+
+Niraj Srivastava <niraj.srivastava@hp.com>
+
+
+[5.3.1.4] Mailing List:
+
+gridcpr-wg@gridforum.org
+
+Subscribe via
+mailto:majordomo@gridforum.org?Body=subscribe%20gridcpr-wg
+
+Searchable archives at
+http://www-unix.gridforum.org/mail_archive/gridcpr-wg/maillist.html
+http://black-ice.psc.edu/mail/ggf-gridcpr/
+
+
+[5.3.2] Description and Objectives:
+
+[5.3.2.1] Focus/Purpose:
+
+The Grid Checkpoint Recovery Working Group will define a user-level API
+and associated layer of services that will permit checkpointed jobs to be
+recovered and continued on the same or on remote Grid resources. A key
+feature of Grid Checkpoint Recovery service is recoverability of jobs
+among heterogeneous Grid resources. In other words, resources on which
+jobs are checkpointed need not be of the same type as those on which the
+jobs are recovered, as long as the application code operating on the
+checkpointing resource can be built for and run on the recovery platforms.
+The benefits of a resource-independent checkpoint recovery capability for
+Grids include facilitation of strategic or tactical job preemption and
+migration (e.g. job load balancing among available resources, cost-based
+job migration, etc.), in addition to recoverability of Grid-managed
+computational jobs across heterogeneous resources.
+
+
+Problem Statement:
+
+Checkpoint Recovery is a service to facilitate automated recovery and
+continuation of interrupted computations with the aid of periodically
+recorded checkpoint data. Checkpoint Recovery is essential for large,
+long-running computations to minimize lost time and other costs incurred
+by system failures, job preemption, job migration and other interruptions
+to calculations. In Grid environments, Checkpoint Recovery will be
+necessary to facilitate migration and continuation of incomplete
+computations among available heterogeneous resources.
+
+Checkpoint Recovery has been implemented in a variety of forms for
+specific systems, applications, and distributed computing architectures.
+One can view approaches to Checkpoint Recovery on a continuum between
+fully system-based (requiring no application involvement, but limited to
+operating only on such systems locally) to fully application-based
+(entirely portable, expecting nothing of the system on which the
+application runs). Neither extreme is practical nor scalable for Grid
+environments. The GridCPR approach will instead combine an application-
+level API with implementations based on layered Grid services.
+
+To facilitate recoverability and migration of large, distributed
+computational jobs in Grid environments, a standard, common interface is
+needed to allow application developers to write portable, resource-
+independent code to handle checkpointing and recovery operations in a
+consistent manner across different Grid resources. Corresponding services
+need to be built on Grid resources to serve the checkpointing and recovery
+commands according to the capabilities of their platforms, with checkpoint
+data written reliably and in a fully portable format to storage. Methods
+need to be developed to forward checkpoint data to Grid resources to which
+jobs are migrated to continue processing.
+
+The Grid Checkpoint Recovery Working Group will define requirements for a
+common Grid Checkpoint Recovery service (GridCPR), and develop and publish
+a specification for a standard Grid Checkpoint Recovery Application
+Programming Interface (GridCPR API). The goal of the API is to provide
+Grid application developers and resource providers a common interface for
+consistent, secure, and system-independent means to record, manage, and
+recover application checkpoint data to continue interrupted and/or
+migrated computations.
+
+
+Impact:
+
+Architecture:
+
+Grid event monitoring services will be closely tied to job management
+facilities that rely on checkpointing and recovery to handle unexpected as
+well as scheduled interruptions to jobs.
+
+Grid Checkpoint Recovery services will provide data necessary to support
+accounting procedures among participating resource providers and users.
+
+Compatibility with complementary standards and API efforts in GGF will be
+essential for the Grid Checkpoint Recovery services and API to succeed.  
+The GridCPR working group will appoint liasons to other GGF research
+groups and working groups. These liasons will be responsible for informing
+the GridCPR working group regarding applicable GGF standards developments,
+and to represent the GridCPR working group in meetings of their assigned
+GGF research/working groups.
+
+Complementary GGF groups of particular interest include those in the areas
+of Scheduling and Resource Management (DRMAA-WG, GRAAP-WG), Architecture
+(Accounting Models RG), Applications, Programming Models and Environments
+(Advanced Programming Models RG), Data (Transport RG), Security (all
+groups), Information Systems and Performance (Monitoring issues) and
+Peer-to-Peer (relationships between OGSA/Globus and P2P).
+
+
+Deployment and Operations:
+
+Grid resource providers will need to deploy services, administrative
+tools, and infrastructure to accommodate Grid Checkpoint Recovery services
+and GridCPR API libraries.
+
+
+Security:
+
+Security for checkpoint data (integrity, availability, privacy) and
+executable binaries will be essential to prevent accidental and deliberate
+disruption, modification, or other subversion of computational jobs.  
+Specifications developed by the Grid Checkpoint Recovery working group
+will comply with and build upon all established GGF Grid security
+standards.
+
+
+Application Development and Runtime Issues:
+
+Given a standard Grid Checkpoint Recovery Application Programming
+Interface library, users and application developers with a need for Grid
+Checkpoint Recovery will incorporate checkpointing and recovery procedures
+into their code.
+
+Vendors and Grid resource providers must implement services to manage
+checkpoint data storage and transport in addition to job migration and
+recovery according to the GridCPR Service and API specifications published
+by the GridCPR Working Group. Grid scheduling facilities will need to be
+aware of checkpointing and recovery operations to facilitate continuation
+of interrupted and migrated jobs.
+
+
+Scalability:
+
+Scalability of Grid Checkpoint Recovery is expected to vary according to
+the nature, distribution, and communication needs of computational jobs as
+well as the nature and configuration of computational resources. It is
+anticipated that best practices associated with application development
+and management of Grid Checkpoint Recovery will develop as experience is
+gained in the field.
+
+
+Transition:
+
+The Grid Checkpoint Recovery Working Group will generate documents to
+guide users, application developers, vendors, and resource providers
+regarding the requirements for Grid Checkpoint Recovery services, and the
+implementation and use of a standard Grid Checkpoint Recovery Application
+Programming Interface.
+
+
+[5.3.2.2] Goals/Milestones:
+
+July, 2002 - GGF5 Edinburgh - BoF session to survey interest and discuss
+draft charter and formation of the Grid Checkpoint Recovery Working Group.
+(Done)
+
+October 2002 - GGF6 Chicago - Ratify Working Group Charter; Discuss
+existing approaches to Checkpoint Recovery APIs (e.g., European DataGrid,
+PSC TCS Checkpoint Recovery API). Develop Grid Checkpoint Recovery
+operational scenarios, including application- and system behaviors;
+Identify categories of scenarios and define scope of functionality to be
+served by a Grid Checkpoint Recovery API/Service. (Done)
+
+March 2003 - GGF7 Tokyo - Discuss and ammend draft GFD-I document
+detailing scope of GridCPR API and services; Discuss and establish GridCPR
+Working Group development (virtual) meetings to be held on a regular
+schedule between GGF meetings. (Done)
+
+June 2003 - GGF8 Seattle - Discuss GridCPR API/Services scope and
+interfaces; Discuss current and anticipated GridCPR API/Service use 
+cases. Identify additional use cases and commit authors to submit brief 
+descriptions of such use cases to the GridCPR-WG for review. (Done)
+
+October 2003 - GGF9 Chicago - Review GridCPR API/Service discussions to 
+date. Develop GridCPR Use Cases and Architecture GWD-I documents. Discuss 
+requirements for proof of concept implementations. Identify writing and 
+review assignments and establish deadlines for drafts and reviews. (Done)
+
+March 2004 - GGF10 Berlin - Review GridCPR Use Cases GWD-I document;
+Review GridCPR Architecture GWD-I document; Initiate Draft GridCPR API
+Specification document. Identify additional writing and review assignments 
+and deadlines for GWD-I documents. (Done)
+
+June 2004 - GGF11 Hawaii - Finalize GridCPR Use Case & GridCPR
+Architecture GWD-I documents (Uses cases discussed & revised, architecture
+document discussion postponed); [Submit GWD-I documents to GGF Editor; 
+Review Draft;  GridCPR API Specification document; Assign writing and
+review assignments and deadlines for GridCPR API Specification; Revisit
+proof of concept implementation requirements. Assign initial proof of
+concept implementation and reporting tasks, deadlines] (Postponed). 
+
+September 2004 - GGF12 Brussels - Review Use Cases and Architecture
+documents. Initiate GridCPR-API Specification document. Plan SC04
+GridCPR-WG meeting.  Identify writing and review assignments and establish
+deadlines for drafts and reviews. 
+
+November 2004 - SC04 Pittsburgh - Finalize Use Cases and Architecture
+Documents; Post Final Drafts to gridcpr-wg mailing list for final internal
+review before submission to GGF Editor; Continue planning GridCPR API
+Specification document and proof-of-concept GridCPR API implementations. 
+(Done). 
+
+March 2005 - GGF13 Seoul - (meeting postponed to GGF14 in Chicago)
+
+June 2005 - GGF 14 Chicago - Review draft GridCPR API Specification; Review
+proof of concept GridCPR API implementation plans; Review updates to
+GridCPR Use Cases and GridCPR Architecture documents based on public
+comments. Resubmit revised Use Cases and Architecture documents to GGF
+Editor if needed. 
+
+Fall 2005 - GGF15 - Revise draft GridCPR API Specification;
+Demonstrate initial GridCPR API implementations and review lessons
+learned; Initiate GridCPR Services Interface Specification document;
+Identify writing and review assignments and establish deadlines for drafts
+and reviews.
+
+Spring 2006 - GGF16 - Review GridCPR API implementations; Finalize GridCPR API 
+Specification & submit to GGF Editor; Review draft GridCPR Services 
+Interface Specification and proof-of-concept GridCPR Services 
+implementations.
+
+Summer 2006 - GGF17 - Revise GridCPR API Specification (if needed); 
+Review proof-of-concept GridCPR Services implementations and lessons 
+learned;  Finalize GridCPR Services Interface Specification & submit to 
+GGF Editor;
+
+Fall 2006 - GGF18 - Revise GridCPR Services Interface Specification (if 
+needed).
+
+
+
+[5.3.2.3] Websites:
+
+http://gridcpr.psc.edu/GGF/
+https://forge.gridforum.org/projects/gridcpr-wg/

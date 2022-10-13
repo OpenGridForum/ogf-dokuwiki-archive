@@ -1,0 +1,727 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/7cdd88a6ce3632c801223b33e5ccc2b9fc13651e/changes/app/models/mailer.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:43:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>/app/models/mailer.rb - Changes - Redmine - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="rsvo5Uvs/OHqzq9AZjxgQ/1mtk/oY58g0kQJMlDTftw="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+  <script src="https://redmine.ogf.org/javascripts/repository_navigation.js?1425381960" type="text/javascript"></script>
+</head>
+<body class="theme-Ogf redmine controller-repositories action-changes">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/redmine-og" method="get">
+        <input name="changesets" type="hidden" value="1" />
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/redmine-og" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=repository" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=repository" class="ancestor">IT</a> » Redmine</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/redmine-og" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/redmine-og" class="dmsf">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/repository" class="repository selected">Repository</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+  
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/statistics" class="icon icon-stats">Statistics</a>
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/changes/app/models/mailer.rb?rev=" id="revision_selector" method="get">  <!-- Branches Dropdown -->
+      | Branch: 
+    <select id="branch" name="branch"><option value=""></option>
+<option value="1.3-stable">1.3-stable</option>
+<option value="devel">devel</option>
+<option value="master">master</option></select>
+  
+  
+  | Revision: 
+  <input id="rev" name="rev" size="8" type="text" value="7cdd88a6ce3632c801223b33e5ccc2b9fc13651e" />
+</form>
+</div>
+
+<h2>
+  <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7cdd88a6ce3632c801223b33e5ccc2b9fc13651e/show">root</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7cdd88a6ce3632c801223b33e5ccc2b9fc13651e/show/app">app</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7cdd88a6ce3632c801223b33e5ccc2b9fc13651e/show/app/models">models</a>
+
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7cdd88a6ce3632c801223b33e5ccc2b9fc13651e/changes/app/models/mailer.rb">mailer.rb</a>
+
+
+@ 7cdd88a6
+
+
+</h2>
+
+<p>
+
+<p>
+History |
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7cdd88a6ce3632c801223b33e5ccc2b9fc13651e/entry/app/models/mailer.rb">View</a> |
+
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7cdd88a6ce3632c801223b33e5ccc2b9fc13651e/annotate/app/models/mailer.rb">Annotate</a> |
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7cdd88a6ce3632c801223b33e5ccc2b9fc13651e/raw/app/models/mailer.rb">Download</a>
+(9.1 kB)
+</p>
+
+
+</p>
+
+
+
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/diff/app/models/mailer.rb" method="get">
+<table class="list changesets">
+<thead><tr>
+
+<th>#</th>
+<th></th>
+<th></th>
+<th>Date</th>
+<th>Author</th>
+<th>Comment</th>
+</tr></thead>
+<tbody>
+
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a06d2c41d5e54db8e434bf80aa1fe11d82ffb870" title="Revision a06d2c41">a06d2c41</a></td>
+<td class="checkbox"><input checked="checked" id="cb-1" name="rev" onclick="$('cbto-2').checked=true;" type="radio" value="a06d2c41d5e54db8e434bf80aa1fe11d82ffb870" /></td>
+<td class="checkbox"></td>
+<td class="committed_on">06/02/2008 12:59 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: Reminder emails shouldn't include archived projects (#1351).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1483">http://redmine.rubyforge.org/svn/trunk@1483</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0c8105277070c20590d22a0d4b8fc1f09ce981d9" title="Revision 0c810527">0c810527</a></td>
+<td class="checkbox"><input id="cb-2" name="rev" onclick="$('cbto-3').checked=true;" type="radio" value="0c8105277070c20590d22a0d4b8fc1f09ce981d9" /></td>
+<td class="checkbox"><input checked="checked" id="cbto-2" name="rev_to" onclick="if ($('cb-2').checked==true) {$('cb-1').checked=true;}" type="radio" value="0c8105277070c20590d22a0d4b8fc1f09ce981d9" /></td>
+<td class="committed_on">05/25/2008 01:31 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds a rake task to send reminders. An email is sent to each user with a list of the issues due in the next days, if any.<br />See <code>rake -D redmine:send_reminders</code> for options.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1459">http://redmine.rubyforge.org/svn/trunk@1459</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f271e772afba181fa61cfbac4e5259fd8e4275b3" title="Revision f271e772">f271e772</a></td>
+<td class="checkbox"><input id="cb-3" name="rev" onclick="$('cbto-4').checked=true;" type="radio" value="f271e772afba181fa61cfbac4e5259fd8e4275b3" /></td>
+<td class="checkbox"><input id="cbto-3" name="rev_to" onclick="if ($('cb-3').checked==true) {$('cb-2').checked=true;}" type="radio" value="f271e772afba181fa61cfbac4e5259fd8e4275b3" /></td>
+<td class="committed_on">03/16/2008 12:52 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">Add the following headers to email notifications (#830, <a href="https://redmine.ogf.org/issues/247" class="issue status-16 priority-2 closed" title="Length of Base-2 Binary Number Elements (closed)">#247</a>):
+	<ul>
+	<li>X-Redmine-Host: host name defined in application settings</li>
+		<li>X-Redmine-Site: application title defined in settings</li>
+		<li>X-Redmine-Project: identifier of the project that the notification is related to, if any...</li>
+	</ul></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a59e6bfb020f51ec2ae586e2e0e238b9827b7e9a" title="Revision a59e6bfb">a59e6bfb</a></td>
+<td class="checkbox"><input id="cb-4" name="rev" onclick="$('cbto-5').checked=true;" type="radio" value="a59e6bfb020f51ec2ae586e2e0e238b9827b7e9a" /></td>
+<td class="checkbox"><input id="cbto-4" name="rev_to" onclick="if ($('cb-4').checked==true) {$('cb-3').checked=true;}" type="radio" value="a59e6bfb020f51ec2ae586e2e0e238b9827b7e9a" /></td>
+<td class="committed_on">03/15/2008 05:40 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Remove hardcoded "Redmine" strings in account related emails. And use application title instead.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1254">http://redmine.rubyforge.org/svn/trunk@1254</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8531e176aab6e3f4b6805aaa19af0b257b6cafb2" title="Revision 8531e176">8531e176</a></td>
+<td class="checkbox"><input id="cb-5" name="rev" onclick="$('cbto-6').checked=true;" type="radio" value="8531e176aab6e3f4b6805aaa19af0b257b6cafb2" /></td>
+<td class="checkbox"><input id="cbto-5" name="rev_to" onclick="if ($('cb-5').checked==true) {$('cb-4').checked=true;}" type="radio" value="8531e176aab6e3f4b6805aaa19af0b257b6cafb2" /></td>
+<td class="committed_on">02/26/2008 01:30 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Do not send an email with no recipient, cc or bcc (closes #743).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1174">http://redmine.rubyforge.org/svn/trunk@1174</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7d1075507221fb0fe1344ddd58f7ee7f485a203c" title="Revision 7d107550">7d107550</a></td>
+<td class="checkbox"><input id="cb-6" name="rev" onclick="$('cbto-7').checked=true;" type="radio" value="7d1075507221fb0fe1344ddd58f7ee7f485a203c" /></td>
+<td class="checkbox"><input id="cbto-6" name="rev_to" onclick="if ($('cb-6').checked==true) {$('cb-5').checked=true;}" type="radio" value="7d1075507221fb0fe1344ddd58f7ee7f485a203c" /></td>
+<td class="committed_on">02/21/2008 02:30 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: "undefined method 'textilizable'" error on email notification when running Repository#fetch_changesets from the console.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1167">http://redmine.rubyforge.org/svn/trunk@1167</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/652dc1a73af8f975e6e126b7b735d524efb40b6f" title="Revision 652dc1a7">652dc1a7</a></td>
+<td class="checkbox"><input id="cb-7" name="rev" onclick="$('cbto-8').checked=true;" type="radio" value="652dc1a73af8f975e6e126b7b735d524efb40b6f" /></td>
+<td class="checkbox"><input id="cbto-7" name="rev_to" onclick="if ($('cb-7').checked==true) {$('cb-6').checked=true;}" type="radio" value="652dc1a73af8f975e6e126b7b735d524efb40b6f" /></td>
+<td class="committed_on">02/17/2008 10:02 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: auto closing of duplicates doesn't work.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1162">http://redmine.rubyforge.org/svn/trunk@1162</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1b002983c31f0936b38d56d2f3d8731f724fc5ef" title="Revision 1b002983">1b002983</a></td>
+<td class="checkbox"><input id="cb-8" name="rev" onclick="$('cbto-9').checked=true;" type="radio" value="1b002983c31f0936b38d56d2f3d8731f724fc5ef" /></td>
+<td class="checkbox"><input id="cbto-8" name="rev_to" onclick="if ($('cb-8').checked==true) {$('cb-7').checked=true;}" type="radio" value="1b002983c31f0936b38d56d2f3d8731f724fc5ef" /></td>
+<td class="committed_on">01/20/2008 05:42 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Display the issue status in the email subject only if the status was actually changed.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1079">http://redmine.rubyforge.org/svn/trunk@1079</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1535ac122053a428ca29f8887cb10994e467f1ab" title="Revision 1535ac12">1535ac12</a></td>
+<td class="checkbox"><input id="cb-9" name="rev" onclick="$('cbto-10').checked=true;" type="radio" value="1535ac122053a428ca29f8887cb10994e467f1ab" /></td>
+<td class="checkbox"><input id="cbto-9" name="rev_to" onclick="if ($('cb-9').checked==true) {$('cb-8').checked=true;}" type="radio" value="1535ac122053a428ca29f8887cb10994e467f1ab" /></td>
+<td class="committed_on">01/20/2008 04:49 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: when changing the status of an issue, the email subject contains the previous status of the issue.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1078">http://redmine.rubyforge.org/svn/trunk@1078</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/6d9490ddcc9c501d31a8b403146cd4ba6d8cc5b5" title="Revision 6d9490dd">6d9490dd</a></td>
+<td class="checkbox"><input id="cb-10" name="rev" onclick="$('cbto-11').checked=true;" type="radio" value="6d9490ddcc9c501d31a8b403146cd4ba6d8cc5b5" /></td>
+<td class="checkbox"><input id="cbto-10" name="rev_to" onclick="if ($('cb-10').checked==true) {$('cb-9').checked=true;}" type="radio" value="6d9490ddcc9c501d31a8b403146cd4ba6d8cc5b5" /></td>
+<td class="committed_on">12/10/2007 12:58 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Merged Rails 2.0 compatibility changes.<br />Compatibility with Rails 1.2 is preserved.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@975">http://redmine.rubyforge.org/svn/trunk@975</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/bc060b31ae086db5a6baf6e3a892c525b2b6f0cd" title="Revision bc060b31">bc060b31</a></td>
+<td class="checkbox"><input id="cb-11" name="rev" onclick="$('cbto-12').checked=true;" type="radio" value="bc060b31ae086db5a6baf6e3a892c525b2b6f0cd" /></td>
+<td class="checkbox"><input id="cbto-11" name="rev_to" onclick="if ($('cb-11').checked==true) {$('cb-10').checked=true;}" type="radio" value="bc060b31ae086db5a6baf6e3a892c525b2b6f0cd" /></td>
+<td class="committed_on">12/02/2007 08:52 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Email notifications are now sent as Blind carbon copy by default. This can be changed in email notifications settings (new setting added).<br />Emission email address setting moved to the email notifications settings view.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@944">http://redmine.rubyforge.org/svn/trunk@944</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/9c9ae217716304f7062fc31c2f4e4f8adafee2b1" title="Revision 9c9ae217">9c9ae217</a></td>
+<td class="checkbox"><input id="cb-12" name="rev" onclick="$('cbto-13').checked=true;" type="radio" value="9c9ae217716304f7062fc31c2f4e4f8adafee2b1" /></td>
+<td class="checkbox"><input id="cbto-12" name="rev_to" onclick="if ($('cb-12').checked==true) {$('cb-11').checked=true;}" type="radio" value="9c9ae217716304f7062fc31c2f4e4f8adafee2b1" /></td>
+<td class="committed_on">11/18/2007 12:46 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">There's now 3 account activation strategies (available in application settings):
+	<ul>
+	<li>activation by email: the user receives an email containing a link to active his account</li>
+		<li>manual activation: an email is sent to administrators for account approval (default)...</li>
+	</ul></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0fe5c7b3e0d8875bff29e3a17230e94de416fa41" title="Revision 0fe5c7b3">0fe5c7b3</a></td>
+<td class="checkbox"><input id="cb-13" name="rev" onclick="$('cbto-14').checked=true;" type="radio" value="0fe5c7b3e0d8875bff29e3a17230e94de416fa41" /></td>
+<td class="checkbox"><input id="cbto-13" name="rev_to" onclick="if ($('cb-13').checked==true) {$('cb-12').checked=true;}" type="radio" value="0fe5c7b3e0d8875bff29e3a17230e94de416fa41" /></td>
+<td class="committed_on">11/12/2007 11:43 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Added an option on 'My account' for users who don't want to be notified of changes that they make.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@899">http://redmine.rubyforge.org/svn/trunk@899</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/bd434427e61edbac03d273a308dcfffe72096ae0" title="Revision bd434427">bd434427</a></td>
+<td class="checkbox"><input id="cb-14" name="rev" onclick="$('cbto-15').checked=true;" type="radio" value="bd434427e61edbac03d273a308dcfffe72096ae0" /></td>
+<td class="checkbox"><input id="cbto-14" name="rev_to" onclick="if ($('cb-14').checked==true) {$('cb-13').checked=true;}" type="radio" value="bd434427e61edbac03d273a308dcfffe72096ae0" /></td>
+<td class="committed_on">11/04/2007 05:43 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">Mailer:
+	<ul>
+	<li>added an application setting to specify the application protocol (http or https) used to generate urls</li>
+		<li>added layouts for text and html emails</li>
+		<li>no more language specific templates</li>
+		<li>urls are now generated using UrlWriter</li>
+		<li>the mailer now uses AdvAttrAccessor code style to set email parameters...</li>
+	</ul></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/90d33c3e518f9e05d9e2893907ebd157062d33de" title="Revision 90d33c3e">90d33c3e</a></td>
+<td class="checkbox"><input id="cb-15" name="rev" onclick="$('cbto-16').checked=true;" type="radio" value="90d33c3e518f9e05d9e2893907ebd157062d33de" /></td>
+<td class="checkbox"><input id="cbto-15" name="rev_to" onclick="if ($('cb-15').checked==true) {$('cb-14').checked=true;}" type="radio" value="90d33c3e518f9e05d9e2893907ebd157062d33de" /></td>
+<td class="committed_on">10/20/2007 08:47 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">More flexible mail notifications settings at user level. A user has now 3 options:
+	<ul>
+	<li>notification on any event on all his projects</li>
+		<li>notification on any event on selected projects only (if the user belongs to more than 1 project)</li>
+		<li>notification only for things that he watches or he is involded in (eg. issues that he watches or he is author or assignee)...</li>
+	</ul></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/dead6a28f81cf54943691b0ce20b9501242aae07" title="Revision dead6a28">dead6a28</a></td>
+<td class="checkbox"><input id="cb-16" name="rev" onclick="$('cbto-17').checked=true;" type="radio" value="dead6a28f81cf54943691b0ce20b9501242aae07" /></td>
+<td class="checkbox"><input id="cbto-16" name="rev_to" onclick="if ($('cb-16').checked==true) {$('cb-15').checked=true;}" type="radio" value="dead6a28f81cf54943691b0ce20b9501242aae07" /></td>
+<td class="committed_on">10/12/2007 02:04 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Removed translated email templates attachments_added and document_added (no longer usefull).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@834">http://redmine.rubyforge.org/svn/trunk@834</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/38f540a7019d194fb02ddcd6b4d8bcebef1423f9" title="Revision 38f540a7">38f540a7</a></td>
+<td class="checkbox"><input id="cb-17" name="rev" onclick="$('cbto-18').checked=true;" type="radio" value="38f540a7019d194fb02ddcd6b4d8bcebef1423f9" /></td>
+<td class="checkbox"><input id="cbto-17" name="rev_to" onclick="if ($('cb-17').checked==true) {$('cb-16').checked=true;}" type="radio" value="38f540a7019d194fb02ddcd6b4d8bcebef1423f9" /></td>
+<td class="committed_on">10/10/2007 03:43 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Added custom fields in issue related mail notifications.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@822">http://redmine.rubyforge.org/svn/trunk@822</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/23264ec3eb8e17543922a0093ed402a9d7ba5de9" title="Revision 23264ec3">23264ec3</a></td>
+<td class="checkbox"><input id="cb-18" name="rev" onclick="$('cbto-19').checked=true;" type="radio" value="23264ec3eb8e17543922a0093ed402a9d7ba5de9" /></td>
+<td class="checkbox"><input id="cbto-18" name="rev_to" onclick="if ($('cb-18').checked==true) {$('cb-17').checked=true;}" type="radio" value="23264ec3eb8e17543922a0093ed402a9d7ba5de9" /></td>
+<td class="committed_on">09/14/2007 11:30 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Mail notification options restored (default is: issue_added and issue_updated).<br />Added mail notification when adding a news (disabled by default).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@728">http://redmine.rubyforge.org/svn/trunk@728</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/74ed14f8a2fb93fc940b68ca76737686d1054d9b" title="Revision 74ed14f8">74ed14f8</a></td>
+<td class="checkbox"><input id="cb-19" name="rev" onclick="$('cbto-20').checked=true;" type="radio" value="74ed14f8a2fb93fc940b68ca76737686d1054d9b" /></td>
+<td class="checkbox"><input id="cbto-19" name="rev_to" onclick="if ($('cb-19').checked==true) {$('cb-18').checked=true;}" type="radio" value="74ed14f8a2fb93fc940b68ca76737686d1054d9b" /></td>
+<td class="committed_on">09/11/2007 01:12 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Notifications about issues (add/edit) are now sent in plain text and html.<br />Removed lang specific strings in the corresponding mail templates, so that there is only one template for all languages.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@723">http://redmine.rubyforge.org/svn/trunk@723</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f16ab838d89dc440825fb6a9c1668b191c889b2a" title="Revision f16ab838">f16ab838</a></td>
+<td class="checkbox"><input id="cb-20" name="rev" onclick="$('cbto-21').checked=true;" type="radio" value="f16ab838d89dc440825fb6a9c1668b191c889b2a" /></td>
+<td class="checkbox"><input id="cbto-20" name="rev_to" onclick="if ($('cb-20').checked==true) {$('cb-19').checked=true;}" type="radio" value="f16ab838d89dc440825fb6a9c1668b191c889b2a" /></td>
+<td class="committed_on">09/04/2007 12:58 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Small fix in Mailer.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@701">http://redmine.rubyforge.org/svn/trunk@701</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/db4781d0686020719a78454ab05152d22883a434" title="Revision db4781d0">db4781d0</a></td>
+<td class="checkbox"><input id="cb-21" name="rev" onclick="$('cbto-22').checked=true;" type="radio" value="db4781d0686020719a78454ab05152d22883a434" /></td>
+<td class="checkbox"><input id="cbto-21" name="rev_to" onclick="if ($('cb-21').checked==true) {$('cb-20').checked=true;}" type="radio" value="db4781d0686020719a78454ab05152d22883a434" /></td>
+<td class="committed_on">08/25/2007 04:09 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Replaced hard-coded urls in Mailer#attachments_add</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@664">http://redmine.rubyforge.org/svn/trunk@664</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0061a3f04afee7654b3cbb35505a6af3dfbb3b53" title="Revision 0061a3f0">0061a3f0</a></td>
+<td class="checkbox"><input id="cb-22" name="rev" onclick="$('cbto-23').checked=true;" type="radio" value="0061a3f04afee7654b3cbb35505a6af3dfbb3b53" /></td>
+<td class="checkbox"><input id="cbto-22" name="rev_to" onclick="if ($('cb-22').checked==true) {$('cb-21').checked=true;}" type="radio" value="0061a3f04afee7654b3cbb35505a6af3dfbb3b53" /></td>
+<td class="committed_on">08/14/2007 06:36 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Added 'email sending test' functionality.<br />Go to Admin -> Mail notifications and click on 'Send a test email'.<br />If an error occurs while sending the mail, the error message is displayed to the user.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@632">http://redmine.rubyforge.org/svn/trunk@632</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7363428703e4a86c3c7b20e5adc00e9ae9428b2e" title="Revision 73634287">73634287</a></td>
+<td class="checkbox"><input id="cb-23" name="rev" onclick="$('cbto-24').checked=true;" type="radio" value="7363428703e4a86c3c7b20e5adc00e9ae9428b2e" /></td>
+<td class="checkbox"><input id="cbto-23" name="rev_to" onclick="if ($('cb-23').checked==true) {$('cb-22').checked=true;}" type="radio" value="7363428703e4a86c3c7b20e5adc00e9ae9428b2e" /></td>
+<td class="committed_on">07/15/2007 08:01 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed mailer (error when no assignee)</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@592">http://redmine.rubyforge.org/svn/trunk@592</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/fd2839c833b696c3a4d0a7c47d31367bcf71674f" title="Revision fd2839c8">fd2839c8</a></td>
+<td class="checkbox"><input id="cb-24" name="rev" onclick="$('cbto-25').checked=true;" type="radio" value="fd2839c833b696c3a4d0a7c47d31367bcf71674f" /></td>
+<td class="checkbox"><input id="cbto-24" name="rev_to" onclick="if ($('cb-24').checked==true) {$('cb-23').checked=true;}" type="radio" value="fd2839c833b696c3a4d0a7c47d31367bcf71674f" /></td>
+<td class="committed_on">07/15/2007 07:12 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Now, when a user turns mail notifications off, he will still receive notifications about issue changes if he is the author or the assignee of the issue.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@590">http://redmine.rubyforge.org/svn/trunk@590</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f04225321c3ea0b56699fd667611ec867c6c458d" title="Revision f0422532">f0422532</a></td>
+<td class="checkbox"><input id="cb-25" name="rev" onclick="$('cbto-26').checked=true;" type="radio" value="f04225321c3ea0b56699fd667611ec867c6c458d" /></td>
+<td class="checkbox"><input id="cbto-25" name="rev_to" onclick="if ($('cb-25').checked==true) {$('cb-24').checked=true;}" type="radio" value="f04225321c3ea0b56699fd667611ec867c6c458d" /></td>
+<td class="committed_on">05/27/2007 06:57 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Account information can now be sent to the user when creating an account.<br />ActionMailer logger set to nil for production environment to disable email contents output in production.log</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@546">http://redmine.rubyforge.org/svn/trunk@546</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7ca7e4bad5037067c1a8cd653eed095372e7f772" title="Revision 7ca7e4ba">7ca7e4ba</a></td>
+<td class="checkbox"><input id="cb-26" name="rev" onclick="$('cbto-27').checked=true;" type="radio" value="7ca7e4bad5037067c1a8cd653eed095372e7f772" /></td>
+<td class="checkbox"><input id="cbto-26" name="rev_to" onclick="if ($('cb-26').checked==true) {$('cb-25').checked=true;}" type="radio" value="7ca7e4bad5037067c1a8cd653eed095372e7f772" /></td>
+<td class="committed_on">05/14/2007 01:03 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Added mail notification when a new message is posted in the forums.<br />Only users who "watch" the board receive notifications. To watch a board, go to the board and click on the "Watch" link.</p>
+
+
+	<p>Notifications are sent by MessageObserver observer.<br />GLoc was modified to use the mail template without language suffix when translated template (with language suffix) doesn't exist....</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2fb84af3e91dc17aa0f84a8fa0e02cabe2ac712c" title="Revision 2fb84af3">2fb84af3</a></td>
+<td class="checkbox"><input id="cb-27" name="rev" onclick="$('cbto-28').checked=true;" type="radio" value="2fb84af3e91dc17aa0f84a8fa0e02cabe2ac712c" /></td>
+<td class="checkbox"><input id="cbto-27" name="rev_to" onclick="if ($('cb-27').checked==true) {$('cb-26').checked=true;}" type="radio" value="2fb84af3e91dc17aa0f84a8fa0e02cabe2ac712c" /></td>
+<td class="committed_on">04/21/2007 08:08 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Added "Watch" functionality on issues. It allows users to receive mail notifications about issue changes.<br />For now, it's only usefull for users who are not members of the project, since members receive notifications for each issue (this behaviour will change)....</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/027bf93849e82ef3c60e4a3024db49d65f0fb3c9" title="Revision 027bf938">027bf938</a></td>
+<td class="checkbox"><input id="cb-28" name="rev" onclick="$('cbto-29').checked=true;" type="radio" value="027bf93849e82ef3c60e4a3024db49d65f0fb3c9" /></td>
+<td class="checkbox"><input id="cbto-28" name="rev_to" onclick="if ($('cb-28').checked==true) {$('cb-27').checked=true;}" type="radio" value="027bf93849e82ef3c60e4a3024db49d65f0fb3c9" /></td>
+<td class="committed_on">03/12/2007 01:59 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>added svn:eol-style native property on /app files</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@333">http://redmine.rubyforge.org/svn/trunk@333</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/90c7cf9763bd02bc832dc20be757e9e2c6b9b616" title="Revision 90c7cf97">90c7cf97</a></td>
+<td class="checkbox"><input id="cb-29" name="rev" onclick="$('cbto-30').checked=true;" type="radio" value="90c7cf9763bd02bc832dc20be757e9e2c6b9b616" /></td>
+<td class="checkbox"><input id="cbto-29" name="rev_to" onclick="if ($('cb-29').checked==true) {$('cb-28').checked=true;}" type="radio" value="90c7cf9763bd02bc832dc20be757e9e2c6b9b616" /></td>
+<td class="committed_on">01/27/2007 06:22 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>proper language setting for mail notifications</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@200">http://redmine.rubyforge.org/svn/trunk@200</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2d47a6d71c0973598bf2d59c59bd4050e77f3861" title="Revision 2d47a6d7">2d47a6d7</a></td>
+<td class="checkbox"><input id="cb-30" name="rev" onclick="$('cbto-31').checked=true;" type="radio" value="2d47a6d71c0973598bf2d59c59bd4050e77f3861" /></td>
+<td class="checkbox"><input id="cbto-30" name="rev_to" onclick="if ($('cb-30').checked==true) {$('cb-29').checked=true;}" type="radio" value="2d47a6d71c0973598bf2d59c59bd4050e77f3861" /></td>
+<td class="committed_on">01/27/2007 10:01 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">mail notifications added when:
+	<ul>
+	<li>a document is added</li>
+		<li>a file is added to the project</li>
+		<li>an attachment is added to an issue or a document</li>
+	</ul>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@196">http://redmine.rubyforge.org/svn/trunk@196</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0b4d4db131304eac84dc90b289a95db3410a2bfe" title="Revision 0b4d4db1">0b4d4db1</a></td>
+<td class="checkbox"><input id="cb-31" name="rev" onclick="$('cbto-32').checked=true;" type="radio" value="0b4d4db131304eac84dc90b289a95db3410a2bfe" /></td>
+<td class="checkbox"><input id="cbto-31" name="rev_to" onclick="if ($('cb-31').checked==true) {$('cb-30').checked=true;}" type="radio" value="0b4d4db131304eac84dc90b289a95db3410a2bfe" /></td>
+<td class="committed_on">01/21/2007 06:50 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>settings are now stored in the database (config_custom.rb no more used) and editable through the application in: Admin -> Settings</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@167">http://redmine.rubyforge.org/svn/trunk@167</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/e1ef9a5c7214404cc916b752a39c2d0f24d61d35" title="Revision e1ef9a5c">e1ef9a5c</a></td>
+<td class="checkbox"><input id="cb-32" name="rev" onclick="$('cbto-33').checked=true;" type="radio" value="e1ef9a5c7214404cc916b752a39c2d0f24d61d35" /></td>
+<td class="checkbox"><input id="cbto-32" name="rev_to" onclick="if ($('cb-32').checked==true) {$('cb-31').checked=true;}" type="radio" value="e1ef9a5c7214404cc916b752a39c2d0f24d61d35" /></td>
+<td class="committed_on">01/03/2007 01:26 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>fixed: no recipient if one of the members of the project has disabled mail notifications</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@145">http://redmine.rubyforge.org/svn/trunk@145</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/96f83cc8f0f032554f771a59da22303cd473b878" title="Revision 96f83cc8">96f83cc8</a></td>
+<td class="checkbox"></td>
+<td class="checkbox"><input id="cbto-33" name="rev_to" onclick="if ($('cb-33').checked==true) {$('cb-32').checked=true;}" type="radio" value="96f83cc8f0f032554f771a59da22303cd473b878" /></td>
+<td class="committed_on">12/05/2006 03:45 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>trunk moved from /trunk/redmine to /trunk</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@67">http://redmine.rubyforge.org/svn/trunk@67</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+</tbody>
+</table>
+<input type="submit" value="View differences" />
+</form>
+
+
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/7cdd88a6ce3632c801223b33e5ccc2b9fc13651e/changes/app/models/mailer.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:43:10 GMT -->
+</html>

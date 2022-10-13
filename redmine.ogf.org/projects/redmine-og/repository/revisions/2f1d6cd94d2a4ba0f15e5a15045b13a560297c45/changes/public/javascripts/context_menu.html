@@ -1,0 +1,549 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/2f1d6cd94d2a4ba0f15e5a15045b13a560297c45/changes/public/javascripts/context_menu.js by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:43:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>/public/javascripts/context_menu.js - Changes - Redmine - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="rsvo5Uvs/OHqzq9AZjxgQ/1mtk/oY58g0kQJMlDTftw="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+  <script src="https://redmine.ogf.org/javascripts/repository_navigation.js?1425381960" type="text/javascript"></script>
+</head>
+<body class="theme-Ogf redmine controller-repositories action-changes">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/redmine-og" method="get">
+        <input name="changesets" type="hidden" value="1" />
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/redmine-og" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=repository" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=repository" class="ancestor">IT</a> » Redmine</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/redmine-og" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/redmine-og" class="dmsf">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/repository" class="repository selected">Repository</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+  
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/statistics" class="icon icon-stats">Statistics</a>
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/changes/public/javascripts/context_menu.js?rev=" id="revision_selector" method="get">  <!-- Branches Dropdown -->
+      | Branch: 
+    <select id="branch" name="branch"><option value=""></option>
+<option value="1.3-stable">1.3-stable</option>
+<option value="devel">devel</option>
+<option value="master">master</option></select>
+  
+  
+  | Revision: 
+  <input id="rev" name="rev" size="8" type="text" value="2f1d6cd94d2a4ba0f15e5a15045b13a560297c45" />
+</form>
+</div>
+
+<h2>
+  <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2f1d6cd94d2a4ba0f15e5a15045b13a560297c45/show">root</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2f1d6cd94d2a4ba0f15e5a15045b13a560297c45/show/public">public</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2f1d6cd94d2a4ba0f15e5a15045b13a560297c45/show/public/javascripts">javascripts</a>
+
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2f1d6cd94d2a4ba0f15e5a15045b13a560297c45/changes/public/javascripts/context_menu.js">context_menu.js</a>
+
+
+@ 2f1d6cd9
+
+
+</h2>
+
+<p>
+
+<p>
+History |
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2f1d6cd94d2a4ba0f15e5a15045b13a560297c45/entry/public/javascripts/context_menu.js">View</a> |
+
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2f1d6cd94d2a4ba0f15e5a15045b13a560297c45/annotate/public/javascripts/context_menu.js">Annotate</a> |
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2f1d6cd94d2a4ba0f15e5a15045b13a560297c45/raw/public/javascripts/context_menu.js">Download</a>
+(7 kB)
+</p>
+
+
+</p>
+
+
+
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/diff/public/javascripts/context_menu.js" method="get">
+<table class="list changesets">
+<thead><tr>
+
+<th>#</th>
+<th></th>
+<th></th>
+<th>Date</th>
+<th>Author</th>
+<th>Comment</th>
+</tr></thead>
+<tbody>
+
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a8f98bb74903954f28c4299f4ea7a7279d9028dd" title="Revision a8f98bb7">a8f98bb7</a></td>
+<td class="checkbox"><input checked="checked" id="cb-1" name="rev" onclick="$('cbto-2').checked=true;" type="radio" value="a8f98bb74903954f28c4299f4ea7a7279d9028dd" /></td>
+<td class="checkbox"></td>
+<td class="committed_on">02/15/2012 08:35 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>remove trailing white-spaces from public/javascripts/context_menu.js</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8890 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/fc7b71b334a458f3192d3f8a851a49a94f4285b4" title="Revision fc7b71b3">fc7b71b3</a></td>
+<td class="checkbox"><input id="cb-2" name="rev" onclick="$('cbto-3').checked=true;" type="radio" value="fc7b71b334a458f3192d3f8a851a49a94f4285b4" /></td>
+<td class="checkbox"><input checked="checked" id="cbto-2" name="rev_to" onclick="if ($('cb-2').checked==true) {$('cb-1').checked=true;}" type="radio" value="fc7b71b334a458f3192d3f8a851a49a94f4285b4" /></td>
+<td class="committed_on">02/15/2012 08:35 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>replace tabs to spaces and fix indents public/javascripts/context_menu.js</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8889 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/daacea11dc2bd7b889b83b2ecc58152188f91953" title="Revision daacea11">daacea11</a></td>
+<td class="checkbox"><input id="cb-3" name="rev" onclick="$('cbto-4').checked=true;" type="radio" value="daacea11dc2bd7b889b83b2ecc58152188f91953" /></td>
+<td class="checkbox"><input id="cbto-3" name="rev_to" onclick="if ($('cb-3').checked==true) {$('cb-2').checked=true;}" type="radio" value="daacea11dc2bd7b889b83b2ecc58152188f91953" /></td>
+<td class="committed_on">02/09/2012 03:25 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Do not hide context menu when clicking on a folder menu item.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8829 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/d3ead6c4d06a1a905669008ff1f83ccdda136162" title="Revision d3ead6c4">d3ead6c4</a></td>
+<td class="checkbox"><input id="cb-4" name="rev" onclick="$('cbto-5').checked=true;" type="radio" value="d3ead6c4d06a1a905669008ff1f83ccdda136162" /></td>
+<td class="checkbox"><input id="cbto-4" name="rev_to" onclick="if ($('cb-4').checked==true) {$('cb-3').checked=true;}" type="radio" value="d3ead6c4d06a1a905669008ff1f83ccdda136162" /></td>
+<td class="committed_on">07/08/2011 05:58 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Fixed: context menu is being submitted twice per right click (#2109).</p>
+
+
+	<p>Contributed by Emilio Carlos da Palma.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@6195 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/340cf8204c21806074051e7500c5f171cae08a59" title="Revision 340cf820">340cf820</a></td>
+<td class="checkbox"><input id="cb-5" name="rev" onclick="$('cbto-6').checked=true;" type="radio" value="340cf8204c21806074051e7500c5f171cae08a59" /></td>
+<td class="checkbox"><input id="cbto-5" name="rev_to" onclick="if ($('cb-5').checked==true) {$('cb-4').checked=true;}" type="radio" value="340cf8204c21806074051e7500c5f171cae08a59" /></td>
+<td class="committed_on">04/11/2011 03:30 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Do not select the row when clicking on an image.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5425 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c58c14cc738f4daf18a58b7ac138219d55bdeb10" title="Revision c58c14cc">c58c14cc</a></td>
+<td class="checkbox"><input id="cb-6" name="rev" onclick="$('cbto-7').checked=true;" type="radio" value="c58c14cc738f4daf18a58b7ac138219d55bdeb10" /></td>
+<td class="checkbox"><input id="cbto-6" name="rev_to" onclick="if ($('cb-6').checked==true) {$('cb-5').checked=true;}" type="radio" value="c58c14cc738f4daf18a58b7ac138219d55bdeb10" /></td>
+<td class="committed_on">03/24/2011 03:21 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds support for Mac metaKey in issues selection (#5148).</p>
+
+
+	<p>Contributed by Simon Courtois.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5217 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ead20ec2e581ff88cd8739d624bba756d12e4496" title="Revision ead20ec2">ead20ec2</a></td>
+<td class="checkbox"><input id="cb-7" name="rev" onclick="$('cbto-8').checked=true;" type="radio" value="ead20ec2e581ff88cd8739d624bba756d12e4496" /></td>
+<td class="checkbox"><input id="cbto-7" name="rev_to" onclick="if ($('cb-7').checked==true) {$('cb-6').checked=true;}" type="radio" value="ead20ec2e581ff88cd8739d624bba756d12e4496" /></td>
+<td class="committed_on">02/24/2011 12:56 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Removes obsolete code from Opera pseudo right click (#7700).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4947 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/3ab981c04c33ebc1a490063d2d626fa669721209" title="Revision 3ab981c0">3ab981c0</a></td>
+<td class="checkbox"><input id="cb-8" name="rev" onclick="$('cbto-9').checked=true;" type="radio" value="3ab981c04c33ebc1a490063d2d626fa669721209" /></td>
+<td class="checkbox"><input id="cbto-8" name="rev_to" onclick="if ($('cb-8').checked==true) {$('cb-7').checked=true;}" type="radio" value="3ab981c04c33ebc1a490063d2d626fa669721209" /></td>
+<td class="committed_on">02/23/2011 11:55 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: Bulk editing menu non-functional in Opera browser (#3132).</p>
+
+
+	<p>Contributed by Claudio Acciaresi.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4935 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/aaee26ae229f1f6cc863094aa58f32c434c98c58" title="Revision aaee26ae">aaee26ae</a></td>
+<td class="checkbox"><input id="cb-9" name="rev" onclick="$('cbto-10').checked=true;" type="radio" value="aaee26ae229f1f6cc863094aa58f32c434c98c58" /></td>
+<td class="checkbox"><input id="cbto-9" name="rev_to" onclick="if ($('cb-9').checked==true) {$('cb-8').checked=true;}" type="radio" value="aaee26ae229f1f6cc863094aa58f32c434c98c58" /></td>
+<td class="committed_on">12/12/2010 11:26 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Use GET instead of POST to retrieve context menu (#6762).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4504 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/69769e1dfde5194edda2b8afafc7bbfc5ece247e" title="Revision 69769e1d">69769e1d</a></td>
+<td class="checkbox"><input id="cb-10" name="rev" onclick="$('cbto-11').checked=true;" type="radio" value="69769e1dfde5194edda2b8afafc7bbfc5ece247e" /></td>
+<td class="checkbox"><input id="cbto-10" name="rev_to" onclick="if ($('cb-10').checked==true) {$('cb-9').checked=true;}" type="radio" value="69769e1dfde5194edda2b8afafc7bbfc5ece247e" /></td>
+<td class="committed_on">03/04/2010 02:09 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Unselect issues when clicking outside of the list.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3544 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/e8bc0b298007fad76fbcaa26bd91faea1ef23c9e" title="Revision e8bc0b29">e8bc0b29</a></td>
+<td class="checkbox"><input id="cb-11" name="rev" onclick="$('cbto-12').checked=true;" type="radio" value="e8bc0b298007fad76fbcaa26bd91faea1ef23c9e" /></td>
+<td class="checkbox"><input id="cbto-11" name="rev_to" onclick="if ($('cb-11').checked==true) {$('cb-10').checked=true;}" type="radio" value="e8bc0b298007fad76fbcaa26bd91faea1ef23c9e" /></td>
+<td class="committed_on">03/04/2010 02:06 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Do not disable text selection in the issue list.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3543 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/bd5fe10c13b0fb15825f767f696e57bb709c1f68" title="Revision bd5fe10c">bd5fe10c</a></td>
+<td class="checkbox"><input id="cb-12" name="rev" onclick="$('cbto-13').checked=true;" type="radio" value="bd5fe10c13b0fb15825f767f696e57bb709c1f68" /></td>
+<td class="checkbox"><input id="cbto-12" name="rev_to" onclick="if ($('cb-12').checked==true) {$('cb-11').checked=true;}" type="radio" value="bd5fe10c13b0fb15825f767f696e57bb709c1f68" /></td>
+<td class="committed_on">03/04/2010 02:02 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds an helper for creating the context menu.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3542 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/73ca9d916146f6b02df0b5928d521b873c4c7fe1" title="Revision 73ca9d91">73ca9d91</a></td>
+<td class="checkbox"><input id="cb-13" name="rev" onclick="$('cbto-14').checked=true;" type="radio" value="73ca9d916146f6b02df0b5928d521b873c4c7fe1" /></td>
+<td class="checkbox"><input id="cbto-13" name="rev_to" onclick="if ($('cb-13').checked==true) {$('cb-12').checked=true;}" type="radio" value="73ca9d916146f6b02df0b5928d521b873c4c7fe1" /></td>
+<td class="committed_on">04/25/2009 04:53 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixes a javascript comment (#3238).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2689 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/d775aee26d1dd4df4f9ebaa2cf7b75bbb3ccd531" title="Revision d775aee2">d775aee2</a></td>
+<td class="checkbox"><input id="cb-14" name="rev" onclick="$('cbto-15').checked=true;" type="radio" value="d775aee26d1dd4df4f9ebaa2cf7b75bbb3ccd531" /></td>
+<td class="checkbox"><input id="cbto-14" name="rev_to" onclick="if ($('cb-14').checked==true) {$('cb-13').checked=true;}" type="radio" value="d775aee26d1dd4df4f9ebaa2cf7b75bbb3ccd531" /></td>
+<td class="committed_on">12/24/2008 08:29 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixes a JS error on context_menu with IE (#2390).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2178 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/e395d3e46dd6caff12abd321f2aa044e05a33152" title="Revision e395d3e4">e395d3e4</a></td>
+<td class="checkbox"><input id="cb-15" name="rev" onclick="$('cbto-16').checked=true;" type="radio" value="e395d3e46dd6caff12abd321f2aa044e05a33152" /></td>
+<td class="checkbox"><input id="cbto-15" name="rev_to" onclick="if ($('cb-15').checked==true) {$('cb-14').checked=true;}" type="radio" value="e395d3e46dd6caff12abd321f2aa044e05a33152" /></td>
+<td class="committed_on">08/25/2008 11:24 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixes context menu with Opera (#1655).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1762">http://redmine.rubyforge.org/svn/trunk@1762</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/954bddbadf9e8a220b087b28f5ef7e9cb43ded77" title="Revision 954bddba">954bddba</a></td>
+<td class="checkbox"><input id="cb-16" name="rev" onclick="$('cbto-17').checked=true;" type="radio" value="954bddbadf9e8a220b087b28f5ef7e9cb43ded77" /></td>
+<td class="checkbox"><input id="cbto-16" name="rev_to" onclick="if ($('cb-16').checked==true) {$('cb-15').checked=true;}" type="radio" value="954bddbadf9e8a220b087b28f5ef7e9cb43ded77" /></td>
+<td class="committed_on">08/25/2008 11:09 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Make the issue list context menu work under Mac OSX Leopard (#1485). Tested with FF3.0.1 and Safari 3.0.4 under OSX 10.5.2.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1761">http://redmine.rubyforge.org/svn/trunk@1761</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/75a5dbd01dd4c57b96dd1fa322bc4d9ec9f865d1" title="Revision 75a5dbd0">75a5dbd0</a></td>
+<td class="checkbox"><input id="cb-17" name="rev" onclick="$('cbto-18').checked=true;" type="radio" value="75a5dbd01dd4c57b96dd1fa322bc4d9ec9f865d1" /></td>
+<td class="checkbox"><input id="cbto-17" name="rev_to" onclick="if ($('cb-17').checked==true) {$('cb-16').checked=true;}" type="radio" value="75a5dbd01dd4c57b96dd1fa322bc4d9ec9f865d1" /></td>
+<td class="committed_on">06/28/2008 07:34 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Upgraded to Prototype 1.6.0.1.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1594">http://redmine.rubyforge.org/svn/trunk@1594</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f6ce427a00650e92f414dc3682e56348d549d7ea" title="Revision f6ce427a">f6ce427a</a></td>
+<td class="checkbox"><input id="cb-18" name="rev" onclick="$('cbto-19').checked=true;" type="radio" value="f6ce427a00650e92f414dc3682e56348d549d7ea" /></td>
+<td class="checkbox"><input id="cbto-18" name="rev_to" onclick="if ($('cb-18').checked==true) {$('cb-17').checked=true;}" type="radio" value="f6ce427a00650e92f414dc3682e56348d549d7ea" /></td>
+<td class="committed_on">04/03/2008 12:38 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Display the context menu above and/or to the left of the click if needed (patch by Mike Duchene, closes #960).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1323">http://redmine.rubyforge.org/svn/trunk@1323</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/4155c97222cea69406060979efca3ebaaed9dcec" title="Revision 4155c972">4155c972</a></td>
+<td class="checkbox"><input id="cb-19" name="rev" onclick="$('cbto-20').checked=true;" type="radio" value="4155c97222cea69406060979efca3ebaaed9dcec" /></td>
+<td class="checkbox"><input id="cbto-19" name="rev_to" onclick="if ($('cb-19').checked==true) {$('cb-18').checked=true;}" type="radio" value="4155c97222cea69406060979efca3ebaaed9dcec" /></td>
+<td class="committed_on">02/10/2008 08:17 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Issue list now supports bulk edit/move/delete (#563, #607). For now, issues from different projects can not be bulk edited/moved/deleted at once.</p>
+
+
+There are 2 ways to select a set of issues on the issue list:
+	<ul>
+	<li>by using checkbox and/or the little pencil that will select/unselect all issues (#567)...</li>
+	</ul></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7eec539222731f5b3fca40d6dbaae8f00f01feba" title="Revision 7eec5392">7eec5392</a></td>
+<td class="checkbox"><input id="cb-20" name="rev" onclick="$('cbto-21').checked=true;" type="radio" value="7eec539222731f5b3fca40d6dbaae8f00f01feba" /></td>
+<td class="checkbox"><input id="cbto-20" name="rev_to" onclick="if ($('cb-20').checked==true) {$('cb-19').checked=true;}" type="radio" value="7eec539222731f5b3fca40d6dbaae8f00f01feba" /></td>
+<td class="committed_on">12/29/2007 05:43 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed r1024: context submenus on the issue list don’t show up with IE6.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1025">http://redmine.rubyforge.org/svn/trunk@1025</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/9a3d743ae57fae6765d6d95c2d46851f4136e105" title="Revision 9a3d743a">9a3d743a</a></td>
+<td class="checkbox"><input id="cb-21" name="rev" onclick="$('cbto-22').checked=true;" type="radio" value="9a3d743ae57fae6765d6d95c2d46851f4136e105" /></td>
+<td class="checkbox"><input id="cbto-21" name="rev_to" onclick="if ($('cb-21').checked==true) {$('cb-20').checked=true;}" type="radio" value="9a3d743ae57fae6765d6d95c2d46851f4136e105" /></td>
+<td class="committed_on">10/28/2007 11:04 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Some slight improvements in AJAX errors handling.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@874">http://redmine.rubyforge.org/svn/trunk@874</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/bb4acc02d06d507424057ea41eebe54fdb224b85" title="Revision bb4acc02">bb4acc02</a></td>
+<td class="checkbox"></td>
+<td class="checkbox"><input id="cbto-22" name="rev_to" onclick="if ($('cb-22').checked==true) {$('cb-21').checked=true;}" type="radio" value="bb4acc02d06d507424057ea41eebe54fdb224b85" /></td>
+<td class="committed_on">10/28/2007 06:55 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Added AJAX based context menu on the project issue list that provide shortcuts for editing, re-assigning, changing the status or the priority, moving or deleting an issue.<br />The context menu shows up when right-clicking an issue (Opera users have to use Ctrl + left-click instead since right-click can't be reassigned for this browser)....</p></td>
+
+</tr>
+
+
+</tbody>
+</table>
+<input type="submit" value="View differences" />
+</form>
+
+
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/2f1d6cd94d2a4ba0f15e5a15045b13a560297c45/changes/public/javascripts/context_menu.js by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:43:05 GMT -->
+</html>
