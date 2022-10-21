@@ -1,0 +1,161 @@
+Access Layer WOrkshop - 14 April 2008 - Morning
+===============================================
+
+* Participants
+  Hiro Kishimoto
+  Mark Morgan
+  Howie Huang
+  Andreas Savva
+  Ellen Stokes
+  Narfi Stefansson
+  Peter Ziu
+  Steven Newhouse
+  Andrew Grimshaw
+
+  Bridge:
+  Costas Kostokalis
+  John Easton
+
+  Minutes by Howie Hwang 
+
+* First session
+
+Andrew gave the stack presentation. What we found very useful is to
+start activities diagram. Use cases will help facilitate other groups.
+Identify a problem and analyze the problem, which helps other groups
+understand it and facilitate the process.
+
+Let us go through the use cases. What should it look like?  What cases
+will drive that? How does use case fit in the existing documents? In
+the second session, we will try to drill down the use cases.
+
+- Mathworks
+	Interactive Batch Parallel on remote cluster.
+	Thinking about launching MPI jobs on laptops and clusters.
+- Application/VM hosting
+- HTC/APC
+- Data Federation
+- J2EE on Grid Engine
+- Financial
+	Time is money. The growing requirement is to do lots of
+	computes on lots of data.  Events need to be analyzed and led
+	to trading decisions.
+- Workflow
+	SLA/QoS
+	Time oriented
+- Reliability aspect when dealing with multiple clusters. When one of
+  clusters fails and goes offline
+- caGrid
+	PDF on wikipage
+	Joes group is the software stack provider for caGrid, 
+the only bio grid funded by US government. The undertaking is 
+Globus. The design template characteristic is to integrate 
+closely related data to answer questions, to track patients 
+over time, to search over multiple organizations, and to mine data.
+	Middle issues and ontology issues
+	Getting access to data, ontology, and security.
+- Engineering Portal. Data
+- Remote instruments
+	Access unique equipment
+
+******************************
+Minutes by Mark Morgan
+
+* Financial Services
+	-- Generally stateless function calls.
+* J2EE
+	-- Abstract communication protocol away from the 
+programming model.
+	-- Access Mechanism
+* Many of the users/developers that UVa encounters are not 
+the sharpest
+  programmers in the world.  They have learned how to use 
+queuing systems.
+* Mathworks
+	- Want to be able to have a user click a button in 
+matlab and suddenly be
+      able to interact with queuing systems, etc.
+	- Need to have backend MPI for Matlab.
+* Finance people want to be able to use grid behind Excel spreadsheet.
+* Usability seems to be the main thing
+	- Secure, easy access to grid resources.
+	- Andrew argues that remote instrumentation falls into 
+this category.
+
+************
+
+Remote Instrumentation on the Grid
+
+* Presentation from Costos
+	- Data comes off of instrument and gets post-processed 
+a number of times.
+		-- Are the intermediate data elements first 
+class?  Is the derivative
+		   data first class?
+			> Usually the data produced by 
+post-processing is the final data.
+	- What grid use are you talking about?
+		-- Single Sign on
+		-- Access to instruments
+	- Attributes of QoS
+		-- Availability, network: throughput/jitter, 
+Application throughput:
+		   Images/second
+		-- What happens if the guarantees are not met?
+			> Some applications will keep going, 
+some will not.
+	- Security
+		-- Claim that strong cryptography for user 
+authentication is strict
+		   requirement.  Is cryptography really important?
+			> Strong authentication is definitely important
+			> Cryptography really depends on the 
+experiment and the
+			  instruments.
+		-- Fine grain access policies -- what do you mean?
+			> Should every operation that you 
+expose have it's own ACL, or is
+			  it more coarse grained then that?
+				^ Typically they want it on a 
+per/operation basis.
+
+***********************
+
+Autotrading (John Easton)
+
+* Automated trading of "stuff"
+	- Millions of events that must be re-acted to.
+	- Have to play withing rules put in place by governments, etc.
+		-- Requires lots of calculations.
+	- Every time that something happens in a financial 
+market, messages are
+	  put out.
+* Can messages be batched up?  Web services aren't 
+particularlly good at doing
+  things fast.
+	- Sounds more like a super-computing problem rather 
+than a grid-computing
+	  problem.
+		-- Well, they do use SOAP, but not traditional 
+WS right now.
+* MPI...load management systems?
+	- Typically is in-house developed.
+* Mostly what gets deployed to the nodes is mathematical libraries.
+* Why use XML at all?
+* What does John believe that grid can bring to this?
+	- A lot of the need is to move away from developing new 
+middleware.
+	- A lot of place are using their own internal, in-house 
+code still because
+	  there wasn't anything for them to buy.
+* Where do you see standardization?
+	- Programming model, scheduling model, etc.
+		-- Scheduling for certain.
+* What about QoS guarantees?
+	- Are there some messages that are less important than otherones?
+		-- It's all about market edge.  You have to be
+		   faster/better than the other guys.  That's what is
+		   important.
+* Memory?
+	- Most will have at least 50GB and 4 to 8 processors.  8-16 cores.
+

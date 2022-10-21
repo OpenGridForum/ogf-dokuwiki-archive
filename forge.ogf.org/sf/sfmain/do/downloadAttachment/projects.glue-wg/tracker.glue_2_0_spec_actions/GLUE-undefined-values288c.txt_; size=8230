@@ -1,0 +1,212 @@
+
+Appendix D : place-holder values for unknown data.
+----
+
+
+Introduction
+---
+
+Whilst people endeavor to provide accurate information, there may be
+situations where specific GLUE values may be assigned place-holder (or
+dummy) values.  These place-holder values carry some additional
+semantic meaning; specifically, that the correct value is currently
+unknown and the presented value should be ignored.  This appendix
+describes a recommended set of place-holder values to use.
+
+GLUE makes no requirement on how much data is published and renderings
+(of GLUE Schema into concrete type, such as LDAP) may allow publishing
+of partial information.  However, there may be situations where a
+value is provided that should not be considered valid.  Two likely
+scenarios are discussed below, although others may exist.
+
+To avoid confusion, these values have be chosen so they are unlikely
+to occur under normal operation, whilst still being valid values.
+Wherever possible, best-practice has been followed.  It is not a
+requirement to use place-holder values in general or to use these
+values in particular; however, if place-holder values are used, using
+these values increases the likelihood that others will understand that
+the value are to be ignored.
+
+
+Use-cases:
+---
+
+Scenario 1. a static value has no good default value and has not been
+configured for a particular site.
+
+Some provisions for GLUE Schema provide templates.  These templates
+may contain static values that have no good default value; for
+example, a value might require some detailed knowledge of a site.
+Whilst there may be the expectation that value be configured it is
+possible that this did not happen, so exposing the application's
+default configuration.
+
+
+Scenario 2. information provider is unable to obtain a dynamic value.
+
+A dynamic value is provided by an information provider by querying the
+underlying grid resources.  This query will use a number of ancillary
+resources (e.g., DNS, network hardware) that might fail; the grid
+services might also fail.  If the system collecting the information
+requires a value, a place-holder will be required.
+
+
+Place-holder values:
+---
+
+This section describes a number of values that can be represented
+within a given address space (e.g., UTF-8, Integers, FQDNs, IPv4
+address space).  Each of the different types are introduced along with
+the proposed value and a brief discussion on the rational and any
+other considerations.
+
+1. Simple strings (ASCII/UTF-8) should use "UNDEFINEDVALUE".
+
+  Upper-case letters make it easier to spot and a single word avoids
+  any white-space issues.
+
+  This is a default option for strings that have no widely-known
+  structure.  If a value is of a more restrictive sub-type
+  (e.g. FQDNs, FQANs), then the rules for more restrictive form should
+  be used.
+
+
+2. Fully qualified domain names: should use a hostname ending either
+	"example.org" or "example.com" for scenario 1, or "invalid"
+	for scenario 2.
+
+  RFC 2606 reserves the ".invalid" Top-Level-Domain (TLD) as always
+  invalid and clearly so.  For dynamic information a value of
+  "unknown.invalid." may be used.  If an alternative is used, it
+  should use the TLD ".invalid".
+
+  RFC 2606 also defines the ".example" TLD and the two second-level
+  domains: "example.org" and "example.com".  These domains have the
+  advantage of ending with a recognisable TLD, so are more immediately
+  recognisable as a DNS name.  Default configuration should use DNS
+  names that end ".example.com" or ".example.org"
+
+
+3. IPv4 addr: should use 192.0.2.250
+
+  There are several portions of IPv4 addresses that should not appear
+  on a network, but none that are reserved for a non-existent address.
+  Using an arbitrary address leads to the risk of side-effects.
+
+  The best option is an IP address from the 192.0.2.0/24 subnet.  This
+  subnet is defined in RFC 3330 as "TEST-NET" for use in documentation
+  and example code.  Although any IPv4 address from 192.0.2.0/24 may
+  be used, the recommended address above should use for consistency.
+
+
+5. IPv6 addr: should use 2001:DB8::FFFF
+
+  There is no documented undefined IPv6 address.  RFC 3849 reserves the
+  address prefix 2001:DB8::/32 for documentation.  For consistency,
+  the address SHOULD BE the one noted above.
+
+
+6. Counting/Natural numbers: should use 0
+
+  Counting- (also known as Natural-) numbers exclude the number zero,
+  so information provider may use this value to indicate an undefined
+  value.
+
+  Some counting-number metrics include 0 as a valid value.  If so, the
+  metric should be considered an Integer and zero not be used.
+
+
+7. Integers: should use MAXINT (maximum value representable in the
+             domain).
+		For int32 this is 2,147,483,647
+		 "  uint32 this is 4,294,967,295
+		 "  int64 this is 9,223,372,036,854,775,807
+		 "  uint64 this is 18,446,744,073,709,551,615
+
+  For non-negative integers, all numbers expressible within the
+  encoding (int32/uint32/etc...) are valid so there is no safe choice.
+  Although any value may be chosen, perhaps the value least likely to
+  be encountered in any given domain is that domain's maximum value.
+
+  If an unsigned integer is encoded as a signed integer, it is
+  possible to use negative numbers safely.  However, these numbers
+  will be unrepresentable if the number is stored as an unsigned
+  integer.
+
+  For values that might be a positive, zero or a negative integer, all
+  numbers expressible within the encoding (unsigned int) are valid so
+  there is no safe choice.  For consistency, the MAXINT value should
+  be used.
+
+  Information providers should not attempt to conveying further
+  semantic distinction, for example by using more than one "undefined"
+  number.
+
+
+8. Filenames: should be "UNDEFINEDPATH".
+
+  As with the simple string, a single upper-case word is recommended.
+
+
+9. Uniform Resource Identifier (URI): schema-specific
+
+  RFC 3986 defines URIs as a "federated and extensible naming system."
+  All URIs start with a schema-name part and no schema-name has been
+  reserved for undefined or example values.
+
+  For any given URI schema ("http", for example), it may be possible
+  to define an undefined value within that name-space.  If a GLUE
+  value has only one valid schema, the undefined value should be taken
+  from that schema.  If several schemata are possible, one should be
+  chosen from the available options, which should be the most commonly
+  used.
+
+  For schemata that include a FQDN (e.g., a reference to an Internet
+  host), an undefined value should be derived by using an undefined
+  FQDN in an otherwise valid URI.  See above for details on undefined
+  FQDNs.  Examples of such schemata include: http, httpg and mailto.
+
+  For other schemata, some element of the naming system should
+  indicate that the value is undefined.  This is subject to further
+  work.
+
+
+10. X509 Distinguished Names: should include a RDN of CN=UNDEFINEDUSER
+
+  Rational:
+
+  X509 uses a X500 namespace, represented as several RDNs concatenated
+  by commas.  The final RDN is usually a single common name (CN).
+
+  It is possible for more than one CN to be present, allowing
+  inclusion of additional semantic meaning.  However, this is outwith
+  the scope of the document.
+
+
+
+Definition of words:
+---
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+document are used deliberately and take their meaning from RFC 2119.
+A brief summary is given here.
+
+
+1. MUST (or "REQUIRED" or "SHALL") means that no deviation is allowed
+   from conforming software.
+
+2. MUST NOT (or "SHALL NOT") means complete prohibition of this
+   behaviour with conforming software.
+
+3. SHOULD (or "RECOMMENDED") means that there may be reasons why
+   conforming software does not to adopt this behaviour, but all the
+   effects of an alternative behaviour must be understood and
+   considered before choosing a different course.
+
+4. SHOULD NOT (or "NOT RECOMMENDED") means that there may be reasons
+   why conforming software adopts this behaviour, but all the
+   effects of an alternative behaviour must be understood and
+   considered before choosing a different course.
+
+5. MAY (or "OPTIONAL") means an item is completely optional.

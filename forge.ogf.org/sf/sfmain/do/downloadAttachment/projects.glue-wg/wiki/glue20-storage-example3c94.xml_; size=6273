@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+   Example rendering of the GLUE 20. Storage Schema draft V. 2 
+   Please visit http://forge.ogf.org for more information on GLUE
+   
+   F.Ehm, 2/2008   
+-->
+
+
+
+<!-- Model of a Storage Service in GLUE 2.0-->
+<StorageService>
+	<ID>tbn18.nikhef.nl</ID>
+	<Name>NIKHEF Grid Storage Service</Name>
+	<Type></Type>
+	<ImplementationName>DPM</ImplementationName>
+	<ImplementationVersion>1.6.7-1.slc4</ImplementationVersion>
+	<Architecture>multidisk</Architecture>
+	<TotalOnlineSize></TotalOnlineSize>
+	<UsedOnlineSize></UsedOnlineSize>
+
+	<!-- IDs of the StorageShare it keeps -->
+	<StorageShare>atlas.replica.tbn18.nikhef.nl</StorageShare>
+	<StorageShare>esr.tbn18.nikhef.nl</StorageShare>
+	<StorageShare>vledut.tbn18.nikhef.nl</StorageShare>
+
+	<!-- The Endpoints of the StorageService -->
+		<Endpoint>
+			<ID>srm_v1.tbn18.nikhef.nl</ID>
+			<URL>httpg://tbn18.nikhef.nl<URL>
+			<Type>srm_v1</Type> 
+			<QualityLevel></QualityLevel>	<!-- ? -->
+			<HeathState>OK</HeathState>
+			<ServingState>production</ServingState>
+			<StorageAccessPolicy>
+				<Scheme></Scheme>
+				<Rule>VO:alice</Rule>
+				<Rule>VO:esr</Rule>
+			</StorageAccessPolicy>
+			<!-- The IDs of the StorageShare this Endpoint can give access to -->
+			<StorageShare>atlas.replica.tbn18.nikhef.nl</StorageShare>
+			<StorageShare>esr.tbn18.nikhef.nl</StorageShare>
+			<StorageShare>vledut.tbn18.nikhef.nl</StorageShare>
+		</Endpoint>
+		<Endpoint>
+			<ID>srm_v2.tbn18.nikhef.nl</ID>
+			<URL>httpg://tbn18.nikhef.nl<URL>
+			<Type>srm_v2</Type>
+			<QualityLevel></QualityLevel>
+			<HeathState>OK</HeathState>
+			<ServingState>production</ServingState>
+			<StorageAccessPolicy>
+				<Scheme></Scheme>
+				<Rule>VO:alice</Rule>
+				<Rule>VO:esr</Rule>
+			</StorageAccessPolicy>
+			<!-- The IDs of the StorageShare this Endpoint can give access to -->
+			<StorageShare>atlas.replica.tbn18.nikhef.nl</StorageShare>
+			<StorageShare>esr.tbn18.nikhef.nl</StorageShare>
+			<StorageShare>vledut.tbn18.nikhef.nl</StorageShare>
+		</Endpoint>
+	<!-- IDs of the StorageEnvironment it offers -->
+	<StorageShareEnvironment></StorageShareEnvironment>
+	<!-- The AccessProtocol of this Service -->
+	<StorageAccessProtocol>
+		<Type>rfio</Type>
+		<Version>1.0.0</Version>
+		<Port>5001</Port>
+		<Streams>20</Streams>
+		<SupportedSecurity>GSI</SupportedSecurity>
+	</StorageAccessProtocol>
+	<StorageAccessProtocol>
+		<Type>gsftp</Type>
+		<Version>1.0.0</Version>
+		<Port>2811</Port>
+		<Streams>20</Streams>
+		<SupportedSecurity>RFIO</SupportedSecurity>
+	</StorageAccessProtocol>
+</StorageService>
+
+
+
+
+<!-- StorageEnvironment -->
+<StorageEnvironment>
+	<ID>custodial.online</ID>
+	<Type>custodial<Type>
+	<AccessLatency>online</AccessLatency>
+	<RetentionPolicy></RetentionPolicy>
+</StorageEnvironment>
+<!-- Replica online (Tape0Disk1) StorageEnvironment -->
+<StorageEnvironment>
+	<ID>permanent.replica.online</ID>
+	<Type>permanent<Type>
+	<AccessLatency>online</AccessLatency>
+	<RetentionPolicy>replica</RetentionPolicy>
+</StorageEnvironment>
+<!-- Tape1Disk1 StorageEnvironment -->
+<StorageEnvironment>
+	<ID>custodial.nearline.replica</ID>
+	<Type>custodial<Type>
+	<AccessLatency>nearline</AccessLatency>
+	<RetentionPolicy>replica</RetentionPolicy>
+</StorageEnvironment>
+
+
+
+
+<!-- The Storage Share 1 -->
+<StorageShare>
+	<LocalID>atlas.replica.tbn18.nikhef.nl</LocalID>
+	<Path>/dpm/nikhef.nl/home/atlas</Path>
+	<ExpirationMode>Never</ExpirationMode>
+	<Tag></Tag>
+	<!--   No file policy for this share.  
+	-->
+	<StorageState>
+		<FreeSpace>30000GB</FreeSpace>
+		<UsedSpace>20000GB</UsedSpace>
+		<TotalSpace>50000GB</TotalSpace>
+		<Status>UP</Status>
+	</StorageState>
+	<StorageAccessPolicy>
+		<Scheme></Scheme>
+		<Rule>VOMS:/atlas/Role=production</Rule>
+		<Name></Name>
+		<Path>/dpm/nikhef.nl/home/atlas</Path>
+		<Tag>atlas:ATLASGRPEGAMMA</Tag>				<!-- SRM SpaceToken Description -->
+	</StorageAccessPolicy>
+	<StorageAccessPolicy>
+		<Scheme></Scheme>
+		<Rule>VOMS:/atlas/Role=production</Rule>
+		<Name></Name>
+		<Path>/dpm/nikhef.nl/home/atlas</Path>
+		<Tag>atlas:ATLASDATADISK</Tag>              <!-- SRM SpaceToken Description -->
+	</StorageAccessPolicy>
+	<StorageAccessPolicy>
+		<Scheme></Scheme>
+		<Rule>VOMS:/atlas/Role=production</Rule>
+		<Name></Name>
+		<Path>/dpm/nikhef.nl/home/atlas</Path>
+		<Tag>atlas:ATLASGRPMUON</Tag>              <!-- SRM SpaceToken Description -->
+	</StorageAccessPolicy>
+	<StorageEndpoint>srm_v2.tbn18.nikhef.nl</StorageEndpoint>
+	<StorageEndpoint>srm_v1.tbn18.nikhef.nl</StorageEndpoint>
+	<StorageShareEnvironment>permanent.replica.online</StorageShareEnvironment>
+</StorageShare>
+
+
+
+<!-- The Storage Share 2 -->
+<StorageShare>
+	<LocalID>esr.online.tbn18.nikhef.nl</LocalID>
+	<Path>/dpm/nikhef.nl/home/esr</Path>
+	<ExpirationMode>Wever</ExpirationMode>
+	<UserTag></UserTag>
+    <!--  No file policy for this share.
+	-->
+	<StorageState>
+		<FreeSpace>161GB</FreeSpace>
+		<UsedSpace>39GB</UsedSpace>
+		<TotalSpace>200GB</TotalSpace>
+		<Status>UP</Status>
+	</StorageState>
+	<StorageAccessPolicy>
+		<Scheme></Scheme>
+		<Rule>VO:esr</Rule>
+		<Rule>VO:dteam</Rule>
+	</StorageAccessPolicy>
+	<StorageEndpoint>srm_v2.tbn18.nikhef.nl</StorageEndpoint>
+	<StorageEndpoint>srm_v1.tbn18.nikhef.nl</StorageEndpoint>
+	<StorageShareEnvironment>custodial.online</StorageShareEnvironment>
+</StorageShare>
+
+<!-- The Storage Share 3 -->
+<StorageShare>
+	<LocalID>vledut.nearline.tbn18.nikhef.nl</LocalID>
+	<Path>/dpm/nikhef.nl/home/vledut</Path>
+	<ExpirationMode>Never</ExpirationMode>
+	<UserTag></UserTag>
+	<StorageSharePolicy>
+		<MinFileSize>0.5GB</MinFileSize>
+		<MaxFileSize>700GB</MaxFileSize>
+		<MaxNumFiles>1000</MaxNumFiles>
+		<MaxPinDuration></MaxPinDuration>
+	</StorageSharePolicy>
+	<StorageState>
+		<FreeSpace>19000</FreeSpace>
+		<UsedSpace>10000</UsedSpace>
+		<TotalSpace>2000000</TotalSpace>
+		<Status>UP</Status>
+	</StorageState>
+	<StorageAccessPolicy>
+		<Scheme></Scheme>
+		<Rule>VO:vledut</Rule>
+	</StorageAccessPolicy>
+	<StorageEndpoint>srm_v2.tbn18.nikhef.nl</StorageEndpoint>
+	<StorageShareEnvironment>custodial.nearline.replica</StorageShareEnvironment>
+</StorageShare>
+
+

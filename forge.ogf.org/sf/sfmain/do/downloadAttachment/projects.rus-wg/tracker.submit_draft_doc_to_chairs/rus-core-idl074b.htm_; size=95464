@@ -1,0 +1,2101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="">
+<!-- Mirrored from forge.ogf.org/sf/sfmain/do/downloadAttachment/projects.rus-wg/tracker.submit_draft_doc_to_chairs/artf6015?id=atch4504 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:13:57 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head><title>OGSA Resource Usage Service - Core IDL Specification Draft 1</title><style type="text/css">
+code           { font-family: monospace; }
+
+div.constraint,
+div.issue,
+div.note,
+div.notice     { margin-left: 2em; }
+
+ol.enumar      { list-style-type: decimal; }
+ol.enumla      { list-style-type: lower-alpha; }
+ol.enumlr      { list-style-type: lower-roman; }
+ol.enumua      { list-style-type: upper-alpha; }
+ol.enumur      { list-style-type: upper-roman; }
+
+
+div.exampleInner pre { margin-left: 1em;
+                       margin-top: 0em; margin-bottom: 0em}
+div.exampleOuter {border: 4px double gray;
+                  margin: 0em; padding: 0em}
+div.exampleInner { background-color: #d5dee3;
+                   border-top-width: 4px;
+                   border-top-style: double;
+                   border-top-color: #d3d3d3;
+                   border-bottom-width: 4px;
+                   border-bottom-style: double;
+                   border-bottom-color: #d3d3d3;
+                   padding: 4px; margin: 0em }
+div.exampleWrapper { margin: 4px }
+div.exampleHeader { font-weight: bold;
+                    margin: 4px}
+</style><link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/base.css"/></head><body><div class="head">
+<h1><a name="title" id="title"/>OGSA Resource Usage Service - Core IDL Specification Draft 1</h1>
+<h2><a name="w3c-doctype" id="w3c-doctype"/>GWD-R TDB TDB TBD</h2><dl><dt>This version:</dt><dd>$Id: rus-core-idl.xml 118 2007-09-18 07:15:26Z noname $</dd><dt>Editor:</dt><dd>Gilbert Netzer <a href="http://www.w3.org/2002/xmlspec/xhtml/1.13/%7B@href%7D">&lt;noname@pdc.kth.se&gt;</a></dd></dl><p class="copyright">Copyright © Open Grid Forum (TBD). All Rights Reserved.</p></div><hr/><div>
+<h2><a name="abstract" id="abstract"/>Abstract</h2><p>To be written</p></div><div>
+<h2><a name="status" id="status"/>Status of this Document</h2><p><strong>This document is an editors' copy that has
+        no official standing.</strong></p><p>
+	<em>
+	  This document is currently a snapshot of a work-in-progress,
+	  parts of it are out-of-date and information may be missing.
+	</em>
+      </p><p>
+	<em>
+	  SUBJECT TO CHANGE WITHOUT NOTICE! USE ONLY AS BASE FOR DISCUSSIONS!
+	</em>
+      </p><p>
+	This document is a draft proposal submitted to the RUS working 
+	group.
+	The document does not represent any view of the RUS-WG or the
+	Open Grid Forum. 
+      </p><p>
+	This document defines the Resource Usage Service Core 
+	Specification.
+	Distribution is unlimited.
+      </p></div><div class="toc">
+<h2><a name="contents" id="contents"/>Table of Contents</h2><p class="toc">1 <a href="#d1e53">Introduction</a><br/>
+    1.1 <a href="#d1e64">Outline for this Document</a><br/>
+    1.2 <a href="#d1e69">Scope</a><br/>
+    1.3 <a href="#d1e80">Non-Goals</a><br/>
+2 <a href="#d1e94">Notational Conventions</a><br/>
+    2.1 <a href="#d1e97">Terms and Abbreviations</a><br/>
+    2.2 <a href="#d1e122">Keywords</a><br/>
+    2.3 <a href="#d1e160">Interface Definition Language</a><br/>
+    2.4 <a href="#d1e169">XML Schema</a><br/>
+    2.5 <a href="#d1e176">XML Namespaces</a><br/>
+3 <a href="#d1e235">Overview</a><br/>
+    3.1 <a href="#d1e249">Usage Scenario</a><br/>
+    3.2 <a href="#d1e262">Architecture</a><br/>
+    3.3 <a href="#d1e275">Message Size Issues</a><br/>
+    3.4 <a href="#d1e286">Concurrency</a><br/>
+    3.5 <a href="#ExtFw">Extension Framework</a><br/>
+4 <a href="#d1e362">Security Considerations</a><br/>
+    4.1 <a href="#d1e369">Privacy</a><br/>
+    4.2 <a href="#d1e379">Integrity</a><br/>
+    4.3 <a href="#d1e386">Authentication</a><br/>
+    4.4 <a href="#d1e391">Authorization</a><br/>
+    4.5 <a href="#d1e400">Input Data Checking</a><br/>
+    4.6 <a href="#d1e405">Auditing</a><br/>
+5 <a href="#d1e439">Faults and Failures</a><br/>
+    5.1 <a href="#d1e449">Service-side Fault Handling</a><br/>
+    5.2 <a href="#d1e503">RUS Fault Types</a><br/>
+        5.2.1 <a href="#RUSBaseFault">rus:BaseFault</a><br/>
+        5.2.2 <a href="#RUSUnspecifiedFault">rus:UnspecifiedFault</a><br/>
+        5.2.3 <a href="#RUSInvalidRecordFault">rus:InvalidRecordFault</a><br/>
+        5.2.4 <a href="#RUSDuplicateRecordFault">rus:DuplicateRecordFault</a><br/>
+        5.2.5 <a href="#RUSNotAuthorizedFault">rus:NotAuthorizedFault</a><br/>
+        5.2.6 <a href="#RUSProcessingFault">rus:ProcessingFault</a><br/>
+        5.2.7 <a href="#RUSInvalidSearchTermFault">rus:InvalidSearchTerm</a><br/>
+        5.2.8 <a href="#RUSUnsupportedDialectFault">rus:UnsupportedDialectFault</a><br/>
+        5.2.9 <a href="#RUSIllegalRequestFault">rus:IllegalRequestFault</a><br/>
+        5.2.10 <a href="#RUSNotFoundFault">rus:NotFoundFault</a><br/>
+6 <a href="#d1e611">Data Type Definitions</a><br/>
+    6.1 <a href="#RecordHistory">Record History Information</a><br/>
+        6.1.1 <a href="#RUSRecordHistoryOperationType">rus:RecordHistoryOperationType</a><br/>
+        6.1.2 <a href="#RUSRecordHistory">rus:RecordHistoryType</a><br/>
+    6.2 <a href="#RUSOperationResult">rus:OperationResult</a><br/>
+        6.2.1 <a href="#RUSRecordIdListType">rus:RecordIdListType</a><br/>
+        6.2.2 <a href="#RUSFaultListType">rus:FaultListType</a><br/>
+7 <a href="#d1e888">Name Definitions</a><br/>
+    7.1 <a href="#URIOpNames">Abstract Operation Names</a><br/>
+    7.2 <a href="#URIQueryDial">Query Dialect Designators</a><br/>
+8 <a href="#d1e1012">Service Interface Definition</a><br/>
+    8.1 <a href="#d1e1022">Configuration</a><br/>
+        8.1.1 <a href="#d1e1027">RUS::listMandatoryUsageRecordElements</a><br/>
+        8.1.2 <a href="#d1e1143">RUS::listSupportedDialects</a><br/>
+    8.2 <a href="#d1e1287">Insertion</a><br/>
+        8.2.1 <a href="#d1e1290">RUS::insertUsageRecords</a><br/>
+    8.3 <a href="#d1e1432">Extraction</a><br/>
+        8.3.1 <a href="#d1e1435">RUS::extractUsageRecords</a><br/>
+        8.3.2 <a href="#d1e1717">RUS::extractRecordHistory</a><br/>
+    8.4 <a href="#d1e1865">Modification</a><br/>
+        8.4.1 <a href="#d1e1884">RUS::modifyUsageRecords</a><br/>
+    8.5 <a href="#d1e2087">Deletion</a><br/>
+        8.5.1 <a href="#d1e2103">RUS::deleteUsageRecords</a><br/>
+9 <a href="#d1e2255">Author Information</a><br/>
+10 <a href="#d1e2260">Contributors</a><br/>
+11 <a href="#d1e2265">Glossary</a><br/>
+12 <a href="#d1e2270">Intellectual Property Statement</a><br/>
+13 <a href="#d1e2277">Disclaimer</a><br/>
+14 <a href="#d1e2282">Full Copyright Notice</a><br/>
+15 <a href="#d1e2292">References</a><br/>
+    15.1 <a href="#d1e2295">Normative References</a><br/>
+    15.2 <a href="#d1e2370">Non-normative References</a><br/>
+</p>
+<h3><a name="appendices" id="appendices"/>Appendix</h3><p class="toc">A <a href="#d1e2389">XML Schema</a><br/>
+</p></div><hr/><div class="body"><div class="div1">
+<h2><a name="d1e53" id="d1e53"/>1 Introduction</h2><p>
+	In large distributed systems like Grids resources will be used by a
+	large number of users. 
+	For various purposes such as accounting, billing, monitoring and 
+	others this usage is usually metered at the resources. 
+	For this information to be useable by the systems that
+	consume it, it has to be transferred. 
+	The Open Grid Services Architecture recognized this need and 
+	specified the Resource Usage Service as one of the core use-cases 
+	<a href="#ogsauc">[OGSA Use Cases]</a>.
+      </p><p>
+	In the context of the OGSA, the Resource Usage Service aims to be 
+	a mediator between the producers of usage metering information, 
+	typically located at resource level and the consumers of the same
+	information typically higher level services or end-users at 
+	different locations. 
+	This mediation process typically involves the storage
+	of usage information so that consumers and producers do not have
+	to coordinate their activities in order to exchange data. 
+	Storage	of information additionally allows for collection of usage 
+	information from different producers.
+      </p><p>
+	The intention of this specification is to describe the basic 
+	operations of the Resource Usage Service in an abstract way 
+	independent of the used transport technology.
+      </p><div class="div2">
+<h3><a name="d1e64" id="d1e64"/>1.1 Outline for this Document</h3><p>
+	  The remainder of this document is organized as follows.
+	  First the scope for this specification is described. 
+	  Then an overview of the typical usage scenario that is 
+	  considered by this specification is given along with the 
+	  general architecture and design constraints of the presented 
+	  solutions.
+	  This is followed by a summary of the security aspects that should
+	  be considered by implementations of this specification and an 
+	  overview over the failures and fault handling in the context of 
+	  the Resource Usage Service.
+	  Then a detailed specification of the port type and data 
+	  structures of the Resource Usage Service is given along with 
+	  constraints that apply for the inputs and outputs of each defined
+	  operation.
+	</p></div><div class="div2">
+<h3><a name="d1e69" id="d1e69"/>1.2 Scope</h3><p>
+	  The scope of this document is to specify the interface for the
+	  Resource Usage Service core functionality in a way that is
+	  independent of the used transport technology.
+	</p><p>
+	  The Resource Usage Service is defined as a OGSA compliant 
+	  Web Service interface. 
+	  The main intention of this specification is to define a set of 
+	  abstract operations that such a Service should provide in order 
+	  to enable interoperability between produces, consumers and 
+	  storage of usage information.
+	</p><p>
+	  The Resource Usage Service interface is modelled around the
+	  methaphor of a trusted storage of usage information and as such
+	  only covers operations to upload, update, delete and retrieve 
+	  usage information.
+	</p><p>
+	  Since collections of usage information typically contain a 
+	  significant number of records, this specifcation specifcally 
+	  addresses operations that manipulate or retrieve large numbers of
+	  usage records at a time. 
+	</p></div><div class="div2">
+<h3><a name="d1e80" id="d1e80"/>1.3 Non-Goals</h3><p>
+	  It is not the goal of this specification to define a concrete
+	  Web Service interface, but rather a technology independent 
+	  interface.
+	  For concrete renderings of this sepcification in the context of a
+	  specific transport technology, the reader is referred to the 
+	  accompanying redering documents.
+	</p><p>
+	  It is also not a goal of this specification to define the 
+	  behaviour of the Resource Usage Service. 
+	  Instead this specification gives guidance of the inteded purpose 
+	  of the defined operations.
+	  Implementors are resposible for defining meaningful behaviour in 
+	  their applications.
+	</p><p>
+	  The only format for usage information considered in this
+	  specification is the Usage Record Format defined in [GFD-98].
+	  No other formats for representing usage records are covered by 
+	  this specification.
+	</p><p>
+	  Is is also not the goal of this specification to define 
+	  operations for configuring the Resource Usage Service including 
+	  definition of security policies and such.
+	</p><p>
+	  It is also not a goal of this specification to define a 
+	  notification service that would allow client to be informed of 
+	  changes of the information stored in the RUS.
+	</p></div></div><div class="div1">
+<h2><a name="d1e94" id="d1e94"/>2 Notational Conventions</h2><div class="div2">
+<h3><a name="d1e97" id="d1e97"/>2.1 Terms and Abbreviations</h3><p>
+	  In the remainder of this document the 
+	  <em>Resource Usage Service</em> may also
+	  be referenced in short as <em>RUS</em>.
+	</p><p>
+	  Entities wanting to push or upload usage information to the RUS
+	  are collectively referred to as <em>producers</em>. 
+	  Entities that want to pull or download usage information from 
+	  the from the RUS are collectively referred to as 
+	  <em>consumers</em>. 
+	  If the distinction between producer and consumer does not 
+	  matter both are referred to as <em>clients</em>. 
+	  The RUS implementations itself is referred to as 
+	  <em>service</em>.
+	</p></div><div class="div2">
+<h3><a name="d1e122" id="d1e122"/>2.2 Keywords</h3><p>
+	  The key words
+	  <strong>"MUST"</strong>,
+	  <strong>"MUST NOT"</strong>,
+	  <strong>"REQUIRED"</strong>,
+	  <strong>"SHALL"</strong>,
+	  <strong>"SHALL NOT"</strong>,
+	  <strong>"SHOULD"</strong>,
+	  <strong>"SHOULD NOT"</strong>,
+	  <strong>"RECOMMENDED"</strong>,
+	  <strong>"MAY"</strong> and
+	  <strong>"OPTIONAL"</strong>
+	  in this document are to be interpreted as described in RFC 2119 
+	  <a href="#RFC2119">[RFC 2119]</a>.
+	</p></div><div class="div2">
+<h3><a name="d1e160" id="d1e160"/>2.3 Interface Definition Language</h3><p>
+	  This specification uses the OMG Interface Definition Language 
+	  (IDL)
+	  <a href="#idl">[IDL]</a> to define the service interface.
+	</p><p>
+	  Although the specification tries to adhere to the IDL syntax, 
+	  some freedom was taken in refering to the types that are 
+	  specified in separate XMLSchema documents.
+	  This was done to provide a more exact definition for the type 
+	  format that is common to all renderings. 
+	</p></div><div class="div2">
+<h3><a name="d1e169" id="d1e169"/>2.4 XML Schema</h3><p>
+	  This specification uses the XML Schema <a href="#schema">[XML Schema]</a>
+	  language to define the format of any XML documents and datatypes.
+	</p></div><div class="div2">
+<h3><a name="d1e176" id="d1e176"/>2.5 XML Namespaces</h3><p>
+	  This specification uses the following namespace prefix throught
+	  the text. 
+	  The binding to actual URIs is listed in the following table.
+
+	  <table><caption>Prefixes and Namespaces used in this specification
+	    </caption><thead><tr><td>Prefix</td><td>Namespace URI</td><td>Specification</td></tr></thead><tbody><tr><td>ds</td><td>http://www.w3.org/2000/09/xmldsig#</td></tr><tr><td>rus</td><td>http://schemas.ogf.org/rus/2007/09/core/types</td></tr><tr><td>xs</td><td>http://www.w3.org/2001/XMLSchema</td></tr><tr><td>xsi</td><td>http://www.w3.org/2001/XMLSchema-instance</td></tr><tr><td>urf</td><td>http://schema.ogf.org/urf/2003/09/urf</td></tr><tr><td>wsdl</td><td>http://schemas.xmlsoap.org/wsdl/</td></tr><tr><td>wsen</td><td>http://schemas.xmlsoap.org/ws/2004/09/enumeration</td></tr><tr><td>wsbf</td><td>http://docs.oasis-open.org/wsrf/fault</td></tr></tbody></table>
+	</p></div></div><div class="div1">
+<h2><a name="d1e235" id="d1e235"/>3 Overview</h2><p>
+	The typical use case for a Resource Usage Service as described in 
+	the OGSA use case document <a href="#ogsauc">[OGSA Use Cases]</a> is as a mediator 
+	between	produces of usage information, typically resources, and 
+	consumers of usage information, such as accounting and billing 
+	systems or end-users.
+	In this use case the RUS provides persistent storage for usage
+	records so that this information can be stored and collected at a 
+	common known point. 
+	The RUS therefore frees the producers from the task of storing 
+	usage data and it frees the consumers from the task of collecting 
+	the usage data from several producers.
+      </p><table border="1" summary="Editorial note: Gilbert Netzer"><tr><td width="50%" valign="top" align="left"><b>Editorial note: Gilbert Netzer</b></td><td width="50%" valign="top" align="right">2007-09-04</td></tr><tr><td valign="top" align="left" colspan="2">This needs rework!</td></tr></table><div class="div2">
+<h3><a name="d1e249" id="d1e249"/>3.1 Usage Scenario</h3><p>
+	  The following typical usage scenario was considered for this 
+	  specification. This scenario is to be understood as general 
+	  guidance an does not mean that the RUS cannot be used in other 
+	  scenarios. 
+	  Wherever possible the specifications tries to consider 
+	  alternative scenarios.
+	  This usage scenario is given as a non-normative guideline. 
+	</p><p>
+	  In the typical scenario producers, like metering components at 
+	  resource level, push or upload usage records to the RUS. This is
+	  typically done in batches to amortize the one-time cost of 
+	  sending a request and enhance performance. 
+	  The process either might be triggered periodically or by some 
+	  threshold mechanism. 
+	  The exact time and frequency of uploads is uncritical to the 
+	  operation of the RUS.
+	</p><p>
+	  The RUS will recieve the usage records and store them in a 
+	  persistent storage for later retrieval by consumers. 
+	  It will also keep a history of operations performed on each usage
+	  record for auditing purposes.
+	</p><p>
+	  Consumers would pull or download usage record information from 
+	  the RUS. 
+	  Typically this would be triggered periodically or by some
+	  event like a user request and the request would contain a filter
+	  to narrow the selection of records to a set of interest for the 
+	  consumer (e.g. all the usage records of a given interval in time 
+	  and user). 
+	  The RUS will then return the requested usage records to the
+	  consumer either in one message or in smaller chunks.
+	</p><p>
+	  To prevent the RUS from overflowing, external clients will scrub 
+	  the RUS and remove old usage records from its persistent storage.
+	  For instance an accounting system could delete usage records that
+	  are already processed and accounted for. 
+	  Other clients could also remove usage records that exceeded a 
+	  certain age, perhaps also keeping them on more permant storage.
+	</p></div><div class="div2">
+<h3><a name="d1e262" id="d1e262"/>3.2 Architecture</h3><p>
+	  To implement the RUS in the above outlined scenario, the service 
+	  is modelled as trusted storage for usage record information. 
+	  As data format for the usage information the Usage Record Format 
+	  specified in <a href="#urf">[URF]</a> is chosen.
+	</p><p>
+	  The RUS exposes this storage as a singe web service through which
+	  clients can request create, delete, update and read type 
+	  operations.
+	</p><p>
+	  Since the information stored in a RUS is of potential value for 
+	  the users and or resources concerned by the usage records (e.g. 
+	  the usage record may indicate a certain consumption of a resource
+	  which leads to a payment transaction) it is important that the 
+	  RUS keeps information about the origin and modifications 
+	  performed on the usage record data in order to allow for later 
+	  inspection and conflict resolution. 
+	  For this purpose the RUS maintains a record history on each 
+	  stored usage record. 
+	  This history is also exposed through the web service interface.
+	</p><p>
+	  Furthermore the RUS exposes information of the local constraints
+	  that information in the storage has to fulfill so that clients 
+	  can decide if they want to interact with a particular service or
+	  choose a more suitable one.
+	</p></div><div class="div2">
+<h3><a name="d1e275" id="d1e275"/>3.3 Message Size Issues</h3><p>
+	  In the RUS a single usage record is used to describe a single 
+	  job.
+	  This leads to a large amount (possible millions) of usage records
+	  being processed by a RUS and reasonable operations can change or
+	  return significant amount of usage records. 
+	  Therefore the interface is designed with features to allow for 
+	  the easy processing of such operations. 
+	  In particular the following measures were taken:
+	</p><p>
+	  Many usage records can be uploaded in one operation to the RUS. 
+	  The upper limit is given by the ability of interacting client 
+	  and  service to handle messages of the requested size. 
+	  The client is in full control of the size of the request. 
+	  The service can however use a fault to indicate that it could not
+	  process the message because of resource constraints.
+	</p><p>
+	  Modify and delete method use query languages (e.g. XPath and 
+	  XQuery) to identify the set of usage records to process which 
+	  allows an arbitray number of usage records to be processed in one
+	  request.
+	  Again the service can indicate via a fault that it was not able
+	  to process the request.
+	</p><p>
+	  Clients that request download of usage records cannot know the
+	  amount of records that will be returned. 
+	  Therefore a negotiation protocol is used to ensure that message 
+	  size dowa not exceed the limits of both service and client. 
+	  A small number of usage records can be directly embedded into the
+	  read response. 
+	  Any exceeding usage records can be downloaded with separate 
+	  request via an enumeration protocol (e.g. WS-Enumeration) outside
+	  of the scope of this specification.
+	</p></div><div class="div2">
+<h3><a name="d1e286" id="d1e286"/>3.4 Concurrency</h3><p>
+	  The specified interface allows for simulatneous access by many
+	  clients to the same information, which naturally generates some
+	  concurrent data-access. 
+	  Since the information stored by a RUS is potentially used for
+	  accounting and billing purposes, it is important that the stored
+	  information is not corrupted by such concurrent access.
+	  Therefore implementations <strong>SHOULD</strong> carefully 
+	  consider the concurrency issues faced and take appropriate 
+	  measures to prevent information corruption.
+	</p><p>
+	  At a minimal level, RUS implementations <strong>SHOULD</strong>
+	  guarantee that requests are treated atomically.
+	  If more advanced mechanisms are required implementations
+	  <strong>MAY</strong> use mechanisms like WS-AtomicTransaction
+	  or any other suitable protocol.
+	</p></div><div class="div2">
+<h3><a name="ExtFw" id="ExtFw"/>3.5 Extension Framework</h3><p>
+	  Most methods and datastructures contain 
+	  <code>xs:any</code> extension points to allow for implementation
+	  specific extensions or further development of the specification.
+	  These extension points <strong>MAY</strong> be used by
+	  implementations or other specifications to add well-formed XML 
+	  <a href="#xml">[XML]</a> data at the defined locations.
+	  All such extensions <strong>MUST</strong> use namespace 
+	  qualified elements.
+	  The namespace URI used by these extensions 
+	  <strong>MUST NOT</strong> start with the prefix 
+	  <code>http://schemas.ogf.org/rus/</code> which is reserved for 
+	  the OGF OGSA RUS working group.
+	</p><p>
+	  Above that any query expressions use the <code>xs:any</code> type
+	  and a URI to idenitify the query dialect used. 
+	  Here again the used namespace and query designator URIs
+	  <strong>MUST NOT</strong> start with the reserved prefix
+	  <code>http://schemas.ogf.org/rus/</code>.
+	</p><p>
+	  Other specifications of the OGSA RUS working group 
+	  <strong>MAY</strong> introduce new elements and URIs with the
+	  <code>http://schemas.ogf.org/rus/</code> prefix.
+	</p><p>
+	  Implementations that do not recognize a specific extension
+	  <strong>SHOULD</strong> ignore it.
+	</p><p>
+	  Any extensions made to this specification 
+	  <strong>MUST NOT</strong> contradict the semantics of the 
+	  parent and/or owner.
+	</p><table border="1" summary="Editorial note: Gilbert Netzer"><tr><td width="50%" valign="top" align="left"><b>Editorial note: Gilbert Netzer</b></td><td width="50%" valign="top" align="right">2007-09-07</td></tr><tr><td valign="top" align="left" colspan="2">
+	    This is a new feature, however it should be mostly transparent.
+	  </td></tr></table></div></div><div class="div1">
+<h2><a name="d1e362" id="d1e362"/>4 Security Considerations</h2><p>
+	The usage information stored in a RUS does not only contain private
+	information, it might also be the basis for billing transactions 
+	which even might incurr monetary transactions. 
+	Therefore security is of utmost importance for any RUS 
+	implementation. 
+	Any RUS implementation must take appropriate steps to protect the 
+	stored data against fraud, theft, malicious use or other uninteded 
+	actions.
+      </p><p>
+	Because of the general nature of this specification it is not 
+	appropriate to normatively specify the security measures that 
+	need to be implemented by a RUS. 
+	However this specification informally discusses security issues 
+	that need to be addresses and suggests possible solutions.
+      </p><div class="div2">
+<h3><a name="d1e369" id="d1e369"/>4.1 Privacy</h3><p>
+	  The usage records exposed by a RUS contain information about the
+	  consumtion of resource by users which by nature contains private
+	  data such as the users identity and other sensitive information.
+	  It is therefore important that a RUS takes steps to maintain the
+	  privacy of the user and resources that have stored information
+	  in the RUS.
+	</p><p>
+	  Privacy issues may be solved by implemention suitable access
+	  control mechanisms and specifying policies to ensure that private
+	  data may only be accessed by authorized entities.
+	</p><div class="note"><p class="prefix"><b>Note:</b></p><p>
+	    Data privacy issues may also be regulated by applicable law!
+	  </p></div></div><div class="div2">
+<h3><a name="d1e379" id="d1e379"/>4.2 Integrity</h3><p>
+	  Usage information may be used by other services like accounting 
+	  systems to initiate billing transactions which eventually may 
+	  lead to monetray transactions. 
+	  Therefore the correctness and integrity of the usage records must
+	  be protected by the RUS. 
+	  This applies to the information stored in a single record as well
+	  (i.e. by manipulating the contents of a usage record) as the 
+	  collection as a whole (i.e. by inserting or removing whole usage 
+	  records).
+	</p><p>
+	  Since the RUS is only a storage for the information it has no
+	  means of actually verifying the contents of the usage records
+	  beyond syntactic correctness. 
+	  The only way to establish trust in the correctness of a given
+	  usage record is therefore via access control and auditing
+	  measures to make the origin of the stored data traceable.
+	</p></div><div class="div2">
+<h3><a name="d1e386" id="d1e386"/>4.3 Authentication</h3><p>
+	  For a RUS to be able to decide upon the validity of a request it
+	  is necessary to establish the identity of the requesting client.
+	  In the other direction it is important for the client to 
+	  establish the identity of the service to decide if it actually 
+	  wants to interact with this service.
+	  Furthermore the service needs to keep track of the identity of
+	  a client in order to be able store audit information.
+	  For this mutual authentication of sufficient strenght must be 
+	  provided. 
+	  As an example mutual TLS or signed messages using WS-Security 
+	  could provide such guarantees.
+	  It is however out of scope for this specification to mandate 
+	  specific methods of authorization, instead this is deferred to 
+	  the rendering specifications.
+	</p></div><div class="div2">
+<h3><a name="d1e391" id="d1e391"/>4.4 Authorization</h3><p>
+	  To guarantee privacy and integrity of the data authorization 
+	  policies on the requests have to be enforced by the RUS. 
+	  Althought no specific authorization mechanism is mandated by this
+	  specification good authorization is the cornerstone to 
+	  maintaining security in the context of RUS. 
+	  For access control role-based models can be advantageously used 
+	  by a RUS implementation by allowing the same client to obtain 
+	  different levels of priviledge (e.g. the same client could act as
+	  a regular user and at another time as a resource owner).
+	</p><p>
+	  Access control should be enforced on the record level. 
+	  Furthermore decisions should also be based on the content of the 
+	  usage record or the input data. 
+	  For example it might be perfectly legit for a user to look at the
+	  usage records for jobs submitted by her but she might not have 
+	  access to usage records for jobs submitted by others.
+	  In the same sense a resource A may upload usage records for jobs
+	  run by it but may not upload usage records for jobs run by 
+	  resource B.
+	</p><p>
+	  Access control decision should also take the input data for 
+	  queries into account. 
+	  This is especially important since read, update and
+	  delete operations use query languages (XPath, XQuery or similar)
+	  to specify the record to operate on.
+	</p></div><div class="div2">
+<h3><a name="d1e400" id="d1e400"/>4.5 Input Data Checking</h3><p>
+	  Some operations of the RUS (read, update and delete) allow the 
+	  client to specify a search term in the terms of a general query 
+	  language such as XPath or XQuery. 
+	  These languages potentially allow execution of arbitraty 
+	  functions thus providing possibility for serious security 
+	  breaches via injection attacks. 
+	  RUS implementations should therefore check all input data for 
+	  any suspicious or illegal content and deny access if such 
+	  attemts are detected.
+	</p></div><div class="div2">
+<h3><a name="d1e405" id="d1e405"/>4.6 Auditing</h3><div class="note"><p class="prefix"><b>Note:</b></p><p>
+	    The data stored in a Resource Usage Service are potentially 
+	    used for accounting and billing purposes. 
+	    Therefore it is important that the origin of any data stored 
+	    inside a Resource Usage Service is traceable to the entitiy 
+	    that uploaded or modified this data in the RUS. 
+	    This allows service consumers to verify the authenticity of 
+	    the presented usage data and thus gain trust in its 
+	    correctness.
+	    It also allows conflict resolution by a third party by 
+	    providing necessary evidence of modifications.
+	  </p></div><p>
+	  Any Resource Usage Service <strong>MUST</strong>
+	  keep an audit record of any creation, modification or deletion 
+	  of any usage record stored by it. 
+	  Furthermore the Resource Usage Service <strong>MUST</strong>
+	  be able to present this audit trail when queried by an authorized
+	  client. 
+	  In this context clients that are allowed to read a specific
+	  usage record <strong>SHOULD</strong> also be granted access to
+	  the corresponding audit trail. 
+	  However, implentations  <strong>MAY</strong> deny access to the
+	  audit trail for privacy or other reasons.
+	</p><p>
+	  For each audited access (insert, modify, delete), the RUS
+	  <strong>MUST</strong> record the type of the operation, 
+	  the identity of the requestor, the time of the request, 
+	  the affected usage records and information to revert any changes
+	  made by the request.
+	</p><p>
+	  The audit trail <strong>MUST</strong> be available during the 
+	  time the corresponding usage record is stored in the RUS 
+	  instance. 
+	  After a usage record has been deleted from the RUS 
+	  instance, the audit trail of this record <strong>MAY</strong> 
+	  also be deleted. 
+	  However, RUS instances are encouraged to keep audit trails 
+	  available after deletion of the corresponing usage record to 
+	  provide evicence of the deletion.
+	</p></div></div><div class="div1">
+<h2><a name="d1e439" id="d1e439"/>5 Faults and Failures</h2><p>
+	It is not possible in the scope of this document to normatively 
+	specify a reporting mechanism for faults and failures. 
+	Instead this section will non-normatively describe the types of 
+	faults and failures that can arise and indicate which information 
+	should be transported to the clients. 
+	The normative definition of the exact mechanism and syntax for 
+	transporting this information is left to the 
+	<em>Profile Renderings</em> specifications.
+      </p><p>
+	During processing of an operation in a RUS server faults and 
+	failures can arise. 
+	It is important that enough information is transported to the 
+	client so that the effect of the fault can be deduced by the client
+	and eventual corrective action be taken.
+      </p><div class="div2">
+<h3><a name="d1e449" id="d1e449"/>5.1 Service-side Fault Handling</h3><p>
+	  RUS operations may in general modify the state of the data 
+	  (usage records and record history information)
+	  stored by the service. 
+	  If a fault condition arises during the processing of a request it
+	  is important that the service data are left in a well-defined 
+	  state.
+	  Any operation may change a substantial number of usage records.
+	  Therefore the service <strong>MAY</strong> choose any of the
+	  following strategies in handling fault conditions:
+	  <ol class="enumar"><li><p>Abort the whole operation</p><p>
+		If the service decides to completely abort the operation, 
+		it <strong>MUST</strong> undo all changes caused by the 
+		operation to the usage record data stored by the service. 
+		The only exception is that the service 
+		<strong>MAY</strong> store audit information about the 
+		fault and the possible changes caused by the operation 
+		which were rejected.
+		If such changes are stored in the audit trail, they 
+		<strong>MUST NOT</strong> be presented as undo 
+		information.
+	      </p></li><li><p>Abort only parts of the operation</p><p>
+		A service <strong>MAY</strong> also decide to abort only
+		part of the operation that cannot be completed succesfully.
+		In this case the service <strong>MUST</strong> decide on
+		a per usage record basis if it wants to abort the operation
+		or proceed. 
+		Usage records <strong>MUST</strong> either be fully 
+		processed or any changes to them <strong>MUST</strong> 
+		be undone. 
+		Any successfully processed records <strong>MUST</strong>
+		be reported back to the client.
+		Not processed records, or records which were reverted to 
+		their original state, <strong>SHOULD</strong> be reported
+		back to the client.
+		Such reporting <strong>MUST</strong> be done by including
+		the relevant information in the 
+		<code>rus:OperationResult</code> element.
+	      </p></li></ol>
+	</p></div><div class="div2">
+<h3><a name="d1e503" id="d1e503"/>5.2 RUS Fault Types</h3><p>
+	  This section describes the fault types that may be used to
+	  report fault and failure conditions to a client as well as the
+	  associated fault and failure conditions.
+	</p><div class="div3">
+<h4><a name="RUSBaseFault" id="RUSBaseFault"/>5.2.1 rus:BaseFault</h4><p>
+	    This abstract fault type is extended by any concrete fault type
+	    that is reported by a compliant RUS. 
+	    It <strong>MUST NOT</strong> be returned by a compliant RUS.
+	    It <strong>SHOULD</strong> contain the following information:
+	    <ul><li><p>A qualified name identifying the type of fault.</p></li><li><p>
+		  One or several text messages describing the cause of the 
+		  fault.
+		</p></li><li><p>
+		  An optional list of underlying faults that caused this
+		  fault.
+		</p></li><li><p>
+		  An optional <code>rus:RecordIdList</code> specifying 
+		  which records were not processed because of this fault.
+		</p></li></ul>
+	  </p></div><div class="div3">
+<h4><a name="RUSUnspecifiedFault" id="RUSUnspecifiedFault"/>5.2.2 rus:UnspecifiedFault</h4><p>
+	    If a RUS cannot determine the exact reason of a fault or does
+	    not want to publish the reason to the client (e.g. to prevent
+	    information leakage), it <strong>MAY</strong> return a 
+	    <code>rus:UnspecifiedFault</code>. 
+	  </p></div><div class="div3">
+<h4><a name="RUSInvalidRecordFault" id="RUSInvalidRecordFault"/>5.2.3 rus:InvalidRecordFault</h4><p>
+	    This fault is raised if a presented <code>UsageRecord</code> is
+	    malformed or does not contain the mandatory elements required 
+	    by the RUS instance. 
+	  </p></div><div class="div3">
+<h4><a name="RUSDuplicateRecordFault" id="RUSDuplicateRecordFault"/>5.2.4 rus:DuplicateRecordFault</h4><p>
+	    This fault is raised if a client tries to insert a 
+	    <code>UsageRecord</code> with a <code>recordId</code> that is
+	    already used by another <code>UsageRecord</code> in the RUS 
+	    instance.
+	  </p></div><div class="div3">
+<h4><a name="RUSNotAuthorizedFault" id="RUSNotAuthorizedFault"/>5.2.5 rus:NotAuthorizedFault</h4><p>
+	    This fault is raised if the client is not authorized to 
+	    executed the requested operation. 
+	    It can also be raised to indicate a partial fault if the 
+	    client does not have permission on some of the records in the 
+	    request.
+	  </p><div class="note"><p class="prefix"><b>Note:</b></p><p>
+	      Implementations should carefully consider the consequences of
+	      partial execution in the presence of this fault since it may
+	      provide attackers with a covert channel to extract 
+	      information.
+	    </p></div></div><div class="div3">
+<h4><a name="RUSProcessingFault" id="RUSProcessingFault"/>5.2.6 rus:ProcessingFault</h4><p>
+	    This fault should be raised by the RUS if any internal fault
+	    prevented the operation from continuing. 
+	  </p></div><div class="div3">
+<h4><a name="RUSInvalidSearchTermFault" id="RUSInvalidSearchTermFault"/>5.2.7 rus:InvalidSearchTerm</h4><p>
+	    This fault is raised if the RUS detects a search term 
+	    (filter expression) that either does not comply to the
+	    respective specification or does select a invalid element, 
+	    like a part of a usage record or violates other semantic or
+	    syntactic constraints.
+	  </p></div><div class="div3">
+<h4><a name="RUSUnsupportedDialectFault" id="RUSUnsupportedDialectFault"/>5.2.8 rus:UnsupportedDialectFault</h4><p>
+	    This fault signals that a RUS does not understand the specified
+	    filter dialect.
+	    It <strong>SHOULD</strong> contain a list of supported 
+	    filter dialects.
+	  </p></div><div class="div3">
+<h4><a name="RUSIllegalRequestFault" id="RUSIllegalRequestFault"/>5.2.9 rus:IllegalRequestFault</h4><p>
+	    This fault is raised if a request would result in an 
+	    inconsistent state of the data stored in the RUS.
+	    This may result from trying to modify read-only elements of a
+	    usage record or of removing mandatory elements or of adding 
+	    illegal content to a usage record.
+	  </p></div><div class="div3">
+<h4><a name="RUSNotFoundFault" id="RUSNotFoundFault"/>5.2.10 rus:NotFoundFault</h4><p>
+	    This fault signals that information for a given 
+	    <code>urf:recordId</code> could not be found.
+	  </p></div></div></div><div class="div1">
+<h2><a name="d1e611" id="d1e611"/>6 Data Type Definitions</h2><p>
+	The following section defines data types used by several operations
+	of the service interface.
+      </p><div class="div2">
+<h3><a name="RecordHistory" id="RecordHistory"/>6.1 Record History Information</h3><p>
+	  One of the main responsibilities of a Resource Usage Service is 
+	  to keep track of the change history of the Usage Records that it
+	  manages.
+	  The history of a record is exposed to a client via the 
+	  <code>rus:RecordHistory</code> element.
+	</p><div class="div3">
+<h4><a name="RUSRecordHistoryOperationType" id="RUSRecordHistoryOperationType"/>6.1.1 rus:RecordHistoryOperationType</h4><p>
+	    For each operation in the record history an element of the 
+	    following type <strong>MUST</strong> be present:
+	    <div class="exampleInner"><pre>&lt;xsd:complexType name="RecordHistoryOperationType"&gt;
+  &lt;xsd:sequence&gt;
+    &lt;xsd:element name="OperationName" 
+                 type="xsd:anyURI" 
+                 minOccurs="1" /&gt;
+    &lt;xsd:element name="TimeStamp"
+                 type="xsd:dateTime"
+		 minOccurs="1" /&gt;
+    &lt;xsd:element ref="ds:KeyInfo" /&gt;
+    &lt;xsd:any namespace="##other"
+             minOccurs="0"
+	     maxOccurs="unbounded"
+	     processContents="lax" /&gt;
+  &lt;/xsd:sequence&gt;
+&lt;/xsd:complexType&gt;
+
+&lt;xs:element name="RecordHistoryOperation"
+	    type="RecordHistoryOperationType" /&gt;</pre></div>
+      
+	    The elements of the RecordHistoryOperationType are further 
+	    described as follows:
+	    <ul><li><p>
+		  <code>/rus:OperationName</code>
+		</p><p>
+		  A URI describing the type of operation that has been 
+		  performed on the usage record. 
+		  The URIs defined in  <a href="#URIOpNames"><b>7.1 Abstract Operation Names</b></a> 
+		  <strong>MUST</strong> be used to refer to the 
+		  operations defined in this specification.
+		  Implementations <strong>MAY</strong> use other URIs to 
+		  refer to operations not cover by this specification. 
+		  For interoperability implementations 
+		  <strong>SHOULD</strong> use the URIs in this 
+		  specification even for operations not described herein 
+		  if the have the same effects on the usage record as one 
+		  of the specified operations (i.e. if a implementation 
+		  provides a non-standard delete operation, it should 
+		  reference this using the URI for the delete operation).
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>This element <strong>MUST</strong> be present.</p></li><li><p><code>/rus:TimeStamp</code></p><p>
+		  This element specifies the time that the operation was 
+		  requested or perfomed on the usage record.
+		</p><p>This element <strong>MUST</strong> be present.</p></li><li><p><code>/ds:KeyInfo</code></p><p>
+		  This element contains the X.509 subject name of the 
+		  requestor of this operation.
+		</p><p>This element <strong>MUST</strong> be present.</p></li><li><p><code>/rus:Before</code></p><p>
+		  This element contains the usage record data before the 
+		  operation was performed on the usage record.
+		</p><p>
+		  This element <strong>SHOULD</strong> be present for 
+		  delete and modify operations.
+		</p></li><li><p><code>/rus:After</code></p><p>
+		  This element contains the usage record data after the 
+		  operation was performed on the usage record.
+		</p><p>
+		  This element <strong>SHOULD</strong> be present for 
+		  create and modify operations.
+		</p></li><li><p><code>/{xs:any}</code></p><p>
+		  This extension point allows implementations to place any 
+		  other history information they see fit into the record 
+		  history.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  Any number of such extensions <strong>MAY</strong> be 
+		  present.
+		</p></li></ul>
+	  </p></div><div class="div3">
+<h4><a name="RUSRecordHistory" id="RUSRecordHistory"/>6.1.2 rus:RecordHistoryType</h4><p>
+	    This history information <strong>MUST</strong> be presented 
+	    in the following format:
+	    <div class="exampleInner"><pre>&lt;xsd:complexType name="RecordHistoryType"&gt;
+  &lt;xsd:sequence&gt;
+    &lt;xsd:element ref="RecordHistoryOperation"
+                 minOccurs="0" 
+                 maxOccurs="unbounded" /&gt;
+  &lt;xsd:sequence&gt;
+&lt;/xsd:complexType&gt;
+
+&lt;xs:element name="RecordHistory" 
+            type="RecordHistoryType" /&gt;</pre></div>
+	    The components of the <code>rus:RecordHistory</code> are 
+	    further described as follows:
+	    <ul><li><p><code>/rus:RecordHistoryOperation</code></p><p>
+		  For each operation recorded in the record history one 
+		  child element must be present. 
+		  These elements <strong>MUST</strong> be sorted in the 
+		  order in which the operations were performed on the usage
+		  record stating with the oldest operations.
+		</p><p>
+		  Any number of such elements <strong>MAY</strong> 
+		  be present.
+		</p></li></ul>
+	  </p></div></div><div class="div2">
+<h3><a name="RUSOperationResult" id="RUSOperationResult"/>6.2 rus:OperationResult</h3><p>
+	  This element is used by many RUS Operations (insert, delete, 
+	  modify and extract) to return the success and failure status of 
+	  the operation as well as the set of records that where processed
+	  if applicable.
+	</p><p>
+	  It <strong>MUST</strong> conform to the following XML Schema
+	  element definition:
+	  <div class="exampleInner"><pre>&lt;xs:complexType name="OperationResultType"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="success" minOccurs="1" type="xs:boolean" /&gt;
+    &lt;xs:element name="faults"
+		type="rus:FaultListType"
+		minOccurs="0" 
+		maxOccurs="1" /&gt;
+    &lt;xs:element name="faultFreeRecords"
+		type="rus:RecordIdListType"
+		minOccurs="0"
+		maxOccurs="1" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+  
+&lt;xs:element name="OperationResult" 
+            type="OperationResultType" /&gt;</pre></div>
+	  The elements are further described as follows:
+	  <ul><li><p>
+		<code>/rus:success</code>
+	      </p><p>
+		This element indicates overall success. 
+		If it is set to true the opearation 
+		<strong>MUST NOT</strong> have caused any faults or
+		failures.
+		If it is set to false the operation 
+		<strong>MUST NOT</strong> have completed without any
+		faults or failures.
+	      </p><p>
+		This element <strong>MUST</strong> be present exactly
+		once.
+	      </p></li><li><p>
+		<code>/rus:faults</code>
+	      </p><p>
+		This element is used to convey more detailed fault 
+		information to the client in case of partial faults or
+		failures.
+		See <a href="#RUSFaultListType"><b>6.2.2 rus:FaultListType</b></a> for the definiton
+		of the content of this element.
+	      </p><p>
+		This element <strong>MAY</strong> occur once.
+	      </p></li><li><p>
+		<code>/rus:faultFreeRecords</code>
+	      </p><p>
+		This element is used to convey the 
+		<code>/ur:UsageRecord/ur:RecordIdentity/@ur:recordId</code>
+		attribute of the usage records that has been successfully 
+		processed.
+		See <a href="#RUSRecordIdListType"><b>6.2.1 rus:RecordIdListType</b></a> for the 
+		definition of the content of this element.
+		Implementations <strong>MAY</strong> omit this 
+		information, however if present it 
+		<strong>SHOULD</strong> be accurate and complete.
+		This elements <strong>SHOULD</strong> only be present
+		if the information cannot be easily determined by other
+		parts of the returned data, i.e. for an extract operation 
+		it is generally not necessary to include this information.
+	      </p><p>
+		This element <strong>MAY</strong> occur once.
+	      </p></li></ul>
+	</p><div class="div3">
+<h4><a name="RUSRecordIdListType" id="RUSRecordIdListType"/>6.2.1 rus:RecordIdListType</h4><p>
+	    For transporting a list of 
+	    <code>/ur:UsageRecord/ur:RecordIdentity/@ur:recordId</code>
+	    to identify a list of usage records the following 
+	    <code>rus:RecordIdListType</code> is used:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="RecordIdListType"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="recordId"
+		type="xs:token"
+		minOccurs="0"
+		maxOccurs="unbounded" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;</pre></div>
+	    The components of the element are further described as follows:
+	    <ul><li><p>
+		  <code>/rus:recordId</code>
+		</p><p>
+		  This item is used to refer to a specific usage record
+		  via the unique
+		  <code>/ur:UsageRecord/ur:RecordIdentity/@ur:recordId</code>
+		  attribute.
+		</p><p>
+		  This element <strong>MAY</strong> occur any number of 
+		  times.
+		</p></li></ul>
+	  </p></div><div class="div3">
+<h4><a name="RUSFaultListType" id="RUSFaultListType"/>6.2.2 rus:FaultListType</h4><p>
+	    For transporting information about multiple partial faults the
+	    following <code>rus:FaultListType</code> type is used:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="FaultListType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:any namespace="##other"
+	    minOccurs="0"
+	    maxOccurs="unbounded"
+	    processContents="lax" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;</pre></div>
+	    The components of the type are further described as follows:
+	    <ul><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  This element contains a single fault that is reported.
+		  This is not an extension point for implementation 
+		  specific data, rather it is a placeholder for the fault 
+		  type that is defined in the profile rendering 
+		  specifications.
+		  This element <strong>MUST</strong> contain one of the
+		  fault type element that are defined by a profile 
+		  rendering  specification. 
+		  Further qualification is made by the respective profile
+		  rendering specifications of the OGSA RUS working group.
+		</p><p>
+		  This element <strong>MAY</strong> occur any number of
+		  times.
+		</p></li></ul>
+	  </p></div></div></div><div class="div1">
+<h2><a name="d1e888" id="d1e888"/>7 Name Definitions</h2><p>
+	This specification uses URIs embedded in its datatypes and 
+	method parameters.
+      </p><div class="div2">
+<h3><a name="URIOpNames" id="URIOpNames"/>7.1 Abstract Operation Names</h3><p>
+	  For the purpose of identifying the abstract operations in this
+	  specification, the following URIs <strong>MUST</strong> be 
+	  used:
+	  <ul><li><p>
+		<code>http://schemas.ogf.org/rus/2007/09/core/insertUsageRecords</code>
+	      </p><p>
+		This URI denotes the abstract 
+		<code>RUS:insertUsageRecords</code> operation.
+	      </p></li><li><p>
+		<code>http://schemas.ogf.org/rus/2007/09/core/extractUsageRecords</code>
+	      </p><p>
+		This URI denotes the abstract 
+		<code>RUS:extractUsageRecords</code> operation.
+	      </p></li><li><p>
+		<code>http://schemas.ogf.org/rus/2007/09/core/extractUsageRecordHistory</code>
+	      </p><p>
+		This URI denotes the abstract 
+		<code>RUS:extractUsageRecordHistory</code> operation.
+	      </p></li><li><p>
+		<code>http://schemas.ogf.org/rus/2007/09/core/modifyUsageRecords</code>
+	      </p><p>
+		This URI denotes the abstract 
+		<code>RUS:modifyUsageRecords</code> operation.
+	      </p></li><li><p>
+		<code>http://schemas.ogf.org/rus/2007/09/core/deleteUsageRecords</code>
+	      </p><p>
+		This URI denotes the abstract 
+		<code>RUS:deleteUsageRecords</code> operation.
+	      </p></li></ul>
+	</p></div><div class="div2">
+<h3><a name="URIQueryDial" id="URIQueryDial"/>7.2 Query Dialect Designators</h3><p>
+	  The following URIs <strong>MUST</strong> be used to refer
+	  to the specified query languages in the operations specified
+	  by this specification.
+	</p><ul><li><p>
+	      <code>http://www.w3.org/TR/1999/REC-xpath-19991116</code>
+	    </p><p>
+	      The filter is an XPath <a href="#xpath">[XPath]</a> predicate 
+	      expression with the following context:
+	      <ul><li><p>
+		    Context Node: 
+		    Any UsageRecord considered by the
+		    service implementation for the operation.
+		  </p></li><li><p>
+		    Context Position: 1
+		  </p></li><li><p>
+		    Context Size: 1
+		  </p></li><li><p>
+		    Variable Bindings: None
+		  </p></li><li><p>
+		    Function Libraries: Core Function Library 
+		    <a href="#xpath">[XPath]</a>
+		  </p></li><li><p>
+		    Namespace Declarations: 
+		    The in-scope namespaces property 
+		    <a href="#infoset">[Infoset]</a> of the enclosing element.
+		  </p></li></ul>
+	    </p></li><li><p>
+	      <code>http://www.w3.org/TR/2006/WD-xqupdate-20060711</code>
+	    </p><p>
+	      The expression is a XQuery Update Facilities compliant
+	      expression <a href="#xqupdate">[XQuery Update]</a>.
+	    </p></li></ul></div></div><div class="div1">
+<h2><a name="d1e1012" id="d1e1012"/>8 Service Interface Definition</h2><p>
+	A service compliant with this description 
+	<strong>MUST</strong> implement the following
+	conceptual interface. 
+      </p><div class="exampleInner"><pre>module RUS {
+    interface RUS {
+        rus:MandatoryElement[] listMandatoryUsageRecordElements();
+	rus:ListSupportedDialectsResponse listSupportedDialects();
+
+	rus:OperationResult insertUsageRecords(in ur:UsageRecords record);
+
+	rus:ExtractUsageRecordsResult extractUsageRecords(in rus:ExtractUsageRecordsRequest);
+	rus:RecordHistory extractRecordHistory(in string urId);
+	
+	rus:OperationResult modifyUsageRecords(in rus:XQuery updateExpr);
+
+        rus:OperationResult deleteUsageRecords(in rus:XPath filter);
+    };
+};</pre></div><div class="div2">
+<h3><a name="d1e1022" id="d1e1022"/>8.1 Configuration</h3><p>
+	  Operations in this group are intended to provide clients with
+	  additional information about the specific requirements and
+	  capabilities of a RUS service.
+	</p><div class="div3">
+<h4><a name="d1e1027" id="d1e1027"/>8.1.1 RUS::listMandatoryUsageRecordElements</h4><p>
+	    The <code>RUS::listMandatoryUsageRecordElements</code> 
+	    operation is used to retrieve information about the elements 
+	    that each <code>UsageRecord</code> in the RUS instance 
+	    <strong>MUST</strong> have. 
+	    Only elements defined in the 
+	    Usage Record - Format Recommendation <a href="#urf">[URF]</a>
+	    <strong>MAY</strong> be declared mandatory.
+	  </p><p>
+	    The operation <strong>MUST</strong> conform to the following 
+	    IDL fragment.
+	    <div class="exampleInner"><pre>module RUS {
+    interface RUS {
+    ...
+        rus:MandatoryElement[] listMandatoryUsageRecordElements();
+    ...
+    };
+};</pre></div>
+	  </p><p>
+	    The operation is invoked by sending a 
+	    <code>rus:ListMandatoryUsageRecordElements</code> message 
+	    confoming to the following schema fragment to the service:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="ListMandatoryElementsRequestType"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:any namespace="##other"
+	    minOccurs="0"
+	    maxOccurs="unbounded"
+	    processContents="lax" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+
+&lt;xs:element name="ListMandatoryElementsRequest"
+            type="ListMandatoryElementsRequestType" /&gt;</pre></div>
+	    The components of the message are further described as follows:
+	    <ul><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  Provides an extension point for implementation specific 
+		  data.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  This element <strong>MAY</strong> occur any number of 
+		  times.
+		</p></li></ul>
+	  </p><p>
+	    The operation <strong>MUST</strong> return a 
+	    <code>rus:ListMandatoryElementsResponse</code>
+	    message conforming to the following Schema fragment:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="ListMandatoryElementsReponseType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="MandatoryElement" 
+		type="xs:QName"
+		minOccurs="0"
+		maxOccurs="unbounded" /&gt;
+    &lt;xs:any namespace="##other"
+	    minOccurs="0"
+	    maxOccurs="unbounded"
+	    processContents="lax" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+
+&lt;xs:element name="ListMandatoryElementsResponse" 
+	    type="ListMandatoryElementsResponseType" /&gt;</pre></div>
+	    The components of the message are futher described as follows:
+	    <ul><li><p><code>/rus:MandatoryElement</code></p><p>
+		  Each element that is mandated by the RUS has to be 
+		  represented by its qualified name as contents of this 
+		  element. 
+		</p><p>
+		  An unlimited number of these elements 
+		  <strong>MAY</strong> be present.
+		</p></li><li><p><code>/{xs:any}</code></p><p>
+		  This element servers as and extension point for 
+		  implementation specific local constraints.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  Any number of extension elements <strong>MAY</strong> 
+		  be present.
+		</p></li></ul>
+	  </p><p>
+	    This operation <strong>MAY</strong> report the following
+	    faults:
+	    <ul><li><p>
+		  <a href="#RUSUnspecifiedFault"><b>5.2.2 rus:UnspecifiedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSNotAuthorizedFault"><b>5.2.5 rus:NotAuthorizedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSIllegalRequestFault"><b>5.2.9 rus:IllegalRequestFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSProcessingFault"><b>5.2.6 rus:ProcessingFault</b></a>
+		</p></li></ul>
+	  </p></div><div class="div3">
+<h4><a name="d1e1143" id="d1e1143"/>8.1.2 RUS::listSupportedDialects</h4><table border="1" summary="Editorial note: Gilbert Netzer"><tr><td width="50%" valign="top" align="left"><b>Editorial note: Gilbert Netzer</b></td><td width="50%" valign="top" align="right">2007-09-13</td></tr><tr><td valign="top" align="left" colspan="2">
+	      I want to propose this operation to give clients a chance
+	      of getting to know which dialects an implementation supports.
+	    </td></tr></table><p>
+	    This operation allows clients to query the filter dialects that
+	    are supported by the service.
+	  </p><p>
+	    The operation <strong>MUST</strong> conform to the following
+	    signature:
+	    <div class="exampleInner"><pre>module RUS {
+    interface RUS {
+    ...
+      rus:ListSupportedDialectsResponse listSupportedDialects();
+    ...
+    };
+};</pre></div>
+	  </p><p>
+	    The operation is invoked by sending a single message of the 
+	    <code>rus:ListSupportedDialectsRequest</code> type to the service.
+	    This message <strong>MUST</strong> conform to the following
+	    schema fragment:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="ListSupportedDialectsRequestType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:any namespace="##other"
+	    minOccurs="0"
+	    maxOccurs="unbounded"
+	    processContents="lax" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+
+&lt;xs:element name="ListSupportedDialectsRequest"
+	    type="ListSupportedDialectsRequestType" /&gt;</pre></div>
+	    The elements are further described as follows:
+	    <ul><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  Provides an extension point for implementation specific data.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  This element <strong>MAY</strong> occur any number of 
+		  times.
+		</p></li></ul>
+	  </p><p>
+	    Upon successful completition
+	    the operation <strong>MUST</strong> return a message of the
+	    <code>rus:ListSupportedDialectsResponse</code> type conforming
+	    to the following schema fragment:
+	    	    <div class="exampleInner"><pre>&lt;xs:complexType name="ListSupportedDialectsResponseType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="operation" 
+		minOccurs="0"
+		maxOccurs="unbounded" &gt;
+      &lt;xs:complexType&gt;
+	&lt;xs:sequence&gt;
+	  &lt;xs:element ref="wsen:SupportedDialect" 
+	              minOccurs="0"
+		      maxOccurs="unbounded" /&gt;
+	&lt;/xs:sequence&gt;
+	&lt;xs:attribute name="name" type="xs:anyURI" /&gt;
+      &lt;/xs:complexType&gt;
+    &lt;/xs:element&gt;
+    &lt;xs:any namespace="##other"
+	    minOccurs="0"
+	    maxOccurs="unbounded"
+	    processContents="lax" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+
+&lt;xs:element name="ListSupportedDialectsResponse"
+	    type="ListSupportedDialectsResponseType" /&gt;</pre></div>
+	    The elements are further described as follows:
+	    <ul><li><p>
+		  <code>/rus:operation</code>
+		</p><p>
+		  This element contains a list of supported dialects for a
+		  specific operation supported by the RUS.
+		</p><p>
+		  This element <strong>MAY</strong> occur any number of 
+		  times.
+		</p></li><li><p>
+		  <code>/rus:operation/@rus:name</code>
+		</p><p>
+		  This attribute specifies the URI identifying the name of
+		  the RUS operation.
+		</p><p>
+		  This attribute <strong>MUST</strong> be present.
+		</p></li><li><p>
+		  <code>/rus:operation/wsen:SupportedDialect</code>
+		</p><p>
+		  This element contains the URI that identified the dialect
+		  supported by the surrounding operation.
+		  See <a href="#URIQueryDial"><b>7.2 Query Dialect Designators</b></a> for more information.
+		</p><p>
+		  This element <strong>MAY</strong> occur any number of 
+		  times.
+		</p></li><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  Provides an extension point for implementation specific data.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  This element <strong>MAY</strong> occur any number of 
+		  times.
+		</p></li></ul>
+	  </p><p>
+	    This operation <strong>MAY</strong> report the following
+	    faults:
+	    <ul><li><p>
+		  <a href="#RUSUnspecifiedFault"><b>5.2.2 rus:UnspecifiedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSNotAuthorizedFault"><b>5.2.5 rus:NotAuthorizedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSIllegalRequestFault"><b>5.2.9 rus:IllegalRequestFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSProcessingFault"><b>5.2.6 rus:ProcessingFault</b></a>
+		</p></li></ul>
+	  </p></div></div><div class="div2">
+<h3><a name="d1e1287" id="d1e1287"/>8.2 Insertion</h3><div class="div3">
+<h4><a name="d1e1290" id="d1e1290"/>8.2.1 RUS::insertUsageRecords</h4><p>
+	    The <code>insertUsageRecords</code> operation allows clients to 
+	    insert new <code>UsageRecord</code> data into the RUS.
+	  </p><p>
+	    The operation <strong>MUST</strong> conform to the following
+	    signature:
+	    <div class="exampleInner"><pre>module RUS {
+    interface RUS {
+    ...
+        rus:OperationResult insertUsageRecords(in ur:UsageRecords record);
+    ...
+    };
+};</pre></div>
+	  </p><p>
+	    The operation is invoked by sending a single message of the 
+	    <code>rus:InsertUsageRecordsRequest</code> type to the service.
+	    This message <strong>MUST</strong> conform to the following
+	    schema fragment:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="InsertUsageRecordsRequestType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element ref="urf:UsageRecords" /&gt;
+    &lt;xs:any namespace="##other"
+	    minOccurs="0"
+	    maxOccurs="unbounded"
+	    processContents="lax" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+  
+&lt;xs:element name="InsertUsageRecordsResponse"
+	    type="InsertUsageRecordsResponseType" /&gt;</pre></div>
+	    The components of the message are further described as follows:
+	    <ul><li><p>
+		  <code>/urf:UsageRecords</code>
+		</p><p>
+		  This element contains the usage records to insert into
+		  the RUS service.
+		  It is defined in the Usage Record - Format Recommendation
+		  <a href="#urf">[URF]</a>
+		</p><p>
+		  This element <strong>MUST</strong> appear exactly once.
+		</p></li><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  Provides an extension point for implementation specific data.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  This element <strong>MAY</strong> occur any number of 
+		  times.
+		</p></li></ul>
+	  </p><p>
+	    The operation <strong>MUST</strong> return a 
+	    <code>rus:InsertUsageRecordsResponse</code> message compliant
+	    with the following schema fragment:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="InsertUsageRecordsResponseType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element ref="rus:OperationResult" /&gt;
+    &lt;xs:any namespace="##other"
+	    minOccurs="0"
+	    maxOccurs="unbounded"
+	    processContents="lax" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+  
+&lt;xs:element name="InsertUsageRecordsResponse"
+            type="InsertUsageRecordsResponseType" /&gt;</pre></div>
+	    The components of the message are further described as follows:
+	    <ul><li><p>
+		  <code>/rus:OperationResult</code>
+		</p><p>
+		  This element contains information about the success of the
+		  operation.
+		  See <a href="#RUSOperationResult"><b>6.2 rus:OperationResult</b></a> for the 
+		  definition of this element.
+		</p><p>
+		  This element <strong>MUST</strong> appear exactly once.
+		</p></li><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  Provides an extension point for implementation specific data.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  This element <strong>MAY</strong> occur any number of 
+		  times.
+		</p></li></ul>
+	  </p><p>
+	    This operation <strong>MAY</strong> report the following
+	    faults:
+	    <ul><li><p>
+		  <a href="#RUSUnspecifiedFault"><b>5.2.2 rus:UnspecifiedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSNotAuthorizedFault"><b>5.2.5 rus:NotAuthorizedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSIllegalRequestFault"><b>5.2.9 rus:IllegalRequestFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSProcessingFault"><b>5.2.6 rus:ProcessingFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSInvalidRecordFault"><b>5.2.3 rus:InvalidRecordFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSDuplicateRecordFault"><b>5.2.4 rus:DuplicateRecordFault</b></a>
+		</p></li></ul>
+	  </p></div></div><div class="div2">
+<h3><a name="d1e1432" id="d1e1432"/>8.3 Extraction</h3><div class="div3">
+<h4><a name="d1e1435" id="d1e1435"/>8.3.1 RUS::extractUsageRecords</h4><table border="1" summary="Editorial note: Gilbert Netzer"><tr><td width="50%" valign="top" align="left"><b>Editorial note: Gilbert Netzer</b></td><td width="50%" valign="top" align="right">2007-04-10</td></tr><tr><td valign="top" align="left" colspan="2">
+	      I want to suggest here to remove the <code>RUSUsageRecord</code>
+	      wrapping from the returned result and return the plain 
+	      <code>UsageRecords</code> data instead. This means also that
+	      the audit information is not returned by default, something that
+	      I think might be benificial for performance. However, it
+	      requires a new method <code>RUS::extractRecordHistory</code>
+	      to retrieve the audit trail for a UsageRecord.
+	    </td></tr></table><p>
+	    Allows a client to access usage record data stored in the RUS
+	    service.
+	    The first number of usage records <strong>MAY</strong> be
+	    directly embedded into the return message.
+	    Further records <strong>MAY</strong> be fetched via a 
+	    Web Services Enumeration <a href="#wsen">[WS Enum]</a> compliant endpoint.
+	    The message size can be negotiated between client and service.
+	  </p><p>
+	    The operation <strong>MUST</strong> conform to the following
+	    signature:
+	    <div class="exampleInner"><pre>module RUS {
+    interface RUS {
+    ...
+        rus:ExtractUsageRecordsResult extractUsageRecords(in rus:ExtractUsageRecordsRequest);
+    ...
+    };
+};</pre></div>
+	  </p><p>
+	    The operation is invoked by sending a 
+	    <code>rus:ExtractUsageRecordsRequest</code> message compliant with
+	    the following schema fragment:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="ExtractUsageRecordsRequestType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="EndTo"
+		type="wsa:EndpointReference"
+		minOccurs="0"
+		maxOccurs="1" /&gt;
+    &lt;xs:element name="Expires"
+		type="wsen:ExpirationType"
+		minOccurs="0"
+		maxOccurs="1" /&gt;
+    &lt;xs:element name="Filter" 
+		type="wsen:FilterType"
+		minOccurs="1"
+		maxOccurs="1" /&gt;
+    &lt;xs:element name="MaxElements"
+		type="xs:positiveInteger"
+		minOccurs="0"
+		maxOccurs="1" /&gt;
+    &lt;xs:any namespace="##other"
+	    processContents="lax"
+	    minOccurs="0"
+	    maxOccurs="unbounded" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+
+&lt;xs:element name="ExtractUsageRecordsRequest" 
+	    type="ExtractUsageRecordsRequestType" /&gt;</pre></div>
+
+	    The elements are further described as follows:
+	    <ul><li><p><code>/rus:EndTo</code></p><p>
+		  This optional element denotes where to send an 
+		  <code>wsen:EnumerationEnd</code> message if the enumeration 
+		  is terminated unexpectedly. For further details refer to the
+		  WS-Enumeration specification [ref].
+		</p><p>
+		  This element <strong>MAY</strong> appear at most once.
+		</p></li><li><p><code>/rus:Expires</code></p><p>
+		  This element contains the requested expiration time for the
+		  enumeration. For further details refer to the WS-Enumeration
+		  specification [ref].
+		</p><p>
+		  This element <strong>MAY</strong> appear at most once.
+		</p></li><li><p><code>/rus:Filter</code></p><p>
+		  This element contains a Boolean predicate in some dialect
+		  that all returned usage records must satisfy. It is used
+		  to query for specific usage records. 
+		</p><p>
+		  This element <strong>MUST</strong> appear exactly once.
+		</p></li><li><p><code>/rus:Filter/@Dialect</code></p><p>
+		  This attribute contains a URI that identifies the 
+		  language used in the <code>rus:Filter</code> element to 
+		  specify the predicate. 
+		  A service <strong>MUST</strong> at least support
+		  the following dialects:
+		  <ul><li><p>
+			<code>http://www.w3.org/TR/1999/REC-xpath-19991116</code>
+		      </p><p>
+			A XPath predicate expression as defined in 
+			<a href="#URIQueryDial"><b>7.2 Query Dialect Designators</b></a>.
+		      </p><p>
+			This is also the implied value in case the 
+			attribute is not present.
+		      </p></li></ul>
+		</p><p>
+		  This attribute <strong>MAY</strong> appear.
+		</p></li><li><p>
+		  <code>/rus:MaxElements</code>
+		</p><p>
+		  This element specifies the maximum number of usage records
+		  the the service <strong>MAY</strong> return embedded in
+		  the <code>rus:ExtractUsageRecordsResult</code> message.
+		  If the element is not present, the service 
+		  <strong>MAY</strong> return any number of records.
+		</p><p>
+		  This element <strong>MAY</strong> appear at most once.
+		</p></li><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  This elements provide extension points for implementation
+		  specific data.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  Any number of extension elements <strong>MAY</strong>
+		  appear.
+		</p></li></ul>
+	  </p><p>
+	    The operation <strong>MUST</strong> return a single 
+	    <code>rus:ExtractUsageRecordsResponse</code> message
+	    conforming to the following schema fragment:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="ExtractUsageRecordsResponseType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element ref="rus:OperationResult" /&gt;
+    &lt;xs:element ref="urf:UsageRecords" /&gt;
+    &lt;xs:element name="Expires"
+	        type="wsen:ExpirationType"
+		minOccurs="0"
+		maxOccurs="1" /&gt;
+    &lt;xs:element name="EnumerationContext"
+		type="wsen:EnumerationContextType"
+		minOccurs="0"
+		maxOccurs="1" /&gt;
+    &lt;xs:any namespace="##other"
+	    processContents="lax"
+	    minOccurs="0"
+	    maxOccurs="unbounded" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+
+&lt;xs:element name="ExtractUsageRecordsResponse"
+	    type="ExtractUsageRecordsResponseType" /&gt;</pre></div>
+	    The components of this message are further described as follows:
+	    <ul><li><p><code>/rus:OperationResult</code></p><p>
+		  Contains information about the overall success status of
+		  the operation.
+		  See <a href="#RUSOperationResult"><b>6.2 rus:OperationResult</b></a> for the definiton
+		  of this element.
+		</p><p>
+		  This element <strong>MUST</strong> be present.
+		</p></li><li><p><code>/urf:UsageRecords</code></p><p>
+		  This element contains all the usage records that are directly
+		  returned by this operation. The number of records returned 
+		  here <strong>MUST NOT</strong> exceed the maximum requested
+		  by the client. 
+		  If records are returned using this element 
+		  they <strong>MUST NOT</strong> be returned via the optional
+		  WS-Enumeration also returned.
+		  Restrictions on the contents of this element are defined
+		  in the Usage Record - Format Recommendation 
+		  <a href="#urf">[URF]</a>.
+		</p><p>
+		  This element <strong>MAY</strong> appear at most once.
+		</p></li><li><p><code>/rus:Expires</code></p><p>
+		  If an <code>/rus:EnumerationContext</code> element is 
+		  returned this element containes the assigned expirery time
+		  of the enumeration according to the WS-Enumeration 
+		  specification.
+		</p><p>
+		  This element <strong>MAY</strong> appear at most once.
+		  If the <code>/rus:EnumerationContext</code> element does
+		  not appear, this element <strong>MUST NOT</strong> appear.
+		</p></li><li><p><code>/rus:EnumerationContext</code></p><p>
+		  This element contains the enumeration context that 
+		  <strong>MUST</strong> be used to request further results
+		  from the same request. 
+		</p><p>
+7		  This element <strong>MAY</strong> appear at most once.
+		</p></li><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  This elements provide extension points for implementation
+		  specific data.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  Any number of extension elements <strong>MAY</strong>
+		  appear.
+		</p></li></ul>
+	  </p><p>
+	    This operation <strong>MAY</strong> report the following
+	    faults:
+	    <ul><li><p>
+		  <a href="#RUSUnspecifiedFault"><b>5.2.2 rus:UnspecifiedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSNotAuthorizedFault"><b>5.2.5 rus:NotAuthorizedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSIllegalRequestFault"><b>5.2.9 rus:IllegalRequestFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSProcessingFault"><b>5.2.6 rus:ProcessingFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSInvalidSearchTermFault"><b>5.2.7 rus:InvalidSearchTerm</b></a>
+		</p></li><li><p>
+		  <a href="#RUSUnsupportedDialectFault"><b>5.2.8 rus:UnsupportedDialectFault</b></a>
+		</p></li></ul>
+	  </p></div><div class="div3">
+<h4><a name="d1e1717" id="d1e1717"/>8.3.2 RUS::extractRecordHistory</h4><table border="1" summary="Editorial note: Gilbert Netzer"><tr><td width="50%" valign="top" align="left"><b>Editorial note: Gilbert Netzer</b></td><td width="50%" valign="top" align="right">2007-04-10</td></tr><tr><td valign="top" align="left" colspan="2">
+	      This is a new operation to extract the audit information
+	      associated with the given <code>UsageRecord</code>.
+	      I suggest this as a clean separation between data (URs) and
+	      metadata (audit information) and also to allow implementations
+	      to tune performance. There is no batch capability because I 
+	      do not anticipate large amounts of audit trails being retrieved.
+	    </td></tr></table><p>
+	    This operation allows clients to obtain the 
+	    <code>rus:RecordHistory</code> for a given 
+	    <code>urf:UsageRecord</code>. 
+	    It only returns the history information for a single 
+	    <code>UsageRecord</code>
+	    that has to be specified via its <code>recordId</code> attribute.
+	  </p><p>
+	    The operation <strong>MUST</strong> conform to the following
+	    signature:
+	    <div class="exampleInner"><pre>module RUS {
+    interface RUS {
+    ...
+	rus:RecordHistory extractRecordHistory(in xs:token urId);
+    ...
+    };
+};</pre></div>
+	  </p><p>
+	    The operation is invoked by sending a 
+	    <code>rus:extractRecordHistoryRequest</code> message conforming
+	    to the following schema fragment to the service:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="ExtractRecordHistoryRequestType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="recordId" type="xs:token" /&gt;
+    &lt;xs:any namespace="##other"
+	    minOccurs="0"
+	    maxOccurs="unbounded"
+	    processContents="lax" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+  
+&lt;xs:element name="ExtractRecordHistoryRequest"
+	    type="ExtractRecordHistoryRequestType" /&gt;</pre></div>
+
+	    The components of this message are further described as follows:
+	    <ul><li><p>
+		  <code>/rus:recordId</code>
+		</p><p>
+		  The unique recordId attribute of the usage record of which
+		  the record history should be retrieved.
+		</p><p>
+		  This element <strong>MUST</strong> appear exactly once.
+		</p></li><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  This elements provide extension points for implementation
+		  specific data.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  Any number of extension elements <strong>MAY</strong>
+		  appear.
+		</p></li></ul>
+	  </p><p>
+	    The operation <strong>MUST</strong> return a single 
+	    <code>rus:ExtractRecordHistoryResponse</code> message conforming
+	    to the following schema fragment:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="ExtractRecordHistoryResponseType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element ref="rus:RecordHistory" /&gt;
+    &lt;xs:any namespace="##other"
+	    minOccurs="0"
+	    maxOccurs="unbounded"
+	    processContents="lax" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+  
+&lt;xs:element name="ExtractRecordHistoryResponse"
+	    type="ExtractRecordHistoryResponseType" /&gt;</pre></div>
+	    The components of this message are further described as follows:
+	    <ul><li><p>
+		  <code>/rus:RecordHistory</code>
+		</p><p>
+		  This element contains the record history of the requested
+		  usage record.
+		  The contents of this element is further described by
+		  <a href="#RUSRecordHistory"><b>6.1.2 rus:RecordHistoryType</b></a>.
+		</p><p>
+		  This element <strong>MUST</strong> appear exactly once.
+		</p></li><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  This elements provide extension points for implementation
+		  specific data.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  Any number of extension elements <strong>MAY</strong>
+		  appear.
+		</p></li></ul>
+	  </p><p>
+	    This operation <strong>MAY</strong> report the following
+	    faults:
+	    <ul><li><p>
+		  <a href="#RUSUnspecifiedFault"><b>5.2.2 rus:UnspecifiedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSNotAuthorizedFault"><b>5.2.5 rus:NotAuthorizedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSIllegalRequestFault"><b>5.2.9 rus:IllegalRequestFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSProcessingFault"><b>5.2.6 rus:ProcessingFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSNotFoundFault"><b>5.2.10 rus:NotFoundFault</b></a>
+		</p></li></ul>
+	  </p></div></div><div class="div2">
+<h3><a name="d1e1865" id="d1e1865"/>8.4 Modification</h3><table border="1" summary="Editorial note: Gilbert Netzer"><tr><td width="50%" valign="top" align="left"><b>Editorial note: Gilbert Netzer</b></td><td width="50%" valign="top" align="right">2007-04-10</td></tr><tr><td valign="top" align="left" colspan="2">
+	    I removed the <code>replaceUsageRecords</code> and 
+	    <code>incrementUsageRecordPart</code> methods as both can be
+	    expressed using the <code>modifyUsageRecords</code> operation
+	    with a suitable XQuery string.
+	    Please provide comments on that!
+	  </td></tr></table><div class="div3">
+<h4><a name="d1e1884" id="d1e1884"/>8.4.1 RUS::modifyUsageRecords</h4><table border="1" summary="Editorial note: Gilbert Netzer"><tr><td width="50%" valign="top" align="left"><b>Editorial note: Gilbert Netzer</b></td><td width="50%" valign="top" align="right">2007-04-10</td></tr><tr><td valign="top" align="left" colspan="2">
+	      I suggest that this method should use the newer and perhaps
+	      more official XQuery Update Facilities 
+	      <a href="#xqupdate">[XQuery Update]</a>
+	      instead of a XUpdate string to specify the update.
+	      It can also update many records in the RUS since the query
+	      is applied over the collection of all UsageRecords stored in 
+	      the RUS instance. 
+	    </td></tr></table><p>
+	    This operation allows clients to modify the contents of the
+	    stored <code>UsageRecord</code> elements in the RUS instance.
+	    The operation <strong>MUST NOT</strong> change the 
+	    <code>recordId</code> of any <code>UsageRecord</code>.
+	    The service <strong>MUST</strong> report a 
+	    <code>rus:IllegalRequestFault</code> fault if an attempt to
+	    modify this attribute was made.
+	    The service <strong>MUST</strong> also check that the 
+	    modified usage records are syntactially and sematically 
+	    correct. 
+	    If not the service <strong>MUST</strong> report a
+	    <code>rus:InvalidRecordFault</code>.
+	  </p><p>
+	    The operation <strong>MUST</strong> conform to the following
+	    signature:
+	    <div class="exampleInner"><pre>module RUS {
+    interface RUS {
+    ...
+	rus:OperationResult modifyUsageRecords(in wsen:FilterType updateExpr);
+    ...
+    };
+};</pre></div>
+	  </p><p>
+	    The operation is invoked by sending a single 
+	    <code>rus:ModifyUsageRecordsRequest</code> message conforming
+	    to the following schema fragment to the service:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="ModifyUsageRecordsRequestType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="UpdateExpression" 
+		type="wsen:FilterType"
+		minOccurs="1"
+		maxOccurs="1" /&gt;
+    &lt;xs:any namespace="##other"
+	    processContents="lax"
+	    minOccurs="0"
+	    maxOccurs="unbounded" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+  
+&lt;xs:element name="ModifyUsageRecordsRequest"
+	    type="ModifyUsageRecordsRequestType" /&gt;</pre></div>
+	    The elements are further described as follows:
+	    <ul><li><p>
+		  <code>/rus:UpdateExpression</code>
+		</p><p>
+		  This element contains an expresion in some dialect
+		  that that specifies how the usage records in the
+		  RUS server should be modified.
+		  It is both used to select which records to modify and
+		  how they should be modified.
+		</p><p>
+		  This element <strong>MUST</strong> appear exactly once.
+		</p></li><li><p>
+		  <code>/rus:UpdateExpression/@wsen:Dialect</code>
+		</p><p>
+		  This attribute contains a URI that identifies the 
+		  language used in the <code>rus:Filter</code> element to 
+		  specify the update expression.
+		  A service <strong>MUST</strong> at least support
+		  the following dialects:
+		  <ul><li><p>
+			<code>http://www.w3.org/TR/2006/WD-xqupdate-20060711</code>
+		      </p><p>
+			A XQuery Update facilities expression as defined 
+			in <a href="#URIQueryDial"><b>7.2 Query Dialect Designators</b></a>.
+		      </p><p>
+			This is also the implied value in case the 
+			attribute is not present.
+		      </p></li></ul>
+		</p><p>
+		  This attribute <strong>MAY</strong> appear.
+		</p></li><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  This elements provide extension points for implementation
+		  specific data.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  Any number of extension elements <strong>MAY</strong>
+		  appear.
+		</p></li></ul>
+	  </p><p>
+	    The operation <strong>MUST</strong> return a single response
+	    of the following form:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="ModifyUsageRecordsResponseType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element ref="rus:OperationResult" /&gt;
+    &lt;xs:any namespace="##other"
+	    processContents="lax"
+	    minOccurs="0"
+	    maxOccurs="unbounded" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+  
+&lt;xs:element name="ModifyUsageRecordsResponse"
+	    type="ModifyUsageRecordsResponseType" /&gt;</pre></div>
+	    The components of the message are further described as follows:
+	    <ul><li><p>
+		  <code>/rus:OperationResult</code>
+		</p><p>
+		  This element contains information about the success of 
+		  the operation.
+		  See <a href="#RUSOperationResult"><b>6.2 rus:OperationResult</b></a> for the 
+		  definition of this element.
+		</p><p>
+		  This element <strong>MUST</strong> appear exactly once.
+		</p></li><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  Provides an extension point for implementation specific 
+		  data.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  This element <strong>MAY</strong> occur any number of 
+		  times.
+		</p></li></ul>
+	  </p><p>
+	    This operation <strong>MAY</strong> report the following
+	    faults:
+	    <ul><li><p>
+		  <a href="#RUSUnspecifiedFault"><b>5.2.2 rus:UnspecifiedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSNotAuthorizedFault"><b>5.2.5 rus:NotAuthorizedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSIllegalRequestFault"><b>5.2.9 rus:IllegalRequestFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSProcessingFault"><b>5.2.6 rus:ProcessingFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSInvalidRecordFault"><b>5.2.3 rus:InvalidRecordFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSInvalidSearchTermFault"><b>5.2.7 rus:InvalidSearchTerm</b></a>
+		</p></li><li><p>
+		  <a href="#RUSUnsupportedDialectFault"><b>5.2.8 rus:UnsupportedDialectFault</b></a>
+		</p></li></ul>
+	  </p></div></div><div class="div2">
+<h3><a name="d1e2087" id="d1e2087"/>8.5 Deletion</h3><table border="1" summary="Editorial note: Gilbert Netzer"><tr><td width="50%" valign="top" align="left"><b>Editorial note: Gilbert Netzer</b></td><td width="50%" valign="top" align="right">2007-10-04</td></tr><tr><td valign="top" align="left" colspan="2">
+	    I suggest removing the <code>deleteSpecificRecords</code> 
+	    operation because this can be simply mapped to the 
+	    <code>deleteUsageRecords</code> operation using a XPath 
+	    expression.
+	  </td></tr></table><div class="div3">
+<h4><a name="d1e2103" id="d1e2103"/>8.5.1 RUS::deleteUsageRecords</h4><p>
+	    This operation allows clients to delete 
+	    <code>UsageRecord</code> data from the RUS instance.
+	  </p><p>
+	    The operation <strong>MUST</strong> conform to the following
+	    signature:
+	    <div class="exampleInner"><pre>module RUS {
+    interface RUS {
+    ...
+        rus:OperationResult deleteUsageRecords(in wsen:FilterType filter);
+    ...
+    };
+};</pre></div>
+	  </p><p>
+	    The operation is invoked by sending a single
+	    <code>rus:DeleteUsageRecordsRequest</code> message  
+	    conforming to the following schema fragment to the service:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="DeleteUsageRecordsRequestType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="Filter" 
+                type="wsen:FilterType"
+		minOccurs="1"
+		maxOccurs="1" /&gt;
+    &lt;xs:any namespace="##other"
+	    processContents="lax"
+	    minOccurs="0"
+	    maxOccurs="unbounded" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+  
+&lt;xs:element name="DeleteUsageRecordsRequest"
+	    type="DeleteUsageRecordsRequestType" /&gt;</pre></div>
+	    The elements are further described as follows:
+	    <ul><li><p>
+		  <code>/Filter</code>
+		</p><p>
+		  This element contains a boolean predicate in some dialect
+		  that all elements that are to be deleted must satisfy.
+		  It is used to select the usage records to delete.
+		</p><p>
+		  This element <strong>MUST</strong> appear exactly once.
+		</p></li><li><p>
+		  <code>/Filter/@wsen:Dialect</code>
+		</p><p>
+		  This attribute contains a URI that identifies the 
+		  language used in the <code>rus:Filter</code> element to 
+		  specify the predicate. 
+		  A service <strong>MUST</strong> at least support
+		  the following dialects:
+		  <ul><li><p>
+			<code>http://www.w3.org/TR/1999/REC-xpath-19991116</code>
+		      </p><p>
+			A XPath predicate expression as defined in 
+			<a href="#URIQueryDial"><b>7.2 Query Dialect Designators</b></a>.
+		      </p><p>
+			This is also the implied value in case the 
+			attribute is not present.
+		      </p></li></ul>
+		</p><p>
+		  This attribute <strong>MAY</strong> appear.
+		</p></li></ul>
+	  </p><p>
+	    The operation <strong>MUST</strong> return a single
+	    <code>rus:DeleteUsageRecordsResponse</code> message conforming
+	    to the following schema fragment:
+	    <div class="exampleInner"><pre>&lt;xs:complexType name="DeleteUsageRecordsResponseType" &gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element ref="rus:OperationResult" /&gt;
+    &lt;xs:any namespace="##other"
+	    processContents="lax"
+	    minOccurs="0"
+	    maxOccurs="unbounded" /&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+  
+&lt;xs:element name="DeleteUsageRecordsResponse"
+	    type="DeleteUsageRecordsResponseType" /&gt;</pre></div>
+	    The components of the message are further described as follows:
+	    <ul><li><p>
+		  <code>/rus:OperationResult</code>
+		</p><p>
+		  This element contains information about the success of 
+		  the operation.
+		  See <a href="#RUSOperationResult"><b>6.2 rus:OperationResult</b></a> for the 
+		  definition of this element.
+		</p><p>
+		  This element <strong>MUST</strong> appear exactly once.
+		</p></li><li><p>
+		  <code>/{xs:any}</code>
+		</p><p>
+		  Provides an extension point for implementation specific 
+		  data.
+		  See <a href="#ExtFw"><b>3.5 Extension Framework</b></a> for more information.
+		</p><p>
+		  This element <strong>MAY</strong> occur any number of 
+		  times.
+		</p></li></ul>
+	  </p><p>
+	    This operation <strong>MAY</strong> report the following
+	    faults:
+	    <ul><li><p>
+		  <a href="#RUSUnspecifiedFault"><b>5.2.2 rus:UnspecifiedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSNotAuthorizedFault"><b>5.2.5 rus:NotAuthorizedFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSIllegalRequestFault"><b>5.2.9 rus:IllegalRequestFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSProcessingFault"><b>5.2.6 rus:ProcessingFault</b></a>
+		</p></li><li><p>
+		  <a href="#RUSInvalidSearchTermFault"><b>5.2.7 rus:InvalidSearchTerm</b></a>
+		</p></li><li><p>
+		  <a href="#RUSUnsupportedDialectFault"><b>5.2.8 rus:UnsupportedDialectFault</b></a>
+		</p></li></ul>
+	  </p></div></div></div><div class="div1">
+<h2><a name="d1e2255" id="d1e2255"/>9 Author Information</h2><p>To be written...</p></div><div class="div1">
+<h2><a name="d1e2260" id="d1e2260"/>10 Contributors</h2><p>To be written...</p></div><div class="div1">
+<h2><a name="d1e2265" id="d1e2265"/>11 Glossary</h2><p>To be written...</p></div><div class="div1">
+<h2><a name="d1e2270" id="d1e2270"/>12 Intellectual Property Statement</h2><p>
+	The OGF takes no position regarding the validity or scope of any 
+	intellectual property or other rights that might be claimed to pertain 
+	to the implementation or use of the technology described in this 
+	document or the extent to which any license under such rights might or 
+	might not be available; neither does it represent that it has made any 
+	effort to identify any 	such rights.  
+	Copies of claims of rights made available for publication and any 
+	assurances of licenses to be made available, or the result of an 
+	attempt made to obtain a general license or permission for the use of 
+	such proprietary rights by implementers or users of this specification 
+	can be obtained from the OGF Secretariat.
+      </p><p>
+	The OGF invites any interested party to bring to its attention any 
+	copyrights, patents or patent applications, or other proprietary rights
+	which may cover technology that may be required to practice this 
+	recommendation.  
+	Please address the information to the OGF Executive Director.
+      </p></div><div class="div1">
+<h2><a name="d1e2277" id="d1e2277"/>13 Disclaimer</h2><p>
+	This document and the information contained herein is provided on an 
+	“As Is” basis and the OGF disclaims all warranties, 
+	express or implied, including but not limited to any warranty that 
+	the use of the information herein will not infringe any rights or 
+	any implied warranties of merchantability or fitness for a particular 
+	purpose.
+      </p></div><div class="div1">
+<h2><a name="d1e2282" id="d1e2282"/>14 Full Copyright Notice</h2><p>
+	Copyright © Open Grid Forum (2007). 
+	All Rights Reserved.
+      </p><p>
+	This document and translations of it may be copied and furnished to 
+	others, and derivative works that comment on or otherwise explain it 
+	or assist in its implementation may be prepared, copied, published and 
+	distributed, in whole or in part, without restriction of any kind, 
+	provided that the above copyright notice and this paragraph are 
+	included on all such copies and derivative works. 
+	However, this document itself may not be modified in any way, such as 
+	by removing the copyright notice or references to the OGF or other 
+	organizations, except as needed for the purpose of developing Grid 
+	Recommendations in which case the procedures for copyrights defined in 
+	the OGF Document process must be followed, or as required to translate 
+	it into languages other than English. 
+      </p><p>
+	The limited permissions granted above are perpetual and will not be 
+	revoked by the OGF or its successors or assignees.
+      </p></div><div class="div1">
+<h2><a name="d1e2292" id="d1e2292"/>15 References</h2><div class="div2">
+<h3><a name="d1e2295" id="d1e2295"/>15.1 Normative References</h3><dl><dt class="label"><a name="RFC2119" id="RFC2119"/>RFC 2119</dt><dd>
+	    S. Bradner.
+	    <em>
+	      Key Words for use in RFCs to Indicate Requirement Levels.
+	    </em>
+	    IETF RFC 2119. See
+	    <a href="http://rfc.net/rfc2119.html">
+	    http://www.ietf.org/rfc/rfc2119.txt
+	    </a>
+	    .
+	  </dd><dt class="label"><a name="urf" id="urf"/>URF</dt><dd>
+	    R. Mach, R. Lepro-Metz and S. Jackson.
+	    <em>Usage Record - Format Recommendation</em>
+	    OGF GFD-R-P.098. See 
+	    <a href="../../../../../../../www.ogf.org/documents/GFD.98.pdf">http://www.ogf.org/documents/GFD.98.pdf</a>.
+	  </dd><dt class="label"><a name="xpath" id="xpath"/>XPath</dt><dd>
+	    S. J. DeRose, J. Clark, Editors,
+	    <em>XML Path Language (XPath) Version 1.0.</em>
+	    W3C Recommendation, 16 November 1999, see
+	    <a href="http://www.w3.org/TR/1999/REC-xpath-19991116">http://www.w3.org/TR/1999/REC-xpath-19991116</a>.
+	    
+	  </dd><dt class="label"><a name="xquery" id="xquery"/>XQuery</dt><dd>
+	    Scott Boag et.al.
+	    <em>XQuery 1.0: An XML Query Language.</em>
+	    W3C Recommendation 23 January 2007. See
+	    <a href="http://www.w3.org/TR/2007/REC-xquery-20070123/">http://www.w3.org/TR/2007/REC-xquery-20070123/</a>.
+	  </dd><dt class="label"><a name="xqupdate" id="xqupdate"/>XQuery Update</dt><dd>
+	    Don Chamberlin, Daniela Florescu and Jonathan Robie.
+	    <em>XQuery Update Facility.</em>
+	    W3C Working Draft 11 July 2006. See
+	    <a href="http://www.w3.org/TR/2006/WD-xqupdate-20060711/">http://www.w3.org/TR/2006/WD-xqupdate-20060711/</a>.
+	  </dd><dt class="label"><a name="schema" id="schema"/>XML Schema</dt><dd>
+	    David C. Fallside and Priscilla Walmsley.
+	    <em>XML Schema Part 0: Primer Second Edition.</em>
+	    W3C Recommendation 28 October 2004. See
+	    <a href="http://www.w3.org/TR/2004/REC-xmlschema-0-20041028/">http://www.w3.org/TR/2004/REC-xmlschema-0-20041028/</a>.
+	  </dd><dt class="label"><a name="infoset" id="infoset"/>Infoset</dt><dd>
+	    John Cowan and Richard Tobin, Editors,
+	    <em>XML Information Set (Second Edition).</em>
+	    World Wide Web Consortium, 04 February 2004. See
+	    <a href="http://www.w3.org/TR/2004/REC-xml-infoset-20040204">http://www.w3.org/TR/2004/REC-xml-infoset-20040204</a>.
+	  </dd><dt class="label"><a name="xml" id="xml"/>XML</dt><dd>
+	    Tim Bray, 
+	    Jean Paoli, 
+	    C. M. Sperberg-McQueen, 
+	    Eve Maler, 
+	    François Yergeau, Editors, 
+	    <em>Extensible Markup Language (XML) 1.0 (Fourth Edition).</em>
+	    W3C Recommendation, 16 August 2006. See
+	    <a href="http://www.w3.org/TR/2006/REC-xml-20060816/">http://www.w3.org/TR/2006/REC-xml-20060816/</a>.
+	  </dd><dt class="label"><a name="SecChan" id="SecChan"/>Secure Channel</dt><dd>
+	    T. Mori and F. Siebenlist 
+	    <em>OGSA Security Profile 1.0 - Secure Channel</em>
+	    OGF GFD-R.P.99, 22 January 2007. See
+	    <a href="../../../../../../../www.ogf.org/documents/GFD.99.pdf">http://www.ogf.org/documents/GFD.99.pdf</a>.
+	  </dd><dt class="label"><a name="wsen" id="wsen"/>WS Enum</dt><dd>
+	    Jan Alexander et. al.
+	    <em>Web Services Enumeration (WS-Enumeration)</em>
+	    W3C Member Submission 15 March 2006. See
+	    <a href="http://www.w3.org/Submission/2006/SUBM-WS-Enumeration-20060315/">http://www.w3.org/Submission/2006/SUBM-WS-Enumeration-20060315/</a>.
+	  </dd></dl></div><div class="div2">
+<h3><a name="d1e2370" id="d1e2370"/>15.2 Non-normative References</h3><dl><dt class="label"><a name="idl" id="idl"/>IDL</dt><dd>
+	    OMG.
+	    <em>
+	      Common Object Request Broker Architecture: Core Specification.
+	    </em>
+	    Version 3.0.3. Chapter 3. See
+	    <a href="http://www.omg.org/docs/formal/02-06-39.pdf">http://www.omg.org/docs/formal/02-06-39.pdf</a>.
+	  </dd><dt class="label"><a name="ogsauc" id="ogsauc"/>OGSA Use Cases</dt><dd>
+	    Foster, I., 
+	    Gannon, D., 
+	    Kishimoto, H 
+	    and J. Von Reich, Jeffrin. (eds.)
+	    <em>Open Grid Services Architecture Use Cases.</em> 
+	    Global Grid Forum OGSA-WG, GFD-I.029. See
+	    <a href="../../../../../../../www.ogf.org/documents/GFD.29.pdf">http://www.ogf.org/documents/GFD.29.pdf</a>.
+	  </dd></dl></div></div></div><div class="back"><div class="div1">
+<h2><a name="d1e2389" id="d1e2389"/>A XML Schema</h2><p>
+	To be inserted.
+      </p></div></div><!-- forge.gridforum.org footer.html -->
+<br> <hr>
+<table width='100%'> 
+ <tr>
+  <td align='left'>   <a href='../../../../../../../www.ogf.org/index.html' target='_blank' style='border: 0 px;'><img src='../../../../../../ogf-it/opengridforum.gif' alt='The Open Grid Forum' style='border:0px white solid;'></a><td>
+  <td align='center'> <a href='mailto:webmaster@ogf.org'>Contact Webmaster</a> 
+                    | <a href="../../../../../tracker/do/createArtifact/projects.ggf-info/tracker.html">Report a problem</a>
+                    | <a href="../../../../../wiki/do/viewPage/projects.ggf-info/wiki/HomePage.html">GridForge Help</a>
+                    </td>
+  <td align='right'>  
+<!--		<img src='/ogf-it/powered_by_dell.gif' alt='Powered by Dell'> -->
+<!-- Begin DigiCert/ClickID site seal HTML and JavaScript -->
+<div id="DigiCertClickID_sxSDRU4L">
+  <a href="http://www.digicert.com/">SSL Certificates</a>
+</div>
+<script type="text/javascript">
+var __dcid = __dcid || [];__dcid.push(["DigiCertClickID_sxSDRU4L", "10", "m", "black", "sxSDRU4L"]);(function(){var cid=document.createElement("script");cid.type="text/javascript";cid.async=true;cid.src=("https:" === document.location.protocol ? "https://" : "http://")+"seal.digicert.com/seals/cascade/seal.min.js";var s = document.getElementsByTagName("script");var ls = s[(s.length - 1)];ls.parentNode.insertBefore(cid, ls.nextSibling);}());
+</script>
+<!-- End DigiCert/ClickID site seal HTML and JavaScript -->
+  </td>
+ </tr>
+</table>
+<!-- google analytics code -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6775861-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+</body>
+<!-- Mirrored from forge.ogf.org/sf/sfmain/do/downloadAttachment/projects.rus-wg/tracker.submit_draft_doc_to_chairs/artf6015?id=atch4504 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:13:57 GMT -->
+</html>

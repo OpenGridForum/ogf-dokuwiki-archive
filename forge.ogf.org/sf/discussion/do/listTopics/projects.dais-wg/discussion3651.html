@@ -18,6 +18,15 @@
 
 
 
+<!-- title -->
+
+
+<!-- bread crumb -->
+
+
+
+
+<!-- content -->
 
 
 
@@ -29,55 +38,138 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
-<!-- Mirrored from forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_pagesize=9999 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:40:35 GMT -->
+<!-- Mirrored from forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_pagesize=9999 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 18 Oct 2022 18:42:29 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-  <title>SourceForge : System Error</title>
-  
+  <title>SourceForge : Topic Summary</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   
-  <link rel="stylesheet" type="text/css" href="https://forge.ogf.org/css/styles_new.css" />
-  <link rel="shortcut icon" href="https://forge.ogf.org/sf-images/icons/favicon.ico" />
-  <script language="JavaScript" src="https://forge.ogf.org/sf/js/sf_functions.js" type="text/javascript"></script>
-  <script>
+  <link rel="stylesheet" type="text/css" href="../../../../../css/styles_new.css" />
+  <link rel="shortcut icon" href="../../../../../sf-images/icons/favicon.ico" />
+  <script language="JavaScript" src="../../../../js/sf_functions.js" type="text/javascript"></script>
+  
 
-  function adjustDisplay() {
-    // get the window name
-    var winName=window.name;
-    if (winName != null) {
-    // if it starts with sfp, it's a popup
-      if (winName.substring(0,3) == 'sfp') {
-      // if a popup, hide the decoration
-        sfmenu = document.getElementById('sfmenubar');
-        if (sfmenu != null) {
-            sfmenu.style.display='none';
-        }
-        sfbutton = document.getElementById('sfbuttonbar');
-        if (sfbutton != null) {
-            sfbutton.style.display='none';
-        }
-        sfcrumbs = document.getElementById('sfcrumbs');
-        if (sfcrumbs != null) {
-            sfcrumbs.style.display='none';
-        }
-        sfclosewin = document.getElementById('sfCloseWin');
-        if (sfclosewin != null) {
-            sfclosewin.style.display='';
-        }
-      }
+
+  <script type="text/javascript" src="../../../../include/calendar/calendar.js"></script>
+  <script type="text/javascript" src="../../../../include/calendar/lang/calendar-en.js"></script>
+  <link type="text/css" rel="stylesheet" href="../../../../include/calendar/calendar-system.css"/>
+
+  <script language="JavaScript">
+  // calendar /////////////////////////////////////////////////////////////////
+  //
+  var calendar = null;
+
+  function calSelected(cal, date) {
+    cal.sel.value = date;
+
+    var updateFlexElements = document.getElementsByName('updateF' + cal.sel.name.substring(1));
+    if ((typeof updateFlexElements != "undefined") && (updateFlexElements.length > 0)) {
+	var elem = updateFlexElements[0];
+	if (elem.type == "checkbox") {
+	   elem.checked = true;
+	}
     }
-  }
+    cal.callCloseHandler();
+  } // calSelected
 
+  function calCloseHandler(cal) {
+   cal.hide();
+  } // calCloseHandler
+
+  function calShow(id) {
+    var el = document.getElementById(id);
+    if (calendar != null) {
+      calendar.hide();		// hide the existing calendar
+      calendar.parseDate(el.value); // set it to a new date
+    } else {
+      var cal = new Calendar(false, null, calSelected, calCloseHandler);
+      var now = new Date();
+      calendar = cal;
+      calendar.setDateFormat('mm/dd/y');
+      calendar.setRange(now.getFullYear() - 10, now.getFullYear() + 10);
+      calendar.weekNumbers = false;
+      calendar.create();
+    }
+    calendar.sel = el;
+    calendar.showAtElement(el);
+    //calendar.addEvent(document, "mousedown", checkCalendar);
+    return false;
+  } // calShow
   </script>
   
+  
+  
+
+  
+
+
+
+
+
+
+
+<script type="text/javascript" language="JavaScript">
+function openWinForId() {
+
+    var checkboxes = document.forms['selectTopicsForm']['_listItem'];
+
+    var val;
+
+    if (checkboxes.length == null) {
+        if (checkboxes.checked) {
+            val = checkboxes.value;
+        }
+    } else {
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                val = checkboxes[i].value;
+                break;
+            }
+        }
+    }
+
+    NewWindow('/sf/sfmain/do/listMonitoringUsers/?id=' + val, 'monusers', 540, 425, 'no');
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="MonitorMenu_selectTopicsForm" class="menu">
+  <div id="selectTopicsForm_monitor"><a href="javascript:submitForm(document.selectTopicsForm, 'Monitor');" class="menuItem">Monitor Selected</a></div>
+  <div id="selectTopicsForm_unmonitor"><a href="javascript:submitForm(document.selectTopicsForm, 'UnMonitor');" class="menuItem">Stop Monitoring Selected</a></div>
+  <div id="selectTopicsForm_who"><a href="javascript:openWinForId();" class="menuItem">Users Monitoring Selected</a></div>
+  
+    <div class="menuItemSep"></div>
+    <a href="https://forge.ogf.org/sf/sfmain/do/monitor/projects.dais-wg/discussion.dais_wg?monitorReturnTo=http%3A%2F%2Flocalhost%3A8080%2Fsf%2Fdiscussion%2Fdo%2FlistTopics%2Fprojects.dais-wg%2Fdiscussion.dais_wg%3F_pagesize%3D9999" class="menuItem" id="monitor_current_folder">Monitor Current Folder</a>
+    <a href="javascript:NewWindow('/sf/sfmain/do/listMonitoringUsers/projects.dais-wg/discussion.dais_wg', 'monusers', 540, 425, 'no');" class="menuItem">Users Monitoring Folder</a>
+  
+</div>
+
+<script language="JavaScript">
+  setMenuEntryPreference('MonitorMenu_selectTopicsForm', 'selectTopicsForm_monitor', 'selectTopicsForm', 1, -1);
+  setMenuEntryPreference('MonitorMenu_selectTopicsForm', 'selectTopicsForm_unmonitor', 'selectTopicsForm', 1, -1);
+  setMenuEntryPreference('MonitorMenu_selectTopicsForm', 'selectTopicsForm_who', 'selectTopicsForm', 1, 1);
+</script>
+
+
 </head>
 
-<body onload="adjustDisplay();">
+  <body>
+
 
 <!-- SourceForge masthead begin -->
-<div id="sfmenubar">
 
-<script type="text/javascript" src="https://forge.ogf.org/sf-help/RoboHelp_CSH.js"></script>
+
+<script type="text/javascript" src="../../../../../sf-help/RoboHelp_CSH.js"></script>
 <script type="text/javascript">
                       var helpRoot = '/sf-help/en/index.htm>HelpWin';
     
@@ -114,24 +206,24 @@
 </script>
 
 <div id="ProjectMenu" class="menu">
-    <a class="menuItem" href="https://forge.ogf.org/sf/sfmain/do/myProjects?selectedTab=my">My Projects</a>
-    <a class="menuItem" href="https://forge.ogf.org/sf/sfmain/do/myProjects?selectedTab=all">All Projects</a>
+    <a class="menuItem" href="../../../../sfmain/do/myProjectsd3a8.html?selectedTab=my">My Projects</a>
+    <a class="menuItem" href="../../../../sfmain/do/myProjectsa641.html?selectedTab=all">All Projects</a>
 </div>
 
 <div id="SearchMenu" class="menu">
-  <a class="menuItem" href="https://forge.ogf.org/sf/search/do/quickJump" onClick="window.open('https://forge.ogf.org/sf/search/do/quickJump', 'quickjumpwindow', 'width=540,height=263'); closeMenu(activeButton); return false">Quick Jump</a>
-  <a class="menuItem" id="search" href="https://forge.ogf.org/sf/search/do/search">Search</a>
+  <a class="menuItem" href="../../../../search/do/quickJump.html" onClick="window.open('../../../../search/do/quickJump.html', 'quickjumpwindow', 'width=540,height=263'); closeMenu(activeButton); return false">Quick Jump</a>
+  <a class="menuItem" id="search" href="../../../../search/do/search.html">Search</a>
 </div>
 
 <div id="HelpMenu2" class="menu">
-<a class="menuItem" href="https://forge.ogf.org/sf/wiki/do/viewPage/projects.ggf-info/wiki/HomePage">GridForge  Help</a>
+<a class="menuItem" href="../../../../wiki/do/viewPage/projects.ggf-info/wiki/HomePage.html">GridForge  Help</a>
 
     <a class="menuItem" href="javascript:showTopicHelp(146)">Help for this Page</a>
 <a class="menuItem" href="javascript:showHelpContents()">Help Contents</a>
 <a class="menuItem" href="javascript:showHelpIndex()">Help Index</a>
-<a class="menuItem" href="https://forge.ogf.org/sf-help/en/doc/User_Guide.pdf">User Guide</a>
+<a class="menuItem" href="../../../../../sf-help/en/doc/User_Guide.pdf">User Guide</a>
 <div class="menuItemSep"></div>
-<a class="menuItem" href="https://forge.ogf.org/sf/global/do/about" onclick="javascript:closeMenu(activeButton); window.open('https://forge.ogf.org/sf/global/do/about','sfpabout','height=450,width=600'); return false;">About SourceForge</a>
+<a class="menuItem" href="../../../../global/do/about.html" onclick="javascript:closeMenu(activeButton); window.open('../../../../global/do/about.html','sfpabout','height=450,width=600'); return false;">About SourceForge</a>
 </div>
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="mastHeadBackground">
@@ -139,12 +231,12 @@
   <td>
    <table width="300" border="0" cellpadding="0" cellspacing="0" class="mastHeadLink">
      <tr class="mastHeadLinkSpacing">
-       <td nowrap="nowrap" valign="middle"><a href="https://forge.ogf.org/sf/sfmain/do/home" target="_top"><img src="https://forge.ogf.org/sf-images/masthead/logo-custom.gif" border="0" align="absmiddle"><img src="https://forge.ogf.org/ogf-it/gf_masthead.gif" border="0" align="absmiddle"></a></td>
-                    <td nowrap="nowrap" class="mastHeadLink"><a href="https://forge.ogf.org/sf/sfmain/do/home" target="_top">Home</a></td>
+       <td nowrap="nowrap" valign="middle"><a href="../../../../sfmain/do/home.html" target="_top"><img src="../../../../../sf-images/masthead/logo-custom.gif" border="0" align="absmiddle"><img src="../../../../../ogf-it/gf_masthead.gif" border="0" align="absmiddle"></a></td>
+                    <td nowrap="nowrap" class="mastHeadLink"><a href="../../../../sfmain/do/home.html" target="_top">Home</a></td>
        <td nowrap="nowrap" class="mastHeadLinkSpacing"> </td>
-                      <td nowrap="nowrap" class="mastHeadLink"><a href="https://forge.ogf.org/sf/sfmain/do/listProjects" target="_top">Projects</a></td>
+                      <td nowrap="nowrap" class="mastHeadLink"><a href="../../../../sfmain/do/listProjects.html" target="_top">Projects</a></td>
        <td nowrap="nowrap" class="mastHeadLinkSpacing"> </td>
-               <td nowrap="nowrap" class="mastHeadLink"><a href="#" onclick="return buttonClick(this, 'SearchMenu');">Search<img src="https://forge.ogf.org/sf-images/masthead/dropdown.gif" width="7" height="4" hspace="2" border="0"></a></td>
+               <td nowrap="nowrap" class="mastHeadLink"><a href="#" onclick="return buttonClick(this, 'SearchMenu');">Search<img src="../../../../../sf-images/masthead/dropdown.gif" width="7" height="4" hspace="2" border="0"></a></td>
      
           
      
@@ -164,47 +256,43 @@
               <td nowrap="nowrap"><input type="password" name="password" class="inputfield" size="8" onkeypress="javascript:submitLoginOnEnter(event)" /></td>
               <td nowrap="nowrap"><a href="javascript:submitForm(document.getElementById('globalLogin'), 'submit');">Log In</a></td>
             </form>
-            <td nowrap="nowrap"><img src="https://forge.ogf.org/sf-images/masthead/vertical_line.gif" width="1" height="19" hspace="4"></td>
-                    <td nowrap="nowrap"><a href="#" onclick="return buttonClick(this, 'HelpMenu2');">Help<img src="https://forge.ogf.org/sf-images/masthead/dropdown.gif" width="7" height="4" hspace="2" border="0"></a></a></td>
+            <td nowrap="nowrap"><img src="../../../../../sf-images/masthead/vertical_line.gif" width="1" height="19" hspace="4"></td>
+                    <td nowrap="nowrap"><a href="#" onclick="return buttonClick(this, 'HelpMenu2');">Help<img src="../../../../../sf-images/masthead/dropdown.gif" width="7" height="4" hspace="2" border="0"></a></a></td>
               </tr>
     </table>
   </td>
   </tr>
   <tr>
-    <td colspan="2" class="black"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" width="1" height="1"></td>
+    <td colspan="2" class="black"><img src="../../../../../sf-images/misc/pixel.gif" width="1" height="1"></td>
   </tr>
 </table>
-</div>
+
 <!-- SourceForge masthead end -->
 
 <!-- SourceForge buttonbar begin -->
-<div id="sfbuttonbar">
-
-
-  <!-- SourceForge buttonbar begin -->
-  <table class="TopMenu">
+<table class="TopMenu">
     <tr class="ButtonRow">
-        <td class="VerticalSeparatorNoBorder"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
-                   <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/projects/dais-wg'; return false;"><a href="https://forge.ogf.org/sf/projects/dais-wg" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-homeicon.gif" width="25" height="20" border="0"><br>Project&nbsp;Home</a></td>
-                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
-                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/tracker/do/listTrackers/projects.dais-wg/tracker'; return false;"><a href="https://forge.ogf.org/sf/tracker/do/listTrackers/projects.dais-wg/tracker" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-trackericon.gif" width="25" height="20" border="0"><br>Tracker</a></td>
-                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
-                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/docman/do/listDocuments/projects.dais-wg/docman.root'; return false;"><a href="https://forge.ogf.org/sf/docman/do/listDocuments/projects.dais-wg/docman.root" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-documentsicon.gif" width="25" height="20" border="0"><br>Documents</a></td>
-                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
-                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/taskmgr/do/viewSummary/projects.dais-wg/taskmgr'; return false;"><a href="https://forge.ogf.org/sf/taskmgr/do/viewSummary/projects.dais-wg/taskmgr" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-tasksicon.gif" width="25" height="20" border="0"><br>Tasks</a></td>
-                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
-                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/scm/do/listRepositories/projects.dais-wg/scm'; return false;"><a href="https://forge.ogf.org/sf/scm/do/listRepositories/projects.dais-wg/scm" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-scmicon.gif" width="25" height="20" border="0"><br>Source&nbsp;Code</a></td>
-                                    <td class="SelectedLeft"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" border="0" height="1" width="4"></td>
-           <td class="Button Selected" onclick="window.location = 'https://forge.ogf.org/sf/discussion/do/listForums/projects.dais-wg/discussion'; return false;"><a href="https://forge.ogf.org/sf/discussion/do/listForums/projects.dais-wg/discussion" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-forumsicon.gif" width="25" height="20" border="0"><br>Discussions</a></td>
-                 <td class="SelectedRight"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" border="0" height="1" width="4"></td>
-                 <td class="VerticalSeparatorNoBorder"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+        <td class="VerticalSeparatorNoBorder"><img src="../../../../../sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                   <td class="Button " onclick="window.location = '../../../../projects/dais-wg.html'; return false;"><a href="../../../../projects/dais-wg.html" target="_top"><img src="../../../../../sf-images/project/project-homeicon.gif" width="25" height="20" border="0"><br>Project&nbsp;Home</a></td>
+                  <td class="VerticalSeparator"><img src="../../../../../sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '../../../../tracker/do/listTrackers/projects.dais-wg/tracker.html'; return false;"><a href="../../../../tracker/do/listTrackers/projects.dais-wg/tracker.html" target="_top"><img src="../../../../../sf-images/project/project-trackericon.gif" width="25" height="20" border="0"><br>Tracker</a></td>
+                  <td class="VerticalSeparator"><img src="../../../../../sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '../../../../docman/do/listDocuments/projects.dais-wg/docman.html'; return false;"><a href="../../../../docman/do/listDocuments/projects.dais-wg/docman.html" target="_top"><img src="../../../../../sf-images/project/project-documentsicon.gif" width="25" height="20" border="0"><br>Documents</a></td>
+                  <td class="VerticalSeparator"><img src="../../../../../sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '../../../../taskmgr/do/viewSummary/projects.dais-wg/taskmgr.html'; return false;"><a href="../../../../taskmgr/do/viewSummary/projects.dais-wg/taskmgr.html" target="_top"><img src="../../../../../sf-images/project/project-tasksicon.gif" width="25" height="20" border="0"><br>Tasks</a></td>
+                  <td class="VerticalSeparator"><img src="../../../../../sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '../../../../scm/do/listRepositories/projects.dais-wg/scm.html'; return false;"><a href="../../../../scm/do/listRepositories/projects.dais-wg/scm.html" target="_top"><img src="../../../../../sf-images/project/project-scmicon.gif" width="25" height="20" border="0"><br>Source&nbsp;Code</a></td>
+                                    <td class="SelectedLeft"><img src="../../../../../sf-images/misc/pixel.gif" border="0" height="1" width="4"></td>
+           <td class="Button Selected" onclick="window.location = '../../listForums/projects.dais-wg/discussion.html'; return false;"><a href="../../listForums/projects.dais-wg/discussion.html" target="_top"><img src="../../../../../sf-images/project/project-forumsicon.gif" width="25" height="20" border="0"><br>Discussions</a></td>
+                 <td class="SelectedRight"><img src="../../../../../sf-images/misc/pixel.gif" border="0" height="1" width="4"></td>
+                 <td class="VerticalSeparatorNoBorder"><img src="../../../../../sf-images/misc/white.gif" border="0" height="40" width="1"></td>
 
-                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/frs/do/viewSummary/projects.dais-wg/frs'; return false;"><a href="https://forge.ogf.org/sf/frs/do/viewSummary/projects.dais-wg/frs" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-releasesicon.gif" width="25" height="20" border="0"><br>File Releases</a></td>
-                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
-                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/wiki/do/viewPage/projects.dais-wg/wiki/HomePage'; return false;"><a href="https://forge.ogf.org/sf/wiki/do/viewPage/projects.dais-wg/wiki/HomePage" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-wikiicon.gif" width="25" height="20" border="0"><br>Wiki</a></td>
-                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
-                             <td class="Button " onclick="window.location = 'https://forge.ogf.org/sf/sfmain/do/projectAdmin/projects.dais-wg'; return false;"><a href="https://forge.ogf.org/sf/sfmain/do/projectAdmin/projects.dais-wg" target="_top"><img src="https://forge.ogf.org/sf-images/project/project-projectadminicon.gif" width="25" height="20" border="0"><br>Project&nbsp;Admin</a></td>
-                  <td class="VerticalSeparator"><img src="https://forge.ogf.org/sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '../../../../frs/do/viewSummary/projects.dais-wg/frs.html'; return false;"><a href="../../../../frs/do/viewSummary/projects.dais-wg/frs.html" target="_top"><img src="../../../../../sf-images/project/project-releasesicon.gif" width="25" height="20" border="0"><br>File Releases</a></td>
+                  <td class="VerticalSeparator"><img src="../../../../../sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '../../../../wiki/do/viewPage/projects.dais-wg/wiki/HomePage.html'; return false;"><a href="../../../../wiki/do/viewPage/projects.dais-wg/wiki/HomePage.html" target="_top"><img src="../../../../../sf-images/project/project-wikiicon.gif" width="25" height="20" border="0"><br>Wiki</a></td>
+                  <td class="VerticalSeparator"><img src="../../../../../sf-images/misc/white.gif" border="0" height="40" width="1"></td>
+                             <td class="Button " onclick="window.location = '../../../../sfmain/do/projectAdmin/projects-18.html'; return false;"><a href="../../../../sfmain/do/projectAdmin/projects-18.html" target="_top"><img src="../../../../../sf-images/project/project-projectadminicon.gif" width="25" height="20" border="0"><br>Project&nbsp;Admin</a></td>
+                  <td class="VerticalSeparator"><img src="../../../../../sf-images/misc/white.gif" border="0" height="40" width="1"></td>
                            <td class="ButtonEnd"></td>
              </tr>
 
@@ -218,65 +306,268 @@
   </tr>
   </table>
 
-  <!-- SourceForge buttonbar end -->
-
-</div>
 <!-- SourceForge buttonbar end -->
 
 <!-- SourceForge content-area begin -->
 <div class="contentArea">
-  <!-- SourceForge crumbs begin -->
-  
-  
-    <div id="sfcrumbs"><div style="padding-bottom: 2px;"><span class="mainnavHeader"><strong class="ProjectProminent">Project: DAIS-WG</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div></div>
-  
-  <!-- SourceForge crumbs end -->
 
-  <!-- SourceForge content begin -->
-  <div style="padding-top: 10px; width: auto;">
+<!-- SourceForge crumbs begin -->
+<div style="padding-bottom: 2px;"><span class="mainnavHeader"><strong class="ProjectProminent">Project: DAIS-WG</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../go/projects.dais-wg/discussion.html">Discussion</a>&nbsp;&gt;&nbsp;<a href="../../../../go/projects.dais-wg/discussion-2.html">DAIS-WG</a>&nbsp;&gt;&nbsp;</span><strong>Topic Summary</strong></div>
+<!-- SourceForge crumbs end -->
+
+<!-- SourceForge messages begin -->
 
 
 
-<div class="errorMessage"><strong>A SourceForge system error has occurred. An unexpected system error has occurred</strong></div>
-
-<p />
 
 
 
-  
-  
-    If you feel you have received this message in error, please contact the SourceForge administrator and reference this tracking number: exid70A80D5501837E72A8D50716
-  
 
+<div style="padding-bottom: 2px; padding-top: 6px;">
 
 
 
 </div>
-  <!-- SourceForge content end -->
+<!-- SourceForge messages end -->
 
-  <div id="sfCloseWin" style="display: none;">
-    <table width="90%"><tr><td><div class="AlignRight"><div class="Button"><div class="Left">&nbsp;</div><div class="Middle"><a href="javascript:self.close();">Close</a></div><div class="Right">&nbsp;</div></div>
-</div></td></tr></table>
-  </div>
+<!-- SourceForge content begin -->
+<div style="padding-top: 10px; width: auto;">
+
+<!--Items per Page -->
+<div id="configureTableMenu" class="menu">
+<span class="menuHeader"><strong>Items per page</strong></span>
+<div class="menu3d">
+        <a id="ipp_15" class="menuItem" href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_pagesize=15"><img src="../../../../../sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;15</a>        <a id="ipp_25" class="menuItem" href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_pagesize=25"><img src="../../../../../sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;25</a>        <a id="ipp_35" class="menuItem" href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_pagesize=35"><img src="../../../../../sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;35</a>        <a id="ipp_45" class="menuItem" href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_pagesize=45"><img src="../../../../../sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;45</a>        <a id="ipp_55" class="menuItem" href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_pagesize=55"><img src="../../../../../sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;55</a>        <a id="ipp_75" class="menuItem" href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_pagesize=75"><img src="../../../../../sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;75</a>        <a id="ipp_100" class="menuItem" href="https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_pagesize=100"><img src="../../../../../sf-images/misc/pixel.gif" width="11" border="0" align="absmiddle">&nbsp;100</a>        <a id="ipp_9999" class="menuItem" href="discussion3651.html?_pagesize=9999"><img src="../../../../../sf-images/icons/check_11_by_11.gif" width="11" border="0" align="absmiddle">&nbsp;All</a></div>
+</div>
+
+
+
+
+
+
+
+<table class="Container">
+  <tr class="WidgetHeader">
+    <td>Topics</td>
+  </tr>
+  <tr>
+    <td class="ContainerBody">
+        
+        <table class="CategoryListTable">
+          <tr>
+            
+            <td class="CategoryListBody">
+              
+              <div class="ImageListParent">
+                <img src="../../../../../sf-images/icons/bullet.gif">
+                <a href="../../listForums/projects-18.html">Forum Summary</a>
+              </div>
+
+              
+                
+                
+
+                <div class="ImageListChild">
+                  <img src="../../../../../sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="discussion-2.html">Help</a>
+                </div>
+              
+                
+                
+                  
+                
+
+                <div class="ImageListChildSelected">
+                  <img src="../../../../../sf-images/icons/bullet.gif" class="ListImage">
+                  <a href="discussion.html">DAIS-WG</a>
+                </div>
+              
+            </td>
+            
+
+            
+            <td class="ContainerBodyWithPaddedBorder" width="90%" >
+              <table class="ItemDetailContainer">
+                <tr class="ContainerHeader" >
+                  <td colspan="2">
+                    DAIS-WG - Topic Summary
+                  </td>
+                </tr>
+		      
+                <tr>
+                  <td class="ItemDetailContainerCell" width="50%">
+                    <table class="ItemDetailTable">
+                      <tr>
+                        <td class="ItemDetailName">Name:</td>
+                        <td class="ItemDetailValue">DAIS-WG</td>
+                      </tr>
+                      <tr>
+                        <td class="ItemDetailName">Description:</td>
+                        <td class="ItemDetailValue">DAIS-WG</td>
+                      </tr>
+		      
+                    </table>
+                  </td>
+                  <td class="ItemDetailContainerCell" width="50%">
+                    <table class="ItemDetailTable">
+                      <tr>
+                        <td class="ItemDetailName">Participants:</td>
+                        <td class="ItemDetailValue">2</td>
+                      </tr>
+                      <tr>
+                        <td class="ItemDetailName">Topics:</td>
+                        <td class="ItemDetailValue">2</td>
+                      </tr>
+                      <tr>
+                        <td class="ItemDetailName">Posts:</td>
+                        <td class="ItemDetailValue">2</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr class="ContainerFooter">
+                <td colspan="2">
+                  <div class="AlignRight">
+                    <div class="ButtonSpace"></div>
+                    
+                  </div>
+                </td>
+              </tr>
+              </table>
+              
+
+              <br>
+
+              
+              <form action="https://forge.ogf.org/sf/discussion/do/selectTopics/projects.dais-wg/discussion.dais_wg" name="selectTopicsForm" method="POST">
+<INPUT type="HIDDEN" name="sfsubmit" />
+<INPUT type="HIDDEN" name="_submitterURL" value="http://localhost:8080/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_pagesize=9999" />
+              <table class="ItemListTable" id="TopicListTable">
+                <thead><tr class="ContainerHeader"><td colspan="9"><a href="#" onclick="return buttonClick(this, 'configureTableMenu');"><img border="0" width="16" height="16" src="../../../../../sf-images/icons/configure_table.gif" /></a><a href="javascript:collapseRow()"><img border="0" src="../../../../../sf-images/misc/filter_plus.gif" id="filtericon" /></a>
+                  
+
+
+
+
+
+                  Topics<span class="ItemCount">&nbsp;(2 Items)</span>
+                </td></tr></thead>
+
+                <tr class="ItemListHeader" >
+                  <td width="2%"><INPUT type="CHECKBOX" onClick="toggleSelectItems(this, 'selectTopicsForm', '_listItem');"  name="_listCheckAll" /></td>
+                  <td width="30%"><a id='_sort_topicList_title' href='https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_sortby=topicList%28title%29&amp;_sorder=topicList%28asc%29'><img src='../../../../../sf-images/icons/sort_up_down.gif'  width='8' height='9' hspace='2' border='0'></a>Topic Name</td>
+                  <td width="12%"><a id='_sort_topicList_postCount' href='https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_sortby=topicList%28postCount%29&amp;_sorder=topicList%28desc%29'><img src='../../../../../sf-images/icons/sort_down.gif'  width='8' height='9' hspace='2' border='0'></a>Posts</td>
+                  <td width="10%"><a id='_sort_topicList_viewCount' href='https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_sortby=topicList%28viewCount%29&amp;_sorder=topicList%28asc%29'><img src='../../../../../sf-images/icons/sort_up_down.gif'  width='8' height='9' hspace='2' border='0'></a>Views</td>
+                  <td width="8%"><a id='_sort_topicList_createdByFullName' href='https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_sortby=topicList%28createdByFullName%29&amp;_sorder=topicList%28asc%29'><img src='../../../../../sf-images/icons/sort_up_down.gif'  width='8' height='9' hspace='2' border='0'></a>Created By</td>
+                  <td width="17%"><a id='_sort_topicList_createdDate' href='https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_sortby=topicList%28createdDate%29&amp;_sorder=topicList%28asc%29'><img src='../../../../../sf-images/icons/sort_up_down.gif'  width='8' height='9' hspace='2' border='0'></a>Created On</td>
+                  <td width="8%"><a id='_sort_topicList_lastPostByFullName' href='https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_sortby=topicList%28lastPostByFullName%29&amp;_sorder=topicList%28asc%29'><img src='../../../../../sf-images/icons/sort_up_down.gif'  width='8' height='9' hspace='2' border='0'></a>Last Post By</td>
+                  <td width="8%"><a id='_sort_topicList_lastPostDate' href='https://forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_sortby=topicList%28lastPostDate%29&amp;_sorder=topicList%28asc%29'><img src='../../../../../sf-images/icons/sort_up_down.gif'  width='8' height='9' hspace='2' border='0'></a>Last Post On</td>
+                  <td>&nbsp;</td>
+                </tr>
+
+                <tr id="filter" class="OddRow" style="display: none">
+                  <td><strong>Filter:</strong></td>
+                  <td><input type="text" id="_filter!!contains!!title" name="_filter!!contains!!title" value="" class="InputField" /></td>
+                  <td></td>
+                  <td></td>
+                  <td><input type="text" id="_filter!!contains!!createdByFullName" name="_filter!!contains!!createdByFullName" value="" class="InputField" /></td>
+                  <td><input type="text" id="_filter!!date!!createdDate" name="_filter!!date!!createdDate" value="" class="InputField" /><img src="../../../../../sf-images/icons/date_popup.gif" align="absmiddle" width="16" height="16" onclick="return calShow('_filter!!date!!createdDate');" /></td>
+                  <td><select id="_filter!!string!!lastPostByFullName" name="_filter!!string!!lastPostByFullName" class="InputField"><option selected="true" value="">Any</option><option value="Allen Luniewski">Allen Luniewski</option><option value="Amy Krause">Amy Krause</option><option value="Andrew Borley">Andrew Borley</option><option value="Beth Plale">Beth Plale</option><option value="Brian Collins">Brian Collins</option><option value="Cecile Madsen">Cecile Madsen</option><option value="Celso H. Poderoso de Oliveira">Celso H. Poderoso de Oliveira</option><option value="Chris Jordan">Chris Jordan</option><option value="Craig Thomson">Craig Thomson</option><option value="Curt Kolovson">Curt Kolovson</option><option value="Dave Pearson">Dave Pearson</option><option value="Diego Toharia">Diego Toharia</option><option value="elias theocharopoulos">elias theocharopoulos</option><option value="Gary Li">Gary Li</option><option value="Giacinto Donvito">Giacinto Donvito</option><option value="Greg Riccardi">Greg Riccardi</option><option value="�iko Moreira">�iko Moreira</option><option value="Inderpal Narang">Inderpal Narang</option><option value="Isao Kojima">Isao Kojima</option><option value="James Magowan">James Magowan</option><option value="John-Paul Navarro">John-Paul Navarro</option><option value="Jonathan Davies">Jonathan Davies</option><option value="Jyotishman Pathak">Jyotishman Pathak</option><option value="Kev O&#39;Neill">Kev O&#39;Neill</option><option value="Malcolm Atkinson">Malcolm Atkinson</option><option value="Mario Antonioletti">Mario Antonioletti</option><option value="Martin Westhead">Martin Westhead</option><option value="Michael J Beckerle">Michael J Beckerle</option><option value="Miguel Esteban Gutierrez">Miguel Esteban Gutierrez</option><option value="Mike Jackson">Mike Jackson</option><option value="Neil Chue Hong">Neil Chue Hong</option><option value="Nguyen Giang Son">Nguyen Giang Son</option><option value="Nicholas Walton">Nicholas Walton</option><option value="Norman Paton">Norman Paton</option><option value="Oscar Corcho">Oscar Corcho</option><option value="Protima Banerjee">Protima Banerjee</option><option value="Sastry Malladi">Sastry Malladi</option><option value="Savas Parastatidis">Savas Parastatidis</option><option value="Scott Oster">Scott Oster</option><option value="Shannon Hastings">Shannon Hastings</option><option value="Simon Laws">Simon Laws</option><option value="SourceForge Administrator">SourceForge Administrator</option><option value="Stephen Langella">Stephen Langella</option><option value="Steven Lynden">Steven Lynden</option><option value="Sunil Ahn">Sunil Ahn</option><option value="Susan Malaika">Susan Malaika</option><option value="Thomas Soddemann">Thomas Soddemann</option><option value="Trevor O\\\&#39;Connell">Trevor O\\\&#39;Connell</option><option value="Vijay Dialani">Vijay Dialani</option><option value="Vikram Sorathia">Vikram Sorathia</option><option value="wildwolf">wildwolf</option><option value="Xiaocheng">Xiaocheng</option><option value="xiaoqiong zhao">xiaoqiong zhao</option></select></td>
+                  <td><input type="text" id="_filter!!date!!lastPostDate" name="_filter!!date!!lastPostDate" value="" class="InputField" /><img src="../../../../../sf-images/icons/date_popup.gif" align="absmiddle" width="16" height="16" onclick="return calShow('_filter!!date!!lastPostDate');" /></td>
+                  <td>&nbsp;</td>
+                </tr>
+
+                  
+                  
+                  <tr class="OddRow">
+                    <td><INPUT type="CHECKBOX" onClick="toggleButtons(this);" value="topc3936"  name="_listItem" /></td>
+                    <td >topc3936:&nbsp;<a href="../../listPosts/projects.dais-wg/discussion.dais_wg.html">JDBC Webrowset</a></td>
+                    <td >1</td>
+                    <td >1419</td>
+                    <td><a href="../../../../global/do/viewUser/deigote.html">Diego Toharia</a></td>
+                    <td>08/02/2006 7:43 AM</td>
+                    <td><a href="../../../../global/do/viewUser/deigote.html">Diego Toharia</a></td>
+                    <td>08/02/2006 7:43 AM</td>
+                    <td>
+                      
+                        
+                        
+                          &nbsp;
+                        
+                      
+                    </td>
+                  </tr>
+                  
+                
+                  <tr class="EvenRow">
+                    <td><INPUT type="CHECKBOX" onClick="toggleButtons(this);" value="topc2765"  name="_listItem" /></td>
+                    <td >topc2765:&nbsp;<a href="../../listPosts/projects.dais-wg/discussion.dais_wg-2.html">test</a></td>
+                    <td >1</td>
+                    <td >1323</td>
+                    <td><a href="../../../../global/do/viewUser/flyhorse2k.html">wildwolf</a></td>
+                    <td>02/10/2006 3:29 AM</td>
+                    <td><a href="../../../../global/do/viewUser/flyhorse2k.html">wildwolf</a></td>
+                    <td>02/10/2006 3:29 AM</td>
+                    <td>
+                      
+                        
+                        
+                          &nbsp;
+                        
+                      
+                    </td>
+                  </tr>
+                  
+                
+                
+
+              <tr class="ContainerFooter">
+                <td colspan="9">
+                  <div class="AlignLeft">
+                    
+                  </div>
+                  <div class="AlignRight">
+                    <div class="Button" id="removefilter" style="display: none"><div class="Left">&nbsp;</div><div class="Middle"><a href="javascript:setFormAction('selectTopicsForm', '/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg') && submitForm(document.selectTopicsForm, '_filterRemove');">Remove Filter</a></div><div class="Right">&nbsp;</div></div>
+<div class="ButtonSpace"></div><div class="Button" id="applyfilter" style="display: none"><div class="Left">&nbsp;</div><div class="Middle"><a href="javascript:setFormAction('selectTopicsForm', '/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg') && submitForm(document.selectTopicsForm, '_filterApply');">Apply Filter</a></div><div class="Right">&nbsp;</div></div>
+<div class="ButtonSpaceSeparator" id="divider" style="display: none"><img src="../../../../../sf-images/misc/button_divider.gif" height="20" width="2"></div>
+                    
+                    <div class="ButtonSpace"></div>
+                    
+                    <div class="ButtonSpace"></div>
+                    
+                  </div>
+                </td>
+              </tr>
+
+              </table>
+              </form>
+              
+
+            </td>
+          </tr>
+        </table>
+        
+    </td>
+  </tr>
+</table>
+
+</div>
+<!-- SourceForge content end -->
+
 </div>
 <!-- SourceForge content-area end -->
 
-<!-- help popup -->
-<div id="popmenu" class="popupmenu" onmouseover="clearhidemenu();highlightmenu(event,'on')" onmouseout="highlightmenu(event,'off');dynamichide(event)" style="left: 774px; top: 17px; visibility: hidden;"><table border="0" cellpadding="0" cellspacing="0" class="textarea"><tbody><tr><td><div class="menuitems"><nobr><a href="#">Help for this Page</a></nobr></div>
-<!-- help index -->
-<div class="menuitems"><nobr><a href="#">Help Index</a></nobr></div>
-<div style="text-align: center; padding-top: 3px; padding-bottom: 3px;"><nobr><table border="0" cellspacing="0" cellpadding="0"><tbody><tr><td height="1" valign="middle"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" width="5" height="1"></td><td><img src="https://forge.ogf.org/sf-images/masthead/menu_divider_leftcap.gif" width="1" height="2"></td><td width="100%" background="https://forge.ogf.org/sf-images/masthead/menu_middle.gif"><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" width="1" height="1"></td><td><img src="https://forge.ogf.org/sf-images/masthead/menu_divider_rightcap.gif" width="1" height="2"></td><td><img src="https://forge.ogf.org/sf-images/misc/pixel.gif" width="5" height="1"></td></tr></tbody></table></nobr></div>
-<!-- about SF -->
-<div class="menuitems"><nobr><a href="https://forge.ogf.org/sf/sfmain/do/about/">About SourceForge 4.0.2</a></nobr></div></td></tr></tbody></table></div>
+<div id="PageLoaded" style="display: none;"></div>
+
 
 <!-- forge.gridforum.org footer.html -->
 <br> <hr>
 <table width='100%'> 
  <tr>
-  <td align='left'>   <a href='http://www.ogf.org/' target='_blank' style='border: 0 px;'><img src='https://forge.ogf.org/ogf-it/opengridforum.gif' alt='The Open Grid Forum' style='border:0px white solid;'></a><td>
+  <td align='left'>   <a href='../../../../../../www.ogf.org/index.html' target='_blank' style='border: 0 px;'><img src='../../../../../ogf-it/opengridforum.gif' alt='The Open Grid Forum' style='border:0px white solid;'></a><td>
   <td align='center'> <a href='mailto:webmaster@ogf.org'>Contact Webmaster</a> 
-                    | <a href="https://forge.ogf.org/sf/tracker/do/createArtifact/projects.ggf-info/tracker.bug_reports">Report a problem</a>
-                    | <a href="https://forge.ogf.org/sf/wiki/do/viewPage/projects.ggf-info/wiki/HomePage">GridForge Help</a>
+                    | <a href="../../../../tracker/do/createArtifact/projects.ggf-info/tracker.html">Report a problem</a>
+                    | <a href="../../../../wiki/do/viewPage/projects.ggf-info/wiki/HomePage.html">GridForge Help</a>
                     </td>
   <td align='right'>  
 <!--		<img src='/ogf-it/powered_by_dell.gif' alt='Powered by Dell'> -->
@@ -304,5 +595,7 @@ pageTracker._trackPageview();
 
 </body>
 
-<!-- Mirrored from forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_pagesize=9999 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:40:35 GMT -->
+<!-- Mirrored from forge.ogf.org/sf/discussion/do/listTopics/projects.dais-wg/discussion.dais_wg?_pagesize=9999 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 18 Oct 2022 18:42:29 GMT -->
 </html>
+
+

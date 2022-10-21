@@ -1,0 +1,158 @@
+From: ogsa-wg-bounces@ogf.org on behalf of Frank Siebenlist
+[franks@mcs.anl.gov]
+Sent: Monday, October 02, 2006 2:55 AM
+To: Mailing List for OGSA-NAMING-WG
+Cc: ogsa-naming-wg@ggf.org; 'OGSA WG'; 'Mailing List for OGSA-WG'
+Subject: Re: [ogsa-wg] [ogsa-naming-wg] ws-naming: Returning an
+alias-EPI in the referral-fault
+
+Comments in-line for the discussion tomorrow:
+
+Andrew Grimshaw wrote:
+> Frank,
+> We discussed this in our group this morning - and don't believe that 
+> the specification requires any changes to support the use cases. I'll 
+> explain below.
+>
+>   
+>> -----Original Message-----
+>> From: ogsa-wg-bounces@ogf.org [mailto:ogsa-wg-bounces@ogf.org] On 
+>> Behalf Of Frank Siebenlist
+>> Sent: Thursday, September 14, 2006 10:24 AM
+>> To: OGSA WG; ogsa-naming-wg@ggf.org
+>> Subject: [ogsa-wg] ws-naming: Returning an alias-EPI in the referral- 
+>> fault
+>>
+>> I'd like to share two use cases for the return of a alias-EPI a an 
+>> alternative to returned referral resolver services:
+>>
+>> * Two EPIs are independently generated for the same resource.
+>> If we associate a resource with some bio-object, the it happens that 
+>> two different researchers "name" the same object independently from 
+>> each other. When this is discovered, one needs the option to 
+>> consolidate the metadata and policy "underneath" one of those EPIs to 
+>> lessen the burden of maintenance and to ensure consistency. A common 
+>> solution is to assign a "master-EPI", and to let the other EPIs refer 
+>> to that master-EPI when it receives resolution requests.
+>>
+>>     
+> [Andrew Grimshaw]
+> A couple of things. First, we thought about this and believe that it 
+> is really an upper level naming issue - there is a desire to have a 
+> human name that is re-mapped to a different entity - the two resources 
+> are DIFFERENT resources - the original - and the "new" one. Thus, by 
+> remapping an RNS name we can accomplish the goal.
+>   
+
+There are no human names here and RNS has no use.
+
+> Assuming for the moment that the above does not satisfy your use case 
+> - then what you are trying to do is to redirect access to the "old" 
+> resource to the "new" resource. Your suggestion was to return a 
+> "fault" and a new EPI. We believe that is the wrong approach. Instead 
+> an EPR that points to the new "resource" should be minted that still 
+> contains the old EPI (if there was an EPI to begin with). Thus, to the 
+> client it is still the same resource -- just at a different location. 
+> The client does not have to go through and change all of their 
+> references to the old EPI at all.  This way the semantics of what you 
+> are trying to accomplish are hidden away in your particular implementation - and not exposed at the semantic level.
+>   
+
+EPIs can be communicated in many ways and live forever - they can be embedded in EPRs, but can also be communicated through queries, emails or pigeons.
+
+Assume that I have an EPI-1 that was issued for a certain resource and the resolution info was maintained in resolution server R-1, and an
+EPI-2 issued for another resource and that resolution info was maintained in resolution server R-2.
+Then it is discovered that those two resource "are" the same identical resource It is then decided that the resource's resolution&meta-data info is consolidated and maintained in one location only, say R-2. Furthermore, after the consolidation policy will be expressed on EPI-2 only.
+When a global naming system is used for EPI-1, like dns/lsid/handle, then that EPI-1 will always be bound to resolution server R-1.
+In such cases, one would want R-1 to resolve to the new EPI-2 as a referral to the EPI where the current resolution/metadata is maintained.
+
+R-1 could potentially return a ReferenceResolver-EPR instead, which would refer to the EPI-2 entry at R-2, and this would be allowed by the current spec.
+
+Semantically there is no difference between returning a referral through an alias-EPI or a referral through a ReferenceResolver, and it is a choice of the deployed naming server implementation which one makes sense.
+
+Therefor there shouldn't be any objection to the suggested enhancement especially when a real use case is identified.
+
+
+>> * Moving metadata management to a different admin domain.
+>> When a global naming system and global resolution frameworks are 
+>> used, like DNS, HandleSystem or LSID, then the EPI's URI will include 
+>> information about the naming server, i.e. the "prefix". This prefix 
+>> in the name is commonly mapped to a real, physical identifier service 
+>> that is used to administer the metadata/resolution bindings and such 
+>> a server will be part of a certain admin domain. When the 
+>> owner/administrator/PI of the individual identifier binding 
+>> moves/changes-jobs, she often wants to take the data-objects with her 
+>> to the new admin domain as well as the ability to administer the 
+>> identifier bindings. Unless that user "owns" a whole prefix, the 
+>> administration of the identifier has to remain at the original naming 
+>> server. This is often not an acceptable solution both for the naming 
+>> server admin domain as well as the original identifier owner. A 
+>> common solution is to create a new EPI with a prefix that is 
+>> maintained in the new admin-domain, and to use that for all the 
+>> bindings/resolution information, and to add to the original EPI a one-time referral to the new EPI.
+>>
+>>
+>>     
+> [Andrew Grimshaw]
+> I can see where you are coming from - especially having been deeply 
+> involved in LSID's. However, the WS-Name spec specifically says that 
+> the EPI should be location independent - and that clients should not 
+> assume anything about the internal structure (besides it being a URI). 
+> Embedding the name of the name server in the prefix is not something 
+> that implementations should count on (client implementations; if 
+> you're implementation wants to do that - fine
+> - but it should not effect the overall specification.) Remember, that 
+> the client can uses any resolver to attempt to resolve the name - they 
+> don't have to use the one in the EPR.
+>   
+
+Not sure where we state that an EPI should be "location independent"...
+or not even sure what that means in your context.
+
+The spec should not rely on any specific resolver information embedded in an EPI, but it should neither exclude any use of such information.
+
+We have chosen the URI format for our EPIs for a reason (at least I
+have...) as it allows the client applications to find the right resolver. Your suggestion that a client can use "any resolver to attempt to resolve the name" doesn't sound very efficient.  Our implementation will make use of the fact that those EPIs are URIs, and the first dispatching will be based on the URI-schema to find the right resolver (uuid:/http:/dns:/lsid:/hdl:). Then depending on available schema-specific handlers, one could associate resolver servers with naming authorities. All those are "optimizations" that make sense if we use real globally resolvable naming schema and I sure hope that we will not cripple our spec to make it impossible to use those strategies.
+
+
+>> The semantics for the referral fault is something like:
+>>
+>> "The resolver service that was asked for the resolution was unable to 
+>> provide the caller with the resolution information. However, the 
+>> resolution service has alternative information returned which the 
+>> caller may optionally use to try to resolve."
+>>
+>> It seems to me that returning a alias-EPI fits very well within the 
+>> referral fault semantics. Furthermore, the processing of a returned 
+>> alias-EPI seems completely equivalent to the processing of the 
+>> original EPI with some checks for looping and such.
+>>
+>> Enjoy the F2F without me.
+>>
+>> Regards, Frank.
+>>
+>> --
+>> Frank Siebenlist               franks@mcs.anl.gov
+>> The Globus Alliance - Argonne National Laboratory
+>>
+>> --
+>>   ogsa-wg mailing list
+>>   ogsa-wg@ogf.org
+>>   http://www.ogf.org/mailman/listinfo/ogsa-wg
+>>     
+>
+> --
+>   ogsa-naming-wg mailing list
+>   ogsa-naming-wg@ogf.org
+>   http://www.ogf.org/mailman/listinfo/ogsa-naming-wg
+>
+>   
+
+-- 
+Frank Siebenlist               franks@mcs.anl.gov
+The Globus Alliance - Argonne National Laboratory
+
+--
+  ogsa-wg mailing list
+  ogsa-wg@ogf.org
+  http://www.ogf.org/mailman/listinfo/ogsa-wg

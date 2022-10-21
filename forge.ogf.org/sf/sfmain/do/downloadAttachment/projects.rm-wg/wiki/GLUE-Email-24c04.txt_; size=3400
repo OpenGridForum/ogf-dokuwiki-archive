@@ -1,0 +1,71 @@
+From: Sergio Andreozzi [sergio.andreozzi@cnaf.infn.it]
+Sent: Wednesday, July 25, 2007 10:08 AM
+To: Strong, Paul
+Cc: Laurence Field; Sergio Andreozzi; rm-wg@ogf.org; Balazs Konya
+Subject: Re: Some Questions :o)
+
+Hi Paul
+
+Strong, Paul wrote:
+> So, if I understand correctly, the management abstractions behind the 
+> Service are only important in that...
+> 
+> 1)   The Job must have a way of expressing it's dependencies - that is
+> what binaries it may need, what data it may need, what types of CPU it 
+> can run on etc.  JSDL can supply this - right?
+
+yes, JSDL is the solution for this; in its evolution, a JSDL document will contain an XQuery expression for expressing the requirements on the resource (e.g., OSType); the resource is expected to be modeled by GLUE;
+
+in other words, GLUE will provide the resource description on which users can express requirements for their jobs
+
+> 2)   The Job must have a way of expressing the desired service level
+> objectives, for example desired completion time (absolute), maximum 
+> job duration, maximum % of resources to be consumed and so forth.
+
+yes
+
+> 3)   The User must be able to get monitoring information and results
+> from the service that include progress versus service level, resources 
+> consumed versus share and so forth.
+
+yes, this is typically provided by the BES interface;
+
+> This brings us back to what Dave was suggesting about drilling down on
+> Share (to some degree).   The area to be refined is perhaps more on the
+> side of the interaction of the user with the service and between the 
+> two organizations.  For example when submitting the Job and querying 
+> progress of the Job.  Examples -
+> 
+> 1)	Do Users simply know what services they can access based on a
+> set of Shares or agreements already in place between their organization
+> and the Admin Domain?   Do they poll services (that are presumably
+> advertized) to see which ones they have shares with and which have 
+> spare capacity?
+yes, this is the scenario in current production Grids like EGEE and the one that we want to support for GLUE 2
+
+> Or can they dynamically negotiate access/Shares and so forth?
+
+this is a more complex situation; BES does not support negotiation; there is a specific language for this (WS-Agreement), but this is not in our focus so far
+
+
+> 2)	How complete or self contained does the job submission have to
+> be? Thus is it simply a request for a binary already installed and 
+> made available by the service or can the submission include the binary 
+> and instructions on how this should be deployed? :o)
+
+the second option; GLUE 1.3 includes attributes to support this scenario; you can see a raw summary of the potential attributes for each
+  class in the GLUE 2 draft that you already have (below each table there is a flat list coming from GLUE 1.3 and NorduGrid)
+
+> This makes a big
+> difference in terms of the level of detail that needs to be exposed by 
+> the Service and expressed in the Share concept.
+
+
+I still have to digest your proposal. A couple of early comments:
+
+1. I see the Share as a specialization of Policy; can you remind me what are management concepts that apply to a policy? and also, what do you think about moving from share concept to SLA?
+
+2. can you give a draft definition of what a container is in this context?
+
+
+Cheers, Sergio

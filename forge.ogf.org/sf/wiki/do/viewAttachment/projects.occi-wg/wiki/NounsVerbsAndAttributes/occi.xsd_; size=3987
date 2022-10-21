@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://occi-wg.org/model" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://occi-wg.org/model" xmlns:occi="http://occi-wg.org/model">
+	<xs:element name="Link" type="Link"/>
+	<xs:complexType name="Link" abstract="true">
+		<xs:sequence>
+			<xs:element name="interface" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Tag" type="Tag" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Group" type="Group"/>
+	<xs:complexType name="Group" abstract="true">
+		<xs:sequence>
+			<xs:element name="Compute" type="Compute" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Group" type="Group" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Tag" type="Tag" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Compute" type="Compute"/>
+	<xs:complexType name="Compute">
+		<xs:complexContent>
+			<xs:extension base="Resource">
+				<xs:sequence>
+					<xs:element name="architecture" type="xs:string" minOccurs="1" maxOccurs="1"/>
+					<xs:element name="cpuCores" type="xs:int" minOccurs="1" maxOccurs="1"/>
+					<xs:element name="cpuSpeed" type="xs:double" minOccurs="1" maxOccurs="1"/>
+					<xs:element name="memory" type="xs:int" minOccurs="1" maxOccurs="1"/>
+					<xs:element name="persistent" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+					<xs:element name="status" type="xs:string" minOccurs="1" maxOccurs="1"/>
+					<xs:element name="summary" type="xs:string" minOccurs="1" maxOccurs="1"/>
+					<xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+					<xs:element name="StorageLink" type="StorageLink" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="NetworkLink" type="NetworkLink" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Network" type="Network"/>
+	<xs:complexType name="Network">
+		<xs:complexContent>
+			<xs:extension base="Resource">
+				<xs:sequence>
+					<xs:element name="ips" type="xs:string" minOccurs="1" maxOccurs="1"/>
+					<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="StorageLink" type="StorageLink"/>
+	<xs:complexType name="StorageLink">
+		<xs:complexContent>
+			<xs:extension base="Link">
+				<xs:sequence>
+					<xs:element name="Storage" type="Storage" minOccurs="1" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="NetworkLink" type="NetworkLink"/>
+	<xs:complexType name="NetworkLink">
+		<xs:complexContent>
+			<xs:extension base="Link">
+				<xs:sequence>
+					<xs:element name="Network" type="Network" minOccurs="1" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Tag" type="Tag"/>
+	<xs:complexType name="Tag">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Resource" type="Resource"/>
+	<xs:complexType name="Resource">
+		<xs:sequence>
+			<xs:element name="Tag" type="Tag" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Storage" type="Storage"/>
+	<xs:complexType name="Storage">
+		<xs:complexContent>
+			<xs:extension base="Resource">
+				<xs:sequence>
+					<xs:element name="size" type="xs:int" minOccurs="1" maxOccurs="1"/>
+					<xs:element name="summary" type="xs:string" minOccurs="1" maxOccurs="1"/>
+					<xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,206 @@
+--------------------------------------------------------------------------------
+nml-examples/201203-subtopology
+    alias.xml
+        - Option 1: Relation is not explicit, implicit through the fact that IDs are used in two different topos.  This may be enough, do we need to say that 'topo a == topo b' for anything?
+
+        - Option 2a: I dont see a problem with the conept of the alias, but I do worry about defining a topology 'in' a relation in a topology.  Maybe they are defined outside of each other?  This would help with referencing things (topologies and ports).  I can see an issue with the way things are referenced, e.g.:
+        
+    <!-- relate the external and internal topology together -->
+    <nml:port idRef="urn:ogf:network:ndn.example.net:2013:ndn.efdx:Internet2-i">
+        <nml:relation type="alias">
+            <nml:port idRef="urn:ogf:network:ndn.example.net:2013:ndn.efdx:IONi" />
+        </nml:relation>
+    </nml:port>
+    
+           The "IONi" port may not be known at this scope (if we were following scoping rules, its not clear if we are ...).  Even if we are not 'publishing' something, we may want to note that it is legal.  Something like this:
+        
+        <!-- just define it out -->
+        <topo id="1-priv" />
+        
+        <topo id="1-pub">
+          <!-- other stuff -->
+          <relation type="hasTopo">
+            <topo id="1-priv">
+              <!-- stuff that is populated, and not shared -->
+            </topo>   
+          </relation>
+        </topo>
+
+or this one, which I actually prefer, but may not be popular ...
+
+        <!-- just define it out -->
+        <topo id="1-priv">
+          <!-- stuff that is populated, and not shared -->
+        </topo>
+        
+        <topo id="1-pub">
+          <!-- other stuff -->
+          <relation type="hasTopo">
+            <topo id="1-priv" />
+          </relation>
+        </topo>
+        
+        - Option 3: See coments above about reference scope.  I also don't like relating via links (not strongly though, I just see option 2 using ports being a little cleaner).  
+
+
+    hasNode.xml
+        - Option 1: I am naturally Biased to this since I wrote it.  Basically the relationship between the topology and things in it, is made explicit by schema rules.  A topology contains 'things' natively.  
+
+        - Option 2/3/4: This doesnt seem necessary since the topology contains thigns by nature of the schema directly.  Relations should be used to link things where there is no explict parent/child relationship available, or when the relation is non standard.  
+        
+
+    hasTopology.xml
+
+        - From Freek's question (1): I dont have a copy of the schema handy, but can a topology have a direct topology child?  If it can, this isn't really needed (see comments for hasNode).  If it isn't, then this seems reasonable.  
+
+        - From Freek's question (2): These are all different, and sometimes not really needed (see above comment,and comment from has Nodes)
+
+        - From Freek's question (3): hasTopo is my vote.  
+
+    inbound-outbound-ports.xml
+
+        - Option 1: I am biased toward this one as well, since I wrote it :).  I agree of the 'con' though.  
+        
+        - Option 2: I don't think this tells us anymore information than the previous.  It also elevates 'bi-directional port' to a first level element (currently it is not, its a group).  
+        
+        - Option 3: I like this, this is my vote.  I prefer the names 'hasOutboundPort' and 'hasInboundPort'
+        
+        - Option 4: See commentary for #2
+
+
+
+
+
+--------------------------------------------------------------------------------
+    
+
+--------------------------------------------------------------------------------    
+nml-examples/201203-versioning
+    alias-version.xml
+        This idea doesnt seem clean to me, we have version information imparted in the namespace (to describe a schema version).  If this is really just another way to describe lifteime, it uses an attribute instead of an element - and thats a silly argument to have which one is 'better'.  If we see lifetime as being complex and needing to be filled with lots of things, let it be an element (e.g. right now it has a start, and an end or a duration).  If its as simple as a timestamp, I suppose it works as an attribute.  
+    
+        The comments here mirror the comments in 'alias-lifetime' below.  
+    
+        Option 1 Comments
+    
+            - It may be the case that each element has a version (in fact this would make it explicit, since I doubt that version is transitive and may not pass from child to parent (Aaron should confirm this)
+            - See my earlier comments about 'hasNode', I am not sure this is needed since Node is allowed tobe a child of topology.  
+        
+            - See comments in '201203-subtopology', we need to be sure to worry about defn scope unless its truely *never* going to be used anywhere else.  Even in this case, I would still prefer a dummy defn (e.g. <node id=1 />) to appear outside.  
+        
+            - Since both topos have the same name, I wonder about ID conflicts ...
+        
+        Option 2 Comments
+            - Prior comments apply here too (hasNode, version, topos, etc.)
+
+            - If things are truely internal, this seems cleaner (e.g. we know the current state within the defn and how many times it changed).  I doubt its ever going to remain inside of this though, due to scoping and wanting to reference things outside (not necessarily a 'public' reference, but a reference internally).  I would prefer option 1 to this.  
+        
+        Freek's Comments:
+
+<!--
+The meaning of the version is "the attributes in the network object with version <timestamp D> 
+are valid starting on timestamp D." If the same network object is described with a different 
+timestamp, that description becomes valid starting from that timestamp. A timestamp may be in 
+the future to signify an planned change in the future.
+-->
+            - JZ: This seems to hold less information than a lifetime element (we dont know a start + end/duration) and harder to tell at a glance when things start and end.  We need to compare all known aliases to build a timeline, this would be a pain to check for overlaps.  
+
+
+<!--
+I favour the use of version over the lifetime object in the above examples, though the description 
+of a scheduled link is more natural with a lifetime object. Perhaps it is possible to use both 
+concepts: lifetime object and version attribute. In fact, that makes it possible to update the 
+lifetime of a scheduled reservation if a user decides to prolong his or her reservation.
+-->
+
+        - JZ: I feel the opposite, version isn't telling us anything that lifetime doesn't do, and its providing less information.  
+
+    
+
+    lifetime.xml
+        - "Lifetime" has appeared in numerous examples, and is featired in the current working draft of the NML Schema.  
+        
+        - Any element can have a lifetime (not just segments in an end to end link), the common use case is for termporal links
+        
+        - Aaron should provide NML with practical examples from OSCARS circuit construction and pS Circuit monitoring
+        
+        - I do not understand the 'hasLifetime' relation element and included 'timeframe' elements.  Lifetime is a first order element, e.g.:
+        
+        <link>
+          <!-- ... stuff about link ...->
+          
+          <lifetime>
+             <startTime>some time</startTime>
+             </endTime>some other time</endTime>
+             <!-- or 'duration' -->
+          </lifteime>          
+
+        </link>
+
+    alias-lifetime.xml
+    
+        Option 1 Comments
+    
+            - See commentary from lifetime, its not really a relation (its an element).  
+        
+            - It may be the case that each element has a lifetime (in fact this would make it explicit, since I doubt that lifetime is transitive and may not pass from child to parent (Aaron should confirm this)
+            - See my earlier comments about 'hasNode', I am not sure this is needed since Node is allowed tobe a child of topology.  
+        
+            - See comments in '201203-subtopology', we need to be sure to worry about defn scope unless its truely *never* going to be used anywhere else.  Even in this case, I would still prefer a dummy defn (e.g. <node id=1 />) to appear outside.  
+        
+            - Since both topos have the same name, I wonder about ID conflicts ...
+        
+        Option 2 Comments
+            - Prior comments apply here too (hasNode, lifetime, topos, etc.)
+        
+            - If things are truely internal, this seems cleaner (e.g. we know the current state within the defn and how many times it changed).  I doubt its ever going to remain inside of this though, due to scoping and wanting to reference things outside (not necessarily a 'public' reference, but a reference internally).  I would prefer option 1 to this.  
+
+        Option 3 Comments
+            - Prior comments apply here too (hasNode, lifetime, topos, etc.)
+        
+            - I dont have a strong opinion about lifetimes being attached to a relationship, but I would prefer not.  I think lifetime belongs attached to an object (link, port, node).  
+    
+        Option 4 Comments
+            - Prior comments apply here too (hasNode, lifetime, topos, etc.)
+        
+            - I think the alias at the port level is confusing.  The alias should be done at high an 'element' as it can (e.g. topology vs port).  This is not a strong opinion
+
+        Freek's Comments:
+           
+<!--
+My conclusion: 
+In proposal 1, 2 and 4, the word "lifetime" might be confused to mean "the lifetime of the network object" rather than what is meant here, "lifetime of the given attributes". In proposal 4, the lifetime object is attached to a relation, not to a network object. This is different from what the current NML schema describes, and it may be undesirable to add attributes to the relation object (NML is already pretty complex, and that won't make it easier).
+-->
+
+            JZ - Lifetime of network object is how we have used it before because ports/links were termporal in the ION space, and were joined to a physical instantiation sometimes, and other times not.  If we start associating lifetime to the 'action' (e.g. the relationship) it makes this element a first order element, not just a *property* of a first order element.  This is a large decission, and shouldn't be taken lightly.  
+                       
+<!--
+I propose to use the "version" attribute instead of the "lifetime" object to describe the above. However, if I had to choose a location of the "Version" or "lifetime", it will be proposal #1 -- FD
+-->
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+nml-examples/201203-vlans
+
+    compoundlink.xml
+        - This example looks fine to me.  
+
+        - The name of the relation is immaterial, its a 'name' describing a process.  I vote "serialCompoundLink" since this is as specific as we can get. 
+        
+        - The name of the other relations is also immaterial, its just a 'name' for a process that is well defined.  If we are going to follow patterns for all names (e.g. action/object ["does-Something, is-Something"] than we should stick with that.  Otherwise its a name, and it should just be put into the standard as is.  
+
+    vlan-link.xml
+        - This example looks fine to me.  
+
+        - Shold the bidirectional links be named, in case they are to be re-used?
+
+--------------------------------------------------------------------------------
+

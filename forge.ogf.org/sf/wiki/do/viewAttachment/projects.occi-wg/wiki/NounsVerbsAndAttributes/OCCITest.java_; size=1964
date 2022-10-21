@@ -1,0 +1,77 @@
+package org.occiwg.model;
+
+import org.occiWg.model.Compute;
+import org.occiWg.model.ComputeDocument;
+import org.occiWg.model.Group;
+import org.occiWg.model.GroupDocument;
+import org.occiWg.model.Network;
+import org.occiWg.model.NetworkLink;
+import org.occiWg.model.Storage;
+import org.occiWg.model.StorageLink;
+import org.occiWg.model.Tag;
+
+public class OCCITest {
+
+	/**
+	 * A test to create a model instance.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+
+	    GroupDocument grpDoc = GroupDocument.Factory.newInstance();
+	    Group grp = grpDoc.addNewGroup();
+	    Tag tag = grp.addNewTag();
+	    tag.setName("rack1");
+	    
+	    for(int i=0; i<5; i++){
+		    Compute compute = createCompute();
+		    
+		    grp.addNewCompute();
+		    grp.setComputeArray(i, compute);
+	    }
+
+	    System.out.println(grpDoc.toString());
+		
+	}
+
+	private static Compute createCompute() {
+		ComputeDocument vm1Doc = ComputeDocument.Factory.newInstance();
+	    Compute vm1 = vm1Doc.addNewCompute();
+	    
+	    vm1.setArchitecture("x86");
+	    vm1.setCpuCores(2);
+	    vm1.setCpuSpeed(2.0);
+	    vm1.setMemory(512);
+	    vm1.setPersistent(true);
+	    vm1.setStatus("running");
+	    vm1.setSummary("A basic compute resource");
+	    vm1.setTitle("A Compute Resource");
+	    
+	    addNetwork(vm1);
+	    addStorage(vm1);
+	    addTags(vm1);
+		return vm1;
+	}
+
+	private static void addTags(Compute vm1) {
+		Tag vmTag = vm1.addNewTag();
+	    vmTag.setName("virtualmachine");
+	    Tag vmTag1 = vm1.addNewTag();
+	    vmTag1.setName("small");
+	}
+
+	private static void addStorage(Compute vm1) {
+		StorageLink sl = vm1.addNewStorageLink();
+	    Storage stor = sl.addNewStorage();
+	    stor.setSize(10000);
+	    stor.setSummary("Some fast storage");
+	    stor.setTitle("Storage");
+	}
+
+	private static void addNetwork(Compute vm1) {
+		NetworkLink nl = vm1.addNewNetworkLink();
+	    Network net = nl.addNewNetwork();
+	    net.setIps("192.168.1.45");
+	    net.setName("private");
+	}
+}

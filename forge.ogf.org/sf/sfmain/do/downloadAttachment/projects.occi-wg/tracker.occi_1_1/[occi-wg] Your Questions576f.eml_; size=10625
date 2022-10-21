@@ -1,0 +1,249 @@
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00800000
+X-Mozilla-Keys:                                                                                 
+Message-ID: <4E1CD634.7000008@r2ad.com>
+Date: Tue, 12 Jul 2011 19:18:12 -0400
+From: Michael Behrens
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20110706 Firefox/5.0 SeaMonkey/2.2
+MIME-Version: 1.0
+To: alexander.papaspyrou@tu-dortmund.de, contact@crohr.me
+CC: occi-wg@ogf.org
+Subject: Re: [occi-wg] Your Questions...
+References: <CACfSb-ZM-XJTRE7anbYFeVQe4-pM=OoGEPqPMJWX=gd=45w_jg@mail.gmail.com> <376F4D2D-B5EA-4AF6-915F-9CF251C5367F@crohr.me> <0B503E76919828489362F1FA504835080123664A@catoexm07.noam.corp.platform.com> <7B0174A4-6D76-4D15-BADC-63EBA2A63434@crohr.me> <AD611CCB-4996-4525-986A-D7A104ACE4A2@tu-dortmund.de>
+In-Reply-To: <AD611CCB-4996-4525-986A-D7A104ACE4A2@tu-dortmund.de>
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+<html>
+  <head>
+    <meta content="text/html; charset=ISO-8859-1"
+      http-equiv="Content-Type">
+  </head>
+  <body bgcolor="#FFFFFF" text="#000000">
+    Agree - good input.&nbsp; We should add some trackers for these.<br>
+    <br>
+    <a class="moz-txt-link-abbreviated" href="mailto:alexander.papaspyrou@tu-dortmund.de">alexander.papaspyrou@tu-dortmund.de</a> wrote:
+    <blockquote
+      cite="mid:AD611CCB-4996-4525-986A-D7A104ACE4A2@tu-dortmund.de"
+      type="cite">
+      <pre wrap="">I think that Cyril is right, and we should address this.
+
+Frankly, I never understood the purpose of the text/plain rendering, for exactly the reasons Cyril stated in his e-mail, and I very much doubt the idea of text/occi. Actually, both make implementing the spec quite a pain.
+
+Personally, I like the idea of using the headers for transporting REST resource metadata, as long as we don't overdo it -- I think the Link headers are a good example of doing the right thing.  
+
+Regarding categories, I am quite confident that, for indicating the "kind" of a resource (clearly being metadata), the "Category" header is a good way of doing it. For filtering, I'd support Cyril in so far that query strings have been made for exactly this purpose.
+
+Just my two cents to keep the fire burning ;-)
+
+-Alexander
+
+Am 11.07.2011 um 12:20 schrieb Cyril Rohr:
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="">Hi Thijs,
+
+I didn't talk about `text/plain` because IMO it's even worse than `text/occi`.
+How a user-agent is supposed to know that it's receiving a payload containing
+OCCI attributes? Looking at the `Content-Type` header it'll just assume that
+it is receiving free-form text from the server. Unless it has out-of-band
+knowledge of which &lt;HTTP verb/URI&gt; tuple is supposed to return OCCI-formatted
+content. Which is not something you would expect from a "RESTful" spec. I'm
+actually a bit surprised that this has been made the default content-type.
+
+Regarding your comment about filtering, I must say I don't see how this
+relates to the media type discussion. Filtering is usually achieved using
+query strings, or (what you're already doing) the use of `Category` headers.
+If you had a proper media type, you could also define URI templates for this.
+My point being that I don't understand the relationship between not putting a
+body in the `GET` request (which is indeed wrong), and the need for
+`text/occi` in addition to `text/plain`. I may have misunderstood your comment
+though ;-)
+
+Cheers,
+
+Cyril
+--
+<a class="moz-txt-link-freetext" href="http://crohr.me">http://crohr.me</a>
+
+On 11 Jul 2011, at 11:36, Thijs Metsch wrote:
+
+</pre>
+        <blockquote type="cite">
+          <pre wrap="">
+Hi,
+
+Thanks for your reply - much appreciated.
+
+Just a quick note from me: The default rendering of OCCI is text/plain and than the content goes in the body. The reason for the text/occi rendering are mostly historical :-) Or because of filtering we don't want to have something in the body of an GET request...
+
+There are also some efforts going on to create JSON renderings for OCCI...just FYI.
+
+Cheers,
+
+-Thijs
+
+-----Original Message-----
+From: <a class="moz-txt-link-abbreviated" href="mailto:occi-wg-bounces@ogf.org">occi-wg-bounces@ogf.org</a> on behalf of Cyril Rohr
+Sent: Mon 11.07.2011 11:32
+To: Andy Edmonds
+Cc: occi-wg
+Subject: Re: [occi-wg] Your Questions...
+
+Hi Andy, all,
+
+It's hard to be constructive in 140 characters, so thanks for letting me
+elaborate on this list.
+
+My concerns are related to the "RESTful HTTP Rendering" spec [1], which views
+HTTP headers as the primary mean of transferring resource representations
+between a user-agent and an OCCI server. I can see how you you may have ended
+there (no need to define a media type, "universality" of the HTTP protocol,
+new RFC drafts about `Category` [4] and `Link` [5] headers popping up, etc.),
+but that just looks wrong to me for the following reasons:
+
+* The most obvious, and a point that you raise in the spec [1], is that the
+  HTTP header max size is often limited by intermediaries (for instance,
+  default limit on Squid is 20KB [2]), while body max size is not. The spec
+  warns:
+
+  "Space in the HTTP header section of a HTTP request is a limited resource.
+  By this, it is noted that many HTTP servers limit the number of bytes that
+  can be placed in the HTTP Header area. Implementers MUST be aware of this
+  limitation in their own implementation and take appropriate measures so that
+  truncation of header data does NOT occur."
+
+  You can't assume that there won't be intermediaries between the user-agent
+  and the server (proxies, caches, etc.), therefore I don't see how an
+  implementer can do anything about the header size limit, which means it is
+  safe to assume that the HTTP Rendering via `text/occi` is broken (unless you
+  have already thought about a possible solution, in which case it should be
+  included in the spec). You can't even use the `Content-MD5` [3] header to
+  provide an end-to-end message integrity check. And the message header is not
+  compressible, contrary to the message body.
+
+* More generally, methods and headers are there to indicate the purpose of a
+  request, not the resource representation itself.
+
+* Finally, you define a `text/occi` content-type, which looks like an empty
+  shell. I mean, if I understand correctly, the only payload you'll ever have
+  is "OK" on successful operations. AFAIK, a media type definition [6] is
+  mainly about the structure and semantics of the message body. It's not about
+  defining custom HTTP headers to replace the message body.
+
+I also have some concerns about the filtering mechanism, linking mechanism and
+the way you define actions, but if I had to sum up my position it would be
+that I have the feeling that you went extreme with the REST concept, and tried
+to put in the spec as much novelty (in terms of recent HTTP-related
+specs/drafts) as you could. Nothing wrong with that, but the result is
+somewhat convoluted. Also, the decision to put everything in the header part
+of the message renders a lot of standard HTTP header fields useless.
+
+I appreciate the effort and time it takes to build a spec like this. From a
+standardization body though, I would have expected that you properly define a
+new media type for the rendering, not custom header extensions. I recall a
+(now dead?) XHTML based rendering doc, which had some flaws but was going more
+in that direction. I can see that you plan on specifying new content types in
+the future: I think it would be good to shift the attention back to the body.
+
+Thank you for your time.
+Best Regards,
+
+Cyril
+--
+<a class="moz-txt-link-freetext" href="http://crohr.me">http://crohr.me</a>
+
+[1] <a class="moz-txt-link-rfc2396E" href="http://ogf.org/documents/GFD.185.pdf">&lt;http://ogf.org/documents/GFD.185.pdf&gt;</a>
+[2] <a class="moz-txt-link-rfc2396E" href="http://www.squid-cache.org/Versions/v2/2.6/cfgman/request_header_max_size.html">&lt;http://www.squid-cache.org/Versions/v2/2.6/cfgman/request_header_max_size.html&gt;</a>
+[3] <a class="moz-txt-link-rfc2396E" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">&lt;http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html&gt;</a>
+[4] <a class="moz-txt-link-rfc2396E" href="http://tools.ietf.org/html/draft-johnston-http-category-header-01">&lt;http://tools.ietf.org/html/draft-johnston-http-category-header-01&gt;</a>
+[5] <a class="moz-txt-link-rfc2396E" href="http://tools.ietf.org/rfc/rfc5988.txt">&lt;http://tools.ietf.org/rfc/rfc5988.txt&gt;</a>
+[6] <a class="moz-txt-link-rfc2396E" href="http://www.ietf.org/rfc/rfc1521.txt">&lt;http://www.ietf.org/rfc/rfc1521.txt&gt;</a>
+
+On 8 Jul 2011, at 18:03, Andy Edmonds wrote:
+
+</pre>
+          <blockquote type="cite">
+            <pre wrap="">Hey Cyril,
+I saw some of your comments [1] [2] on twitter about OCCI. It'd be great if you could elaborate on them on the list as everyone here really values useful and constructive comments and critique.
+
+BTW: you might have been viewing older OCCI specs. The latest published are here [3].
+
+Cheers,
+
+Andy
+andy.edmonds.be
+
+[1] <a class="moz-txt-link-freetext" href="https://twitter.com/#!/crohr/status/89318560417067008">https://twitter.com/#!/crohr/status/89318560417067008</a>
+[2] <a class="moz-txt-link-freetext" href="https://twitter.com/#!/crohr/status/89320097755312128">https://twitter.com/#!/crohr/status/89320097755312128</a>
+[3] <a class="moz-txt-link-freetext" href="http://ogf.org/gf/docs/">http://ogf.org/gf/docs/</a>
+
+</pre>
+          </blockquote>
+          <pre wrap="">
+
+
+
+
+
+</pre>
+        </blockquote>
+        <pre wrap="">
+--
+<a class="moz-txt-link-freetext" href="http://crohr.me">http://crohr.me</a>
+
+
+
+_______________________________________________
+occi-wg mailing list
+<a class="moz-txt-link-abbreviated" href="mailto:occi-wg@ogf.org">occi-wg@ogf.org</a>
+<a class="moz-txt-link-freetext" href="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</a>
+</pre>
+      </blockquote>
+      <pre wrap="">
+</pre>
+      <br>
+      <fieldset class="mimeAttachmentHeader"></fieldset>
+      <br>
+      <pre wrap="">_______________________________________________
+occi-wg mailing list
+<a class="moz-txt-link-abbreviated" href="mailto:occi-wg@ogf.org">occi-wg@ogf.org</a>
+<a class="moz-txt-link-freetext" href="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</a>
+</pre>
+    </blockquote>
+  <!-- forge.gridforum.org footer.html -->
+<br> <hr>
+<table width='100%'> 
+ <tr>
+  <td align='left'>   <a href='http://www.ogf.org' target='_blank' style='border: 0 px;'><img src='/ogf-it/opengridforum.gif' alt='The Open Grid Forum' style='border:0px white solid;'></a><td>
+  <td align='center'> <a href='mailto:webmaster@ogf.org'>Contact Webmaster</a> 
+                    | <a href="/sf/tracker/do/createArtifact/projects.ggf-info/tracker.bug_reports">Report a problem</a>
+                    | <a href="/sf/wiki/do/viewPage/projects.ggf-info/wiki/HomePage">GridForge Help</a>
+                    </td>
+  <td align='right'>  
+<!--		<img src='/ogf-it/powered_by_dell.gif' alt='Powered by Dell'> -->
+<!-- Begin DigiCert/ClickID site seal HTML and JavaScript -->
+<div id="DigiCertClickID_sxSDRU4L">
+  <a href="http://www.digicert.com/">SSL Certificates</a>
+</div>
+<script type="text/javascript">
+var __dcid = __dcid || [];__dcid.push(["DigiCertClickID_sxSDRU4L", "10", "m", "black", "sxSDRU4L"]);(function(){var cid=document.createElement("script");cid.type="text/javascript";cid.async=true;cid.src=("https:" === document.location.protocol ? "https://" : "http://")+"seal.digicert.com/seals/cascade/seal.min.js";var s = document.getElementsByTagName("script");var ls = s[(s.length - 1)];ls.parentNode.insertBefore(cid, ls.nextSibling);}());
+</script>
+<!-- End DigiCert/ClickID site seal HTML and JavaScript -->
+  </td>
+ </tr>
+</table>
+<!-- google analytics code -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6775861-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+
+
+
+The working group of Stephen Pickles, Yoshio Tanaka, Sinichi Mineo, Von Welch 
+and myself have discussed briefly a "plan for a plan" toward establishing a 
+first level of interoperability between our grids. We have developed the 
+following draft outline of steps with a natural milestone date for Step 3 but no 
+obvious milestone dates for the subsequent steps. Those will be influenced by 
+further discussion and results of other groups (particularly the agreement on 
+driving use case(s) ).
+
+Step 1:  Identify the near term requirements and goals for minimal useful 
+	interoperability.  (draft is done and appended below)
+Step 2:  Identify the consensus implementations to be globally supported to 
+	achieve this for this first phase. (draft below contains our current 
+	proposal. We have not yet completed a review for completeness.)
+Step 3:  Present this information in the GGF Authorization workshop in Athens 
+	and solicit feedback from the other interested grids and users. 	(GGF16)
+Step 4: Deploy consensus implementations or develop adapters to translate to 
+	local implementations.
+Step 5: Conduct an interoperability fest to establish functionality and debug 
+	with experts.
+Step 6: Communicate the completion of this effort to our target user base(s).
+
+
+
+
+Step 1 - Requirements:
+
+First step is to identify the requirements to establish the basic level of 
+interoperability between our various grids needed to serve our user community in 
+accomplishing their first steps.  We believe the following will be sufficient to 
+allow information request, basic job submission and file transfer. We not all 
+services within a grid will need to accept requests from sources external to the 
+grid, so we are identifying requirements only for services which are to 
+participate in cross-grid requests. We name these "InterGrid services" below.
+
+Identity:
+
+An X.509 identity certificate is necessary to identify services and requesters 
+for grid transactions. In order to have a manageable set of known identity 
+sources, we agree to use the set of CAs identified as accredited by PMAs which 
+are members of the International Grid Trust Federation as the common set of 
+known identity sources.
+
+Grids (or Sites) may individually reject any or all of the CA and/or add 
+additional ones, but the expectation is that the grid infrastructure will 
+propagate and maintain these known CA credentials, signing-policy files and CRLs 
+throughout their infrastructure such that authorization of an authentic request 
+from an entity identified by one of these CAs COULD be authorized if so desired.
+
+Authentication:
+
+All InterGrid services which require authentication will be able to perform at 
+least one of: GSI authentication or OGSA Basic Profile authentication. The Basic 
+Profile authentication is described in GGF document XXX (and is tied to TLS).
+
+Authorization (expression and transport):
+
+We will use "push mode" authorization with authorization attributes encoded as 
+VOMS proxy extensions as the basic authorization transport mechanism. VOMS 
+extensions have two attributes: "groups" and "roles". The meaning of the strings 
+assigned to these roles is valid only within the context of a single attribute 
+authority (eg. a VOMS server or whatever else generates the attributes). 
+Propagating the meaning of these strings will be done out of band between the 
+parties.
+
+Authorization (policy expression and interpretation):
+
+We will not attempt to implement a common policy expression/interpretation 
+standard at this level. We'll have to watch and see what comes from the 
+SAML/Shibboleth/WS-* discussions. At the moment this will have to be manual and 
+out of band.
+
+Delegation:
+
+The common method for all InterGrid services which need delegated credentials 
+will be either GSI delegation of RFC 3280 proxy credentials or the result of the 
+WS-Delegation discussions underway now. We expect that most InterGrid requests 
+will NOT require delegation.
+
+Re-Delegation:
+
+We do not assume that InterGrid services will provide automatic renewal of 
+credentials. We make the assumption (at least at this level of interoperation) 
+that requesters will renew a delegation if needed. This implies that all 
+InterGrid services which support delegation should also support re-delegation to 
+renew credentials before they expire without interrupting the request.
+
+Audit/Accounting:
+
+We do not yet know what agreements are required for audit and/or accounting 
+between grids.
+
+
+
+
+
