@@ -1,0 +1,241 @@
+OGSA-WG Teleconference - 30 August 2004
+=======================================
+
+* Participants
+
+  Ian Foster (ANL)
+  Andrew Grimshaw (UVa)
+  Bill Horn (IBM)
+  Fred Maciel (Hitachi)
+  Susan Malaika (IBM)
+  Bryan Murray (HP)
+  Andreas Savva (Fujitsu)
+  Jem Treadwell (HP)
+  Jeffrin Von Reich (HP)
+
+  Minutes: Andreas Savva
+
+* Agenda bashing
+  
+  - Agreed on the agenda that Andrew sent out before the call
+
+  - Objectives
+    - What are we trying to do?
+    - Other standards we MUST work with
+  - Discuss straw man document and received comments 
+    - (Ian's, Bryan, Peter's, OGSA-DAI document sent by Dave Berry
+      only to Andrew (others haven't seen it))
+    - Line item and philosophy
+    - Distinguish DESIRABLE properties versus REQUIRED properties
+  - Is there an existing STANDARD that meets the requirements? 
+    - (There are many existing implementations)
+  - Next steps.
+
+* Define the problem to solve
+
+  - Initial target
+    - Not trying to do new grid specific standard
+      - It should useful to the wider community and not just the Grid
+        - Difficult to make sure that wider community will accept
+          something developed just within GGF
+          - Need a lot of marketing effort to get buy-in
+      - Identify where work should be done to be adopted by the wider
+        community.
+    - Not aiming to just come up with a specific naming scheme
+    - Make the case for the need for a naming scheme and possibly do
+      some prototype work on proposal
+    - And sell it to major players
+      - For both political and technical reasons: need to make sure
+        major players are involved to ensure success
+
+  - Do we anticipate a single set of requirements and solution or a
+    range of solutions?
+    - Initial step is try to build a case for naming
+      - Determine required vs desirable properties
+    - There are probably going to be some core requirements
+      - In the end classify requirements using MUST/SHOULD/CAN
+        categories
+      - Also have to show that these are not addressed in existing
+        standards
+    - (And convince people that there is a need for a base name
+      scheme vs N schemes)
+
+* Other related/required standards
+
+  - Anything that does references: e.g., WS-Addressing, or the related
+    but different proposal from Oracle (WS-MessageDelivery?)
+
+  - WSRF subgroup trying to unify approaches of using WS-Addressing
+    - It's an open question whether WSRF (RR) can (be tweaked to)
+      fulfill naming requirements.
+      - There is no RR spec publically available right now
+
+  - A suggestions was to do a wider search for similar efforts within
+    other standards work, e.g., W3C.
+
+  - (Commercial area has been slow to see the need for naming.)
+
+* Document walkthrough
+
+  Ref: https://forge.gridforum.org/projects/ogsa-wg/document/ogsa-naming/en/2
+
+** Introduction
+
+  - The document has no motivation section yet.
+    - Andrew will add it before distributing it to a wider audience
+    
+  - Does naming need to be defined separately from metadata?
+    - Metadata mapping (e.g., directory) is higher level (third level)
+    - Here deal with bottom two levels: addresses and abstract names
+    - This point (3 levels) should be made clear in the
+      introduction. It goes to defining the problem to be addressed.
+
+  - Mapping directly human name to physical/address?
+    - Some implementations might want that; some existing systems do
+      it.
+    - But some flexibility is lost in doing so
+   
+  - Use cases
+    - Need to come up with as many as possible
+    - (To identify as broad set of requirements as possible; and then
+      classify them)
+
+** Terms
+
+   - Make clearer distinction, if any, between service and resource.
+
+   - Need for extensibility because it is unlikely that one proposal
+     can address all future requirements.
+
+   - Security and naming connection:
+     - Should discuss more the need to support different
+       authentication schemes; might have to conform to different
+       ones.
+    
+   - "...number information."
+     - 'cardinality' is probably more correct
+     - Refers to replicants (clients can't distinguish between them)
+    
+   - Resource identity and WS-Security terminology 
+     - (Not sure yet how to phrase this)
+
+   - Binding time: when and how often to refresh mapping
+
+** Desirable properties
+
+   - Try to tie desirable properties (back) to use cases
+
+   - Alias
+     - If an id matches they are the same; if not they might still be;
+       and need for more checks.
+     - (This is the same as WSDM)
+
+   - Location portability:
+     - Name maps to same resource regardless where it is used
+     - Conference room counter-example; find a room based on location
+       of inquiry. (i.e., ability to get service nearby.)
+     - Andrew thinks this should be done at a higher level; above naming
+       - E.g., PDA querying its location and then asking for room
+         nearby
+       - Leads to question of how to find one's location? Typically
+         broadcasting is used.
+     - Not clear that this property falls in desirable or not.
+     - But does sound like a use case to consider.
+     
+   - Transparencies: Agreed that not all are needed in all cases
+
+   - Trust:
+     - Don't require trust but the ability to support trust.
+     - (Current (grid) environment is in a sense more trusted than the
+       (potential) global one.)
+     - A desirable rather than required property
+
+   - Agreed on need to be more specific on performance, etc.
+
+   - Binding:
+     - Bind whenever you need to and get the 'right' answer
+     - Ability to detect stale bindings (e.g., by receiving faults)
+     - And how to detect that if a binding is returned then it does
+       map to the desired entity
+       - Ties into security/authentication
+
+   - Free (no licensing):
+     - Handle.net one example of a nice approach that is unfortunately
+       not royalty free for commercial use.
+     - Consensus that RF is a requirement for something as basic as
+       naming
+
+   - Additional commenton Versioning:
+     - Will add in but not sure if it is required; could be done at
+       higher level.
+     - 'Same' document vs different documents
+
+* Related work
+
+   - Handle.net: lots of nice properties. More of a directory service
+     than a naming scheme
+   - Life Science Identifier (LSID)
+     - Persistent identifier (identifying proteins and related
+       annotations across time/organizations)
+     - IBM reference implementation
+
+   - WSRF/RR
+     - RR document not available yet
+
+   - "Scalable Naming in Global Middleware" (citeseer reference by Ian)
+
+   - WSDM definition: UUID. Deals with identification rather than
+     naming scheme.
+
+* Comments on Bryan's paper
+
+  Ref: http://www-unix.gridforum.org/mail_archive/ogsa-wg/2004/08/msg00055.html
+
+  - Rather than Grid community retooling the problem is for WS
+    community retooling.
+
+  - Can 'fake' it by just mapping what the clients think are urls (so
+    that the clients are not aware of changes)
+    - The big problem is not the client-side but getting buy-in to
+      make this functionality part of the software infrastructure.
+
+* Is there a standard that meets the requirements?
+
+  - No
+
+* Next steps:
+  
+  1. Andrew to re-draft doc 
+     - Merging some of Bryan's stuff where appropriate
+     - Keep within OGSA for now or seek broader audience?
+       - Consensus to do another draft, making a more compelling case
+         before going wider
+         - (Bryan is involved in WSDM/WSRF so there is some input from
+           other groups already)
+       - WSDM identified some required pieces. E.g., identity. 
+         - But not trying to solve the entire problem.
+       - If solution is WSRF based then it could be picked up by WSDM
+         too since they are WSRF/WS-Addressing currently based
+
+     - In the next version get people to comment whether each property
+       is required or desirable, etc.
+        
+  2. Andrew to consult with Hiro and Dave Snelling (WSRF co-chair) on
+     next steps
+     - Talk to Dave about the state of the RR spec.
+     - Also thinking of creating an 'ogsa-naming' mailing list;
+       possibly other timeslot for future calls.
+
+  3. Do a review of name schemes and how far they address requirements
+     detailed in the paper.
+
+  [And at a later point:]
+  4. Go to standards bodies, possibly first talking to major vendors
+     - Andrew has some contacts:
+       - IBM: Steve Graham, Jeff Frey 
+       - MS: .Net group
+     - WSRF in OASIS: 
+       - One deliverable is RR. Could submit the naming proposal to
+         that group
+       - Of course this still does not get buy in from major companies
+         not involved in WSRF (e.g., MS)

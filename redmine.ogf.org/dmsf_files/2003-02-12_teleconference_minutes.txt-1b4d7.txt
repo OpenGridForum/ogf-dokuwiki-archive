@@ -1,0 +1,216 @@
+Minutes for twentysecond OGSI-WG Teleconference
+February 12, 2003 @ 16:30 - 18:30 GMT
+
+Pete V.
+Dave S.
+Steve T.
+Steve G.
+Karl C.
+
+
+1) Approve minutes of February 5th, 7th, 10th, 11th Teleconferences - Skipped.
+
+2) Consolidated Actions Review - Skipped.
+
+Action: ---: Feb 12: Steve T: To check if Incorrectvalue is the right fault name in SetServiceData operation.
+
+Action: ---: Feb 12: Steve T: Remove fault hierarchy from Spec. Deferred to V2.
+
+Action:  49: Feb 13: Tom M: Make PT extensions explicit in the wsdl.
+
+Action: 86: Feb 12: Steve T: Check that our service data elements that need coherency semantics, e.g. non-static/non-constant, have them specified.
+
+Action: ---: Feb 11: Steve G: Add to the spec as a minOccurs=0, (Including explanatory text) next time with the pen [Done by DS, Feb 11 draft].
+
+Action: ---: Feb 12: Steve G: To answer issues around SOAP 1.2 requirement for use of WSDL 1.2.
+
+Action: ---: Feb 12: Steve T: To talk to Thomas about the tooling issue in more detail.
+
+Action: ---: Feb 12: Steve T: To produce a GWSDL Draft.
+Action: ---: Feb 05: Steve G: Draft of GWSDL definitions (See Section 5) - moved to Steve T.
+
+Action: ---: Feb 11: ---- --: Discussion of fault architecture (See Section 7.7)
+
+Action:  55: Feb 11: Shel  F: Provide feedback on timestamp model in OASIS, we plan to punt to v1.1
+
+Action:  35: Feb 06: Steve T: Push Tom M. and Thomas S. to provide XML Schema and WSDL for the specification
+
+Action: 17 & 82: --- --: Steve G: Finish the handle resolver protocol discussion (See Section 10)
+
+Action: ---: --- --: Steve G: Create non-normative text for the service data section describing forward looking solutions to query processing via XPath/XQuery. (Sections 9.2.1.2/3, 6.2.1, 9.2.3)
+
+Action: 93, 94: --- --: Steve T: Check and fix these bugzilla items
+
+Action: Steve T: Substitute service data description with service data declaration.
+
+Action: Steve T: some types use "ServiceType", and some use "GridServiceType".  Make these consistent
+
+Action:  19: --- --: Steve T: Check as this bug has been resolved already. May just need to remove highlighting. (Section 12.2.1)
+
+Action: ---: --- --: Steve T: Make sure that the WSDL group is aware of the OGSI's use of the WSDL 1.2 draft. Use the gwsdl draft to package notification.
+
+Action:  42: --- --: ----- -: Andrea & Steve T & Dave: Complete the faults for all operations in all portTypes (Action on Feb 5).
+
+Action:  67: --- --: ----- -: Check that draft schema support optional parameters, e.g. empty extensibility, See Section 9, and resolved bug 67.  Options: Define a <nil> element that can go into a ##any, or use substitution group, or use XSD nillable
+
+
+3) Review Faults Section
+
+Meta Issue:
+
+From Steve T: The biggest comment/issue that I see is that our model of having each fault
+              reflected in a WSDL fault element in the operation declaration won't work
+              for extensible operations such as FindServiceData. Should we go back to having
+              just a single fault in the WSDL operation of type GridServiceFaultType, which
+              is extended as necessary?
+
+F2F Strategy was to include a WSDL part with the same name as the type for each subtype of GridServiceFault.
+
+Problem: A subtype adding faults to existing operations. This creates two classes of fault. Those that have WSDL parts and those that don't.
+
+The F2F advantage was direct tooling from the WSDL parts to Java exceptions for example.
+
+Resolved: The WSDL for operations will contain fault elements for all faults listed for the operation. When throwing a subtype of a portType specified fault, use a derived type and use an xsitype to indicate the actual fault type. Tooling could either catch the fault included in the WSDL part or inspect the xsitype information and throw the more refined fault subtype.
+
+Action: ---: Feb 13: Steve T: Check with Thomas about tooling impact.
+
+Resolved: We confirmed that all operations can throw GridServiceFault.
+
+Resolved: We confirmed the Semantic and Structural faults be removed.
+
+Remaining Questions:
+
+   a- Can a Grid service throw a more general fault than a published fault, e.g throw
+      GridServiceFault, rather than SubscriptionTargetNotFound?
+
+Resolved: Allow less specific Faults to be thrown by requiring every Grid service
+          to throw GridServiceFault on all operations. Use SHOULD throw most refined fault.
+
+   b- In the fault of 6.2.2, what does "the value" refer to in the case of a multi-valued SDE?
+      Is it talking about one SDE value or the whole set?  Should "the value" be replaced by
+      "one of the values"? - Dave S would recommend that the "first" error be the
+      primary error, all others coming in the extensibility element. The extensibility element
+      could also indicate which SDE was in error.
+
+This is set service data Incorrectvalue for example. The language needs to be cleaned up here so that we can indicate which value has faulted.
+
+Action: Steve T to chase.
+
+   c- Needed additional faults (see note from GT3 group below) Yes or No.
+
+         GridService:findServiceData:, InvalidQuery (semantic), QueryNotSupported (structural)
+
+         NotificationSource:subscribe: SubscriptionTargetNotFound - (semantic -assuming this
+         means the target service cannot be found, rather than a missing locator)
+
+Action: Steve T: To check on next pass.
+
+   d- What about DeliverNotification in the NotificationSink portType, which is a single
+      sided operation, i.e. it does not produce an output message. Can it raise
+      GridServiceFaults? If no, there are several MUSTs in the text that need to be changed
+      to SHOULDs.
+
+Action: Steve T: To check for MUSTs that should be SHOULDs.
+
+4) Next Meetings:
+
+Thursday, Feb 13, 2003 (Note 2 hours).
+
+  (Half hour later start)
+
+  09:00-11:00 US Pacific
+  10:00-12:00 US Mountain
+  11:00-13:00 US Central
+  12:00-14:00 US Eastern
+  16:00-18:00 GMT
+  17:00-19:00 UK
+  18:00-20:00 Central Europe
+  01:00-03:00 Japan
+
+Place
+
+  484-630-8733
+  passcode 89914
+
+Friday, Feb 14, 2003 (Note 2 hours).
+
+  (1 hour later start)
+
+  09:30-11:30 US Pacific
+  10:30-12:30 US Mountain
+  11:30-13:30 US Central
+  12:30-14:30 US Eastern
+  16:30-18:30 GMT
+  17:30-19:30 UK
+  18:30-20:30 Central Europe
+  01:30-03:30 Japan
+
+Place
+
+  484-630-8733
+  passcode 89914
+
+6) Open Bugzilla list:
+
+Notification Bugs:
+
+Bug 61 - Provide notification of destuction in the GSS
+
+Resolved: Push onto V1.1 
+
+Bug ?? - Deliver with ack issue??
+
+Resolved: Push onto V1.1
+
+Bug ?? - Review Notification status and language (was an agenda item).
+
+Consider that we have done this through the various read throughs.
+
+WSDL Bugs:
+
+Bug 62 - Do we need a way to mark operations in a portType optional?
+
+Resolved: No optional operations. (e.g. won't fix)
+
+Factory:
+
+  We should nuke the Factory portType entirely (Karl, Steve T., Pete agree).  We've already created specialized factories for subscription and serviceGroup.  We should just talk about factories as an abstract pattern, until we actually understand their utility.  So suggest removal of Factory portType from v1 spec, and reconsider in v2.
+ACTION: Steve T will send mail to ogsi-wg list on this issue.
+
+Factory Bugs:
+Bug 72 - mutability of gsdl:CreatesPortTypes and CreationInputTypes
+RESOLVE: Change to "static" so that they be WSDL defined
+
+Bug 73 - Factory::CreateService requester as SDE?
+RESOLVE: Won't fix.
+
+Bug 74 - strictness of gsdl:CreatesPortTypes commentary
+RESOLVE: Remove CreatesPortTypes.  Decision for all other extensible operations for v1 was to only list the qnames of input arguments, and have all outputs, faults, and semantics implied by that input argument.
+
+Misc Bugs:
+Bug 70 - Change SDE names from "...Types" to "...Elements"
+RESOLVE: This is no longer an issue because of the new SDE approach of SDD's being xsd:element declarations.
+
+ACTION: Pete: Go through the various SDE names and operation parameters and suggest changes to make their names consistent.
+
+Bug 39 - message identifier for audit
+RESOLVE: This is v2 issue.
+
+Bug 77 - serviceDataNames minOccurs should be 7
+RESOLVE: Make this minOccurs=0.  The text says that all WSDL defined SDEs MUST be included in the serviceDataName element.
+
+Bug 30 - Define queryByXPath
+RESOLVE: Previous resolution to remove this from v1, push out to v2 issue.
+
+Bug 31 - Define queryByXQuery
+RESOLVE: Previous resolution to remove this from v1, push out to v2 issue.
+
+Bug 44 - Language linking notification subscriptions to SDEs.
+RESOLVE: Already in the introductory text.
+
+Bug 71 - CPU port-type example SDE inconsistent
+RESOLVE: This example is no longer in the spec.  It probably disappeared with the new service data integration.
+
+Bug 81 - GSS and WS-SD need unification.
+RESOLVE: Already done.
+

@@ -1,0 +1,231 @@
+Subject:
+GRAAP GGF9 meeting #2: minutes
+From:
+"Alain Andrieux" <a_andrieux@hotmail.com>
+Date:
+Sat, 11 Oct 2003 01:46:54 -0700
+To:
+"Jim Pruyne" <pruyne@hpl.hp.com>
+
+meeting minutes
+---------------
+
+GRAAP-WG meeting 2 (Technical Session 1)
+
+
+focus of session: negotiation aspect of WS-Agreement
+----------------
+Explain the term states and protocol.
+
+WS-Agreement:
+init/provider doesn't necessary mean client/service.
+can be disjointed.
+asymmetrical relationship.
+etc...
+2-Level negotiation slide...
+
+slide: Term State Dimensions:
+-----------------------------
+-status: offered (initiator offers a value)/observed/ignored
+-criticality: optional or required
+-negotiability: value can change or not
+
+Chris: provisional observed?
+ex: broker = provider: yes I accept this term but 
+want to negotiate sub-agreement
+Asit: what does "observed" mean? 
+      strictly observed?
+
+Asit: "offered"? from which side? not clear.
+
+Jim: state or terminology issue?
+State maps to any time the term is in flux.
+
+Asit: no it is actually 2 states:
+- provider offered
+- client requested
+
+Jim: sounds like initial values proposed 
+Asit: offered = agreement template
+Karl: we must distinguish b/w state of agreement 
+and direction of messages.
+
+Jim: so, issue of pre-agreement creation offer.
+Anything before the create() call is before 
+the states exposed on the slide. 
+Maybe we can change terminology to reduce ambiguity?
+
+Notion of criticality: is term vital to creation or not?
+if optional: no need to reach agreement on term, can drop it.
+else if required: parties MUST reach agreement
+
+Question: is aspect of multiple 
+sub-groups of terms can be flagged too?
+Karl: we would like to express equivalent...
+note from minute taker: I missed the rest...
+
+
+Question: 
+is it possible to distinguish whether initiator 
+or provider have different rights to renegotiate 
+the terms?
+-> only initiator can, so far.
+Asit: provider can change terms of conditions 
+because maybe higher priority job is here...
+Karl: agreement should have separate negotiability 
+constraints to cope with asymmetry. 
+
+Some states are not possible: 
+(Ignored, required, *) (Observed, Optional, *)
+Question: what's wrong with O-O?
+
+Karl: what's difficult here is that dimensions 
+   don't map to what we have in the spec 
+(i.e. wsp:Usage and wsa:Negotiability --> only 2 dimensions). 
+In spec "optional" get stripped out when "observed". 
+(same attribute).Maybe our mapping in current spec 
+is not valid.
+
+slide: Join State Definitions
+-----------------------------
+spec has only 2 dimensions:  last column.
+
+keep in mind here "offered" means 
+"requested by client", not offered in template.
+
+John: what's the point of offered?
+comment: everyone prefers to call the state 
+"requested" but in certain cases "offered" in better. 
+Simple batch job submission scenario: "I want to submit 
+job so I am requesting agreement or I am offering to run..."
+
+How about "proposed"?
+
+Sounds like a naming issue. 
+ACTION ITEM: resolve it on list, if it even 
+makes sense to keep this state.
+
+status = offered + * --> set by initiator on call to create()
+
+status = observed + * --> lead to final observed state
+
+ignored + optional: other final state
+
+
+state chart:
+in each required case: fault can be thrown if 
+value is not acceptable in optional state; 
+it is always possible to change state to 
+ignored in observed states, which correspond 
+to the creation of an agreement (if all terms 
+are observed).
+
+
+comment: need to get out of observed-negotiable..
+Jim: add link from obs-neg to obsv-fix?
+Karl: do not forget that each party can cancel.
+
+Asit: these are individual terms so obviously 
+    fault happen because fault occur when 
+    negotiating one term.
+
+Jim: set of unclear transitions:
+for instance: obsv-neg to obsv-fix state
+
+John:  by putting renegotiate loop on obsv-neg, 
+you are not renegotiating on state but starting 
+new set of transitions...so it is confusing.
+
+Do we have a conflict in use cases?
+It is the same use case: we might still renegotiate 
+while the job is running!
+Karl: renegotiate loops really say: you need to launch 
+     some state negotiation in order to renegotiate 
+
+Asit: it is perfectly all right to remain in 
+    observed-negotiable state until the agreement 
+    terminates! 
+
+Asit: why no transition from req-neg to req-fix ?
+Karl:  scenario with only create(). case when client 
+has constraint and provider narrows them down further 
+
+Question: is there a concept of timeout? 
+example: an offer will expire after no decision 
+has been taken by the initiator to accept it...
+-->lifecycle issue.
+Jim: no timeout per term but for an agreement. 
+
+Asit:how do we inject some advanced negotiations methods?
+ex: have to negotiate A before can negotiate B
+Jim: negotiability might be not sufficient 
+     tackle generalization of that?
+Karl: general state machine , but for terms is 
+      more restricted
+
+Question: is it reasonable to have term fixed as a 
+   range as opposed to fixed as a value?
+   --> yes
+
+Question: have you looked at robustness of 
+    state diagram w/ respect to denial of service 
+    attacks, especially because of those renegotiate 
+    "loops"?
+
+Jim carries on with the slides:
+
+how (not) to make an offer:
+ex1 (bad): price=5 REQ-NEG . Provider can 
+return price=1000 OBSV-FIX 
+Karl: no, we missed the commitment phase
+   need handshaking protocol
+
+ex2 (good):  REQ-FIX
+
+comment: a good implementation would maintain 
+         state in provider 
+--> that is just an implementation issue.
+
+When negotiation with several providers 
+need to keep yourself open to negotiation.
+
+You need some way to hold state.
+--> implementation issue again.
+
+Chris points out an issue w/ commitment phase. 
+High-level agreement commitment?
+Jim: you maintain it in the last term.
+Actually this is not the right method!!
+Right method: commit level/term on every term...
+Jim: we will add method for explicit commit phase.
+
+Is wsa:Negotiability redundant with the negotiability 
+constraints?
+Idea: wsa:Negotiability  goes away and we use 
+absence/presence of negotiability constraints instead.
+
+Jim: as negotiation goes forward, you want to refine 
+those constraints...but who has the right to 
+redefine those?
+
+Karl: our mistake is having "Negotiable" without 
+      any constraints.
+
+Karl suggests distinct negotiation constraints 
+on both parties. Makes it simpler too. Then it will 
+be possible to unilaterally refine the constraints. 
+Everyone agrees.
+
+Renegotiate: send all the terms or only the terms 
+that are being renegotiated?
+Karl: maybe we need 2 methods then...?
+
+Faults: same as createService faults?
+
+Asit: how more advance negotiation protocols can fit in?
+Jim: extend Agreement port type to accommodate for 
+      those extra protocols...
+Asit: can we negotiate the negotiation protocol itself?
+Jim: you can use a related agreement to model how you 
+    agree on how to agree...  
+--> no need for changes to the spec.

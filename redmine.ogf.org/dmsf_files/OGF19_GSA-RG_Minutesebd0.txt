@@ -1,0 +1,184 @@
+
+GSA-RG
+Session #1
+29.01.07 - 9:00-10:30am
+
+Lead: Philipp Wieder
+notes by Ramin Yahyapour
+
+- Philipp gives intro on progress since OGF18
+  o Update on progress after OGF18
+  o Goal: short-term feasibility study with actual
+    implementation and show-case of scheduler interoperability
+    = a job is submitted to an existing scheduler in a certain Grid middleware
+      and this scheduler interacts with another scheduler covering a different
+      Grid/Grid middleware to execute a job there.
+      (not just submission as in HPC-P, but scheduling consideration)
+    Involved partners/middlewares:
+       - VIOLA-MSS/UNICORE
+       - GRMS
+       - D-Grid Scheduler (Globus-based; gLite based)
+       - GridWay (status not clear, need to query)
+    Time-line: Within the next twelve months
+
+- Q: Clarification on what are scheduling domains:
+  o different independent Grids with different Grid middlewares
+  o therefore, we do not consider a single information source.
+  o bridge only through agreement management (retrieve templates,
+     parallel negotiation, final committments)
+
+
+- Job Attributes
+------------------
+
+- only a very small subset of JSDL attributes have been identified
+ which are supported by all reviewed systems
+ o however, these systems could be extended to support more JDSL entries, e.g.
+   VIOLA-MSS expressed their willigness
+
+Q. Ali: why just subset and not the whole JSDL set?
+ o the existing systems do not support all entries.
+   The current efforts are focused on a simple, but feasible use case.
+
+
+Q. Ali: why are the JSDL attributes at all important for scheduling?
+  The matching of job and resource attributes could be generalized and
+  independent from the specific attributes (just matching).
+  Just the scheduler specific attributes are essential?
+  o for the practical work on a feasibility study we need to agree also
+    on these issues. In the long-run, the modeling of jobs and resources
+    could be more extensive and generalized in the scheduler matching
+    task except the Scheduling Description Attributes, see next item.
+
+
+- Scheduler Description Language (SDL)
+--------------------------------------
+- presentation see slides:
+
+Q. Ali: Does it make a difference to decide on a new scheduling language or
+  some "JSDL extension" or something else? Only the attributes matter
+ - no real difference, except process who finally produces a recommendation.
+ - decision: the research group is not foreseen to produce recommendations,
+   therefore we work on informational documents to outline the proposed steps
+   for scheduler interoperability. The final adoption and transition to a WG
+   can be discussed later.
+ - thus, suggestion to publish the doc as INFO, and see whether people
+   use and adopt it.
+
+Q. what kind of dependencies are considered (the language has some
+simple starting points for job dependencies)?
+ - workflow is currently not in scope of the group
+ - discussion showed that workflow is required by several groups
+ - not clear how to cover this within this group
+ - it is expected that the initial scheduler which is responsible for a
+   job might consider dependencies and workflows during its scheduling.
+
+Q. (Synapse) Is rescheduling covered?
+ - currently not considered with the short term goals
+
+Q. (Synapse) Standardisation of resource tags might be needed, is this covered?
+ - this is an issue for a broader information model. This is out of scope for
+   this group.
+
+Q. How to interact with resource discovery in this process?
+ - OGSA-RSS provides the interfaces for CSG and EPS.
+   The resource discovery would be called through CSG.
+   The scheduler would call this in its scheduling process.
+   The scheduler itself would be accessed as an EPS
+
+Q. is cost considered?
+  - needs to be considered in the long run.
+  - for now we consider flexible scheduling objectives which can include
+    cost etc. as an optimization goal. Inclusion of cost would be simple, however
+    the supporting services (accounting, billing, transformation of currency etc).
+    could be complicating and are out of scope.
+
+Q. Is load balancing considered? Is predictive scheduling considered?
+  - This is part of the scheduling algorithm. The algorithm is a black box
+    and can be adapted as needed. That is the reason why the interaction of
+    schedulers is done through negotiation. This supports different independent
+    scheduling strategies in the different schedulers.
+
+
+- Negotiation Protocol
+------------------------
+- Presentation by Oliver, see slides
+
+
+
+Session #2
+29.01.07 - 11am-12:15pm
+
+Lead: Ramin Yahyapour
+notes by Philipp Wieder
+
+- Execution Management
+---------------------------
+- Presentation by Ramin, see slides
+
+After Agreement committment
+- prior to job execution
+ * Is the JSDL job description enough to start the job (short-term)?
+  -> MSS: Could live the JSDL stage-in/sage-out.
+  -> Usage of stage-in/stage-out might be a general option.
+  -> OGSA BES? - Existing systems do not have a BES backend. Possible solution for later.
+  -> Decision: use JSDL for stage-in/stage-out.
+ * Is it ok that the job execution is automatically executed by the agreement provider?
+  -> Yes.
+
+- during job execution
+ * Monitor the status of the agreement.
+- after job execution
+ -> stage-out via JDSL.
+ -> evaluate the agreement after job execution
+
+Authentication
+- VOMS - UNICORE this summer
+- VOMS - Globus unknown
+-> Decision could not be made during the session, postponed (ask OMII-Europe guys for more info).
+
+-> short term stay with JSDL, long-term check together with the "big picture" BES/VOMS/...
+
+Discussion
+----------
+- Bring in the negotiation into WS-Agreement? -> Wolfgang: yes.
+- Any aspects not covered? - Looks like it.
+- No common information model yet, OGSA information model work still in preliminary phase.
+- Proposal (Jay Unger): Use XML description of resource capabilities and XQuery to to the matching and XSLT to do the transformation.
+ -> Talk to Michel Drescher about his approach.
+
+
+Start discussion on "Big picture", architectural inclusion of other standards
+-----------
+- Whiteboard discussion  (more on paper)
+- (Opwn) issues (among others)
+ * Clarification wrt to OGSA-EMS is needed -> talk to these guys
+ * Can/should the OGSA-BES interface be part of the scheduling interface?
+  -> Oliver: Yes, is possible.
+
+
+GSA telecon
+------------
+Will be set-up again bi-weekly, date and time will be circulated via mailing list
+
+
+
+Action Items:
+A1: Prepare INFO doc with architectural picture that shows the
+   flow between the architectural blocks and outline the interaction
+ = Ramin
+A2: Prepare INFO doc with scheduler attributes, potential links to JSDL
+ = Philipp (Ali volunteers to review the work)
+A3: need to better understand the links to OGSA-BES and OGSA-HPCP
+ = n.n.
+A4: Describe the architectural blocks and its relation to other spec work like
+   OGSA-RSS, OGSA-BES etc.
+   -> See A1.
+A5: Contact OMII-Europe wrt integration of VOMS into Globus, UNICORE, gLite
+ = Philipp
+A6: Talk to Michel Drescher about XML/XQuery/XPath approach to resource modeling
+ = Philipp [DONE]
+
+
+Next steps:
+Picking up regular telecons (bi-weekly) e.g. end of February

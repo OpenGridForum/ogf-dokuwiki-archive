@@ -1,0 +1,280 @@
+DAIS Telcon 13/07/04
+====================
+
+Chair  : Norman Paton
+Minutes: Mario Antonioletti
+
+Present:
+	Mario Antonioletti, EPCC
+	Norman Paton, University of Manchester
+	Simon Laws, IBM
+	Vijay Dialany, University of Southampton
+	Susan Malaika, IBM
+
+Agenda:
+
+1. Minutes/Actions.
+2. Discussion of Briefing Document on "socialising" the specifications
+   (Dave Pearson).
+3. Update on issue logging for specifications (Mario Antonioletti).
+4. Update on process for finalising mapping scenarios document
+   (Simon Laws).
+5. Update on process for addressing mapping issues for specifications
+   (Simon Laws).
+6. Discussion on possible meeting on 26th July, in association with WSRF
+   meeting (Norman Paton).
+7. DAIS/File Access Group Interactions (Brian Collins)
+8. AOB
+
+
+New Actions:
+
+[Mario] Mail list stating that process for resolving trackers outlined in
+        previous mailing is the one to be used in future.
+
+Actions from previous meeting:
+
+[Dave]   Post a straw man executive summary and set of questions before
+         the next call for people to comment on.
+
+Done.
+
+[Mario]  Post a summary of existing DAIS issues to the list and let folks
+         know that the Grid Forge trackers are being used for this.
+
+Done.
+
+[Mario]  Propose a process for closing issues that are posted on Grid
+         Forge. Check out what other GGF groups are doing in this space.
+         To be done by the next call.
+
+Done.
+
+[Norman] Email the people involved in the Object Data Access
+         Realisation to see if this effort can be picked up again.
+
+On-going.
+----
+
+1. Minutes/Actions.
+
+2. Discussion of Briefing Document on "socialising" the specifications
+   (Dave Pearson).
+
+Dave not present so this item was not discussed.
+
+3. Update on issue logging for specifications (Mario Antonioletti).
+
+Mario: Put out a mail with a list of existing trackers and artifacts.
+       Suggested a process for resolving artifacts (issues).
+
+Norman suggest that Mario should mail the list stating that this is
+going to be the process for resolving issues.
+
+4. Update on process for finalising mapping scenarios document
+(Simon Laws).
+
+There is a call on the 27th of July. Will try to close down the
+mappings document. No particular progress but moving forward.
+Sastry, one of the authors, will be leaving Oracle so that's an
+incentive for this to be resolved soon.
+
+5. Update on process for addressing mapping issues for specifications
+(Simon Laws).
+
+Norman: discussion of the singleton resource pattern going on in
+        the WSRF mailing list after Susan posted a mailing there.
+
+Simon: ... there is a disagreement about the model to be used to
+       identify resources.
+
+*Susan joins*
+
+Norman asks Susan to comment
+
+Susan: it's still under discussion. 
+
+Simon: ... singleton resource pattern would allow a web services and
+       WSRF based framework to be used ...
+
+Susan: you are still supposed to have reference properties ...
+
+Simon: you don't need reference properties if you have only one
+       resource.  According to WSRF people you still have an EPR
+       ... the model works in both situations but that does not answer
+       the skeptics that believe that resources should not be
+       modelled.
+
+Norman: ... RESTful is a distraction as you encode the resource in the
+        URL ...
+...
+
+Simon: encoding the resource properties in the URL is seen as a bad
+       thing as that is protocol specific ...
+
+Susan: in DAIS we name the database, the table, it's part of the
+       resource - all these things have established names and access
+       mechanisms ... you think that someone will be against that
+       ... who would argue against it?
+
+Simon: if things are already identified what is the objective of WSRF?
+       We had this conversation a long time ago that it's all about
+       identity ... we had an OGSA-DAI Technical Review Board where
+       Malcolm Atkinson pointed us to the OGSA document that has
+       something about naming which is very useful ... it splits the
+       naming problem down into three things without being specific to
+       the mapping - the three things are a human readable name, an
+       abstract name - unique for all time and an address ... you can
+       map between those three things ... this is a useful framework
+       to use ... also they gave examples in the document ... someone
+       has thought what this means in WSRF and in other things ... we
+       should think about that ourselves.
+
+Norman: section 3.9.4.1 on page 54 or the OGSA document ... this seems
+        to be a very specific use of a WSRF EPR ... you can pass
+        something that is not physical at all ...
+
+Susan: yes
+
+Simon: that EPR with no renewable reference part identifies a
+       particular resource.
+
+Norman: Could see how I could go to a service ... pass an EPR, the
+        service could unpack that ... it could be location transparent
+        but the person that uses that EPR cannot tell...
+
+Simon: some will think that this is a great way of building
+       distributed databases or you could use it to hide stuff
+       ... some people talk about bank account ids and other about
+       disks which are at opposite end of the spectrum ... we can use
+       the OGSA framework.
+
+Norman: has the renewable resource document been published?
+
+Simon: no.
+
+Norman: trying to find a mode of operation that makes most people make
+        comfortable or be able to factor it in if people require it
+        ...
+
+Susan: will do some more probing ..
+
+Norman: look forward to this ...
+
+Susan: what should we ask next?
+
+Simon: what happens if I already have an id?
+
+Norman: could use the scenarios ... have two scenarios ... where the
+        database is the data resource or where the result is treated
+        as a data resource ... we could make that community look at
+        our scenarios ... when the database is our resource you have 3
+        options: a service fronts one database in which case you don't
+        want to be bothered with a WSRF construct if you only have one
+        resource, the second possibility is that you have a naming
+        scheme that is understood by the underlying management system
+        that understands this, e.g. Oracle has a global naming scheme
+        for databases, and you could use that ... and the final
+        possibility is that you do have WSRF. The last two examples
+        have multiple resources ... we would like to be able to use
+        option 1 - our desire is to allow options 1 and 3 to co-exist
+        in the spec ... or there is no WSRF issue for option 2 or it's
+        ruled out of bounds ... it could become a 2 step process
+        .. look up that name in a registry and get an EPR and then
+        address the service through the EPR ... could get a level of
+        indirection ... could be a good thing ...
+
+Susan: ruling out option 2 rules out a lot of web services ...
+
+Simon: number 2 is not just a database thing ...
+
+Susan: sure but we want them to look at the scenarios ...
+
+Simon: WSRF people will say in option 1 you have an EPR, in option 2
+       you map it to an EPR and option 3 is an EPR.
+
+Norman: but there are different views on this ... the question is
+        though how do we make 1 a sub-option for 3 ...
+
+Simon: but WS-Addressing was not written for WSRF, WSRF was written to
+       use WS-Addressing ... if you are using a URL then clearly it's
+       not an EPR but you could also use that as an EPR then the
+       consumer can't tell if a WSRF EPR or a standard WS EPR...
+
+Norman: as a client this is a good thing but the service provider
+        might get grumpy about naming its internal resources ... want
+        to achieve the client not to know these things.
+
+Susan: how can it see if it can get reference properties?
+
+Simon: can look at the WSDL and see if the methods are supported or
+       send a message and if faults ...
+
+...
+
+Susan: talk a little about the result set one ... when you have a
+       result set you do not have the luxury of a global name
+       ... unless we invented one.
+
+Simon: there is a space in the metadata for it ...
+
+Susan: it's a matter of implementation ... you could use a temporary
+       table.
+
+Norman: if you created a temporary table and imported the name the
+        management of that table would be managed by the underlying
+        resource whereas if it's managed by the service it's a first
+        class citizen in the service space and a 2nd class name in the
+        resource space
+
+Susan: have been talking about this today ... bit of resource that is
+       tightly coupled to the service ... WSRF is ideal
+
+Norman: it makes it a first class citizen of the service ... 
+
+6. Discussion on possible meeting on 26th July, in association with WSRF
+   meeting (Norman Paton).
+
+Norman: Meeting on the 26th supposed to tie with the WSRF face-to-face
+        taking place in London.
+
+Susan: There are two Oracle people attending the WSRF meeting but they
+       are not DAIS ... they are from the application server group but
+       they should be ok about this ... the WSRF is all day on the
+       27th ... one of them is flying in for the Monday and the other
+       is coming in on the Tuesday ...
+
+Norman: so there is a possibility on the Monday ...
+
+Susan: but I will not be able to attend in the afternoon ...
+
+Norman: could meet up with Simon and meet up and discuss the scenarios
+        ... we should be able to have a useful discussion with someone
+        from an AP Server ... could also possibly meet post the WSRF
+        meeting but I will not be able to attend.
+
+Susan: what about a meeting after the WSRF days ...
+
+* general discussion trying to pin down a time to meet *
+
+7. DAIS/File Access Group Interactions (Brian Collins)
+
+Could not do as neither Neil nor Brian were not on the call.
+
+8. AOB
+
+Susan: CGS model stuff is proceeding nicely. Being vetted by the IBM
+        SQL standards people.
+
+Norman: there is a question whether the spec team should try to meet
+        at some point. May be able to suggest a suitable time next
+        week.
+
+Mario: Status of charter?
+
+Norman: area chairs have been sent the updated charter but have not
+        had a reply.
+
+---
+
+

@@ -1,0 +1,202 @@
+OGSA Interim Meeting 12 - CDDLM Joint Session
+=============================================
+
+  Location: Fujitsu Labs America, Sunnyvale, US
+  Date:     16 August 2005 (Day 2), afternoon
+
+* Participants
+
+  Jay Unger (IBM)
+  Tom Maguire (IBM)
+  Hiro Kishimoto (Fujitsu)
+  Andreas Savva (Fujitsu)
+  Fred Brisard (CA)
+  Takuya Mori (NEC)
+  Pete Ziu (Northrop Grumman)
+  Mark Morgan (UVa)
+  Michel Drescher (Fujitsu)
+  Steven Newhouse (OMII)
+  Ravi Subramaniam (Intel)
+  Fred Maciel (Hitachi)
+  Ellen Stokes (IBM)
+  Soonwook Hwang (NAREGI)
+  Donal Fellows (UoM)
+  Steve McGough (LeSC)
+  Andrew Grimshaw (UVa)
+  Dejan Milojicic (HP)
+  Mike Behrens (R2AD, LLC)
+  Stuart Schaefer (Softricity)
+  Jun Tatemura (NEC)
+
+  Phone bridge:
+        Steven Loughran (HP)
+
+  Minutes: Andreas Savva
+           (Includes some notes from Mike Behrens)
+
+* EMS overview
+
+  - Overview of EMS interactions by Andrew Grimshaw
+  - From the point of view of EMS: 
+    - Provisioning: "I want this application on this resource"
+    - It does not cover provisioning hardware at this point.
+    - CDDLM point of view is the same.
+
+* CDDLM overview
+
+  - A number of documents submitted
+    - Foundation
+    - Deployment API
+    - XML based CDL
+    - Smartfrog specification
+
+  - Some approved, some in the GGF process
+  - CDDLM builds on WSDM and provides compatible APIs
+
+** CDL overview
+  - Component Description
+  - Property and property values for each component
+  - Reference between values and extensions are supported by the
+    language
+  - Extension: like an abstract template that can be 'instantiated' by
+    replacing values
+  - Can provide references (values) to components after deployment
+    (e.g., hostname)
+  - Deployment API: prepare the resource
+  - Content provider connection: e.g., ACS
+  - Component provider: defines meta-data and wrappers for content
+  - CDDLM can derive requirements from a JSDL document and decide
+    which resources to deploy and then do so. And manage those
+    resources.
+  - In OGSA EMS: the resources are picked by CSG and EPS and only then
+    does deployment start
+    - (There is a need for an integration point between ACS and
+      CSG. CSG would need to be able to get the application metadata
+      in order to make an appropriate decision on where a particular
+      job can execute.)
+  - Job management in CDDLM figure is {JM and EPS}; terminology may
+    not be exact as it is based on intermediate drafts.
+  - Deployment API allows access to 'system', not directly to a
+    specific component within the system.
+  - Component: deploy and manage resources
+  - System: just a collection of components (possibly made of multiple
+    applications)
+  - CDL: system needs to be defined to cause a deployment to occur by
+    the Deployment API
+  -  'System' in addition to deployment port also has an information
+     port that can be used to access internal components. (e.g.,
+     lookup via xpath.)
+  - Lifecycle: 'running' means that the deployment is finished and the
+    system is available for use.
+  - The component model describes (effectively) the EMS container
+  - Portal: well known; manages nodes and knows about deployed systems
+
+  - Perceived overlap with EMS: CDDLM functionality seems quite close
+    to BES functionality
+    - EMS schedules and runs functional requests (e.g., run BLAST with
+      parameters x,y...)
+    - CDDLM deploys the capabilites that make it possible to run
+      functional requests (e.g., install and make BLAST runnable on
+      some node(s). It does not actually kick off a BLAST invocation
+      with parameters x,y...)
+    - The capability to be deployed might look similar to a functional
+      request but it is with the intention of providing an
+      infrastructure for other functionality. (E.g., deploy a hosting
+      environment such as a web server in order to host an
+      application.)
+    - (Also discussed further down in 'Relationship with EMS')
+
+  - Ping: only on system. It accesses each component's management
+    interface for status. (A component by definition does not support
+    ping.)
+
+** Relation of CDDLM with SDD
+
+   - Similarities, overlaps, missing pieces: not sure exactly what
+     space SDD will cover.
+   - CDDLM would like to keep deployment api
+   - And perhaps some part of the CDL and Lifecycle model would move
+     to SDD.
+
+   - SDD TC is now doing use case analysis; might be worth to submit
+     CDDLM use cases there
+     - ACS has already submitted their use cases
+     - And ACS will probably have some ability to include ACS specific
+       content into SDD
+
+** ACS introduction 
+
+   https://forge.gridforum.org/projects/ogsa-wg/document/OGSA-2005-08-ACS/en/1
+
+   - Each Application Description (AA) has an EPR
+   - May have dependencies between archives
+   - Large data may be outside and referred to
+   - There is dependency support, but is it for same purpose as CDDLM?
+     Can it store CDL? Same purpose.
+   - Archive 'file' is similar to gar/jar/etc
+   - If there are two applications are they in two archives or one?
+     - Logically independent but could be in one archive
+   - Can information about the deployment requirements of an
+     application be retrieved? Yes
+   - 'System' is a deployable entity (AA are the contents that would
+     be deployed)
+   - An Archive Description (AD) may have some similarities with CDL
+     and ...
+   - Other interactions: Replication, ByteIO as a transport etc
+   - Does this model support partial instantiation (currying)? 
+     - (Or making a copy of an AA and creating a new AA from it by
+       extending it and overwriting some of the contents with perhaps
+       different DD information which might have some particulars for
+       a different organization. This would mean that the new AA would
+       have a new EPR.)
+
+*** Provisioning appliance presentation
+    https://forge.gridforum.org/projects/ogsa-wg/document/OGSA-2005-08-ACS-concept/en/1
+
+** Relationship with EMS (integration)
+   
+   - It would be nice to use the same 'infrastructure' to deploy
+     [capabilities] and to run those [capabilities]
+   - Timing component might be a difference or the kind of resources
+     being targeted might be different
+
+   - Conditional (deployment): e.g., if there is an existing instance
+     of, say, Oracle can one use it to deploy additional pieces to
+     setup a new system?
+     - CDDLM does no prohit it. But need to do some more work within
+       CDDLM to achieve it: Check for existence of the required system
+       and not deploy it. (It needs separate 'wrapper logic')
+     - At the moment CDDLM does not allow definition of system of
+       systems
+   - System definitions are self-contained (do not allow definition
+     that cross boundaries; but such connections can be done by
+     'wrapper logic')
+   - No concept of optionality in the definition
+     - But CDDLM supports conditional workflow that can be used to
+       achieve this (to some extent)
+     - That kind of intelligent decisions are left to a higher
+       level. CDDLM does provides some basic support for it.
+   - CDDLM definition intended for provisioning resources that already
+     exist and to re-use existing resources
+     - Not for submitting functional requests
+     - A provisioning request (action) is a kind of grid job
+       (activity)
+     - Hiro: The BG project also discussed this kind of recursion;
+       decided to avoid it.
+     - The CDDLM-WG also discussed this recursion or bootstrapping
+       problem: scheduling talks to provisioning that talks to
+       scheduling, and also tried to avoid it.
+
+   - Agreed to define one or two scenarios and go through them to
+     explore interactions between the various 'pieces'
+     - Volunteers: Andrew, Jay, Ravi, Stuart, Mike
+     - Goal to present something by GGF15. But need to produce
+       something before that. 
+   - Agreed to continue the work on the OGSA teleconferences.
+
+   Action: OGSA-WG (Hiro,Andrew etc) to arrange scheduling such meetings in
+           the future (Calls, GGF, etc)
+
+
+
+

@@ -1,0 +1,136 @@
+OGSA Interim Meeting (OGSA-16) - Day 1, morning
+===============================================
+
+  Date: 9 November 2006 (Thursday), morning
+
+* Participants
+
+  Fabio Benedetti (IBM)
+  Michel Drescher (Fujitsu)
+  Hiro Kishimoto (Fujitsu)
+  Fred Maciel (Hitachi)
+  Tom Maguire (EMC)
+  Steve McGough (Imperial)
+  Mark Morgan (UVa)
+  Andreas Savva (Fujitsu)
+  Ellen Stokes (IBM)
+  
+  Phone bridge: 
+    Donal Fellows (UoM) (until Security session)
+    Chris Kantarjiev (Oracle)
+    Jay Unger (IBM)
+    David Groep (NIKHEF) (from Security session onwards)
+
+  Minutes: Andreas Savva
+
+* Summary of New Actions
+
+  AI-1109am-a: Ellen and Tom will review the error code/faults issue
+                further with a view to put a proposal forward to DMTF.
+  
+* Welcome
+
+* Review of "Containers in OGSA"
+
+  - Need to apply new OGF template (see Gridforge Editor project)
+  - The plan is to publish it as an Information-track document and
+    contribute it to the DMTF
+
+  - [Sec.2 paragraph2] Container is general and might need
+    sub-classing for more specific container types
+    - Is the relationship between this document and BES clear enough?
+      It is part of the discussion today.
+
+  - In thinking about how an information model relates to a service,
+    should we consider defining a BES Service (sub-classed from
+    CIM_Service) where the BES Service contains the remaining BES
+    container specific factory operations?  (Refer to new visio
+    drawing)
+
+  - Revised model suggests 'moving' operations from Container to
+    Service (generic ones) and specializations of Service for more
+    specific ones (e.g., BES Container)
+    - Container would have only a set of attributes that are generic
+      enough (perhaps only a type attribute?) that apply to all
+      sub-types.
+    - Should Queuing Service and J2EE Hosting Environment be
+      considered together as possible sub-types?
+      - The interesting point is what resources are behind the queuing
+        service, for example, rather than what the container is
+        'running on'
+    - Need some kind of transformation model to build document set(s)
+      for XQuery --- the advertisement model
+      - (A related topic is the connection to SML)
+      - XQuery itself could be one of those tools but this usage is
+        different from the one envisaged for matching
+    - Clearly this is still in the initial stages and need more work
+      to determine what has to be done.
+
+  - Is an attribute that denotes the environment of container needed;
+    such as whether the container is a queuing service, a J2EE hosting
+    environment, a host (operating system based), etc?
+    - Probably, but still have open issues as above.
+
+  - The current version of the BES spec defines 2 attributes: Common
+    Name and Long Name.  These do not have to defined in this
+    container model because the Container class inherits Caption and
+    Description, respectively, from the ManagedElement class.
+    - Agreed no problem with this.
+
+  - Are there any other elements of BES that we think are of a general
+    nature and should be added to this Container class definition?
+    - not at this point
+
+  - open() and close() as detailed below have no inputs, but do have a
+    return code. BES analogous operations have no inputs and no
+    outputs.  How do we want to define open and close?
+    - There is a difference in thinking about these. In particular
+      between the operation failing (which in the view of the BES spec
+      writers is not possible) and of the operation succeeding and
+      returning some abnormal returns that should be modeled as faults
+      instead.
+    - There is also a discrepancy in the way CIM models everything as
+      error codes.
+
+  AI-1109am-a: Ellen and Tom will review the error code/faults issue
+                further with a view to put a proposal forward to DMTF.
+
+  - WS-CIM appears not to be the right XML representation to list
+    here---from an OGSA point of view.  From a DMTF/CIM point of view,
+    WS-CIM can be algorithmically generated (per DSP0230).  For this
+    information document, Ellen recommends that it does not include a
+    WS-CIM XML representation. 
+    - Agreed to remove the WS-CIM XML section from this document
+
+  - Is a Glossary needed?
+    - No need. Checked that the Container definition in the OGSA
+      Glossary 1.5 is good and the Glossary is referenced.
+
+  - Ellen will produce a revised version
+
+* Document status review
+
+  - Updates directly in the spreadsheet by Hiro; and uploaded to
+    Gridforge.
+
+* Security
+
+  - Review of proposed charter for AuthN
+  - Current proposal is to focus on protocol aspects; along the lines
+    of the OGSA-AuthZ group
+  - Is profile accurate here or not? It might be better called an
+    instantiation.
+  - Should review of existing work be a target? There is a lot of
+    existing work in this area and this may be a long task.
+  - Is delegation in scope - yes
+  - Jim Basney (NCSA) was named as one person to try to get involved
+    in this group.
+  - Best Practice and Roadmap are mentioned as deliverables.  Why not
+    a core specification as well?
+    - Agreed to add a title for a recommendation document.
+  - There are many specific problems in moving forward. For example,
+    why is this topic important, what is it trying to solve. In
+    particular what is the specific threat model that it is addressed,
+    what threats can this work mitigate, and so on.
+    - Agreed to add as part of Best Practices a section on common
+      threats and what are the practices that mitigate them.

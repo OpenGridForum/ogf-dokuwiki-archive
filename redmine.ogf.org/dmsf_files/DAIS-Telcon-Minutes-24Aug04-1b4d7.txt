@@ -1,0 +1,307 @@
+DAIS Telcon 24/08/04
+====================
+
+Chair  : Norman Paton
+Minutes: Mario Antonioletti
+
+Present:
+-------
+         Mario Antonioletti, EPCC
+         Simon Laws, IBM
+	 Allen Luniewski, IBM
+	 Dave Pearson, Oracle
+         Norman Paton, University of Manchester
+	 Amy Krause, EPCC
+	 Savas Parastatidis, University of Newcastle
+         Susan Malaika, IBM
+	 Thomas Soddeman, Rechenzentrum der MPG am MPI fuer Plasmaphysik
+
+Agenda:
+------
+
+0. Minutes/Actions.
+1. Object Data Access Services (Norman Paton)
+2. Discussion of GridForge Issues for WS-DAI Specification (Simon Laws)
+3. Discussion of GridForge Issues for WS-DAI Realisations (Brian 
+   Collins/Amy Krause/Susan Malaika)
+
+Actions:
+--------
+
+[Dave]   Distribute the executive summary document together with Mario's 
+         comments and try to attribute where the document excerpts came 
+         from.
+[Norman] Arrange a get together at GGF12 for those interested in an object
+         data service realisation.
+
+---
+
+1. Object Data Access Services
+
+   None of the relevant people were present at the beginning of the
+   call so this got relegated towards the back end of the call.
+
+2. Discussion of GridForge Issues for WS-DAI Specification (Simon Laws)
+
+   Going through the spec and making updates. Have sent out a list of
+   the status of the current issues logged in Grid Forge.
+
+   Going through these issues.
+
+   Issue 480 is about concurrency.
+   Have dropped this and will specify a set of faults of this.
+
+   Issue 932 is about the model for derived data service or what we
+   call indirect access.
+
+   Will be addressed by putting a comment in the relevant section.
+
+   Issue 933 is about lifetimes, comment about the lifetime and the
+   relationship between the web service and the data resource. When a
+   query is sent in there will be data hanging around that will have
+   some sort of lifetime.
+
+   Have added 4 elements to describe the different possibilities
+   regarding the lifetime of this data. Talked originally about
+   allowing the consumer to vary this but not for this spec.
+
+   Issue 934: in the specification we propose a way of allowing
+   different response formats. We recognise that other people are
+   doing this, e.g. the WS-Agreement people. Will leave this as an
+   outstanding issue for GGF12 and then see if GRAAP have a solution
+   post GGF12.
+
+   Issue 935 is about the relationship of DAIS specs with other specs,
+   this is repeated in issue 971.
+
+   Leave this as ongoing. Other specs are coming to light, e.g. GSM,
+   which we need to keep an eye on.
+
+   Issue 936 no faults in the GGF11 spec 
+
+   Will add some and close the issue.
+
+Simon: are faults going to go in the GGF12 version of the XML spec?
+
+Amy: yes.
+
+   The data management stuff is on-going.
+
+   Issue 938: the document now contains some MUSTs and SHOULDs.
+
+   This needs needs to be reviewed.
+
+Norman: in terms of faults ... these are usually associated with
+        operations ... what do faults mean in relation to the base
+        spec?
+
+Simon: the faults sections in the mapping part said there were no
+       faults specified in the base specifications ... need to say
+       where faults will have an impact ... to do with behavioural
+       properties..
+
+
+Norman: so you are describing the types of faults that might be
+        produced?  ... could define faults in relation to the base
+        operations ...
+
+Simon: could take the view that all faults should operate on all
+       messages ... we need to discuss which faults appear generally
+       and describe them in the base spec ... some decision making
+       required ..
+
+Norman: the suggestion is that faults are added and the issue can be
+        closed ...
+
+Simon: maybe we need to create the proposition ... close the existing
+       issue and add an item on the fault proposition ... will make a
+       note of what the general faults and question whether that is
+       the right thing to do.
+
+...
+
+   Issue 968: people were unhappy about a data resource definition.
+
+   We don't have a better one as yet. Propose that will leave that as
+   on-going while the data design effort goes on.
+
+
+   There's an issue about establishing the equivalence of data service
+   and data resource.
+
+   It sounds like a higher level issue than just for data. Have moved
+   this to a pending state. Will not do anything explicit about that.
+
+   Somebody raised the issue about appending metadata to data service.
+   We envisage though that this will be done through a metadata
+   service or through a registry. Talking about this kind of thing in
+   the data design effort.
+
+  Issue 972: should dais expose elements from CIM?
+
+  Have not talked about that so have left as on-going
+
+  Issue 977: disconnected data sets
+
+  Not clear exactly what that meant. Presume that means taking data out
+  of a data resource, making changes and putting it back in.
+
+Norman: let's imagine a result set, this can still be in the database
+        and another possibility is that this is in memory and there is
+        no underlying thing managing it. Does it make any difference?
+        Can the service handle both of those cases? You look at the
+        behavioural properties and know how this will behave. The
+        client should not care. We should be able to handle both of
+        these cases. Is there some consequence of accessing that
+        data. You want to ensure that you have told the user enough
+        about this so when the user sends a request they will know
+        what this means.
+
+        ...
+
+        You could envisage implementations of your service that are
+        handled in different ways may have implications on the
+        semantics.
+
+Dave: this is going to have an impact when you try to do data
+       integration.
+
+Susan: when people talk about disconnected data they usually envisage
+       a different language as well ... like check in, check
+       out. Check out to make it disconnected and check in when you
+       want to put the data back in. Those interfaces are not there
+       when it is not disconnected data.
+
+Norman: maybe there is a useful scenario here that we can use to see
+        if behavioural descriptions can be used for this kind of
+        scenarios.  The way to address this is to examine a couple of
+        issues.
+
+Savas: I agree with Susan the idea about ADO.Net you get an idea of
+       the data ... the underlying infrastructure has an understanding
+       of where the data came from. The object itself knows how the
+       updates have to be done on the original data resource when the
+       disconnected data set is sent back to it.
+
+Susan: in implementation this can happen on the client or on the
+       server...  do this for performance reasons, you work locally...
+
+Savas: but because it is disconnected other issues like concurrency
+       come into play ....
+
+Simon: have that issue in the indirect method ... can ask for a
+       particular service and ask for a given interface and the
+       behavioural properties that you set that affect that behaviour
+       that it will exhibit. ...  we have not thought about specifying
+       the interface based on whether it is connected or disconnected
+       or not.
+
+Susan: you are not using SQL or XPath ... you are using a different
+       manipulation language ... we have not described something
+       else..
+
+Simon: but the spec allows for it...
+
+Norman: Two issues:
+
+	- what impact should disconnectedness have on the spec and how
+	  you might handle this and what the behavioural properties
+	  are.
+
+	- what is happening behind the scenes ... etc..
+
+we should define how this relates to the spec and take some scenarios,
+the effectiveness of the behavioural properties.
+
+Simon: will write some notes and send them out ...
+
+Susan: the term disconnected is not only as is used as in English but
+       also an implementation from Microsoft.
+
+Norman: what is the analogue in JDBC?
+
+Susan: webrowset and things like that ... we have not talked about the
+       actual interfaces.
+
+Simon: that is the end of the issues. There are some issues that have
+       arisen from the other specs. Will not talk about this on this
+       call but would like to talk about the "primitive data access".
+       Were going to put something on the spec or just write it as
+       an issue?
+
+Norman: write up as an issue with a view for a future discussion.
+
+Simon: Amy I was going to give you an example of an XML extension type?
+
+Amy: in the XPath the version was just an enumeration ... you said
+     that it should be an extension.
+
+
+Norman: For the relational spec all the issues are closed on Grid
+	Forge.  Should get Brian to send a summary to the list that
+	the issues have been closed ...
+
+        One open XML issue.
+
+Amy: that will be closed ... the inconsistency in the naming of
+     factories ... this is now in line with the relational spec.
+
+...
+
+Norman: missing the people to discuss item 1.
+
+Dave: could try to do something at GGF. 
+
+Thomas: I will be at GGF.
+
+Norman: I will send round another email to see if something can be
+	done at GGF.
+
+
+AOB
+---
+
+Dave: have circulated a revised executive summary, looking for names
+      to distribute this document to.  Worth at looking at Mario's
+      comments as these are commenting on excerpts that were taken
+      from current version of documents.
+
+Susan: are the informational documents not supposed to be snapshots?
+
+Dave: these documents may be snapshots and Mario questioned some of the
+      things that were taken from informational documents ... the 
+      informational documents should perhaps be updated ...
+
+Susan: are they supposed to be updated?
+
+Norman: the documents are the draft specs ... 
+
+Dave: yes. have taken words from the draft specifications and if these
+      need to be changed ...
+
+Susan: I was taking documents that were not the specifications ..
+
+Susan: sent you an email Dave suggesting a structural change to the
+       document ...
+
+Dave: will look at that and try to take that into account ...
+
+Susan: put some of the questions ahead of the text ...
+
+Mario: charter?
+
+Norman: have updated it on the web ... 
+
+Mario: should the mailing list not be sent a copy of this?
+
+Norman: have already mailed a copy of this?
+
+Dave: why not send out a pointer?
+
+Norman: I will do that ...
+
+There were some other AOB discussion I did not log:
+
+ - Discussion of logistics for GGF12.
+ - Discussion of the mapping document for GGF12.
+ - Discussion of naming.

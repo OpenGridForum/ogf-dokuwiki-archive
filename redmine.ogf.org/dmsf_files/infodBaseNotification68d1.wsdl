@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions name="infodBaseNotification" targetNamespace="http://www.w3.org/INFOD" xmlns:tns="http://www.w3.org/INFOD" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:infod="http://www.w3.org/INFOD">
+
+	<wsdl:import namespace="http://docs.oasis-open.org/wsrf/rw-2" location="http://docs.oasis-open.org/wsrf/rw-2.wsdl" />
+
+
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/INFOD" xmlns:infodxsd="http://www.w3.org/INFOD"></xsd:schema>
+		<xsd:schema>
+			<xsd:import namespace="http://docs.oasis-open.org/wsn/b-2" schemaLocation="http://docs.oasis-open.org/wsn/b-2.xsd" />
+			<xsd:import namespace="http://www.w3.org/INFOD" schemaLocation="infodTypes.xsd"></xsd:import>
+		</xsd:schema>
+	</wsdl:types>
+
+
+	<wsdl:message name="CreatePublisherRequest">
+		<wsdl:part name="WSEntityReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="PublisherName" type="xsd:string"></wsdl:part>
+		<wsdl:part name="PublisherDescription" type="xsd:string"></wsdl:part>
+		<wsdl:part name="PropertyConstraints" element="infod:PropertyConstraints"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="CreatePublisherResponse">
+		<wsdl:part name="INFODEntityReference" element="infod:EndPointReference"></wsdl:part>
+	</wsdl:message>
+
+
+	<wsdl:message name="ReplacePublisherRequest">
+		<wsdl:part name="WSEntityReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="INFODEntityReference" element="infod:EndPointReference"></wsdl:part>
+		<wsdl:part name="PublisherName" type="xsd:string"></wsdl:part>
+		<wsdl:part name="PublisherDescription" type="xsd:string"></wsdl:part>
+		<wsdl:part name="PropertyConstraints" element="wsinfod:PropertyConstraints"></wsdl:part>
+		<wsdl:part name="Notification" type="xsd:boolean"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="ReplacePublisherResponse">
+		<wsdl:part name="Status" element="infodxsd:status"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DropPublisherRequest">
+		<wsdl:part name="INFODEntityReference" element="infod:EndPointReference"></wsdl:part>
+		<wsdl:part name="ExecutionMode" type="xsd:string"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DropPublisherResponse">
+		<wsdl:part name="Status" element="infodxsd:status"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="CreateSubscriberRequest">
+		<wsdl:part name="WSEntityReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="SubscriberName" type="xsd:string"></wsdl:part>
+		<wsdl:part name="SubscriberDescription" type="xsd:string"></wsdl:part>
+		<wsdl:part name="PropertyConstraints" element="infod:PropertyConstraints"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="CreateSubscriberResponse">
+		<wsdl:part name="INFODEntityReference" element="infod:EndPointReference"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="ReplaceSubscriberRequest">
+		<wsdl:part name="WSEntityReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="INFODEntityReference" element="infod:EndPointReference"></wsdl:part>
+		<wsdl:part name="SubscriberName" type="xsd:string"></wsdl:part>
+		<wsdl:part name="SubscriberDescription" type="xsd:string"></wsdl:part>
+		<wsdl:part name="PropertyConstraints" element="infod:PropertyConstraints"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="ReplaceSubscriberResponse">
+		<wsdl:part name="Status" element="infodxsd:status"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DropSubscriberRequest">
+		<wsdl:part name="INFODEntityReference" element="infod:EndPointReference"></wsdl:part>
+		<wsdl:part name="ExecutionMode" type="xsd:string"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DropSubscriberResponse">
+		<wsdl:part name="Status" element="infodxsd:status"></wsdl:part>
+	</wsdl:message>
+
+
+	<wsdl:message name="CreateConsumerRequest">
+		<wsdl:part name="WSEntityReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="INFODEntityReference" element="infod:EndPointReference"></wsdl:part>
+		<wsdl:part name="ConsumerName" type="xsd:string"></wsdl:part>
+		<wsdl:part name="ConsumerDescription" type="xsd:string"></wsdl:part>
+		<wsdl:part name="PropertyConstraints" element="infod:PropertyConstraints"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="CreateConsumerResponse">
+		<wsdl:part name="INFODEntityReference" element="infod:EndPointReference"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="ReplaceConsumerRequest">
+		<wsdl:part name="WSEntityReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="INFODEntityReference" element="infod:EndPointReference"></wsdl:part>
+		<wsdl:part name="ConsumerName" type="xsd:string"></wsdl:part>
+		<wsdl:part name="ConsumerDescription" type="xsd:string"></wsdl:part>
+		<wsdl:part name="PropertyConstraints" element="infod:PropertyConstraints"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="ReplaceConsumerResponse">
+		<wsdl:part name="Status" element="infod:status"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DropConsumerRequest">
+		<wsdl:part name="INFODEntityReference" element="infod:EndPointReference"></wsdl:part>
+		<wsdl:part name="ExecutionMode" type="xsd:string"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DropConsumerResponse">
+		<wsdl:part name="Status" element="infod:status"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="CreateSubscriptionRequest">
+		<wsdl:part name="SubscriptionName" type="xsd:string"></wsdl:part>
+		<wsdl:part name="SubscriptionDescription" type="xsd:string"></wsdl:part>
+		<wsdl:part name="WSEntityReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="DataConstraints" element="infod:DataConstraints"></wsdl:part>
+		<wsdl:part name="PropertyConstraints" element="infod:PropertyConstraints"></wsdl:part>
+		<wsdl:part name="DynamicConsumerConstraints" element="infod:DynamicConsumerConstraints"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="CreateSubscriptionResponse">
+		<wsdl:part name="INFODEntityReference" element="wsa:EndPointReference"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="ReplaceSubscriptionRequest">
+		<wsdl:part name="INFODEntityReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="SubscriptionName" type="xsd:string"></wsdl:part>
+		<wsdl:part name="SubscriptionDescription" type="xsd:string"></wsdl:part>
+		<wsdl:part name="WSEntityReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="DataConstraints" element="infod:DataConstraints"></wsdl:part>
+		<wsdl:part name="PropertyConstraints" element="infod:PropertyConstraints"></wsdl:part>
+		<wsdl:part name="DynamicConsumerConstraints" element="infod:DynamicConsumerConstraints"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="ReplaceSubscriptionResponse">
+		<wsdl:part name="Status" element="infod:status"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DropSubscriptionRequest">
+		<wsdl:part name="INFODEntityReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="ExecutionMode" type="xsd:string"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DropSubscriptionResponse">
+		<wsdl:part name="Status" element="infodxsd:status"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="RegisterPropertyVocabularyRequest">
+		<wsdl:part name="VocabularyName" type="xsd:string"></wsdl:part>
+		<wsdl:part name="VocabularyDescription" type="xsd:string"></wsdl:part>
+		<wsdl:part name="VocabularyBody" type="xsd:string">
+			<wsdl:documentation>Attention: A string has been used, the specification requires a string array instead. One can modify this to an array or sequence type, is that needed, or shall we put any as the type?</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="RegisterPropertyVocabularyResponse">
+		<wsdl:part name="INFODVocabularyReference" element="infod:EndPointReference"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="CreatePropertyVocabularyInstanceRequest">
+		<wsdl:part name="VocabularyInstanceReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="VocabularyInstanceVocabularyReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="VocabularyInstanceVocabularyBody" type="xsd:string">
+			<wsdl:documentation>Attention: A string has been used, the specification requires a string array instead. One can modify this to an array or sequence type, is that needed, or shall we put any as the type?</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="CreatePropertyVocabularyInstanceResponse">
+		<wsdl:part name="INFODVocabularyInstanceReference" element="wsa:EndPointReference"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DropPropertyVocabularyInstanceRequest">
+		<wsdl:part name="VocabularyInstanceReference" element="wsa:EndPointReference"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DropPropertyVocabularyInstanceResponse">
+		<wsdl:part name="Status" element="infodxsd:status"></wsdl:part>
+	</wsdl:message>
+
+
+	<wsdl:message name="RegisterDataVocabularyRequest">
+		<wsdl:part name="VocabularyName" type="xsd:string"></wsdl:part>
+		<wsdl:part name="VocabularyDescription" type="xsd:string"></wsdl:part>
+		<wsdl:part name="VocabularyLanguage" type="xsd:anyURI"></wsdl:part>
+		<wsdl:part name="LanguageUsageDescription" type="xsd:anyType"></wsdl:part>
+		<wsdl:part name="VocabularyInstanceVocabularyBody" type="xsd:string">
+			<wsdl:documentation>Attention: A string has been used, the specification requires a string array instead. One can modify this to an array or sequence type, is that needed, or shall we put any as the type?</wsdl:documentation>
+		</wsdl:part>
+	</wsdl:message>
+
+
+	<wsdl:message name="RegisterDataVocabularyResponse">
+		<wsdl:part name="INFODVocabularyReference" element="wsa:EndPointReference"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="UnregisterVocabularyRequest">
+		<wsdl:part name="INFODVocabularyReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="ExecutionMode" type="xsd:string"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="UnregisterVocabularyResponse">
+		<wsdl:part name="Status" element="infodxsd:status"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="AssociateVocabularyRequest">
+		<wsdl:part name="AssociateVocabularyName" type="xsd:string"></wsdl:part>
+		<wsdl:part name="AssociateVocabularyDescription" type="xsd:string"></wsdl:part>
+		<wsdl:part name="AssociationEntityReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="VocabularyReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="PropertyConstraints" element="infod:PropertyConstraints"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="AssociateVocabularyResponse">
+		<wsdl:part name="INFODAssociationReference" element="wsa:EndPointReference"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DisassociateVocabularyRequest">
+		<wsdl:part name="INFODAssociationReference" element="wsa:EndPointReference"></wsdl:part>
+		<wsdl:part name="ExecutionMode" type="xsd:string"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DisassociateVocabularyResponse">
+		<wsdl:part name="Status" element="infodxsd:status"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="GetMetaDataRequest">
+
+		<wsdl:part name="MetaDataQueryExpression" type="xsd:string"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="GetMetaDataResponse">
+
+		<wsdl:part name="MetaDataQueryResult" type="xsd:string"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="NotifyRequest">
+
+	</wsdl:message>
+
+
+
+	<wsdl:message name="CreateEntityAuthorizationFailureErrorMessage">
+		<wsdl:part name="err" element="infod:CreateEntityAuthorizationFailure"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="UnknownElementReferenceFaultErrorMessage">
+		<wsdl:part name="err" element="infod:UnknownElementReferenceFault"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="MissingRequiredParameterFaultErrorMessage">
+		<wsdl:part name="err" element="infod:MissingRequiredParameterFault"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="UnSupportedXQueryFaultErrorMesage">
+		<wsdl:part name="err" element="infod:UnSupportedXQueryFault"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="ReplaceEntityAuthorizationFaultErrorMessage">
+		<wsdl:part name="err" element="infod:ReplaceEntityAuthorizationFailure"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="DropEntityAuthorizationFaultErrorMessage">
+		<wsdl:part name="err" element="infod:DropEntityAuthorizationFailure"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="ExecutionModeFaultErrorMessage">
+		<wsdl:part name="err" element="infod:ExecutionModeFault"></wsdl:part>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="RegisterVocabularyAuthorizationFailureErrorMessage">
+		<wsdl:part name="err" element="infod:RegisterVocabularyAuthorizationFailure"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="UnSupportedVocabularyFaultErrorMessage">
+		<wsdl:part name="err" element="infod:UnSupportedVocabularyFault"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="CreatePropertyVocabularyInstanceAuthorizationFailureErrorMessage">
+		<wsdl:part name="err" element="infod:CreatePropertyVocabularyInstanceAuthorizationFailure"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="CreateAssociationAuthorizationFailureErrorMessage">
+		<wsdl:part name="err" element="infod:CreateAssociationAuthorizationFailure"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="DisAssociationAuthorizationFailureErrorMessage">
+		<wsdl:part name="err" element="infod:DisAssociationAuthorizationFailure"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="infodRegistry">
+		<wsdl:operation name="CreatePublisher">
+			<wsdl:input message="infod:CreatePublisherRequest" name="createPublisherMessage"></wsdl:input>
+			<wsdl:output message="infod:CreatePublisherResponse"></wsdl:output>
+			<wsdl:fault message="infod:CreateEntityAuthorizationFailureErrorMessage" name="CreateEntityAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="UnSupportedXQueryFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedXQueryFaultErrorMesage" name="UnSupportedXQueryFault"></wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="ReplacePublisher">
+			<wsdl:input message="infod:ReplacePublisherRequest" name="ReplacePublisherMessage"></wsdl:input>
+			<wsdl:output message="infod:ReplacePublisherResponse" name="ReplacePublisherResponse"></wsdl:output>
+			<wsdl:fault message="infod:ReplaceEntityAuthorizationFaultErrorMessage" name="ReplaceEntityAuthorizationFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="MissingrequiredParameterFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedXQueryFaultErrorMesage" name="UnSupportedXQueryFault"></wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="DropPublisher">
+			<wsdl:input message="infod:DropPublisherRequest" name="DropPublisherRequestMessage"></wsdl:input>
+			<wsdl:output message="infod:DropPublisherResponse" name="DropPublisherResponseMessage"></wsdl:output>
+			<wsdl:fault message="infod:DropEntityAuthorizationFaultErrorMessage" name="DropEntityAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="UnSupportedXQueryFault"></wsdl:fault>
+			<wsdl:fault message="infod:ExecutionModeFaultErrorMessage" name="ExecutionModeFault"></wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="CreateSubscriber">
+			<wsdl:input message="infod:CreateSubscriberRequest"></wsdl:input>
+			<wsdl:output message="infod:CreateSubscriberResponse"></wsdl:output>
+			<wsdl:fault message="infod:CreateEntityAuthorizationFailureErrorMessage" name="CreateEntityAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="UnSupportedXQueryFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedXQueryFaultErrorMesage" name="UnSupportedXQueryFault"></wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="ReplaceSubscriber">
+			<wsdl:input message="infod:ReplaceSubscriberRequest"></wsdl:input>
+			<wsdl:output message="infod:ReplaceSubscriberResponse"></wsdl:output>
+			<wsdl:fault message="infod:ReplaceEntityAuthorizationFaultErrorMessage" name="ReplaceEntityAuthorizationFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="MissingrequiredParameterFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedXQueryFaultErrorMesage" name="UnSupportedXQueryFault"></wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="DropSubscriber">
+			<wsdl:input message="infod:DropSubscriberRequest"></wsdl:input>
+			<wsdl:output message="infod:DropSubscriberResponse"></wsdl:output>
+			<wsdl:fault message="infod:DropEntityAuthorizationFaultErrorMessage" name="DropEntityAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="UnSupportedXQueryFault"></wsdl:fault>
+			<wsdl:fault message="infod:ExecutionModeFaultErrorMessage" name="ExecutionModeFault"></wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="CreateConsumer">
+			<wsdl:input message="infod:CreateConsumerRequest"></wsdl:input>
+			<wsdl:output message="infod:CreateConsumerResponse"></wsdl:output>
+			<wsdl:fault message="infod:CreateEntityAuthorizationFailureErrorMessage" name="CreateEntityAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="UnSupportedXQueryFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedXQueryFaultErrorMesage" name="UnSupportedXQueryFault"></wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="ReplaceConsumer">
+			<wsdl:input message="infod:ReplaceConsumerRequest"></wsdl:input>
+			<wsdl:output message="infod:ReplaceConsumerResponse"></wsdl:output>
+			<wsdl:fault message="infod:ReplaceEntityAuthorizationFaultErrorMessage" name="ReplaceEntityAuthorizationFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="MissingrequiredParameterFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedXQueryFaultErrorMesage" name="UnSupportedXQueryFault"></wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="DropConsumer">
+			<wsdl:input message="infod:DropConsumerRequest"></wsdl:input>
+			<wsdl:output message="infod:DropConsumerResponse"></wsdl:output>
+			<wsdl:fault message="infod:DropEntityAuthorizationFaultErrorMessage" name="DropEntityAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="UnSupportedXQueryFault"></wsdl:fault>
+			<wsdl:fault message="infod:ExecutionModeFaultErrorMessage" name="ExecutionModeFault"></wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="CreateSubscription">
+			<wsdl:input message="infod:CreateSubscriptionRequest"></wsdl:input>
+			<wsdl:output message="infod:CreateSubscriptionResponse"></wsdl:output>
+			<wsdl:fault message="infod:CreateEntityAuthorizationFailureErrorMessage" name="CreateEntityAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="UnSupportedXQueryFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedXQueryFaultErrorMesage" name="UnSupportedXQueryFault"></wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="ReplaceSubscription">
+			<wsdl:input message="infod:ReplaceSubscriptionRequest"></wsdl:input>
+			<wsdl:output message="infod:ReplaceSubscriptionResponse"></wsdl:output>
+			<wsdl:fault message="infod:ReplaceEntityAuthorizationFaultErrorMessage" name="ReplaceEntityAuthorizationFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="MissingrequiredParameterFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedXQueryFaultErrorMesage" name="UnSupportedXQueryFault"></wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="DropSubscription">
+			<wsdl:input message="infod:DropSubscriptionRequest"></wsdl:input>
+			<wsdl:output message="infod:DropSubscriptionResponse"></wsdl:output>
+			<wsdl:fault message="infod:DropEntityAuthorizationFaultErrorMessage" name="DropEntityAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="UnSupportedXQueryFault"></wsdl:fault>
+			<wsdl:fault message="infod:ExecutionModeFaultErrorMessage" name="ExecutionModeFault"></wsdl:fault>
+		</wsdl:operation>
+
+	</wsdl:portType>
+	<wsdl:portType name="infodVocabulary">
+		<wsdl:operation name="RegisterPropertyVocabulary">
+			<wsdl:input message="infod:RegisterPropertyVocabularyRequest"></wsdl:input>
+			<wsdl:output message="infod:RegisterPropertyVocabularyResponse"></wsdl:output>
+			<wsdl:fault message="infod:RegisterVocabularyAuthorizationFailureErrorMessage" name="RegisterVocabularyAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="MissingRequiredParameterFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedVocabularyFaultErrorMessage" name="UnSupportedVocabularyFault"></wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="CreatePropertyVocabularyInstance">
+			<wsdl:input message="infod:CreatePropertyVocabularyInstanceRequest"></wsdl:input>
+			<wsdl:output message="infod:CreatePropertyVocabularyInstanceResponse"></wsdl:output>
+			<wsdl:fault message="infod:CreatePropertyVocabularyInstanceAuthorizationFailureErrorMessage" name="CreatePropertyVocabularyInstanceAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="MissingRequiredParameterFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedVocabularyFaultErrorMessage" name="UnSupportedVocabularyFault"></wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="DropPropertyVocabularyInstance">
+			<wsdl:input message="infod:DropPropertyVocabularyInstanceRequest" name="DropPropertyVocabularyInstanceRequest"></wsdl:input>
+			<wsdl:output message="infod:DropPropertyVocabularyInstanceResponse" name="DropPropertyVocabularyInstanceResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="RegisterDataVocabulary">
+			<wsdl:input message="infod:RegisterDataVocabularyRequest"></wsdl:input>
+			<wsdl:output message="infod:RegisterDataVocabularyResponse"></wsdl:output>
+			<wsdl:fault message="infod:RegisterVocabularyAuthorizationFailureErrorMessage" name="RegisterVocabularyAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="MissingRequiredParameterFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedVocabularyFaultErrorMessage" name="UnSupportedVocabularyFault"></wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="UnregisterVocabulary">
+			<wsdl:input message="infod:UnregisterVocabularyRequest"></wsdl:input>
+			<wsdl:output message="infod:UnregisterVocabularyResponse"></wsdl:output>
+			<wsdl:fault message="infod:RegisterVocabularyAuthorizationFailureErrorMessage" name="RegisterVocabularyAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="MissingRequiredParameterFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedVocabularyFaultErrorMessage" name="UnSupportedVocabularyFault"></wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="AssociateVocabulary">
+			<wsdl:input message="infod:AssociateVocabularyRequest"></wsdl:input>
+			<wsdl:output message="infod:AssociateVocabularyResponse"></wsdl:output>
+			<wsdl:fault message="infod:CreateAssociationAuthorizationFailureErrorMessage" name="CreateAssociationAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="MissingRequiredParameterFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedVocabularyFaultErrorMessage" name="UnSupportedVocabularyFault"></wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="DisassociateVocabulary">
+			<wsdl:input message="infod:DisassociateVocabularyRequest"></wsdl:input>
+			<wsdl:output message="infod:DisassociateVocabularyResponse"></wsdl:output>
+			<wsdl:fault message="infod:DisAssociationAuthorizationFailureErrorMessage" name="DisAssociationAuthorizationFailure"></wsdl:fault>
+			<wsdl:fault message="infod:UnknownElementReferenceFaultErrorMessage" name="UnknownElementReferenceFault"></wsdl:fault>
+			<wsdl:fault message="infod:MissingRequiredParameterFaultErrorMessage" name="MissingRequiredParameterFault"></wsdl:fault>
+			<wsdl:fault message="infod:UnSupportedVocabularyFaultErrorMessage" name="UnSupportedVocabularyFault"></wsdl:fault>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="infodMetaData">
+		<wsdl:operation name="GetMetaData">
+			<wsdl:input message="infod:GetMetaDataRequest"></wsdl:input>
+			<wsdl:output message="infod:GetMetaDataResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="infodNotify">
+		<wsdl:operation name="Notify">
+			<wsdl:input message="infod:NotifyRequest"></wsdl:input>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

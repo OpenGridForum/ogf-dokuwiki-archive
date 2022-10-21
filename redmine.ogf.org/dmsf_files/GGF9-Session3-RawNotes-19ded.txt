@@ -1,0 +1,273 @@
+Lifecycle
+
+Discussion based on the current spec.
+
+Lifecycle's everything between creation and termination
+
+creation done via the factory, and leads to the negotiation phase
+
+termination is handled via the terminationTime OGSI operation
+
+either party can cause termination
+
+termination does not release parties from all commitment, particularly
+penalties
+
+
+States
+
+negotiation states (considered -> observed) in previous discussion
+
+idea of commitment added during yesterday's discussion, perhaps we'll
+come back to such discussion
+
+satisfaction of terms as from the spec: satisfied, violated,
+completed, partial satisfaction may be less severe 
+
+Agreement state diagram
+
+considered -> satisfied
+
+satisfied -> violated or completed
+
+can we go from violated back to satisfied?
+
+Ming, yes.
+
+Jon, yeah, but it's not quite the same since a violation did occur?
+
+Asit, must maintain some state about violation having occured for post
+mortem saving or notification of the parties.  Can be used for
+triggering penalties.
+
+Karl, how are our operations changed by going into violated state?
+Really, we need the audit trail that this has happened at some point.
+
+Karl, is observed really a mega-state.  Perhaps the states are really
+just properties or current snapshots.
+
+Ming, all we really care is that we have an agreeement or not.
+
+Alain, violation requires that we can talk about guarantee semantics.
+
+Karl, what's the diff. between term violations & agreement violations.
+
+Kate: summary, we must capture an attribute that violation occured
+
+Kate: What about completion?
+
+Karl, comments related to termination states and whether the agreement
+ever really had meaning.
+
+Asit, remember this is about whole agreements rather than about terms
+(which was discussed yesterday).
+
+
+Use of terminationTime
+
+termTime for purposes of limiting the time we have to reach agreement,
+but it could be part of negotiation as well and we're trying to use it
+for a special purposes.
+
+Alain, why not termination time on terms?
+
+Kate, price example shows how a term might have limited lifetime
+
+Karl, perhaps we look at this at term grouping and phasing, so the
+lifetime of an offer could be tied to a term grouping.  That is,
+whatever granularity is used for offer/counter-offer negotiations.
+
+Kate: this implies that this term time (on the group) is distinct from
+the overall agreement term. time
+
+Ming, this generally feels too complex (he might be tired as it's late
+in the day)
+
+Asit, this can be optional or there can be some default behavior that
+provides the simple case
+
+Karl, how can you do fine grain negotiation without this?  But, if a
+provider doesn't support fine grain neg. then we probably don't need
+that.
+
+Karl, thinks of "active" has to do with attributes on terms wrt when
+they are enforceable.
+
+XXX, Question, is there any guarantee/assertion that terms are in a
+consistent state?
+
+Kate: not presently, but that's a good idea
+
+Ali, what about state diagram for individual terms?
+
+XXX, If terms are not asserted to be mutually consistent, then there's no
+point to some of this like term. times
+
+XXX, How do lawyers frame negotiations and terminology related to them?
+
+Karl, termination times are really about offers, not about terms.
+
+XXX, Can you add terms during an agreement?
+
+Karl, we've discussed this somewhat, and there may be a way of doing that.
+
+
+How is agreement termination time related to termination time of the
+target?  Must the agreement outlive the target?
+
+Chris, we must be careful with the use of ogsi:termTime because we
+might do record keeping, so the completed state is important.
+
+Karl, some of this was discussed at interim wrt finalization and
+putting something into an audit system even if the real agreement is
+no longer around.  So, we need to negotiate for the needed
+finalization activities.
+
+Asit, back to the original question, they're really distinct things,
+so these should be independent
+
+Kate, not really what she's asking, what about the example where a
+reservation completes after the agreement completes is really the
+question?
+
+Ming, think about kerberos tickets, I have to renew those to keep
+access to my services via kerberos
+
+Summary: if the agreement terminates before the active time of any
+terms complete, then those terms/agreement are completed.  The old
+active time is lost.
+
+Karl, in this case you SHOULD be able to renew agreement to extend to
+the end of the active term.
+
+XXX, finalization gets involved here because it might need some of
+this "residual state" / agreement terms even after the agreement
+itself is gone.
+
+
+Ming, one approach to finalization is an "auditing service" that gets
+callbacks as the term/agreement states update.
+
+Kate, do we define such a service in our scope?
+
+Group, no?
+
+Kate, do we provide requirements?
+
+Chris, probably some of this is domain specific, so we probably cannot
+do this.
+
+JonM, like the resource usage service.
+
+XXX, there are international changes in requirements as well.
+
+XXX, all this finalization fine-print must be captured somehow, but a
+lot of this stuff is outside scope.  And someone might need to draft
+these higher level things.
+
+XXX2, IETF has banned the term "Agreement" from SLA and use
+specification due to legal interpretations.
+
+Asit, ultimately this is just language, and what we get here is not a
+legal contract.
+
+
+WRT termplates
+
+Karl, has been looking at this wrt JSDL.  Templates actually easier
+than supportedAgreements because it looks already like the structure
+of an agreement.
+
+Kate: Fusion uses the same approach
+
+Alain, DAIS, also looking at templates
+
+Karl, perhaps templates ends up replacing supported agreements?
+
+Chris, but what about for discovery?
+
+
+Asit, on expiration time: by adding another term. time it is not based
+on OGSI
+
+Karl, that's completely wrong.  the OGSI notion already captures, so
+it makes no sense to add another thing with the same semantic meaning?
+
+
+Finally, commit handshake?  Consensus remains that it is needed.
+
+Karl. the spec. is broken, and it needs this, so we have to solve
+this.
+
+
+
+
+Switch to Asit's presentation on templates
+
+as we talk about terms, remember it is not a single value, it could be
+an entire clause with lots of meaning/semantics, etc.
+
+Customization is kinda like car buying.  You set up different "option
+packages" and that ends up having different constraints, results such
+as price, and you can negotiate on any of these.  Coming up with these
+option packages is complex, and the template helps with this.
+
+Also, terms are not all SLA things, they can be parameters for the
+service (e.g. naming the subnets when we're negotiating a network
+connectivity service)
+
+
+Ming, enumerating all possiblities can be hard/impossible.
+
+Asit, sure just leave everything open and put no constraints, that's
+always possible
+
+Kate, so you end up with an empty template
+
+Asit, sure, but then you maybe don't even need to talk to the
+provider.
+
+Jim, so, any reason the templates cannot go into an SDE.  Ming also
+asks?
+
+Asit, yeah, we think it can go into SDE
+
+Ming, mostly this is when the client hasn't a clue how to specify
+terms?
+
+Asit, at least when they don't know the meaningful way of doing it
+
+Karl, so it basically mixes in the schema and the policy.
+
+Kate, don't have to get template.  Perhaps they reuse an old
+agreement.
+
+Asit, sure.
+
+Asit, Data svc. people asking about this, and we just don't have them
+yet
+
+Karl, also, for scale, etc., these could be collected into a central
+service for discovery and could contain with them names of providers
+that can support them.
+
+Karl, for repositories, we may need a simplified version of template
+for these repositories relative to what provider's factorys can say
+about themselves.
+
+Chris, why?
+
+Karl, the sort of query is gonna be complex, and doing that on
+arbitrarily complex templates is gonna be difficult.
+
+Question, how do we make reference to WS-Policy if it is not in any
+standard body?
+
+Because it is publicly available, so we can refer to it.
+
+What about IP issues though?
+
+
+
+
+

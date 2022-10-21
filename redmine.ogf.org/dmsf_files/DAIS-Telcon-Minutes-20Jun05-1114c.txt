@@ -1,0 +1,236 @@
+DAIS Telcon - 21/06/05
+======================
+
+Chair: Norman Paton
+Notes: Mario Antonioletti
+
+Attendees:
+	Norman Paton, University of Manchester
+	Mario Antonioletti, EPCC
+	Susan Malaika, IBM
+	Simon Laws, IBM
+	Thomas Soddemann, RZG
+	Amy Krause, EPCC
+
+Agenda:
+
+
++---
+
+Susan: no longer have type 1 and 2 resources - now call them
+       internally and externally managed resources.
+
+Simon: so the current position is:
+
+       Sue wrote some coherent notes.
+       Deal with externally managed or service managed data resources.
+       Externally managed data resources are as before - lifetime not
+       managed by DAIS, opposite is the case for the service managed
+       resources.
+       There are a set of core interfaces - these applies to both
+       kind of data resources, they define some properties and 
+       some messages as well as messages for accessing the data
+       resources. The messages contain the name of the resources
+       being accessed. 
+
+       The realisation define some properties and some messages and
+       some additional properties/messages for the given
+       realisation. They rely on passing the resource names.
+
+       There are also some optional things:
+
+       The data conduit - say that this is a WS-Resource which
+       represents a data resource and it's purpose is to describe
+       the lifetime of the underlying data resources ... it's
+       a facade over the data resource. 
+
+       The other thing that has been pulled out separately is an
+       optional catalogue - a list of names, and also possibly EPRs
+       and other things.
+
+       When you build the service you can include the catalogue, core
+       interfaces and realisation interfaces and may include conduit
+       interfaces ... in the case where you try and do lifetime - you
+       either manage to do it or you get an error.
+
+       That's it ...
+
+Norman: my concern is that when we stand up and suggest this as the
+        model we may get criticised for not using WSRF.
+
+Simon: I say we are ... there is an optional data conduit that can be
+       used to control the lifetime.
+
+       There is a 1-1 relationship between a conduit and a resource
+       ....
+
+Susan: the conduit provides a WSRF representation ... so you can have
+       a WSRF view ...
+
+Norman: so can have many conduits associated with a service which is
+	why you have separated it from the list of names ...  the
+	conduit is optional so if you have no conduit then those
+	messages must have the names in the body regardless of whether
+	it is an externally/service managed resource. So if you don't
+	have a conduit you have no lifetime management ... if you have
+	a conduit then the messages are sent to the EPR so that there
+	are up to 2 names for every resource - the conduit name and
+	the underlying resource ... an externally managed resource may
+	pass the name of the underlying resource ...
+
+	...
+
+Simon: not happy about unplugging the relationship between the conduit
+       and the data resources there is no way to plug it back
+       together again ....
+
+Norman: have 2 naming schemes and fault when you send a lifetime
+	message if there is no conduit. In the case where you create a
+	service managed resource what does the service return?
+
+Simon: a name and an EPR - the address. The EPR could point to a
+       service or it could reference the conduit. It's just an
+       EPR. The name is a synthetic name but it could have a greater
+       significance.
+
+Norman: the scheme is trying to define the messages in a way separate
+	from the conduit but allows these messages to be blended in
+	with the conduit ...
+
+Simon: the conduit allows more generic resources ...  the core and
+       realisation can define the messages without having to worry
+       about whether you are addressing the conduit or the resource...
+
+...
+
+Norman: two possible issues that might arise with this model:
+
+	- the WS-I people may think that they have a dependency on
+	  WSRF, e.g. have to use WSRF for lifetime and there is an
+	  association between a conduit and WSRF. They are forced to
+	  use WSRF for lifetime.
+
+Susan: there is a destroy...
+
+Simon: so this is something we need to decide - do we include a
+       destroy? That allows you to manage the lifetime but not the
+       soft state ....
+
+Norman: having a destroy that takes a name cuts slightly against the
+	conduit. If you stick with the names in the body then you are
+	a message short of achieving your goal ...
+
+	- The WSRF people might think that the use of WSRF is somewhat
+	  indirect .... because you have two kinds of names when you
+	  could have got by with one - an EPR.
+
+Simon: it doesn't stop an implementation from doing that ...
+
+Norman: you can ignore the names ... but you have properties
+	that pass the name forwards and back that are somewhat
+	redundant...
+
+Susan: can think of them as descriptions...
+
+Norman: I don't think that helps. ...
+        Neither of these sound really problematical ....
+
+	So who is going to present this next week?
+	
+Simon: is the model plausible and can we describe it?
+       Sue has written some words ... which 
+       includes some MUSTs and MAYs...
+
+Norman: where are we at with the associated spec and WSDL?
+
+Simon: WSDL is done, subject to Amy reviewing the XML WSDL.  The core
+       document has not caught up yet.
+       
+Susan: so do you want to plug in the text?
+
+Simon: would be good if someone could start doing this ...
+
+Susan I will start.
+
+Susan: now the WSDL is done - need to go through the other specs and
+       compare with what is on the specs.
+
+...
+
+Susan: did you see the DMTF message I sent out? Essentially there are
+       3 DMTF groups we are dealing with - one to get the namespace,
+       another to generate the XML and a third to review the model.
+       Have been dealing with all three groups - if anyone else would
+       like to join in then that would be good. The calls are every
+       other Monday - would be nice to have someone else dropped
+       in. Can only have one GGF rep per group. Fairly easy for
+       academics to join.
+
+       Would be nice to push the namespace thing ... someone to
+       encourage them ...
+
+Norman: I'm willing to consider one of those things ... have to decide
+	where I can make the best contribution.
+
+...
+
+        Need to decide about GGF presentations.
+
+	- Thomas can do the object realisation, 20 mins to 
+	  present and 10 mins for discussion.
+
+	Also XML, what do we want to present and what do we want
+	feedback in.
+
+        If the object one gets a slot in the DAIS sessions ...  need
+	to get people that are willing to contribute. Currently have:
+	Thomas, William Sanchez and some observations from Objectivity
+	... possibly some interest from Manchester.
+
+Thomas: yep, want to get some more interest...
+
+...
+
+Norman: Socialisation is going to take place after submission ...
+	regarding implementation - we know that we are getting an XML
+	implementation from Manchester under DAIT, a relational
+	implementation from Hursley possibly under DAIT and we are
+	going to get an implementation from Oracle - not sure if for
+	both the relational and XML realisations.
+
+	Need to speak to Dave about the implementation from Oracle.
+
+Mario: at one point Ohio were keen to do an XML implementation....
+
+Norman: yes, they have been involved so we need to ask them ....
+
+	So, we need to put in a plan to do the interoperability.
+
+Simon: we also need to define what we mean by interoperability...
+
+Norman: say an IBM client should be able to access an Oracle
+	implementation and vice versa....
+
+	So what do we need to say about the relational and xml specs?
+	Not that much.
+	So we spend most of the first session on the model and the 
+	mapping.
+
+	Someone needs to present this .... it will be me either Susan
+	or me.
+
+Susan: let me see how I get on with the documents and I can get back
+       to you ...
+
+Norman: so we will have to be in touch ... 
+        Need to prepare slides for XML/Relational .... 
+	Susan/Mario can do the relational ...
+	Amy can do the XML spec ...
+
+....
+
+	So need a spec of the WS-DAI spec soon
+	and then try to do the other specs.
+
++--
+	

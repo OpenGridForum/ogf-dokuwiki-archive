@@ -1,0 +1,617 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:ident="http://www.w3.org/INFOD"
+            targetNamespace="http://www.w3.org/INFOD">
+  <xsd:element name="CreatePublisher">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="WSEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="PublisherName" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="PublisherDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="PropertyConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="Notification" 
+                     type="xsd:boolean" default = "FALSE"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="CreatePublisherResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ReplacePublisher">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="WSEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="INFODEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="PublisherName" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="PublisherDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="PropertyConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="Notification" 
+                     type="xsd:boolean" default="FALSE"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="ReplacePublisherResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status" 
+                     type="xsd:string" fixed = "COMPLETED"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+   <xsd:element name="DropPublisher">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="ExecutionMode" type="xsd:string" 
+		             minOccurs="0" maxOccurs="1" 
+					 default="IF UNUSED">   
+					 <xsd:complexType>
+					   <xsd:complexContent>
+					     <xsd:restriction>
+					       <xsd:enumeration value="IF UNUSED"/>
+					       <xsd:enumeration value="DISABLE NEW"/>
+					       <xsd:enumeration value="CASCADE"/>
+					     </xsd:restriction>
+					   </xsd:complexContent>
+					 </xsd:complexType>
+	    </xsd:element>                   
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="DropPublisherResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status" 
+                     type="xsd:string" fixed="COMPLETED"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+<xsd:element name="CreateSubscriber">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="WSEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="SubscriberName" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="SubscriberDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="PropertyConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="CreateSubscriberResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="ReplaceSubscriber">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="WSEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="INFODEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="SubscriberName" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="SubscriberDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="PropertyConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="ReplaceSubscriberResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status" 
+                     type="xsd:string" fixed="COMPLETED"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="DropSubscriber">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="ExecutionMode" type="xsd:string" 
+		             minOccurs="0" maxOccurs="1" 
+					 default="IF UNUSED">   
+					 <xsd:complexType>
+					   <xsd:complexContent>
+					     <xsd:restriction>
+					       <xsd:enumeration value="IF UNUSED"/>
+					       <xsd:enumeration value="DISABLE NEW"/>
+					       <xsd:enumeration value="CASCADE"/>
+					     </xsd:restriction>
+					   </xsd:complexContent>
+					 </xsd:complexType>
+	    </xsd:element>                                    
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="DropSubscriberResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status" 
+                     type="xsd:string" default="COMPLETED"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+<xsd:element name="CreateConsumer">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="WSEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ConsumerName" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ConsumerDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="PropertyConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="CreateConsumerResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="ReplaceConsumer">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="WSEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="INFODEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="ConsumerName" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="ConsumerDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="PropertyConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="ReplaceConsumerResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status" 
+                     type="xsd:string" fixed="COMPLETED"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="DropConsumer">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="ExecutionMode" type="xsd:string" 
+		             minOccurs="0" maxOccurs="1" 
+					 default="IF UNUSED">   
+					 <xsd:complexType>
+					   <xsd:complexContent>
+					     <xsd:restriction>
+					       <xsd:enumeration value="IF UNUSED"/>
+					       <xsd:enumeration value="DISABLE NEW"/>
+					       <xsd:enumeration value="CASCADE"/>
+					     </xsd:restriction>
+					   </xsd:complexContent>
+					 </xsd:complexType>
+	    </xsd:element>                
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="DropConsumerResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status" 
+                     type="xsd:string" default="COMPLETED"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="CreateSubscription">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="SubscriptionName" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="SubscriptionDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+     <xsd:element name="SubscriberReference" 
+                     type="xsd:string"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="DataConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+     <xsd:element name="PropertyConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+     <xsd:element name="DynamicConsumerConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="CreateSubscriptionResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="ReplaceSubscription">
+    <xsd:complexType>
+      <xsd:sequence>
+                <xsd:element name="SubscriptionName" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="SubscriptionDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+     <xsd:element name="SubscriberReference" 
+                     type="xsd:string"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="DataConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+     <xsd:element name="PropertyConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+     <xsd:element name="DynamicConsumerConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="ReplaceSubscriptionResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status" 
+                     type="xsd:string" fixed="COMPLETED"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="DropSubscription">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="ExecutionMode" type="xsd:string" 
+		             minOccurs="0" maxOccurs="1" 
+					 default="IF UNUSED">   
+					 <xsd:complexType>
+					   <xsd:complexContent>
+					     <xsd:restriction>
+					       <xsd:enumeration value="IF UNUSED"/>
+					       <xsd:enumeration value="DISABLE NEW"/>
+					       <xsd:enumeration value="CASCADE"/>
+					     </xsd:restriction>
+					   </xsd:complexContent>
+					 </xsd:complexType>
+	    </xsd:element>                 
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="DropSubscriptionResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status" 
+                     type="xsd:string" default="COMPLETED"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="RegisterPropertyVocabulary">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="VocabularyName" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="VocabularyDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="VocabularyBody" 
+                     type="xsd:any"
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="RegisterPropertyVocabularyResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODVocabularyReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="CreatePropertyVocabularyInstance">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="VocabularyInstanceReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="VocabularyInstanceVocabularyReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="VocabularyInstanceVocabularyBody" 
+                     type="xsd:any"
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="CreatePropertyVocabularyInstanceResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODVocabularyInstanceReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="DropPropertyVocabularyInstance">
+    <xsd:complexType>
+      <xsd:sequence>
+         <xsd:element name="INFODVocabularyInstanceReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="DropPropertyVocabularyInstanceResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status" 
+                     type="xsd:string" default="COMPLETED"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="RegisterDataVocabulary">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="VocabularyName" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="VocabularyDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="LanguageDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="LanguageUsageDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="VocabularyBody" 
+                     type="xsd:any"
+                     minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="RegisterDataVocabularyResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODVocabularyReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="UnregisterVocabulary">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODVocabularyReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="ExecutionMode" type="xsd:string" 
+		             minOccurs="0" maxOccurs="1" 
+					 default="IF UNUSED">   
+					 <xsd:complexType>
+					   <xsd:complexContent>
+					     <xsd:restriction>
+					       <xsd:enumeration value="IF UNUSED"/>
+					       <xsd:enumeration value="DISABLE NEW"/>
+					       <xsd:enumeration value="CASCADE"/>
+					     </xsd:restriction>
+					   </xsd:complexContent>
+					 </xsd:complexType>
+	    </xsd:element>                      
+   </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="UnregisterVocabularyResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status" 
+                     type="xsd:string" default="COMPLETED"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="AssociateVocabulary">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="AssociateVocabularyName" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="AssociateVocabularyDescription" 
+                     type="xsd:string"
+                     minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="AssociationEntityReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="VocabularyReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+     <xsd:element name="PropertyConstraints" 
+                     type="xsd:any"
+                     minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="AssociateVocabularyResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODAssociationReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="DisassociateVocabulary">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="INFODAssociationReference" 
+                     type="wsa:EndpointReferenceType"
+                     minOccurs="1" maxOccurs="1"/>
+        <xsd:element name="ExecutionMode" type="xsd:string" 
+		             minOccurs="0" maxOccurs="1" 
+					 default="IF UNUSED">   
+					 <xsd:complexType>
+					   <xsd:complexContent>
+					     <xsd:restriction>
+					       <xsd:enumeration value="IF UNUSED"/>
+					       <xsd:enumeration value="DISABLE NEW"/>
+					       <xsd:enumeration value="CASCADE"/>
+					     </xsd:restriction>
+					   </xsd:complexContent>
+					 </xsd:complexType>
+	    </xsd:element> 
+	  </xsd:sequence>			                
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="DisassociateVocabularyResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Status" 
+                     type="xsd:string" default ="COMPLETED"
+                     minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="GetMetaData">
+    <xsd:complexType>
+      <xsd:sequence>
+         <xsd:element name="MetaDataQueryExpression" 
+                     type="xsd:string"
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="MetaDataQueryResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="MetaDataQueryResult" 
+                     type="xsd:any" 
+                     minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+
+</xsd:schema>

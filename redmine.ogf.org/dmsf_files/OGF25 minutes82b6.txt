@@ -1,0 +1,141 @@
+Grid Resource Allocation Agreement Working Group (GRAAP-WG)
+Session minutes OGF 25
+March 2-6, 2009
+Catania, Italy
+Minute taker: Dominic Battré
+
+GRAAP Session #1: Experience Document
+-------------------------------------
+[Details: see slides on GridForge [1]]
+
+- Progress since last OGF
+  - sent survey to various projects, received 7 replies
+  - had discussions about negotiation on top of WS-Agreement and decided not
+    to wait for WS-Agreement version 2 but create extension that allows
+    multi-round negotiation without breaking compatibility
+    -> need extension of states but that does not break compliance to
+       WS-Agreement
+
+- Experience document
+  - presentation of structure of document (see GridForge [2])
+
+- Open issues -> who will work on what?
+  - Rationale for writing the document: Oliver, Wolfgang
+  - Some project descriptions currently blank, Dominic will check whether
+    questionnaires provide sufficient input. Otherwise fall back to the people
+    specified below:
+    - Akogrimo (Bastian Koller) -> fill questionnaire
+    - BREIN (Bastian)
+    - BEinGRID BEs (Igor)
+    - JSS
+    - SmartLM (Oliver & Wolfgang)
+  - Section about generic WS-Agreement frameworks -> coordinated by Dominic
+    -> write for each framework:
+      - dependencies (middleware stack, specifications)
+      - ... 
+      - Wolfgang will pass list of items to Dominic & Oliver for completion
+        and generation of questionnaire
+    - forward questionnaire to
+      - WSAG4J -> Oliver
+      - BREIN framework -> Bastian
+      - NegMgr -> Dominic
+    - see below
+  - Section about interoperation Testing -> Dominic & Oliver -> coordinated
+    by Oliver
+  - Comments from Projects taken from survey -> Dominic
+  - Suggestion for new section: add analysis, which parts are used by
+    implementations and which parts are not used -> Igor
+  - Further procedure: first we generate a beta version of the document, then
+    circulate to everybody who gave input (for updates/changes)
+
+- input from GFSG regarding interoperability demonstration:
+  - Need true interoperability of two independent code bases
+    -> Both use same template
+  - Issue: Hosting environments incompatible
+    - adapters are ok to circumvent incompatibilities of hosting environments
+  -> demonstration will be job submission with best effort jobs
+  - we will include an interoperable template in experience document,
+    afterwards we will write a new document discussing various use cases and
+    interoperability
+
+- Discussion on "WS-Agreement Frameworks" section in experience document
+  - have created list of criteria -> Wolfgang sends this to Oliver & Dominic
+    for another iteration
+  - possible answers to several questions will be: "automatically handled by
+    framework", "can be implemented in domain specific implementation", "not
+    supported"
+
+- Should we found a new group for Negotiation?
+  -> no, just add an extension since Negotiation is based on WS-Agreement 1.0 and only
+     requires small changes resulting in WS-Agreement 1.1
+  - update Charta to include Negotiation (Wolfgang)
+
+- GFSG expressed desire to specify term languages (eg. for Advance
+  Reservation)
+
+- Some topics shall be addressed at SLA Workshop in Dagstuhl:
+  - 1/2 day on Microspec for advanced reservation as JSDL Extension (WSDL
+    files), will be passed to JSDL working groups
+  - 1/2 day on negotiation (definition of WSDL files)
+
+- Presentation by Ioannis Kotsiopoulos, UoM
+  - SLA terms/metrics/... for domains are NOT specified in WS-Agreement
+  -> Proposal of semantic annotation
+     - semantic annotation = reference to ontology
+     - provides semantic interoperability
+     - no need to change WS-Agreement
+     - Annotation by SAWSDL, is backwards compatible
+     - tools: SASLA4j library
+  - Comments: very interesting, might fit well into metrics of WS-Agreement
+
+GRAAP Session #2: Negotiation
+-------------------------------------
+
+- Implementation for Negotiation exists for SmartLM based on WSAG4J framework
+  - started with negotiation
+  - will be extended to re-negotiation
+  - see slides for details
+- legal issues need to be discussed (how long is old agreement valid in case
+  of renegotiation)
+
+- discussion:
+  - during iterations of negotiation the creation constraints remain the same
+  - is the document passed during the negotiation and the template really the
+    same? -> seems ok
+  - should negotiate be allowed to return >1 template at a time?
+    - yes, simpler for a client to handle this
+  - should negotiate accept >1 template as parameter?
+    - no, user can send several requests sequentially. Advantage: easier for the agreement 
+      responder to find out what the agreement initiator wants.
+    -> requests to change:
+      - NegotiateOutputType:
+        - minOccurs="0"
+        - maxOccurs="unbound"
+      - superseding state missing
+        - will be added
+      -> Oliver + Wolfgang
+  - How do we address PendingAgreementFactories?
+    - First ignore this, then ask for input on first version of WSDL files
+      from GRAAP mailing list and work on PendingAgreementFactory in parallel
+  - Do we need an exception for the provider to tell that it is not willing to
+    renegotiate any further?
+    -> No, WS-Agreement has too limited exception features, needs a general
+       overhaul there as well
+    -> it could be put in the final agreement ("this is the last offered
+       agreement")
+  - Usecases for validation of (re-)negotiation:
+    - Graceful termination
+    - Service Responder wants to make changes
+    - Service Initiator wants to make changes
+    - Broker Scenario (broker collects offers)
+    - quote is accepted/rejected / no quote generated
+    - maybe more in wiki
+  - is an extension of agreement context needed?
+    - tracking quotes?
+    - superseding of agreements
+    - maybe, Oliver creates proposal
+  -> proposal of document ready by SLA workshop in Dagstuhl (Oliver & Wolfgang)
+
+GRAAP Session #3:
+-----------------
+cancelled

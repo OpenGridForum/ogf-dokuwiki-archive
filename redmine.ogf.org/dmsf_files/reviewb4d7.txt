@@ -1,0 +1,65 @@
+
+I reviewed both documents.  They provide a storage-based perspective
+on resource management, suitable for a system administrator.  The SRM
+standards document focuses on the implementation semantics, defining
+the sets of operations, the criteria under which the operations will
+be executed, and the state parameters that are used to control the
+operations.  The user experience document lists the breadth of
+implementation (number of sites) and describes the multiple types of
+systems that have implemented an SRM interface.
+
+Given that over 10 PBs of data are managed by storage systems that
+use an SRM interface, the documents should be moved to a full
+recommendation.
+
+That said, the documents do overlook some essential problems that
+need to be addressed:
+
+1) The SRM Standards document lists two sets of policies, one set for
+the data (retention, access latency, overwrite) and one set for the
+storage systems (space reservation, replication, staging, space
+lifetime).  When there is a single storage resource, the policies can
+be made consistent with the data lifetime set less than or equal to
+the space reservation lifetime.  When multiple storage systems are
+integrated into a single Storage element, it is not obvious that both
+the data policies and the storage policies can be met.  The simple
+example is the migration of data between two storage systems with
+different policies.
+
+A chart that explains how policies are resolved between data and
+storage is needed.  A mechanism to verify that the actual data
+storage location has policies that are consistent with the desired
+data policies is needed.
+
+2) Multiple SRM systems can be federated, with data moved between SRM
+systems.  The issue of policy consistency must also be addressed for
+data that are distributed between multiple SRM accessible storage
+elements.  The SRM approach assumes that the application will manage
+consistency properties of data deposited into storage.  When data is
+deposited into multiple SRMs, the user experience document noted that
+policies do vary across SRMs, and that the application will have to
+invoke different options depending upon the SRM that is being used.
+This is a very heavy requirement to put upon an application.
+
+3) A second perspective is needed for the standards document, based
+upon what a user of the system should do for effective interaction
+(storage and retrieval of data).  For each operation, there are a
+large number of error conditions that need to be checked to decide
+which subsequent operation to perform.  The error conditions may
+require re-submission of an operation (system temporarily not
+working), separate queuing of a status request, or use of another
+Storage Element.  The logic behind these choices is not presented.
+
+The document needs to provide a usage example that includes:
+- command sequence that a user needs to execute to request a space
+reservation, verify space reservation, request file staging, verify
+staging, initiate transfer
+- logic for responding to possible errors that can be returned for each command
+I would expect that a sequence of commands and error recovery logic
+can be created that would be used by all applications that access
+SRM-based storage elements.
+
+The goal is a clean way for an application to interact with SRM
+controlled storage resources, that includes both recovery logic as
+well as the sequence of asynchronous operations that need to be
+invoked to perform the desired operations.

@@ -1,0 +1,169 @@
+Minutes of the Ninth OGSI-WG Teleconference
+09/10/2002 @ 15:00-16:30 GMT
+
+Attendees:
+
+Tim Banks <IBM>
+Karl Czajkowski <ISI>
+Shel Finkelstein <Sun>
+Steve Graham <IBM>
+Bill Horn <IBM>
+John Karpovich <Avaki>Fred Maciel <Hitachi>
+Andreas Savva <Fujitsu>
+Frank Siebenlist <ANL>
+David Snelling <Fujitsu>
+Steve Teucke <ANL>
+Peter Vanderbilt <NASA>
+
+1) Approval of minutes form October 2nd. OK
+
+2) Review of plans for GGF, The following topics have identified and
+   an initial priority assigned to some:
+
+   1 - Notification possibly divided into "Event-style mechanisms".
+   2 - Registration/Collection interface hierarchy and operations.
+   3 - Read-Write SDE's Bug 51
+   ? - Extension relationship in the GS portTypes.
+   ? - Coherency semantics of multiple findServiceData operations.
+   ? - Bugizlla issue review.
+   ? - Interim strategy discussion (what to do while we wait for WSDL 1.2)
+   ? - Resolver behavior and the semantics of multiple naming schemes.
+
+3) Matters arising
+
+- We agreed to continue the teleconferences following GGF6, to to give
+  ourselves a week off before resuming. Time to be agreed at GGF6 (due
+  to the end of daylight savings).
+
+- Note to folks wanting to reread the draft in the absence of change
+  bars. Most substantial changes have bee to sections 4 and
+  6. Otherwise, check the change log. If changes are made before GGF,
+  there will be a tracked version posted.
+
+- Note that the GSS now meets GGF copyright and IPR rules. Well done
+  all those pushing on this.
+
+4) Technical Agenda, Service Data Issues:
+
+Confirmed that bugs 21 and 22 had been resolved.
+
+------
+Bug 48 - SDEs that should not be initialized in the WSDL
+
+It was resolved that an Enum should be added to indicate that values
+MUST NOT appear in the WSDL or values MAY appear. The Enum is
+intentional to allow for more structure later.
+
+------
+Bug 53 - queryByServiceDataName to allow multiple name parameters
+
+It was quickly agreed that this was a good idea, but a discussion
+followed on the semantics. In particular, what coherency semantics
+can/ought to be assumed between the members of the serviceDataSet
+returned? Given that the serviceData itself has no guarantees attached
+to, only coherency within the service data itself was thought to be
+possible. The goodfrom/until annotations within each SDE provide a
+'soft' coherency relationship between the serviceData state and the
+instance state. Language to be sought that allows the goodfrom/until
+attributes of the returned serviceDataSet itself to reflect this
+'soft' coherency relationship for the members of the set.
+
+------
+Bug 32 - xsd:float use is misleading
+
+As data types other than strings are only used in examples, it was
+agreed that these be adapted to provide their own typing information
+(i.e. correct the XML). The proposal in this bug is to be dropped.
+
+------
+Bug 45 - serviceData type attribute is redundant
+
+Resolved as proposed and therefore to use the xsi type approach.
+
+------
+Bug 40 - Does minOccurs=1 make sense in light of authorization?
+
+Resolved to leave it in as an indication of designer intent. The text
+should be checked to cover authorization caveat.
+
+------
+Bug 46 - Proper interpretation of Mutability
+Bug 47 - Clarify terminology of serviceData
+
+These have both been resolved and fixed in the document, see action
+below.
+
+------
+Bug 54 - We need some way of specifying 'nothing' as an SDE in itself.
+
+Resolved as proposed. An emptyElement type will be provided for
+extensibility elements that are supposed to mean 'nothing' is here.
+
+Still outstanding:
+
+Bug 34 - Model FindServiceData() & CreateService() specializations as methods
+Bug 51 - Read-Write SDEs - deferred to GGF6 face to face.
+
+5) Time of meetings after GGF6 -  deferred to GGF6
+
+6) Review of actions:
+
+Action: Steve Graham to drive the creation of an XML Schema for the
+specification, #35 - Pending, but may be dealt with in a breakout at
+GGF6.
+
+Action: Steve Graham to craft language for recommendations to
+developers for use of resolvers. Pending, but may be a session at
+GGF6.
+
+Action: Dave Snelling and Andrew Grimshaw to look at requirements and
+solutions for pull like semantics - Pending with ideas forming.
+
+Action: Dave will look into a DeliverWithAck option. One issue is
+specifying which delivery operation should be used - Pending, but ties
+into the events and notifications discussions.
+
+Action: Steve Tuecke will propose a binding layer project to OGSA WG,
+but he is not committed to drive it - Pending GGF
+
+Action: Proponents of the inclusion of QoS specifications in Grid
+Service portTypes to produce documentation to the list justifying a
+reconsideration of this issue - Pending activity on the list.
+
+New Actions:
+
+
+Action: Steve T. to arrange calls starting October 30th at the new time.
+
+Action Steve T. to update document schedule on the Web site to reflect
+decisions at the interim meeting.
+
+Action: Authors to ensure that changes have been executed in the draft
+for bugs 21 and 22.
+
+Action: Steve G. to check bug 46 and 47 status in the document.
+
+Action: Dave to go through the minute and append resolutions to the
+notes associated each bug.
+
+Action: Dave and Steve T. to establish a process for dispatching the
+bugs and removing their references from the document.
+
+7) Open Issues being carried:
+
+      - Track the IPR status of WSIL.
+      - Should WS-Inspection document (or other formats) be explicitly
+        noted in the spec?
+      - Oinn's report on presence or absence of SDEs still be be discussed.
+      - What assumptions can be made about the properties of a service
+        resolved by a resolver?
+        #43 The specialization of the DeliverNotification operation
+        #44 Language linking notification subscriptions to SDEs.
+      - Explore further the implications of subscriptions as Grid Services.
+      - What does a successful return from a RegisterService call mean?
+        #42 The distinction between 'void return' and 'no return' in
+            some operations
+        #34 Model FindServiceData() & CreateService() specializations
+           as methods
+
+See you at GGF6.

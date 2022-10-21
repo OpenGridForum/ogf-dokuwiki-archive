@@ -1,0 +1,219 @@
+OGSA January 2006 Interim Meeting
+=================================
+
+  Location: Sunnyvale, CA
+  Date:     18/1/2006, afternoon
+
+* Naming session
+
+** Roll Call
+
+Session leader: Andrew Grimshaw, University of Virginia
+Note taker: Dave Berry, NeSC
+
+Around the table:
+Mark Morgan, University of Virginia
+Takuya Mori, NEC
+Ravi Subramaniam, Intel
+Tom Maguire, EMC
+Stephen McGough, Imperial College
+Andreas Savva, Fujitsu
+Allen Luniewski. IBM
+Neil Chue Hong, EPCC, University of Edinburgh
+Chuck Spitz, Computer Associates
+Fred Brisard, Computer Associates
+Darren Pulsipher, Xango
+Dave Snelling, Fujitsu Labs Europe
+Jem Treadwell, HP
+Jay Unger, IBM
+Hiro Kishimoto, Fujitsu
+Frank Siebenlist, Argonne
+Fred Maciel, Hitachi USA
+Chris Jordan, SDSC
+
+Phone:
+Stephen Davey, NeSC
+Marvin Theimer, Microsoft
+
+Apologies from Manuel Pereira, IBM (co-chair of OGSA-naming group)
+
+* Agenda
+
+RNS vs WS-Directory
+WS-Naming
+
+
+* RNS vs. WS-Directory
+
+Andrew reminded us of the history of RNS.  We have been consulting
+with GFS over RNS for about 2 years.
+
+The latest RNS spec still contains an enumeration interface on the
+lookup which clashes with other potential specs for enumeration.  It
+entangles implementation details.  It includes the abstract naming
+layer which clashes with WS-Names.
+
+Dave Berry reported that the OGSA Data WG has told the GFS co-chairs
+that it has concerns over the complexity of the spec.
+
+Hiro reported that the RNS doc has been submitted to the GGF editor.
+The Area Directors also believe that the spec is too biased towards
+files.  The document is not going into public comment.
+
+Chris Jordan reported that GFS have had some initial discussions in
+response to these criticisms.  GFS will work over the next few months
+to address the file system requirements for naming.
+
+UVa (Mark Morgan) has implemented a lightweight implementation of a
+service that would be an alternative to RNS for the human-level of
+OGSA naming maps strings to EPRs.  This is called WS-Directory.
+
+WS-Directory supports hierarchy by recursion - an entry in a directory
+may point to another WS-Directory service.
+
+The goal is not per se to resolve names to EPRs.  The goal is to
+support humans who which to give structured names to the things they
+are interested in.
+
+Ravi noted that WS-Directory might not be the best name.  This
+interface could be embedded in other services to resolve other types
+of names.
+
+Ravi asked why the interface support a reverse lookup, for find the
+EPRs that the WS-Directory knows about.  This could be possible.
+Everyone agreed that this would not work if the resource referenced by
+the EPR had to keep track of the directories that pointed to them.
+
+WS-Directory does not currently store any properties with its entries.
+To get properties you have to contact the actual service.  This would
+have efficiency problems.  In the file system domain this would
+probably not be acceptable.  one alternative would be to map from
+strings to an XML document; another would be to add metadata into the
+EPR itself.  Jay suggested that strings could map to a pair of EPRs,
+one for the resource and one for the metadata document, but this also
+involves extra invocations.
+
+If metadata is stored with the directory service, issues of coherence
+arise.  It also potentially gives the possibility of lookup on the
+metadata.
+
+Jay noted that this is similar service groups.  Mark replied that he
+implemented this as service groups but that turned out to be more
+complicated.  Dave Snelling reported that service groups are going to
+be an OASIS spec next month.  Mark noted that Service Groups would
+only apply using the WSRF stack.
+
+Dave Berry noted that we need to consult users and establish
+requirements.  Hiro noted that we need some concrete examples to work
+with.
+
+Frank suggested that we should just use URIs.  This would allow us to
+use the same service as for resolving abstract names.  There was a
+discussion about how this would map to the proposed WS-Directory
+scalable services, e.g. whether all strings passed to WS-Directory
+should be wrapped as URIs.  There was disagreement whether strings are
+subsets of URIs or URIs are subsets of strings, which was resolved
+when people understood that the set of all strings is greated than the
+set of all URIs, but that strings encoded as a "freetext" schema of
+URIs will be a semantically-encoded subset of all URIs.  Particular
+tools might encode strings as particular URI schemas, e.g. "file:".
+There was some detailed discussion about implementation implications.
+[Note: to first order, this discussion is orthogonal to the choice of
+RNS, WS-Directory or Service groups].
+
+Andrew asked whether two occurrences of a URI "freetext://A" have to
+denote the same EPR, given the definition of a URI requires
+uniqueness, e.g. for nested lookups of the path "/A/A/...".
+
+Andrew suggested a process to take this forward.  OGSA-naming is
+chartered to work in this area; in the past it has attempted to do
+this via RNS.  OGSA-naming could take WS-Directory forward, could look
+again at service groups, or take a revised version of RNS.
+
+
+* WS-Naming
+
+Changes since last OGSA F2F:
+
+- WGs must not mandate use of WS-Names
+
+- An abstract name must be an IRI not just a string.
+
+- Abstract names are not mandatory in EPRs with resolvers; 
+
+- EPRs may include a list of resolvers; there are no semantics
+  involved in how elements of the list are chosen.
+
+- There is agreement to disagree on whether to define how to generate
+  unique names.
+
+- While a client may choose to include an abstract name in the header
+  of a message, a server must not rely on the presence of that
+  information as some tooling might not support it.  If a server
+  requires that information, it should be provided at a resource
+  parameter.
+
+- Some guidance will be provided on possible ways of generating unique
+  names, with reference to a particular RFC.
+
+Andrew asked whether the opinion of the OGSA WG was that the
+specification should be submitted in its current form.
+
+Dave Berry asked whether it has been established that a user community
+exists for this specification.  Andrew said that University of
+Virginia will use it, Marvin Thiemar says that MS HPC group will use
+it, Frank said that Globus will implement some form of abstract name.
+
+Frank noted that issues have not been recorded in a tracker so it is
+hard to tell whether each issue have been discussed.  The GGF official
+policy is that minutes of the necessary meeting should record
+decisions taken.  Hiro checked the minutes of the relevant call and
+found that some items had not been discussed.  We revisited this list.
+
+Frank suggested that an EPR contains enough information for comparison
+in a combination of the To: field and the reference parameters.  These
+will be passed on the wire, unlike the abstract name which current
+tooling might be passed on the wire.  So we could specify a mechanism
+for assembling a unique abstract name by reassembling the information
+from the address and the reference parameters.  There was a concern
+that reference parameters might contain extra information that is not
+part of the abstract name.
+
+Dave Snelling noted that there are two requirements: to have an
+abstract name and that the abstract name be available on the wire.
+There are also two use cases: (i) auditing and (ii) clients.
+
+Marvin said that as it is up to the server to check names that it
+handed out, it can hand out duplicate addresses and resolve these
+itself.  Frank replied that this would require a profile to specify
+that sort of server.  Marvin explained that by including an abstract
+name in an EPR, the server is implicitly asserting these semantics.
+
+Andrew suggested that the spec should specify that for a service that
+mints the EPR with an abstract name, that service asserts that the
+EPRS it mints will not "get confused" when used by that service.
+Regardless of how the service accomplishes this.
+
+Jay suggested that for the above assertion to hold, the mechanism need
+not be specified.  This doesn't meet the requirement that clients can
+compare WS-Names; Ravi concurred.
+
+Andrew noted three requirements (i) client comparison of EPRs (ii)
+servers can move around and EPRs can be resolved (iii) servers must
+not get confused (iv) things can be audited on the wire.
+
+Frank suggested that we define a profile that all identity be
+including in the "To" field. Jay objected that this prevents moving a
+service.  Andrew objected that this would not work with existing
+tooling.  Frank said that this does not remove the need for an
+abstract name per se; it is just an equivalent (for a while) that is
+on the wire.
+
+Dave Snelling suggested that the unique name should be in the address,
+and if this is not a map to an address, a resolver in the (WSDL of
+the) EPR is invoked to find the actual address.
+
+Andrew lead a survey of how people think we should progress.  The vote
+was not to put this into public comment but to take forward the
+discussion.  We should create a tracker to record issues.  We would
+like to get the document read by some more, chosen, people.

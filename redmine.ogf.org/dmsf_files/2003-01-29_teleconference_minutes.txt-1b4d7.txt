@@ -1,0 +1,150 @@
+Minutes Sixteenth OGSI-WG Teleconference
+January 29, 2003 @ 16:30 - 18:00 GMT
+
+Attendees:
+
+Tim Banks, IBM 
+Karl Czajkowski, ISI
+Shel Finkelstein, Sun 
+Dave Snelling, Fujitsu 
+Steve Tuecke, ANL 
+Pete Vanderbilt, NASA 
+
+
+1) Approve minutes (of both the interim meeting and Jan 27th)
+
+   It was requested the terms of the draft CRM document release was .... 
+
+2) Actions Review
+
+Action: Tom M. provide XML Schema and WSDL for the specification. Use gwsdl for WSDL 1.2 extensions (#35) - Pending
+
+Action: Pete V. to propose a more general solution to the extensibility argument pattern (#34) - Done
+
+Action: Andrew G to write a document describing the options for reslover behavior (#17) - Pending
+
+Action: Steve Graham to craft language for recommendations to developers for use of resolvers (#17) - Pending
+
+Action: Steve T. and Steve G. to make sure that the WSDL group is aware of the OGSI's use of the WSDL 1.2 draft - Pending
+
+Action: Steve G. to clarify the spec to make the differences between declaration, value, and element, e.g. clarify the conceptual model of Service Data types etc. - Pending
+
+Action: Dave S to redraft fault words to reflect resolutions at January F2F and put Faults back on the agenda. - Pending
+ 
+Action: Dave S will update bugzilla to reflect the call. - Done
+
+3) Query by locator equivalence and other ServiceGroup unfinished business etc.
+
+   This may be the "sameness" issue all over again. There are two definitions on the table
+   at present (GSH textual equivalence and transitive Locator equivalence). In the current
+   semantics for ServiceGroup, this query type is intended to decide whether the add
+   operation adds a new entry or performs a replace of the contents. It could also serve as
+   an argument to the remove operator (e.g. remove the equivalence class of all services
+   equal by LocatorEquivalence, even if LocatorEquivalence  was not the Uniqueness property).
+   It may also be used as an argument to findServiceData.
+
+   As I see it the things to decide:
+
+      - Do we need a uniqueness property and dual semantics on add?
+      - Do we define any required/recommended query types for:
+         - The Uniqueness Property (if we still have it).
+         - The Match Expressions for remove.
+         - Entries in the QueryExpressionTypes SDE.
+      - If yes to the above, what are they?
+
+
+Confirmed that driving destroy on a ServiceGroupEntry is equivalent to remove of that entry.
+
+Discussion:
+Revisitation of multiple GSHs in the same Locator.
+The creation of Locators do not enforce and equality and therefore Locator equivalence can't be trusted. No action taken with respect to Locator definition or semantics.
+
+Back to ServiceGroups:
+
+Rejected: Leave the semantics to be defined by the actual service without any uniqueness property tag.
+
+Resolved: The Uniqueness Property is a SDE containing a qname defining the add semantics.
+
+Resolved: The Uniqueness Property "None" is to be specified in the GSS.
+
+Resolved: Match expression types are XPath boolean valued applied to each entry in turn. Other approaches may be considered in V 1.1.
+
+End of Meeting.
+
+8) Next Meeting Monday February 3, 2003
+
+Time:
+
+  08:30-10:00 US Pacific
+  09:30-11:00 US Mountain
+  10:30-12:00 US Central
+  11:30-13:00 US Eastern
+  15:30-17:00 GMT
+  16:30-18:00 UK
+  17:30-19:00 Central Europe
+  00:30-02:00 Japan
+
+Place:
+
+  484-630-8733
+  passcode 89914
+
+
+Issues from the Agenda to carry forward:
+
+   *) Service data redirection. See Karl Czajkowski's mail ->
+      Thu Dec 12, 2002: [ogsi-wg] find service data "links" in service data values?
+
+   *) Resolver language
+
+   *) Set Service Data Review
+
+
+Bugs with actions assigned.
+
+Bug 17 - Recommend client use of HandleResolver over direct resolver protocols
+Bug 82 - New grid service instance registration to handle resolver
+   Steve G. and Andrew G.
+
+Bug 35 - normative XML schema is needed
+   Tom M.
+
+Bug 42 - The distinction between 'void return' and 'no return' in some operations
+   Dave S. - Faults summary action.
+
+Bug 50 - RegisterService Fault for Registry portType
+Bug 63 - Replace WSIL (temporarily?) with a simple contents description.
+Bug 68 - The a Registration a bag or set and what is the key?
+Bug 69 - Timeout should be added back into the register operation in the Registration protType.
+   Dave S. - Registration portType action.
+
+Notification Bugs:
+
+Bug 43 - The specialization of the DeliverNotification operation
+Bug 61 - Provide notification of destuction in the GSS
+Bug 66 - Allow modification of NotificationSubscriptions
+Bug ?? - Deliver with ack issue??
+Bug ?? - Review Notification status and language (was an agenda item).
+
+WSDL Bugs:
+
+Bug 62 - Do we need a way to mark operations in a portType optional?
+
+Factory Bugs:
+
+Bug 72 - mutability of gsdl:CreatesPortTypes and CreationInputTypes
+Bug 73 - Factory::CreateService requester as SDE?
+Bug 74 - strictness of gsdl:CreatesPortTypes commentary
+
+Misc Bugs:
+
+Bug 70 - Change SDE names from "...Types" to "...Elements"
+Bug 39 - message identifier for audit
+Bug 77 - serviceDataNames minOccurs should be 7
+Bug 30 - Define queryByXPath
+Bug 31 - Define queryByXQuery
+Bug 44 - Language linking notification subscriptions to SDEs.
+Bug 71 - CPU port-type example SDE inconsistent
+Bug 81 - GSS and WS-SD need unification.
+
+

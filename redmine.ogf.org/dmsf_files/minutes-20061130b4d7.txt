@@ -1,0 +1,109 @@
+OGSA WG Teleconference call
+===========================
+
+30 November 2006
+
+Participants
+============
+Hiro Kishimoto, Fujitsu
+Michel Drescher, Fujitsu
+Chris Kantarijev, Oracle
+Mark Morgan, UoV
+Wolfgang Emmerich, University College London
+Fred Brisard, CA
+Andreas Savva, Fujitsu
+Rich Kao, CA
+Jem Treadwell, HP
+Fabio Benedetti, IBM
+Mike Behrens, RR2C
+Steve McGough, Imperial College
+Andrew Grimshaw, UoV
+Jay Unger, IBM
+
+1) Early discussion
+===================
+- Minutes approval
+  -- Monday 27 Nov minutes approved no change
+- Action Item review
+  -- AI-11.27.a: Ongoing
+  -- AI-11.27.b: Ongoing, updates not likely until mid-December
+  -- AI-11.09.am-a: Postponed
+  -- AI-11.09.pm-a: Skipped
+  -- AI-11.09.pm-c: Ongoing
+  -- AI-11.09.pm-d: Ongoing
+  -- AI-11.10.am-a: Ongoing, updates not likely until mid-December
+  -- AI-11.02.a: Closed
+  -- AI-10.30.a: Skipped
+  -- AI-09.15.d: Skipped
+  -- AI-08.17.a: Skipped
+  -- AI-07.F2F.a ["EGR-WG" AI from July F2F]: Skipped
+  -- AI-07.F2F.b ["GFox-reply-mail" AI from July F2F]: Skipped
+  -- AI-10.23.c: Ongoing
+  -- AI-10.23.g: Ongoing
+- Agenda bashing
+  -- Info model & Service Integration
+     --- Discussion skipped
+     --- XQuery live demo added, which was not available at F2F
+
+2) Info Model
+=============
+* XQuery presentation/live demo  [Notes for this section kindly taken by A. Savva]
+    Explanation of xquery docs/jsdl/resource  - uses commercial version of saxon since it supports namespaces  - ( context is extremely important )  - ogsa-xq : evaluate an xquery in the context of an xml document    - uses saxon:evaluate-node   - question on scalability of approach since must produce an xml     document?     - this is just prototyping to see feasibility and what kind of       minimal set would be needed   - Enforce use of xquery processor?     - could do xquery in xquery as this example (but not require       specific xquery engine, don't have to use saxon)     - could parse and transform to a native query system(     - could query a db directly )   - minimal set; stated motivation to avoid DoS attack     - that's a bigger target than identifying the minimal feature set       that is expressible enough; sufficient expressibility for most       uses should be the target for the minimal set instead     - (...)   - xquery expression affected by the xml document structure that     will be searched   - xml encryption can be used in for example password fields; not     used here for simplicity   - Approach looks good; good to have a proof of concept     - Approach should be documented in the info model architecture       doc.       - AI-11.30a: Michel to talk with Tom and Ellen on how to go about it     - But cannot release code at the moment; need to check internally       whether and how it can be released 
+  
+  
+3) Workflow discussion
+======================
+- Mark runs the group through the slides "Workflow thoughts" 
+  provided by Andrew, Steve and Mark
+- OGSA could either pick a specific Workflow language, and 
+  alienate everybody else
+- Alternatively, OGSA could pick none and create a new one, 
+  and also alienate everybody else
+- Orchestration and workflow must be separated
+- OGF is best served with simplicity
+- The proposal is as follows
+  -- stay away from language and API specification
+  -- Tightly scope WFDL (Workflow Definition Language)
+  -- Ensure reasonable mappings from existing systems into WFDL
+  -- Toos support
+  -- Reuse as much existing as possible
+- WFDL is XML based and describes directed graphs
+- Nodes are WFDL, ord JSDL
+- Nodes have labelled input and output
+- Mark walks the group along a sample WFDL instance document
+- Jay: This example is a dataflow graph, not a workflow graph
+  -- Mark: Example 2 demonstrates other kinds of dependencies than
+     data dependencies
+- Jay: Dependencies should be expressed as resources produced and 
+  resources consumed
+- The group discusses Jays suggestion
+- Jay points out that the Workflow effort should be very carefully 
+  evaluated against the current other efforts related to JSDL
+- Chris: Defining (yet another) WF language is probably a bad idea
+  -- This would, among others, add delay
+  -- Andrew: As pointed out on the slides earlier, picking a 
+     particular WF language or creating one is a matter of "choose your poison".
+  -- Fabio: We probably should focus first on listing the requirements the 
+     languuage should meet
+  -- Jay: I believe it is possible to combine this workflow effort with current 
+          efforts for JSDL and Information modelling
+- The group discusses possible further steps from here on
+- Andrew: After this first initial investigation, does OGSA think that the WF 
+  issue is important enough to set forth a design team now, or postpone for
+  the moment
+- Andrew proposes to set up a separate phone connference with a specific WF agenda
+  -- Jav and Michel support the idea
+- The group discusses the appointment for the next WF call
+- Jay proposes to use OGSA's Gridforge wiki to collect people's requirements, 
+  dependencies, favourite existing WF solutions, etc. together to get an overview
+  on what's necessary and what's not.
+  -- The group reaches rough consensus to picck up this idea
+
+Any other Business
+==================
+- Date of next call: Thu 7 December 06 1 pm GMT
+
+Sumary of new Action Items
+==========================
+AI-11.30a: Michel to talk with Tom and Ellen on how to go about documenting
+           his current proof of concept in the Info model Arch doc.

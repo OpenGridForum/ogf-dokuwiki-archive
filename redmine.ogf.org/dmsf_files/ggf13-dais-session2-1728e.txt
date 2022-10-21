@@ -1,0 +1,440 @@
+GGF13 - DAIS Session 2 - 16/03/05
+================================
+
+Notes: Mario Antonioletti
+
+[No slides were presented at this session]
+
+Dave Pearson (DaveP) opens the proceeding and sets the scene:
+
+Gave an overview of the current DAIS status at the previous session.
+Have had a stable model together with its associated functionalities 
+for some time now.
+
+However we have had difficulty mapping this to an underlying model.
+
+The question that is faced by DAIS is whether it should map to: 
+
+       (1) a WSRF solution only.
+       (2) a non-WSRF solution only .
+       (3) try to map to both infrastructure.
+
+Susan Malaika is asked to say a couple of words about the different
+positions.
+
+Position (3) would offer message level compatibility between (1) and (2).
+
+Tom: are you presuming that someone wants to use http GET to get data?
+
+Yes.
+
+Tom Maguire: just an XML message pumped in.
+
+Dave Snelling: a non-WS approach.
+
+Absolutely.
+
+There are people in the community that are not going to build on WSRF.
+
+Malcolm Atkinson: we have people building on the non-WSRF platform.
+
+Tom: Can certainly do this in lots of ways. The issue is
+     interoperability between these implementations. Existing
+     implementations are interesting but not relevant.
+
+DaveP: but if the frameworks are successful then that is interesting.
+
+Tom: assume you have wire specifications and not API specs.
+
+Yes
+
+Malcolm: you end up with communities that exist that use these. These
+         are realities now.
+
+Tom: DAIS is trying to exist in a situation where you have different
+     implementations with different protocols that don't interoperate
+     ...
+
+Malcolm: want to provide each community with something that allows
+         them to inter-operate
+
+ 
+Jay Unger: want to have one model and possibly build gateways between
+           these communities ...
+...
+
+Dave Berry (DaveB): in the UK community there is something called WS-I
+
+                    ...
+
+Jay: if you put a bound on the requirements and functionalities of the
+     protocol low enough then they will be right, the problem is that
+     we are trying to build an infrastructures that has higher level
+     protocols that led initially to OGSI and then to WSRF.
+
+Malcolm: our primary specification should rely on WSRF but it should
+         allow other services to use this...
+
+Dave: is there an implementation of the DAIS specs out there?
+
+...
+
+Malcolm: not good news to accommodate the two models but whether this
+         should infect the specification ...
+
+Dave: there is some functionality that does not require WSRF
+      ... however to work in the spirit of OGSA, or a unified
+      architecture, only providing one way of implementing this
+      functionality would be a good idea ... lifetime would be a good
+      idea.
+
+Malcolm: also need to allocate resource names ....
+
+Dave: you can do WSRF with addressing - may not require the extended
+      capabilities ....
+
+Malcolm: we need properties...
+
+Dave: you need at least two capabilities and DAIS has some really nice
+      use cases for service groups ....
+
+Susan: did not finish the correspondence as to whether they were the
+       right use cases ...
+
+Malcolm: have to deal with resource properties and have to return
+         faults so base faults are good ...
+
+Dave: can pick up base faults for both contexts ....  one of the use
+      cases is addressing a message to the top of a hierarchy - it is
+      perfectly consistent to have a WSRF and, in that, list all the
+      resources contained in it ... what feels uncomfortable is if you
+      target a resource with duplicate information.
+
+Jay: if you put it in the body, then this is risky for consistency ...
+
+Susan: today the names are in the body as DAIS acts as a conduit to the
+       data resource ...
+
+DaveP: but then the message is not going to the resource it is going to
+      the resource manager
+
+Dave: so there are lots of names in the DAIS scope and the name appear
+      in lots of places ... the thing that you point to is the top one
+      and the things in the argument list are not redundant. If you do
+      lifetime then you do that on the top level element. You have to
+      sort out the semantics of the things under it ...
+
+Susan: in DAIS space there are lots of things that DAIS has not
+       control over
+
+Dave: that's ok....
+
+Jay: this feels like the high level resource is nothing more than a
+     session handler
+
+Malcolm: no, they are quite different ...
+
+Dave: the top level resource is a collection manager ...
+
+Tom: the concern with this is that if you were to drive an operation,
+     say the drop operation, then you would pass the names of the
+     databases that you wanted to drop in the message. The difficulty
+     with this is that if you have properties associated with these
+     then how do you deal with that? So, if I wanted to get metadata
+     about a table - do I address at the DBMS passing the name of the
+     table or do I do this through a resource properties? ...
+
+Malcolm: both mechanisms are used for both cases ...
+
+Tom: in one case I pass a human name and in another case you have an
+     EPR ....
+
+Malcolm: have a problem if you are force to generate an EPR for each
+         entity ...
+
+Tom: and what is onerous about that?
+
+Malcolm: you would have to scan the database to find all this
+         information. The databases change all the time and new
+         entities are being created, if you have to find the name and
+         then fabricate the property generation then we have to do a
+         lot of work that has already been done by the DBMS.
+
+Dave: if you want to get the resource properties of a table that you
+      cannot address directly ... is there an entity for which you
+      would like to drive a getResourceProperty that you cannot
+      provide a URI for and that is only describable in some other
+      way? ...
+
+Malcolm: this could be a temporary result set....
+
+Dave: if you cannot convert it to an EPR or a URI then you cannot
+      convert it to a WSRF resource.
+
+Susan: we are postulating using resource properties but we will use
+       our own format.
+
+Tom: the result will be the same but you will use the name, do you
+     care if it goes in the header or the body?
+
+Malcolm: we care because we have a lot of SQL that already does this.
+
+Dave: the WSRF is only seeing the end-to-end communication as data in
+      the wire...
+
+Jay: in the DAIS spec there are result sets
+
+Malcolm: they would get EPRs because we control them ....
+
+Dave: that is perfectly appropriate, when you cannot address these
+      then you cannot use an EPR .... I like the fact of using the
+      WSRF protocols when you can access these ... rather than having
+      another version of resource properties you could put that in as
+      reference parameter and drive it that way ... the more logical
+      approach is to use the long query request as the thing that
+      creates the EPR and then drive things from that...
+
+Jay: that is the pattern that they have - what drives the other part.
+
+Susan: it's a wrapper to a DBMS ... other people use it too
+
+Jay: it is not just lifetime there is no scopable context in WS.
+
+...
+
+DAveP: I can see the method works when the results are externalised
+       what happens when you use a factory that produces a new table?
+       ...
+
+Dave: the webservice takes a string that creates a new table .... it
+      does not have to be an EPR.
+
+Jay: if it creates a new abstract name ... if you access an existing
+     name in the DBMS - hard to establish lifetime in the external
+     space but if you are creating something new that is not shared,
+     that has no broad transaction names then I can give it an EPR
+
+Dave: anything that you build from the WS context you can do that ...
+
+Malcolm: you see this in the Astrogrid context where you can use it to
+         let it manage the lifetime for you ...
+
+Tom: if you are building an adaption layer then this is just code. 
+
+Malcolm: you don't have everything as you not may have access to the
+         names ....
+... 
+
+Jay: you can say drop a table but unless you manage the consistency of
+     what is in the EPR and in the SQL state then you have a problem
+     ...
+...
+
+DaveP: from what I've heard today so far - if you have a resource where
+      DAIS has control then there is no problem with using WSRF
+      properties and lifetime.
+
+Tom: where something is brought into existence by the message exchange
+
+Jay: something that has a context that is 1-1 to an message exchange
+     ...
+
+Dave: wherever you can do this as a result of 2 messages then WSRF is
+      ready for this ... you want to get XML rendering properties of
+      something that happens then its fine.
+
+Malcolm: the point here is what do we want the extra work associated
+         with this for> - it's just a conduit.
+
+Dave: I see no controversy there ....
+
+...
+
+Susan goes back to enumerating the possible solutions.
+
+Jay: is there any value in establishing a broad context that has any
+      of the functions of WSRF over that conduit ...
+
+Dave: the conduit itself ... if anything can have an EPR ... for all
+      practical purposes it is WSRF.
+
+Jay: is there any value in doing that ....
+
+Susan: get the version of the conduit ....
+
+....
+
+Malcolm: a typical data service is a proxy for the DBMS ...
+
+DaveP: so you never need an EPR ...
+
+Malcolm: you don't have one if you do not do that ...
+...
+         There are lots of things that are outside the database world.
+...
+
+Jay: this model is true for any WS implementation. The manager decides
+     at what granularity it is going to project to the WS what is
+     under it. Every resource manage is faced with this decision.
+
+Malcolm: not arguing about that ...
+
+Jay: I don't see anything inherent different about DBMSs ...
+
+Malcolm: we want to describe things in the DAIS spec as we want to
+         verify what you project ...
+
+Jay: somebody could project an extant table at the WS world ... then
+     it would have an EPR
+
+Malcolm: but you cannot insist that everything that we expose will have
+         an EPR.
+
+Dave: if I'm the owner of a DBMS system and want to build a DAIS
+      interface, you start up with one WS. The first WS is an EPR that
+      contains everything and maybe that is the only thing that you
+      will expose and then it's just a conduit.  The resource property
+      may only have lifetime. Anther DBA could come along and promote
+      all the databases as EPRs ....
+
+Susan: an implementation of DAIS ...
+
+Malcolm:  you would end up replicating the DBMS....
+
+Susan: the names are already embedded in the SQL
+
+Tom: but Dave did not go as far as going to have a table ....
+
+...
+
+Jay: I go into a conduit and issue an SQL query that is complicated
+     that has a set of tables ... if you get a new result set then you
+     can have an EPR for that ... in theory I could also have an SQL
+     name ....
+
+Malcolm: you cannot do that ...
+
+Susan: the types of results that you get are a result set over which
+       you can iterate ... that's ok. The one that's not is when you
+       put it in a table and then it's back in the SQL world.
+...
+
+Jay: I can create a new artifact, inside or outside, and project as WS
+     ... but I can't do the same thing with the message "find me table
+     x" and find me an EPR which I can manipulate with ...
+
+Malcolm: there is nothing wrong ... we need to get the current spec
+         out ... every time you dig you end up with a bunch of issues
+         ...
+
+DaveP: sounds to me that the only EPR is the conduit and the result
+      set.  ... if you identify an EPR for each name ...
+...
+
+Malcolm: because we are dealing with all sorts of data models, the
+         entities that you are dealing with have different entities
+         ...
+
+DaveP: there are very little uses of WSRF in the current version of DAIS.
+
+...
+
+Tom: SOAP processing rules what goes in the header can be consumed ...
+
+Jay: infrastructure may not inspect of what is in the body but
+     anything that is not in the header will not be handled by
+     infrastructure.
+
+Tom: the header allows the opportunity for the infrastructure to
+     inspect and maybe do something about it
+...
+
+Malcolm: There are people that have a lot IP in the queries. They want
+         to ensure that no one can read what they put. They want all
+         their names to go in the body so the infrastructure can't
+         look at it
+
+Jay: you can use a table to do indirection so that what is clear
+     because you don't know the naming ... use pseudonyms.
+...
+
+Malcolm: could we have our own getProperties operation that took a
+         name so that it would work even if you did not have another
+         mechanism for doing that.
+
+Tom: an operation that has a name is identical to an operation that
+     has a header that contains the name ...
+...
+
+Malcolm: if it's in the header it is not described in the WSDL and
+         then you cannot use tooling help you with that
+
+Tom: .Net tends to use this mechanism .. it shows up in the
+     bindings.  They both show up in the WSDL but in different parts.
+
+DaveB: it would be useful to get people to sit down and write these
+       things ...
+
+Tom: this is exactly the outreach that I want to do for basic
+     profilers.
+...
+
+Dave: if you can name the resource then you can use an EPR - if you
+      cannot then you use the conduit.
+...
+
+Jay: if you know that you are addressing something simple and you want
+     to do something then you can send 2 messages - the first one to
+     find the EPR for it and the second one allows you to query the
+     object .... a factory pattern ....
+...
+
+Tom: if you understand the abstract name and the encoding scheme then
+     there is nothing to stop you form building EPRs at the client
+     side ...
+
+Jay: you can avoid that ... you can say this message is a factory
+     pattern where you say two things - give me an EPR and get some
+     properties ..
+...
+
+Jay: a projection can be temporal where you get different answers
+     depending on when you query it.
+
+Tom: So you have: composite message, 2 message exchange, go with an
+     encoding at the client side ( the client produces the headers).
+
+Dave: a DAIS enabled DBMS could advertise all its internal resource or
+      any artifact in the database ....
+
+Jay: I like the 2 message pattern as you don't have to advertise - you
+     can pick up what you want...
+...
+
+Dave: the only reason that you would not use WSRF is when you don't
+      care about resource properties and a lifetime.
+
+DaveP: you can use WSRF provided that are mapped to a DBMS or the
+       conduit but you still need to use WSRF if you externalise a
+       result and you want to manage its lifetime.
+
+Jay: it could go further ... anything that you decide to materialise
+     in the WS world which could be a table or an internal procedure
+     you could expose as an EPR. What are the interaction between WS
+     and the things that are manipulated through an EPR.
+
+Dave: you cannot use getResourceProperties then you cannot do this.
+
+Jay: if you do not require a context then WSRF and non-WSRF would
+     work.
+
+DaveB: a non-WSRF client can only access the non-WSRF operations in
+       that service.
+
+This version of the DAIS specs will not project WSRF tables into the 
+web services world. 
+...
+
+The meeting was drawn to a close.
+
+

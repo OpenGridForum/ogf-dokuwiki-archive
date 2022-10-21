@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Ariel Oleksiak (PSNC) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.ggf.org/sdl" xmlns:sdl="http://schemas.ggf.org/sdl" targetNamespace="http://schemas.ggf.org/sdl" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="TimeConstraints_Type">
+		<xs:sequence>
+			<xs:element name="Duration" type="xs:duration"/>
+			<xs:element name="TimePeriod" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="EarliestStartTime" type="xs:dateTime" minOccurs="0"/>
+						<xs:element name="LatestStartTime" type="xs:dateTime" minOccurs="0"/>
+						<xs:element name="Deadline" minOccurs="0"/>
+						<xs:element name="DayTimeWindow" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DayTimeWindowStart">
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="xs:time"/>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="DayTimeWindowEnd" type="xs:time"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Excluding" minOccurs="0">
+							<xs:complexType>
+								<xs:choice maxOccurs="unbounded">
+									<xs:element name="WeekDay">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="Monday"/>
+												<xs:enumeration value="Tuesday"/>
+												<xs:enumeration value="Wednesday"/>
+												<xs:enumeration value="Thursday"/>
+												<xs:enumeration value="Friday"/>
+												<xs:enumeration value="Saturday"/>
+												<xs:enumeration value="Sunday"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="DateDay" type="xs:date"/>
+								</xs:choice>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Including" minOccurs="0">
+							<xs:complexType>
+								<xs:choice maxOccurs="unbounded">
+									<xs:element name="WeekDay">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="Monday"/>
+												<xs:enumeration value="Tuesday"/>
+												<xs:enumeration value="Wednesday"/>
+												<xs:enumeration value="Thursday"/>
+												<xs:enumeration value="Friday"/>
+												<xs:enumeration value="Saturday"/>
+												<xs:enumeration value="Sunday"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="DateDay" type="xs:date"/>
+								</xs:choice>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SchedulingAttributes">
+		<xs:sequence>
+			<xs:element ref="sdl:TimeConstraints" minOccurs="0"/>
+			<xs:element ref="sdl:JobDependencies" minOccurs="0"/>
+			<xs:element ref="sdl:JobPriorities" minOccurs="0"/>
+			<xs:element ref="sdl:SchedulingObjectives" minOccurs="0"/>
+			<xs:element ref="sdl:DataScheduling" minOccurs="0"/>
+			<xs:element ref="sdl:QueueScheduling" minOccurs="0"/>
+			<xs:element ref="sdl:Auxiliary" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="JobDependencies_Type"/>
+	<xs:complexType name="JobPriorities_Type">
+		<xs:sequence>
+			<xs:element name="JobPriority" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SchedulingObjectives_Type">
+		<xs:sequence>
+			<xs:element name="CompletionTime" type="sdl:Objective_Type" minOccurs="0"/>
+			<xs:element name="StartTime" type="sdl:Objective_Type" minOccurs="0"/>
+			<xs:element name="Cost" type="sdl:Objective_Type" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DataScheduling_Type"/>
+	<xs:complexType name="QueueScheduling_Type"/>
+	<xs:complexType name="Auxiliary_Type">
+		<xs:sequence>
+			<xs:element name="ReRunOnFailure" type="xs:boolean" default="false" minOccurs="0"/>
+			<xs:element name="NoCoallocation" type="xs:boolean" default="false" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Objective_Type">
+		<xs:sequence>
+			<xs:element name="Min" type="xs:double" minOccurs="0"/>
+			<xs:element name="Max" type="xs:double" minOccurs="0"/>
+			<xs:element name="Importance" type="xs:double" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TimeConstraints" type="sdl:TimeConstraints_Type"/>
+	<xs:element name="JobDependencies" type="sdl:JobDependencies_Type"/>
+	<xs:element name="JobPriorities" type="JobPriorities_Type"/>
+	<xs:element name="SchedulingObjectives" type="sdl:SchedulingObjectives_Type"/>
+	<xs:element name="DataScheduling" type="sdl:DataScheduling_Type"/>
+	<xs:element name="QueueScheduling" type="sdl:QueueScheduling_Type"/>
+	<xs:element name="Auxiliary" type="sdl:Auxiliary_Type"/>
+</xs:schema>

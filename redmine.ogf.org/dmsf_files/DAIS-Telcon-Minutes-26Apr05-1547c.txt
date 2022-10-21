@@ -1,0 +1,480 @@
+DAIS Telcon - 26/04/2005
+========================
+
+Chair : Norman Paton
+Notes : Mario Antonioletti
+
+Attendees:
+----------
+	   Simon Laws, IBM
+	   Mario Antonioletti, EPCC
+	   Dave Pearson, Oracle
+	   Norman Paton, University of Manchester
+	   Allen Luniewski, IBM
+	   Susan Malaika, IBM
+
+Agenda:
+-------
+
+	Discuss Mappings Issues Identified since the April 12th telcon.
+
+Actions:
+--------
+
+[Norman] Create a list of options for update of disconnected data sets.
+
+[Simon]  Write up the top level IO operation to go in the core spec.
+
+[Mario/Simon/Amy] Look at DAIS issue 1200 and either decide what needs
+                  to done to resolve this and respond accordingly on
+                  Grid Forge or flag it as an issue that needs to be
+                  discussed at some future telcon.
+
+[Mario] Continue working on the DAIS contribution to the data
+        architecture.
+
+[Susan] Look into how the XML attributes and elements for the resource
+        properties relate to the DMTF CIM model
+
+---
+
+[Unattributed comments belong to Norman].
+
+This call will continue the mappings discussion. 
+A summary of the present position has been posted to the list by Simon.
+
+http://www-unix.gridforum.org/mail_archive/dais-wg/2005/04/msg00021.html
+
+Raises a collection of issues when trying to implement portTypes that
+are similar in a WSRF and a non-WSRF way.
+
+Savas' WSDL only passed a bit of SQL which should have included an
+optional parameter to identify the data resource that the SQL was
+targeted at and that could be used for both WSRF and non-WSRF.  Savas
+had assumed that there was one resource per service.
+
+Simon lists a number of different ways of implementing a naming
+scheme. Of these Savas thought that a URI would be fine.
+
+Is it always the case that a URI could be used to identify the
+resources using a URI? This is the case for relational. The service
+could publicise the different type of URIs that it makes available.
+
+Asks Susan about the XML case - they mostly all seem to take URIs also.
+
+Dave: This will be OK for relational and other DBMS but I'm not sure it will 
+       be for file systems.
+
+Allen: Don't have a problem to use a URI.
+
+Simon: we are talking about the abstract name of the thing.
+
+It looks like we can go ahead with a URI naming scheme. If people come
+back to us on this we can generalise.
+
+*Susan arrives*
+
+What is the nature of the response to factory pattern messages?  Can
+return an abstract name but then that requires an extra hop for WSRF
+to resolve the name to an EPR, could also have some additional
+structure which could have an EPR and other stuff.
+
+Savas commented that an EPR requires some powerful framework which
+would require extra capabilities.
+
+Paul added that the client may have to support this.
+
+So there is a question as to the nature of the representation of the
+name (the derived artifact) the level of support that an
+implementation must provide.
+
+So, what do we do? I like the idea that we have structure for
+the name with potentially optional parts. Have not really 
+discussed the mandatory aspects of these approaches.
+
+Simon: my view is what we are talking about is the structure with both
+       the end point and the resource name. The resource name is
+       optional and the end point could be an EPR or a URL. So the end
+       point does not have to be optional.
+
+      Some systems will adopt WSRF for their end-point but others will
+      adopt a URL.
+
+If it was the same service then you would not require to check for EPR
+support
+
+Simon: you are making the assumption that an EPR means WSRF. A basic
+       implementation might use URLs or EPRs but we are not going to
+       mandate that they use EPRs.
+
+
+Dave: if you use the same service you don't need the factory pattern?
+
+Simon: you are still logically using the factory pattern - you are not
+       creating end-points but new names. We do not suggest that a new
+       service is deployed to handle disconnected data sets. We might
+       want to use a different interface or for the data to be
+       available through another end point but that could be an end
+       point that already exists.  Services access finite resources -
+       the service exists and has a finite number of resources which
+       might be extended. We recognise that there are things that we
+       might want to do to the resources or things we might want to do
+       to the service but an end point is an end point and these might
+       not be deployed automatically.
+
+Next, how do we represent properties? as in the message.
+
+In relation to point 8.
+
+Simon: there is a message that goes to a service that does not have
+       any resources associated with it then that goes to the service.
+
+Have gone through Simon's message so the question is what we do.
+
+We can write the WSDL and then determine what the MUST, SHOULDs are
+and assess what impact this has on the mappings. This allows us to
+make a decision as to what our mapping is and then we can tweak this
+if there are good reasons to do so.
+
+As an example if you take mapping 3 this states that you MUST implement
+the derived resource using WSRF and is silent on the MAYs, that then
+makes a decision. As a service provider you would implement one thing.
+This could be taken a sensible strategy.
+
+Someone may come along who is not willing to implement the WSRF
+specs they might want a path that does not bind to WSRF tightly.
+We need to try to agree a collection of MUSTs and MAYs that is
+coherent.
+
+Norman goes round the people present to express a view regarding the
+different approaches that could be taken.
+
+Mario, who cannot type and speak at the same time, presents the
+OGSA-DAI current position where more than one messaging infrastructure
+is currently being supported. This is painful as it takes away a lot
+of the time from developing functionality.
+
+Simon: agree with Mario - as soon as you have to do things twice then
+       you have bad news. But in the context of DAIS I would like to
+       think that we can re-use a lot of the WSDL.
+
+It has been difficult for OGSA-DAI to try to cater for the different
+development platforms and so on ... but the user community is
+currently divided because it has people that are already committed to
+use the different mappings.
+
+Mario: what about the interoperability issue? If we want to become 
+       a GGF standard then you need at least two inter-operable
+       implementations - what does that mean in the context of a
+       twin track approach?
+
+Simon: what does inter operable mean in terms of DAIS ...
+
+A client can interact with different implementations of the
+specification.
+
+Dave: there is pain associated with the implementors. For the users
+      however, in the commercial world, there will be mixed
+      infrastructures so for data integration - most management
+      functions will be done through WS-RF (once this gets
+      accepted) and for access users will want to use WS-I.
+
+Susan: should use whatever makes it easier for us to implement -
+       whoever the implementors are going to be. The single track
+       could be for just accessing the database - that needs to be
+       single track.
+
+There is a coherent WS-I only subset for the request-response format.
+You could restrict the twin track approach to the factory pattern. As
+the conduit is implemented using a singleton resource pattern from the
+client's perspective the messages would look the same for both cases.
+
+Simon: the difference is in the properties. For a non-WSRF approach
+       you might want to ask how many resources are available and that
+       goes to the service. The twin track difference occurs in the
+       WSDL specifying the WS-Resource but that is the only the
+       difference.
+
+       I suspect that they would be interoperable but it depends on
+       the tooling and how it takes account the properties - if it
+       takes into account the WSRF properties then it will require
+       WSRF. If you don't care about the resource properties then
+       there is little difference.
+
+...
+
+Susan: maybe we need to explain carefully the assumptions that we have
+       made.
+
+Simon: problem is that we don't know what interoperable means - the
+       things may be able to talk to each other but they will have
+       different WSDL. In the development space it will not be
+       interoperable but at run time it may well be interoperable.
+
+...
+
+Allen: come from the point of view that DAIS has to provide inter
+       operability.  Have a concern that dual track does not mean
+       interoperable, i.e. I write my application and I do not have to
+       know what track the implementors chose. On the other hand there
+       is division in the community and that is a reality that we have
+       to be aware of. Not sure how to deal with that ... I'm torn.
+
+...
+
+Dave: There is an easy way to deal with the community - you take the
+      conservative approach and use WS-I. WSRF is not established and
+      stable. Equally well aware that that does not help us within the
+      GGF community that has adopted WSRF. Don't like dual approaches
+      - also have the different realisations ... this just adds
+      complexity.  We might end up with something that is not feasibly
+      implementable.
+
+
+We need to propose a strategy. We have three types of resource
+
+    1/ conduit
+    2/ database
+    3/ results
+
+for types 1 and 2 we can avoid the twin approach at least from an
+inter-operability perspective - applications don't have to care about
+the nature of the resource they target. For type 3 we have to make a
+decision as to whether or not we do - we could make access to type 3
+resources optional within the spec. If we go with WSRF for type 3 then
+people could implement the core DAIS spec (Type 1 and Type 2) without
+adopting the WSRF approach to naming.
+
+We could say for a type 3 resource - anyone implementing DAIS must:
+
+    - provide support for a type 3 resource in a WSRF way only.
+    - provide support for a type 3 resource in a WS-I only.
+    - provide support for one mapping and may support the other.
+    - provide support for one mapping and may support the other.
+
+What do people think?
+
+...
+
+Simon: have two sets of orthogonal points - could still use WSRF
+       for types 1 and 2.
+
+Norman: I am assuming that you can use it for type 1 but not type 2.
+
+Simon: we can choose to use the WS-Properties and lifetime and write
+       the WSDL but choose not to use WSRF and assume that the end
+       point is using the singleton resource pattern and that there is
+       one conduit. However, the standard assume that there is an
+       association between the properties and the XML document used to
+       describe these properties. We then do not adopt the resource
+       properties.
+
+...
+
+Dave: Simon makes a fundamental point as he is talking about what is
+      going along the wire.
+
+Simon: there is an interesting thing that in the WSDL, the structure of
+       the properties they describe goes in the WS-Resource.  However,
+       there is nothing to stop a WS-Resource adding properties. Can
+       say that the structure of the WS-Resource is not set regardless
+       of the WSDL, but they use a complex type to typify the
+       WS-Resource and it is that what we would lose, which is why the
+       WSRF WSDL would be different from the non-WSRF WSDL. As far as
+       I can tell that is the only difference.
+
+       Could choose not use a WSRF resource but add that line at some
+       future point.
+
+
+The thought is that we can take a mid approach for type 1.
+
+Simon: but it would not be WSRF. This would not break any WS-I rules.
+       The only thing that we can do is sketch the WSDL and see whether
+       that gives us some issues.
+
+Then there is type 3 resource - we have the option, for a service
+provider, which would be obliged to:
+
+	- support both
+	- use one and not the other
+	- use one and make the other optional
+
+Simon: have another options, for the derived set:
+
+       - represent as a WS-Resource or
+       - represent as a named resource inside of a conduit
+
+	 - can do the conduit with WSRF/non-WSRF but could knock out
+	   the WSRF version of this.
+
+
+       then you are then into Norman's.
+
+Think that you have replicated 2 of mine ...
+
+Dave: but can start a derived result set by using a conduit - which
+      seems like a more standardised model - it allows you to apply
+      the same, or similar behaviour, to a derived resource as that
+      which you use for a data resource.
+
+
+Use abstract name for a type 2 resource because lifetime management is
+not suitable for type 2 and a lot of these things already have
+pre-existing names. For type 3 we have to manage the lifetimes and
+they do not already have pre-existing names. The sorts of problems
+that we have for type 2 are the inverse of those we have for mapping
+type 3 resources to WS-I. Simon makes remark that you could provide
+the conduit model for derived resources - I think you could use the
+conduit for any of the different problems.
+
+...
+
+Dave: in the case of using the conduit then all of our resource have
+      abstract name ... these are managed out of bound by the
+      database.
+
+The approaches that are being discussed the two alternative mandatory
+approaches ... this is possible.
+
+Dave: it's not just about framework mappings - it's also about politics.
+      ...
+
+Susan: we want an approach that a lot of the community will expect ...
+       WSRF is going through all the processes.
+
+Simon: the practical approach allows you to do the derived data sets in
+       either way.
+
+Dave: the problem I have is that if WSRF gets accepted it will be used
+      at a management level rather than to modify the content of
+      databases.  All along we were trying to shoehorn in a set of
+      capabilities that WSRF  was not defined to address.
+
+
+Discussion about DAIS, OGSA-DAI, GT4.0 and uptake WSRF in different
+projects. Followed by a brief discussion between Mario and Dave about
+whether to use/or not use WSRF. As Mario was talking he did not
+minute.
+
+Why don't we put the relevant WSDL for both approaches in the specs?
+To be fully compliant with the DAIS specs you have to implement both
+the abstract name and WSRF resources. Clients will then be able to
+talk to both - pain for the service provider but not both.  Have tried
+to minimise the message difference for the twin track approach - there
+will be an evolution to go from one to the other.
+
+So, interoperability works at the client-service.
+
+Simon: so both approaches are mandatory for type 3 resources.  In case
+       of the operations that produce type 3 resource does the client
+       indicate what mappings should be exposed or does the
+       implementation do this?
+
+The client does this.
+
+Dave: the implementation will support both portTypes?
+
+Simon: that's quite interesting actually - you are choosing what
+       portType you use. ... this does not mean that they have to be
+       mandatory.
+
+They should be both mandatory for service providers so that the client
+makes the minimum assumptions.
+
+Simon: it is unlikely that an implementation will implement DAIS
+       portTypes - we do not specify in the spec services or bindings
+       - we specify messages and xml ... what may happen is that
+       someone may take the DAIS messages and schema and aggregate
+       them with other portTypes to create their own portTypes. In this
+       context interoperability of the portType is likely to be
+       meaningless.
+
+Dave: the client can establish what portType it wants to use but how
+      does the client initially identify what portTypes the service
+      supports.
+
+We would have to provide a resource portType...
+
+Susan: but this is a general problem ..
+
+Simon: we provide a resource property in a factory that states what
+       portTypes are supported but there is also the more general
+       problem that Dave is alluding to.
+
+       Interoperability of the portTypes at the DAIS level is
+       irrelevant as it is the messages and operations that will be
+       used. The mandatory factor is complex as it may be used in WSRF
+       and/or non-WSRF portTypes.
+
+...
+
+	it makes no difference of the mandatory nature if people are
+	going to cut and paste the operations into their own
+	portTypes.
+
+Trying to say how you get desirable properties of the DAIS specs
+... *list properties* ... general position to try and move the
+complexity to the service side and not the client side.
+
+Simon: not entirely convinced as a service returns a name and an
+       end-point - you take the information you get and then use it.
+       I don't think that you need to get people to implement both	
+       you just need to get the return type right - if you get both
+       you use that and if you just get the end point then you use
+       that.
+
+Simon arguing to put both in the spec and make them both optional
+
+...
+
+Simon: to be inter-operable do we need to support derived data sets?
+
+Dave: derived data sets were supposed to be one of the main motivations
+      for DAIS to move away from these now would be a big problem...
+
+*general agreement*
+
+Mandatory-mandatory is good for interoperability but what you are
+saying is that optional-optional would be better. I think a client
+needs to know what it is interacting with ... Norman start to provide
+a use case ...
+
+Simon: if you have an abstract name then, if it's the same thing, then
+       the abstract name will not change.
+
+What if you start interacting with a service A which then goes
+down. You then start talking to service B but that can't deal with
+your name because it only talks to an EPR
+
+Simon: but you got the EPR from somewhere ,...
+
+but if it is interacting with another then you need to look it up so
+ok ....
+
+...
+
+Simon: need a mandatory somewhere if you want derived data sets to be
+       supported.
+
+So, we have a plausible position for type 1 and type 2 resources. For
+type 3 we need an email from Simon that if we describe both approaches
+in the specs then we need to say what the consequences of using
+mandatory-mandatory or mandatory-optional approaches.
+
+Simon: would be useful to discuss the services for inter-operability
+       but a bit snowed under at the moment. To understand this we are
+       going to need a bit of WSDL. Will need to sketch out the
+       WSDL. Would like to take a bit of time and then come back to
+       discuss this..
+
+Can then bring Savas in ...
+
+Simon: yes, Savas is ideally placed to discuss this... getting down
+       to the level of what options we should mandate.
+
+Getting into subtle points with type 1 and type 3.
+The documents for GGF14 need to be in six weeks.
+
+Need to do work in WSDL and also in the specs. 
+Can try to generate the WSDL and come back to discuss this.

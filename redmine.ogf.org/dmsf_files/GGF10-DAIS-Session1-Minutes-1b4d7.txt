@@ -1,0 +1,553 @@
+DAIS session 1: Discussion of Implications of WSRF
+--------------------------------------------------
+
+GGF10, 11th March 2004
+
+Chair: Norman Paton
+Notes by Mario Antonioletti (mario@epcc.ed.ac.uk).
+
++-----------------------------------------------------------
+Presentations available from:
+
+	       https://forge.gridforum.org/projects/dais-wg
+               Documents->GGF Documents/GGF10/Presentations
+
+Make sure that the document filter is working correctly.
+Unattributed statements in general belong to the speaker
+at that point in time.
++-----------------------------------------------------------
+
+
+
+Welcome by Norman Paton.
+[See the Intro_to_discussion_of_implications_of_WSRF_Session 
+ presentation on Grid Forge]
+
+Reminder of the remaining DAIS sessions. 
+Also the Information Dissemination BOF and the CIM Based Grid Schema 
+sessions that are taking place at GGF10 and have some bearing on what 
+DAIS is doing. 
+
+Had a f2f which concluded that we should try to continue making progress
+by:
+
+	- refactoring specs to minimise dependencies on other specs.
+	- refine core features: operations, semantics, metadata
+	- explore design options
+
+This session is about:
+
+     - impact of WSRF on OGSA Data Services
+     - mapping of specs on to WSRF, WS-CAF and WS-I
+
+Aim to move forward by understanding the issues in mapping the spec.
+
+Plan:
+
+	- Allen Luniewski will talk about OGSA Data Services
+	- Savas, Simon and Sastry will talk about mappings the DAIS 
+	  specs to the different WS specifications 
+
+----
+
+Allen Luniewski: OGSA Data Services
+[ See the Data_Services-Impact_of_WSRF presentation on Grid Forge]
+
+Reminder what data services are about - all about virtualizing data.
+Reviewed what Virtualizing data meant:
+
+	 - describe an abstract view of some data
+	 - over data resources and possibly other services 
+	 - ... (other points in the slides)
+
+Reviewed the original partitioning into interfaces.
+Showed an abstract DataService example from last October - nothing has
+changed in this high level view. Only the syntax has changed. 
+(WLM - Work Load Managment on the slide)
+
+The changes:
+
+    - GSH/GSR have gone
+      - Can now use WS-RenewableReference
+    - DataDescription has now gone. 
+      Can now use Properties from WS-Resource
+    - WS Resource properties
+      - DAIS will define common elements
+      - extensions will have to be defined
+
+Ann Chervenak: WS-Resource properties is associated with the resource
+               and not the service?
+
+Yes. 
+
+Discussion about WS-Resource Properties and how these describe resources.
+
+Savas Parastatidis: what is it meant to capture? Is the resource
+                    properties the serialised version of the state of
+                    the resource or metadata of the results from a
+                    data resource?
+
+Allen: my opionion is that it should supply the metadata and not the
+       data itself. It's not clear the way it is described in the
+       document.
+
+Susan Malaika: at another meeting that same question was asked and the
+               result was that it could be the data itself. It could
+               be anything that you want but the guidance is that it
+               should be metadata. Another point is to have guidance
+               on how WSRF should be used.
+...
+
+     - Talk about lifetime in WSRF.
+     - DataFactory has gone as an explicit interface and it should be
+       a pattern.
+
+OGSA discussed that yesterday where they said that the factory
+operation was not particularly useful - it remains for us to see
+whehter this also applies to DAIS.
+
+WS-Agreement - at the last f2f we agreed not to build a dependency on
+WS-Agreement as this effort would not converge in the same time frame
+as the DAIS specs. The suggestion is that we pick and do something
+that is simple with the goal that it will go in the same direction as
+WS-Agreement.  My suggestion is to define agreement terms and the
+negotiation will be the client specifying what it wants and the
+service can then say yes/no and leave it at that.
+
+Sastry Mallady: agreement is trying to do how to negotiate agreement
+                and not how to express the agreement. That is the
+                important thing. I think we are trying to push too far
+                - walk before we can run. We should try to get ...
+
+Jon: Agreement protocol does not say anything about the terms and
+     unless you need negotiation you do not need agreement. It's worth
+     looking how the agreement terms are defined and try to do it
+     along those lines.
+
+GRAAP person: I am a member of GRAAP have a first draft of
+      WS-Agreement - need two more GGFs before we have a valid
+      specification. ... we are also defining terms for data ... we
+      suggested we should have a joint meeting with DAIS.
+
+Norman: that was placed on the table but there was not enough time to
+        arrange a meeting for thiss GGF.
+
+GRAAP person: prior to last Friday there were 5 docs which have been
+      merged. One of these dealt with terms,
+
+...
+
+Have the same idea of what a data service is. DataDescription gone but
+there should be a DataProperties interface.
+
+WSRF has a small impact on the DataServices. Changes are more syntax than
+semantics.
+
+Paul Watson: in the OGSI version it talked about using transient
+             services to represent sessions and in the latest version
+             that is still the case. Is that a mistake?
+
+Allen: is that a problem?
+
+Paul: I thought you'd moved ... is the proposal still correct though?
+
+Allen: that is just an example and not a requirement?
+
+Savas: do you need to create a new service to establish a session?
+
+ ...
+
+Norman: sessions could be represented using WSRF or some other mechanism.
+
+...
+
+Norman: are you using the term data service to be synonymous with a
+        data resource?
+
+Allen: yes.
+
+Norman: I would not do that ... Allen and I know that I had some issues
+        with the latest version of the document ...
+
+...
+
+GRAAP Person: what are QoX and what are the interfaces (describes some
+      of the interfaces but is missing one)?
+
+Allen: Quality of X and DataFactory.
+
+GRAAP Person: you reference something called a WS-Resource which is a
+       document which exists in the IBM web site but not anywhere else
+       ... quoted some lines from the document .... point of
+       clarification....
+
+Allen: meant the set of specs ...
+
+Susan: the point that you make is being addressed. The WSRF document
+       was not one of the documents that was submitted to OASIS.
+
+Norman: we will move on to the next section.
+
+-----
+
+[ See the presentation Mapping_of_DAIS_Session on Grid Forge.]
+
+Simon Law: this came out of a conversation that started between me,
+           Savas and Sastry. We all had differnt understanding on
+           various points. We started working on this in order to
+           submit an informational document to GGF11. Savas did most
+           of the work to do the slides (that are being presented).
+
+Issues considered are stated in the slides.
+
+There were a load of issues that could be added to the list (in the
+slides) but have not done so.
+
+Having got the list of things that we wanted to consider we came up
+with some scenarios worrying about how we can produce 
+
+     - stateful interactions with resources and sessions, 
+     - resource discovery, 
+     - metadata, 
+     - third party references.
+
+Will only deal with Stateful interactions with resources in this
+presentation.
+
+Put in a slide about context to establish its definition. Context
+allows you to identify "what" resource you are interacting with and
+"how" you are interacting?
+
+Susan: are you ignoring the context that is used to identify clients?
+
+Simon: we have not taken that into account. That is a useful point to note.
+
+...
+
+Talk about some scenarios. Want to use scenarios as a discussion
+forum.  Savas, Sastry and you will interact with the slides as 
+I present them.
+
+Considered four approaches
+
+	   - explicit contextualisation.
+	   - implicit contextualisation.
+	   - combination of the above two
+	   - contextualisation with WSRF
+
+Have some service and a consumer. Consumer constructs SOAP message.
+Going to get some information from the resource. The object is to
+identify the resource.
+
+The query happens, the result set is identified and the service
+associates an identity with that result. This identity is exposed as
+it is returned to the client. What happens to this information is what
+makes this explicit.
+
+The comsumer then chooses to perform another operation on that data, a
+sort. It is explicit because the client explicitly identifies the
+resource on which that operation is going to operate (it is in the
+body of the soap message),
+
+If you make it a little bit more complicated - the name could also be
+used with another service if that service interprets that data with
+the same name. The data could be replicated or they could be
+interacting with the result set. In each case the id is passed in the
+body.
+
+Sastry: start with a single consumer and a single service and then you
+        add additional services
+
+Inderpal Narang: how is the replica (end point) recognised?
+
+This is recognised out of band. The way that the identity is matched
+to the resource is of no concern to us.
+
+Sastry: it is up to the implementation.
+
+Savas: it does not matter to travel agent (a) or (b) with a flight
+        number.
+
+Inderpal: how did the client know which service go to?
+
+Savas: it's part of the application logic.
+
+Peter Kuntz: from the clients name there is an expectation is unique.
+
+Savas: that is why I chose a urn - global and unique.
+
+Peter: so if you go to the wrong place ....
+
+it may do something unexpected ...
+
+Susan: you expect this to be used with account numbers ... you would
+       not expect different services to understand it?
+
+Savas: it depends on applications domain.
+
+Simon: Regan was saying that you could use federation and not use a
+       global name space.
+
+Susan: you should put more in your urn (as represented in the slide) ...
+
+David Martin: but you are now moving into federation and are going out
+              of scope.  Do you see this as part of this?
+
+
+Simon: the federation of the name spaces would be handled separately?
+
+David: you would need a mapping routine....
+
+Savas: but that is a naming issue rather than a requirement issue.
+
+Simon: the other interesting thing happens if you want to tell other
+       people about the result that you have created. What is passed
+       to the second client is the actual identifier and the end point
+       to use to interact with this resource.
+
+Sastry: it could just pass the name ...
+
+Simon: you are getting ahead of me ... the information is being passed
+       very explicitly... it is the same as the last one - we are
+       pointing out that you have to pass these two bits of
+       information.
+
+...
+
+This is a resource (not a WS-Resource)
+
+Savas: these examples show how you could do things with/without
+       WS-Resource.
+
+Simon: moving onto explicit contextualisation you pass the identity to
+       a second consumer and the second consumer will use some out of
+       band mechanism to determine which end point this type of
+       service can deal with this URN.
+
+...
+
+Could have used a registry. 
+
+Savas: it could be a convention - it does not have to be a real registry.
+
+
+Simon: now we will do the same thing with implicit contextualisation.
+       Now using the soap header to provide some context-state. The
+       infrastructure worries about identifying the context.
+
+Guy Rixon: in the original slide you used the client to identify the
+           context ...
+
+Simon: all we are saying in this slide is that the infrastructure is
+       able to insert context. The context flows back and there is not
+       much content in the body. The implcation is that the service is
+       now holding context that is identified at the service.
+
+Implicit contextualisation - so now we want to sort the result
+set. Now the data is identified by the context provided by the
+infrastructure.
+
+When we want to use two different end-points. It's the same situation
+- as long as the infrastructure is imposing the context and that
+context is valid at the end point.
+
+Peter: the mapping is happening at the service ... but you have to
+       coordinate that?
+
+Sastry: that is done by the infrastructure. We did not want to show
+        it. This is not relevant...
+
+Peter: by coordination I mean you have 2 services, the first knows
+       about the context - so how does the second one know about that
+       context?
+
+Savas: when the replication took place the context may have been passed.
+
+Sastry: the context could be held by a third service ... there are
+        many ways in which this could be done.
+
+Simon: we take these comments and widen the scope. All the points can
+       be added to these scenarios.
+
+Tom:...?
+
+Context is associated with a particular resource so you could have
+multiple resources and there is no way you can identify ... there are
+implications on choosing these desired functions.
+
+Dave Berry: what is this like from the point of the programmer? Do you
+            have to specify which context to include in the message or
+            is there some magic?
+
+Savas: there could be .. it depends on the tooling that is
+       available. You may want to specify the context in which case an
+       operation acts ....
+
+Dave B: tooling could hide or reveal ...
+
+...
+
+Indrpal: there are lifetime issues?
+
+Sastry:which will be provided by whoever is providing about the
+       context.
+
+Inderpal: I worry about the replication ....
+
+Sastry: but that is not the main point here ... there are many ways in
+        which the data/context could be replicated
+
+...
+
+Peter: I do not understand the difference with the previous example
+
+Savas: it's whether you treat identity as first class citizens or you
+       hide this.
+
+Peter: that is an API matter ....
+
+Savas: you may need to know that identity for long term storage.
+
+...
+
+Simon: can build tools to hide a lot of these issues. This exercise is
+       trying to allow us to understand how we feel about these
+       different models.
+
+Norman: there is a higher level timing things ... we need to get to
+        the end.
+
+Simon: we are ok.
+
+We now have some context but we are explicitly identifying which
+resource we are interacting with. Have to be careful here because we
+are blurring the what and the how. You are saying that you want to
+interact with this resource and this context.
+
+Sastry: this is how you identify which resource you want to interact.
+
+In this context the explicit context is identifying the resource that
+you are interacting with.
+
+Thomas Soddermann (?): this complicates transactions ... how do we use
+                        transactions...
+
+We are not re-assigning the resource ... that's a good question ...
+what happens if you re-assign resources. Also, what information is
+part of that context? Is transaction part of that context ... is
+security part of the context?
+
+Savas: the context in this case does not identify the resource it
+       models the interaction. In the same way that in a transaction
+       you can state to include a resource with a particular
+       transaciton. In this scenario we are only one data resource.
+
+Simon: we need to be able to consider what happens when you add/remove
+       resources.
+
+Thomas (another one): it's not different from before...
+
+Savas: we are presenting the service with a context and the service
+       will associate the resource with that context ... Sastry
+       earlier suggested that the service will change the context
+       which is not my view ...
+...
+
+It is responsibility of the service to mantain the association between
+the service and the dta resource.
+
+...
+
+Simon: The context could be changing but it does not have to change.
+
+The last approach uses WSRF. The select goes into the service. The
+result is produced and the result contains an end point reference.
+
+The SOAP header makes a call to sort. The header contains the end
+point reference that identifies the resource.
+
+...
+
+Savas: should have possibly put an opaque block - the consumer cannot
+       access that data?
+
+Guy: can the information returned to the client go in the header as
+     opposed to the body?
+
+Simon: the application may want to deal with that EPR and deal with it.
+
+Savas: the spec specifies that from now on you are going to use the
+       EPR in the header ...
+
+Allen: this is an API allows you to access the data.
+
+Can you return more than one end-point?
+
+Simon: why not?
+
+...
+
+Simon: what happens when you want to communicate the result to another
+       consumer as an EPR so that the second consumer can access the
+       data.
+
+Allen: the application is taking the EPR and saying invoke that  and 
+       getting that as the target ....
+
+Simon: yes.
+
+Dave B: is there a gurantee if that the EPR is still in its own
+        lifetime that it will still be able to interpret it?
+
+Savas: it's the same as adding stuff yourself ... the question is
+       whether you can tamper with the the EPR... you could put
+       anything in the SOAP server. It's an XML element in the body in
+       the body or the header ...
+
+...
+
+
+Simon: this is an on-going discussion (summary points can be found on
+       the slide).
+
+Sastry: it's a stepping point so that we can model a session.
+
+Peter: I'm looking forward to the other scenarios ... it's way too
+       complicated.
+
+Simon: which may be a conclusion ... but we are not drawing the
+       conclusion yet.
+
+Savas: in scenario 1 everyitng seems very close. Once you start going
+       to the other scenarios the advantages of the different
+       framework become more apparent.
+
+Dave Pearson: would be see whether Allen sees any conflicts ....?
+
+Allen: I see none.
+
+...
+
+Dave B: thinking from a programmer ... if looking at WSRF I can look
+        at the EPR for the other schemes what do I use?
+
+Savas: that is a policy issue.
+
+Allen: Is there a URL to a URN mapping scenario? You may wish to resolve
+       the logical name to the protocol specific end point.
+
+Savas: that is registries which we are addressing.
+
+...
+
+Norman: thanks guys .... you can see there are things to discuss. What
+        happens next?
+
+Simon: trying to write down what we have discussed and put it in a
+       document which we can discuss and submit to a future GGF.
+
+Savas: there is a document that you can look at.
+
+
+
+

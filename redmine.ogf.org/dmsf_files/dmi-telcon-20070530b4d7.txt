@@ -1,0 +1,97 @@
+OGSA-DMI teleconference minutes
+===============================
+
+30 May 2007
+
+Participants:
+============
+Allen Luniewski, IBM
+Mario Antonioletti, EPCC
+Michel Drescher, Fujitsu
+
+Minutes: Mario Antonioletti
+
+1) Early discussion (5 min)
+    Note taker assignment
+    Roll call
+    Telecon minutes approvals
+        23 May 07: http://forge.gridforum.org/sf/go/doc14561?nav=1
+    Agenda bashing
+
+2) Functional Specification (50 min)
+    Current draft: http://forge.ogf.org/short/OGSA-DMI-WG/spec
+
+3) Wrap up (5 min)
+    AOB
+
+Actions:
+
+[Michel] Migrate actions from past minutes to tracker items.
+
+[Allen] Talk to the security people at OGF to see if there is any prior
+        work on [Identity].
++--
+
+Previous minutes approved without any changes.
+
+Agreed that actions in future would be migrated to be grid forge
+artifacts. Michel will migrate any previous actions on to grid forge.
+
+Michel had a phone call with Steve Newhouse. Steve confirmed that the
+undo strategy is a child of the supported protocols.  In the data
+transfer factory the undo strategy/strategies is/are child elements of a
+supported protocol.
+
+Discussion as to whether [supported protocol] should be protocols (as
+opposed to protocol) or whether this is purely an XML rendering
+issue. Agreed to leave it as is for now.
+
+There was a brief discussion as to whether there should be a default
+protocol - as a shorthand (if the user does not specify the protocol
+it uses this) - but it was thought it would be simpler to keep the
+system as is (no default).
+
+There is no default undo strategy property as a top element of the
+factory as there was before. The document has to be changed to reflect
+this.
+
+The undo strategy, in the factory, is something that the user can
+specify which, if not available, will produce a fault. If the user
+does not specify an undo strategy the factory will negotiate an
+appropriate one.
+
+The Data Transfer Instance, however, should have an undo strategy
+property which describes what is actually being used. This will be
+added to the spec.  Possibility not have a single undo strategy - it
+could be a list of strategies that the data service instance will do
+in a specified order on behalf of the client before it fails. No extra
+implementation burden as having more than one is optional.
+
+Identity may have to be revised (including whether we should keep the
+concept in the spec). This information is required in addition to the
+passing of source/sink credentials in the
+requestDataTransferInstance. Question as to whether [Identity] is a
+concept that is already out there or whether it's something that we
+are trying to create. Also issue as to how this information is passed
+to the participants.
+
+Discussion about the Data Transfer Instance - static properties should
+be top level property elements while dynamic ones could be sub elements
+of something like status (though there was a misunderstanding of what
+status is by Mario and Allen - it specifies state machine state and
+not actually bytes transferred or that kind of information).
+
+It would be edifying to try to walk through a simple use case of a
+Data Transfer Instance and Data Transfer Factory for DMI that does this
+for the transfer of a file from point A to point B using, say,
+GridFTP.
+
+This led to a discussion of what properties were optional and which
+were mandatory. Led to a discussion of the state machine - which also
+needs to be re-examined.
+
+Will discuss the state machine at the next DMI call.
+
+Allen will not be available on the 13 or the 20th of June for a call.
+
+

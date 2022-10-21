@@ -1,0 +1,196 @@
+OGSA Teleconference - 14 July 2004
+==================================
+
+* Participants
+
+  Bill Horn (IBM)
+  Hiro Kishimoto (Fujitsu)
+  Fred Maciel (Hitachi)
+  Andreas Savva (Fujitsu)
+  Frank Siebenlist (ANL)
+  Latha Srinivasan (HP)
+  Jem Treadwell (HP)
+  Jeffrin Von Reich (HP)
+
+  Minutes: Jem Treadwell and Andreas Savva
+
+* Minutes July 12th 2004: Accepted
+ 
+* F2F Update
+
+   Most people OK; Jem, Abdeslem and Dave Snelling can't make it.
+
+   Hiro asked Heather for WSDM people to come to our meeting, but has
+   not heard anything yet. Hiro will follow up.
+
+   Proposal is for a 2.5 day meeting
+   - Latha asks how many people might be able to make it
+   - Hiro: so far 10, assume 10-15.
+ 
+   - Is the F2F agenda fixed yet? No still tentative, so let Hiro know
+     any suggestions.  Focus will be on the v2 document.
+
+* Resource Model discussion
+
+  - Latha: did we decide that we would have a single model, and should
+    we first have a CIM representation of resources?  
+  - Fred: didn't decide - we had a lot of contributions from Andrea,
+    which is why there may be some bias toward CIM, but we haven't
+    decided or said that in the document.
+  - Would be good if we can synchronize.  
+  - Hiro: to achieve the goal of sharing resources we may have to
+    create a simple common model for the Grid.
+  - Fred: A single model is utopian; desirable but not possible.
+  - Hiro: depends on definition
+  - Fred: problem is not complexity or size; it's consensus---we're
+    not going to achieve consensus at this point.
+  - Fred: Ch 4 of CMM discusses semantics and renderng. Rendering is
+    how to put the model on the wire - e.g. XML.  MIB is
+    semantic. When I talk about models, I talk about the semantics.
+    Second level is how to access it. Industry didn't get consensus on
+    one resource model, so WSDM is standardizing using a
+    model-agnostic approach
+    - For example: How do you map CIM operations and attributes to
+      WS-RF, to Web services etc. - simple example, map CIM attributes
+      to resource properties.
+    - So CIM could be rendered onto WSDM. At the Gap Analysis session
+      at GGF11, Heather said don't go through CIM, you map directly to
+      WSDM.
+ 
+  - What is our challenge in OGSA?  
+    - Fred: which resource models do we need, so which will we adopt.
+    - Bill: Advocating a non-prescriptive approach so that one can
+      pick and choose?
+    - Fred: no, hope we can be reasonably clear - use SNMP for this
+      etc., and then
+    - (Bill:) render through WSDM?  Fred, yes.  
+    - Bill: so go through the models that are of interest, pick and
+      choose strategic models
+    - Fred: if we want interoperability we must pick the models, map
+      to unicore or GLUE, CDL, CDDLM, JSDL, this kind of thing - they
+      have resources also - they have attributes, but not operations,
+      so if they've received a request, how do I map what's in the
+      request to our model so that one understands the other. One more
+      gotcha: if we're doing deployment - reservation, deployment &
+      monitoring, so we use a resource model for each of these, we
+      will need the resource models to be in sync, can map to each
+      other. Not sure if the concept of identities should be common -
+      e.g., are we talking about a running instance in a Java VM or
+      are we talking about the whole host.
+    - Hiro: JSDL and CDDLM are now creating their specs, so if we can
+      propose an abstract model they can be aligned.  JSDL is defining
+      a language for job description, not resource description, so if
+      we can provide a model they would be happy to use ours, not
+      define our own.
+    - Jeffrin: I think Fred is trying to saying that if you think of
+      managing manageable entities you can think of an enormous number
+      of things - schedules, provisioning statements etc.---all kinds
+      of things will need to be managed in OGSA, so fundamentally we
+      have too many models - too many things to be managed.  In the
+      case of deployment, while CDDLM could provide the CDL [the
+      mechanism needs to be managed?] too many things that need to be
+      managed---might be worthwhile to think in terms of not trying to
+      match every model to a universal model, but saying that
+      everything that needs to be managed needs a model, and think
+      what needs to be done - but don't know how this can be done!
+      Different layers of abstraction.
+ 
+  - There was disagreement if it is easier to handle multiple models
+    or multiple renderings of a single model.
+  - Is this the only way to achieve interoperability? Is it possible
+    to avoid choosing a specific model and do mappings at a higher
+    level instead?
+
+  - How well adopted is CIM?
+    - There is some adoption on the systems side but not so much on
+      the network side. And very little on the applications side.
+  - For this reason (Jeffrin) seems more interested in mapping between
+    models rather than assuming there is a single model. (It's going
+    to be multiple models so) if you choose one thing above everything
+    else then it becomes just another standard that nobody uses.
+
+  A first candidate within OGSA to use CIM is EMS. But Fred is worried
+  that we are talking about EMS as an example for resource modeling
+  when there are no EMS people on this call.
+  - Also it is not clear that OGSA has progressed enough to the
+    point of being able to feed in requirements to CIM
+  - CIM is complex and it is not always clear how or where to extend
+    the model
+
+  - Next step: Hiro to try to get more EMS people to join the next
+    call
+  - EMS Container & Job as two initial modeling topics
+
+* Use case document public comments review
+
+  - Process discussion: Discuss within group first, reach consensus
+    and then post replies to public comment tracker
+
+  1. "Service utilization"
+    - 'platform service': This is no longer consistent with the
+      current OGSA document. Perhaps the term should be changed; but
+      in any case it does not sound like a major problem.
+    - Perhaps add some explanation on what the template should be
+      describing.
+
+    Action: Relevant people (OGSA-WG) should review document and
+            come up with a proposal on how to handle this issue.
+
+  2. "Advance" vs "Advanced" reservation
+
+     Discussed whether 'advanced' actually means something else (e.g.,
+     complex reservation)
+     
+     Action: Jeffrin will review document and kick off discussion on
+             whether the two terms mean different things.
+
+    2-1. Disagree with suggestion to list requirements for general
+         workflow engines
+
+    2-2. Time to process reservation: Hiro agreed that wording is not
+         very good and should be changed.  Action: Jeffrin to edit and
+         Hiro to check
+
+  3. Agreed to change 'enterpise' to 'organization' though there
+     should not be a problem either way.
+
+  4. This is a term defined by this use case. No extra explanation is
+     needed.
+
+  5. Abstract: Agreed to re-phrase. Jeffrin to do.
+
+  6. Agreed to 
+     - Fix figure captions to make consistent
+     - Bibliography per section is ok, but fix inconsistent
+       formatting
+     - Section refs are incorrect: Search for 'section' keyword and
+       make into real cross refs to the section numbers
+
+  7. English corrections: ok.
+
+  8. 7.2.2 service description:
+     - The comment is not clear; ask for more explanation.
+
+     - Workflow as GS: Not sure if this has to be drawn out in this
+       case but adding a reference is a possibility. Need more
+       information about 'taverna' and what they think its relevance
+       is.
+
+     - Collaboration: Reject. It seems inappropriate to add
+       implementations.
+
+     - Machine readability: Agree in principle but not sure what need
+       to be added.
+
+     - Collaboration: Add a sentence about 'dynamic nature' and
+       'description language'
+
+  - Other comments:
+    - Jeffrin to check again who is the original author of the mutual
+      authorization use case and add to contributors
+
+    - Acknowledgment: Should 'work supported by' be kept? 
+      - Confirm with relevant people first(e.g., Ian Foster)
+
+    - Should refactor the use case document to make it consistent with
+      the OGSA doc. But it is not clear how much work this will be.

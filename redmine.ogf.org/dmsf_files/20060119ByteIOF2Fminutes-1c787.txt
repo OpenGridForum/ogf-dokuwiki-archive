@@ -1,0 +1,82 @@
+ByteIO F2F Minutes 19/1/06 - Fujitsu, Sunnyvale
+------------------
+
+Mark Morgan
+Neil Chue Hong
+
+Andrew Grimshaw
+Steve McGough
+Dave Berry
+Fred Brisard?
+Darren Pulsipher
+Andreas Savva
+Dave Snelling
+Hiro Kishimoto
+Allen Lunieski
+
+Started session by screening www.405themovie.com - played using ByteIO (DIME/FTP) to access the file.
+Cool!
+
+Dave: Does the interface simplifies if you remove strided read? 
+- Yes
+
+Andreas: Does long mean 64 bits? 
+- Yes
+
+Hiro: Why is the return type of seekWrite void? What if there is an error?
+- An error would throw a fault
+
+?: Why is seekOrigin a URI? 
+- Essentially have defined three qnames as URIs, rather than a URI as a generic locator.
+Could do as an enum, but noone has complained with this approach.
+
+Hiro: what happens if someone seekWrites backwards.
+- This can fail, if the stream does not allow it, but may work if the stream supports it.
+
+Andreas: Do you write zeroes if seekWriting backwards?
+- You pass over the data unchanged, if going past end of stream. Is implemented similar to UNIX, i.e. bytes to pad are undefined.
+- Does the document specify the semantics for this clearly? Check this.
+
+Currently in GFSG review.
+Will revise the docs as go through PC comments.
+
+DEMO:
+demonstrated FTP interface using ByteIO (easy to get Windows to interface with it)
+and a set of command line utilities.
+
+EPCC addresses uses lowlevel Java functions to a particular URL but will write a different address in the <To> field which means the MS client cannot use this.
+
+Looking at <To> field and using it as a despatcher.
+
+Service is at http://foobar/blah/byteio
+
+<EPR>
+<To>http://byteio/?/ResourceName</To>
+</EPR>
+
+There is no information in the To field to point it to the service. We'll look at this and try for interop at GGF16.
+
+GFSG is working on a template for interop documents. We should work with them (Steve Pickles?)
+
+Does GFSG have a template for experience documents - what should they contain?
+
+Dave B: you're using URIs to define transfer mechanisms. Does OGSA as a whole have a policy on the use of URIs?
+
+e.g. what happens if we use URIs to identify transfer messages elsewhere?
+
+Dave S: If you are using ByteIO as a mechanism, then you should use the ByteIO one. If not, there is no problem with having a plethora of mechanism definitions.
+
+Dave B: recommend OGSA create a central list of mechanisms
+
+Neil: just now, think it's better to just let groups own the lists, when other groups need them refer back to OGSA. Only problem is when two groups overlap. This needs coordination.
+
+Dave B: e.g. DMIS should refer to byteio mechanisms and add a GridFTP transfer mechanism.
+
+Andreas: which version are you using of e.g. MTOM, DIME. 
+We need to define this properly in the document, and also support this in the URI defining the transfer mechanism.
+
+Final words:
+
+- Give comments on the spec
+- next is interop between the three implementations
+- what do we need to write in an interop and experiences document?

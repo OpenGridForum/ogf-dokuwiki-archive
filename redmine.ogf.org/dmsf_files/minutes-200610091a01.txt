@@ -1,0 +1,197 @@
+OGSA Teleconference - 9 October 2006
+====================================
+
+* Participants
+
+  Jay Unger (IBM)
+  Jem Treadwell (HP)
+  Paul Strong (eBay)
+  Ellen Stokes (IBM)
+  Dave Snelling (Fujitsu)
+  Andreas Savva (Fujitsu)
+  Fred Maciel (Hitachi)
+  Hiro Kishimoto (Fujitsu)
+  Chris Kantarjiev (Oracle)
+  Chris Jordan (SDSC)
+  Alan Clark ()
+  Mukund Buddhikot (SUN)
+  Michael Behrens (R2AD, LLC)
+
+  Minutes: Andreas Savva
+
+* Summary of new actions
+
+   AI-1009a: Review slide 6 again and clarify what the problem is
+             (Reference Model Design Team)
+
+   AI-1009b: Review the Reference Model 'Manage Job' in more
+             detail. Specifically look at it from the perspective of
+             an enterprise application (e.g., a 3-tier app) (Reference
+             Model Design Team)
+
+   AI-1009c: Hiro to ask Jay to provide his comments for Slide 6
+             - Perspective of submitter vs platform provider and the
+               hierarchical model connection
+
+   AI-1009d: Jem will produce a topic discussion list for the
+             converged glossary
+
+
+* October 5th minutes accepted with minor corrections
+  - Correct Abdeslem Djaoui's name
+  - Add Andreas Savva to participants
+  - Correct AI misnumbering
+
+* Oct 2 minutes approval postponed
+  - Many people were not aware that the Oct.2 minutes had already been
+    posted.
+
+* EGA Reference Model 
+
+** HPC Cluster Use Case
+
+   Explained by Hiro
+
+  - [slide 2] Note that this description is more general than the
+    scope of the *HPC Profile*---this is an HPC cluster use case
+  - [slide 4] The "Abstract Application Definition" appears twice in
+    the stack 
+    - There is no problem doing this from the view of the EGA
+      reference model. (It is not necessary to have a 1-to-1 mapping
+      of things on the stack.)
+    - In this case the "HPC cluster" level is probably better called
+      "virtualized platform". Agreed to make this correction. 
+  - [slide 5] Provisioning, etc, are noted as out-of-scope of the HPC
+    use case. They do happen but they are done (typically manually) at
+    very rare occasions---e.g., at installation or upgrading of
+    environment---and might occur a long time before or after the
+    actual HPC use case of submitting a job.
+    - There is no actual model conflict here but that is perhaps due
+      to the HPC work not focusing on these aspects even though there
+      are a number of assumptions. (And the assumptions should be made
+      explicit.)
+    - One consequence of this analysis might be to start looking at
+      some other use cases; and so leverage other work from the
+      Reference Model. Staying only on the HPC use case might provide
+      enough coverage.
+    - The works otherwise seem complementary
+    - "Managed Job" in the case of the EGA reference model is probably
+      a much richer concept than in the HPC use case
+      - A longer lived application vs one-off invocation
+      - Interactive vs non-interactive; but this may be less true for
+        HPC applications nowadays
+      - If one can thinks in terms of aggregation of HPC jobs as
+        higher level services then it would fit better into the EGA
+        model
+  - [slide 6] Raises the issue of difference in job vs application
+    state model
+    - Reviewed Paul's suggested alternate figure sent to the mailing
+      list. Agreed it is a good way of looking at things:
+      workload - job +- hpc cluster - node
+                     +- binary
+    - This relationship occurs frequently. It is the same for
+      database/database service/database software. (An instance of a
+      database service is composed through managing the things it
+      depends on.)
+    - There is a danger here of trying to do a very elaborate model
+      (like CIM). It is important to know where to draw the line and
+      stop.
+    - OGSA position so far is close to "stop once the service is
+      identified"; the Reference Model on the other hand takes a few
+      more steps towards CIM; but aims to have a broad rather than
+      than a deep view
+    - There is no assertion by the Reference Model that there is only
+      one possible graph
+    - Another difference is what the submitter of the job cares about
+      (needed characteristics/attributes) vs what the
+      environment/platform provider cares about (which includes the
+      hierarchical model needed to instantiate things)
+      - (With the reference model it is enough to focus on the current
+        node; no need to try and dig deep in the hierarchy.)
+    - Some preliminary work is being done in OGSA in the context of
+      the EMS scenarios---the JSDL and CDL connection.
+    - There is a need to discuss and refine the next version of this
+      figure; and incorporate Jay's comments
+
+   - [slide 5] Need more discussion on what "Submit Job" means
+     - Also "Manage Job" in the Reference Model is much richer than
+       what the HPC/BES model are doing
+       - This is essentially the difference between (discrete)
+         invocations of an HPC job and taking care of an enterprise
+         application that once up has to be taken care of, resources
+         provided appropriately to maintain the required service
+         level, etc.
+
+   AI-1009a: Review slide 6 again and clarify what the problem is
+             (Reference Model Design Team)
+
+   AI-1009b: Review the Reference Model 'Manage Job' in more
+             detail. Specifically look at it from the perspective of
+             an enterprise application (e.g., a 3-tier app) (Reference
+             Model Design Team)
+
+   AI-1009c: Hiro to ask Jay to provide his comments for Slide 6
+             - Perspective of submitter vs platform provider and the
+               hierarchical model connection
+
+** Glossary review
+
+   Jem has produced an initial draft with EGA terms highlighted.
+
+   Agreed that the target is a converged glossary by GGF19. (The HPC
+   discussion is higher priority.)
+
+   It is important to know where there are differences or discussion
+   points. Agreed that the discussion should proceed by email and the
+   occasional time slot on a teleconference.
+
+   AI-1009d: Jem will produce a topic discussion list for the
+             converged glossary
+
+* AI Review
+
+  [Only items with updates are listed]
+
+  AI-0928b: Closed (see next item) 
+  AI-0928c: Closed. Obsolete since we have agreed to provide normative
+            text
+  AI-0925b: Closed. Draft was posted to gridforge
+  AI-0921b: Closed. Started writing charter.
+  AI-0921d: Closed.
+  AI-0914f: Closed. Picked location and launched zoomerang.
+
+  AI-0803e and AI-0803f: No update. 
+           - Hiro volunteered to talk to the CDDLM-WG.
+
+* OGSa Roadmap Review
+
+  Chris Jordan gave an overview of current state, followed by some
+  discussion on the status of various documents.
+
+  - There have been many contributed updates, in particular from Jem,
+    Hiro and Andreas.
+  - Still missing updates for some documents, especially HPC Profile
+    and Naming.
+  - With respect to the state of documents Dave S mentioned that the
+    status of the WSRF and WSN specs has changed since the publication
+    of Roadmap 1.0.
+    - For the Roadmap however the various specification owners (that
+      actually refer to WSRF or WSN) have to update their documents
+      for the Roadmap tables to change.
+    - Chris J is leaving the update of the tables for last.
+  - Status of HPC documents
+    - The HPC Use Cases have finished their public comment period on
+      Sep.20.
+    - Not sure about the HPC Profile
+  - Naming documents: Not sure. The profile does seem close to
+    completion.
+  - Review progress at the next Roadmap call
+
+* Other business
+
+  - Jem has updated the OGSA Wikipedia entry to bring it up to date
+    with the publication of OGSA 1.5 and Basic Profile 1.0
+
+  - Thursday's call is cancelled
+
+   

@@ -1,0 +1,175 @@
+OGSA-DMI conference call notes
+==============================
+
+07 March 2007
+
+Attendees:
+	Ravi Madduri, University of Chicago and ANL
+	Mario Antonioletti, EPCC
+	Michel Drescher, Fujitsu
+	Allen Luniewski, IBM
+        James Casey, CERN
+
+[MD] Put a tracker on the outstanding issues from this call:
+
+     - How do we represent/understand composite data movements in DMI.
+     - Protocol negotiation not resolved yet, how much do we have to
+       specify? are we re-inventing the wheel for things that already
+       work? etc.
+ 
+
+Previous minutes approved with a minor change Allen works for IBM and
+not IBMM.
+
+Agenda bashing:
+
+ - Implication of Daylight Time changes
+ - Recap of what was discussed last week
+
++---
+
+o Implication of Daylight Time changes
+
+  From  11/03 US is changing to summer time as opposed to the end of
+  the month for the rest of the world. Implication of this for future
+  calls is discussed.
+
+  Conclusion: keep the calls at 16:00 UTC.
+
+  There will not be a call next week as Michel is going to 
+  be busy (unless someone else can host it).
+
+o Recap of issues discussed last week.
+
+  DM proposed a solution resulting from last week's discussion:
+
+  http://www.ogf.org/pipermail/ogsa-dmi-wg/2007-February/000140.html
+
+RM: implication of requirement on source and sink EPRs would result in
+    hacky implementations. Providing ref impls is going ot be hard if
+    we don't standardize on source/sink service interfaces.
+
+AL: the source and sink labels are on the service and not on the
+    EPRs themselves.
+
+MD: the services model the source and the sink. These may contain
+    the protocol identifiers.
+
+There is no existing OGSA Standard to describe the source/sink metadata.
+
+JC: services like SRM do this already - they let you know the 
+    protocols they support  - could provide another API to make 
+    this available through DMI.
+
+    SRM copy should be removed from the spec - the data movement is an
+    abstraction of the actual data.
+
+    SRM models the storage resource and not the transfer. DMI should
+    model the transfer. Other folks would rather have SRM to model the
+    storage and transfer.
+
+    Would be good to get DMI to model the transfer.
+
+...
+
+JC: initially DMI was set up to rationalise the transfer
+    implementations but now we are moving to require the existing
+    applications to change in order to do the things that they already
+    can do.
+
+AL: this tries to leverage existing transfer mechanism by putting
+    a minimal requirement by advertising the transfer protocols they
+    support
+
+JC: SRM is a control protocol for transferring transport ....
+
+AL: but it does not negotiate transfer protocols ...
+
+JC: you can get the supported protocols - transfer is outside the
+    scope. Transfer decision takes place outside - you can specify a
+    preferred transfer protocol and if that matches then all is well
+    ...
+
+...
+
+JC: Transport negotiation is important but if we go too abstract then
+    we are going to slip in term of deadlines and we are already
+    slipping.
+
+MD: anyone can take the  pen and add to the existing spec but the
+    architectural issues need to be sorted ...
+
+...
+
+JC: OGSA is far off what appears in production grids. Need to bridge
+    between OGSA and data movement and the existing implementations.
+
+MD: present architecture does not impose many changes - does it?
+
+JC: there is an assumption that is using an EPR to model the source
+    and sink and if you want to dig into an EPR is different from
+    present implementations which believe the EPR is the actual
+    storage - we are not modelling this very well
+
+    An EPR could represent 20 files in a source and a sink.
+    How do we relate a source file inside the source EPR with the
+    corresponding file representing the destination file inside the
+    destination EPR?
+
+AL: there is a question of granularity - 20 transfers or 1 transfers
+    ...
+
+JC: for a million files that becomes a problem ... users can model the
+    data transfer as a data set which could be 1 or many. Need to know
+    where that split is made - where does it fit in the architecture?
+
+MD: if DMI comes up with a solution that would be an important thing
+    to accomplish.
+
+JC: need a representation - what is infrastructure, how you break
+    things down - does anything exist?
+
+AL: from data point of view - moving a data object is an
+    implementation detail - that would help the DMI problem. Need to
+    think as to where the decomposition lies.
+
+MD: this decomposition line is very close or on the DMI service.
+
+JC: we do not say what we do with the file or the data case - we say
+    version 2 would deal with general data objects ....
+
+AL: could say that for version 1 we only deal with a single file but
+    we need to think of the composite object not to be inconsistent
+    with version 2 ...
+
+JC: from the mandate we should be able to deal with the composite
+    object but you need to explicitly state its composition - DMI
+    would not be able to break it down itself. DMI should be able to
+    hand over a lot of work and not to have to track individual
+    requests.
+
+AL: does DMI deal with the composite or is it pushed down to the
+    source and sinks ...
+
+JC: we don't know how to map a composite object to sources and sinks that 
+    have different architectures - e.g. move a directory to something that
+    does not have that structure. We can represent unitary value of files.
+
+MAA: issue is whether the transfer has to understand the semantics of
+     the data that you are moving. At some level if it's just data movement
+     then it's a question of moving bytes. How this is interpreted at the
+     source and sink is a different problem. It may well be that the source
+     has to disambiguate a composite object to be able to determine what
+     data has to be transferred but how that is interpreted at the source
+     may not be a DMI problem unless we require that the semantics of the
+     data have to be the same at the sink
+
+...
+
+MD: The http 1.1 specification already does something similar to
+    this. You can specify ranges for data specified in bytes and then
+    specify which data has to be transferred. Can specify that you
+    want the second range - can specify the range of bytes.  Something
+    very similar applies to what you are doing here.
+
+Further discussion needed...

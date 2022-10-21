@@ -1,0 +1,64 @@
+Minutes of the OGSA Data WG telcon, 27th July 2005
+
+0) Actions arising
+
+- Mario to ask an OGSA-DAI staff member to write something on the security issues around OGSA-DAI
+- Dave to consult OGSA WG security design team
+- Dave to revamp section 3 of the architecture document
+- Bill to scope the proposed WG for byte-level transfer.
+
+1) Early discussion 
+
+* Roll call 
+Dave Berry, NeSC (note taker)
+Allen Luniewski, IBM
+Bill Allcock, Argonne
+Stephen Davey, NeSC
+Mario Antonioletti, EPCC
+Malcolm Atkinson, NeSC
+
+There was one correction to the minutes: Mario's action is to elicit comments on the security issues around OGSA-DAI.
+
+The agenda was unchanged.
+
+
+2) Action report
+- Stephen to tidy the scenarios draft and circulate it to the list [Done]
+- Mario to ask an OGSA-DAI staff member to write something on the security issues around OGSA-DAI [Ongoing]
+- Dave to consult OGSA WG security design team [Ongoing]
+- Dave to revamp section 3 of the architecture document [Ongoing]
+
+There was a short discussion about authorisation, following from last week's discussion.  Bill pointed out that any resource has the final say about authorisation, regardless of what the AuthZ call-out mechanism.  Allen asked how this should be explained in the document.
+
+3) Data transfer discussion
+
+This discussion builds on from discussions at the London F2F and GGF14.
+
+At GGF14 we were talking about a service primarily aimed at movement of bytes.  Q.  Would this handle all scales (1KB or 1TB)? A. Aim to include both if possible.  The aim is to have standard API for different scenarios, from memory-to-memory transfer on the same machine to file transfer across the net, i.e. different implementations possibly each providing choice of different transport mechanisms.
+
+Dieter Gawlick is interested in being able to use this for basic messaging (does he mean high-level messaging?  We are discussing datagrams here). He has additional requirements such as guaranteed delivery (at-most-once or exactly-once).  These probably need to be layered on top of a basic system.
+
+Bill mentioned the question of how we handle authorisation of data transfer.  An analogous situation arises with the discovery of SRM resources.  In both cases the resources available may depend on who is requesting them.
+
+Bill asked whether we would consider a solution that did not use SOAP to negotiate the data transfer, e.g. if the time taken to set up a transfer outweighed the cost of the transfer itself.  Malcolm mentioned that some use cases involve setting up a channel for multiple invocation of the same data flow, which would ameliorate the overhead of SOAP.  Bill countered that often problems arose when calling the transfer service from simple scripts, e.g. when transferring multiple small files, a naive script will set up the transfer session for each one.  There are a lot of naive script writers out there.  We decided to work with SOAP initially.
+
+Dave asked how can we include streaming?  E.g. we could say that this level transfers blocks and people can build streaming protocols on top.  Alternatively we could make streaming explicit.  Problems may arise if the transport mechanism relies on random access, e.g. for blocks arriving out of order.  Steven mentioned that streaming data can be a different use case, as if data doesn't arrive in time it may not be needed.  We discussed the analogy with IP and TCP, which has of course been very successful.
+
+We agreed that we have a level that knows about structure sitting above the byte-transfer level(s).  We ran out of time to discuss this level.  
+
+Bill to scope the proposed WG for byte-level transfer.  This will also contribute to the architecture discussion (and vice versa).
+
+We scheduled a follow-up call for September 7th.
+
+- Do we need to engage with the JSDL spec?
+Dave summarised an e-mail conversation.  Bill will comment on JSDL from a GridFTP perspective. 
+
+
+4) Planning
+
+Allen noted that there seems little interest in an OGSA-D F2F in August.
+Other discussion was postponed to next week.
+
+5) Wrap up
+      DONM: August 3rd.
+

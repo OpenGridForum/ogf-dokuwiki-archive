@@ -1,0 +1,80 @@
+
+meeting minutes
+---------------
+
+GRAAP-WG meeting 2 (Technical Session 1)
+
+
+focus of session: negotiation aspect of WS-Agreement
+----------------
+Explain the term states and protocol.
+
+We started with a repeat of some of the overview presented in the
+previous session.  We discussed the roles of the parties in WS-A
+(init/provider, client/service), pointed out the assymetry of the
+model, and talked about negotiation operations.
+
+Negotiation state is captured in the state of the terms which have the
+following possible values:
+
+-status: offered (initiator offers a value)/observed/ignored
+-criticality: optional or required
+-negotiability: value can change or not
+
+We had much discussion about what "offered" means.  Presently it
+really means any state for which agreement has not been reached.  Much
+of the confusion may be about terminology, but also stems from the
+assymetry of the model (who can propose a value).
+
+We also discussed how initial values could/should come from templates
+published by providers.
+
+It was also pointed out that, at this point, we're modelling the state
+of the terms and haven't truly said much about what messages put the
+terms into these states.
+
+We discussed briefly the notion that criticality may be applicable to
+term groupings in addition to individual terms.
+
+The question about initiating rengotiation was raised, and we noted
+that the present model only permits an initiator to cause renegotiation.
+
+The state space for the terms was discussed even those these states do
+not map directly to what's in the current version of the spec. which
+only uses two dimensions.  The full mapping from the spec. to the
+logical may not be complete/correct at this point.
+
+We again discussed the confusion of the term "offered" and resolved to
+discuss it further on the list.  Other words like "proposed" or
+"requested" were thrown about.
+
+Following the state space, we worked through a state transition
+diagram.  There are some ambiguities, particularly with respect to
+getting into a really final state, observed-fixed from other states,
+and what it means to bypass some intermediate states.
+
+There was also concern that there was no time aspect to the overall
+picture.  That is, no transitions were triggered by time.  Part of
+this is that lifetime is handled for a full agreement, and this is
+just for one term.
+
+It may be helpful to restrict paths through the state diagram in some
+cases to model particular negotiation styles.
+
+Problems with denial of service were also raised.
+
+We ran through some example cases.  In this discussion, it became
+clear that we really, truly do need a commitment phase.  This is not
+in the spec. now, but needs to get in there.  We take it as an area to
+be worked out.
+
+We also discussed the possibility of completely removing the idea of a
+negotiability dimension when/if we start adding constraints.  The
+presence or absence of a constraint could indicate the negotiability.
+A separate set of constraints could be maintained for both the
+provider and initiator.  They act as hints to the other party.
+
+Renegotiation was discussed, and it is possible that we may need two
+different methods, one for updating existing terms, another for
+providing entirely new terms.
+

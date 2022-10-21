@@ -1,0 +1,545 @@
+OGSA Interim Meeting -- 14-16 February 2005
+===========================================
+
+* Participants
+
+  Jay Unger (IBM)
+  Steve Tuecke (Univa) [14]
+  Jem Treadwell (HP)
+  Ravi Subramaniam (Intel) [14,15]
+  Andreas Savva (Fujitsu)
+  Manuel Pereira (IBM) [15]
+  Steven Newhouse (OMII)
+  Takuya Mori (NEC, ANL)
+  Mark Morgan (UVa)
+  Sam Meder (ANL) [14,15]
+  David Martin (IBM) [15]
+  Tom Maguire (IBM) [14,15]
+  Fred Maciel (Hitachi)
+  Hiro Kishimoto (Fujitsu)
+  Andrew Grimshaw (UVa) [15]
+  Ian Foster (ANL) [14,15]
+  Abdeslem Djaoui (RL)
+
+On Bridge:
+  Dave Snelling (Fujitsu) [14]
+  Frank Siebenlist (ANL) [14,16]
+  Ted Anderson (IBM) [15]
+
+Minutes: Andreas Savva
+
+* Should OGSA use WSRF, WS-I+ or both?
+
+  The "2 stacks are unavoidable" argument (WSRF and WS-I+), ref: UK
+  e-Science OGSA meeting.
+
+  Note:
+        - WS-I+ Core:    WS-I plus WS-Addressing, WS-RM, BPEL
+        - WS-I++ Core: Also adds WS-Eventing
+
+  There are other related specs that are not in public or standard
+  space: ws-trasfer, ..., ws-management, etc. They correspond to wsrf,
+  ws-n, wsdm.
+
+  WS-I+ or WS-I++ are not good names.
+
+  A comment that there are actually 3 (or more) positions/approaches;
+  currently articulated as 2 stacks.
+
+  UK e-Science concern: Who will be the eventual winner. And desire to
+  avoid re-work later; motivated by OGSI experience)
+    - The danger is that choosing WSRF, without sufficient explanation
+      and reaching out, might make some (sizeable) part of the UK
+      e-Science community turn to something else.
+    - Adopting WS-I as lowest denominator is safest choice
+    - But any functionality over and above that would probably end up
+      re-inventing WSRF and WSN mechanisms in a (different)
+      non-standard way
+
+  - Proposal: to define OGSA profile at a higher (more abstract) level
+    than either stack and then provide 'bindings' to both
+     - In other words, identify what features should be in the profile
+       and then do the mapping
+     - These features have been discussed for the past 3 years; not
+       diving in to the definition.
+     - Already have described requirements in good enough detail in
+       the OGSA version 1.0 document
+     - This OGSA informational document might have to be adjusted to
+       allow for multiple mappings since it currently states
+       WSRF,WSN,WSDM, will be used.
+
+  - Proposal: A lesser profile
+   - That describes a smaller set of features (no wsrf (ws-resource),
+     base notification, service groups, not constrainted to metadata)
+     so it would probably just add something close to addressing, and
+     ws-eventing.
+   - The problem is that what is pushed out will still have to be
+     described somewhere;
+   - If it is left up to each system designer then no
+     interoperability; not a solution.
+   - Not enough experience to decide what is the best approach? So it
+     is either choose an approach or wait.
+
+  - There was an argument that this topic was discussed before (at
+    great length) and settled already.
+
+  - Rough consensus:
+    - Go ahead with a profile and that profile should be based on WSRF
+      because the main expertise (within the group) is there and
+      because these are the specs that are in the standards process
+    - If anyone wants to soften the language on WSRF in the main ogsa
+      document (for version 2.0 or 1.x) and/or base profile: Open a
+      tracker (OGSA v2 or Agenda Topic) with the *recommended revised
+      text*
+      - Action for Ravi, and Steven N
+    - Arrange a tutorial/study session on how WSRF and (WS-Transfer,
+      etc) fit together, how and where they overlap.
+
+** Why WSRF or not (revisited on Day 2 during summary of Day 1)
+
+  - Tony Hey feedback on previous day discussions and UK e-Science
+    support for dual model.
+        
+  - Projects in UK already doing things using WS-I; e.g., for job
+    submission, etc. 
+  - Unless OGSA-WG offers a more compelling reason for using WSRF
+    these and other projects (e.g., EGEE) are probably going to use
+    'plain' WS
+    - Need to understand objections to WSRF in more detail.
+    - Andrew is following up on some of these issues by phone; but
+      this is work for more than one person.
+    - Key WSRF concepts (naming, state exchange, introspection...)
+      seem fundamental. If WSRF or something like it is not adopted
+      then different projects will probably come up with similar
+      functionality eventually out of necessity.
+      
+  - Proposal: Service specification documents produced by OGSA related
+    activities should be WSRF agnostic so as to allow for different
+    implementations/mappings.
+
+  - Proposal: Each party to provide a brief statement on why it is
+    choosing to adopt WSRF
+
+* Basic Profile Document walkthrough 
+  
+  Ref:
+  https://forge.gridforum.org/projects/ogsa-wg/document/draft-ggf-ogsa-basic-profile/en/2
+
+** Overview by section
+
+  - Agreed to keep the referenced versions as they are; and
+  - Lay out a schedule and time frame and how to sync with final
+    versions specs
+  - Talk to WSRF and WSN chairs and find out their schedule.
+  - (Presumably all namespaces would have to be consistent for the
+    final version.)
+  - Action: A timeframe document for the BP (Tom and Dave S)
+
+  - WS-RMD - agreed to remove it completely
+
+    No document available yet so it is premature to include. Do not be
+    prescriptive on this feature.
+
+  - Resource lifetime - agreed to keep the section
+    - How far to mandate immediate resource termination; still an open
+      issue and will have to talk about it again.
+    - Difficulty of testing it but agreed that resource lifetime
+      should be in.
+    - Still need to discuss the details
+      - If created due to a message exchange and so on...
+
+  - ServiceGroup -  agreed to drop the section completely
+
+  - Base Notification - keep
+    - Issue: base notification namespace (WS-Addressing namespace
+      update and topic update)
+      - Options: 
+        1. re-do schemas for this profile
+        2. Ask WS-N to update their specification 
+           > Action for Tom
+
+  - Base faults - agreed to keep 
+
+    - But probably just to mandate that the defined schema should be
+      used
+
+  - Security
+    - Issue: Allow anonymous interactions
+    - Issue: release date of BSP 1.0
+
+** Detailed by compliance statement
+
+  - R1002: Issue: Check that the policy element (wsp) has been removed
+    from the WS-Addressing schema and remove this statement. 
+    > Tom to verify.
+  
+  - R1003, R1004: may be removed pending ongoing work within WSRF TC.
+
+  - R1005, R1006, R1007:
+    - Should a reference be passed in (with the meaning of don't give
+      me this reference again, and how far that should be mandated)
+      and related issue of how to compare references.
+    - Should resolver EPR also be part of the reference handed out.
+      - Covers a large number of cases, but obviously not all. Agreed
+        that it is useful to have.
+    - Ideally this feature should be defined in a lower level
+      specification (but no candidates yet)
+    - Idea that if references are broken then the entity introducing
+      the change should be made responsible to 'fix' things up (so
+      that they can be re-resolved)
+    - ogsa-rns:Resolve
+      - Need followup discussion on how to factor/refactor the
+        existing RNS spec to provide the naming resolution spec needed
+        by OGSA.
+    - Need to define namespaces (ogsa-*) for schema and wsdl
+
+  - 3.1.6 to be deleted
+
+  - 3.2 (MIH) - Probably what's in the WS-Addressing is ok
+
+  - 3.3 - Faults
+    - Faults with resolving resilient references should be also
+      defined. (For now put in this profile since there is no
+      candidate spec.)
+      - RNS might cover part of this but probably not the faults
+        specific to updating resilient references.
+      - What are those faults?
+    - Ideally there should be a new spec. for this space.
+
+  - 4. Requirement for specific embodiment; but even WSRF TC likely to
+       just use single WS-Addressing embodiment.
+       - Proposal to delete the section completely and assume a
+         specific embodiment (and state which earlier on)
+       - Rejected for now. List the embodiments that will be used in
+         this profile.
+
+  - Issue: Require usage of WS-Addressing or not 
+           > Tom and Ravi
+    - Implicitly the text seems to be assuming WS-Addressing anyway.
+    - Ok, provided final W3C version is used eventually
+
+  - 5. Resource Property
+    - xpath 1.0 response issue (undefined) and whether this would be
+      an issue. Need to determine what and if there is
+      interoperability issues. (Might need to define the response in
+      the profile.)
+    - Agreed to look at using nodeset serialization in xml digital
+      signature as base for this.
+
+  - Topics
+    - Value-change notification topic: (don't need to have except)
+      - RPDN[?]
+      - Add notifiable resource properties property
+  
+  - Set resource property
+    - Action for Tom to describe what is implied by supporting this.
+
+  - Immediate destruction (revisit later)
+
+  - Revisit 8.1.1 at a later point
+    
+  - Security
+    - Issue on whether to have a section here or to make it a separate
+      profile.
+      - Consensus that some basic functionality should be described
+        here.
+    - Agreed to extend section to cover more than session security.
+      Also support other XML security mechanisms.
+    - Agreed to support both message or transport; use either or both
+    - Agreed to split this off as a basic security profile. [XXX]
+    
+  - WS-I copyright for front matter; too much text is being
+    reused. Hiro and Tom to followup on copyright issues and redo if
+    necessary.
+
+[Day 2]
+
+* Naming discussion
+
+  RNS: started as file system specific. Generalized and reduced to
+  cover naming (Human name to Abstract name; and possibly to Address
+  (aka EPR)). Mainly the 'resolve' operation.
+
+** WS-Naming:
+  - A string (xml). Globally unique in space and time.
+  - Define a way to be able to compare for equality; probably a
+    byte-wise comparison (note: i18n support)
+  - "Abstract name EPR": EPR that contains an "Abstract Name" as
+    extensibility element (not in the reference properties since those
+    are opaque)
+  - Optionally contains 0 or more resolver EPR
+    - Do not have to be used; alternative resolvers could be used
+  - Not aiming for a new specification but a convention or a profile.
+  - Resolve operation takes an EPR and returns an EPR (or list of);
+    and constrained to return equivalent ones if an abstract name is
+    included.
+  - Optionally perhaps a set of convention on what resolvers are
+    included (resolver of choice, last resort resolver). E.g., factory
+    may be a resolver, etc.
+
+  - Issue: Type, etc, information should or could also be included?
+
+  - Proposal: Do this as a WS-Naming profile and refer to it from the
+    OGSA Basic Profile.
+    - So the relevant pieces now in the BP are split off.
+    - It is worked on within the OGSA-WG; no need for a separate WG.
+    - In combination with an RNS specification, which may have wider
+      scope. The Profile uses and restricts the usage of the 'Resolve'
+      operation
+
+Action: Andrew, Mark, Manuel to do a short write up. Review options to
+        move forward including the possibility of doing something like
+        a BoF on {WS-Naming, RNS/Resolver}.
+        - (Might be able to use the existing slot rather than applying
+          for a new BoF slot.)
+
+** RNS update
+   - Revision based on Dec F2F discussions
+   - Definition of resource properties moved to appendix
+   - Application of RNS to filesystems
+     - Agreed this should be moved to a separate document; if RNS is
+       referenced in a Naming profile it would look strange to
+       reference a spec talking about filesystems.
+     - This is also a good argument for spinning RNS out in a separate
+       WG.
+
+* Data activities update
+
+  - Update from UK Data F2F.
+    - Full minutes by Mark are on Gridforge:
+      https://forge.gridforum.org/projects/ogsa-wg/document/OGSA_Data_Interim_Minutes_2_Feb_2005/en/1
+
+  - Proposed BoF for 'ByteIO' : simple posix IO like file access
+    - Operations: Read, write, append: they take an offset; but there
+      is no session state with clients (no file pointer)
+    - They are not the 'user' interface; these are the back-end
+      services; hence no 'open' operation.
+    - Aiming for a minimal set; extensible to cover more complex
+      scenarios.
+    - Planning for BoF at GGF13
+
+* EMS 
+
+** EMS activities update
+
+  - Minutes from UK EMS F2F:
+    - Full minutes by Mark are on Gridforge
+      https://forge.gridforum.org/projects/ogsa-wg/document/OGSA_EMS_Interim_Minutes_1_Feb_2005/en/1
+      https://forge.gridforum.org/projects/ogsa-wg/document/OGSA_EMS_Interim_Minutes_2_Feb_2005/en/1
+
+  - Basic EMS documents
+
+    Background: It became obvious that OGSA version 1.0 EMS
+    terminology had problems due to overloaded terms like 'job',
+    'task' and so on. There was an initial revision last year to
+    change the terminology followed by an attempt to simplify in order
+    to get a minimal set that could be quickly defined.
+
+    UK meeting took things further by further reducing the already
+    simplified text. The resulting draft (including some UML) was
+    posted to the list during a previous call.
+
+    http://www-unix.gridforum.org/mail_archive/ogsa-wg/2005/02/msg00009.html
+
+  - A proposal for a "Basic Execution Service" interface was later
+    produced by Steven N. [To be circulated more widely soon.] This is
+    one input for the upcoming BoF. Other input also welcome.
+
+** OGSA-BES (Basic Execution Service)
+
+   - A Service interface for 'job factory' or container or .... It
+     corresponds to one small piece in the EMS picture (service
+     container).
+     - Note that this is not a scheduler or queue (out of scope)
+     - Job state/modelling is in scope
+
+   - Review of early draft by Steven N.:
+
+   - submitJob: 
+     - Input: jsdl 1.0
+     - Output: a job identifier/"Abstract Name"
+     - Faults:  (feature not supported)
+   - and a variant
+     - submitJob 
+       - Input: an abstract name pointing to a jobdescription
+       - The abstract name could be an EPR (a WS-Address)
+          - Why not state that it is an EPR?
+            - Just trying not to be overly restrictive at this
+              stage.
+           - This is an open issue. (Need an alternative normative
+             definition of WS-Address that is not based on EPRs if
+             this is not to be defined as an EPR.)
+   - getJobStatus
+   - jobTerminate
+     - This is an operation on the container not the 'job'; the job
+       might also have a similar operation.
+     - Shouldn't this be done through WS-Resource lifetime mechanism?
+        - Or why create new operations or terms for functionality that
+          can be provided by existing mechanisms?
+        - Not intended as a substitute for a destroy on the created
+          resource (job). It is an alternative (shorcut) way of
+          managing jobs within a container.
+          - Input could be a list of abstractNames; provide a
+            serviceGroup like functionality. For example, to quickly
+            purge all jobs from a container.
+          - ... still open... 'different' names for what is already
+            available/possible using EPR and WSRF model
+
+   - getSupportedStatus
+
+  - Provides a view that is more easily mappable to more traditional
+    job submission/control functionality.
+    - Simplest set that is useable by a large part of the community;
+      and can be delivered within a reasonable time.
+
+  - Requirement: exactly once job submit semantics
+    - Does not have to be part of the spec, but the spec must allow
+      support for it
+    - Possibilities: A jobid (or some unique input token) could be in
+      the submission document or part of the API
+
+  - Differences in opinion
+    - Concerns with possible overlap or clash in functionality with
+      basic profile definition.
+      - In the sense that the BP takes the WSRF route while this
+        proposal might take a different approach that does not use WSRF,
+        but provides similar functionality to what WS-Resource modeling
+        would provide.
+      - And also 'way of doing things' that fits with the OGSA/OGSA-EMS
+        model/architecture.
+        - But this is something that should and could be done as the
+          work of this proposed WG progresses.
+    - Whether the 'container' has operations that can manage jobs or
+      whether that management is done directly on the jobs (and only
+      that way is defined)
+
+  - BoF followup 
+    - (Andrew is leading the activity for now)
+    - Select chairs
+    - How to make sure that this work remains OGSA compliant
+    - Milestones: draft by GGF14; implementations by GGF15 and go into
+      public comment; proposed recommendation by Dec.
+
+** Basic Execution Profile
+
+   - Two approaches: 
+     - list candidate specs currently available 
+     - what we would like to be able to define and then match what is
+       available with what is needed to be able to describe it
+
+   - Currently available or nearly available
+     - JSDL 
+     - WS-Agreement 
+
+     - JSDL and WS-Agreement connection. A need for some simpler
+       normative document that describes how these two fit together.
+     - The OGSA-BES BoF/proposal
+
+   - Proposal for a short informational document to describe what the
+     space looks like, where the holes are and whether they can be
+     filled.
+     - In other words an EM roadmap document that will be part of the
+       OGSA roadmap
+     - With a basic execution profile following after that.
+
+   - Which part of the broader EM architecture should be worked on
+     next?
+     - Refinement could proceed along with other activities to do
+       a proto-profile
+
+   - Proposal to begin BP-EM after June; after the OGSA-BES activity
+     starts up.
+
+   - Three activities:
+     1. OGSA-BES BoF spawns WG for BES Specification
+     2. OGSA-WG works on Basic execution profile 
+        (With input from existing specs (JSDL & WS-Agreement, etc))
+     3. OGSA EM Design team works on Refactoring of EM architecture
+
+* GGF13 session review
+
+  - Confirmed sessions and session owners
+  - Outreach: 
+    - Overview: Hiro
+    - Profile: Dave S
+    - Data:  Andrew, Dave B
+  - Basic Profile:
+    - Tom and Dave S
+  - Naming (check possible conflict with CGS session; for cross-wg
+    collaboration---not on naming but resource management)
+    - Could use this as a 'BoF-like' session for WS-Naming/RNS
+    - Try to arrange to do GFS-RNS in combination with this
+  - EM : the 3 activities (Ravi, Andrew?)
+
+  (Paper on resource properties: Andrew to write up?)
+
+  - Deliverables for GGF13 --- initial draft submissions by 18 February
+    - Roadmap draft for first session (Ian)
+    - Draft Basic Profile (Tom, Dave S)
+    - Draft Basic Profile Template (Dave S, Tom)
+    - Draft for Naming (Requirements doc) (Mark )
+    - Draft Data document (Mark to see if he can get something
+      together by Friday since Dave B is away)
+
+* Roadmap document
+  
+  - Look into combining the two existing documents (Original draft
+    from GGF12 and the profile creation proposal) 
+    > Ian will do draft
+  - Need schedule input from EM, Data, Basic Profile team leaders to
+    update the draft before GGF13.
+
+[Day 3]
+
+* Design teams
+
+  - Hiro's presentation
+  http://www-unix.gridforum.org/mail_archive/ogsa-wg/2005/02/msg00073.html
+
+** Resource Management
+   
+   - CIM or WS-CIM adoption as model for OGSA
+   
+     Main work must be done by the respective design teams (Data, EM)
+     with help from the RM team.
+
+   - Proposal:
+     1. Informational document comparing CIM and GLUE.
+     2. Informational document on how CIM could be used for OGSA work,
+        which are the relevant pieces, how they should be used.
+     3. Use/refer to CIM in OGSA profiles
+
+     - Additions, or proposals to CIM if gaps are identified could be
+       done directly to DMTF
+     - CIM the model in contrast to CIM renderings (WS-CIM, and so
+       on). Could use the model or pieces of the model as appropriate
+       without worrying too much about the availability or not of a
+       good way of rendering it for use by WS. 
+
+     Action: Fred to lead the activity, send schedule to Hiro.
+
+** Security
+
+   - Security profile was split off from basic profile.
+   - Security profile work: interest by other parties in GGF.
+   - Frank to lead this activity.
+
+** Information Services
+
+   - There are related activities within GGF, e.g., the INFO-D
+     WG. Hence the joint OGSA-INFO-D session to work out the
+     relationship in more detail.
+   - Most things needed to build on are probably already in the basic
+     profile
+   - Could start working on a profile for information around GGF14
+
+* Teleconference schedule
+
+  - Initial proposal by Hiro
+  http://www-unix.gridforum.org/mail_archive/ogsa-wg/2005/02/msg00074.html
+
+  - Reviewed and modified. 
+
+  - Action: Hiro to send out updated version
+  - Action: Hiro to check that next week Monday is a holiday or not
+            for US participants (President's day)

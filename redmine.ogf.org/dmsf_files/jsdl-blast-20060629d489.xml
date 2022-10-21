@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsdl:JobDefinition 
+xmlns:jsdl="http://schemas.ggf.org/jsdl/2005/11/jsdl"
+xmlns:jsdl-posix="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://schemas.ggf.org/jsdl/2005/11/jsdl jsdl.xsd
+http://schemas.ggf.org/jsdl/2005/11/jsdl-posix jsdl-posix.xsd">
+  <jsdl:JobDescription>
+    <jsdl:JobIdentification>
+      <jsdl:JobName>Blast1</jsdl:JobName>
+      <jsdl:Description>Blast query number 1</jsdl:Description>
+      <jsdl:JobAnnotation>Blast1Annotation</jsdl:JobAnnotation>
+      <jsdl:JobProject>BlastProject</jsdl:JobProject>
+    </jsdl:JobIdentification>
+    <jsdl:Application>
+      <jsdl:ApplicationName>BlastN</jsdl:ApplicationName>
+      <jsdl:ApplicationVersion>NCBI BLAST 2.2.13</jsdl:ApplicationVersion>
+      <jsdl:Description>BlastN performs nucleotide similarity
+searching</jsdl:Description>
+      <jsdl-posix:POSIXApplication>
+        <jsdl-posix:Executable>/usr/local/bin/blastall</jsdl-posix:Executable>
+        <jsdl-posix:Argument>-p</jsdl-posix:Argument>
+        <jsdl-posix:Argument>blastn</jsdl-posix:Argument>
+        <jsdl-posix:Argument>-d</jsdl-posix:Argument>
+        <jsdl-posix:Argument>/db/ncbiblast/est</jsdl-posix:Argument>
+        <jsdl-posix:Argument>-T</jsdl-posix:Argument>
+        <jsdl-posix:Argument>T</jsdl-posix:Argument>
+        <jsdl-posix:Input
+filesystemName="HOME">sequences1.txt</jsdl-posix:Input>
+        <jsdl-posix:Output
+filesystemName="HOME">sequences1.html</jsdl-posix:Output>
+        <jsdl-posix:Error
+filesystemName="HOME">sequences1.err</jsdl-posix:Error>
+        <jsdl-posix:WorkingDirectory
+filesystemName="HOME">blastqueries</jsdl-posix:WorkingDirectory>
+        <jsdl-posix:Environment
+name="PATH">/usr/bin:/usr/local/bin:/usr/local/bio/bin</jsdl-posix:Environment>
+        <jsdl-posix:Environment name="TMPDIR" filesystemName="TMP"/>
+        <jsdl-posix:WallTimeLimit>60</jsdl-posix:WallTimeLimit>
+        <jsdl-posix:FileSizeLimit>1073741824</jsdl-posix:FileSizeLimit>
+        <jsdl-posix:CoreDumpLimit>0</jsdl-posix:CoreDumpLimit>
+        <jsdl-posix:DataSegmentLimit>32768</jsdl-posix:DataSegmentLimit>
+        <jsdl-posix:LockedMemoryLimit>8388608</jsdl-posix:LockedMemoryLimit>
+        <jsdl-posix:MemoryLimit>67108864</jsdl-posix:MemoryLimit>
+        <jsdl-posix:OpenDescriptorsLimit>16</jsdl-posix:OpenDescriptorsLimit>
+        <jsdl-posix:PipeSizeLimit>512</jsdl-posix:PipeSizeLimit>
+        <jsdl-posix:StackSizeLimit>1048576</jsdl-posix:StackSizeLimit>
+        <jsdl-posix:CPUTimeLimit>30</jsdl-posix:CPUTimeLimit>
+        <jsdl-posix:ProcessCountLimit>8</jsdl-posix:ProcessCountLimit>
+        <jsdl-posix:VirtualMemoryLimit>134217728</jsdl-posix:VirtualMemoryLimit>
+        <jsdl-posix:ThreadCountLimit>8</jsdl-posix:ThreadCountLimit>
+        <jsdl-posix:UserName>csmith</jsdl-posix:UserName>
+        <jsdl-posix:GroupName>bio</jsdl-posix:GroupName>
+      </jsdl-posix:POSIXApplication>
+    </jsdl:Application>
+    <jsdl:Resources>
+      <jsdl:CandidateHosts>
+        <jsdl:HostName>cluster1</jsdl:HostName>
+        <jsdl:HostName>cluster2</jsdl:HostName>
+      </jsdl:CandidateHosts>
+      <jsdl:FileSystem name="TMP">
+        <jsdl:FileSystemType>temporary</jsdl:FileSystemType>
+        <jsdl:Description>
+          Temporary space that does not necessarily persist after the job
+          terminates and which might not be shared between resources, but 
+          which will be fast.
+        </jsdl:Description>
+        <jsdl:DiskSpace>
+          <jsdl:LowerBoundedRange>10737418240.0</jsdl:LowerBoundedRange>
+        </jsdl:DiskSpace>
+      </jsdl:FileSystem>
+      <jsdl:FileSystem name="HOME">
+        <jsdl:FileSystemType>normal</jsdl:FileSystemType>
+        <jsdl:Description>Chris's home directory</jsdl:Description>
+        <jsdl:MountSource>server.acme.com:/home/csmith</jsdl:MountSource>
+        <jsdl:MountPoint>/home/csmith</jsdl:MountPoint>
+      </jsdl:FileSystem>
+      <jsdl:FileSystem name="DB">
+        <jsdl:FileSystemType>normal</jsdl:FileSystemType>
+        <jsdl:Description>Formatted BLAST database</jsdl:Description>
+        <jsdl:MountSource>server.acme.com:/db/ncbiblast</jsdl:MountSource>
+        <jsdl:MountPoint>/db/ncbiblast</jsdl:MountPoint>
+      </jsdl:FileSystem>
+      <jsdl:ExclusiveExecution>true</jsdl:ExclusiveExecution>
+      <jsdl:OperatingSystem>
+        <jsdl:OperatingSystemType>
+          <jsdl:OperatingSystemName>MACOS</jsdl:OperatingSystemName>
+        </jsdl:OperatingSystemType>
+        <jsdl:OperatingSystemVersion>10.4.4</jsdl:OperatingSystemVersion>
+        <jsdl:Description>Mac OS version 10.4.x</jsdl:Description>
+      </jsdl:OperatingSystem>
+      <jsdl:CPUArchitecture>
+        <jsdl:CPUArchitectureName>powerpc</jsdl:CPUArchitectureName>
+      </jsdl:CPUArchitecture>
+      <jsdl:IndividualCPUSpeed>
+        <jsdl:LowerBoundedRange>2147483648.0</jsdl:LowerBoundedRange>
+      </jsdl:IndividualCPUSpeed>
+      <jsdl:IndividualCPUTime>
+        <jsdl:UpperBoundedRange>60.0</jsdl:UpperBoundedRange>
+      </jsdl:IndividualCPUTime>
+      <jsdl:IndividualCPUCount>
+        <jsdl:Exact>2.0</jsdl:Exact>
+      </jsdl:IndividualCPUCount>
+      <jsdl:IndividualNetworkBandwidth>
+        <jsdl:LowerBoundedRange>104857600.0</jsdl:LowerBoundedRange>
+      </jsdl:IndividualNetworkBandwidth>
+      <jsdl:IndividualPhysicalMemory>
+        <jsdl:LowerBoundedRange>1073741824.0</jsdl:LowerBoundedRange>
+      </jsdl:IndividualPhysicalMemory>
+      <jsdl:IndividualVirtualMemory>
+        <jsdl:LowerBoundedRange>1073741824.0</jsdl:LowerBoundedRange>
+      </jsdl:IndividualVirtualMemory>
+      <jsdl:IndividualDiskSpace>
+        <jsdl:LowerBoundedRange>1073741824.0</jsdl:LowerBoundedRange>
+      </jsdl:IndividualDiskSpace>
+      <jsdl:TotalCPUTime>
+        <jsdl:UpperBoundedRange>600.0</jsdl:UpperBoundedRange>
+      </jsdl:TotalCPUTime>
+      <jsdl:TotalCPUCount>
+        <jsdl:Exact>10.0</jsdl:Exact>
+      </jsdl:TotalCPUCount>
+      <jsdl:TotalPhysicalMemory>
+        <jsdl:LowerBoundedRange>10737418240.0</jsdl:LowerBoundedRange>
+      </jsdl:TotalPhysicalMemory>
+      <jsdl:TotalVirtualMemory>
+        <jsdl:LowerBoundedRange>10737418240.0</jsdl:LowerBoundedRange>
+      </jsdl:TotalVirtualMemory>
+      <jsdl:TotalDiskSpace>
+        <jsdl:LowerBoundedRange>10737418240.0</jsdl:LowerBoundedRange>
+      </jsdl:TotalDiskSpace>
+      <jsdl:TotalResourceCount>
+        <jsdl:Exact>5.0</jsdl:Exact>
+      </jsdl:TotalResourceCount>
+    </jsdl:Resources>
+    <jsdl:DataStaging>
+      <jsdl:FileName>blastqueries/sequences1.txt</jsdl:FileName>
+      <jsdl:FilesystemName>HOME</jsdl:FilesystemName>
+      <jsdl:CreationFlag>overwrite</jsdl:CreationFlag>
+      <jsdl:Source>
+        <jsdl:URI>file:/Users/csmith/blastqueries/sequences1.txt</jsdl:URI>
+      </jsdl:Source>
+    </jsdl:DataStaging>
+    <jsdl:DataStaging>
+      <jsdl:FileName>blastqueries/sequences1.html</jsdl:FileName>
+      <jsdl:FilesystemName>HOME</jsdl:FilesystemName>
+      <jsdl:CreationFlag>overwrite</jsdl:CreationFlag>
+      <jsdl:Target>
+        <jsdl:URI>file:/Users/csmith/blastqueries/sequences1.html</jsdl:URI>
+      </jsdl:Target>
+    </jsdl:DataStaging>
+    <jsdl:DataStaging>
+      <jsdl:FileName>blastqueries/sequences1.err</jsdl:FileName>
+      <jsdl:FilesystemName>HOME</jsdl:FilesystemName>
+      <jsdl:CreationFlag>append</jsdl:CreationFlag>
+      <jsdl:Target>
+        <jsdl:URI>file:/Users/csmith/blastqueries/sequences1.err</jsdl:URI>
+      </jsdl:Target>
+    </jsdl:DataStaging>
+  </jsdl:JobDescription>
+</jsdl:JobDefinition>

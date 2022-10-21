@@ -1,0 +1,155 @@
+Data Staging - Concepts and Scenarios
+=====================================
+
+
+Permanent location of 1 file
+----------------------------
+From the point of view of the grid Computing Resource, 1 permanent file can be stored on 5 different types of location :
+
+CLIENT:  A location accessible by the Client (grid User or Workflow Engine), but NOT by Grid Services.
+------   This requires Data Staging managed by the Client.
+
+WEB:     A location accessible by anybody (for example on AFS, or a Data Desktop Grid).
+---      If data access requires credentials :
+         -  Data Staging SHOULD be managed by the Client.
+         -  Otherwise, the Client has to transmit (beware of security issues) or delegate the credentials to a Grid Service.
+
+TAPE:    A tape on a grid Storage Resource.
+----     This requires Data Staging (which can be managed by the Client or by a Grid Service).
+
+DISK:    A disk on a grid Storage Resource.
+----     If the network bandwidth is high enough, and if the file is accessed only sequentially, this does NOT require Data Staging.  But the Client can prefer to perform Data Staging anyway.
+
+LIST:   A list of grid Storage Resources (storing replicas having identical content).  The Client does NOT know in advance on which media (tape or disk) each Storage Resource stores its replica.
+----
+
+According to best practices, a disk on the Computing Resource should NOT be a permanent location for a file.
+
+
+Destination of Stage-in  (INPUT Data Staging)
+-----------------------
+Stage-in can be performed in direction of 3 different types of Storage Resources :
+
+-  Disk on a (possibly remote) grid Storage Resource (from tape).
+   This permits remote sequential reads.
+
+-  Disk on a close grid Storage Resource (from tape or remote Storage Resource).
+   This permits close sequential reads.
+
+-  Local disk of the Computing Resource.
+   This permits quick sequential or random reads and writes.
+
+
+Destination of Stage-out  (OUTPUT Data Staging)
+------------------------
+Stage-out can be performed from the local disk of the Computing Resource to 4 different types of Storage Resources :
+
+-  1 grid Storage Resource
+   (The decision to choose disk or tape for permanent storage of the file is OUTSIDE the scope of PGI).
+
+-  LIST (see definition above).
+
+-  WEB  (see definition above).
+
+-  CLIENT  (see definition above).
+
+
+
+SCENARIOS FOR DATA STAGING
+--------------------------
+The possibilities listed above lead to numerous different scenarios.  Below are described 5 canonic scenarios (of course, any combination is possible) :
+
+
+Pre and Post Staging by the Client  (EGEE standard scenario)
+----------------------------------
+This scenario is NOT covered by the 'Execution Service Strawman' document.
+
+1) Only if the input files are NOT already in the same Storage Resource, the Client transfers the input files to disks in the same grid Storage Resource (pre stage in),
+
+2) The Client submits a Job (with the grid locations of input and output files, all in the same grid Storage Resource) to a Computing Resource close to the Storage Resource,
+
+3) The Job sequentially reads from and writes to files inside the close Storage Resource, and uses the local disk only for temporary files,
+
+4) The Client receives notification that the Job is finished,
+
+5) Only if necessary, the Client pulls the desired output files from the Storage Resource (post stage out).
+
+This scenario is very simple, and does NOT REQUIRE staging at all inside a well designed global workflow (like Unix pipe).
+
+
+Pre and Post Staging in a STORAGE Resource by the Execution Service
+-------------------------------------------------------------------
+This scenario is NOT covered by the 'Execution Service Strawman' document.
+
+1) The Client submits a Job (with the grid locations of input and output files) to the Execution Service,
+
+2) Only if the input files are NOT already in the same Storage Resource, the Execution Service transfers the input files to disks in the same grid Storage Resource (pre stage in),
+
+3) The Execution Service sends the Job for execution to a Computing Resource close to the Storage Resource.
+
+4) The Job sequentially reads from and writes to files inside the close Storage Resource, and uses the local disk only for temporary files,
+
+5) The Execution Service receives (from the Computing Resource) the notification that the Job is finished inside the Computing Resource,
+
+6) Only if necessary, the Execution Service transfers the desired output files from the close Storage Resource to their final grid locations (post stage out).
+
+7) The Client receives notification that the Job is finished,
+
+If the Client is a grid User, he would appreciate this scenario, because it is very simple for him, but it requires complex processing by the Execution Service.
+
+
+Just In Time Staging in the COMPUTING Resource by the Execution Service
+-----------------------------------------------------------------------
+This corresponds to chapters 3.5.2 'stagein: GES pulling input data' and 3.5.3 'stageout: GES pushing output data' of the 'Execution Service Strawman' document.
+
+1) The Client submits a Job (with the grid locations of input and output files) to the Execution Service,
+
+2) The Execution Service sends the Job with a 'do not start' attribute to a Computing Resource.
+
+3) The Execution Service receives (from the Computing Resource) the locations of input and output files inside the Computing Resource,
+
+4) The Execution Service transfers the input files to their locations inside the Computing Resource (just in time stage in),
+
+5) The Execution Service starts the Job,
+
+6) The Job sequentially or randomly reads from and writes to files only inside its local disk,
+
+7) The Execution Service receives (from the Computing Resource) the notification that the Job is finished inside the Computing Resource,
+
+8) The Execution Service transfers the output files from the Computing Resource to their final grid locations (just in time stage out),
+
+9) The Execution Service purges the Job (from the Computing Resource),
+
+10) The Execution Service sends to the Client the notification that the Job is finished.
+
+This scenario requires some processing by the Execution Service, but is the best one when the job really needs random access to files.
+
+
+Just In Time Staging in the COMPUTING Resource by the Client
+------------------------------------------------------------
+This corresponds to chapters 3.5.1 'stagein: client pushing input data to GES' and 3.5.4 'stageout: client pulling output data from GES' of the 'Execution Service Strawman' document.
+
+The Client :
+
+1) submits a Job with a 'do not start' attribute,
+
+2) receives the locations of input and output files inside the Computing Resource,
+
+3) pushes the input files to their locations inside the Computing Resource (just in time stage in),
+
+4) starts the Job,
+
+5) receives notification that the Job is finished,
+
+6) pulls the output files from the Computing Resource (just in time stage out),
+
+7) purges the Job (from the Computing Resource).
+
+This scenario is complicated, and the Computing Resource must keep the (possibly huge) output files until they are pulled by the Client.
+
+
+Staging by the Job running on the Computing Resource
+----------------------------------------------------
+This corresponds to chapter 3.5.5 'stagein/out: performed as part of the grid job execution' of the 'Execution Service Strawman' document.
+
+Cited here only for completeness.  Out of scope for PGI.

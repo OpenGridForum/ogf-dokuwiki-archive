@@ -1,0 +1,168 @@
+Minutes of the Second OGSI-WG interim Meeting
+14/Nov/2002
+
+Attendees:
+
+Karl Czajkowski <ISI>
+Jeff Frey <IBM>
+Steve Graham <IBM>
+Bill Horn <IBM>
+John Karpovich <Avaki>
+Dean Lorenz <IBM>
+Fred Maciel <Hitachi>
+Jim Magowan <IBM>
+Tom Maguire <IBM>
+Jeff Nick <IBM>
+John Rofrano <IBM>
+David Snelling <Fujitsu>
+Ellen Stokes <IBM>
+Yih-Shin Tan <IBM>
+Steve Teucke <ANL>
+Jay Unger <IBM>
+Peter Vanderbilt <NASA>
+
+1) Approval of minutes from Nov 6 2002: - OK
+
+2) Set Agenda:
+
+   Adjourn at 15:00 Friday
+
+   - WSDL 1.2 report and strategy
+   - Strategy for development of the spec and timelines
+   - Service Data
+      - PortType representation of SD
+      - Set operations
+      - Style of representation of create etc.
+   - Notification/Events
+   - Registration
+   - Exceptions
+   - Bugzilla items
+   
+3) WSDL 1.2 report and strategy
+
+W3C met this week. Scheduling: Next fall to recommendation. Only GGF perspective seemed to press for an early date. They may be looking more like a WSDL 2.0 strategy. Implications: Work to 1.1 or work from a December Draft or wait for 1.2. What we need: PT extension and open content in portTypes.
+
+At present there is a leaning toward allowing name clashes causing either combining of operations or rising errors on signature mismatches. 
+
+[Status of GT3 tooling discussion using WSDL4J have put SD in to the definitions level. For extension some compromise. We had a general discussion of similar development strategies. Tom M. pointed out that the server side implications extend fairly deeply into the system architecture.]
+
+There may be a publish/subscribe and event models.
+
+In, in/out, out, out/in were in WSDL 1.1, They are thinking of dropping the last two.
+
+They may remove the message element to replace with schemas. The impact on GSS would be minor in any case.
+
+4) Strategy for development of the spec and timelines
+
+Resolved: Delay release to Feb 14, 2003 and treat GGF7 (in the middle of the public review process) as an educational process. 
+
+Resolved: We hold another interim meeting Jan 22, 23, 24 in Chicago, asking the OGSA WG to move to the start of the week. A video link to USC/ISI will be provided. 
+
+Resolved: Move up the telecons by 30 minutes. No call on Nov. 27.
+
+5) Service Data
+
+Steve Graham: Walked through his proposal, but the addition of ref posed some problems.
+
+Resolved: Accept SG's proposal with the following exceptions.
+
+Discussion of ref: Posed some problems with multiple inheritance and is a parallel construct to inheritance. There was some concern that the absence of refs would cause an object explosion in the design space.
+
+Resolved: Drop ref from SG's proposal. This implies adding an initial values section to the declaration. Section 3.8 mostly goes away. Error if min/max occurs are valued.
+
+Resolved: Delete serviceDecriptionOnly for assignable. Convert back to instance only boolean default false.
+
+Discussion about the ServiceData as a projection of actual state of the service. E.g why are we making the distinction in the architecture. This discussion surrounded the "implied" state and the SD 'projection' of that state.
+
+6) Service Data versus Service State
+
+Discussion: The key problem centres around the fact that the GS model has the notion of "implicit" state (defined by or implicit in the semantics of the operations) of which Service Data is a "projection", but that this distinction is not explicit in the model and there is no way to express the difference in the interface (e.g. are the implicit state and its projection indistinguishable). This failing creates problems in creating stable models of the distributed systems built from Grid Services.
+
+[Note: The above paragraph summarizes 4 hours of discussion.]
+
+Proposal: We need to add the duality of service data/state to the model explicitly and an attribute to state that the SDEs are consistent with (indistinguishable from) the "implied" state as defined by the operations on the service. Or is this a property of the semantics of the service? (Key word "directly_observable", "implied state", "projected state").
+
+7) Set Service Data Proposal from John R:
+
+John R: Overview of proposal. Mostly focusing on changes from the proposal discussed at the last telecon, e.g. interaction of modifiable vs mutability. 
+
+Resolved: John R's proposal accepted with the following mods.
+
+Resolved: (modifiable=T & mutability=constant) => error.
+
+Resolved: Have append and replace (e.g. save), with (replace & mutability= extend) = fault.
+
+Resolved: Wait for X-Update for more complex update semantics.
+
+Resolved: These changes need to also reflect the decision to remove initial values from the spec.
+
+The following was overturned in minutes review the following week.
+   <Struckoff>
+      Rejected: Add a delete operation. It will remain as proposed.
+   </Struckoff>
+
+8) Removal of the concept of initial values in Service Data.
+
+Discussion on the possibility of removing initial values (i.e. in the WSDL) from the spec. This simplifies several parts of the spec that have to do with mutability. However, the ability of a portType to advertise SDE based functionality (e.g. query expression types) must be communicated "out of band" until the service instance exists.
+
+Resolved: SDEs may be either static, with their values appearing only in the WSDL, be mutable, or extendable, constant (at initialization time). PortType inheritance combines constant values these as long as max occurs is not violated. All SDE are visible at runtime.
+
+9) Notification 
+
+Walk through proposal from Steve G. 
+
+Issues: Are topics really needed. They can be modeled by (possibly opaque) service data. The idea of a DB trigger can be represented by an (opaque) SDE. The notion of service data state model has significant impact on whether this is necessary or not. There was some concern about how pursuing this might impact time scales. The notification broker concept probably needs to be pulled out of OGSI and pushed up to OGSA-WG. There is also some tension surrounding the fact that the Web Services are mostly "stateless" and a SDE based event service possibly exposes more state that the WS community would be happy with.
+
+10) Faults
+
+John R asked about a fault for mutability errors. This was approved. 
+
+11) Registration
+
+Proposal: Refactor serviceLocator into an either/or GSH/GSR plus a serviceLocatorSet.
+
+Proposal: Use the new serviceLocator as the Key in registration and locator set where plurality is required. Possible canonical form for GSH and GSR.
+
+12) Actions:
+
+Action: Jeff Frey to draw up a description of how to integrate the 'implicit' verses 'SDE' state dichotomy. Also look into other issues of coherency control.
+
+Action: Ellen to think over night, re: ref. - Done, not required see resolution above.
+
+Action: Steve T&G to push on W3C to get what we need (portType extension without breaking encapsulation). Take ownership.
+
+Action: Pete to go through the SDEs in the spec to see if these changes have any gotchas. 
+
+Action: Tom Maguire and John R, not being happy with the mutability language, will propose new language reflecting the current meaning.
+
+Action: Steve G & John R to update Service Data document and integrate the Set service Data Document.
+
+Action: Dave S Faults summary.
+
+Action: Dave S to write up a proposal.
+
+13) Actions from previous meetings
+
+Action: Steve Graham and Pete to drive the creation of an XML Schema for the specification, #35
+
+Action: Steve Graham to craft language for recommendations to developers for use of resolvers. 
+
+Action: Dave Snelling and Andrew Grimshaw to look at requirements and solutions for pull like semantics
+
+Action: Dave, Steve G, and others Write something for Events portType that might work with JMS and related issues (use cases)
+
+Action: All to post use cases for Notification/Events to the list.
+
+Action: Keith to post pointers to the Python implementation.
+
+Action: Dave S to put a proposition for registration portType, together
+with exact text.
+
+Action John Rofrano and Ellen Stokes will propose a setServiceDataByName(s) text.
+Also by DB style Update if possible. Done, but reissued request for a new draft
+following discussions on Nov 6th.
+
+Action: Andrew G to write a document describing the options for reslover behavior.
+
+Action: Steve T. publish spec and Resloved/Fixed bug numbers.
+

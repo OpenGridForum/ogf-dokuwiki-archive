@@ -1,0 +1,717 @@
+OGSA Interim Meeting #9, 8-10 December 2004
+===========================================
+
+* Participants
+
+  Mike Behrens (R2AD, LLC) [8,9]
+  Dave Berry (NeSC)
+  Abdeslem Djaoui (RL)
+  Ian Foster (ANL) [8,9]
+  Hiro Kishimoto (Fujitsu)
+  Tom Maguire (IBM)
+  Mark Morgan (UVa)
+  Takuya Mori (NEC (ANL))
+  Steven Newhouse (OMII)
+  Manuel Pereira (IBM) [9 pm]
+  Andreas Savva (Fujitsu)
+  Dave Snelling (Fujitsu)
+  Ravi Subramaniam (Intel)
+  Jem Treadwell (HP)
+  Steve Tuecke (ANL) [8,9]
+  Jay Unger (IBM)
+  Peter Ziu (Northrop Grumman)
+
+On Bridge:
+   Susan Malaika (IBM) [9,10]
+   Jun Tatemura (NEC) [8,9]
+
+* V1 status review
+
+  - OGSA v1 comments review nearly done
+    - Some comments (requirements) not reviewed yet; these are mainly
+      wordsmithing.
+    - Final revisions of a number of sections (Data, Information,
+      Resource Management) done.
+    - Waiting for EMS (partially done), Infrastructure, Requirements
+      sections; also minor stuff in other sections.
+
+    - Agreed to a separate session to finish v1 comments review; maybe
+      a small group of 4-5 people.
+
+  - Glossary
+    - Revision almost complete (a couple of points only remaining)
+    - Action: Jem to mail out [Done]
+
+  - Target is to get a completely revised version together, post it a
+    couple of days before a call; and dedicate a call to review it
+    before re-submitting it to the GGF-Editor. Try to get it done by
+    Xmas.
+
+  - Comments still welcome
+
+* EGA discussion
+
+  Dave's presentation at EGA / EGEE: "Web Service Grids"
+  https://forge.gridforum.org/projects/ogsa-wg/document/WS-Grids/en/1
+
+  [Background]
+
+  - Ongoing discussion at the top level of GFSG and EGA on how to
+    collaborate; another meeting this week.
+  - EGA not in standards for standards sake. A substantial part of
+    their work is also marketing.
+  
+  [Dave's presentation]
+
+  - [p3] Revise: Dynamic service/resource creation -> 'service' is
+    deprecated
+
+  - [p4] 
+    - A picture that many people seem to have found useful to help
+      understand the area and how the pieces come together
+    - Rather than 'different views on same problem domain' it should
+      say something along the lines of 'map onto same infrastructure'
+
+  - [p10] (Core services build out)
+    - Too much of a management focus ; only certain parts of WSDM may
+      be needed between top and bottom layer.
+
+    - eventing (messaging/delivery & format/content)
+
+  - [p20] (Architecture : Status)
+    - Information: A lot of activity; probably not entirely a gap ;
+      - Action: Abdeslem to follow up with Dave
+
+  - [p13] (Base Profile 1)
+    - Embodiment 1 : EPR
+
+  - [p14] (Base Profile 2)
+    - WS-Eventing followup: letter sent and waiting for response ;
+      moving existing specs closer to it 
+    - JSIM was extension proposed by GGF CGS-WG to CIM. Mainly Job
+      queue additions; folded in CIM v2.8
+    - WS-CIM profiles and protocols, and mapping of schema to xml
+      - no modeling work involved
+      - current timeline: 
+        - set of proposal for January F2F
+        - Delivery mid next year perhaps
+
+    Issue: Need to check into WS-CIM and relation (how much it fits
+            OGSA profile needs)
+    Issue: Glue schema: might be worth revisiting in this context and see if
+            extensions could be added to CIM; maybe as an extension to
+            CGS-WG (JSIM) activity
+            - Glue schema addresses needs of certain group of users
+              (mainly academic) not sure if it addresses needs of
+              business users
+              > (Maybe Fred is the person to take this on initially.)
+
+    Issue: How much does JSDL map into CIM; JSDL does not use
+            explicitly the same names for elements. (Names similar and
+            probably mappable without too much effort)
+            > (Andreas)
+
+    Issue: How to model logical 'constructs' on top of the lower modelling
+            layers; e.g., to provide support for schedulers to decide
+            where to place jobs etc.
+
+    Issue: Need to figure out how to make decision on whether and how
+           much to use CIM; which parts to extend; which parts not to
+           use;
+          > (Fred was named as one possible candidate to lead this
+          > activity)
+
+  - [p15] (Security profile)
+    - Perhaps structure differently? Separate base security and
+      specific versioning (e.g., WS-I)
+    - Audit; UR mentioned but obviously more work needed here
+    - Privacy: related to NextGrid work, e.g., medical data
+
+    Comment: Items futher down the list are becoming more abstract; pointing
+           to more abstract functionality or functionality at the
+           use-case level.
+
+    Issue: Should 'policy' not be included in the base profile
+           - policy in specific areas (e.g., security policy) is included.
+           - do we need a policy framework?
+           - does ws-policy fill this gap?
+    Action: Add policy (as a placeholder) for now in these profiles; a gap
+
+    Issue: Need two different 'types' of profiles
+           - The long term view of what's needed 
+           - The short term view of what can be accomplished based on
+             what is out there or what can be expected to be out there
+             in the near future.
+
+        - In addition to doing a profile we must also make sure that
+          there is sufficient interest and buy-in from major players
+          in the components (and in the total result) [To be discussed
+          later.]
+
+  - (Core Services Profile)
+    - Why UDDI is not included?
+      - A recurring question. Too static; not geared for dynamic grid
+        like scenarios (e.g., soft state registration) where services
+        might not be available indefinitely.
+      - Model is that of yellow pages of services for applications
+      - Some work to make it more flexible; might be worth reviewing
+        it in the future.
+
+    - OGSA-DAI is doing structured access; also need basic file access
+      - Posix I/O is a gap
+      - GFS doing some of that
+    - Not just access to files but also file management and
+      replication, and so on.
+
+    - One combination of (emerging) standards that looks as a
+      plausible first step:
+      - JSDL to describe job for submission; WS-Agreement to
+        instantiate it; WSDM to manage it
+
+    - VO management: EGEE VOMS as a fairly widely adopted example to
+      look into.
+      - UK e-Science also adopting it.
+      - OMII, NMI
+
+    - Self-management: 
+      - CDDLM is mentioned but its scope is not that wide (mainly the
+        deployment aspect)
+
+* OGSA use case & EGR hand-over
+
+  - Is 'Enterprise' smaller than Grids?
+    - Hence smaller than OGSA's focus, so it would make sense to keep
+      some of the use cases in OGSA?
+    - What happens with non-business grid use cases?
+    - EGR scope seems quite large ('enterprise' is also not well
+      defined); group is not against covering non-business use cases
+      too.
+
+  - EGR is more than use cases; also requirements analysis
+
+  - A revised/re-done use case document would probably be identified
+    as an EGR document.
+
+  - What is the process for getting back use cases or requirements
+    from the use cases?
+    - Still undecided; the collecting process is main focus now
+
+  - OGSA-WG not the only group; EGR is also trying to collect use
+    cases from other groups.
+
+  - Would still need to do requirements analysis in OGSA-WG if the
+    schedules do not match well. 
+    - (And the EGR work might take time to start up.)  
+
+  - It's likely that EGA will also publish its use cases. EGR should
+    probably then (be ready to) tackle those too.
+
+  - Proposal: Give use cases documents to EGR and receive requirements
+    analysis 
+    - It is not clear yet what form the requirements analysis will
+      take. Or the timing.
+    - No objections to this proposal. 
+
+  - Next step is to put the proposal out on the list and make sure
+    that there is consensus. (>Hiro)
+  - Ravi to send  mail to EGR
+
+* Survey template / review
+
+  - Purpose of survey: 
+    - Get feedback on what's considered important; use as part of
+      determining what OGSA-WG should focus on next.
+    - [Identify the areas that are more mature or there is more
+      expertise]
+    - Also determine what things people are willing to work on; and
+      gauge the level of support
+
+  - [Side discussion on what work should be done in OGSA vs what work
+    should be done in other spec focused groups. (For later
+    discussion.)]
+
+  - Review of surveys: The following groups/projects provided initial
+    surveys (snapshots): Globus, Unigrids, Business Grid, Distributed
+    Command and Control (DC2I), EGEE, OMII, OGSA-DAI, Intel, NEC.
+    [Note: Since the surveys are incomplete they are not available on
+    gridforge yet.]
+
+  - Summary
+    - Requirement for a stable (sub)set of standards to build on
+     (within the context of an architecture)
+    - Even when projects are not directly involved in OGSA there is an
+      interest to at least co-ordinate/collaborate to (varying)
+      extents
+    - Main interest is EMS and Data. In EMS, JSDL and WS-Agreement are
+      the ones most referred to. WSDM is also often mentioned.
+      - Some projects not choosing WS-Agreement yet because of
+        specification complexity.
+   - Backward compatibility as a requirement (at spec level as well)
+     - Difficulty of reasoning about equivalence ; initially in ogsi
+       but removed due to complexity
+   
+   - Preliminary summary of surveys:
+    https://forge.gridforum.org/projects/ogsa-wg/document/survey-summary-200412-snapshot/en/1
+
+  - Review of survey template (and how to improve it)
+    - Some confusion about what information to include and
+      where.
+    - Some responses related to OGSA were answered about GGF instead;
+      should revise questionnaire for clarity.
+    - 'Involvement' in OGSA-WG specifically and not in any of the
+      related WGs; make this clearer.
+    - Also important to identify not those just attending but also
+      those supporting OGSA
+
+* OGSA version 2 process discussion
+
+  [Note: The final consensus is summarized in the following
+  documents.
+  
+  1. https://forge.gridforum.org/projects/ogsa-wg/document/Profile_proposal/en/1
+  2. https://forge.gridforum.org/projects/ogsa-wg/document/ProfileTemplate/en/1
+  3. https://forge.gridforum.org/projects/ogsa-wg/document/next_step_slides_at_2004dec_f2f/en/1
+
+  The minutes are a summary of the discussion leading to this
+  consensus.]
+
+  - Discussion material: "Defining the Open Grid Services
+    Architecture"
+  https://forge.gridforum.org/projects/ogsa-wg/document/defining-ogsa/en/1
+
+  - Dave S gave an explanation on the genesis of the document
+    - Note that this is a an early draft / work in progress
+    - The initial document was done by Ian, Steve T, Mark Linesch,
+      following a discussion between Dave S and Mark.
+    - It was circulated to Hiro, Andrew, and Dave S and modified;
+      released in time for F2F. No consensus yet. It is not yet
+      intended for public consumption (i.e., outside the OGSA-WG).
+    - It is intended as contribution to improve the OGSA definition
+      process (WG process), or (a more extreme view) as input to
+      re-chartering the WG. (In the latter case, the GFSG would also
+      have to be consulted.)
+
+  - Ian gave an overview of the document
+    - Two concerns:
+      - OGSA'S effect on world (GGF position as its main output); what
+        OGSA-WG should do
+        - What OGSA tells people. In particular generating normative
+          material has been quite slow.
+        - Profiles as an idea to satisfy the need for more normative
+          description; and make talking about compliance possible.
+      - What OGSA should not do
+        - How far architecture and its definition should go
+        - Top-down definition of interfaces in detail vs the risk that
+          doing so may alienate some people who may not recognize
+          OGSA'S authority to specify this area.
+
+    - Globus consortium role: as supporting the OGSA profile adoption
+
+  - Discussion was led by Dave S under a fairly strict process. (Must
+    have permission before speaking.)
+
+  - Pointed out that there are both controversial issues but also a
+    lot of ground for agreement.
+    - Identify issues: which ones we agree on, which ones we don't and
+      what we do about them
+
+** Issue: OGSA needs something normative soon.
+** Issue: OGSA is not doing normative specification work today.
+** Issue: OGSA should provide Leadership to the Grid community.
+
+  - General agreement that it is important to make normative progress
+    on what OGSA is in the next 12 months in order to satisfy the
+    desire of the community for this definition.
+    - The big question is how do we proceed to this goal.
+    - (Without necessarily disagreeing on the need for longer term
+      work since we might not get it right the first time.)
+    - (It is not necessary that all the development is within OGSA-WG;
+      should also participate in other related efforts)
+
+  - Argued over the difference between 'normative' and 'standard'
+    - 'Standard' meaning something widely adopted is what Ian & Steve
+      want to see happen with the profiles.
+
+    - In contrast the OGSA architecture documents are informational to
+      start off with and over time become slowly normative as space is
+      more refined.
+    - OGSA may not provide normative description; provide definition
+      of problem; while the normative work is done elsewhere.
+
+** Issue: Role of OGSA and OGSA design teams and whether they should lead the
+   identification of new standards work or not.
+** Issue: How do we discover gaps?
+
+   More specifically whether the design teams produce just informative
+   documents or something more binding. And does the output of a
+   design team automatically becomes 'OGSA' and who decides.
+
+  - Clarified that a design team is an informal way for people to work
+    within OGSA-WG on a topic of common interest. 
+    - Any document produced has to be vetted by the group as a whole
+      before (and if) released as the group's output (open process).
+      - A draft does not have to be accepted by the WG
+      - Drafts may look like 'real' documents but are not until
+        released by the group as a whole. They are meant to move the
+        discussion forward.
+    - The group (and by implication the design teams) only produce
+      informative documents.
+    - Normative documents are done by other WGs (so if a design team
+      wants to produce a normative spec they would have to form a new
+      WG per GGF process). 
+    - There may be a lot of interaction with other WGs as well.
+
+  - [There is a perception that people in OGSA-WG do not work on
+    normative specs but only high level architecture. It is incorrect
+    because many people work on different things at the same time; and
+    some of those efforts (in other groups) are not on
+    architecture. But work on normative specs is in other WGs.]
+
+  - Not implying that design team work is not necessary; but that the
+    aim should be more tightly scoped.
+
+** Issue: Do profiles address the need for a normative approach? 
+** Issue: We need a process by which profiles are selected.
+** Issue: OGSA should do both Bottom up and/xor Top down work.
+** Issue: Bottom's up specification works fine without a top down design.
+** Issue: Normative documents cannot be developed in a top down approach.
+** Issue: Design teams are required to integrate input from the rest
+   of the community.
+** Issue: What is the role of information documents?
+
+  - Profiles as a means of identifying how a number of specs can be
+    used together and provide a way for achieving compliance.
+
+  - Profiles per se are not an issue; how to get to them is. (For
+    example, is the drive to define them top-down or bottom-up.)
+
+  - The pattern proposed/assumed so far: A design team identifies a
+    gap; scopes the activity; maps work to something in progress; and
+    influences the direction of standards work to fit the gap.
+    - Working on this kind of 'loop' the final step is to incorporate
+      the result in the proposed idea of profile
+    - The key is the scoping activity; stay concrete in order to be
+      effective.
+
+  - Doing work on architecture is useful to identify what is needed
+    but is not there, and kick off related efforts.
+    - RSN was put forward as an example of such activity being carried
+      out by OGSA design teams.  A gap (Naming) was identified from
+      high level analysis. There was an existing draft spec that did
+      not fulfill all requirements. Adjustments were made to make sure
+      that things would fit together.
+
+  - Even if the focus on profile definition is bottom up there would
+    still be some (implicit) model in mind. If this model is not
+    identified then there is a danger of just ending up with laundry
+    list of stuff.
+
+  - This identified one major area of disagreement. Other people
+    believe that it is unlikely that a shared view of the space can be
+    agreed on in advance. Each party may have a view on this space but
+    they may not be willing to share it.
+
+  - And bottom up work would offer more flexibility and allow for
+    incremental validation.
+
+  - Agreed that profiles are normative and informed by 'architecture'
+    informative documents and that consistency is two ways. Profiles
+    could feedback into the information document and vice versa.
+    - OGSA-WG (somehow) makes sure they are consistent with each
+      other.
+    - Cannot make prescriptive statements on how the consistency is
+      achieved.
+
+** Issue: We need a definition of profiles.
+** Issue: The bar for inclusion of a spec in a normative profile is very high.
+** Issue: We need a definition of normative (boolean?).
+** Issue: What is profile refinement?
+
+  - What is the point that something becomes 'normative OGSA'? (And
+    hence making it in a profile.) A continuum of...
+    - when a design team comes up with something
+    - when a WG produces a specification
+    - when implementations exist
+    - ...
+
+  - Ian, Steve: The point is far towards the end when there is
+    adoption and implementation experience; only then can it be added
+    to a profile.
+
+  - But drawing the line too far towards implementation would probably
+    hinder adoption (noone will adopt something until it is part of a
+    profile)
+
+  - Candidate profiles as a way of allowing more experimentation.
+
+  - How can work proceed; is it possible to do it in the current
+    design teams?
+    - Not to the point of profiles; candidate profiles perhaps. But
+      even that seems difficult to 'commit' to right now.
+
+    - Profiles as restrictions on existing standard specifications
+      (typically do not define new standards)
+
+  - Define what is a profile: an information document
+  - Define the process of creating a profile: an information document
+
+  - Are profiles information or normative? 
+    - Recommendation proposals initially
+    - If after the fact, might be community practice instead
+    - Candidate profiles are probably information document (see below)
+
+    - Different types of profiles
+      - (Infrastructure) Base profile refers to infrastructure
+      - (Service) Candidate profiles are service profiles
+      - (Application) User scenario profiles that capture what users what to do
+
+    - What is the difference between 'candidate profile' and
+      'profile'?
+
+    - Proposal: 
+      - Profile can only include finished specs ; have gone through
+        process or are *perceived* to be stable and widely adopted
+      - Candidate profile includes specs that have not been
+        (completely) through that process but are perceived that they
+        fill a need ; are (almost) complete ;
+
+  Action: Dave to do a first draft to try and define profile, and
+          different profile types. Put on the agenda for a next call.
+
+** Issue: OGSA trademark
+
+  - What does it mean to be OGSA compliant?
+  - Is OGSA version 2.0 informative or not? And does an information
+    document define compliance in some way? 
+    - No and no.
+
+** Proposal: (To split off profile work into different WG); OGSA-WG
+   does not produce a normative architecture document; normative
+   statements only in profile documents.
+    - And acknowledge that it is possible to adhere to a profile
+      (and therefore be compliant) and potentially not meet the
+      entire (informational) architecture
+    - But generally it would/should not be possible to be
+      orthogonal to the architecture document
+    - Initial 'profile' work is done in OGSA-WG to some extent
+      and then split off (it is not to the detailed level that
+      included compliance statements)
+    - And change the name of the 'architecture' document to a
+      'concepts' or something else
+
+** Proposal: Form a design team to do profiles with first task to
+   define what a profile is (and what is not in a profile might be in
+   the roadmap document)
+     - Don't split into separate working groups at this time
+       (ref: GGF re-org.)
+     - 'Candidate profiles' as things that go in a roadmap
+       document
+     - Different types of profiles; 'service profiles' that are
+       top down or high level and technology ones that build
+       bottom up.
+
+    - Should security be part of the base profile or a different
+      profile?
+    
+    - Proposal to include naming in the base profile
+    - Not sure if security fits here
+
+    - Review of profiles, schedules and solicit volunteers.
+
+    - Proposal to do part of the next f2f as parallel working sessions
+      for design teams working on profiles
+
+* Naming team report
+
+  https://forge.gridforum.org/projects/ogsa-wg/document/ws-naming-design-team-report/en/1
+
+** Review of status
+   - Regular bi-weekly calls.
+   - Minutes are on gridforge.
+   - Write up is available on gridforge (minus latest work)
+   - Naming here focuses on the bottom two layers of 
+    (human - logical - physical)
+   - (Thinking of de-focusing from 'Name' format to resolution)
+
+   - Difference between name resolution and reference resolution?
+
+   Action: Tom to send to OGSA-WG ml a reference to the renewable
+   reference document submitted to the WSRF TC
+
+** Naming requirements draft walkthrough
+    - Name and identity separated
+    - Comparable - lexical comparison (equality only)
+    - No aliases allowed
+    - A name cannot act as an identity (no crypto connection in
+      current draft)
+    - (How to isolate the requirement that identity and address are
+      separate. (ref: RR))
+
+   Action: Andrew will do a revision based on last review. 
+   - By Monday; Dave is planning to use this document as input
+     for an on-going discussion in the WSRF TC call
+
+** RNS
+   - Main focus is on upper 2 layers; can also map to 3rd layer
+    (human - logical - physical)
+   - (Re-factored from a filesystem specific proposal; still has some
+     remnants of that work; being worked through)
+   - Human-readable perhaps should be more correctly called
+     'human-choosable'
+   - Logical name (chosen by the system)
+   - Address reference (the document might still mention data
+     references occasionally)
+   - Will pull out the resource properties that are specific to data
+     entities (still in the document)
+   - Operations defiend are on the names and not the resources pointed
+     to
+   - Working implementation of the specification
+
+   Proposed target: Review and scope down/focus specification. Try to
+    get a couple (or three) implementations (e.g., IBM, UVa,
+    perhaps JAIST) by GGF13.
+   
+   Specification work is done within GFS-WG and interaction with
+   OGSA-WG via Data design team). Considered (and rejected) forming a
+   new group.
+
+* Apollo/Hermes/Muse Apache projects
+
+  Jem announced that three new Apache projects have been started by HP
+  and the Globus team to develop implementations of WSRF, WSN and WSDM
+  MUWS.  The projects are named Apollo (WSRF), Hermes (WSN) and Muse
+  (MUWS); all three are currently in the incubation stage.  At
+  present, the Muse project includes an implementation of MUWS 0.5,
+  including elements of WSRF and WSN, while Apollo and Hermes are
+  unpopulated.  Work is under way to make Muse a MUWS 1.0
+  implementation (targeted for March '05), and to remove the WSRF and
+  WSN code from that project. Apollo and Hermes will be populated with
+  WSRF and WSN code contributed by Globus and HP.
+        
+  Anyone interested in these projects is asked to get involved by
+  visiting the project web sites, joining discussions on the mailing
+  lists, and if possible contributing to the development effort.  See
+  Jem's message at
+  http://www-unix.gridforum.org/mail_archive/ogsa-wg/2004/12/msg00023.html
+  (http://tinyurl.com/6tvk8) for more info, including links to the
+  projects.
+
+* EMS team report
+
+  https://forge.gridforum.org/projects/ogsa-wg/document/ems-design-team-report/en/1
+
+** Update
+  
+  - Participation has improved. Currently trying to work through
+    terminology problems. There are a lot of open issues. Ravi started
+    an issues list for discussion.
+
+  - Attempt to work through terminology issues resulted in revision of
+    terminology: Actor, Solution, etc. A strawman was put together by
+    Andrew, Mark and Chris. There are many similarities to ACS.  In
+    the simplest case there is no need to install anything. A slightly
+    more complicated case might involve a copy/ftp to the resource
+    before starting it up.
+
+  - Recognize need to get more concrete.
+
+  - JSDL is probably one of the pieces; and after EMS refinement may
+    end up with more requirements. EMS is not at that point yet
+    though. JSDL focus is much narrower than EMS so it is not
+    appropriate to try and take the EMS work there.
+
+  - How (and by when) to get a more concrete EMS specification,
+    perhaps a strawman?
+    - It is possible to do a draft within a small group; might not be
+      representative.
+    - A F2F might be more productive to push this process forward.
+      - Would like to get the right people to the table but realize
+        that it might not be high enough on everyone's list of
+        priorities.
+      - Identify the relevant WGs vs draft a discrete specification
+        and try to get the right players; a balancing act between
+        top-down and bottom-up.
+    - In any case require coordination across a number of WGs to get
+      to interoperability in this area.
+
+* Data team report
+
+  https://forge.gridforum.org/projects/ogsa-wg/document/data-design-team-report/en/1
+
+** Status
+   - Lots of involvement. The base architecture is based on EGEE and
+     DAIS
+   - Lots of interested parties:
+     - (gridftp is listed but might not fit in with the architecture)
+  - Links to EMS
+    - Long running operations: do not fit the normal model of
+      execution (i.e., stage in; exec; stage out). More of an
+      invocation style with results received incrementally.
+    - Data produced by computation
+  - Data stories
+    - A lot of discussion on metadata; metadata (logically of)
+      resource vs other
+
+  - GLite: EGEE data services
+    - Posix I/O is mentioned but is it needed? (the implication is
+      that it is legacy)
+      - Posix I/O simple subset to support basic file access
+      - More correctly to call it a posix-like API
+
+  - Data management (file replication)
+    - Strawman architecture. It is in very early stages, for comment.
+    - Need to think about what should be optimized and design for that
+      first.
+
+  - Data story: Maintain replica of file
+    - Looking at it top-down
+    - Lots of holes/gaps;
+
+  - Data story: Federated data service
+    - Definition of federation: 
+    - Purpose: update, query or both. But probably mainly for querying
+
+  - Engaged WGs, scenarios for data, some ideas on what exists still
+    issues on metadata
+  - Architectural strawman needs more work
+
+* Infrastructure 'team' status
+
+  - WS-Addressing: Submission and WG started in W3C. Very aggressive
+    schedule.
+    - Probably only minor issues 
+    - Expected delivery: January/February time scale
+  - WSRF:
+    - No controversial issue with respect to WS-Addressing at the
+      moment
+    - Interop document nearly ready to come out of design team
+    - Metadata document; optional properties about resource element:
+      OGSI like mutability, default values, etc.
+      - Targeted to resource type
+      - Issue how to exchange metadata:
+        - Metadataexchange or define a special resource property
+    - IBM submission for RR
+      - Andrew's feedback desired by Monday's call (WSRF)
+    - serviceGroup: needs more work to define more clearly
+      - Already in use by WSDM
+    - F2F planned for January/February 2005
+    
+    - Documents coming out in January:
+      - Resource property
+      - Lifetime
+      - Base faults
+    - Interop: not scheduled yet; to be based on committee drafts
+
+    - WSDM committee draft came out and is dependent on an older draft
+      of WSRF; not sure how it will be resolved after the WSRF draft
+      comes out.
+
+    - WS-N base notification and topics are probably needed for basic
+      functionality; (resource property update)
+      - Brokered notification is useful too; maybe use only a subset
+        of it in profiles; or scoped to use specific functionality
+
+* Next F2F
+
+  Planning for beginning of Feb (1-2) or week of Feb 20. Hiro will
+  send out a questionnaire.

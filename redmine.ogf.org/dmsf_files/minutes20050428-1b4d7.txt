@@ -1,0 +1,168 @@
+Minutes for BES Telecon -- 28 April 2005
+
+Attendees
+---------
+	Andrew Grimshaw
+	Mark Morgan (Minutes)
+	Steven Newhouse
+	Darren Pulsipher
+	Fred Maciel
+	Tom McGuire
+	Andreas Savvas
+	Karl Czajkowski
+
+* Many presentations at GGF had something at the bottom end that started up
+  services
+	- create
+	- instantiate
+	- submit
+	- etc.
+	- Took some kind of JSDL or something and returned some kind of handle
+		-- EPR
+		-- etc.
+	- Since that seemed like fairly consistent pattern, can we agree that that
+	  is the pattern that we are looking for for factory like operations?
+		-- Yes
+* Last call we agreed that we were going to work with both legacy jobs and
+  service instantiation.  Is there a consensus that this is the basic approach
+  that we want to be taking here?
+	- No dissagreement.
+* Karl brings up WS-Agreement.
+	- Concern about WS-Agreement is that going with it could stall the pipe.
+	- We are under pressure to have something tangiable come out of this
+	  process in a fairly short period of time.
+		-- Waiting on WS-Agreement could hurt that.
+	- On the other hand, it seems like if we could come up with a basic thing
+	  here, we could sometime in the future refactor in terms of WS-Agreement.
+	- Is there agreement that we should wait on WS-Agreement?
+		-- Would like to know more about the timing for WS-Agreement?
+		-- Current plan in the group is to try and have the next rev for GGF in
+		   Chicago for another comment period.  Hoping that this will be a
+			"pat on the back" comment period so the hope is that it might be
+		   ready in a soon time frame (a few months).
+	- Is the draft in gridforge close to what is expected to be presented in
+	  Chicago?  How closely does this match what we are talking about here.
+		-- WS-Agreement is a WSRF based approach.  Current issues include
+		   technical issues so the technology isn't frozen...there will be
+		   changes, but the basic idea is pretty close.
+		-- The factory pattern is to create an agreement.  The operatoin is
+		   called createAgreement and it returns an EPR which is the agreement
+		   (in the synchronous case) or an EPR which you have to talk to to see
+		   if the agreement was accepted (in the asynch. case).
+		-- That pattern isn't too far from what we have here.
+		-- The big difference is that what we are talking about here in BES is
+		   that there are other things that we have put into the container that
+		   are more specific to container like things then to a general
+		   agreement.
+	- Propose to the group, put on the agenda for next week, a discussoin of
+	  how we want to deal with agreement.
+		-- Karl to send out mail with links to which documents we should be
+		   looking at.
+		-- Karl to confirm the projected schedule for agreement.
+
+* Current Prototype
+	- What is the purpose of submissionIdentifier?
+		-- This is a message identifier, like UUID.
+		-- Question whether or not we really need this because JSDL already has
+		   it.
+		-- If it's already in JSDL, then we don't need this parameter.
+		-- The objective is to eliminate duplicate requests.
+		-- We'll take the parameter out as an input, but replace it with a
+		   comment to indicate that we need this duplication detection
+		   somewhere -- either at message/SOAP layer, or perhaps in JSDL.
+	- Do we want to presume that something like WS-Names will be finished in
+	  time?
+	- Leave it for now that it will be defined elsewhere.  If we get down the
+	  pipe and WS-Names aren't there, we will have to get more concrete and get
+	  back to it.
+	- Punt for now on faults
+		-- one of the things we will have to figure out later is the fault
+		   model.
+		-- Mentioning the faults is good, but it's not time to talk about the
+		   mechanism.
+			--- We'll have a call later with "bring your own favorite faults".
+* getActivityStatus:
+	- We have a container for services that can be a hosting environment of
+	  some kind, or something else.
+	- Will model some physical resource out there.
+	- What other kinds of things do we want to be able to do to containers.
+	- One is, give me the activity or status of one or more named things that
+	  have been instantiated on this thing.
+		-- One of the arguments we've had on this is that, on the one hand, if
+		   everything is WSRF, then I should directly talk to the named input.
+		-- This goes for a few of the operations.
+		-- The argument is to say that having two different functions is to
+		   have two different ways to do things.
+			-- But, sometimes you want to talk to the container to do something
+			   to a down or unresponsive object, or you want to do bulk
+			   operations.
+			--  If we have these get status things and the terminate one in
+			    particular -- sometimes you have to kill something that isn't
+				responsive.
+	- Talking about the model, or the rendering, or both?  One of the problems
+	  the OGSA WG has to address very soon is the resource model for OGSA in
+	  general (and mangement model) vs. the individual thing for individual
+	  services and containers.  A lot of the things that we are going to be
+	  doing on containers are going to look like management things.  You can't
+	  just pull it away from the service -- they are inter-twined.
+		-- We are to have a discussion of this in London.
+	- You also have things that even a scheduler wouldn't care about that a
+	  manager may care about like changing the policy on how to throw out
+	  jobs on an overloaded (or overcommitted) resource.
+		-- Andrew told Hiro that he would prepare an example of the kinds of
+		   places this would show up.
+	- Karl votes in favor of this.  Some discussion to separate notion of
+	  job management from aggregate job management (kill this job, kill
+	  all jobs).
+		-- Managers didn't like the ability to get the status of all jobs.
+		-- In reality, you end up crippling systems to satisfy requirements.
+		-- Security strickly speaking is out of scope, but in practice you
+		   have to think about it.
+		-- Let's make the assumption that someone above us is going to handle
+		   security, maybe with a document where they pass in there user
+		   identification or credentials.  The underlying system will handle
+		   that.  You have to make assumptions that the implementation will
+		   handle this stuff as long as you believe that the user's credentials
+		   will be passed.  Leave it up to the implementers to implement or
+		   some security/policy working group.
+	- There has to be some linkage back to the original JSDL document.  The
+	  schema (format) of this document TBD.
+		-- It needs to have the activity identifier and the activity state.
+		-- You return multiple activity states -- you may have multiple data
+		   staging -- how do I match them up.
+			--- You need to be able to name the states and match them up with
+				things in the JSDL document.
+		-- Should the BES include data staging in it?
+			--- If you are thinking about the workflow to run a job is
+				something that could take place outside of the BES interface.
+			--- If there is an overall job manager, it could start a small job
+				or service that does the staging for you.  That's a separate
+			   job.
+			--- Depending on how we decide to do BES, you could make all data
+				staging irrelevant.
+					---- We need to dive into this more deeply.
+					---- How simple can we make BES by pulling out things like
+						 staging?
+					---- How simple "SHOULD" we make it?
+* No desire to make the calls long then 1 hour.
+* Final discussoin briefly is about the terminate with prejudice function.
+	- Is returning the right thing to do?
+		-- We shouldn't return anything.
+		-- Boolean isn't rich enough.
+		-- You could get something back saying it's dead, there's nothing
+		   there, it's going down, etc.....from a practical sense, there's a
+		   bunch of terminate status as well....
+		-- It should either be an empty output, or some kind of fault model or
+		   something.
+		-- We should think about whether or not this is synchronous or
+		   asynrchronous.
+		-- Decide to make output empty (we get an empty return or ack right
+		   away).
+			-- It's asynchronous in terms of the functionallity, not the RPC.
+* Successful meeting
+	- Mark to send out notes
+	- Andrew to clean up slides (like AbstractName -> WS-Name).
+* Agenda for next week is to discuss the agreement document and also to get the
+minutes approved.  This WG is on the agenda for the next steering group call
+next week.  No expectations of problems.  Expectation is for approval on
+Tuesday.

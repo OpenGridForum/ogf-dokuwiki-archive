@@ -1,0 +1,246 @@
+In addition to the OGF proposed recommendations
+Secure Addressing   --  http://www.ogf.org/documents/GFD.131.pdf
+Secure Communication  -- http://www.ogf.org/documents/GFD.132.pdf
+OGSA-BSP 2.0 --- http://www.ogf.org/documents/GFD.138.pdf
+
+
+here is a brief description of our security architecture. It is very
+WSI-BSP, WS-SecurityPolicy, and WS-Federation oriented, and is compliant
+with each of the three proposed recommendation profiles above.
+
+1.1	Security
+The security of grid infrastructure rests on its ability to protect its
+assets (information, data, services, etc) from various sources of misuse.
+Following the Open Systems Interconnect threat model [47], the types of
+security threat to which networked resources are vulnerable include
+disclosure or theft of resources, modification (including destruction) of
+resources, and resource service interruption.  The purpose of a grid
+security architecture is to define the security services and related
+mechanisms that can be appropriately applied to mitigate such threats.  The
+goal of these services and mechanisms is to make the costs of unauthorized
+behavior greater than the potential value of doing so.  Without a strong
+commitment to meaningful security, many potential adopters would be unable
+to participate because of undue risk and/or legal restrictions.   
+Grid security architecture is complicated by the reality that participants
+from different administrative domains will "come to the table" with distinct
+trust and security infrastructures.  This presents challenges for
+interoperability, even if all resource interfaces and security mechanisms
+are well-specified by de facto community standards.  For example, although
+the service implementations of a particular application (e.g., a job
+execution service) may conform to the same interface, each provider is free
+to choose the security mechanisms that satisfy its particular security
+requirements.  The orthogonality between service interface and security has
+two important implications: security tokens from one domain may not carry
+any syntactic or semantic meaning within another, and different peers may
+require different compositions of secure communication mechanisms (e.g.,
+specific encryption or signature actions).
+With site autonomy in mind, OGSA-compliant architectures are designed with a
+flexible security architecture in order to support the integration of
+existing trust infrastructures rather than force users to adopt a new,
+singular security model.  Genesis II provides services and mechanisms to
+federate and broker existing identity, to provide suitable forms of new
+identity as necessary, and to configure and discover the secure
+communication requirements of communicating peers.  This is fundamental to
+realizing the vision of resource sharing in an environment lacking a single
+source of authority.  
+Although Genesis II is implementation agnostic and uses standard mechanisms,
+it guarantees neither the complete interoperability nor the security of all
+participants.  By design, it does not establish a "lowest common
+denominator" set of security mechanisms that must be supported by all
+compliant resources, nor does it govern the establishment and maintenance of
+the trust relationships that are ultimately necessary to provide assurances
+of authorized usage.  Domain administrators are responsible for undertaking
+threat assessment for new grid resources and then using these requirements
+to select appropriate security mechanisms.  Administrators must also
+negotiate trust with their counterparts in other domains in order to
+configure token brokering services to federate their security
+infrastructures. 
+In the following we present the Genesis II models for identity, access
+control, and secure communication.
+1.1.1	Identity
+Identity is critical in grids.  It is necessary for determining who the
+remote party is (authentication), who is allowed to perform what actions
+(authorization), and who did what and when (auditing).  Genesis II supports
+a number of identity standards that are defined for Web Services.  These
+currently include X.509 digital certificate [46, 77], UsernameToken [76],
+and SAML token [73, 75] profiles. 
+When considering the client-server model of Web services, we often think in
+terms of resource identities and user-principal identities.  We associate
+resource identities with virtualized grid resources (i.e., callees) and
+user-principal identities with actors (i.e., callers).  A Genesis II
+resource may play both roles.
+1.1.2	Resource Identity
+A Genesis II resource is a logical entity to which messages can be
+delivered.  Often, such entities are local resources (e.g., files, job
+queues, etc.) that have been "provisioned" into the grid.  Unfortunately,
+classic resource identities (e.g., file i-nodes, RDBMS table names, etc.)
+are not suitable for grid use because they are not guaranteed to be
+universally unique and/or they cannot be cryptographically authenticated.  
+All Genesis II grid resources are given X.509 identities, each consisting of
+an X.509 digital certificate and a corresponding public/private keypair.
+These cryptographic identities can be used by clients to ensure that they
+are indeed communicating with the intended grid resource (as opposed to
+being spoofed). 
+In many cases, grid resources and their identities are automatically
+generated and destroyed at sufficient rates and quantities as to preclude
+human involvement in the trust process of vetting identity.  The depth of
+the certificate chain for automatically generated resource identities
+reflects this dilution of trust.  A typical certificate chain of trust for a
+Genesis II resource has four entries: 
+1.	The automatically generated end-entity certificate identifying the
+logical resource
+2.	The automatically generated certificate of its parent Web Service
+instance (e.g., the Web Service instance for RNS, ByteIO, BES, etc.), which
+is also a Genesis II resource
+3.	The certificate of the hosting Genesis II Container (which is also
+used for HTTPS transport connections), configured by the domain
+administrator
+4.	A global Certificate Authority (CA) "trusted" by all grid
+participants. 
+1.1.3	User-principal Identity
+User-principal tokens are security credentials that state different facts
+about the caller.  For example, one security credential may claim that the
+caller is John Smith as vetted by State University, and another that
+indicates they are a member of the Astronomy Department.  When using Genesis
+II, a caller can convey arbitrarily many identity tokens. 
+User-principal tokens are used by Genesis II resources to perform
+access-control.  When performing an operation on a Genesis II resource, the
+user-principal credentials conveyed within the request message are checked
+against that resource's security policy to decide whether to allow or deny
+the operation. 
+1.1.4	Existing Identities
+Genesis II is very flexible with regard to user-principal tokens. In many
+cases, grid participants will already possess identities supplied by their
+organization.  The Genesis II login commands make it simple to acquire these
+credentials for grid use, and security tools allow for the inclusion of
+these credentials within resource authorization policies.
+For example, users can use the login tool to acquire an existing X.509
+credential stored within the Windows keystore or other popular keystore
+formats (e.g., PKCS12, JKS, etc.).  The corresponding X.509 digital
+certificate is their identity and is conveyed within outgoing messages; the
+private key is used for signature and never leaves the calling process's
+address space.  The login command also allows users to convey UsernameToken
+credentials within outgoing messages. 
+Alternatively, users may have identities that are managed by directory
+systems such as NIS/YP, LDAP, etc.  Genesis II integrates with these systems
+to virtualize these identities into the grid: Genesis II login commands can
+authenticate to these services, and their identity entries can be specified
+within resource authorization policies.
+1.1.5	Delegated Identities
+Although Genesis II allows clients to use a specific X.509 identity for
+message/transport-level authentication, the ability to delegate
+identities/roles to a single shorter-lived, transient identity has several
+advantages.  Delegation allows users to obtain their roles/identities when
+and where they are needed without exposing the associated private keys to
+the grid client.  Delegation also allows clients to convey multiple
+identities/capabilities that have been cryptographically delegated to the
+single X.509 certificate/keypair used for authentication in
+message/transport-level protocols.
+For example, the default process of acquiring an X.509 identity (e.g., John
+Smith) during login incorporates a signing request to delegate that identity
+to the grid shell process (or IFS process, or OGRSH process), which itself
+has its own X.509 identity.  Their private key is used to sign a SAML
+document asserting that "John Smith says grid shell XYZ can be John Smith
+for 24 hours".  In this fashion, a Genesis II process such as the grid shell
+can use a single X.509 certificate/keypair for authentication within
+message/transport-level protocols, yet still convey multiple
+identities/capabilities that have been cryptographically delegated to it. 
+Although SAML assertions can support delegation chains of arbitrary depth,
+the login tool has options that limit the duration and number of subsequent
+delegations allowable for an identity credential.  For example, suppose the
+grid shell wishes to further delegate John Smith's identity to a job queue
+resource.  The identity conveyed in the job-submission request is an
+enclosing SAML document with nested, signed statements asserting that "John
+Smith says grid shell XYZ can be John Smith for 24 hours, grid shell XYZ
+says Queue 123 can be grid shell XYZ".  Hence Queue 123 can perform duties
+on behalf of John Smith, such as scheduling the job on an available BES when
+the time is appropriate. 
+1.1.6	Identity Provider Resources (IDPs)
+New grid identities can be created and managed using Genesis II Identity
+Provider (IDP) resources.  An IDP is a grid resource that delegates security
+credential(s) to the caller.  IDP resources are exposed via a Genesis II
+implementation of the WS-Trust [79] Security Token Service (STS) Web service
+interface.  Each Genesis II Container hosts an STS instance that can be used
+to create and manage IDP resources. 
+By creating new IDP resources, one can create new security credentials that
+can be used to indicate facts about a user-principal, such as identities
+(e.g., Jane Smith), roles (e.g., Faculty), privileges (e.g., Level 5), etc.
+IDP resources are typically given names and linked into the RNS namespace. 
+In many cases, a user may wish to acquire multiple security credentials for
+their grid session.  It may be tedious and inconvenient to individually use
+the login command to obtain delegated credentials from every identity,
+group, and role IDP resource that the user-principal belongs to.  To
+facilitate single-sign-on capability, our IDP resources implement the RNS
+directory interface.  For example, RNS links to IDP resources such as
+FacultyGroup and QueueAdministrators can be placed within the directory
+exposed by the JSmithProxy IDP resource.  This configuration signifies that
+a user-principal logging into JSmithProxy will automatically obtain
+delegated credentials for all three restricted identities. 
+1.1.7	Access Control
+In Genesis II, access control decisions are made by pluggable authorization
+modules.  This extensible design allows Genesis II installations to
+accommodate alternative authorization technologies.  The default module uses
+access control lists (ACLs) to make authorization decisions at the
+granularity of logical resources (as opposed to doing so at the container or
+Web service granularity).  When using this module, each Genesis II grid
+resource maintains a set of three access-control lists: a read-access list,
+a write-access list, and an execute-access list. These lists can be
+populated with user-principal identities to allow varying degrees of access
+to different caller-entities bearing different security credentials.
+As discussed in the previous section, Genesis II supports "group
+credentials" by allowing individuals to acquire multiple credentials that
+can be used to logically indicate group roles or privileges.  Genesis II
+also supports another grouping method that exploits the certificate-chain
+hierarchy conveyed within a user-principal's digital certificate.  For
+example, one can configure the read-access list for file Foo to include the
+UVA PKI Standard Assurance identity.  This has the effect of granting
+read-access to all users carrying security credentials whose certificates
+chain to the UVA PKI Standard Assurance certificate.
+1.1.8	Secure Communication
+Threat assessment is the process of identifying the specific security
+requirements for a given asset.  In addition to establishing authorization
+requirements (i.e., who is allowed proper access), a threat assessment for a
+prospective resource to be exposed via the grid may identify confidentiality
+and integrity requirements for the protection of communication over an
+un-trusted network (e.g., the Internet).  
+Confidentiality is the assurance that only those principals authorized for
+information access are capable of doing so. Confidentiality in an insecure
+environment is usually derived through message encryption.  
+Integrity is the assurance that unauthorized changes made to communication
+messages can be detected by the recipient.  Cryptographic digital signatures
+are generally used to detect message tampering.  
+Genesis II uses the SOAP protocol for messaging between communication
+endpoints.  Fundamentally, the security of SOAP messages is affected by two
+aspects:
+a)	Binding to a particular network transport protocol.  Genesis II uses
+HTTPS as the default transport, which uses anonymous-client SSL/TLS [17] to
+provide security guarantees for properties such as container authentication,
+integrity, and confidentiality.
+b)	Message-level credentialing and protection. Genesis II is compliant
+with the Web Services Security [78] (WS-Security) family of specifications
+that define a general-purpose mechanism for associating security tokens with
+message content.  WS-Security encompasses a set of profiles for encoding
+popular token types (e.g., X.509 [77], Kerberos [74], SAML [75], and
+UsernameToken [76] tokens).  The WS-Security core specification also defines
+the application of XML-Encryption [45, 95] and XML Digital Signature [94] to
+provide end-to-end messaging integrity and confidentiality without reliance
+upon support from the underlying communication protocol.  
+In order to achieve real-world interoperability, Genesis II is also
+compliant with the WS-I Basic Security Profile [97] (WS-I BSP).  The WS-I
+BSP provides guidance on the use of WS-Security and its associated security
+token formats to resolve nuances and ambiguities between communicating
+implementations intending to leverage common security mechanisms.
+Genesis II resources are intended to be configured with diverse integrity,
+confidentiality, and authorization requirements.  These requirements are
+independent of the resource's service interface, yet still affect message
+format.  As such, interoperability between Genesis II peers is dependent
+upon the ability to normatively describe and advertise individual secure
+communication requirements.  
+Genesis II adheres to the OGF Secure Addressing Profile [54] (SecAddr) to
+distribute secure communication requirements within WS-Addressing endpoint
+references (EPRs).  More specifically, these requirements are conveyed as
+WS-SecurityPolicy documents that have been embedded within EPRs.  The
+WS-Addressing endpoint reference data structure is a useful construct
+because it provides the "invocation context" for a service endpoint-all of
+the necessary information that a client requires to establish meaningful
+communication.  

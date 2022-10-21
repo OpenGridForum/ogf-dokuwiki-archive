@@ -1,0 +1,359 @@
++-------------------------------------+
+|  OGF :  PGI Single Job State Model  |
++-------------------------------------+
+
+
+1) User Job Submission
+2) Submitted
+3) Pre-processing
+4) Delegated
+5) Post-processing
+6) Finished with Success or Error
+7) Failed
+8) Cancelled
+9) Purged
+
+
+
+Scope
+=====
+The scope of this 'PGI Single Job State Model' is only Single Jobs.
+
+This excludes Collection Jobs, Parameter Sweep Jobs, DAG Jobs, ... (for which the Execution Service automatically submits several Single Jobs).
+
+In particular, 'Create multiple Activities' as defined in chapter 3.1.2 of 'Strawman of the Geneva grid job Execution Service (GES)' at http://forge.gridforum.org/sf/go/doc15590?nav=1 is NOT covered by the 'Single Job State Model'.
+
+
+
+1) User Job Submission
+======================
+This initial state requires that the Job Submitter (which can be a human User, a software client, or the Execution Service itself) has prepared a Job description (standard is JSDL) for a Single Job.
+
+The Job description must contain a request to run a script or an executable.
+
+The Job description can contain :
+–  Requests of automatic staging (performed by the Execution Service without action of the Submitter),
+–  Requests of manual staging (where the Execution Service notifies the Submitter the location of the file(s) to be staged).
+
+
+
+2) Submitted
+============
+The Job goes into the 'Submitted' state in the 2 following cases :
+–  When the User has submitted a readable Job description,
+–  When the Execution Service has triggered the 'Automatic Resubmission' transition for a Job in the 'Failed' state, in which case the Job retains its original Jobid (or EPR).
+
+In case of a new submitted job, the Execution Service immediately allocates a Jobid (or an EPR) to the Job and sends it back to the Submitter.
+
+That permits the Submitter, at any time, to request a Job cancellation, which sends the Job to the 'Cancelled' state.
+
+If the Execution Service finds that the Job can NOT be executed at all (for example: bad Job description, Requirements exceeding quotas), then it triggers the 'Submitted Failure' transition which sends the Job to the 'Failed' state.
+
+When the Execution Service has found a set of resources adequate for the execution of the Job :
+–  It decides the storage resources which are necessary for Stage-in, Job execution and Stage-out, but does NOT allocate them yet,
+–  It decides which computing resources will execute the Job, but does NOT allocate them yet,
+–  It triggers the 'Goes to Pre-processing' transition which sends the Job to the 'Pre-processing' state.
+
+The Execution Service updates the Job status, but does NOT specifically notify the Submitter.
+
+
+The Job can stay in this 'Submitted' state a long time, for various reasons, for example :
+
+2.1) Incoming
+–------------
+In this substate, the Execution Service has previous submitted Jobs to process first.
+
+2.2) Waiting
+–-----------
+In this substate, the resources required by the Job are NOT simultaneously available yet.
+
+2.3) Outgoing
+–------------
+In this substate, the Execution Service has previous Jobs to send to the 'Pre-processing' state first.
+
+
+
+3) Pre-processing
+=================
+The Job goes into the 'Pre-processing' state from the 'Submitted' state when the Execution Service has triggered the 'Submitted goes to Pre-processing' transition.
+
+At the beginning of the 'Pre-processing' state, the Execution Service allocates the storage resources which are necessary for Stage-in.
+
+Inside the 'Pre-processing' state, the computing resources are decided, but NOT allocated yet.  This permits the Job to stay inside the 'Pre-processing' state as long as necessary to perform automatic Stage-in, without blocking computing resources.
+
+In case of an unrecoverable error, the Execution Service triggers the 'Pre-processing Failure' transition which sends the Job to the 'Failed' state.
+
+When the Execution Service has verified that all Stage-in operations have been successfully performed, it triggers the 'Pre-processing goes to Delegated' transition which sends the Job to the 'Delegated' state.
+
+The Execution Service updates the Job status, but does NOT specifically notify the Submitter.
+
+
+The Job can stay in this 'Pre-processing' state a long time, for various reasons, for example :
+
+3.1) Incoming
+–------------
+In this substate, the Execution Service has previous pre-processing Jobs to process first.
+
+
+3.2) Automatic-Stage-In
+–----------------------
+In this substate, the Execution Service automatically performs Stage-in.
+
+
+3.3) Hold
+–--------
+The Job can go into the 'Hold' substate of the 'Pre-processing' state, for example in the 3 following cases :
+–  Manual Stage-in is necessary,
+–  The Submitter has voluntarily suspended the Job,
+–  Pre-processing has failed in a manner that can perhaps be corrected by the Submitter.
+
+Inside this 'Hold' substate :
+–  The storage resources which are necessary for Stage-in are already allocated,
+–  The computing resources are decided, but NOT allocated yet.
+
+This permits the Job to stay inside this 'Hold' substate as long as necessary to perform manual Stage-in or any other User action, without blocking computing resources.
+
+The Execution Service DOES specifically notify the Submitter that the Job requires User action.
+
+The Execution Service updates the Job status.
+
+The Execution Service can send the Job back to a normal substate of 'Pre-processing' when the Submitter has notified the Execution Service that automatic processing can be resumed.
+
+The Job can stay in this 'Hold' substate a long time, for example inside following third level substates :
+
+3.3.1) Manual-Stage-In
+–-------------------
+In this substate of 'Hold', the Submitter has to manually perform Stage-in.
+
+3.3.2) Suspended
+–---------------
+In this substate of 'Hold', the Job has been voluntarily suspended by the Submitter.
+
+3.3.3) Failed-Recoverable
+–----------------------
+In this substate of 'Hold', the Submitter has to perform corrective actions.
+
+
+3.4) Outgoing
+–------------
+In this substate, the Execution Service has previous Jobs to send to the 'Delegated' state first.
+
+
+
+4) Delegated
+============
+The Job goes into the 'Delegated' state from the 'Pre-Processing' state when the Execution Service has triggered the 'Pre-Processing goes to Delegated' transition.
+
+At the beginning of the 'Delegated' state :
+–  The storage resources which were necessary for Stage-in are already allocated, and Stage-in has already been successfully completed,
+–  The Execution Service allocates the storage resources which are necessary for Job execution (including Stage-out),
+–  The Execution Service allocates all necessary computing resources to the Job.
+
+So, the Job should make best use of the allocated computing resources :  It should NOT sleep or halt.  The Execution Service should consider most Job failures as unrecoverable.
+
+The 'Delegated' state covers both :
+–  Execution by a batch system belonging to the original grid infrastructure;  In that case, the Execution Service must be able to give to the Submitter the name of the batch queue (+ perhaps local job id),
+–  Forwarding to the Execution Service of another grid infrastructure;   In that case, the Execution Service must be able to give to the Submitter the corresponding EPR;  Detailed follow-up of the Job status inside the other grid infrastructure is NOT performed at all by the original Execution Service, but optionally by the Submitter using the returned EPR.
+
+In case of an unrecoverable error, the Execution Service triggers the 'Delegated Failure' transition which sends the Job to the 'Failed' state.
+
+At the end of the 'Delegated' state, the Execution Service deallocates :
+–  All computing resources from the Job,
+–  The storage resources which where required only for Job execution,
+–  The storage resources which where required only for Stage-in.
+
+When the Execution Service has verified that Job execution has been entirely performed (successfully or with a non-zero return code), it triggers the 'Delegated goes to Post-Processing' transition which sends the Job to the 'Post-Processing' state.
+
+The Execution Service updates the Job status, but does NOT specifically notify the Submitter.
+
+
+The Job can stay in this 'Delegated' state a long time, for various reasons, for example :
+
+4.1) Incoming
+–------------
+In this substate, the Execution Service has previous delegated Jobs to process first, for example allocate computing resources to them.
+
+
+4.2) Running
+–-----------
+In this substate, the Job is in execution inside a batch system belonging to the original grid infrastructure.
+
+
+4.3) Forwarded
+–-------------
+In this substate, the original Execution Service has forwarded the Job to the Execution Service of another grid infrastructure.
+
+
+4.4) Hold
+–--------
+The Job can go into the 'Hold' substate of the 'Delegated' state in rare cases, for example when :
+–  The Submitter has voluntarily suspended the Job,
+–  Job execution has failed in a manner that can perhaps be corrected by the Submitter.
+
+Inside this 'Hold' substate, all storage and computing resources which are necessary for Job execution are already allocated.
+
+So the Job should stay inside this 'Hold' substate as shortly as possible.
+
+The Execution Service DOES specifically notify the Submitter that the Job requires urgent User action.
+
+The Execution Service updates the Job status.
+
+The Execution Service can send the Job back to a normal substate of 'Delegated' when the Submitter has notified the Execution Service that automatic processing can be resumed.
+
+The Job should stay in this 'Hold' substate as shortly as possible, for example inside following third level substates :
+
+4.4.1) Suspended
+–---------------
+In this substate of 'Hold', the Submitter has voluntarily suspended the Job, and has to urgently perform some actions.
+
+4.4.2) Failed-Recoverable
+–----------------------
+In this substate of 'Hold', the Submitter has to urgently perform corrective actions.
+
+
+4.5) Outgoing
+–------------
+In this substate, the Execution Service has previous Jobs to process first, for example deallocate computing resources from them, then send them to the 'Post-Processing' state.
+
+
+
+5) Post-processing
+==================
+The Job goes into the 'Post-processing' state from the 'Delegated' state when the Execution Service has triggered the 'Delegated goes to Post-processing' transition.
+
+At the beginning of the 'Post-processing' state :
+–  The storage resources which are necessary for Stage-out are already allocated,
+–  The computing resources are already deallocated.
+
+This permits the Job to stay inside the 'Post-processing' state as long as necessary to perform automatic Stage-out, without blocking computing resources.
+
+In case of an unrecoverable error, the Execution Service triggers the 'Post-processing Failure' transition which sends the Job to the 'Failed' state.
+
+At the end of the 'Post-processing' state, the Execution Service deallocates the storage resources which where required only for Stage-out.
+
+When the Execution Service has verified that all Stage-out operations have been successfully performed, it triggers the 'Finishes with Success or Error' transition which sends the Job to the 'Finished with Success or Error' state.
+
+The Execution Service updates the Job status, but does NOT specifically notify the Submitter.
+
+
+The Job can stay in this 'Post-processing' state a long time, for various reasons, for example :
+
+5.1) Incoming
+–------------
+In this substate, the Execution Service has previous post-processing Jobs to process first.
+
+
+5.2) Automatic-Stage-Out
+–-----------------------
+In this substate, the Execution Service automatically performs Stage-out.
+
+
+5.3) Hold
+–--------
+The Job can go into the 'Hold' substate of the 'Post-processing' state, for example in the 3 following cases :
+–  Manual Stage-out is necessary,
+–  The Submitter has voluntarily suspended the Job,
+–  Post-processing has failed in a manner that can perhaps be corrected by the Submitter.
+
+Inside this 'Hold' substate :
+–  The storage resources which are necessary for Stage-out are already allocated,
+–  The computing resources are already deallocated.
+
+This permits the Job to stay inside this 'Hold' substate as long as necessary to perform manual Stage-out or any other User action, without blocking computing resources.
+
+The Execution Service DOES specifically notify the Submitter that the Job requires User action.
+
+The Execution Service updates the Job status.
+
+The Execution Service can send the Job back to a normal substate of 'Post-processing' when the Submitter has notified the Execution Service that automatic processing can be resumed.
+
+The Job can stay in this 'Hold' substate a long time, for example inside following third level substates :
+
+5.3.1) Manual-Stage-Out
+–--------------------
+In this substate of 'Hold', the Submitter has to manually perform Stage-out.
+
+5.3.2) Suspended
+–---------------
+In this substate of 'Hold', the Job has been voluntarily suspended by the Submitter.
+
+5.3.3) Failed-Recoverable
+–----------------------
+In this substate of 'Hold', the Submitter has to perform corrective actions.
+
+
+5.4) Outgoing
+–------------
+In this substate, the Execution Service has previous Jobs to send to the 'Finished with Success or Error' state first.
+
+
+
+6) Finished with Success or Error
+=================================
+The Job goes into the 'Finished with Success or Error' state from the 'Post-processing' state when the Execution Service has triggered the 'Finishes with Success or Error' transition.
+
+At the beginning of the 'Finished with Success or Error' state, the Execution Service deallocates all storage and computing resources which would still be allocated to the Job.
+
+Inside the 'Finished with Success or Error' state, the Submitter can only retrieve the Job log and the Output Sandbox.
+
+The Execution Service DOES specifically notify the Submitter that the Job is finished and that the Output Sandbox is available for retrieval.
+
+The Execution Service can purge the Output Sandbox :
+–  when the Submitter has successfully retrieved it,
+–  or after a long defined period (several weeks).
+
+The Execution Service then triggers the 'Purge after Finished' transition to send the Job to the 'Purged' state.
+
+
+
+7) Failed
+=========
+The Job goes into the 'Failed' state from any state when the Execution Service has detected an unrecoverable Job Failure.
+
+At the beginning of the 'Failed' state, the Execution Service deallocates all storage and computing resources which would still be allocated to the Job.
+
+The Execution Service can trigger the 'Automatic Resubmission' transition to send the Job back to the 'Submitted' state.  This is possible only from this 'Failed' state, where we are sure that the Execution Service has completely deallocated all storage and computing resources from the Job.
+
+Inside the 'Failed' state, the Submitter can only retrieve the Job log, and perhaps bits of the Output Sandbox which the Job could generate before failure.
+
+The Execution Service DOES specifically notify the Submitter that the Job is 'Failed' and if bits of the Output Sandbox are available for retrieval.
+
+The Execution Service can purge the Output Sandbox :
+–  if it is empty,
+–  or when the Submitter has successfully retrieved the available bits,
+–  or after a long defined period (several weeks).
+
+The Execution Service then triggers the 'Purge after Failure' transition to send the Job to the 'Purged' state.
+
+
+
+8) Cancelled
+============
+The Job goes into the 'Cancelled' state from any state when the Submitter has cancelled the Job.
+
+At the beginning of the 'Cancelled' state, the Execution Service deallocates all storage and computing resources which would still be allocated to the Job.
+
+Inside the 'Cancelled' state, the Submitter can only retrieve the Job log, and perhaps bits of the Output Sandbox which the Job could generate before cancellation.
+
+The Execution Service DOES specifically notify the Submitter that the Job is 'Cancelled' and if bits of the Output Sandbox are available for retrieval.
+
+The Execution Service can purge the Output Sandbox :
+–  if it is empty,
+–  or when the Submitter has successfully retrieved the available bits,
+–  or after a long defined period (several weeks).
+
+The Execution Service then triggers the 'Purge after Cancellation' transition to send the Job to the 'Purged' state.
+
+
+
+9) Purged
+=========
+The Job goes into the terminal 'Purged' state from 3 states :
+–  From the 'Finished' state when the Execution Service has triggered the 'Purge after Finished' transition,
+–  From the 'Failed' state when the Execution Service has triggered the 'Purge after Failure' transition.
+–  From the 'Cancelled' state when the Execution Service has triggered the 'Purge after Cancellation' transition.
+
+Inside the 'Purged' state :
+–  All storage and computing resources are already deallocated from the Job.
+–  The Output Sandbox has already been purged.
+–  The Submitter should still be able to retrieve the Job log  (For example, inside EGEE, if the Job log has been purged from the LB, it must still be available in the JP).

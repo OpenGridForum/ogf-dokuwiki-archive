@@ -1,0 +1,203 @@
+OGSA Telecon (7 Sept. 2005)
+
+Attendees
+--------------
+	Mark Morgan (Minutes)
+	Jem Treadwell (Minutes)
+	Tom Maguire
+	Fred Maciel
+	Hiro Kishimoto
+	Andrew Grimshaw
+	Steven Newhouse
+	Ellen Stokes
+	Dejan Milojici
+	Jim Pruyne
+	Stewart Schafer
+	Takuya Mori
+	Mike Behrens
+	Ravi Subramanium
+	Jay Unger
+	Pete Ziu
+
+* Telecon minutes approval (Oct. 31) -- approved without modification
+* Winter F2F Meeting in California
+	- Jan 16th is the day
+	- San Francisco area
+	- ACTION:  Hiro asking Fujitsu for meeting room avail.
+		-- Hitachi might be an option if Fujitsu isn't an option
+* WSRF Basic Profile
+	- New Trademark on OGSA in the trademark section
+	- At this moment, OGSA is trademark, not "Open Grid Services Architecture"
+		-- ACTION:  Tom to change this--DONE -- Hiro to submit
+	- Line 455 has misspelling.  ACTION:  Tom to fix.--DONE--Hiro to submit
+	- Line 464 Another misspelling:  ACTION Hiro to submit
+	- Next monday we'll review Takuya's basic security channel profile
+	- GGF Editor asked our profile def. into public comment review -- not yet 
+          shown in web page, but very soon it will start for profile defn.
+
+* Fred asked to move info model discussion into week of 26th.  OK to move info modelling into the 26th or 28th?
+	- DONE
+
+* How is the schedule for the OGSA 1.5 exactly?
+	- Ready before or just after GGF 15
+
+* Announcement:  Tom Maguire has left IBM; is now at EMC.  WRT Co-chairship, 
+          no changes expected
+	- Interested implications for BES and Naming regarding conference calling numbers
+
+* Do we need to do anything on the roadmap in terms of AuthZ?
+	- Hiro asked to put this at end of this call.
+
+* Agenda Bashing
+	* EMS Discussion
+	* Other Topics
+
+* EMS   
+	- GRAAP and WS-Agreement (in context of EMS, but further reaching than that)
+	- Going through slides on WS-Agreement (Jim Pruyne presenting)
+	- Is it possible to use WSRF Basic Profile?
+		-- Probably not -- WSRF Basic Profile is too broad.
+	- Agreement no longer has negotiation -- it's all or nothing
+	- What about living up to the intention of the agreement.  What is 
+          the relationship between consumer and initiator regarding this 
+          intention of agreement
+		-- Any responsibilities with respect to the agreement are  
+                   only between the initiator and responder.  If the responder 
+                   and the provider are not the same, and the provider is behind 
+                   the responder, then there should be another agreement under 
+                   the covers between those two.
+	- Agreement will possibly be a service, but need not be one
+	- A Name could be an EPR
+	- Anything that becomes domain specific is out of scope
+	- How does a potential Agreement initiator find a template
+		-- Responder publishes them as resource properties
+	- Versioning to be handled in name field if at all.  Not really part of Agreement
+
+- JEM TAKING NOTES:
+
+        - Bandwidth example: Could broker make a reservation and then make 
+          sub-agreements with other consumers? 
+          Yes - those are the types of agreements we've had in mind all along.
+
+        - Agreement used as a token? Or stays resident with the responder? 
+          Show to other referenced parties? 
+          Jim: Might be able to, but not covered in spec - considered briefly,  
+          but not required.
+
+        - Hiro: What timeframe for interop?? Jim: not sure, had a good
+          session in GGF14, need to see how long it will take to do
+          implementations - better idea after GGF15. Job execution is
+          a common denominator for implementations.
+
+        - Ravi - Dejan have any ideas for scenarios?  Dejan: recommend
+          take a look at the scenarios in the CDDLM foundation doc.
+          Not really prepared for this today.
+
+        - Jim: How to follow up?  Andrew: once we have basic BES we
+          should see how we might layer a reservable execution service on
+          top of it, using WS-Agreement. Steven: Yes, but we're quite a
+          way from BES completion yet.
+
+        - Ravi: Composable - would it apply to a spec?  Andrew: not
+          sure that it would be in a spec; might be in a profile.  Ravi:
+          agree - might want to compose CDDLM/BES/Agreement.
+
+        - Hiro: We had an execution profile discussion at GGF13, but
+          too immature - GGF15 would be a good time to restart.  Ravi: how
+          to represent agreements - use template in some fashion... what
+          role would EPS (Execution Planning Services) play?  Might be
+          able to give some feedback to GRAAP, and they might be able
+          to give some advice.  Jim: We'd be happy to do that - wouldn't
+          want to make too many changes to current rev.
+
+        - Jay: WS-Agreement provides a reasonable general framework - may
+          be some tweaks needed - POC is for people to start using as-is
+          - things we could do to flesh out - probably things we could
+          do to enhance - in the absence of the framework people have
+          found other ways to do it.  Jim: In the attempt to provide
+          a generalize ruled some things out of scope.  Ravi: want to
+          go through the process of seeing what hoops we need to jump
+          through to make ws-ag work.  What do we need to do to make it
+          work in the EMS framework?
+
+        - Jay: good early discussion; should have an in-depth discussion
+          with GRAAP people.  e.g. nothing prevents a template from being
+          passed around among services prior to completing the agreement.
+
+        - Jim: willing to be a regular telecon participant with OGSA and
+          other W/G's or design teams who would like to discuss (e.g. Data).
+
+        - Hiro to send out URL for scenario info.
+
+	- Ravi: Back to CDDLM discussion - Dejan - 6 scenarios in
+          Foundation that EMS might want to look at. Also a picture
+          that shows order of deployment and reservation.  I believe
+          we need someone responsible for driving.  Ravi will take on
+          responsibility.  Hiro proposes another call with CDDLM & OGSA
+          - next Wed, 9/16?  Need an agenda - discuss on mailing list;
+          Ravi will collect open items.  Stuart will start a mail thread;
+          everyone should review them before the meeting.
+
+
+RAVI's NOTES:
+============
+
+Hi,
+
+Here is a synopsis of the agreed next steps from today's OGSA telephone
+meeting. Attendees, please review and update as required.
+
+GRAAP: Jim: Thanks again for the introduction to WS-Agreement today. We
+appreciate your taking time to engage.
+
+I would like to reiterate the couple of areas of focus we had discussed
+at the F2F:
+
+a. Understand the domain terms that may apply in agreements in a specific
+EMS scenario (BES?)
+
+b. Look at how one might apply WS-Agreement to the multi-entity (for a
+single operation) scenario that is EMS. (Cluster girds have a single
+entity (scheduler?) to handle all resources and requests and so that
+could fit the two party model of WS-Agreement but I was thinking of EMS
+outside of this space where responsibility is distributed).
+
+CDDLM: Dejan/Stuart: Thanks for attending this session. Sorry for
+any mixup here. I hope you did get something useful from Jim's
+presentation. Based on our discussions around CDDLM, here is what
+I captured:
+
+a. Hiro will send out the pointers to the interaction of EMS services
+for the 3 scenarios that was developed at the last OGSA F2F.
+
+b. Stuart will take a look and see how the CDDLM architecture would
+address these scenarios and start and email thread in the OGSA mail list.
+
+c. Ravi would collect any difficult or long drawn discussion topics
+(as suggested by the respondents) as agenda items for discussion at the
+next OGSA telecom.
+
+d. The OGSA WG will study the high level scenarios from CDDLM that
+were the model for the CDDLM specs. Need to reconcile these into the
+EMS/OGSA space.
+
+We will *not* have a parallel small team meeting this week but will
+schedule over the longer term (beyond GGF15) to do so as an ongoing
+activity as we work to resolve the approaches.
+
+Speaking for myself right now: I would suggest that an output of this
+activity be the OGSA EMS diagram fleshed out with the provisioning
+services from CDDLM (this could be either a blowing up of the
+provisioning box or a refactoring that may be dictated by this joint
+activity). Thoughts?
+
+OGSA:
+
+Anyone on the call today, please let me know if I have missed any of
+the outcomes of the discussion here. Any other suggestions and topics
+for discussions and/or focus with CDDLM and GRAAP are welcome.
+
+
+Thanks!
+
+Ravi

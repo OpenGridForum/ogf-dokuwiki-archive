@@ -1,0 +1,173 @@
+Meeting notes NML session OGF 33
+================================
+
+NML had three sessions, two on Tue 20 Sep, and one on Thu 22 Sep.
+
+The first sessions consisted of formal presentation of related work:
+* Jason Zurawski – Circuit Monitoring
+* Jeroen van der Ham – GEYSERS; NOVI; GLIF DTOX-TF
+
+The second sessions contained presentations with discussions:
+* Jerry Sobieski – Jerry's Topology Wishlist 
+* Jeroen van der Ham – Port vs. Interface
+* Freek Dijkstra – URN:OGF:network Status and Proposal
+* Freek Dijkstra - Status and Work Items
+* Jeroen van der Ham & Freek Dijkstra – Label Proposal
+
+The third session was devoted to a technical discussion on the XML syntax for labels, adaptations and switching services.
+* Jason Zurawski - XML syntax
+
+
+Jason Zurawski – Circuit Monitoring
+-----------------------------------
+Slides: http://www.ogf.org/OGF33/materials/2350/20110920-CircuitMonitoring.ppt
+
+Jason presented slides describing the circuit monitoring work by Internet2, done late 2010, early 2011.
+Some of these slides were presented earlier in the NMC working group, but this time, Jason focussed a bit more on the schemas used.
+
+Live demo: http://ndb1.internet2.edu/circuits/
+
+Q: Why is there a topology collector (that queries both OSCARs and a topology service)?
+A: Topology service has static topology info, OSCARs has the dynamic information.
+
+One of the slides had a screenshot describing the following circuit:
+-> ion.internet2.edu -> dragon.maxgigapop.net ->
+<- dragon.maxgigapop.net <- ion.internet2.edu <-
+This was confusing, as both dataflows seem to go from Internet2 to Max Gigapop.
+
+It was unclear if the bandwidth utilization of an interface lists the total bandwidth of that interface, or just the bandwidth of a VLAN on that interface. (The GUI does not list the VLAN number, so we presumed it listed the bandwidth utilization of all VLANs on that interface).
+
+The source code of the project is available online.
+Code base topology service available at http://anonsvn.internet2.edu/svn/perfSONAR-PS/trunk/perfSONAR_PS-TopologyService
+Code base GUI is available at http://anonsvn.internet2.edu/svn/perfSONAR-PS/branches/aaron-circuits/perfSONAR_PS-CircuitMonitoringAgent/
+
+
+Jeroen van der Ham – GEYSERS; NOVI; GLIF DTOX-TF
+------------------------------------------------
+Slides: http://www.ogf.org/OGF33/materials/2350/1109-OGF-NML-UvA-Activities.pdf
+
+Jeroen presented three slide decks:
+- on the GEYSERS project that the UvA is involved with
+- on the NOVI project that the UvA is involved with
+- on the Automated GOLE demo at GLIF, and the DTOX (dynamic topology exchange) workgroup of the GLIF
+
+Jeroen invited participants to join a BoF session at SC'11 on "Semantic Resource Descriptions in Advanced Cyberinfrastructures". URL: http://sc11.supercomputing.org/schedule/event_detail.php?evid=bof116
+
+Both GEYSERS and NOVI use semantic (= OWL-based) topology descriptions. Jeroen explained their schemata.
+
+GEYSERS:
+Richard asked why a "Network Element" is different from a "Node Component". Would it be possible to integrate the network with other resources (such as CPU, memory and storage)?
+
+NOVI:
+Slide manager - manages virtual pool of composed resources from different domains
+Aggregate manager - manage resource pool under single management 
+In a future plan, the ASB will be responsible for composition and slicing of resources across domains. However, the Slice manager can not be removed from the SFA, since not all (PlanetLab) domains have a ESB.
+
+DTOX:
+Discussion if NSI Topology represents the data plane or the control plane.
+According to Jerry, the NSI Topology represents the data plane, according to Jeroen the control plane.
+
+According to Jeroen, an endpoint is combination of URN and label
+
+
+Jerry Sobieski – Jerry's Topology Wishlist
+------------------------------------------
+Slides: http://www.ogf.org/OGF33/materials/2350/NSI+Topology+Wishlist.pptx
+
+Jerry presented two slides with a wishlist that NSI has with regards to topology description. 
+
+
+Jeroen van der Ham – Port vs. Interface
+---------------------------------------
+
+Jeroen argued that the change of the term "Port" to the term "Interface" in NML would reduce confusion. 
+Both the NOVI and GEYSERS project use most of the concepts defined in NML, and also use the same terminology, with the exception of the term "Port", which is changed to "Interface" by both projects. The term "Port" was deemed confusing with the ports in TCP and UDP.
+
+Jeroen noted that a TCP port is actually a label on an Port/Interface.
+There's no real advantage to changing the term other than to reduce confusion.
+
+A vote will be held on the mailing list to decide on the term in NML.
+
+
+Freek Dijkstra – URN:OGF:network Status and Proposal
+----------------------------------------------------
+Slides: http://www.ogf.org/OGF33/materials/2350/NML+Progress+OGF33.pptx (slides 8-11)
+
+Freek presents progresson URN:OGF(:network)
+- URN:OGF has been accepted by IETF, waiting for sister-doc in OGF
+- document for registering subnamespaces is now in public-comments.
+- urn:ogf:network request draft has been written
+
+Problem with current urn:ogf:network syntax: domain names are somewhat volatile.
+Creating a registry for organisations that assign URNs would solve the problem.
+  - suggestion for the registry:
+     - organisation name
+     - DNS + version
+     - DNS + year
+
+Freek will write a proposal to the mailing list.
+
+
+Jeroen van der Ham & Freek Dijkstra – Label Proposal
+----------------------------------------------------
+Slides: http://www.ogf.org/OGF33/materials/2350/NML+Progress+OGF33.pptx (slides 12-13)
+
+Jerry and Jeroen volunteer to provide a candidate solution for expressing this in the UML.
+IP and MAC addresses as labels?
+
+
+Freek Dijkstra - Tasks Ahead
+----------------------------
+Slides: http://www.ogf.org/OGF33/materials/2350/NML+Progress+OGF33.pptx (slides 14-18)
+URL: http://forge.gridforum.org/sf/tracker/do/listTrackers/projects.nml-wg/tracker
+
+Freek added tasks in the Tracker at the Gridforge website.
+
+Everyone is invited to shepherd any item that is marked as "New" or "Waiting for Volunteer".
+
+Jeroen notes that OWL is now the more standard syntax for ontologies. Proposes to change RDF to OWL.
+
+Jerry is volunteering to review the schema document once it nears completion.
+
+Jeroen volunteers to write the OWL schema
+Jason volunteers to finish the RNC schema
+Freek volunteers to help with the schemas
+
+
+Jason Zurawski - XML syntax
+---------------------------
+Jason energetically led the working group through a couple of examples in XML, trying to reach consensus on syntax. The effort started in the hallway, and continued during the third session.
+
+The XML files are available from subversion repository at http://forge.ogf.org/svn/repos/nml-examples/20110922
+
+Consensus was reached on the single layer XML syntax.
+
+Freek noted that he still thought the syntax of NML relations could be improved, but also made it clear that there is rough consensus on <nml:relation type="name_of_the_relation"/>. He reserved the right to re-iterate on a previous proposal after creating an implementation, to show the advantages (if any), but also urged the working group to continue with the current syntax, and not wait on that proposal.
+
+The goal of the third working session was to create a syntax to describe a VLAN switch, including a 802.1x-capable link between two devices.
+
+This problem was tackled in the following steps:
+
+1. nmlbase.xml: A syntax to describe channels over a single link, in this case a single (default) VLAN (ID 0) over a link between Houston and Atlanta. This introduces two complimentary concepts:
+  - A "providesChannel" relation between the (physical) link and (channel) link.
+  - A syntax to describe adaptation between a (physical) fibre port, and the (logical) VLAN ports. This was done using an "adaptation" Service, which includes the adaptation between the two ports.
+
+2. switch_matrix_without_labels.xml: Introduce the concept of a "switching" Service, that can provide cross connects.
+
+3. switch_matrix_w_labels.xml: Introduce the concept of "labels" associated with ports (the possibility if they can be associated with links as well was not discussed. This is still open for debate.)
+
+4. configured_vlan.xml: Description of a single VLAN as a "switching" Service.
+
+5a. 2vlans_option1.xml: Description of two VLANs as two "switching" Services.
+5b. 2vlans_option2.xml: Description of two VLANs as one "switching" Service.
+  - It should be decided which of these two option is the best syntax. 
+  - 2vlans_option1.xml is more verbose, but easier to parse
+  - 2vlans_option1.xml scales better (more compact syntax), but harder to parse
+
+The XML files are a first pass on agreeing with the syntax. They are not yet production ready examples:
+- they contain comments listing some (usually minor) open issues
+- some agreed upon syntax is commented out, so it validates against the RNC schema
+- some syntax may be superfluous for a given example, the examples should be trimmed to remove redundant code.
+
+Freek, Jason and Jeroen agreed to work on these examples, so they can be used in the schema document (or in an accompanying document).
+

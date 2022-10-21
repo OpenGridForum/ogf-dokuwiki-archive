@@ -1,0 +1,507 @@
+DAIS Specification Writers face-to-face, London 10 & 11th May
+=============================================================
+
+Present:
+
+	Simon Laws, IBM
+	Brian Collins, IBM
+	Susan Malaika, IBM
+	Amy Krause, EPCC
+	Mario Antonioletti, EPCC
+	Norman Paton, University of Manchester
+
+---
+Day 1
+=====
+
+Core Spec
+=========
+
+     - Should use US English for the specs.
+
+     - DataFactory, DataAccess, DataManagement, (DataDescription) are
+       concepts not necessarily portTypes. May change.
+        - This view currently not reflected in the OGSA Data Services 
+          document but this document may yet change.
+
+     - Subspecs should reflect the top level structure of the core spec 
+       document for their own structure.
+
+     - Add "relational view" as one of the examples for a Data Resource
+       as one of the examples in section 3.2?
+
+     - Should "For example, it is not currently the intention of the DAIS 
+       working group to define new query languages." in section 3.3
+       be stated in the scope section and the abstract?
+
+     - Split the "Terminology and Concepts" into "Terminology" and
+       "Concepts" sections.
+
+     - May need to revisit the identity section to ensure that we need all 
+       the statements made in that section.
+
+     - A question about the "name" - if a data resource is a federation
+       then you do not want to expose the individual members of that 
+       federation.
+
+       If the service manages the multiplicity then it's ok to expose
+       the names of the resources represented by the service. 
+       In general a query will be directed at one of the data resources
+       and not the collection and not the collection as a whole - hence 
+       it makes sense to return the "name" in the context of one request.
+
+       Suggestion: anything that deals with multiplicities may be located
+       in the management interface.
+
+       When a service represents many data resources then it must contain
+       several identifiable things.
+
+       The names returned by service regarding the data resources may be
+       mapping dependent.
+
+     - Susan would like it that it be stated that data services are
+       identifiable explicitly.
+
+     - Comment as to whether the terms and properties boundary is clearly
+       defined. Move to just use properties from now on.
+
+     - Session - relationship between requests, one client going to multiple
+       resources or multiple requests going to a single resource? ...
+       clarification called for. This was done in the spec at the meeting.
+
+     - Maybe have a subsection in the mapping section to related specs.
+
+     - Section 1.2 requires some more text to indicate what is in this spec 
+       for someone new to this area.
+
+       Susan has volunteered to supply text for this. 
+
+       Norman also said that we should have a statement about what is in the 
+       document structure - section 1 deals with x, section 2 deals with y, 
+       etc.
+
+     - Data Description Elements in section 3.11 needs to be revisited.
+
+     - WSDL uses ws-dai (or wsdai) as a prefix while the document has
+       a dais prefix.
+
+     - Return types: issue as to what we choose as a return type.
+
+                        Service
+                       +------------+       +---------+
+           --[Req]---->| SQLQuery   |------>| Rowset  |  
+                       |            |       |         |
+                       |            |       +---------+
+           <--[Ref]----+------------+ 
+             
+                        Service
+                       +------------+
+           --[Req]---->| SQLQuery   |
+                       |            |
+                       |            |
+           <--[Res]----+------------+ 
+             Rowset
+
+	   static -- different service type -- specified in the WSDL
+
+        Variability:
+
+	   by service -- different service or rowset property -- terms
+	   by message -- per message -- parameter in the request
+	   service chooses -- per message
+
+       Question about tooling and how it can support variability.
+
+       Same issue about tooling applies to the factory.
+
+       Do not want to be vendor hostile. This area does not show any
+       convergence so it might be best not to follow a static choice
+       for the return type.
+
+       Another approach is to be static with synchronous replies and be
+       dynamic with asynchronous.
+
+       JSR235 - SDO - Service Data Objects. At some point we will probably
+       be asked what our positioning is regarding SDOs.
+
+       Webrowset shows the SQL data sets through while SDO does not. We 
+       need to determine whether we show the relational aspects through
+       or adopt the SDO approach.
+
+       The relationship between the creator and created is variable. Should
+       come back to this after looking at the realisation types.
+
+       Could add that individual realisation can include their own return
+       types.
+
+       What the factory does is mapping specific - it may or may not create
+       a service.
+
+     - ServiceProperties will probably go in section 3.13.
+
+     - In the response do we want to allow the possibility of more than
+       one reference as the result of a request? i.e. the "*" shown in
+       one of the example in the core spec. Sounds sensible at the top
+       level ....?
+
+     - Section 5 should state that DataAcess interface must implement
+       some operations as well as the properties otherwise it may look
+       a bit silly.
+
+     - Data Access Interface ... should re-think the usage of the word 
+       "Interface" as this has a very specific meaning. Can:
+
+		   - leave as is
+		   - in the intro that operations MUST be supported with the
+		     form and MAY...
+
+     - Susan in section 5.5 - may need to extend the interpretation of
+       transaction isolation. This is a behaviour not described by 
+       any of the options already described in the document.
+
+     - Section 3.8 should include some examples.
+
+     - Sensitivity - means that you can go forward and back in a rowset
+       and whether you read the same the results when you read forwards
+       and then backwards. Sensitive means that you will see the change
+       while if it is insensitive then you will not. Do we want this?
+       It might be worth phrasing a question to someone that
+       understands transactions regarding this.
+
+     - Partial data - partial data is acceptable/not acceptable,
+       pertinent to federation, e.g. what happens if one of the data
+       sources is not available as opposed to the service getting some
+       way through all the data sources in a federation and then for
+       some reason not getting any more.
+
+       Norman: inclination is not to include this property as it's not
+       a clear concept.  Chop out for now but can come back - need to
+       be able to specify what partial data is/has been obtained.
+
+     - destruction rule - when do we remove the relationship between the
+       service and the resource. Question as to whether this is a mapping
+       issue or not. Something like a read once - you don't specify where
+       the rules are. 
+
+       It was pointed out that this is really a management role and
+       should not be in the access interface.
+
+     - Questions: do we want the service to advertise the type of terms
+       that it supports? Can a factory expose more than one set of
+       term documents and can WS-Policy be used to describe a choice of
+       these available to the client (no negotiation) or should each of
+       these document terms be exposed through a different service interface.
+
+       This may be exposed as a property.
+
+     - Move 3.13 to section 6, Move section 3.12 to 5, move section
+       3.11 to 4 to have properties with the operations.
+
+     - Should we care about term documents as opposed to term types? One 
+       is a structure the other an instance.
+
+Day 2
+=====
+
+     - Examine the capabilities of using MUWS and MOWS for describing
+       management capabilities.
+
+     - We should make a statement in the spec that management will be
+       taking place somewhere else and then try to ensure that the
+       areas that are dealing with management actually cover the data
+       area concerns.
+
+     - We should do something with the OGSA Data Service in the run up
+       to GGF 12.
+
+     - Need to go through all the issues in Grid Forge and clarify this.
+
+     - Try to engage with the WSDM Group at GGF11.
+
+     - Possibly try to produce a straw man to see how well DAIS fits in 
+       with WSDM.
+
+Relational Realisation
+======================
+
+     - Change the operations to use capitalised first letters. This applies
+       to all the specs.
+
+     - DAIS direct (request/response) access to data while infod provides 
+       a publish/subscription based access to data.
+
+       Simon's view:
+
+                  ------> [DS]
+                          /  \
+                         /    \
+                        /      \
+          --[Pull]--->[DS]     [DS]---[Push]-->
+
+               DAIS                INFOD
+
+                     |--Common Ground--|
+
+        In both you identify some data, derive some data and the DAIS
+        is obtained via request-response while infod would use a publish
+        subscribe.
+
+        Maybe the publish/subscribe sections should be renamed in the core
+        document.
+
+
+                  ------> [DS]
+                          /  \
+                  [Derive]    [Subscribe]
+                        /      \
+          --[Pull]--->[DS]     [DS]---[Push]-->
+   Direct Request-response     Publish
+               DAIS                INFOD
+
+                      |--Common--|
+
+      This can be used as a basis for the core spec and possibly be put in
+      the charter of the infod WG.
+
+    - We may allow our properties to be settable. (Simon:) Terms and
+      descriptions will be combined into
+      properties. LanguageCapabilities describes what you will supply
+      in the request. (Sue:)Could also be jdbc compliant.  (Norman:)
+      May want the service to be transparent on this. (Simon:) the
+      LanguageCapabilities is an extensible list.
+
+      Conclusion: defer to CGS-WG (via DMTF Model) but have
+      SQL92Expression, SQL99Expression, SQL03Expression for now.
+
+      DBx vendors y will provide functionality to automatically
+      populate the DMTF model which the application could then use as a
+      basis for deriving interoperability.
+
+    - CGS WG will be generating XML for RelationalProperties.
+
+    - Is SQL/PSM included? Answer seems to be yes.
+
+    - SQL2003 defines the type mappings in XML.
+
+    - Does JSR114 use the SQL2003 type mappings?
+
+      Returns column types as strings and exposes the relational type
+      in the metadata.
+
+    - Need a property in the relational spec that describes the qnames of 
+      valid output types that come out of an SQLExecute statement.
+
+      SQLExecute(...)--->SQLExecuteResponseValue
+                                    ^
+                                    |
+                         +----+-----+------+--- ....
+                         |    |     |      |
+                         RF1  RF2   RF3    RF4  ....
+                         Response formats
+
+      Can select this at the message level.
+
+    - Need to investigate what access denial means at the message level. 
+      Should we define a "PermissionDenied" fault that reflects an
+      authorisation denial at the operation level?
+
+    - Need to be able to reflect the SQL errors in the DMBS and how these
+      are mapped to SOAP faults. Should these be mapped generically? 
+      Brian states that most of these will be exposed through the 
+      SQLCommunicationsArea.
+
+    - You get one SQLCommunicationsArea per row when you pull a result
+      set (from a stored procedure?).  Questions as to whether this
+      makes sense to have this in stored procedure.
+
+    - Scenario
+
+
+        Query -----> [DS]
+                      |
+                      |    +- Rowset1
+                      [DS]/-  Rowset2
+                          \+- Rowset3
+                                |
+                      [RS]<-----+   
+      
+      Why have a different interface for iterating through result sets?
+
+      Each result could be exposed as a different service. :-(
+
+      Could use GetRowsetReference to expose the different services?
+
+      You don't know what the shape of the output is going to be from
+      SQLExecute unlike SQLQuery and SQLUpdate where you know what the
+      output of the call is going to be.
+
+      Can you combine rowset access and data set access? - Norman
+      Have a specific relational interfaces that allow you to return
+      complete rowsets and/or expose the different rowsets.
+
+      How do you identify the result set/return value you wish your
+      request operation acts on?
+
+    - Backwards compatibility should be a guiding principle in the writing
+      of the specs.
+
+    - RelationalResponseAccess operations - need the following operations
+
+      Property = NumberofRowSets: number of rowsets, format, ...
+                 Metadata about the result sets.
+      ::GetRowSet
+      ::GetRowSetReference
+      ::GetUpdateCount
+      ::GetReturnValue
+      ::GetOutputParameter
+      ::GetSQLCommunicationsArea
+
+      Need to be able to identify which rowset the above operations will
+      act on. Also need to identify the format of each of the rowsets.
+
+      What does GetSQLCommunicationsArea mean in relation to the fact that 
+      the DBMS returns one SQLCommunicationArea per row. We are inventing
+      something so we need to derive some meaning for it.
+
+      A service should identify the number of result sets (and any other 
+      metadata) through metadata.
+
+      How do you control the lifetime of these objects - do they all live
+      for the same lifetime, can they be individually destroyed, should this
+      be a term or can one have an explicit operation that will remove them.
+
+      Rational: if these guys are large and are cached at the service level
+      (no longer associated with the database) you may want to remove them
+      as you consume them.
+
+    - Scenario 3
+
+            R ----[Q]--------->[DS]
+              <---[QR]---------
+              ----[getNextN]-->
+
+      What happens if you want to iterate over a rowset as opposed to obtain
+      all of the results in one go?
+
+    - Need to think about the naming scheme - SQLQuery is what it should do?
+      GetRowset-> GetRowsetFactory, ...
+
+    - Need to publish the specs to the DAIS WG mailing list by the end of this
+      week. Have a telcon scheduled for this Thursday that will deal with
+      the realisations.
+
+XML
+===
+    - Susan will go through all three abstracts of the current specs 
+      and make appropriate changes.
+
+    - In section 4.1 XMLCollectionDescription the CGS will not be defining
+      stuff.
+
+    - Question as to whether we remove the Index property - not as whacky
+      as versioning. Call to leave it out.
+
+    - Susan - people index xml collections using XPath but it's going to be
+      hard to get agreement on this.
+
+    - Norman thought that we should have an updated set of specs before 
+      approaching vendors.
+
+    - An action on the group: try and get XML database vendors interested
+      once the version of the XML spec is out.
+
+    - Removed versioning? Do we know what we mean by this? Some people do
+      not approve of using the namespace for versioning.
+
+    - Susan brought up XQJ (www.jcp.org, JSR 225). Susan suggest that Amy 
+      should join.
+
+    - The access section needs to apply to the packaging convention of the
+      core specs.
+
+    - ValidResponseFormats have to refer to the name of the message - use
+      the name of the property - if you have more than one message that can
+      return data in different formats ... XPathAccessResponseFormat.
+
+    - Implementing the XUpdate operation should be optional (not under any
+      standards body).
+
+    - Issue as to whether XMLSequenceAccess should be a separate document.
+      Susan says that should wait and see as to what happens in this space
+      before taking a decision.
+
+    - Seems to be a consensus with regards to XMLSequenceAccess and rowset
+      back into the documents.
+
+    - In the relation spec change DataSet -> RelationalResponse.
+
+    - createService -> put it in access and call it something factory,
+      e.g. SelectCollectionFactory.
+
+    - XMLCollectionManagement much the same as before though there is
+      no overall agreement in this space. If Management is associated
+      with the managing the service and the relationship between the
+      service and the data resource then this might migrate into access
+      (where it was before). If management is associated with
+      adding/removing documents then it's management.
+
+      Call is to move these portTypes into access to be self
+      consistent.  There is no external agreement.
+
+Positioning in Relation to Infod
+================================
+
+Diagram put up by Simon. DAIS on the left INFOD on the right.
+
+                               | Direct Request
+             Direct Request    | Response-Query
+             Response-Query   \/
+           ------------------>[Data]
+                              /    \
+                 Derivation  +     + Subscription
+                              \    /        Publication
+          ------------------->[Derived Data]--------->
+             Direct Request   ^
+            Response - Access |
+                              |  Direct Request-Response
+                              |  Publication Creation
+
+Susan: Infod not interested in the publication part. 
+     
+
+                               | Direct Request
+             Direct Request    | Response-Query
+             Response-Query   \/
+           ------------------>[Data]
+                              / |  \
+                 Derivation  +  |  + Subscription
+                              \ |  /        Publication
+          ------------------->[Derived Data]--------->
+
+Middle line is also a derivation line too.
+
+Infod will concentrate on subscriptions. The specification of a query,
+transformation, etc. scoping the data you are interested in ... very
+similar to DAIS.
+
+The subscriber does not have to be the client.
+The broker and consumer roles are missing in the diagram.
+Will not concentrate on the data movement - will do the subscription.
+Will try to provide DAIS with the third party delivery.
+Will also de-emphasise data replication.
+
+What Happens Next
+=================
+
+	- Simon core write token
+	- Brian relational write token
+	- Amy xml write token
+
+Mario email Norman instructions on setting up at the OGSA-DAI IRC
+Post the documents on Friday 14th to the DAIS mailing list.
+9am Monday 17th -- Norman to arrange.
+Tuesday morning Norman has got time to read the documents and comment.
+9am Thursday 20th
+21st have to have the documents submitted to GGF.
+
+

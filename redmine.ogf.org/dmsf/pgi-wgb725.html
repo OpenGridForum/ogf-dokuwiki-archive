@@ -1,0 +1,576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/dmsf/pgi-wg?folder_id=6354 by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 19 Oct 2022 20:08:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>DMSF - PGI WG - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="cCg/D1tluCuylx7S3e8VQVQ6oaM9KpmIVNNisH3Wr48="/>
+<link rel='shortcut icon' href='../favicon4460.ico?1425381960' />
+<link href="../themes/ogf_redmine/stylesheets/application4460.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="../javascripts/prototype4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/effects4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/dragdrop4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/controls4460.js?1425381960" type="text/javascript"></script>
+<script src="../javascripts/application4460.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="../plugin_assets/extended_fields/stylesheets/extended_fields4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="../plugin_assets/wiking/stylesheets/wiking4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/jquery-ui/jquery-ui-1.8.134460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/plupload/jquery.ui.plupload4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/jquery.dataTables/jquery-ui.dataTables4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../plugin_assets/redmine_dmsf/stylesheets/dmsf4460.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+	
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery-1.6.1.min4460.js?1425381960" type="text/javascript"></script>
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery-ui-1.8.13.min4460.js?1425381960" type="text/javascript"></script>
+	<script src="../plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/jquery.dataTables.min4460.js?1425381960" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		jQuery(document).ready(function() {
+			jQuery("#browser").dataTable({
+				"bJQueryUI": true,
+				"oLanguage": {
+					'sUrl': '/plugin_assets/redmine_dmsf/javascripts/jquery.dataTables/en.json'	
+				},
+				"bAutoWidth": false,
+				"bPaginate": false,
+				"aaSorting": [[1,'asc']],
+				"aaSortingFixed": [[7,'asc']],
+				"aoColumnDefs": [
+					{ "bSearchable": false, "aTargets": [0, 6, 7, 8] },
+					{ "bSortable": false, "aTargets": [0, 6, 7] },
+					{ "iDataSort": 8, "aTargets": [ 2 ] }
+				],
+				"fnInitComplete": function() {
+					jQuery("div.controls").prependTo(jQuery("#browser_wrapper div.fg-toolbar")[0]);
+				},
+				"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+					return "Folders: 0, Documents: 8";
+				}
+			});
+			
+			jQuery("[data-downloadurl]").each(function() {
+		        var url = this.getAttribute("data-downloadurl");
+		        if (this.addEventListener) {
+		          this.addEventListener("dragstart", function(e) {
+		            if (e.dataTransfer) {
+		              e.dataTransfer.setData("DownloadURL", url);
+		            }
+		          },false);
+		        }
+	      	});
+		});
+		
+		function manipulation_link(action) {
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+		
+		function confirmation_link(action) {
+			if(!window.confirm("Do you really want to delete this entry?")) return;
+			jQuery("#entries_form").attr("action", action);
+			jQuery("#entries_form").submit();
+		};
+	</script>
+</head>
+<body class="theme-Ogf redmine controller-dmsf action-show">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="../login.html" class="login">Login</a></li>
+<li><a href="../account/register.html" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="../index.html" class="home">Home</a></li>
+<li><a href="../projects.html" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/pgi-wg" method="get">
+        
+        <label for='q'>
+          <a href="../search/index/pgi-wg.html" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="standards.html?jump=dmsf" class="root">Standards</a> » <a href="architecture-area.html?jump=dmsf" class="ancestor">Architecture Area</a> » PGI WG</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="../projects/pgi-wg.html" class="overview">Overview</a></li>
+<li><a href="../tab/show/pgi-wg.html" class="tab">Project Info</a></li>
+<li><a href="../projects/pgi-wg/issues.html" class="issues">Issues</a></li>
+<li><a href="../projects/pgi-wg/issues/calendar.html" class="calendar">Calendar</a></li>
+<li><a href="../projects/pgi-wg/news.html" class="news">News</a></li>
+<li><a href="pgi-wg.html" class="dmsf selected">Documents</a></li>
+<li><a href="../projects/pgi-wg/wiki.html" class="wiki">Wiki</a></li>
+<li><a href="../projects/pgi-wg/files.html" class="files">Files</a></li>
+<li><a href="../projects/pgi-wg/repository.html" class="repository">Repository</a></li>
+<li><a href="../projects/pgi-wg/embedded/index.html" class="embedded">Mailing Lists</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+	
+</div>
+
+
+<h2>
+	<a href="pgi-wg.html">Documents</a>
+
+ / 
+ <a href="pgi-wg451a.html?folder_id=872">gridforge</a>
+ 
+
+ / 
+ <a href="pgi-wg445b.html?folder_id=6346">Input Documents</a>
+ 
+
+ / 
+ <a href="pgi-wg1325.html?folder_id=6353">Execution Service</a>
+ 
+
+ / 
+ <a href="pgi-wgb725.html?folder_id=6354">State Model</a>
+ 
+
+
+</h2>
+
+<div class="wiki">
+
+</div>
+
+<form action="https://redmine.ogf.org/dmsf/entries_operation/pgi-wg?folder_id=6354" class="dmfs_entries" id="entries_form" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="cCg/D1tluCuylx7S3e8VQVQ6oaM9KpmIVNNisH3Wr48=" /></div>
+	<input id="action" name="action" type="hidden" />
+	<div class="controls" style="float: left">
+		<input name="download_entries" title="Download checked in Zip archive" type="submit" value="Download" />
+		<input name="email_entries" title="Send checked by email" type="submit" value="Email" />
+		
+	</div> 
+	<table class="display entries" id="browser">
+		<thead>
+			<tr id="root">
+				<th class="check">
+					<input id="check_all_entries" title="Check/Uncheck all for zip download or email" type="checkbox" />
+				</th>
+				<th>Title</th>
+				<th>Size</th>
+				<th>Modified</th>
+				<th>Ver.</th>
+				<th>Author</th>
+				<th></th>
+				<th class="hidden"></th>
+				<th class="hidden"></th>
+			</tr>
+		</thead>
+	<tbody>
+	
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12468" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/statesb4d7.pdf?download=" class="icon icon-file " data-downloadurl="application/pdf:ARC Job state diagram:https://redmine.ogf.org/dmsf_files/12468?download=" title="ARC Job state diagram version 2.0 download">ARC Job state diagram</a>
+				<div class="filename" title="Filename used for download or in Zip archive">ARC Job state diagram</div>
+			</td>
+			<td class="size">30.8 kB</td>
+			<td class="modified">
+				2009-06-23 05:01
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/12468.html" title="ARC Job state diagram details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12468'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">31518</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12467" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/CREAM_job_statesb4d7.png?download=" class="icon icon-file " data-downloadurl="image/png:CREAM job state diagram:https://redmine.ogf.org/dmsf_files/12467?download=" title="CREAM job state diagram version 1.0 download">CREAM job state diagram</a>
+				<div class="filename" title="Filename used for download or in Zip archive">CREAM job state diagram</div>
+			</td>
+			<td class="size">22.1 kB</td>
+			<td class="modified">
+				2009-06-09 04:52
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/12467.html" title="CREAM job state diagram details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12467'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">22671</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12470" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/PGI-Single-Job-State-Modelb4d7.zargo?download=" class="icon icon-file " data-downloadurl="application/octet-stream:PGI Single Job State Model  (ZARGO file):https://redmine.ogf.org/dmsf_files/12470?download=" title="PGI Single Job State Model  (ZARGO file) version 57.0 download">PGI Single Job State Model  (ZARGO file)</a>
+				<div class="filename" title="Filename used for download or in Zip archive">PGI Single Job State Model  (ZARGO file)</div>
+			</td>
+			<td class="size">48.2 kB</td>
+			<td class="modified">
+				2011-09-21 12:52
+				
+				
+			</td>
+			<td class="version">
+				57.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/12470.html" title="PGI Single Job State Model  (ZARGO file) details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12470'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">49396</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12471" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/PGI-Single-Job-State-Model-Big-Diagramb4d7.png?download=" class="icon icon-file " data-downloadurl="image/png:PGI Single Job State Model - Big diagram (PNG):https://redmine.ogf.org/dmsf_files/12471?download=" title="PGI Single Job State Model - Big diagram (PNG) version 3.0 download">PGI Single Job State Model - Big diagram (PNG)</a>
+				<div class="filename" title="Filename used for download or in Zip archive">PGI Single Job State Model - Big diagram (PNG)</div>
+			</td>
+			<td class="size">118.1 kB</td>
+			<td class="modified">
+				2011-09-21 12:54
+				
+				
+			</td>
+			<td class="version">
+				3.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/12471.html" title="PGI Single Job State Model - Big diagram (PNG) details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12471'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">120937</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12472" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/PGI-Single-Job-State-Model-Big-Diagram-With-Commentsb4d7.png?download=" class="icon icon-file " data-downloadurl="image/png:PGI Single Job State Model - Big diagram with comments (PNG):https://redmine.ogf.org/dmsf_files/12472?download=" title="PGI Single Job State Model - Big diagram with comments (PNG) version 2.0 download">PGI Single Job State Model - Big diagram with comments (PNG)</a>
+				<div class="filename" title="Filename used for download or in Zip archive">PGI Single Job State Model - Big diagram with comments (PNG)</div>
+			</td>
+			<td class="size">701.1 kB</td>
+			<td class="modified">
+				2011-09-21 12:54
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/12472.html" title="PGI Single Job State Model - Big diagram with comments (PNG) details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12472'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">717893</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12469" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/PGI-Single-Job-State-Modelb4d7.txt?download=" class="icon icon-file " data-downloadurl="text/plain:PGI Single Job State Model - Textual description:https://redmine.ogf.org/dmsf_files/12469?download=" title="PGI Single Job State Model - Textual description version 10.0 download">PGI Single Job State Model - Textual description</a>
+				<div class="filename" title="Filename used for download or in Zip archive">PGI Single Job State Model - Textual description</div>
+			</td>
+			<td class="size">22.8 kB</td>
+			<td class="modified">
+				2011-09-21 12:50
+				
+				
+			</td>
+			<td class="version">
+				10.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/12469.html" title="PGI Single Job State Model - Textual description details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12469'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">23327</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12465" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/2009-05-22_PGI_StateModel_v2b4d7.ppt?download=" class="icon icon-file " data-downloadurl="application/vnd.ms-powerpoint:PGI State Model v2:https://redmine.ogf.org/dmsf_files/12465?download=" title="PGI State Model v2 version 2.0 download">PGI State Model v2</a>
+				<div class="filename" title="Filename used for download or in Zip archive">PGI State Model v2</div>
+			</td>
+			<td class="size">459.5 kB</td>
+			<td class="modified">
+				2009-05-22 06:28
+				
+				
+			</td>
+			<td class="version">
+				2.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/12465.html" title="PGI State Model v2 details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12465'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">470528</td>
+		</tr>
+	
+		<tr class="file">
+			<td class="check"><input id="files_" name="files[]" title="Check for Zip download or email" type="checkbox" value="12466" /></td>
+			<td class="title">
+				
+				<a href="../dmsf_files/12466b4d7.html?download=" class="icon icon-file " data-downloadurl="none:gLite job flow  (from gLite 3.1 User Guide):https://redmine.ogf.org/dmsf_files/12466?download=" title="gLite job flow  (from gLite 3.1 User Guide) version 1.0 download">gLite job flow  (from gLite 3.1 User Guide)</a>
+				<div class="filename" title="Filename used for download or in Zip archive">gLite job flow  (from gLite 3.1 User Guide)</div>
+			</td>
+			<td class="size">0 Bytes</td>
+			<td class="modified">
+				2009-05-26 17:15
+				
+				
+			</td>
+			<td class="version">
+				1.0
+				
+			</td>
+			<td class="author">Redmine Admin</td>
+			<td class="actions">
+				
+				<div class="right_icon_box" style="width: 70px;">
+					<div style="float: left">
+					<a href="../dmsf_files/12466.html" title="gLite job flow  (from gLite 3.1 User Guide) details"><img alt="Filedetails" class="detail_icon" src="../plugin_assets/redmine_dmsf/images/filedetails4460.png?1425381960" /></a>
+					</div>
+					<div style="float: right; width: 44px;">
+					
+						
+							<a href="#" onclick="manipulation_link('/dmsf_files/lock/12466'); return false;" title="Lock to prevent changes for other members"><img alt="Lock" src="../plugin_assets/redmine_dmsf/images/lock4460.png?1425381960" /></a>
+						 
+						&nbsp;
+					
+					
+					</div>
+				</div>
+				<br class="clear" />
+			</td>
+			<td class="hidden">1</td>
+			<td class="hidden">0</td>
+		</tr>
+	
+	</tbody>
+	</table>
+	<br />
+</form>
+
+<script type="text/javascript">
+	jQuery("#entries_delete_button").click(function(event) {
+		if(window.confirm("Do you really want to delete checked entries?")) {
+			jQuery("#entries_form").attr("action", "/dmsf/delete_entries/pgi-wg?folder_id=6354");
+			jQuery("#entries_form").submit();
+		}
+	})
+	
+	jQuery("#check_all_entries").click(function(event) {
+		var $this = jQuery(this);
+		if($this.prop("checked")) {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", true);
+		} else {
+			jQuery("input[type=checkbox]", jQuery("#browser > tbody")).prop("checked", false);
+		}
+	})			
+</script>
+
+
+
+
+
+
+<br />
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/dmsf/pgi-wg?folder_id=6354 by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 19 Oct 2022 20:08:59 GMT -->
+</html>

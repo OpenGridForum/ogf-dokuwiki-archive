@@ -1,0 +1,294 @@
+OGSA EMS Meeting @ Imperial College, London - 1 February 2005
+=============================================================
+
+*	Participants
+
+	Mark Morgan (UVa)
+	Andrew Grimshaw (UVa)
+	Steven Newhouse (OMII)
+	William Lee (Imperial College, London)
+
+	Minutes:	Mark Morgan
+
+*	EMS as it stands in the OGSA EMS group
+	- Discussion of PSHS - what they are and why the went away (simpliciation)
+	- Container "is a" resource
+		> They will have attributes/metadata
+		> Their are port types on that (start, stop, checkpoint,
+			deploy binary, etc.)
+	- Deployment and Configuration Services
+	- Is Job Manager Server-side or Client-side
+		> The client interacts with it (could be programmatic client,
+			web page, etc.)
+	- We can get rid of some of the cruft for the simple case
+		> Drop EPS and CSG
+		> Drop Reservations
+		> etc.
+
+*	What is RNS?
+	- Resource Naming Service -- Three level naming scheme.
+	- High level, human-readable, to abstract, to EPR mappings.
+	- Went to GFS to get that group to generalize their naming -- RNS is
+		outcome.
+
+*	What does the UVa/Platform EMS Prototype look like?
+	- Actor Descriptors
+		> doesn't have to be an endpoint
+			-- could be entry in registry
+			-- it's mostly metadata
+		> Seems similar to JSDL
+		> Seems simliar to EGA
+			-- whole infrastructure, reference model is Object based with a 
+				'root' grid component.
+			-- From the grid component they derive OS, file types, etc.
+			-- Problem is, it's an object model.
+			-- Object model is just a way of thinking of things.
+			-- Service oriented archs' eventually lead to objects.
+			-- Resource is anything that has a URI and state.
+	- Solutions
+		> Likely to be configured with JSDL
+		> Each element of the JSDL Doc could be a requirment
+
+*	What is an Abstract Name?
+	- Globally Unique in Time and Space
+	- RNS names will eventually map to Abstract Names
+	- Data files can also be named in RNS (though they don't have to be)
+		and as such can have Abstract Names.
+	- Killer spin on this is that it can probably map into EGA
+		> EGA Work is not public
+		> EGA's logical file name is exactly what RNS is talking about
+			(conceptually).
+	
+*	Service Containers
+	- Virtualization of the compute resource
+	- It takes in the application
+	- Maybe solutions are too complicated for the simplest case.
+	- Question:  Given this application description, can this container in
+		fact start this up?
+		> Depends.  Are you doing a two phase?
+			-- In otherwords, do you ask if you are allowed to execute, then
+				do so, or
+			-- Do you just try and execute and wait for failure
+				^ Both make sense, but there are race conditions with 2 phase.
+		> In the end you have to be prepared for failure no matter which way
+			you do it.
+
+*	OMII and execution
+	- Launching returns a string
+	- AbstractName is similar to this.
+		> Difference is that Abstract Name has a format and more stringent
+			requirements (i.e. uniqueness guarantees, etc.)
+
+* Type
+	- Encoding your type in the OMII string is OK too
+	- We don't necessarily have to reflect (though we can).  
+	- Nothing prevents you from putting type into a WS-Address.
+
+* EMS and Data
+	- Notice that we have left the data out
+		> The data design team is handling that
+		> Should all be fairly abstract
+		> Proxy service or actor could be different depending on how the data
+			is acquired.
+		> On the other hand if data goes down the path of having this global
+			namespace and we have NFS, SMB, etc. then you can always put in
+			paths and deal with it at that level.
+
+* Handles
+	- We are passing around handles in EMS (Abstract Names)
+	- We need to have a solid place to store where those handles point to.
+	- If it's a WS-Address handle, will have DNS name, service, xtra bits, etc.
+	- In WS-I world, live with a registry where state/metadata is stored
+
+* Metadata
+	- Logically vs. phsyically.
+		> We want to be able to take this string and get it's meta data for it
+			-- one mechanism to do this rather then two is better.
+		> Maybe we need to create this abstract name sooner.  
+			-- Then I can have this abstract name that is either a WS-I thing
+				or a WSRF endopint.
+				^ System will need to know what to do with it.
+		> There is an implicit assumption that when you get a pointer back
+			(an abstract name) for a proxy, then talking with that abstract
+			name implies that the action takes place at that proxy.
+			-- Decoupling is however possible.
+
+* WSRF v. WS-I
+	- Argument isn't really so much about state -- that's a red herring
+	- In the WS-I model, if something has meta data and operations, then
+		meta data tells you where to talk to this thing.
+		> Mobility is gained through this registry abstraction.
+		> We want that middle abstract name that can then be mapped to an
+			endpoint.
+		> This discussion is on going.
+		> It's going to be done in registries of some kind.
+		> Handle.NET (from CNRI) -- they've come up with another attempt
+			-- Handle.NET is too powerful for naming alone.
+			-- It keeps lot's of different meta data, not just address.
+			-- Naming didn't like it because it was free to Universities,
+				but cost everyone else.
+			-- If we start going down this path, then Handle.NET has the
+				technique we should look at.
+			-- It's a "self-declared" standard.  
+
+* Summary of EMS and OMII Comparison
+	- This really simpleton world view isn't really going to collide with OMII
+	- Might also fit in with EGEE's world view.
+
+* GridSAM
+	- Funded by OMII.
+	- Job Submission and Monitoring Web Service bridges to existing systems
+		> Condor
+		> SGE
+		> Globus
+		> etc.).
+	- Use JSDL to describe job and provision files.
+	- A lot like GRAM
+ 	- Doesn't use any WSRF ideas
+	- Current implementation includes
+		> WS-I
+		> Soap/HTTP(S)
+		> WS-Security
+		> JSDL
+		> WS-(Some Notification Mechanisms)*
+
+* JSDL
+	- XML template language for describing core aspects of a job
+	- Extensible in various sections
+	- Defined through GGF JSDL-WG
+	- How is JSDL different from JCL?
+		> The terms are different.
+		> JSDL took the commonalities between a lot of different languages.
+		> Sort of like RSL too and JCL didn't really have resource description.
+		> JSDL is more complex.
+	- JobDefinition contains JobDescription.
+	- JobDescription contains:
+		> Application
+		> Resources
+		> DataStaging
+			-- set of files that would be staged in or out and source or
+				target of those files)
+			-- presumes a staging environment and not a virtual data env..
+			-- a description of what files need to be there, and which
+				ones will be generated.
+			-- We could leave this empty if we wanted.
+	- JobDefinition also contains Profile which contains
+		> Application
+		> Resources
+		> DataStaging.
+	- Profile allows you to under specify your JobDescription and then
+			"instance" them in the Profiles
+		> Platform dependent
+		> Attempt not to make JSDL language too difficult.
+			-- Concrete example would be binary location on different systems.
+				^ In the JobDescription you might leave this blank and then
+					indicate the path in the various profiles.
+		> One of the features of JSDL was that it was simple and discrete.
+		> So far, this seems like a whole can of worms with Consistency checking
+			and verification.
+		> It's an alternative to having a more complicated language.
+
+* GridSAMService interface
+	- submitJob
+		> Input: JobDescription (JSDL)
+		> Output: JobIdentifier
+		> Fault: Submission Fault
+		> Fault: UnsupportedFeatureFault
+
+* JobMonitoringPortType interface
+	- getJobStatus
+		> Input: JobIdentifer
+		> Output: JobStatus
+		> Fault: UnknownJobFault
+
+* So there isn't a kill port type yet?
+	- No, not quite yet.
+	- GridSAM doesn't proclude these interfaces being used in a bigger system.
+	- If we are looking at containers in general, some will have this 
+		interface, and some will be to start a new service instance in this
+		container.  It would be nice if we didn't hvae to dichotomize those
+		into two different mechanisms.  If we could unify them, great.
+
+* JSDL currently allows you to have a pure staging job with no application.
+
+* GridSAM seems to fill two different roles
+	- Abstraction of the underlying interface (like container)
+	- Can encapsulate scheduling, etc.
+		> If you are running GridSAM on a front end machine that has two
+			queing systems behind it, then you would have two GridSAMs
+		> GridSAM can actually be arranged recursively.
+			-- GridSAM can backend GridSAM
+
+* GridSAM interfcae and simple container have a lot of parallels.
+	- The SuperSchedule is sort of everything else in EMS.
+		> Has to do resource discovery, planning mapping, etc.
+	- If we could somehow come to an agreement on what has to change and what
+		fits, then we'd have the ability too all agree on where we are heading
+		in the bigger picture.
+
+* EGEE
+	- Set of Grid Services
+		> Workload Manager
+		> Computing Element
+		> Logging and Bookkeeping
+		> Job Provenance
+		> Grid Accounting Service
+		> These are the gLite descriptions, not the existing, deployed one.
+			But, they have more or less agreed to this set.
+	- Workload Manager
+		> Task Queue
+		> Match Maker
+		> Information Supermarket
+		> etc.
+		> Talks to the computing element service
+	- EGEE does not plan to use JSDL at the moment.
+		> Instead they currently have something called JDL (Job Description
+			Language)
+		> Concepts in JDL have a moderately direct route to the JSDL
+			-- there is probably just a syntax mapping that needs to take place
+	- How does a user submit a job
+		> You express it via JDL language
+		> User submits JDL
+		> This goes to the Task Queue
+	- Looks like EGEE is going to support both push and pull scheduling model.
+	- A user can directly interact with Computing Elements
+		> it's a web service.
+		> Doing so eliminates benefits of placements, etc.
+	- Information about resources is available through the
+		Information Supermarket.
+	- Computing Element Architecture.
+		> The client (or Workload Manager) talks to the Computing Element
+		> The Monitoring system uses notification to report back to client
+			about the status of the job.
+		> Going through Interfaces (document that is public and was mailed out
+			in Gaithersburg).
+		> Seems that the CE also get the JDL when you do a submit.
+			-- They may get lots of information that they don't need any more.
+		> The JobID which is returned by the CE is not necessarily the same as
+			the one that is returned by the Manager.
+	- GT3.9.x has the factory model built in.
+	- The data model (gridFTP) is a lot more explicit.  Also the mapping file.
+	- EGEE has a separate infrastructure for dealing with authorization.
+	- Grid Access Service acts as a multiplexer for the clients.
+	- The ComputeElement has a large number of services inside of it.
+		> They want lots of small, lite interfaces
+			--  but then you have a bunch of things that you have to keep up
+				and running.
+	- All security stuff is done out of band.
+	- But, even the compute element has a "can this user run here" method.
+	- Data services
+		> presumably all those serviecs aren't exposed to the manager service.
+	- FTS/FPS -- File Transfer Service/File Placement Service
+	- EGEE seems pretty complex which is what we have been trying to map away
+		from EMS.
+	- EGEE is based on GT2.  They aren't likely to move to WSRF (GT4).
+	- It would be hard for EGEE to go to the whole pointer (object) thing
+		> EGEE is essentially a huge legacy system.
+		> Like any such system, it has its own internal dymanics and arch.
+		> Trying to change it in any way is life with risk.
+		> As opposed to OMII which is in an early stage
+			-- it's legacy system is smaller and simpler.
+	- Original idea for EGEE was to define a system that was modular and easy
+		to modify.
+		> This is why all data interaction is provided by the data management
+			people.  This was intention.  Is it true in practice?

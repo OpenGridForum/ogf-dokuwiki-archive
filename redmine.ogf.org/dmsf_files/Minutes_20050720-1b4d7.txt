@@ -1,0 +1,91 @@
+Minutes of the OGSA Data WG telcon, 20th July 2005
+
+0) Actions arising
+- Stephen to tidy the scenarios draft and circulate it to the list
+- Mario to ask an OGSA-DAI staff member to write something on the security issues around WS-DAI
+- Dave to consult OGSA WG security design team.
+- Dave to revamp section 3 of the architecture document
+
+1) Early discussion
+
+* Roll call 
+Dave Berry, NeSC (Note taker)
+Allen Luniewski, IBM
+Stephen Davey, NeSC
+Mario Antonioletti, EPCC
+Fred Maciel, Hitachi
+David Chadwick, University of Kent
+
+Apologies from Ann Chervenak
+
+The minuted from 22nd June were approved.
+Note: there was no meeting last week (13th July).
+
+2) Action report
+
+- Allen and Dave to mail co-chairs of other groups re our GGF sessions [Done].
+- Dave to mail list with a summary of his discussion with NeSC security people. [Done]
+- Stephen to update replication use case. [Stephen has added an extra version of the replication diagram to cover the case where the replication is hidden.  He still has to add some extra text.  He has also added a scenario for data pipelining.]
+Action: Stephen to tidy this and circulate it to the list
+- Ann to organise the security notes we've taken so far into a coherent memo that we can take to the security working groups. [Done]
+- Dave to revamp section 3 of the architecture document.
+- Update on Liaison with other groups (e.g. security, GFS)
+[GFS have an architecture finishing off RNS, suggested after August]
+
+3) GGF report
+Minutes from GGF are pending, so this was a short verbal report.
+
+- Data transfer session 
+This was mainly a discussion with Bill Allcock & Timur Perelmutov.  There may be a WG planned to cover the specification of a data transfer "job", at a very grounded level - from one known physical location to another, transferring bytes with on interpretation or transformation.  We agreed the document needs to deal with the concrete case first, and then consider higher-level issues (possibly in a separate section).
+
+- Outreach session
+
+- Transaction session
+It seems we can simply layer transactions on top of everything else, by referring to the appropriate draft standards.
+
+- Other related workgroups etc.
+AuthZ- discussed schemes for federated security.
+DAIS - planning to submit their specs.
+Trusted Computing RG - This mainly discussed low-level hardware issues.  These could have uses in making proxy certificates more secure, for example, but they don't directly affect our work.
+
+
+4) Security discussion
+
+We worked through Ann's memo, with much valuable information from David.
+
+Authentication: we believe this is solved.
+
+Authorisation: 
+The key problem arising is that data resource (DR) authorisation is typically more fine-grained than VO resource.  On the Grid, access control typically has three phases:
+Phase 1:  Get authentication ID.
+Phase 2:  Map authentication ID (Grid) to authorisation ID (DR).  The concept of "authorisation ID" has been used in IETF work for several years.  Mapping could be via proxy certificate, in LDAP, ...
+Phase 3:  DR Authorisation.
+Potential problem: what if the DR wants to do its own authentication (e.g. requests a password).
+
+In PERMIS: PEP = Policy Enforcement Point (application), PDP = Policy Decision Point (controls access to different applications).
+Currently, it is not practical to outsource fine-grained data access rights to an outside PDP.  PDP could control access to more static objects (e.g. tables).  PDPs can keep records of number of accesses, but can't handle privacy policies that depend on the content of previous queries.
+
+SAML 2.0 will not develop authorisation further; this is now the province of XACML 2.0.  Work in progress to add support for parameter passing to XAMCL 2.0.
+
+PERMIS doesn't yet use XAMCL and won't until it supports delegation of authority.  This is likely to be supported in XACML 3.0, which might appear next year (?).   Note: there are two different types of delegation - Globus delegates authentication to proxy certs; PERMIS delegates authorisation to users (e.g. a professor allowing certain rights to students).
+
+Replication:
+LDAP had similar issues 10 years ago.  They took the view that the replica must enforce the policy of the master copy.  This requires a standard access control scheme, which caused problems in practice.
+Two separate issues: access to use a particular resource plus access to use data.  E.g. a resource may not allow a certain user to access data on that resource at all, but if access is granted, the rights to the data should be the same on each resource.
+There's a certain amount that can be built into the technology, but there is also the social context (legal system).
+
+Federation:
+If only one backend service fails, can the federation service provide a "best effort" response (e.g. for a union query)?  There seem to be no easy answers to the questions raised in Ann's memos.
+
+Cpnclusion: It seems that each section of the document will need a subsection on security.  Possibly we need an introductory section that describes the possible security scenarios in which data services may operate.  We should consult the OGSA WG security design team
+
+Action:
+Mario to ask an OGSA-DAI staff member to write something on the security issues around WS-DAI.
+Dave to consult OGSA WG security design team.
+
+5) Planning
+
+We ran out of time so this was not discussed.
+
+6) Wrap up
+	DONM: Next week (July 27th).

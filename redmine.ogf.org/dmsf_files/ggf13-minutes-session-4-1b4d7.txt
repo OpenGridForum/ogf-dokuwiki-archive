@@ -1,0 +1,140 @@
+GGF13 OGSA-WG session #4 - EM profile
+=====================================
+
+* EM profile proposal (Hiro)
+  <URL>
+
+  - Candidate profile is an informational document
+  - The Basic profile and Naming profile are also assumed and should
+    be added to the slides (done)
+
+  - Supporting more complicated variants: e.g., workflow
+    - Including these in scope will probably make the profile
+      definition take longer.
+
+  - WS-Agreement
+    - It looks like that spec might have to go through another round
+      of public comments. It depends on the outcome of the discussion
+      stemming from the public comment review.
+
+  - Fig. 1: job submission should not be the service layer/(ref karl's
+    presentation)
+
+  - EM profile scope
+    - JSDL can be used separately/standalone.
+    - How far WS-Agreement is required is one of the issues that has
+      to be resolved.
+
+  - Contents (examples):
+    - Need to be careful that this is profiling and not specification
+      writing. So the statement "jobs are ws-resources..." should be
+      part of a referenced specification not part of this profile.
+
+  - Is placement (scheduling) out of scope of this profile or not?
+    - It is out of scope unless someone really objects (not an issue
+      at this moment).
+
+  - Issue: Introspection, or getting information about providers
+
+  - Issue: Should resource consumption tracking by part of this
+    candidate profile or not? candidate specs: UR and RUS
+
+* Business grid project description (Hiro)
+
+* Basic execution management (Karl)
+
+  - "...must support...": read this as these are the kind od jobs that
+    globus supports at the moment
+  - WS-Agreement: replaces GRAM rather than in addition to it. So the
+    createAgreement operation would have the same meaning as a
+    submitJob.
+  - container : service provider
+  - job: negotiated service
+  - mgmt state: agreement
+
+  - Does JSDL as framed today fit with WS-Agreement? Yes. In fact
+    WS-Agreement is specified so that it can be composed with any
+    other domain-specific specification.
+
+  - Timeline:
+    - The WS-Agreement specification is in revision and might take 3-6
+      months before it can be published.
+    - If the specs were ready today then an EM profile that combines
+      WS-Agreement, JSDL and adds some extra things (unclear) might be
+      good enough but this is not feasible as things stand.
+
+  - WS-Agreement entities: Difference with Hiro's figure is that the
+    pink layer is the job itself and the agreement layer is the job
+    factory.
+
+  - 'Negotiation' is a misnomer. The simplest case and what is specified
+    at the moment is just yes/no reply.
+  - Chaining; could be used to model reservations 
+
+  - So WS-Agreement is a pattern that leaves 'everything' up to the
+    specific domain language. Returns an EPR to the agreement.
+    - Once a domain specific agreement is created it may also have
+      porttypes that are domain specific. These are probably going to
+      be the 'interesting' porttypes. No such porttypes are currently
+      defined.
+
+  - Whether data staging is in scope or not
+    - Definition of what files are needed is probably in scope but
+      probably not the mechanism of providing it
+    - Also an issue whether this should be separate from the job
+      submission; it is a form of workflow. 
+
+* Naregi presentation (Saga)
+
+  <URL>
+
+  - Want to use EM profile (agreement) between super-scheduler and
+    gridvm. Maybe also between client and super-scheduler but at the
+    moment only JSDL is used between client to super-scheduler.
+
+  - "...WS-Agreement based brokering is more secure..."
+    - "secure" is used in the sense of "less fragile" here
+
+* Unicore and EM profile (Dave Snelling)
+
+  <URL>
+  
+  - Overview of Unicore and Unigrids approach
+  - JSDL satisfies most requirements and has a good fit. With the
+    exception of no multi-job support.
+    - What capabilities are needed to submit pieces and coordinate them
+      (e.g., guarantee they start up together)
+
+* OGSA BES strawman
+
+  - initiateactivityfromjsdl : looks similar to the createagreement
+    operation
+  - Why is activityStates defined as [][]: i.e., return a set of
+    states?
+    - A job may include multiple components/operations. For example,
+      there may be multiple data staging operations which may be done
+      concurrently while the job is still in the hold state. The
+      status of the executable part of the job as well as of each data
+      staging could be returned.
+
+* Conclusion
+
+  - Is it premature or not to attempt an EM profile? 
+    - Specifications are still in a fluid state and likely to
+      change. So it looks premature.
+  - But it may still be useful to continue the discussion within
+    OGSA-WG. The proposal is for a candidate profile and so is
+    separate from the API (BES) discussion.
+    - There is a logistical problem with how many people can work on
+      this. It may be be better to postpone starting work at least
+      until next GGF.
+  - How about working out a rough idea of what the contents of the EM
+    profile might look like?
+    - It implies starting the work. And the people needed for the
+      discussion are overextended as is.
+ 
+  - Rough consensus that JSDL and BES are probably sufficient and that
+    the WS-Agreement operations may be the same as the BES ones. If
+    so, there might not be a need for this profile. In any case more
+    work on the BES specification is needed to make things clearer
+    before deciding if and how to proceed with an EM profile.

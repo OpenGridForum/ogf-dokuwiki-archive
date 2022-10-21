@@ -1,0 +1,119 @@
+OGF PGI - Security Model
+========================
+
+
+Current Established Base
+========================
+Chapters 1, 2 and 3 below describe the current security model of Computing Grid Infrastructures.
+
+
+1) Grid Users and Certificate Authorities
+-----------------------------------------
+1.1)  Each grid User is authenticated by a legal body (recognized by a government).
+
+1.2)  This legal body uses a Certificate Authority to grant a (long lived) X509 certificate to the grid User.
+
+1.3)  Each Certificate Authority is itself or is authenticated by a self-signed Root Certificate Authority.
+
+1.4)  All such Root Certificate Authorities trust each other and cooperate within APGridPMA, EUGridPMA or TAGPMA (Policy Management Authorities).
+
+1.5)  These 3 Policy Management Authorities trust each other and cooperate within IGTF.
+
+1.6)  IGTF distributes the list of CA Certificates to be trusted.
+
+1.7)  Each grid Site providing grid Services to grid Users installs the CA Certificates it deems necessary.  In general, there is no requirement to keep them up-to-date, but typically it is considered a security update and as such is strongly recommended to apply.  Some infrastructures issue warnings for sites with outdated CA certs, but normally it does not impede operations.
+
+1.8)  Using its X509 certificate, each grid User can create at any time a (usually short lived) X509 proxy with permits impersonation / delegation during a (usually short) period.
+
+
+2)  Virtual Organizations
+-------------------------
+2.1)  A Virtual Organization (VO) groups grid Users (usually with common goals).  A Virtual Organization may be a legal body, and may be a Certificate Authority which can issue X509 certificates, but most are NOT.
+
+2.2)  Inside DEISA, a Virtual Community also groups grid Users with common goals.  The relationships between Virtual Communities and Virtual Organizations have to be explained by Morris RIEDEL.
+
+2.3)  Each grid User belongs to 1 or more VO (Virtual Organization), which grants him access rights to grid Storage and Computing Resources.
+
+2.4)  Access rights are granted by VOs to grid Users through either :
+      2.4.1)  VOMS extensions of X509 proxies (this makes a VOMS proxy)
+      2.4.2)  SAML assertions
+
+
+3)  Grid Services :  Information, AUTHN, AUTHZ
+----------------------------------------------
+3.1)  Some grid Infrastructures provide an Information Service with describes the Infrastructure, for example according to the 'GLUE 1.3' schema.
+
+3.2)  If this Information Service exists, then each grid User can query it in order to discover the list, requirements and capabilities of grid Services.
+
+3.3)  Each grid User can directly access data hosted by grid Storage Services.  For Authentication, the grid User can present the public part of his X509 certificate or X509 proxy.  For Authorization, the grid User has to present either (depending on the Infrastructure) :
+      3.3.1)  the public part of his VOMS proxy, or
+      3.3.2)  a bag of SAML assertions.
+      If the grid User accesses data through a interface requiring delegation, then the next subchapter applies.
+
+3.4)  Each grid User can submit Jobs to grid Computing Services.  If such a Job needs access to data hosted by grid Storage Services, then the grid User must provide a delegation token.  This delegation token is either (depending on the Infrastructure) :
+      3.4.1)  a full VOMS proxy, or
+      3.4.2)  a bag of SAML assertions.  Morris RIEDEL has to explain if and how delegation of SAML assertions work.
+
+3.5)  Each grid Site providing grid Services to grid Users has installed Authorization Files (such as 'gridmap' files) describing VOMS authorizations, other authorizations, and mapping of known VO members to local UIDs.   Grid Sites try to keep those Authorization Files up to date.
+      There is a trend to replace these static 'gridmap' files by a robust Authorization Service (SCAS by EGEE, GUMS by OSG).
+
+
+
+Where we propose to go
+======================
+Chapters 4, 5, 6 and 7 below describe a security model for short term Interoperability between Computing Grid Infrastructures.
+
+
+4)  Operational Robustness of Security
+--------------------------------------
+4.1)  The number of Certificate Authorities for grid Infrastructures SHOULD be kept as low as possible.
+
+
+5)  Interoperability between X509 certificates and X509 proxies for Authentication
+----------------------------------------------------------------------------------
+5.1)  For this short term Security Profile aimed at short term Interoperability, we accept Shibboleth as an option, but knowingly exclude Shibboleth from any requirement.
+
+5.2)  X509 proxies MUST fully comply to RFC 3820.
+
+5.3)  VOMS services, which deliver X509 proxies with VOMS extensions, MUST fully comply to RFC 3820.
+
+5.4)  The authentication library used by grid Services MUST fully comply to RFC 3820 (for example a recent version of OpenSLL), so that it can accept as well X509 certificates as X509 proxies.
+
+
+6)  Information Service describing the Infrastructure according the the GLUE2 schema
+------------------------------------------------------------------------------------
+6.1)  Each grid Infrastructure MUST provide an Information Service, which describes the Infrastructure according the the GLUE2 schema.
+
+6.2)  If access to the Information Service is restricted, the grid Infrastructure MUST provide a Bootstrap Information Service, with describes the security requirements for access to the full Information Service according the the GLUE2 schema.
+
+
+7)  Interoperable Grid Services :  Information, AUTHN, AUTHZ
+------------------------------------------------------------
+7.1)  The semantics of Authorization tokens MUST be the same for all grid Infrastructures :
+      7.1.1)  VOMS extensions
+      7.1.2)  Restriction attributes
+
+7.2)  The Information Service of each grid Infrastructure MUST describe, for each grid Service, the security requirements for access to the grid Service, and which Authorization Tokens this Service expects (potentially several) :
+      7.2.1)  X509 VOMS extensions
+      7.2.2)  X509 restriction attributes
+      7.2.3)  SAML assertions
+
+7.3)  For SAML assertions, the Information Service of each grid Infrastructure MUST describe, for each grid Service, the transport method that the grid Service expects (potentially several) :
+      7.3.1)  As attributes of X509 proxies
+      7.3.2)  Inside a SOAP header
+
+7.4)  Each grid Site providing grid Services to grid Users MUST install and keep up to date a robust Authorization Service describing VOMS authorizations, other authorizations, and mapping of known VO members to local UIDs.
+
+7.5)  Each grid Service MUST accept at least :
+      7.5.1)  One of the Authorization Tokens described at chapter 7.2
+      7.5.2)  One of the transport methods described at chapter 7.3 (only if the grid Service accepts SAML assertions)
+
+7.6)  As long as it satisfies subchapter 7.5, each grid Service MAY also accept Authentication and Authorization methods based on Shibboleth.
+
+7.7)  In order to ease the development and deployment of grid Clients, each grid Service SHOULD accept ALL types of Authorization Tokens described at chapter 7.2
+      If it accepts SAML assertions, it SHOULD accept that they are transported inside SOAP headers.
+
+7.8)  In order to keep middleware complexity and bandwidth usage as low as possible, grid Services should NOT send their full description of their security interface inside each message, but only when specifically requested (for example by the Information Service).
+
+
+To be thoroughly criticized ...

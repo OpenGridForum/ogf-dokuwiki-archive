@@ -1,0 +1,359 @@
+OGSA Naming Teleconference - 29 November 2004
+=============================================
+
+*	Participants
+
+	Andrew Grimshaw (UVa)
+	Frank Siebenlist (ANL)
+	Hiro Kishimoto (Fujitsu)
+	Mark Morgan (UVa)
+	Takuya Mori (NEC/ANL)
+	Jane Xu (IBM)
+	Leo Luan (IBM)
+	Osamu Tatebe (GTRC)
+	Manuel Pereira (IBM)
+	Ted Anderson (IBM)
+
+	Minutes: Mark Morgan
+
+*	Agenda Bashing/Agenda
+	- Discussion of relationship with GFS-WG
+	- Accomplish Security and Naming issues
+		* What issues are?
+		* What tradeoffs are?
+		* i.e.  If we say absolute requirement that public key included in
+			name.
+
+*	Previous Minutes Approved
+
+*	Discuss Identity/security/naming
+	- Last time we spoke about names, abstract names, uniqueness.
+	- There should be notion of identity defined
+	- Relationship between Identity and authentication
+	- Local vs. global naming
+	- What does resolver look like
+	- What about embedding other information in id for authentication (such as
+	  the public key)?
+		-- Advantages
+			+ If I have a name, then I can communicate with that entity
+			  securely without involving a 3rd party.
+		-- Disadvantages
+			+ Requires that you trust the entity that gave you that name.
+	- Given that we are talking about Abstract Names, eventually we have to
+	  resolve to real name.
+		-- If someone lies and gives me a bad binding, then if security bits
+		   are in it and we talk to the bad binding, they don't understand.
+	    -- Downside of embedding keys.  If key is ever compromised, then there
+		   isn't a way of changing the name so the name is compromised forever.
+	- Alternative is to use some other mechanism to enable me to authenticate
+	  that the party on the other side is who you think it is.
+		-- Trusted 3rd party, etc.
+		-- That's the distinction between these.
+	- If you add keys or other stuff to name, you are building up attributes
+	  which you serialize on one line.
+		-- equiv of taking XML doc at the network endpoint address, plus key
+		   that belongs to it and then just serialize it on one line.
+		-- Adding that stuff to a name is just a record with all the info.
+	- If those bits that have been added.  question is whether or not they are
+	  immutable for all time.
+		-- Is that a property of the name.  Or...
+		-- Can I change those over time and it still refers to the same entity.
+	- First observation: You can make a name as complex as you want,
+	  serialize the record structure to add things to that identity.
+	- Finding the right key that belongs to a certain resource or thing
+		-- either you get it directly, or
+		-- there is a 3rd party involved.
+		-- Adding the key to the name is nothing more then an optimization.
+		-- In Legion it was just another field.
+		-- It could be a very good optimization, but it is just an
+		   optimization.
+	- If you add the key to the name, the key couldn't be changed.
+	- On the other hande, you could put a unique ID in front of key.
+		-- You could use pieces of the name, but not the whole part.
+		-- Key isn't part of identity, but is additional attribute data that
+		   flows along with the name.
+			--- Not part of the equals operation.
+		-- In this case, it truly is an optimization.
+		-- Got to have trusted 3rd party anyways.
+	- Think that we shouldn't allow aliasing.
+		-- If you change the key, and the EPR is still the same, then you have
+		   two names with same EPR, but different keys, you have to conclude
+		   that they are the same thing.
+	- If we go with the approach that a name is a record, and it's got some
+	  fields (we did agree that there shouldn't be aliases), then the
+	  conglomeration is not the name, it's a part of it with optimizations for
+	  certain things.
+	- Last time, problem with aliasing was with comparability.
+		-- If there are no aliases, that is a much simpler proposition.
+		-- If there are aliases, then its a proposition that you can sometimes
+		   state yes, but you can't without going to some other thing say
+			"no they aren't the same thing."
+	- From an optimization point of view, if identity is in the name, then I
+	  can start talking right away.
+		-- For lightweight ops, that can be very important.
+		-- SPKI says identity is really the key itself.
+			--- If you can prove private key posession, then you are that
+				thing.
+			--- Everything else is annotations on that thing.
+		-- Here we have something else.
+			--- We have the one who can assert (the signer) and the web service
+				resource, the document, the property.
+			--- Not the same thing as the key.
+	- The key is associated with the hosting environment.
+		-- We may struggle with how to combine these two.
+		-- SPKI says key is ID because then aliasing doesn't exist.
+		-- How we map those to EPR is separate matter.
+		-- The hosting environment could host more then one resource.
+		-- Key with hosting environment.
+	- Key generation is the most crypto expensive operation
+		-- Even then, managing the whole mess is expensive.
+		-- If you put a db behind it, you could literally have millions of
+		   resources in one hosting environment.
+		-- The problem from an implementation point of view
+			--- If you have hosting environment with a key, and each
+				individual resource in that environment had a key, then most of
+				crypto stuff is happening at the service container layer.
+			--- Doesn't work well if you migrate state to a different place.
+				---- Unless you migrate the private keys too.
+		-- You cannot force a service to forget the secrets that it once knew.
+		-- All you can say is that you have to trust the transitive closure of
+		   everywhere you have migrated to.
+			--- Not a good property.
+
+	- What SPKI paper is explaining?
+		-- Model is entity that sign, that can authenticate, are identified
+		   by a private key
+			--- not by DN
+			--- not by X509 Cert.
+		-- If you start from that, then there is no trusted 3rd party.
+		-- Makes some of the deployment a lot easier because you don't have to
+		   have a global namespace in that case.
+		-- The only reason why we need readable names (that are used by
+		   humans) is because we want to express policies in readable form)
+			--- I want to say that Hiro has access to file, not <pub-key> has
+				access.
+		-- We need a binding of a name to Hiro's key.
+		-- There are two schemes
+			--- I always use Franks Naming scheme
+				---- Then I am the only one that has to guarantee uniqueuess
+					 that there is one Hiro.
+			--- Global scheme
+				---- We have to be careful with Name clashes.
+				---- In order to resolve that, we have to have cooridanation.
+			--- That is where CA and X509.
+				---- CAs have a secret handshake that says that they won't
+					 give the same name to different places.
+				---- To provide that guarantee is a very expensive guarantee.
+			--- You have to have a global trust scheme.
+			--- That's the difference between a global and local name scheme.
+			--- Familiar with local name assertions, such as group memberships.
+				---- Frank is a member of the OGSA-WG, then we should ask, who
+					 says so?
+				---- Who asserts this?
+				---- If we know that Hiro is the OGSA-WG boss and Hiro asserts
+					 that, then that assertion may make sense.
+				---- You have to trust the attribute issuer that Frank is a
+					 member of OGSA-WG.
+				---- Makes assignment of membership of OGSA-WG local to Frank.
+				---- Can have many OGSA-WG in the world, we only care about
+					 the one here that Hiro assigns.
+				 	----- Can use that for ID.
+				---- It's only Hiro's Andrew if he asserts identity.
+					----- Could aslo be Frank's Andrew -- isn't the same thing.
+			--- Interesting: Don't have to use names on the wire -- just keys.
+	- SPKI looks really interesting.
+	- Has SPKI work stopped?
+		-- Yes and no.
+		-- They have a number of RFCs.
+		-- Work is pretty much done -- they've defined what they wanted.
+	- Are there any impls. out there that people are using?
+		-- In a way SPKI has always been fighting against X509 and X500 world.
+		-- They've been trying to push X500 scheme in naming certificates.
+		-- In the beginning, they truly lost that war.
+		-- Now many people have scars as X509 didn't pan out too well.
+		-- There are no real comercial applications (X509) out there
+			--- secure web services stuff, but is different ball game.
+		-- For personal identification purposes, no one uses X509 certificates
+		   except in Gov. areas and related domains.
+		-- Whole comercial world tried and has been burned badly.
+		-- Now revival in interest in SPKI.
+			--- Other scheme based on keys and based on lookup in directories.
+	- Suppose that an AN was nothing more/less then pub. key.
+		-- Wouldn't only work for entities that are signers.
+		-- Why wouldn't file have a public key.
+			--- Cause then you get one key pair for each resource.
+			--- Problems are generating large numbers of keyparis
+				---- Hosting environments aren't set up to operate this way.
+	- Would it be foolish or wise of us to say, X509 is problematic,
+	  SPKI is one way to look at it?
+	- Or is it the case that the powers that be are so strongly committed to
+	  X509 that it wouln't happen?
+	- Don't want to fight battle for SPKI vs. X509.
+		-- X509 is a given in a lot of the projects and people that we might
+		   deal with.
+		-- Comercial world is also a major customer and they may balk at X509.
+	- We need inputs on requirements and demands from comercial sector.
+	- If we go one step back and associate an ID with a hosting environment,
+	  not resources, then we leave open what that identiy could be.
+		-- It could be a key
+		-- Could be part of X509
+		-- Could be kerberos name and realm.
+		-- Then hosting env. becomes part of the name.
+		-- How would be migrate?
+			--- The individual resource has id within environment.
+	- Seems that the consensus that is forming is that it doesn't appear that
+	  keys should be in names
+	- Instead it may be part of a name as hosting environment.
+	- But we shouldn't assume that key is in name or count on it being there.
+	- Suppose I am a hosting environment and my key or DN is Frank and there
+	  is abc.txt in my hosting environment
+		-- abc.txt is not globally unique.
+		-- I can compose a name for that file which is globally unique....
+	- With SPKI, you call somone by his public key...the way he makes
+	  statements about something being unique is by signign it with his
+	  public key.
+	- SPKI applies generally.
+	- Hosting environment term is being viewed as place where guy lives when
+	  he makes statement about where he is living -- but in other role we
+	  call hosting environment the agent who runs as that key...
+		-- in the latter the key is part of the name.
+		-- Problem is that that process may move to another hosting environment
+		-- But you want to move key and agent to some other place....
+	- You have to have a temporary key signed by a permanent key....
+		-- temp key is hosting environment key
+		-- permanent key is entity's.
+	- Or you could use unique naming scheme for the file abc.txt that I have.  
+	- Action:  Mark write up what we think people are saying and what issues
+	- What we need to do is at next week's f2f Frank, Andrew, and whoever
+	  feels passionately can get together and hash this out.
+	- Scanning through Resource Namespace Service Specification is different
+	  problem
+	- It's looking at hierarchical namespace and map that to an AN then mapped
+	  to a physical address.
+	- Mostly in the camp of a three level namespace.
+	- Here we are talking about properties of AN and resolving that to EPRs.
+	- Top layer is human names, directory structures, etc.
+	- Requirements bleed back and forth.
+	- Would be hard to map requirements to various naming levels.
+	- RNS has had discussions about trust of names.
+		-- Nothing in specification or draft
+		-- Who can assign logical name in RNS
+		-- How the ID of the party who finds the name in place are included.
+		-- We'll need to continue this topic on another call.
+
+* DISCUSS Relationship with GFS-WG and RNS.
+	- Top layer of 3 layer namespace was in data design.
+	- Was high degree of overlap in GFS-WG in Data area.
+	- GFS-WG was focused on files -- if it was genericized then it could be
+	  useful to everyone.
+	- Towards that end, a proposed impl. was generated and discussed.
+	- It is not the opinion of the OGSA group to do all specifications, but to
+	  work with groups who are.
+	- If RNS does what we would like to see, then highly good.
+	- RNS addresses need for resource namespace.
+	- Idea is that we see need for 3 tiered arch.
+	- RNS has functional 3 tiered naming convention
+		-- allows two levels of indirection.
+		-- Concept of virtual directory.
+		-- Entry in space repository that establishes or manifests hierarchy.
+		-- Even in a direct reference case, those names in the human readable
+		   don't have to change if the physical address changes.
+		-- Based on WSRF now.
+			--- Specifies resource property documents that maintain info
+				reguarding metadata about namespace elements themselves.
+		-- It's extensible.
+	- RNS presents a solution for global namespace and tries to offer some
+	  property descriptions of data resources but allows for abstract ones.
+		-- Fully support referencing of resources that aren't data.
+	- Virtual directories consist of set of string/value pairs 
+		-- values can be AN or direct references.
+		-- The direct reference is conceptually an optimization
+	- A subdirectory is not a resource
+		-- doesn't have EPR or Abstract Name (AN)
+	- If I'm at UVa, how do I connect my namespace to yours?
+	- Virtual directories are a namesapce entity only.
+	- Are you limiting yourself to just trees?  Can you have directed graphs?
+	- You can have a referral.
+		-- Referral is an entity within a given instance that points to
+		   another location (nested, root of another RNS instance).
+	- Seems from a symetry point of view, each folder should be a first class
+	  entity.
+		-- Can assume that creating new AN is cheap (delta key pair discussion)
+		-- Seems like you'd want all of these things to conceptually be an AN.
+	- Original motivation to offer this middle tier was to have compatibility
+	  and utility outisde of RNS
+		-- we could have junctioned into the namespace a name that literally
+		   referenced some other RLS entry (replication location service).
+	- Is that entry referenced by an EPR or some AN?  How was it referenced?
+		-- Before WSRF it was a URL.
+		-- Now it is an EPR pointing to actual logical named resource.
+	- Also, if this service was deployed in a smaller envir. with no
+	  dependencies, then having facility withing RNS made since.
+	- Wanted to allow external services to communicate with RNS.  
+	- Alot of it is inline with what people on Data team are thinking of.
+	- Might it be possible to make it a little more symetric in a couple of
+	  places and drop a couple of things that might be more file specific?
+		-- Then we can globally adopt RNS.
+		-- Can we drop some of the things out that are file specific.
+		-- If we could go to RNS "lighter", then this could be something that
+		   OGSA could use.
+		-- Trim it down so that it is a little more generic
+			--- then you could always build up more file specific things.
+		-- Would GFS-WG be interested in this?
+	- How should we proceed -- through OGSA-Data?
+	- RNS now has port type for Logical or AN to Direct.
+	- Raises crucial question that we have wondered about
+		-- dont' want to restrict utility by being too dogmatic about it,
+		   but there is argument for restricting that everything is a
+		   reference concept.
+		-- In Context space, they could be creating an arbitrary graph...
+		-- if virtual directories are exposed as AN, you could do the same
+		   thing.
+		-- On one hand its the most general.
+		-- Concerns are
+			--- if you go far in that direction, you are basically saying that
+				every name is named by it's virtual directory or by it's
+				context, plus the name inside of that.
+			--- Andrew believes that this isn't the case.
+				---- Want to have lots of different pathways to get somewhere
+					 so that you can organize things differently.  
+	- Should these things be merged -- yes, before too long.
+	- But we think it's important for OGSA that whatever top level name scheme
+	  we pick, be not so specifically tied to filesystems.
+		-- Constrains too heavily about what we can do.
+		-- By going to less specificity about things, you can get away from
+		   these constraints.
+		-- If you want to have specific semantics, then thats important too,
+		   but in OGSA we need a high level name scheme that is more flexible.
+	- Doesn't seem insurmountable.
+	- Differences in terms are not fundamental.
+		-- For example Logical Name v. Abstract Name.
+	- Also, we want a high level to mid-level whereas RSN covers all
+	  three layers.
+		-- Specification of what is an AN and what the resolution interface
+		   should look like.
+		-- This is a bigger issue then GGF
+			--- Should be done inside inside of a standards body 
+			--- Should be a web services issue and not grid issue.
+		-- Could remove lower level mapping from RNS.
+		-- Would like to push RNS to a much more generic thing.
+	- Manuel made an attempt a moving filesystem stuff separate.
+	- Next step is to further separate stuff out.
+		-- Have file system specific part in a different document,
+		-- referencing the base document...
+	- Philosophy is that it is abstract enough right now, but we literally
+	  want to segregate the two.
+* Summary
+	- Was interesting phone call.
+	- Makes sense to have discussion in context of OGSA Data design team.
+	- Very happy if we can trim this down just a little more and say, bam,
+	  that's it.
+	- Context Space was put out there to get out of quagmire.
+		-- If we can get this to work, then great.
+	- If we want to push this specification to a basic, generic level, then
+	  EMS could use it too.  
+	- All specifications should use this.
+	- Can somone from GFS guys can come to F2F next week?
+		-- Difficult.
+		-- Agenda will be ready by Wed.
+	- We can have another phone call of data design team.

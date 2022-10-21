@@ -1,0 +1,569 @@
+DAIS Telcon - 19/04/05
+======================
+
+Chair: Norman Paton
+Notes: Mario Antonioletti
+
+Attendees:
+----------
+	   Dave Pearson, Oracle
+	   Norman Paton, University of Manchester
+	   Mario Antonioletti, EPCC
+	   Simon Laws, IBM
+	   Savas Parastatidis, University of Newcastle
+	   Amy Krause, EPCC
+	   Dave Berry, NeSC
+	   Susan Malaika, IBM
+	   Allen Luniewski, IBM
+
+Agenda:
+-------
+	Specification Issues; 
+	OGSA Data Architecture; 
+	Mappings
+
+Actions:
+--------
+
+[Norman] Create a list of options for update of disconnected data sets.
+
+[Simon] Write up the top level IO operation to go in the core spec.
+
+[Mario/Simon/Amy] Look at DAIS issue 1200 and either decide what needs
+                  to done to resolve this and respond accordingly on
+                  Grid Forge or flag it as an issue that needs to be
+                  discussed at some future telcon.
+
+[Mario] Continue working on the DAIS contribution to the data
+        architecture.
+
+[Susan] Look into how the XML attributes and elements for the resource
+        properties relate to the DMTF CIM model
+
+Completed Actions
+-----------------
+
+[Simon] Post note to list on refined GGF13 proposal and relationship to 
+        mapping approach (4).
+
+	Done.
+
+[Norman] Seek to ensure that relevant OGSA/WSRF people are following the 
+         process.
+
+	 Done.
+
++---
+
+Specification Issues:
+
+Want to ensure that there are no big open issues that we are failing
+to address. There are 6 weeks to the document submission deadline.
+
+In WS-DAI have 3 issues worthy of discussion:
+
+977: Semantics of disconnected data sets
+
+also 1370 - can you push data back in to the data resource. With
+disconnected data sets we do not provide a mechanism to write back to
+them.
+
+Simon: that's not necessarily true. We don't prevent people from
+       implementing any old interface.
+
+Norman: ok, people can use extensibility but we don't specify
+	operations for pushing data.
+
+Dave Pearson: but we don't allow disconnected data sets to be reflected
+	     back on to the data resource.
+
+Norman: that's fair enough as that could be complicated. The other
+	thing that we don't provide is the opportunity to push it
+	somewhere else - as in a SaveInTableOfGivenName type of
+	operation, or to save itself in a given location.
+
+	The ability to write to a disconnected data set - can we
+	specify operations analogous to the the get data or should we
+	leave as is and allow other things to write to the data
+	resource?
+
+Simon: in theory - in the way you construct disconnected data sets -
+       you could create an interface that could do this ...
+
+Norman: but then it will not be standardised...
+
+Simon: you could extend the service and use what ever you like or you
+       could use interfaces that we already provide - you could use
+       SQLExecuteFactory that allows you to pose a SQL select which is
+       then disconnected but that would also have a SQLExecute on that
+       that which would then provide you with the ability to do an
+       update.
+
+Dave Pearson: I was thinking along the lines... 
+
+Mario: can we express the source of data that is separate from the
+       messages?
+
+Norman: no, we can't.
+
+Simon: yes, we do not have a way of specifying this.
+
+Dave Pearson: so we cannot support a bulk load procedure then?
+
+Norman: yes, you could send a collection of insert operations - now,
+	if we are seeing the disconnected data sets as a way of doing
+	bulk transfer out of a data service then the obvious solution
+	is to use this the other way round.  In which case what does
+	one do? We allow data to go out but we don't provide any way
+	of moving that data to the database. As a client you would
+	have to extract the data and then do a bunch of inserts which
+	is not very satisfactory.
+
+Susan: JSR 114 specifies a way of updating a disconnected data set
+       and to send them back. When people want to do major bulk loads
+       they will generally use comma-separated-values so there are two
+       or three ways that one could go about doing this.
+
+Simon: I think we should note it and not put it in, as it's linked in
+       with a bunch of stuff that we've looked at in the past...
+
+Norman: there is the question about disconnected data sets and then
+	there is another question about pushing the data back. Let's
+	look at these.  A solution for some of these may be
+	straightforward ... there is a lack of symmetry at the moment.
+
+...
+
+	We can let people use whatever they want - that's there
+	already or we provide operations to put tuples into the data
+	resource - that would be quite an easy thing ....
+
+Susan: might be easy if you don't allow deltas, otherwise it might be
+       difficult.
+
+Dave Pearson: have to be careful as to what we mean by updates and
+	     inserts - there may be issues about referential
+	     integrity. The underlying data may be changed in the
+	     meantime ... I don't think we should go down the path of
+	     updates ....
+
+Norman: this is one of the reasons why I'm trying to deal with things
+	separately. Given that we are interacting with a disconnected
+	artifact what are the analogues of the get operations - the
+	put tuples? ...then there's the question, assuming that is
+	fairly straightforward, how do you associate that with the
+	database.  You can reflect back ... Susan says that JR114
+	provides a way of doing this.
+
+Susan: you can tell which are inserts/changes/deletes ... you can
+       implement it how you like - how you lock is your business.
+
+Norman: we could provide a reflect back operation which merely states
+	that the reflect operation has the semantics as in JSR114 and
+	then not specify much else. Then there is the StoreInSomePlace
+	type of operation that effectively does a bunch of inserts -
+	you give it the collection name and the table name ... that's
+	another possibility and that too does not sound too difficult
+
+Simon: so you are taking one data resource and tell it to combine
+       itself with another data resource?
+
+Norman: yes, avoids unnecessary communication.
+
+Simon: it sounds like a simple and general operation that would
+       provide real value. Not sure how we do it in DAIS - whether we
+       do something specific to DAIS or propose something more
+       general. It's tied into the transport mechanism....
+
+Norman: so my take is that it should not be tied to the transport
+        mechanism.
+	
+...
+
+       We have a number of possibilities. The relevant functionalities
+       are missing. Have looked at this before but shied away because
+       the bulk loads tend to be database specific but maybe we can
+       use the disconnected data set idea ....
+
+Dave Pearson: if you wanted to do an update on disconnected data sets
+	     you might use a bulk update ... you would want to have
+	     the same update to be consistent across the whole data
+	     set.
+
+Norman: if one supports change on a derived artifact then you want to
+	know what those are like ... if you use predicates then it
+	begins to become a more sophisticated interface ... another
+	approach is to have something quite simple. ... then that
+	raises the question about delete as well.....
+
+Dave Pearson: if people want to update data then they should do it
+	     within the context of SQL within a database at least for
+	     this initial release and if you want to do updates then
+	     you should use the update syntax.
+
+Norman: we could leave as is or look at the different
+	capabilities. Can post issues to the list .....
+
+*Norman takes an action to do this*
+
+Susan: one of the things that compounds this is that any
+       implementation would not have to parse the request and in this
+       case we would have to do that ...
+
+Norman: I did not have it in mind to do any parsing ...
+
+Simon: if we came up with a list of the options then that would be
+       useful.
+
+Norman: next one is, top level default access... are we going to try
+	to put the operation in the spec?
+
+Simon: I think we should write it up. That would then go on the top
+       level spec.
+
+*Simon takes an action to do this*
+
+Norman: Issue 1200 - inconsistent representation of properties in the
+        specs.
+
+Simon: the answer is probably yes, and we should have done it before.
+
+* Simon, Mario and Amy take an action on this*
+
+Norman: there are other things in the relational context there are two
+	that we should touch base on ... 1997 the nature of the
+	properties as place holders for the CIM name .... what is
+	there may not eventually go in the DAIS specs.
+
+Mario: We could specify the name space and not enumerate as we are
+       beginning to do this ...
+
+Susan: the XML for the CIM model is currently being generated...
+
+Mario: we could just use the name space ...
+
+Susan: that might work.
+
+*Susan takes an action on this*
+
+Norman: 1198 ... we can just fix this. On the XML spec there are 5
+	outstanding issues .... are any of these closed?
+
+Amy: ... there is 1086
+
+Mario: this was me ... what are the semantics when you associate an
+       XML schema with an existing collection of XML documents - do
+       these have to validate? Moreover if this type of functionality
+       is not supported by the underlying data resource do you then
+       have to support it at the service level? The get out clause is
+       that these operations are optional ...
+
+Norman: it could fault if that capability is not provided. So it just
+	needs to be added to the document and the issue closed. What
+	about XUpdate?
+
+Amy: we decided to keep that ...
+
+Norman: inconsistent factory portTypes ...
+
+Amy: that can be closed now.
+
+Norman: any other issues Amy?
+
+Amy: No.
+
+Norman: Moving on to data architecture. Is there anything that DAIS
+        can do for the data architecture? Dave Berry has asked for
+        some text on DAIS.
+
+Mario: I wrote some text which may have been too DAIS specific...
+
+Dave Berry: would like to see something about the patterns used - what
+	   interfaces are required for reading/writing - an overview
+	   and then the specifics.
+
+
+Norman: maybe you could use DAIS as a case study for identifying the
+	level of detail that you require for the data architecture
+	... it has properties identifying some of the semantics but
+	not operations ...
+
+Dave Berry: have an action to give more guidance on how to do
+	   this. There are various people working on this at the
+	   moment. So not quite accurate that WS-DAI would be the
+	   template ....
+
+Norman: ... just trying to be helpful. The fact that DAIS is silent on
+	third party delivery means that there is a hook there that
+	needs to be filled ... the data architecture document only has
+	text and the only point where it is specific is that it lists
+	properties but it does not clump behaviours in a diagrammatic
+	fashion ... could use our experience for that ...
+
+Dave Berry: that would be useful ...
+
+Norman: that would require more detail in the DAIS section - to what
+	level of depth you describe the properties and what do you do
+	for the messages and the WSDL ....
+
+Dave Berry: would be helpful to go round the loop a couple of times...
+
+Allen: we do not want to copy masses of text from the other specs...
+
+Norman: and there are specs that are missing, need to establish the
+	level of detail that is going to be used .... Mario can keep
+	the token ... Mario will evolve that and circulate round the
+	usual suspects ... 
+
+*Mario takes an action on this*
+
+	are there any other things that should be doing?
+
+
+Dave Berry: need people to contribute to the sections and then get
+	   people to comment ... there's a meeting in London on May
+	   26th - we can get more people to attend - a follow-on from
+	   OGSA working group ... if anyone is interested please come
+	   along.
+
+...
+
+Norman: move on to mappings ... since last week Simon posted a more
+	detailed description between options 3 and 4 and Savas cobbled up
+	some WSDL ... when I look through the WSDL I was looking for
+	the relationship between option 3 and 4 but I did not see
+	resource names being made available as opeartion parameters ...
+
+Savas: there is a message called SQLQueryStorebyref .... this returns
+       a string which is a reference to the stored web rowset. there
+       webrowsetcount which accepts a name which is a name for the web
+       rowset which was previously stored ....
+
+Norman: there is no explicit name for the data resources though...
+
+Savas: you could do that ....
+
+Norman: what I'd like to get is an understanding the extent to which
+	we can write the same spec for options 3 and 4 with the
+	variation of where you put the MUSTs and SHOULDs in the specs
+	so that they have largely the same message body .... with
+	option 3 imposing some prioritisation on what you do in the
+	implementation.
+
+	If we were to do a type 3 proposal and did it in such a way
+	that you could have type 4 - people preferring
+	interoperability to flexibility - then this would mean a
+	minimum change in the MUSTs and SHOULDs...
+
+
+Simon: this hinges of the availability of the name in the message and
+       whether you make this optional .... Savas can map a name to an
+       EPR - have called this the conduit before. ...  These things
+       used in combination could solve the problem but we've not put
+       that in the same WSDL ....
+
+Dave Berry: this notion of getting together at the ogsa face-to-face on
+	   May 25th ... use WSRF and DAIS folks to discuss this topic.
+
+Norman: we will need to decide very soon so we are likely to have made
+	a decision before May but aspects of detail could be looked at
+	in mid-May.  ...  It would be a good opportunity to air our
+	approach.
+
+*Discussion as to who could make it and whether this could be done*
+
+...
+
+        The question: given the explicit naming of resource how close
+	can we make the message bodies.
+
+Savas: all the DAIS messages can be identical whether you are using a
+       WSRF/non-WSRF solution. The difference is in how you identify
+       the resources in these messages. The name is going to be
+       optional....
+
+Norman: understand the name optionality ... but let's take the
+	response in the factory case - you have defined it to be a
+	string but in reality it is a choice of something - a string
+	in one context or an EPR in another ...
+
+Savas: you could have a choice or you could have an extra set of
+       messages to convert the name into an EPR.
+
+Norman: or the other way round ...
+
+Savas: but if you do the other way round you break the WS-I Basic
+       Profile assumption.
+
+...
+
+Norman: you are drawing the line further up stream by not including
+        ws-addressing than I thought... what is the status of
+        ws-addressing?
+
+Savas: they are in the last call. Will become a recommendation in
+       weeks or a couple of months if there are not major last call
+       issues ... a recommendation and not a standard
+       .... recommendations are considered stable in W3C.
+
+Norman: have been slightly careless, there is the WSRF people and the
+	non-WSRF people but I assumed the latter people would also use
+	WS-Addressing ....
+
+Savas: don't get me wrong - I like WS-Addressing but WS-I Basic
+       Profile does not have WS-Addressing.
+
+Norman: so we have pure WS-I, WS-I + WS-Addressing or WS-RF.
+
+Simon: there is a subtlety in that point as we are returning something
+       to return a disconnected data set ... we need something to
+       abstract away ...
+
+Dave Pearson: Tom Maguire suggested that you might need 2 trips to do
+	     that resolution ... even if you are using WSRF.
+
+...
+
+Norman: the likely definition of a response type - what is that likely
+        to be?
+
+Simon: good question, we need to do some work. Dangerous to specify a
+       new type - will take you a long time to standardise it. Don't
+       want something arbitrary either though ...
+
+Savas: the issue that Simon identified - given an EPR not knowing the
+       underlying data resource, if you want to identify that, whether
+       you use an EPR or a name, requires additional semantics - could
+       use a URI that specifies the type but then you will have to
+       identify the type - this is not possible with an EPR as that is
+       opaque. You can however do it by having an additional message
+       exchange ....
+
+Simon: also attracted by having a structure that allows you to hold
+       other things such as the type ... to avoid the naming scheme
+       .... maybe that is something that we should revisit.
+
+Savas: as it is a DAIS spec then you can do what you like as long as
+       you don't expect other services to use it.
+
+Norman: our hope is to produce a model that others feel comfortable
+        with - on the way in we can define messages bodies with
+        optional names - that seems ok ....  then can you have as
+        little pain in the results in the context of the factory
+        pattern ...
+
+Savas: have my proposal, then you have your possibility with the
+       compound element and then there is the choice but choices 
+       are tricky programmatically ...
+
+...
+
+Dave Pearson: does the top level operation produce complications?
+
+Simon: if we include the name as optional then we would have to
+       ... this is a message which is generic across lots of different
+       types of data resources .... it's not the same as your resolve
+       operations - accept lots of messages to access the data ...
+
+...
+
+Norman: we need to get ourselves into a position where we understand
+	the implications of the specs for defining a type but have a
+	prioritisation for these messages - Savas has generated some
+	WSDL and has shied away about putting in the optional names in
+	the body ... now we are exploring the factory pattern - the
+	result types for the factory pattern.
+
+Simon: and how we can handle the optional names. Easy to put these
+       into the specs if we know what these look like or how we avoid
+       using a structure for them...
+
+Savas: if it's a URI ....
+
+...
+
+Norman: a URI sounds ok for me ...
+
+Savas: but it still does not give you any semantics ..
+
+Norman: but we don't need any semantics ...
+
+Savas: but if you don't need semantics you can just have a string ...
+
+Simon: if we accept the name then it's resolving whether we have a two
+       call structure for the factory or we have a complex
+       data structure...
+
+Savas: you could have something from a name space that is not
+       standard...
+
+Simon: my concern is about the 2 call operation is where you call to
+       perform the resolve operation - the same service> ....
+
+Savas: I assume that there is only one service .... I want to indicate
+       that there is only one service and all you have to know the end
+       point ....
+
+Simon: I don't agree with that ... have to take into account where
+       these do not have the same end point ... resilience for
+       instance...
+
+Savas: but then you have replication ...
+
+Simon: or you could have versioning ....
+
+Savas: I don't understand ... 
+
+Norman: but the factory pattern allows flexibility as to which end
+	point handles your results ...
+
+Simon: or which interface handles your results... the end point
+       required to handle the disconnected data resource could be
+       different from that which was used to generate it ...
+
+Norman: that sounds sensible......
+
+Dave Pearson: does WSRF not require you to have a different end point?
+
+Simon: you could have a different end point but the same service - it
+       depends on what you mean by service.
+
+...
+
+Simon: it sounds like the thing to do is to work these issues into the
+       WSDL and go round the loop again ... there is a danger in
+       extending the WSDL into something that you cannot understand
+       but then you can then reduce it to something you can understand
+       ....
+
+Savas: can add things to the WSDL - I can produce the WSDL if you let
+       me know what you want ...
+
+Norman: optionality and then whether you are dealing with a bridge or
+	a complex type. This affects the types and what the bridging
+	operations are
+
+Savas: also the issue of resource properties ...
+
+Norman: don't think that is tricky - when you are in WSRF you use the
+	ResourceProperties and you use analogous messages when you are
+	not ... in WS-I case you have to define some extra messages
+	for lifetime and managing the resource properties ....
+
+Simon: useful to use the same terminology ...
+
+Norman: if DAIS is going to have a twin track want to make them as
+	similar as possible.
+
+        It would be useful to have examples the extended WSDL and to
+	have a note of what the options are in the WSDL.
+
+*Savas and Simon will continue the evolution of the WSDL and options
+with Norman in the loop*
+
+
+
+
+
+
+

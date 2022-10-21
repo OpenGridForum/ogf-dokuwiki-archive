@@ -1,0 +1,146 @@
+OGSA Teleconference - 28 September 2005
+=======================================
+
+* Participants
+
+  Mike Behrens (R2AD, LLC)
+  Dave Berry (NeSC)
+  Hiro Kishimoto (Fujitsu)
+  Takuya Mori (NEC)
+  Andreas Savva (Fujitsu)
+  Frank Siebenlist (ANL)
+  Ravi Subramaniam (Intel)
+  Mary Thompson (LBL)
+  Jem Treadwell (HP)
+  Stuart Schaefer (Softricity)
+  Ayla Debora Dantas de Souza (UFCG)
+  Pete Ziu (Northrop Grumman)
+
+  Minutes: Mike Behrens and Andreas Savva
+
+* Minutes of September 26 approved with no changes.
+
+* OGSA AuthZ discussion
+
+** Specifications
+
+  OGSA-AuthZ-WG has changed the names of both its specs following
+  Hiro's comments about the usage of 'OGSA'. (And also changed
+  'Profile' to 'Specification' since the documents do not conform to
+  the OGSA Profile Definition.)  Hiro, however, had intended the
+  comment to apply only to one of the two documents (the Service
+  document) that is using OGSI for the rendering---the Attributes
+  document does not and could have kept OGSA in the title.
+
+  The AuthZ WG's intention is to update these documents later (next
+  version) and use the 'OGSA' term. But they could also just be
+  resubmitted to the editor. (Perhaps the WG was over-zealous in
+  changing these documents).
+
+  Agreed to discuss these issues further at GGF15 in one of the OGSA
+  AuthZ sessions.
+
+  - Some detailed comments:
+    - eduPerson is defined and seems to be required for all
+      services. But the document is actually just defining vocabulary
+      and it is up to each service whether and which attributes it
+      will use.
+    - 'edu-' prefix: As defined by Shibboleth and names kept as is.
+      'eduPerson' is originally intended for Higher Education. Here
+      pulled out some of the more generic attributes but did not
+      change the names.
+
+  - Hiro has more comments on the Attribute document but these will be
+    discussed on the mailing list or GGF15.
+
+** Charter
+   
+   - Deliverables: 
+     
+     It is not clear if the WG will deliver one document or two. Also
+     a requirements document was mentioned on the call but it is not
+     listed in the charter.
+
+    - There is also the possibility of one more document on
+      blacklist/whitelist service interaction.
+    - Hiro also wants a document on fine-grained delegation of rights
+      since it is functionality relating/required by a number of OGSA
+      services, e.g., Data has recently raised a set of requirements.
+      - This field is a political minefield since there is no standard
+        'policy' language. SAML/XACML address some but not all issues.
+      - It is also difficult to get people to use something like this
+        just because a standards body says so.
+
+  The charter will be discussed at GGF15. There is also a plan for a
+  discussion with the Data WG.
+
+* Basic security profile review
+
+  Takuya uploaded a new version before the call.
+
+  There was an action to ask other parties (Industry, Projects) on
+  their requirements wrt TLS and MLS.
+
+  Hiro talked to people within Fujitsu and also people involved in
+  outside Grid projects. Overall the opinion is that TLS is a more
+  basic requirement than MLS. 
+  - MLS is seen as application specific. For example, which part of
+    the payload to sign or encrypt depends on the application. It is
+    not enough to say sign and encrypt everything. 
+  - MLS is more complex and the requirements for including MLS in this
+    profile have not been made clear.
+  - The key exchange portion of the profile is one feature that may be
+    useful to both TLS and MLS and should be kept.
+
+  Proposed and accepted to focus the secure channel profile on just
+  TLS in the interests of making quick progress. Leave MLS out until
+  the requirements for it are made clear. MLS may be included in a
+  later version; or a separate profile for it may be defined.
+
+  Action: Takuya and Frank to re-check the WS-I BSP for the MLS
+          choices and which portions of those might be refined in an
+          OGSA security profile.
+
+  There was also a discussion on how to communicate the set of
+  security features that an endpoint supports and how to negotiate
+  which of these features to use in an interaction.  The negotiation
+  process is not specific to security but there is a need to
+  characterize the set of security features that can be
+  negotiated. (At the moment the Profiles provide 'Claim URIs' which
+  indicate an all or nothing claim and do not make clear which
+  optional features in the Profile are supported.)
+
+* CDDLM demo
+
+  Demo by Ayla Dantas.
+  Slides were sent to the list before the call.
+  URL used for the demo: http://150.165.85.155:8080/muse/services
+
+  - OurGrid introduction.
+
+    This implementation is part of the OurGrid project. The CDDLM
+    implementation is built on the Apache MUSE project. It is an
+    independent implementation done using the CDDLM specifications
+    only. There will also be a demo at GGF15 in a CDDLM session.
+
+  - In the Architecture diagram: What is resource manager? A web
+    service that has operations to create context (tomcat context that
+    can create a CDDLM system) on the resource. It is not a Resource
+    Manager in the OGSA sense.  Probably it should be renamed to
+    something else, e.g., component manager.
+
+  - Description of CDL, including a number of features such as
+    extends, lazy, etc.
+
+  - Demo went through entire CDDLM lifecycle.
+
+* GGF15 & F2F meeting
+
+  - Proposed and agreed to have one more presentation in the Overview
+    session
+    - A presentation on an alternate basic profile. It is a
+      continuation of the BoF held in the last GGF.
+    - Allocate 20 minutes: A person from UVa (Marty's team, probably
+      Glenn) will give the presentation.
+    - Also planning to have an ad-hoc BOF during GGF15. (UVa and
+      Microsoft)

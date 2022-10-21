@@ -1,0 +1,321 @@
+OGSA Teleconference December 11, 2003
+=====================================
+
+* Participants
+
+  Abdeslem Djaoui (RL)
+  Steve Fisher (RL)
+  Dan Gunter (LBL)
+  Bill Horn (IBM)
+  Hiro Kishimoto (Fujitsu)
+  Fred Maciel (Hitachi)
+  James Magowan (IBM)
+  Dave Berry (NeSC)
+  Pierluigi Ritrovato (UNISA)
+  Andreas Savva (Fujitsu)
+  Frank Siebenlist (ANL)
+  David Snelling (Fujitsu)
+  Paul Taylor (IBM)
+  Jem Treadwell (HP)
+
+  Minutes: Andreas Savva
+
+* Early Discussion
+
+** Previous minutes approval
+
+*** F2F Minutes - approved
+
+   - Some minor changes from Fred were submitted but a new version has
+     not been posted yet. Nothing controversial, but do recheck the
+     minutes when they are available.
+
+     Action: Andreas to announce new version.
+
+*** Last call's minutes (Monday 12/8) - approved
+
+** Teleconf schedule 
+
+  - Hiro sent out the teleconf schedule up to the next F2F.
+  - No comments - Approved.
+
+** OGSA Spec. pen
+
+  - Ian has the pen (not on the call)
+  - No-one wants the pen urgently.
+
+** AOB - none
+
+* Information and Monitoring discussion
+
+  - Some changes to Bill's previous text stemming from F2F discussion.
+
+** "Comparison of Intermediaries" (Bill Horn)
+  
+  - Main document discussed in this teleconf ([1])
+  - Note: Page numbers in minutes refer to the above document.
+
+  Bill explained the common intermediary patterns expressed in UML
+  (p4).
+    - Type 1: Message broker
+    - Type 2: Log
+    - Type 3: Directory 
+    - Type 4: Corba generic events 
+    - Type 5: OGSI 1.0
+
+  As well as the GMA (p3) and MDS-3 (p2) examples. 
+
+  There was a lot of discussion, partly captured in the section
+  ``Details of discussion on "Comparison of Intermediaries"'' located
+  after the conclusions.
+
+* Conclusions
+
+    - Resolved: For the OGSA document do not merge types 1,2,3. Rather
+                we want to pull them apart in such a way that will let
+                us identify commonalities and combine sub-components.
+        Notes:
+        - (In other words identify the collection of pieces that
+           make up logger/broker/directory and tease out
+           commonalities.)
+        - Don't want to do type 1,2,3 separately (e.g., in 3 different
+          WGs) and end up not interoperating or co-existing.
+        - Types 4,5 are intermediary patterns E.g., Take Type 1 with
+          cardinality 1. Drop broker and push functionality into
+          supplier: turns it into type 4/5.
+        - Already have type 5 builtin by default (OGSI)
+        - (Detailed) i/fs not in OGSA group.
+        - Bill has already done work on type 2 (logger). It was a good
+          exercise helping to make things more concrete.  He has
+          started work on Type 1. 
+
+          Action: Bill to continue on this path; eventually include
+                  results in OGSA specification.
+
+   - Action: GMA group to talk to Bill and arrange for extra meetings,
+             if necessary.
+
+   - Action: Everyone should (re)read docs
+
+   - Agreed: GMA has requirements; OGSA doc should satisfy those
+             requirements
+             - GMA is system to allow existing systems to interroperate.
+             - European Data Grid is currently pushing GMA (about 15
+               people involved).
+             - The current GMA work is an extension of the original
+               GMA work. Since the original GMA-WG is not active
+               anymore OGSA-WG is dealing with the current GMA work.
+             - Need to check that implementation and *use cases
+               driving it* are satisfied by types 1,2,3.
+
+   - Action: GMA group to classify GMA use cases into the types
+             presented.
+
+   - Action: Bill to produce next version of slides
+     - p4: combine 4,5 into the other types.
+     - unify naming of operations/interface? e.g., pullall is
+       query(pullall)
+     - Tease out a generalization, if possible. (This is probably a
+       longer term goal.)
+       
+   - Action: GMA group to push out interface to OGSA group
+     - Note: GMA enumerates i/f but does not describe them in
+       detail. Think of it as starting point.
+       - It's ok for some people (Dave) to just get the interface spec
+         if it is something like javadoc.
+
+   - Issue: Any relation or overlap between GMA & CMM?
+     - Fred is posting a new doc later today. Continue discussion as
+       necessary.
+
+* Details of discussion on "Comparison of Intermediaries" 
+  
+  Note: This section records details of the discussion triggered by
+        the above presentation.
+  
+
+** p4. "Patterns"
+    - Some common intermediary patterns expressed in UML.
+
+    - Type 1: Message broker
+      - pull vs pullall
+        - pullall gets all messages on channel since last pull
+      - cardinality: many producers or consumers per broker
+
+    - Type 2: Log
+      - Type 2 vs Type 1: 
+        - Persistency for long term (logging) vs 
+                persistency of message until it is delivered.
+                => message is kept until delivered to all current
+                   subscribers
+        - (durable subscriptions might provide more persistency)
+      - Comment: Persistency may be defined in terms of time or
+                 may be determined by the size of buffer/storage medium.
+
+    - Type 3: Directory 
+      - An example is MDS-3 (refer page 2)
+
+    - Type 4: Corba generic events 
+      - Built on "generic" event
+      - Exchange references to create association
+
+      Comment: GMA is type 3 (find references) & then type 4 (talk
+               directly)
+
+    - Type 5: OGSI 1.0
+
+  - Discussion explored variants to determine whether the above
+    patterns are really basic
+
+    - Publish/subscribe: 
+      - Query driven (subscribe and register a filter to broker)
+        - QoS requirements 
+        - Combination of types 2 & 3?
+      - More like Type 1. Stream of events going to broker and then
+        pushed to a particular topic.
+      - Combination of types 1 & 2
+        - Persistency for period of time
+        - Put in RDBMS. Consumers can go and update data later
+          - Comment: EDG project using DBMS for storage. Updates not
+                     allowed once something is stored.
+
+** p3 - "Example from GMA"
+
+    - Bill: Would be tempted to use type 1 pattern for this
+      architecture.
+
+    - Particular implementation could use JMS to delegate to broker
+        
+    - (If consumer can choose topics couldn't everything be reduced to
+      a single pattern. E.g., Type 3?)
+
+    - Entities in the middle have different properties; would reduce
+      to just a message broker.
+
+    - Producer is providing unified i/f to SNMP and to consumer
+    - Key point is that producer is mainly an *interface*
+      - Wraps sensors and presents data in unified way to consumer
+
+    - At some point will have to talk to legacy system; not mandated
+      by this diagram.
+
+    - Consumer i/f is not necessarily a standardized i/f
+
+    - Producer/consumer is type 4? push and pull
+                        but generally producer pushes
+      - If there is a subscription + predicate then it is push.
+        (query leads to push)
+        - persistent query equals subscription?
+        - (consumers can subscribe and pull; implementation details on
+          query)
+
+    - GMA directory maps to type 3?
+
+      GMA directory is completely distinct from the aggregator
+
+      Bill: Directory is like active directory; lookup of keys. Can
+            put anything you like there.
+       - Then maybe not type 3. Since it does not contain any
+         events? 
+         - Does not preclude putting events there.
+
+       - But isn't type 4 right hand side of type 1 (if you massage
+         the terms)?
+
+    - Conclusion: GMA is combination of type 3 & 4
+                Type 3 records (what gets created)
+                Type 4 delivers 
+
+        (messaging broker is both a consumer --left-hand-supplier--
+        and producer of information to --right-hand-consumer--)
+
+** p2. "MDS in GT3"
+
+   - GT3 model
+     - collective layer (aggregator) combines small XML docs into a
+       large one.
+     - resource layer to collective layer: push
+     - collective to user: might be either push or pull
+
+   - Standardize behaviour vs interface 
+   - Type 1,2,3 are just type 4 on both sides (with something in the
+     middle)?
+
+  - Need additional semantics to put together distributed systems
+
+  - Collection of subscription patterns
+    - pub/sub
+    - query
+    - ...
+
+  - Variety of push/pull (delivery mechanisms)
+  - Variety of persistency 
+
+** Relation with OGSA document
+
+    - Two main ways of going about it:
+      1. Building blocks; can be mixed in a variety of ways,
+             versus
+      2. Focus on patterns and leave the rest (block combinations) to
+         implementators
+
+      The fear is that if the OGSA spec becomes too abstract it will
+      be very difficult for people(grid system architects) to
+      implement it.
+
+      - Apply patterns. Factor out common subcomponents. Describe
+        subcomponents and their relations.
+
+      - Think of GMA as pattern (not as architecture?)
+             distributed logging, etc...
+        are just intermediaries.
+
+        - Proposal: Look into generalizing GMA doc to include other
+                    types (e.g., monitoring, logging....)
+
+      - Do as interfaces rather than patterns, e.g., following type 5.
+        - producer/consumer i/f  (push/pull?)
+        - idea of producer/consumer goes away
+        - no real model in the picture
+        - publish / subscribe i/f 
+          - Note: publish here doesn't mean publishing the event, but
+            availability of some type of event
+        - persistence i/f (or way of advertising it)
+
+        - Not a panacea: E.g., A push to a broker is not same as a
+          write to a log.  Pinning semantics of push (to a system
+          e.g., logging) is a tough exercise.
+
+          Interface changes to support different types of push/pull --
+          difference between type 1, 2.
+
+          Would like that level of detail (defining push & pull
+          semantics) in the OGSA spec.
+
+     - Do not see a problem with OGSA doc saying this is how you do
+       logging, broker, directory , and these are the fundamental bits
+       of broker, logger.
+
+   - Current logger document is not synced with OGSA specification.
+     - Old version did not seem to pose problems mapping to GMA
+
+
+* References
+
+** Main document discussed in teleconf
+
+    [1] Comparison of Intermediaries (Bill Horn)
+     https://forge.gridforum.org/docman2/ViewCategory.php?group_id=42&category_id=469
+
+** Other Relevant documents:
+
+  - Logging service by Bill Horn
+    - https://forge.gridforum.org/projects/ogsa-wg/document/Logging_service_overview_0.6_0.3/en/1
+    - https://forge.gridforum.org/projects/ogsa-wg/document/OGSA_Logger_System_V9/en/1
+
+  - GMA usecase
+    - https://forge.gridforum.org/projects/ogsa-wg/document/GMA_usecase/en/1
+
+  - GMA service description
+    - https://forge.gridforum.org/projects/ogsa-wg/document/GMA_service_description/en/1
+

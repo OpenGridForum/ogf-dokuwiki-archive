@@ -1,0 +1,310 @@
+INFOD Unresolved Issues
+=======================
+
+This is a list of open issues. Each issue has a serial number, once it
+is resolved it is moved to a companion document of resolved issues
+
+==============================================================================
+
+Issues with target date of <= 21 Jul 2005
+
+1  Abdeslem
+7  Dieter
+8  Abdeslem, Shailendra
+21 Dieter
+
+==============================================================================
+
+
+1       What is infod scope wrt publishers and when infod influences messages and when it doesn't?
+
+        the stages involved are creation of messages (which infod can influence), making 
+        messages available for transmission, and actual dissemination of messages. We end
+        up discussing scope of infod over and over again, either when asking if infod
+        publishers may publish without subscriptions, or infod publishers may support 
+        the equivalent of a dpublish, etc.  So what is needed is clear statement on scope
+        of infod as it relates to the infod influence on message lifetime.
+        - description of item in Chicago f2f chat section 10:10:49 on 6/27  
+        - action item is to add description in Ch1 of specs to hopefully clarify scope.
+
+        - Date: 1 Jul 2005
+        - Owner: Abdeslem
+        - target date: 21 Jul 2005
+
+
+2       What are components of the manifest section of the infod data (and metadata) message?
+
+        this is the message that is sent to the consume or notifyupdate operations.
+        
+        Once that is described, scenarios like rgma can decide whether they can use that
+        format to publish and essentially support the PO Box at the publisher site 
+
+        - Date: 1 Jul 2005
+        - Owner: Shailendra
+        - target date: 28 Jul 2005
+                - dependency on infod object schemas more or less finalized 
+
+
+3       Is PO Box at the publisher site supported in infod?
+
+        RGMA scenario: publish against a publisher allowed ?
+        SensorNet also: infod recommendation on granularity of publisher to be documented 
+
+        - Date: 1 Jul 2005
+        - Owner: Dieter, Cecile
+        - target date: Aug ? 
+                - dependency on issue 2
+
+
+5       Do we need consumptions as well as subscriptions?
+
+        http://www-unix.gridforum.org/mail_archive/infod-wg/2005/06/msg00020.html,              
+        http://www-unix.gridforum.org/mail_archive/infod-wg/2005/06/msg00021.html
+        http://www-unix.gridforum.org/mail_archive/infod-wg/2005/06/msg00026.html
+        http://www-unix.gridforum.org/mail_archive/infod-wg/2005/06/msg00028.html
+        
+        - Date: 1 Jul 2005
+        - Owner: Dieter, Cecile
+        - target date: 28 July 2005
+
+
+6       How do we relate to OGSA profiles?
+
+        - Date: 1 Jul 2005
+        - Owner: Abdeslem 
+        - Target date: 
+
+
+7       How are registry object updates  broadcasted to interested infod player
+
+        for ex, how new subscriptions are found by publishers - 
+        
+        describe how notifying/finding appropriate consumers for metadata 
+        messages - specs don't do it now (notifyUpdate interface half spec'ed)
+        and we didn't discuss at F2F (Animation scenario feedback)
+
+        A dup issue: due to the dynamic nature of publications, publishers, etc., a subscription
+        may need to include information about how to notify consumers of changes to the
+        subscription dependencies (additional publishers, removal of publishers that occur
+        over time, etc.). 
+        http://www-unix.gridforum.org/mail_archive/infod-wg/2005/03/msg00029.html
+
+        What is the interaction between parameters of subscription - their dependencies?
+
+        Subscription parameters are infod object components that may interact with each
+        other (what happens if data filter exists but not association, or if both exist,
+        or none...) - Describing interaction will help readers understand these components
+        better and simplify section 3 as at least one is required  but not clear what
+        non-provided parm means (means all as in '*' or means NULL...).
+        
+        - Date: 1 Jul 2005
+        - Owner: Dieter 
+            - describe options - propose parms - summarize pbm - discuss scalability
+            - target date: 21 Jul 2005
+
+8	How does registry handles EPRs, especially when logical EPRs for expressions?
+
+        logicalEPRs don't current support expressions - define how to do so - indirection
+
+        - Date: 1 Jul 2005
+        - Owner: Abdeslem, Shailendra
+            - describe options - summarize pbm 
+            - also, quick description of what an EPR is         
+            - target date: 21 Jul 2005
+
+
+11      How does INFOD relate to WS-RF and WS-ResourceLifetime?
+        Topics about Resource Management (naming, versioning and change management of resources)
+        is not part of the INFOD scope yet some specific components are expected by the INFOD model, 
+        in particular: time of a change, a reference to an identity to record responsibility for the change,
+        time when a version becomes valid, time when a version expires, a schedule when this version is valid,
+        etc. 
+        Document current positioning wrt to wsrf (a few papers were summarizing this already)
+
+        it might mean that we end up trying to build on top of or align with 
+        WS-BaseNotification, because it is part of the OGSA Basic Profile
+        Document current positioning wrt to wsn (ref:   
+        http://www-unix.gridforum.org/mail_archive/infod-wg/2005/05/msg00003.html)
+
+        WS-ResourceLifetime is a specification that allows us to
+        destroy resources. Does this have any sort of versioning? Not
+        obviously - this could be used for planned updates? There
+        is no scheduling component to this specification - it is about
+        handling instances, not any evolutionary aspects of a service.
+        We will still have to have our own creation mechanisms.
+
+        - Date: 1 Jul 2005
+        - Owners: Abdeslem, Cecile
+        - target date: 28 Jul 2005
+
+
+12     Can we provide INFOD services as an extension to WS-BaseNotify?
+          http://www-unix.gridforum.org/mail_archive/infod-wg/2004/08/msg00010.html
+          http://www-unix.gridforum.org/mail_archive/infod-wg/2004/12/msg00000.html
+        
+        - Date: 1 Jul 2005
+        - Owner: Susan
+        - target date: 
+
+
+13	How do WS-Eventing, WS-N and INFOD relate and can we provide INFOD
+	services as an extension to WS-BaseNotify
+
+        - Date: 1 Jul 2005
+        - Owner: Susan  
+        - target date:  
+
+
+14      How do we break the spec into multiple documents defining differetn levels of INFOD?
+
+        decomposition of interfaces, and factoring of this specification into related specification 
+        documents
+
+        The proposed factoring is as follows, from simple to more complex scenarios:
+
+        - Information Dissemination from publishers to consumers, allowing subscribers to subscribe 
+          on behalf of 3rd party consumers
+        - Information Dissemination with one or more disseminators, but without propagation 
+          requirements between disseminators (disseminators do not talk to each other yet provide 
+          decoupling of publishers/subscribers/consumers interaction)
+        - Information Dissemination with one or more disseminators and with possible propagation 
+          between disseminators (delivery of the ‘intelligent cloud’ of figure 2 above).
+
+        Another proposal from F2F was to look at the list of Requirements, and pick a few that
+        are doable short term, and use it to drive the factoring from simple to more complex
+        scenarios - and use that work to see how the 2 relate to each other (ie common short term
+        items from both)
+
+        Is file replication part of INFOD, or OREP ? and if part of INFOD, part of base specs ?
+        (ref: http://www-unix.gridforum.org/mail_archive/infod-wg/2005/05/msg00003.html)
+
+        Have it aligned with wsn base: have infod base, one for broker - disseminator(s)
+
+        - Date: 1 Jul 2005
+        - Owner: Cecile
+        - Target date: 4 Aug 2005
+
+
+15      Which (if any) components support transformations?
+
+        Are they supported by consumptions?  consumption  has different  use-cases:
+        replication,  fan-out with same subscription and different consumer
+        transforms, different channel    options for a given consumer,
+        
+	(followup at http://www-unix.gridforum.org/mail_archive/infod-wg/2005/06/msg00017.html)
+        
+        - Date: 1 Jul 2005
+        - Owner: Shailendra
+        - Target date:
+
+
+16      How do we deal with retention periods?
+
+        - Date: 1 Jul 2005
+        - Owner: Dieter
+        - Target date: 31 Aug 2005
+
+
+17      How do the propagation interface(s) differ from the consume interfaces and what is stored in the registry?
+
+        - Date: 1 Jul 2005
+        - Owner: Shailendra, Cecile
+        - target date:  4 Aug 2005
+
+
+18      Should we be looking at other rule specifications and consolidate/align with them?
+
+        E.g. This applies to transform definitions. Specs need to document approach taken.
+
+        Also we are oriented towards putting things in multiple queues right now.  But the 
+	consumer may not want to be able to see those queues, especially cross-VO. So we
+        need a mechanism for replaying past events without the producer understanding the
+        ID structure of the consumer. The consumer just wants to get the information; it
+        shouldn't have to know what the underlying structure was.
+        
+        - Date: 1 Jul 2005
+        - Owner: Shailendra
+        - Target date: 
+
+
+20      What is a Vocabulary?
+
+        Making sure concerns, questions raised in 2 appends below are addressed in 
+        section 8 of specs:
+        - http://www-unix.gridforum.org/mail_archive/infod-wg/2005/02/msg00014.html
+        - http://www-unix.gridforum.org/mail_archive/infod-wg/2004/09/msg00002.html
+
+        From ed technologies such as 'Recommendation Engines' known
+        from Business Intelligence. See http://www-db.stanford.edu/~echang/
+            
+        - Date: 1 Jul 2005
+        - Owner: Dieter 
+        - Target date: 31 Aug 2005
+
+21     How should vocabularies appear in the spec and in which levels?
+
+       how much of the vocabulary management issue really belongs in our spec explicitly,
+       instead of being considered a "meta" problem that "everyone" will have to deal
+       with?
+
+       We would like our basic specification to not rely on some vocabulary manager at
+       least at the lowest level. We will pick a vocab or two and just use it.
+
+        - Date: 1 Jul 2005
+        - Owner: Dieter
+        - Target date: 21 July 2005
+
+22     Can OGSA workflow be done with INFOD?
+
+        - Date: 1 Jul 2005
+        - Owner: none
+        - target date:  
+
+
+23      How does INFOD relate to OREP?
+
+        OREP includes in its charter replication specifications so positioning is necessary
+        between OREP (file only ?) and INFOD.
+
+        - Date: 1 Jul 2005
+        - Owner: Cecile
+        - target date: 31 Aug 2005 (talk to Ann - follow-up with David Martin - may close OREP)
+
+
+24      How do security issues apear in the spec?
+
+        One specific aspect is how registry decides who can delete the publication_types and other objects?
+
+        - Date: 1 Jul 2005
+        - Owner: Vijay and Dieter
+        - Dependency - Issue #7
+        - target date: 
+
+
+25      Can INFOD implement R-GMA semantics?
+
+        - Date: 1 Jul 2005
+        - Owners: Steve
+        - target date: After next draft 
+
+26      How do operational things appear in the spec?
+    
+        This info that applies to INFOD resources is not specifically addressed in this version 
+        of the specifications. 
+    
+        How does OGSA do active management of resources? Typically, the resource is
+        expected to be queryable. We propose to use a MIB-style structure ("resource
+        properties") at the producers/consumers/disseminators to control them. We would
+        prefer not to burden the registry with this functionality.  OGSA is currently
+        proposing to use the OASIS WS-DistributedManagement for this functionality for
+        hardware-style management, but it might be too low-level for INFOD.
+
+        There was some discussion about what this meant. It would appear that stopping a
+        service is out of scope but that suspending a suncsription - i.e. an operation on
+        the registry contents, is in scope.
+
+        - Date: 1 Jul 2005
+        - Owners: Abdeslem
+        - Target date: 
+
+

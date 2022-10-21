@@ -1,0 +1,251 @@
+OGSA Teleconference - 19 January 2005
+=====================================
+
+* Participants
+
+  Abdeslem Djaoui (RL)
+  Ian Foster (ANL)
+  Andrew Grimshaw (UVa)
+  Hiro Kishimoto (Fujitsu)
+  Tom Maguire (IBM)
+  Mark Morgan (UVa)
+  Takuya Mori (NEC, ANL)
+  Steve Newhouse (OMII)
+  Andreas Savva (Fujitsu)
+  Dave Snelling (Fujitsu)
+  Latha Srinivasan (HP)
+  Ravi Subramaniam (Intel)
+  Jem Treadwell (HP)
+
+  Minutes: Andreas Savva
+
+* Jan 10 and 12 minutes approved with no changes
+
+* F2F logistics
+
+  - Place is Westin at O'Hare airport.
+  - Logistics are not completely worked through yet.
+
+  Action: Andrew to
+    - Book conference room for the OGSA-WG meeting (3 days: Feb 14-16)
+    - [And an additional one day for the non-OGSA meeting]
+    - And let the group know of the room rate (for staying at the
+      hotel)
+
+  Action: Hiro will update F2F agenda, etc to reflect discussions and
+          re-post.
+
+* GGF13 preparation
+
+  - Hiro added InfoD to the RM session (now a shared session) and
+    submitted the OGSA scheduling requests to Stacey.
+  
+  - There is a plan to do an EM-related BoF. Stacey should know about
+    it but it is not the job of the OGSA-WG to tell her---the
+    proposed-chairs should do it. Preparation has not progressed to
+    that point yet so Andrew as Area Director will take care of it.
+
+  Action: Andrew as Area director to send an email to the directors of
+          the relevant Area (SRM: Bill, Stephen) to let them know of
+          the proposed BoF; also to Stacey to reserve a slot.
+
+  - Andrew mentioned that on the Data call there was a discussion for
+    a similar BoF for Data.
+
+* Basic profile review
+
+  Reference:
+  https://forge.gridforum.org/projects/ogsa-wg/document/draft-ggf-ogsa-basic-profile/en/2
+
+** Introduction/Front matter
+
+  - Many changes since the last review. Because the document was still
+    taking form these were not change tracked. The authors will do
+    change tracking for future versions.
+    - Ian re-wrote the Introduction.
+    - Security section by Dave S.
+      - Basic security addition is not reflected in the front matter
+        yet.
+    - Tom fleshed out many compliance statements.
+
+  - Agreed to track issues via trackers. All comments should be
+    deleted for the next version: either address in the text or move
+    to the tracker, if substantial enough.
+    
+  Action: Andreas to create issues tracker.
+          [Done.
+          https://forge.gridforum.org/tracker/index.php?func=browse&group_id=42&atid=780]
+
+  - Submit issues to the tracker directly or to the ogsa-wg list (and
+    someone (probably Andreas) will put in the tracker.) The tracker
+    is set to send mail to the list on addition of new artifacts only.
+
+** Profile Conformance 
+
+  - Conformance targets need update. Probably some of these will be
+    deleted.
+
+  - Conformance Claim URI: Not defined yet. Reuse the WS-I approach.
+
+  - There are two different types of statements marked with different
+    prefix letters: {R, E}
+    - [R]: Requirements statement. These are fairly consise. They may
+      restrict but not extend an existing specification. (They should
+      not be used to try and write new specifications.)
+
+    - [E]: Extensibility points. Call out points where extensions may
+      be made. E.g., where open content might be required. These
+      highlight areas where behaviour may vary. (In a sense these are
+      "warning flags.")
+
+** Addressing
+
+   - Using submission drafts as base; not trying to actively follow
+     the latest ones.
+
+   - R1002: Highlights an issue with the current spec.; the use of
+     policy elements. Needs follow up.
+
+   - R1003: It might be the case that the URL contains the ServiceName
+     but this is not required. This statement is trying to codify the
+     desired behaviour.
+
+*** 3.1.5 Resilient References
+     
+    - The intention is to describe ogsi-similar renewable references.
+      - Focus is on capturing the renewable reference aspect and NOT
+        on how to register a name so that it can be resolved.
+      - 'Speculative' addition of rns:resolve since the RNS spec. may
+        provide this operation.
+
+    - There was a proposal for standardization of renewable references
+      (RR). But it seems to be falling between the cracks of various
+      groups: W3C Addressing group has placed it out of scope; WSRF
+      does not seem to be the right place for it.
+
+*** 3.1.6 Reference properties
+
+    - R1005: This statement will probably disappear into a tracker
+      artifact. It is not easy to test or check.
+
+    - In terms of terminology note that the profile deals with a
+      particular message exchange. So terms like SENDER and CONSUMER
+      are used instead of CLIENT/SERVER since the latter would
+      describe a relation beyond a specific message exchange.
+      
+    - "Encoding scheme" might be work for a higher level profile.
+      ("Correlateable properties?")
+
+*** 3.2 Addressing MIH
+
+    Includes just boilerplate text for now.  Need to think about it
+    and revisit as WS-Addressing progresses. (It is expected that by
+    March the W3C Addressing WG wil have a committee draft for this.)
+
+** Resource embodiment
+
+   - One major issue here is how far Data requirements can be
+     accomodated while promoting interoperability.  It might be good
+     idea to schedule a joint-session with DAIS on this topic at
+     GGF13.
+
+*** Resource properties
+
+**** 5.1.1 Property names 
+
+  - Qnames to point to the type of a resource property. And assume
+    that the entity retrieving that information knows or can find out
+    what they mean.
+
+  - (There was a side-argument on why type information cannot be
+    returned in general. Many implications if dynamic resource
+    property elements are allowed and how they should be
+    supported. Might want to record this as an issue but it is not
+    likely to be something that can be solved in this profile.)
+
+  - (DTDs were also mentioned as an alternative.)
+
+**** 5.1.2 Metadata descriptor
+
+    WSRF has made this optional so it should not be made mandatory
+    here. But it is probably a good idea to make it a separate section
+    to draw out the relevant issues.
+     
+*** 5.3 Query resource properties
+
+   - (Issue) Requires XPath 1.0; but there is no standard
+     serialization for an XPath response; so it ends up being
+     implementation dependent.  (XPath 2.0 on the other hand defines
+     the response as well.)
+   
+
+*** 5.4 ResourceProperty change notification
+  
+    - Might not want to require Topics. (Make no statements about
+      their usage.)
+      - Then they could not be used in a manner compliant to this
+        profile but people could still experiment with them. And the
+        profile could be kept simple for now.
+      - Adding them in a later version would not affect other parts.
+        
+*** 5.5 Set resource property
+
+   - Another problematic function. Ordering issues are one typical
+     issue (but there are other related issues discussed in the WSRF
+     TC).
+   - Revisit after checking with likely users: WSDM and possibly GT
+  
+   - Proposal at the moment is to give them the same treatement as
+     Topics: say nothing about them and leave the field open for
+     experimentation.
+
+** 6 Resource lifetime
+
+  - Not sure how far to mandate support for immediate destruction.
+
+  - Proposal: A resource that can be created by message exchange
+    should support immediate destruction
+  - Might want to require response by all (even if a resource was
+    statically created).
+
+  - The semantics are defined by WSRF; not in the profile. In
+    particular there was some discussion on what a destruction message
+    means (in particular a successful reply).
+
+  - A long discussion on whether to allow other behaviours, e.g., not
+    mandate that a resource has to support this behaviour. It seemed
+    to be due to a misunderstanding and it was agreed that the
+    discussion should be taken offline; revisit in a later call if
+    still an issue.
+    
+*** 6.4 Notification of pending destruction
+
+   - Might be something to propose to the WSRF group since it requires
+     functionality not currently specified.
+  
+** Security
+
+   - A first attempt to do a security profile segment. It uses the
+     WS-I basic security profile, HTTP over TLS, and TLS
+
+  - Note terminology: SENDER/RECEIVER not CLIENT/SERVER since the
+    statements are with respect to message exchange roles as noted
+    earlier.
+
+  - It is transport-based security: not necessarily session-based---
+    it could be message-based. This seemed not to come out clearly
+    enough from the text.
+
+  - Contrast with WS-I basic security profile
+    - WS-I profile statements are that "if something needs to be
+      secured this is how it should be done" while this profile makes
+      statemens on what functionality is required
+
+  - Restricted authentication to just x509 certs. (And therefore
+    disallowing username/passwd authentication.) This should probably
+    be stated more clearly.
+
+** Other business
+
+   - Tom has the pen and will produce the next version of the basic
+     profile document.

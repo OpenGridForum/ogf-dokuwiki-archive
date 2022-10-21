@@ -1,0 +1,128 @@
+OGSA Teleconference - 2 November 2005
+=====================================
+
+* Participants
+
+  Jay Unger (IBM)
+  Jem Treadwell (HP)
+  Ellen Stokes (IBM)
+  Chris Smith (Platform)
+  Andreas Savva (Fujitsu)
+  Manuel Pereira (IBM)
+  Steven Newhouse (OMII)
+  Mark Morgan (UVa)
+  Steve McGough (Imperial)
+  Tom Maguire (EMC)
+  Fred Maciel (Hitachi)
+  Hiro Kishimoto (Fujitsu)
+  Andrew Grimshaw (UVa)
+  Dave Berry (NeSC)
+  Michael Behrens (R2AD, LLC)
+
+  Minutes: Andreas Savva
+
+* October 26 minutes approved with no changes
+
+* Information Model discussion
+
+  - Postponed for next Wednesday
+  - Action: Andrew to identify the attributes needed for BES container
+
+* EMS Sequence review
+
+  - Reviewed sequence diagram and text sent to the list
+  http://www-unix.gridforum.org/mail_archive/ogsa-wg/2005/11/msg00003.html
+
+    The diagram has not changed since the last review. There is
+    additional text explaining the steps.
+
+  - An open issue is the meaning of the 'abstract JSDL document'.
+    - In the simplest case a document that does not specify a
+      particular resource (host) for execution.
+    - A more abstract case is that of specifyin only an application
+      name and data (input, output) and leaving the rest to the
+      system.
+    - Taking the OS as an example, if the OS element is defined then
+      only that specific OS can be used. If left undefined then any OS
+      can be used. There is no in between choice with JSDL 1.0. The
+      expectation is that JSDL should be combined with some other
+      language to provide more flexible descriptions.
+    - (WS-Agreement is one option but the assumption is that it is not
+      used in this sequence. )
+
+  - Other existing work on preferences or selection policy?
+    - EGEE uses Condor classads (with EGEE extensions)
+    - Globus (no, since no there is no scheduler)
+
+  - Can the Policy document may be empty? Then would just get
+    whichever resource the EPS considers good enough.
+
+  - Job management is out of scope of this scenario
+    - How about job termination? It was discussed last time and is out
+      of scope at this stage.
+    - But it is a good idea to add the simplest case of 'control'
+      returning to JM at the end of the job.
+    - Agreed that this should be a separate sequence diagram.
+
+* Naming discussion
+
+  - There was substantial confusion with the statements made at the
+    last F2F.
+  - Confirmed that the gist of the statement was: "In OGSA pointers
+    are EPRs that may or may not be WS-Names."
+  - The additional question is whether individuals WGs, because of the
+    service specifications they are defining, can choose to require
+    WS-Names (their reasons for doing so may vary).
+
+  - Why does a service require EPR comparison? Does it fall in the
+    category of "Nice but..."
+    - One example is to distinguish EPRs for identity purposes.
+    - And one common usage may be to enable additional functionality
+      for monitoring, etc.
+
+  - The expectation is that even if some OGSA services mint WS-Names
+    and other OGSA services deal with them, those other OGSA services
+    may also have to tolerate vanilla EPRs because there may be
+    non-OGSA services in the system.
+
+  - Does the requirement for WS-Names have to be part of the interface
+    signature or is it more of a compliance statement that should be
+    in a profile instead?
+
+  - Is it an optimization? Can there be implemenations that
+    functionally work without this feature, even if sub-optimally? So
+    to make this feature mandatory becomes an overstatement.
+    - It is also putting the onus on the client to manage the
+      identities vs requiring the service to provide an operation.
+    - Filesystem traversal as one(another) case where such an
+      optimization (WS-Name) is useful.
+    - The logging use case mentioned earlier is a commonly cited
+      one. But in Jay's experience the identifiers have to be
+      explicitly designed for the specific system and do not
+      generalize.
+
+  - Also the 'unique-in-space-and-time' statement is another point
+    of disagreement.
+    - To guarantee uniqueness there are two approaches: 1) arbitrator; or
+      2) agreed upon algorithm (with some unique input) used by
+         everyone.
+    - Agreed that something closer to (2) is expected but it is more
+      of a best-effort. So the space-time guarantee is not expected to
+      hold literally.
+  
+  - Noone on the call doubts the usefulness of WS-Names in helping
+    build quality implementations. The disagreement is whether they
+    must be mandated in the interface signatures of basic specs.
+
+  - The open issue is what is the statement OGSA should make to the
+    fellow WGs. Is this issue something that can be left to each
+    individual WG or should it be tackled by the Architecture (so
+    within OGSA-WG).
+
+  - Hiro proposed to write up a document defining the problem, what
+    are the requirements and proposed approach; and circulate to
+    interested parties. Continue discussion on the list and possibly
+    re-review next week with Ian Foster and Frank Siebenlist.
+    - Tom volunteered to start a draft
+
+* UML Tool discussion - postponed

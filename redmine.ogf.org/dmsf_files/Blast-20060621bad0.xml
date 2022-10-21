@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdl:cdl
+    targetNamespace="http://cddlm.org/component-model-example"
+    xmlns="http://cddlm.org/component-model-example"
+    xmlns:cdl="http://www.gridforum.org/namespaces/2005/02/cddlm/CDL-1.0"
+    xmlns:cmp="http://www.gridforum.org/cddlm/components/2005/02"
+    xmlns:bpc="http://www.gridforum.org/ogsa/BasicPosixComponent/2006/06"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <cdl:system>
+    <Blast cdl:extends="bpc:PosixApplication">
+      <cdl:documenation>
+          Configuration data for BLAST binariy deployment.
+      </cdl:documenation>
+      <BlastApp cdl:extends="bpc:Application">
+        <Binary type="tar"> http://blast.app.com/blast.tar </Binary>
+        <UserName> csmith </UserName>
+	    <GroupName> hpc </GroupName>
+	    <Mode> 755 </Mode>
+      </BlastApp>
+      <TmpFileSystem cdl:extends="bpc:FileSystem">
+        <cdl:documenation>
+            Configuration data for temporary file system.
+        </cdl:documenation>
+        <FileSystemType>temporary</FileSystemType>
+        <DiskSpace>
+	       <LowerBoundedRange>10737418240</LowerBoundedRange>
+        </DiskSpace>
+      </TmpFileSystem>
+      <HomeFileSystem cdl:extends="bpc:FileSystem">
+        <cdl:documenation>
+            Configuration data for home file system.
+        </cdl:documenation>
+        <FileSystemType>normal</FileSystemType>
+        <MountSource>server.acme.com:/home/csmith</MountSource>
+        <MountPoint>/home/csmith</MountPoint>
+      </HomeFileSystem>
+      <DataBaseFileSystem cdl:extends="bpc:FileSystem">
+         <cdl:documenation>
+            Configuration data for formatted database file system.
+         </cdl:documenation>
+         <FileSystemType>normal</FileSystemType>
+         <MountSource>server.acme.com:/db/ncbiblast</MountSource>
+         <MountPoint>/db/ncbiblast</MountPoint>
+      </DataBaseFileSystem>
+      <PATH cdl:extends="bpc:EnvironmentVariable"/>
+         <cdl:documenation>
+            Proper value of PATH environment variable will be available after
+            deployment.
+         </cdl:documenation>
+      <TMPDIR cdl:extends="bpc:EnvironmentVariable"/>
+         <cdl:documenation>
+            Proper value of TMPDIR environment variable will be available after
+            deployment.
+         </cdl:documenation>
+    </Blast>
+  </cdl:system>
+</cdl:cdl>

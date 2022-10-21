@@ -1,0 +1,272 @@
+11:00-12:30 PGI Session 2
+-------------------------
+
+Chair: Andrew Grimshaw
+Minutes: Steve Crouch
+
+Attendance: ~16
+
+Name shortcuts:
+ AG - Andrew Grimshaw
+ EU - Etiennce Urbah
+ DK - Daniel Katz
+ OS - Oxana Smirnov
+ JPN - JP Navarro
+ KS - Katsushige Saga
+ SC - Steve Crouch
+
+New actions:
+
+[BS] Write-up proposal for including benchmarking requirements in JSDL
+[EU/OS] Write-up proposal for using benchmarks as measurement units in terms of the resource requirements
+[SC/AG] Another file staging profile++
+
+Minutes:
+
+Summary of yesterday's session on agreement of moving forward with existing specs, profiling/updating individual ones and moving towards an overall profile which brings these together. See AG's session presentation for more details.
+
+BES++
+
+[See AG's session presentation for more details. List of proposals for last session and open questions.]
+
+JSDL
+
+Which XML rendering to use for GLUE2 embedded in JSDL, hold before/after execution. Any others?
+
+AM: rumour of final version of XML rendering from GLUE group is imminent. [Is it flat or hierarchical?] Can use sub-elements from GLUE2 and include smaller parts.
+
+AG: representative from GLUE?
+
+AM: JP Navarro good candidate.
+
+AG: JSDL's session poorly attended.
+
+ActivityManagement Port Type
+
+i.e. suspend(), resume(), get_status(), terminate()
+
+AG: Idea being that you could have hold states prior to data staging. With this port type, should have other sensible management activies e.g. terminate().
+
+EU: a 'purge' exists in PGI requirements.
+
+AG: may get rid of info about the job.
+
+'Activity Integration Profile'
+
+AG: profiling for this management port type. e.g. RNS 1.1, OGSA-ByteIO 1.0 (yesterday's session).
+
+JPN: ad-hoc GLUE2 session - need understanding of how JSDL wants to use GLUE, to address use cases. 1) allow GLUE2 subelement rendering in other schemas e.g. JSDL; 2) understanding PGI use cases. GLUE2 describes configuration, not matching rules. JSDL may want a, b, c but ranges cannot be described in GLUE2, it's static description.
+
+AG: 1) have BES resources use GLUE2 to describe itself; 2) specify job requirements. In JSDL, can specify ranges?
+
+AM: how is this matched with the two elements?
+
+AG: shortcoming of JSDL - we need to do OR's, but more really guarded statements.
+  We originally want players in JSDL/BES/GLUE to present in these sessions.
+  Do we want to go depth-first? i.e. JSDL first. BES appears straightforward, EU mentioned one way yesterday. Decision on substate model? Then can profile out.
+
+EU: can KS provide links to their state model?
+
+KS: will provide this this afternoon.
+
+OS: user likes to describe job assuming resources offer different configurations, but discovery and matching already done, but when it gets to resource, it's a single item. Do we need logic instructions?
+
+AG: JSDL with user submits and what ends up in BES can be different. Important to have consensus on how this is described in JSDL, even if a broker exists in the middle dealing with this translation.
+  User wants to run app, don't care where. May be diff staging thing to do. With ORs? Better with guarded statements with predicates. Can decide based on these. This is better.
+  Guarded statements presented in CSP, incorporated into lots of languages in 80's.
+
+OS: implementors - dont know how to implement discovery with logic, through workflows, or deterministic model. Either end of execution service, or in client.
+
+AG: request things that have been modified in JSDL from groups e.g. UNICORE.
+
+OS: limit JSDL to what arrives at BES. User tasks can describe whatever they like.
+
+AG: not a big fan. Would like to take JSDL docs and throw them to EUropean BES'. Not necessary to define these things, but will hurt interop, won't be able to use others' JSDLs and vice versa.
+
+OS: broker?
+
+AG: EMS can take in documents and transform them along the way.
+
+EU: Oxana - do you see BES as a site service, or a machine service? ...
+
+AG: would like as symmetric as possible. A site or machine service, but can be entire set of sites or machines. I like recursive layer not being part of design.
+
+AG: [on guarded statements]
+
+Select
+ (condition expression): action
+ (condition expression): action
+ ...
+
+Sepearte our resource req section, but repeating groups of that. For each one have job description, staging elements. On diff machines, want to execute diff apps and move diff data. i.e. diff actions dependent on conditions. Too much of a ++ or BES? We want to have small steps really, instead have smaller pieces. Leave until later?
+
+AG: postpone for now, not much enthusiasm for tackling this.
+
+EU: inside JSDL, have POSIXApplication. Would like to deprecate it. In same element, it describes subelements on environment, and others belonging to resources. e.g. input/output/error/working directory - really belong in env of execution. Already sep blocks for env and resources in JSDL.
+
+Mike: need to be careful careful.
+
+BS: +1 on deprecating limits.
+
+Mike: places where we specify OS, GLUE for this. We want to still allow JSDL to specify this, and profile to specify this as GLUE2 attributes.
+
+EU: but conflict of attributes ...
+
+Mike: it complicates the logic.
+
+AG: deprecate - not something to count on in future. Take it out of follow-on spec. If moving forward, can take these out, just discourage use in future.
+  Go thru JSDL issues and put them on table. Maybe not make decision yet, but just to list them. BES things fairly well understood. Just JSDL for now.
+  For BES++, what should a BES return on a param sweep [added to slides].
+
+EU: param sweep is dynamic creation of jobs. Not possible to return fixed list of EPRs since created ... ?
+
+AG: cardinality of set known at request time.
+
+EU: for bulk requests yes, but param sweep number is much higher.
+
+AG: need to get to what a BES should return.
+
+EU: jobs created one after the other in dynamic way. Supposed that there are too many to list them.
+
+AG: our imp generates EPRs from param sweep at the time.
+
+Mike: timeout situation?
+
+AG: would like to push this back.
+
+EU: propose to replace param sweep with vector or bulk.
+
+AG: disagree strongly.
+
+EU: param sweep is different than vector/bulk. Vector/bulk are finite lists = finite list of EPRs. Param sweep, not finite, but algorithm to dynamically create these.
+
+AG: no conditional statements in algorithm, deterministic. Size can be worked out. Open to discussing param sweep on call, but esoteric for now, perhaps not useful.
+  Another JSDL thing (Mark Morgan originally) found resouce factory attributes not enough, sometimes want to match on a property, exec host have requirement that job has attribute. e.g. Kraken, Crays require statically linked binaries. Can'd send dynamically linked program. App needs to say this about itself. So would like to have matching token which has these descriptions for matching on.
+
+EU: solved by GLUE?
+
+AG: in JSDL ability to describe wanting something, but not predefined e.g. supply as a token.
+
+EU: GLUE env entity.
+
+AG: can have strings? Corresponding element in the resource description?
+
+JPN: app env subelement of other GLUE2 elements, including resource descriptions.
+
+AG: could we do - host has BLAST 3.4 and app needs BLAST 3.4 for this. Similarly, relationship for specifying apps as statically linked.
+
+JPN: statically linked - haven't heard of this. Perhaps turn this into GLUE2 requirements - not currently adtervised but could be.
+
+EU: in GLUE - app name, app version, state of app, can add static desc. in 'Other info'.
+
+AG: just a string? e.g. accepts VISA? [Yes] we could include this as we go.
+
+BS: difficult - our main thing is having extensible resource model, to have something that allows resources defined by us (not in GLUE/JSDL days) to stay extensible for things we dont know yet. Extension - key/value pairs.
+
+AG: can add key/value pairs to GLUE2? JPN?
+
+JPN: extension elements all over GLUE - the way to do it. Don't know if formatted as key/valur pairs, perhaps strings.
+
+AG: hinge upon things expressed in JSDL. With GLUE, you must have what BES must support, and features for matching.
+  We'll be guinea pigs.
+
+EU: good to use benchmarks as measurement units.
+
+BS: scalable requirements ... e.g. 2000 CPU hours as benchmark value.
+
+AG: normalisation of CPU hours based on benchmark?
+
+BS: impossible or very very hard. Benchmark very approximate.
+
+AG: scaling factor depends on app.
+
+OS: benchmarks may be related to GLUE2, but not JSDL - a valid unit?
+
+EU: don't like normalisation or scaling factor. Don't use scalable time. Want to specify 2000 SPECints; it means something.
+
+EG: IEEE computer (Freund) - how do we do scaling based on affinities. Very app dependent. you suggest we just use specint family?
+
+OS: any.
+
+AG: here's a table - this resource has this factor.
+
+EU: in GLUE2, can specify.
+
+AG: can u point to a benchmark and use it?
+
+DK: can go into long list, but best to think of a couple of parameters.
+
+AG: really want a performance estimator. Problem is either use simplistic methods, or complicated models. Fine with what ever is desired.
+
+DK: needs to be something app env will provide. More complicated, less likely.
+
+AM: allowing users to submit benchmarks, nothing could match it.
+
+AG: [removing normalisation and benchmarks on slides] - want to specify benchs in terms of what we want. It makes sense.
+
+EU: yes.
+
+AG: need to come up with extensible list of benchmarks that each have float/int associated with them.
+
+EU: already in GLUE.
+
+AG: BES endpoint manager advertises that they are e.g. 27 in this benchmark. Request says at least 30.
+  Do we say time I want is based on this?
+
+DK: 1) using benchmarks nice, need to say what these are - painful, poss worth it; 2) what do you do with it?
+
+AG: break this up into separate standalone profile in JSDL e.g. JSDL Benchmark Profile?
+
+OS: depends on application.
+
+DK: no, depend on something generic.
+
+AG: on benchmark. If extensible, have BLAST benchmark.
+
+EU: GLUE bogomips, specint, ... it's extensible.
+
+AG: these sorts of benchmarks typically function of machine.
+
+EU: open enumeration equivalent of string.
+
+AG: this machine, runnig this problem size, ... could be all over the map for tightly coupled systems. Suggest ask those that want it to provide proposal - what would it look like for JSDL and for BES Factory Attributes for how ti would be characterised. At least 2 groups interested - no reason not to profile it, but not as a MUST for resource providers.
+
+DK: do res provs have obligation to provide some benchmarks?
+
+AG: not mandatory, but profile in terms of how it _can_ be specified.
+
+DK: interesting to know how it would be used.
+
+AG: yes, people who care about this write this up. e.g. profile, we have use cases, in JSDL do this as a profile and not mandatory in JSDL.
+
+EU: go to PGI reqs Wiki and JD20.
+
+BS: ideally have a schema for this, but prob not necessary. Have diff models for providing resources and requesting resources. Often not the same. ...
+
+AG: action item to write this up?
+
+Action: [BS] Write-up proposal for extensible resource model for systems we don't know yet - key/value pairs
+
+AG: leave guarded statements for now, but have agreed on many things [see session slides].
+  Want names to some of these things.
+
+Action: [EU/OS] Write-up proposal for using benchmarks as measurement units in terms of the resource requirements
+
+EU: should be able to describe diff data sources in sequential-try mode e.g. first fails, second fails, use third (it works).
+  Output file semantics not clear, don't discuss.
+
+AG: JSDL is declarative.
+
+EU: order doesn't matter.
+
+AG: shortcoming of JSDL from users - can't do wildcard staging, including differentiating betwen files and folders.
+  Right now we have File Staging extensions. Do a profile for additional file staging protocols.
+
+Action: [SC/AG] Another file staging profile++
+
+AG: related to wild card staging, may want to do -r recursive, inclusion/exclusion patterns.
+  How to prioritise - last 9 mins, get consensus on this. High, medium, low groups.
+
+[See AG's session slides for prioritisation list]
+
+
