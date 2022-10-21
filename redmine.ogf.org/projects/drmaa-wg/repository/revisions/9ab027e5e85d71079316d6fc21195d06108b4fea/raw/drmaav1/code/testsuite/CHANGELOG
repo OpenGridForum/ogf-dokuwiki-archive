@@ -1,0 +1,65 @@
+Version 1.7.2
+-------------
+- Relaxed ST_EXIT_STATUS to check only signal 0 to 125 (thanks Piotr)
+- Fixed ST_SUBMIT_KILL_SIG to check only for "signalled" status
+
+Version 1.7.1
+-------------
+- Relaxed check for expected job state, so that it retries several times (thanks Piotr)
+
+Version 1.7.0
+-------------
+- Added new test ST_GET_NUM_JOBIDS for testing drmaa_get_num_job_ids()
+- Extended ST_SUPPORTED_ATTR / ST_SUPPORTED_VATTR to check also the drmaa_get_num_attr_names() call
+- Extended ST_ATTRIBUTE_CHANGE to check also the drmaa_get_num_attr_values() call
+- Added new test ST_BULK_SUBMIT_INCRPH for testing placeholder handling
+
+Version 1.6.0
+-------------
+- Extended ST_SUBMIT_IN_HOLD_DELETE to check that only wifaborted is true (thanks to Piotr for finding the according SGE bug)
+- Extended ST_SUBMIT_KILL_SIG to check that only wifsignalled is true (thanks to Piotr for finding the according SGE bug)
+
+Version 1.5.1
+-------------
+- Testsuite code base moved to GridForge
+- Recreated Windows configuration files for Visual Studio 2005
+- Changed bool type replacement to easier solution which works with recent gcc
+
+Version 1.5.0
+-------------
+- Took back ST_*_FILE_FAILURE changes from 1.4.0, since the DRMAA spec now allows the original behavior (rejected job submission with invalid template)
+
+Version 1.4.2
+-------------
+- Added retry mechanism in case drmaa_job_ps() returns PS_UNDETERMINED
+  (the spec is unclear here, SGE demands this)
+
+Version 1.4.1
+-------------
+- Relaxed ST_SUBMIT_KILL_SIG test by removing wif_exited() call
+
+Version 1.4.0
+-------------
+- Added CHANGELOG file
+- Removed drmaa_wifexited() check from ST_*_FILE_FAILURE tests, since this assumes some behavior by the DRM, which is not covered by DRMAA (thanks to Ruben Santiago Montero from GridWay for the suggestion) 
+- ST_*_FILE_FAILURE tests no longer expect drmaa_run_job() to be successful (same as with the last issue) - only returned job state must match. Note: This breaks DRMAA compliance for Condor 6.7.17.
+- Removed drmaa_synchronize() call from ST_SUBMIT_IN_HOLD_DELETE, ST_BULK_SUBMIT_IN_HOLD_SESSION_DELETE and ST_BULK_SUBMIT_IN_HOLD_SINGLE_DELETE since the spec does not demand synchronization to work with terminated jobs 
+- Removed ST_UNSUPPORTED_ATTR and ST_UNSUPPORTED_VATTR tests, since the spec does not forbid the usage of unsupported attributes. 
+
+Version 1.3.0
+-------------
+- Windows support added (thanks to Greg Quinn from the Condor team)
+- Fixed ST_SUPPORTED_ATTR test, to reflect new DRMAA_ERRNO_NO_MORE_ELEMENTS from C-binding 1.0
+
+Version 1.2.0
+-------------
+- Added check for correct drmaa_version() return value.
+
+Version 1.1.0
+-------------
+- Removed SGE-specific non-automated tests: ST_SUBMIT_NO_RUN_WAIT, ST_INPUT_BECOMES_OUTPUT, ST_DRMAA_JOB_PS, ST_DRMAA_CONTROL, ST_ATTRIBUTE_CHECK, ST_TRANSFER_FILES_SINGLE_JOB, ST_TRANSFER_FILES_BULK_JOB
+- Removed unused code fragments
+
+Version 1.0.0
+-------------
+- initial version of DRMAA compliance test suite

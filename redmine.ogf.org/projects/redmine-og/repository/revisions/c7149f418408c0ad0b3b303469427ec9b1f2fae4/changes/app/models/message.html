@@ -1,0 +1,702 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/c7149f418408c0ad0b3b303469427ec9b1f2fae4/changes/app/models/message.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:40:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>/app/models/message.rb - Changes - Redmine - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="rsvo5Uvs/OHqzq9AZjxgQ/1mtk/oY58g0kQJMlDTftw="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+  <script src="https://redmine.ogf.org/javascripts/repository_navigation.js?1425381960" type="text/javascript"></script>
+</head>
+<body class="theme-Ogf redmine controller-repositories action-changes">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/redmine-og" method="get">
+        <input name="changesets" type="hidden" value="1" />
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/redmine-og" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=repository" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=repository" class="ancestor">IT</a> » Redmine</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/redmine-og" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/redmine-og" class="dmsf">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/repository" class="repository selected">Repository</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+  
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/statistics" class="icon icon-stats">Statistics</a>
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/changes/app/models/message.rb?rev=" id="revision_selector" method="get">  <!-- Branches Dropdown -->
+      | Branch: 
+    <select id="branch" name="branch"><option value=""></option>
+<option value="1.3-stable">1.3-stable</option>
+<option value="devel">devel</option>
+<option value="master">master</option></select>
+  
+  
+  | Revision: 
+  <input id="rev" name="rev" size="8" type="text" value="c7149f418408c0ad0b3b303469427ec9b1f2fae4" />
+</form>
+</div>
+
+<h2>
+  <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c7149f418408c0ad0b3b303469427ec9b1f2fae4/show">root</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c7149f418408c0ad0b3b303469427ec9b1f2fae4/show/app">app</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c7149f418408c0ad0b3b303469427ec9b1f2fae4/show/app/models">models</a>
+
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c7149f418408c0ad0b3b303469427ec9b1f2fae4/changes/app/models/message.rb">message.rb</a>
+
+
+@ c7149f41
+
+
+</h2>
+
+<p>
+
+<p>
+History |
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c7149f418408c0ad0b3b303469427ec9b1f2fae4/entry/app/models/message.rb">View</a> |
+
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c7149f418408c0ad0b3b303469427ec9b1f2fae4/annotate/app/models/message.rb">Annotate</a> |
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c7149f418408c0ad0b3b303469427ec9b1f2fae4/raw/app/models/message.rb">Download</a>
+(4.1 kB)
+</p>
+
+
+</p>
+
+
+
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/diff/app/models/message.rb" method="get">
+<table class="list changesets">
+<thead><tr>
+
+<th>#</th>
+<th></th>
+<th></th>
+<th>Date</th>
+<th>Author</th>
+<th>Comment</th>
+</tr></thead>
+<tbody>
+
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a7bacf70fb187bcb32ab15671ef835fd60d2a01d" title="Revision a7bacf70">a7bacf70</a></td>
+<td class="checkbox"><input checked="checked" id="cb-1" name="rev" onclick="$('cbto-2').checked=true;" type="radio" value="a7bacf70fb187bcb32ab15671ef835fd60d2a01d" /></td>
+<td class="checkbox"></td>
+<td class="committed_on">04/06/2012 08:20 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: Unable to change locked, sticky flags and board when editing a message (#10564).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@9350 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/286bda14f14d5824975ac46de7c79a8d0181a1e2" title="Revision 286bda14">286bda14</a></td>
+<td class="checkbox"><input id="cb-2" name="rev" onclick="$('cbto-3').checked=true;" type="radio" value="286bda14f14d5824975ac46de7c79a8d0181a1e2" /></td>
+<td class="checkbox"><input checked="checked" id="cbto-2" name="rev_to" onclick="if ($('cb-2').checked==true) {$('cb-1').checked=true;}" type="radio" value="286bda14f14d5824975ac46de7c79a8d0181a1e2" /></td>
+<td class="committed_on">03/06/2012 02:46 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Prevent mass-assignment when adding/updating a forum message (#10390).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@9133 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7183530e7a10ceb2111b3fa850a0a54e5182fe1e" title="Revision 7183530e">7183530e</a></td>
+<td class="checkbox"><input id="cb-3" name="rev" onclick="$('cbto-4').checked=true;" type="radio" value="7183530e7a10ceb2111b3fa850a0a54e5182fe1e" /></td>
+<td class="checkbox"><input id="cbto-3" name="rev_to" onclick="if ($('cb-3').checked==true) {$('cb-2').checked=true;}" type="radio" value="7183530e7a10ceb2111b3fa850a0a54e5182fe1e" /></td>
+<td class="committed_on">10/07/2011 08:24 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: model: replace deprecated errors.add_to_base at cannot_reply_to_locked_topic of Message</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7607 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/049b35edb083be1f10ddb653d8fd0778dbd30b14" title="Revision 049b35ed">049b35ed</a></td>
+<td class="checkbox"><input id="cb-4" name="rev" onclick="$('cbto-5').checked=true;" type="radio" value="049b35edb083be1f10ddb653d8fd0778dbd30b14" /></td>
+<td class="checkbox"><input id="cbto-4" name="rev_to" onclick="if ($('cb-4').checked==true) {$('cb-3').checked=true;}" type="radio" value="049b35edb083be1f10ddb653d8fd0778dbd30b14" /></td>
+<td class="committed_on">09/30/2011 09:11 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: model: replace deprecated 'validate_on_create' method at Message model</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7555 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/4ac5a2c338cee1a8c5d754803dbb52a6eb94ce2a" title="Revision 4ac5a2c3">4ac5a2c3</a></td>
+<td class="checkbox"><input id="cb-5" name="rev" onclick="$('cbto-6').checked=true;" type="radio" value="4ac5a2c338cee1a8c5d754803dbb52a6eb94ce2a" /></td>
+<td class="checkbox"><input id="cbto-5" name="rev_to" onclick="if ($('cb-5').checked==true) {$('cb-4').checked=true;}" type="radio" value="4ac5a2c338cee1a8c5d754803dbb52a6eb94ce2a" /></td>
+<td class="committed_on">09/22/2011 11:42 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: model: replace deprecated 'after_destroy' method at Message model</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7457 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c23052aa08e16be12f4054ac3cb435d4c228f51f" title="Revision c23052aa">c23052aa</a></td>
+<td class="checkbox"><input id="cb-6" name="rev" onclick="$('cbto-7').checked=true;" type="radio" value="c23052aa08e16be12f4054ac3cb435d4c228f51f" /></td>
+<td class="checkbox"><input id="cbto-6" name="rev_to" onclick="if ($('cb-6').checked==true) {$('cb-5').checked=true;}" type="radio" value="c23052aa08e16be12f4054ac3cb435d4c228f51f" /></td>
+<td class="committed_on">09/22/2011 11:41 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: model: replace deprecated 'after_update' method at Message model</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7456 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/52dd8b56c9d908e036e34930ac0aef32010a399e" title="Revision 52dd8b56">52dd8b56</a></td>
+<td class="checkbox"><input id="cb-7" name="rev" onclick="$('cbto-8').checked=true;" type="radio" value="52dd8b56c9d908e036e34930ac0aef32010a399e" /></td>
+<td class="checkbox"><input id="cbto-7" name="rev_to" onclick="if ($('cb-7').checked==true) {$('cb-6').checked=true;}" type="radio" value="52dd8b56c9d908e036e34930ac0aef32010a399e" /></td>
+<td class="committed_on">08/31/2011 08:43 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: replace deprecated 'after_create' method at Message model.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@6936 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/33745d1972fc7261b3ecf6580d562f0831b293b1" title="Revision 33745d19">33745d19</a></td>
+<td class="checkbox"><input id="cb-8" name="rev" onclick="$('cbto-9').checked=true;" type="radio" value="33745d1972fc7261b3ecf6580d562f0831b293b1" /></td>
+<td class="checkbox"><input id="cbto-8" name="rev_to" onclick="if ($('cb-8').checked==true) {$('cb-7').checked=true;}" type="radio" value="33745d1972fc7261b3ecf6580d562f0831b293b1" /></td>
+<td class="committed_on">08/20/2011 09:56 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>remove trailing white-spaces from app/models/message.rb.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@6506 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c810b9db9cd5cfd0e592d45c42ab39a9ae3adbf6" title="Revision c810b9db">c810b9db</a></td>
+<td class="checkbox"><input id="cb-9" name="rev" onclick="$('cbto-10').checked=true;" type="radio" value="c810b9db9cd5cfd0e592d45c42ab39a9ae3adbf6" /></td>
+<td class="checkbox"><input id="cbto-9" name="rev_to" onclick="if ($('cb-9').checked==true) {$('cb-8').checked=true;}" type="radio" value="c810b9db9cd5cfd0e592d45c42ab39a9ae3adbf6" /></td>
+<td class="committed_on">05/16/2011 11:57 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>remove trailing white-spaces from message model source.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5817 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/405fc07e90730c550f1e690a446eda872fd8732d" title="Revision 405fc07e">405fc07e</a></td>
+<td class="checkbox"><input id="cb-10" name="rev" onclick="$('cbto-11').checked=true;" type="radio" value="405fc07e90730c550f1e690a446eda872fd8732d" /></td>
+<td class="checkbox"><input id="cbto-10" name="rev_to" onclick="if ($('cb-10').checked==true) {$('cb-9').checked=true;}" type="radio" value="405fc07e90730c550f1e690a446eda872fd8732d" /></td>
+<td class="committed_on">04/05/2011 08:50 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Makes visible scopes accept projects option and deprecate Project.visible_by.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5324 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/b20210e83c42807e6445b827504afe64323e272d" title="Revision b20210e8">b20210e8</a></td>
+<td class="checkbox"><input id="cb-11" name="rev" onclick="$('cbto-12').checked=true;" type="radio" value="b20210e83c42807e6445b827504afe64323e272d" /></td>
+<td class="checkbox"><input id="cbto-11" name="rev_to" onclick="if ($('cb-11').checked==true) {$('cb-10').checked=true;}" type="radio" value="b20210e83c42807e6445b827504afe64323e272d" /></td>
+<td class="committed_on">01/23/2011 11:47 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds visible scope to redmine links queries.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4759 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8fb29d4d211ac09549cf47fad764b56c9173e938" title="Revision 8fb29d4d">8fb29d4d</a></td>
+<td class="checkbox"><input id="cb-12" name="rev" onclick="$('cbto-13').checked=true;" type="radio" value="8fb29d4d211ac09549cf47fad764b56c9173e938" /></td>
+<td class="checkbox"><input id="cbto-12" name="rev_to" onclick="if ($('cb-12').checked==true) {$('cb-11').checked=true;}" type="radio" value="8fb29d4d211ac09549cf47fad764b56c9173e938" /></td>
+<td class="committed_on">02/06/2010 07:54 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds pagination to forum messages (#4664).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3373 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/358e3194d79b9e4503edd48d2179b9f8f2920cd3" title="Revision 358e3194">358e3194</a></td>
+<td class="checkbox"><input id="cb-13" name="rev" onclick="$('cbto-14').checked=true;" type="radio" value="358e3194d79b9e4503edd48d2179b9f8f2920cd3" /></td>
+<td class="checkbox"><input id="cbto-13" name="rev_to" onclick="if ($('cb-13').checked==true) {$('cb-12').checked=true;}" type="radio" value="358e3194d79b9e4503edd48d2179b9f8f2920cd3" /></td>
+<td class="committed_on">02/01/2010 01:57 PM</td>
+<td class="author">Eric Davis </td>
+
+  <td class="comments"><p>Refactor: Move recipients method into acts_as_event</p>
+
+
+	<p>acts_as_event should be the standard interface to Redmine events, like mail<br />notifications, so having a standard recipients implementation there makes sense.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3358 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/bb477a3a0fe71f0e15b78b6e0fafb017065fba26" title="Revision bb477a3a">bb477a3a</a></td>
+<td class="checkbox"><input id="cb-14" name="rev" onclick="$('cbto-15').checked=true;" type="radio" value="bb477a3a0fe71f0e15b78b6e0fafb017065fba26" /></td>
+<td class="checkbox"><input id="cbto-14" name="rev_to" onclick="if ($('cb-14').checked==true) {$('cb-13').checked=true;}" type="radio" value="bb477a3a0fe71f0e15b78b6e0fafb017065fba26" /></td>
+<td class="committed_on">12/13/2009 09:26 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Make sure users don't get notified for thing they can not view (#3589).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3169 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f33231181f9591ee67577e229a8bf6de24516ba0" title="Revision f3323118">f3323118</a></td>
+<td class="checkbox"><input id="cb-15" name="rev" onclick="$('cbto-16').checked=true;" type="radio" value="f33231181f9591ee67577e229a8bf6de24516ba0" /></td>
+<td class="checkbox"><input id="cbto-15" name="rev_to" onclick="if ($('cb-15').checked==true) {$('cb-14').checked=true;}" type="radio" value="f33231181f9591ee67577e229a8bf6de24516ba0" /></td>
+<td class="committed_on">12/13/2009 07:39 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Makes user unwatch what he can no longer view after its permissions have changed (#3589).<br />A rake task (redmine:watchers:prune) is also added to prune existing watchers.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3167 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7642b5a9ab180aaedee24c6b4e38eb28cafd00b3" title="Revision 7642b5a9">7642b5a9</a></td>
+<td class="checkbox"><input id="cb-16" name="rev" onclick="$('cbto-17').checked=true;" type="radio" value="7642b5a9ab180aaedee24c6b4e38eb28cafd00b3" /></td>
+<td class="checkbox"><input id="cbto-16" name="rev_to" onclick="if ($('cb-16').checked==true) {$('cb-15').checked=true;}" type="radio" value="7642b5a9ab180aaedee24c6b4e38eb28cafd00b3" /></td>
+<td class="committed_on">06/14/2009 05:19 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: editing a message may cause sticky attribute to be NULL (#3356).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2787 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ca166b30e1b223c7f3aba3befc894a8597362592" title="Revision ca166b30">ca166b30</a></td>
+<td class="checkbox"><input id="cb-17" name="rev" onclick="$('cbto-18').checked=true;" type="radio" value="ca166b30e1b223c7f3aba3befc894a8597362592" /></td>
+<td class="checkbox"><input id="cbto-17" name="rev_to" onclick="if ($('cb-17').checked==true) {$('cb-16').checked=true;}" type="radio" value="ca166b30e1b223c7f3aba3befc894a8597362592" /></td>
+<td class="committed_on">04/05/2009 06:08 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds the ability to move threads between project forums (#2452). 'Edit message' permission is required.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2649 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/33bd7f45e1f8dff469173b950146309ed564d134" title="Revision 33bd7f45">33bd7f45</a></td>
+<td class="checkbox"><input id="cb-18" name="rev" onclick="$('cbto-19').checked=true;" type="radio" value="33bd7f45e1f8dff469173b950146309ed564d134" /></td>
+<td class="checkbox"><input id="cbto-18" name="rev_to" onclick="if ($('cb-18').checked==true) {$('cb-17').checked=true;}" type="radio" value="33bd7f45e1f8dff469173b950146309ed564d134" /></td>
+<td class="committed_on">02/03/2009 12:13 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixes message search eager loading (#2654).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2359 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/5d2899ee1b3e00d0cf43521182b1244dfc3cfe9f" title="Revision 5d2899ee">5d2899ee</a></td>
+<td class="checkbox"><input id="cb-19" name="rev" onclick="$('cbto-20').checked=true;" type="radio" value="5d2899ee1b3e00d0cf43521182b1244dfc3cfe9f" /></td>
+<td class="checkbox"><input id="cbto-19" name="rev_to" onclick="if ($('cb-19').checked==true) {$('cb-18').checked=true;}" type="radio" value="5d2899ee1b3e00d0cf43521182b1244dfc3cfe9f" /></td>
+<td class="committed_on">12/09/2008 11:54 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>AttachmentsController now handles attachments deletion.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2116 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/fce4615f10ad81b9070e65a45f9d37b1c571ccd7" title="Revision fce4615f">fce4615f</a></td>
+<td class="checkbox"><input id="cb-20" name="rev" onclick="$('cbto-21').checked=true;" type="radio" value="fce4615f10ad81b9070e65a45f9d37b1c571ccd7" /></td>
+<td class="checkbox"><input id="cbto-20" name="rev_to" onclick="if ($('cb-20').checked==true) {$('cb-19').checked=true;}" type="radio" value="fce4615f10ad81b9070e65a45f9d37b1c571ccd7" /></td>
+<td class="committed_on">11/30/2008 06:18 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Display latest user's activity on account/show view.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2066 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7a05f8ed66918e13315e647ecea620a716c4cbeb" title="Revision 7a05f8ed">7a05f8ed</a></td>
+<td class="checkbox"><input id="cb-21" name="rev" onclick="$('cbto-22').checked=true;" type="radio" value="7a05f8ed66918e13315e647ecea620a716c4cbeb" /></td>
+<td class="checkbox"><input id="cbto-21" name="rev_to" onclick="if ($('cb-21').checked==true) {$('cb-20').checked=true;}" type="radio" value="7a05f8ed66918e13315e647ecea620a716c4cbeb" /></td>
+<td class="committed_on">11/11/2008 10:07 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds permissions to let users edit and/or delete their messages (#854, patch by Markus Knittig with slight changes).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2019 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/16e09bfd774487d7b21e1b939f9b0321ad3a850a" title="Revision 16e09bfd">16e09bfd</a></td>
+<td class="checkbox"><input id="cb-22" name="rev" onclick="$('cbto-23').checked=true;" type="radio" value="16e09bfd774487d7b21e1b939f9b0321ad3a850a" /></td>
+<td class="checkbox"><input id="cbto-22" name="rev_to" onclick="if ($('cb-22').checked==true) {$('cb-21').checked=true;}" type="radio" value="16e09bfd774487d7b21e1b939f9b0321ad3a850a" /></td>
+<td class="committed_on">09/19/2008 11:32 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds watch/unwatch functionality at forum topic level (#1912).<br />Users who create/reply a topic are automatically added as watchers but are now able to unwatch the topic.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1878">http://redmine.rubyforge.org/svn/trunk@1878</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a774c5c48b5e596770340b6ac27ea9f0a1e1141f" title="Revision a774c5c4">a774c5c4</a></td>
+<td class="checkbox"><input id="cb-23" name="rev" onclick="$('cbto-24').checked=true;" type="radio" value="a774c5c48b5e596770340b6ac27ea9f0a1e1141f" /></td>
+<td class="checkbox"><input id="cbto-23" name="rev_to" onclick="if ($('cb-23').checked==true) {$('cb-22').checked=true;}" type="radio" value="a774c5c48b5e596770340b6ac27ea9f0a1e1141f" /></td>
+<td class="committed_on">07/27/2008 01:54 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Activity refactoring.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1701">http://redmine.rubyforge.org/svn/trunk@1701</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0fd9b102be7dec664c8df1ddb802fac9ba8cea79" title="Revision 0fd9b102">0fd9b102</a></td>
+<td class="checkbox"><input id="cb-24" name="rev" onclick="$('cbto-25').checked=true;" type="radio" value="0fd9b102be7dec664c8df1ddb802fac9ba8cea79" /></td>
+<td class="checkbox"><input id="cbto-24" name="rev_to" onclick="if ($('cb-24').checked==true) {$('cb-23').checked=true;}" type="radio" value="0fd9b102be7dec664c8df1ddb802fac9ba8cea79" /></td>
+<td class="committed_on">06/26/2008 03:04 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds anchor to atom feed messages links.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1588">http://redmine.rubyforge.org/svn/trunk@1588</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/073818f8bc46580e118a7550f1faaa55b3be13d9" title="Revision 073818f8">073818f8</a></td>
+<td class="checkbox"><input id="cb-25" name="rev" onclick="$('cbto-26').checked=true;" type="radio" value="073818f8bc46580e118a7550f1faaa55b3be13d9" /></td>
+<td class="checkbox"><input id="cbto-25" name="rev_to" onclick="if ($('cb-25').checked==true) {$('cb-24').checked=true;}" type="radio" value="073818f8bc46580e118a7550f1faaa55b3be13d9" /></td>
+<td class="committed_on">05/18/2008 12:15 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Ability to search all projects or the projects the user belongs to (#791).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1435">http://redmine.rubyforge.org/svn/trunk@1435</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/6d2a89142af235b5d0a9e30350859fb99ac665f3" title="Revision 6d2a8914">6d2a8914</a></td>
+<td class="checkbox"><input id="cb-26" name="rev" onclick="$('cbto-27').checked=true;" type="radio" value="6d2a89142af235b5d0a9e30350859fb99ac665f3" /></td>
+<td class="checkbox"><input id="cbto-26" name="rev_to" onclick="if ($('cb-26').checked==true) {$('cb-25').checked=true;}" type="radio" value="6d2a89142af235b5d0a9e30350859fb99ac665f3" /></td>
+<td class="committed_on">04/12/2008 12:54 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Add an icon to each event on the activity view.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1342">http://redmine.rubyforge.org/svn/trunk@1342</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/d54ba39e7aced22dd352273ec4af4b345a827363" title="Revision d54ba39e">d54ba39e</a></td>
+<td class="checkbox"><input id="cb-27" name="rev" onclick="$('cbto-28').checked=true;" type="radio" value="d54ba39e7aced22dd352273ec4af4b345a827363" /></td>
+<td class="checkbox"><input id="cbto-27" name="rev_to" onclick="if ($('cb-27').checked==true) {$('cb-26').checked=true;}" type="radio" value="d54ba39e7aced22dd352273ec4af4b345a827363" /></td>
+<td class="committed_on">01/23/2008 12:48 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: can not lock a topic when creating it.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1095">http://redmine.rubyforge.org/svn/trunk@1095</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/29b3614bcb759214bb1aba77c27ac11c8ef6b15b" title="Revision 29b3614b">29b3614b</a></td>
+<td class="checkbox"><input id="cb-28" name="rev" onclick="$('cbto-29').checked=true;" type="radio" value="29b3614bcb759214bb1aba77c27ac11c8ef6b15b" /></td>
+<td class="checkbox"><input id="cbto-28" name="rev_to" onclick="if ($('cb-28').checked==true) {$('cb-27').checked=true;}" type="radio" value="29b3614bcb759214bb1aba77c27ac11c8ef6b15b" /></td>
+<td class="committed_on">11/24/2007 07:25 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">Forums enhancements:
+	<ul>
+	<li>messages can now be edited/deleted (explicit permissions need to be given)</li>
+		<li>topics can be locked so that no reply can be added (only by users allowed to edit messages)</li>
+		<li>topics can be marked as sticky so that they always appear at the top of the list (only by users allowed to edit messages)...</li>
+	</ul></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/66c8c1e29249505d2cf949293454e676b9726154" title="Revision 66c8c1e2">66c8c1e2</a></td>
+<td class="checkbox"><input id="cb-29" name="rev" onclick="$('cbto-30').checked=true;" type="radio" value="66c8c1e29249505d2cf949293454e676b9726154" /></td>
+<td class="checkbox"><input id="cbto-29" name="rev_to" onclick="if ($('cb-29').checked==true) {$('cb-28').checked=true;}" type="radio" value="66c8c1e29249505d2cf949293454e676b9726154" /></td>
+<td class="committed_on">09/27/2007 06:24 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: unable to migrate from an empty database.<br />(Message model is loaded at startup, which fails if it doesn't exist)</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@771">http://redmine.rubyforge.org/svn/trunk@771</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a96421019f3a813b93798e4ec8099edd09f8a661" title="Revision a9642101">a9642101</a></td>
+<td class="checkbox"><input id="cb-30" name="rev" onclick="$('cbto-31').checked=true;" type="radio" value="a96421019f3a813b93798e4ec8099edd09f8a661" /></td>
+<td class="checkbox"><input id="cbto-30" name="rev_to" onclick="if ($('cb-30').checked==true) {$('cb-29').checked=true;}" type="radio" value="a96421019f3a813b93798e4ec8099edd09f8a661" /></td>
+<td class="committed_on">09/27/2007 01:28 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Search engines now supports pagination.<br />Results are sorted in reverse chronological order.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@766">http://redmine.rubyforge.org/svn/trunk@766</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f8ef65e8f64111b5bfa45abd42e0e684afd61f07" title="Revision f8ef65e8">f8ef65e8</a></td>
+<td class="checkbox"><input id="cb-31" name="rev" onclick="$('cbto-32').checked=true;" type="radio" value="f8ef65e8f64111b5bfa45abd42e0e684afd61f07" /></td>
+<td class="checkbox"><input id="cbto-31" name="rev_to" onclick="if ($('cb-31').checked==true) {$('cb-30').checked=true;}" type="radio" value="f8ef65e8f64111b5bfa45abd42e0e684afd61f07" /></td>
+<td class="committed_on">05/26/2007 11:42 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Attachments can now be added to wiki pages (original patch by Pavol Murin). Only authorized users can add/delete attachments.<br />Attached images can be displayed inline, using textile image tag (for wiki pages, issue descriptions and forum messages).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@541">http://redmine.rubyforge.org/svn/trunk@541</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/b90e84b9fe252df464d084f0222c65367407a4ba" title="Revision b90e84b9">b90e84b9</a></td>
+<td class="checkbox"></td>
+<td class="checkbox"><input id="cbto-32" name="rev_to" onclick="if ($('cb-32').checked==true) {$('cb-31').checked=true;}" type="radio" value="b90e84b9fe252df464d084f0222c65367407a4ba" /></td>
+<td class="committed_on">05/13/2007 01:09 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Per project forums added.<br />Permissions for forums management can be set in "Admin -> Roles &#38; Permissions".<br />Forums can be created on the project settings screen ("Forums" tab).<br />Once a project has a forum, a "Forums" link appears in the project menu.<br />For now, posting messages in forums requires to be logged in. Files can be attached to messages....</p></td>
+
+</tr>
+
+
+</tbody>
+</table>
+<input type="submit" value="View differences" />
+</form>
+
+
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/c7149f418408c0ad0b3b303469427ec9b1f2fae4/changes/app/models/message.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:40:01 GMT -->
+</html>

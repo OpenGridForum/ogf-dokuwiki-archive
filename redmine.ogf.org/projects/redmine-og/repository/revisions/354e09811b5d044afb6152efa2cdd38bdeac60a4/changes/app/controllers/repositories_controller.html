@@ -1,0 +1,1745 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/354e09811b5d044afb6152efa2cdd38bdeac60a4/changes/app/controllers/repositories_controller.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:41:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>/app/controllers/repositories_controller.rb - Changes - Redmine - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="rsvo5Uvs/OHqzq9AZjxgQ/1mtk/oY58g0kQJMlDTftw="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+  <script src="https://redmine.ogf.org/javascripts/repository_navigation.js?1425381960" type="text/javascript"></script>
+</head>
+<body class="theme-Ogf redmine controller-repositories action-changes">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/redmine-og" method="get">
+        <input name="changesets" type="hidden" value="1" />
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/redmine-og" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=repository" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=repository" class="ancestor">IT</a> » Redmine</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/redmine-og" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/redmine-og" class="dmsf">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/repository" class="repository selected">Repository</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+  
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/statistics" class="icon icon-stats">Statistics</a>
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/changes/app/controllers/repositories_controller.rb?rev=" id="revision_selector" method="get">  <!-- Branches Dropdown -->
+      | Branch: 
+    <select id="branch" name="branch"><option value=""></option>
+<option value="1.3-stable">1.3-stable</option>
+<option value="devel">devel</option>
+<option value="master">master</option></select>
+  
+  
+  | Revision: 
+  <input id="rev" name="rev" size="8" type="text" value="354e09811b5d044afb6152efa2cdd38bdeac60a4" />
+</form>
+</div>
+
+<h2>
+  <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/354e09811b5d044afb6152efa2cdd38bdeac60a4/show">root</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/354e09811b5d044afb6152efa2cdd38bdeac60a4/show/app">app</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/354e09811b5d044afb6152efa2cdd38bdeac60a4/show/app/controllers">controllers</a>
+
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/354e09811b5d044afb6152efa2cdd38bdeac60a4/changes/app/controllers/repositories_controller.rb">repositories_controller.rb</a>
+
+
+@ 354e0981
+
+
+</h2>
+
+<p>
+
+<p>
+History |
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/354e09811b5d044afb6152efa2cdd38bdeac60a4/entry/app/controllers/repositories_controller.rb">View</a> |
+
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/354e09811b5d044afb6152efa2cdd38bdeac60a4/annotate/app/controllers/repositories_controller.rb">Annotate</a> |
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/354e09811b5d044afb6152efa2cdd38bdeac60a4/raw/app/controllers/repositories_controller.rb">Download</a>
+(14.1 kB)
+</p>
+
+
+</p>
+
+
+
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/diff/app/controllers/repositories_controller.rb" method="get">
+<table class="list changesets">
+<thead><tr>
+
+<th>#</th>
+<th></th>
+<th></th>
+<th>Date</th>
+<th>Author</th>
+<th>Comment</th>
+</tr></thead>
+<tbody>
+
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1d4ef8964def4ecbe7a11485f72d7fbe61c55724" title="Revision 1d4ef896">1d4ef896</a></td>
+<td class="checkbox"><input checked="checked" id="cb-1" name="rev" onclick="$('cbto-2').checked=true;" type="radio" value="1d4ef8964def4ecbe7a11485f72d7fbe61c55724" /></td>
+<td class="checkbox"></td>
+<td class="committed_on">02/05/2012 05:56 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds a "Manage related isses" permission to add/remove commits/issues relations manually from the changeset view (#2009).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8777 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/abc0b0ea3e520ce1174b687f55c03ac85c128950" title="Revision abc0b0ea">abc0b0ea</a></td>
+<td class="checkbox"><input id="cb-2" name="rev" onclick="$('cbto-3').checked=true;" type="radio" value="abc0b0ea3e520ce1174b687f55c03ac85c128950" /></td>
+<td class="checkbox"><input checked="checked" id="cbto-2" name="rev_to" onclick="if ($('cb-2').checked==true) {$('cb-1').checked=true;}" type="radio" value="abc0b0ea3e520ce1174b687f55c03ac85c128950" /></td>
+<td class="committed_on">01/15/2012 05:23 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Don't use a disabled SCM as a default repository SCM (#779).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8653 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1bd5e58c847816ae5751ee0026e55597d1541dd4" title="Revision 1bd5e58c">1bd5e58c</a></td>
+<td class="checkbox"><input id="cb-3" name="rev" onclick="$('cbto-4').checked=true;" type="radio" value="1bd5e58c847816ae5751ee0026e55597d1541dd4" /></td>
+<td class="checkbox"><input id="cbto-3" name="rev_to" onclick="if ($('cb-3').checked==true) {$('cb-2').checked=true;}" type="radio" value="1bd5e58c847816ae5751ee0026e55597d1541dd4" /></td>
+<td class="committed_on">01/15/2012 01:19 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds support for multiple repositories per project (#779).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8650 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/fb1a2fd7cd4ca7335d660265a32604f6e2006dd6" title="Revision fb1a2fd7">fb1a2fd7</a></td>
+<td class="checkbox"><input id="cb-4" name="rev" onclick="$('cbto-5').checked=true;" type="radio" value="fb1a2fd7cd4ca7335d660265a32604f6e2006dd6" /></td>
+<td class="checkbox"><input id="cbto-4" name="rev_to" onclick="if ($('cb-4').checked==true) {$('cb-3').checked=true;}" type="radio" value="fb1a2fd7cd4ca7335d660265a32604f6e2006dd6" /></td>
+<td class="committed_on">01/15/2012 09:23 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Resourcified repositories for CRUD operations to prepare for multiple SCM per project (#779).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8648 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/59789c799761bfd928d0a4d7d1d1e492951fe55a" title="Revision 59789c79">59789c79</a></td>
+<td class="checkbox"><input id="cb-5" name="rev" onclick="$('cbto-6').checked=true;" type="radio" value="59789c799761bfd928d0a4d7d1d1e492951fe55a" /></td>
+<td class="checkbox"><input id="cbto-5" name="rev_to" onclick="if ($('cb-5').checked==true) {$('cb-4').checked=true;}" type="radio" value="59789c799761bfd928d0a4d7d1d1e492951fe55a" /></td>
+<td class="committed_on">01/07/2012 02:02 PM</td>
+<td class="author">Etienne Massip </td>
+
+  <td class="comments"><p>Moved Date months/weeks calculations used in Graph to lib.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8540 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/90010d1f3bd34d4aeaa94f90d63dcf1467210ccb" title="Revision 90010d1f">90010d1f</a></td>
+<td class="checkbox"><input id="cb-6" name="rev" onclick="$('cbto-7').checked=true;" type="radio" value="90010d1f3bd34d4aeaa94f90d63dcf1467210ccb" /></td>
+<td class="checkbox"><input id="cbto-6" name="rev_to" onclick="if ($('cb-6').checked==true) {$('cb-5').checked=true;}" type="radio" value="90010d1f3bd34d4aeaa94f90d63dcf1467210ccb" /></td>
+<td class="committed_on">12/14/2011 01:07 PM</td>
+<td class="author">Etienne Massip </td>
+
+  <td class="comments"><p>Removed code duplicated in lib.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@8206 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/4ae7f82f3ae13ff01d1581f2a8f271ff294e06be" title="Revision 4ae7f82f">4ae7f82f</a></td>
+<td class="checkbox"><input id="cb-7" name="rev" onclick="$('cbto-8').checked=true;" type="radio" value="4ae7f82f3ae13ff01d1581f2a8f271ff294e06be" /></td>
+<td class="checkbox"><input id="cbto-7" name="rev_to" onclick="if ($('cb-7').checked==true) {$('cb-6').checked=true;}" type="radio" value="4ae7f82f3ae13ff01d1581f2a8f271ff294e06be" /></td>
+<td class="committed_on">11/04/2011 11:47 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>do not annotate text files which exceed the size limit for viewing (#9484)</p>
+
+
+	<p>Contributed by Antonio García-Domínguez.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7728 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/e33ce24849431eacdbcbbb6d83599323da63a6f1" title="Revision e33ce248">e33ce248</a></td>
+<td class="checkbox"><input id="cb-8" name="rev" onclick="$('cbto-9').checked=true;" type="radio" value="e33ce24849431eacdbcbbb6d83599323da63a6f1" /></td>
+<td class="checkbox"><input id="cbto-8" name="rev_to" onclick="if ($('cb-8').checked==true) {$('cb-7').checked=true;}" type="radio" value="e33ce24849431eacdbcbbb6d83599323da63a6f1" /></td>
+<td class="committed_on">11/03/2011 04:11 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: controller: include parents in changesets (#5501)</p>
+
+
+	<p>Contributed by Jan Topiński.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@7715 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1f4ff3687cc29ac2c824327f91e23eba8acd7bdd" title="Revision 1f4ff368">1f4ff368</a></td>
+<td class="checkbox"><input id="cb-9" name="rev" onclick="$('cbto-10').checked=true;" type="radio" value="1f4ff3687cc29ac2c824327f91e23eba8acd7bdd" /></td>
+<td class="checkbox"><input id="cbto-9" name="rev_to" onclick="if ($('cb-9').checked==true) {$('cb-8').checked=true;}" type="radio" value="1f4ff3687cc29ac2c824327f91e23eba8acd7bdd" /></td>
+<td class="committed_on">10/09/2011 07:34 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Rails3: controller: repositories: use to_s for revision parameter</p>
+
+
+	<p>On Rails 3.0 and Ruby 1.8.7, following error raises.</p>
+
+
+	<p>Error:<br />test_revision(RepositoriesControllerTest):<br />NoMethodError: undefined method `strip' for 1:Fixnum<br />    app/controllers/repositories_controller.rb:252:in `find_repository'...</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/d84565220bf5cd4d08c5d20a96e3c0ee4f30d470" title="Revision d8456522">d8456522</a></td>
+<td class="checkbox"><input id="cb-10" name="rev" onclick="$('cbto-11').checked=true;" type="radio" value="d84565220bf5cd4d08c5d20a96e3c0ee4f30d470" /></td>
+<td class="checkbox"><input id="cbto-10" name="rev_to" onclick="if ($('cb-10').checked==true) {$('cb-9').checked=true;}" type="radio" value="d84565220bf5cd4d08c5d20a96e3c0ee4f30d470" /></td>
+<td class="committed_on">08/31/2011 08:01 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>remove trailing white-spaces from app/controllers/repositories_controller.rb.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@6891 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/93c2b92a4b5b7003be3113b5d9baf2a0448402a8" title="Revision 93c2b92a">93c2b92a</a></td>
+<td class="checkbox"><input id="cb-11" name="rev" onclick="$('cbto-12').checked=true;" type="radio" value="93c2b92a4b5b7003be3113b5d9baf2a0448402a8" /></td>
+<td class="checkbox"><input id="cbto-11" name="rev_to" onclick="if ($('cb-11').checked==true) {$('cb-10').checked=true;}" type="radio" value="93c2b92a4b5b7003be3113b5d9baf2a0448402a8" /></td>
+<td class="committed_on">07/09/2011 04:56 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Separation of RSS/API auth actions.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@6197 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/115d22729848c84bd669e4a5017c360a620213a6" title="Revision 115d2272">115d2272</a></td>
+<td class="checkbox"><input id="cb-12" name="rev" onclick="$('cbto-13').checked=true;" type="radio" value="115d22729848c84bd669e4a5017c360a620213a6" /></td>
+<td class="checkbox"><input id="cbto-12" name="rev_to" onclick="if ($('cb-12').checked==true) {$('cb-11').checked=true;}" type="radio" value="115d22729848c84bd669e4a5017c360a620213a6" /></td>
+<td class="committed_on">06/13/2011 06:09 PM</td>
+<td class="author">Jean-Baptiste Barth </td>
+
+  <td class="comments"><p>Do not cache I18n strings when truncating a long diff (#5089).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@6073 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/5543ec5f5a4f55529c55f296fda69a09c30670ae" title="Revision 5543ec5f">5543ec5f</a></td>
+<td class="checkbox"><input id="cb-13" name="rev" onclick="$('cbto-14').checked=true;" type="radio" value="5543ec5f5a4f55529c55f296fda69a09c30670ae" /></td>
+<td class="checkbox"><input id="cbto-13" name="rev_to" onclick="if ($('cb-13').checked==true) {$('cb-12').checked=true;}" type="radio" value="5543ec5f5a4f55529c55f296fda69a09c30670ae" /></td>
+<td class="committed_on">05/21/2011 02:16 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: code clean up repositories controller.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5875 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/782f7ca3bf2b491035d26c1572b7eae0b9513afa" title="Revision 782f7ca3">782f7ca3</a></td>
+<td class="checkbox"><input id="cb-14" name="rev" onclick="$('cbto-15').checked=true;" type="radio" value="782f7ca3bf2b491035d26c1572b7eae0b9513afa" /></td>
+<td class="checkbox"><input id="cbto-14" name="rev_to" onclick="if ($('cb-14').checked==true) {$('cb-13').checked=true;}" type="radio" value="782f7ca3bf2b491035d26c1572b7eae0b9513afa" /></td>
+<td class="committed_on">05/21/2011 02:15 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: remove trailing white-spaces from repositories controller.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5874 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/57c5b4ea743e6f11385088b321359b5699151ff6" title="Revision 57c5b4ea">57c5b4ea</a></td>
+<td class="checkbox"><input id="cb-15" name="rev" onclick="$('cbto-16').checked=true;" type="radio" value="57c5b4ea743e6f11385088b321359b5699151ff6" /></td>
+<td class="checkbox"><input id="cbto-15" name="rev_to" onclick="if ($('cb-15').checked==true) {$('cb-14').checked=true;}" type="radio" value="57c5b4ea743e6f11385088b321359b5699151ff6" /></td>
+<td class="committed_on">05/12/2011 11:52 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: use repository merge_extra_info() to save extra_ parameter (#8365, #7047).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5770 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ab430a13b5ae11437ef2b47e0e208a77def1ccd0" title="Revision ab430a13">ab430a13</a></td>
+<td class="checkbox"><input id="cb-16" name="rev" onclick="$('cbto-17').checked=true;" type="radio" value="ab430a13b5ae11437ef2b47e0e208a77def1ccd0" /></td>
+<td class="checkbox"><input id="cbto-16" name="rev_to" onclick="if ($('cb-16').checked==true) {$('cb-15').checked=true;}" type="radio" value="ab430a13b5ae11437ef2b47e0e208a77def1ccd0" /></td>
+<td class="committed_on">05/12/2011 11:51 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: switch to save repository setting params in "extra_" or not (#8365, #7047).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5769 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/615c81f3df5be7da184aba97ffa768b51b7fa8bb" title="Revision 615c81f3">615c81f3</a></td>
+<td class="checkbox"><input id="cb-17" name="rev" onclick="$('cbto-18').checked=true;" type="radio" value="615c81f3df5be7da184aba97ffa768b51b7fa8bb" /></td>
+<td class="checkbox"><input id="cbto-17" name="rev_to" onclick="if ($('cb-17').checked==true) {$('cb-16').checked=true;}" type="radio" value="615c81f3df5be7da184aba97ffa768b51b7fa8bb" /></td>
+<td class="committed_on">05/08/2011 05:47 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: code clean up Repositories Controller.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5708 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/69bb041c464f921ced937fab724dffbe56a50363" title="Revision 69bb041c">69bb041c</a></td>
+<td class="checkbox"><input id="cb-18" name="rev" onclick="$('cbto-19').checked=true;" type="radio" value="69bb041c464f921ced937fab724dffbe56a50363" /></td>
+<td class="checkbox"><input id="cbto-18" name="rev_to" onclick="if ($('cb-18').checked==true) {$('cb-17').checked=true;}" type="radio" value="69bb041c464f921ced937fab724dffbe56a50363" /></td>
+<td class="committed_on">05/04/2011 12:59 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: set disable a button if scm is not selected in project scm setting.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5625 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ca5ce92cfcb93a327717d4cf6fd4a0d2d259701f" title="Revision ca5ce92c">ca5ce92c</a></td>
+<td class="checkbox"><input id="cb-19" name="rev" onclick="$('cbto-20').checked=true;" type="radio" value="ca5ce92cfcb93a327717d4cf6fd4a0d2d259701f" /></td>
+<td class="checkbox"><input id="cbto-19" name="rev_to" onclick="if ($('cb-19').checked==true) {$('cb-18').checked=true;}" type="radio" value="ca5ce92cfcb93a327717d4cf6fd4a0d2d259701f" /></td>
+<td class="committed_on">05/03/2011 03:32 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: code clean up RepositoriesController.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5617 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f15b12556f01be2eca445f13bed33ce463146ed6" title="Revision f15b1255">f15b1255</a></td>
+<td class="checkbox"><input id="cb-20" name="rev" onclick="$('cbto-21').checked=true;" type="radio" value="f15b12556f01be2eca445f13bed33ce463146ed6" /></td>
+<td class="checkbox"><input id="cbto-20" name="rev_to" onclick="if ($('cb-20').checked==true) {$('cb-19').checked=true;}" type="radio" value="f15b12556f01be2eca445f13bed33ce463146ed6" /></td>
+<td class="committed_on">03/22/2011 12:56 PM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: set mime type in downloading file.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5210 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/79eba572affbe7bd3b3a1985e94f9f6e11822b4b" title="Revision 79eba572">79eba572</a></td>
+<td class="checkbox"><input id="cb-21" name="rev" onclick="$('cbto-22').checked=true;" type="radio" value="79eba572affbe7bd3b3a1985e94f9f6e11822b4b" /></td>
+<td class="checkbox"><input id="cbto-21" name="rev_to" onclick="if ($('cb-21').checked==true) {$('cb-20').checked=true;}" type="radio" value="79eba572affbe7bd3b3a1985e94f9f6e11822b4b" /></td>
+<td class="committed_on">03/22/2011 11:31 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: fix non ascii text files displaying (#6256).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5204 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/b6dfa0b081d0233259f653c11b6bb15dcedba9e2" title="Revision b6dfa0b0">b6dfa0b0</a></td>
+<td class="checkbox"><input id="cb-22" name="rev" onclick="$('cbto-23').checked=true;" type="radio" value="b6dfa0b081d0233259f653c11b6bb15dcedba9e2" /></td>
+<td class="checkbox"><input id="cbto-22" name="rev_to" onclick="if ($('cb-22').checked==true) {$('cb-21').checked=true;}" type="radio" value="b6dfa0b081d0233259f653c11b6bb15dcedba9e2" /></td>
+<td class="committed_on">03/15/2011 04:21 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: recovery showing "root @ branch" in repository tree viewing.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@5139 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/66c979d63c49ef48e11ef6a92bdf9750b9658aa3" title="Revision 66c979d6">66c979d6</a></td>
+<td class="checkbox"><input id="cb-23" name="rev" onclick="$('cbto-24').checked=true;" type="radio" value="66c979d63c49ef48e11ef6a92bdf9750b9658aa3" /></td>
+<td class="checkbox"><input id="cbto-23" name="rev_to" onclick="if ($('cb-23').checked==true) {$('cb-22').checked=true;}" type="radio" value="66c979d63c49ef48e11ef6a92bdf9750b9658aa3" /></td>
+<td class="committed_on">02/17/2011 09:17 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: fix diff revision param validation.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4860 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/3493bb1d3709b7071548c11233b3ac5535f0d0c6" title="Revision 3493bb1d">3493bb1d</a></td>
+<td class="checkbox"><input id="cb-24" name="rev" onclick="$('cbto-25').checked=true;" type="radio" value="3493bb1d3709b7071548c11233b3ac5535f0d0c6" /></td>
+<td class="checkbox"><input id="cbto-24" name="rev_to" onclick="if ($('cb-24').checked==true) {$('cb-23').checked=true;}" type="radio" value="3493bb1d3709b7071548c11233b3ac5535f0d0c6" /></td>
+<td class="committed_on">02/12/2011 04:44 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: space and tab cleanup of app/controllers/repositories_controller.rb.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4817 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/4957f916399b133e0250d6c6211257657c914de5" title="Revision 4957f916">4957f916</a></td>
+<td class="checkbox"><input id="cb-25" name="rev" onclick="$('cbto-26').checked=true;" type="radio" value="4957f916399b133e0250d6c6211257657c914de5" /></td>
+<td class="checkbox"><input id="cbto-25" name="rev_to" onclick="if ($('cb-25').checked==true) {$('cb-24').checked=true;}" type="radio" value="4957f916399b133e0250d6c6211257657c914de5" /></td>
+<td class="committed_on">02/12/2011 04:44 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: fix non ASCII filename downloaded from repo is broken on Internet Explorer (#7288).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4816 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/6e1fa1603b16da3e9792e26b3bca5d1618ca24dc" title="Revision 6e1fa160">6e1fa160</a></td>
+<td class="checkbox"><input id="cb-26" name="rev" onclick="$('cbto-27').checked=true;" type="radio" value="6e1fa1603b16da3e9792e26b3bca5d1618ca24dc" /></td>
+<td class="checkbox"><input id="cbto-26" name="rev_to" onclick="if ($('cb-26').checked==true) {$('cb-25').checked=true;}" type="radio" value="6e1fa1603b16da3e9792e26b3bca5d1618ca24dc" /></td>
+<td class="committed_on">01/21/2011 08:22 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: use format_revision() for history, view and annotate (#3724).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4733 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/e14e244f7b5e9b205d462de4f46745a02bc3c8c9" title="Revision e14e244f">e14e244f</a></td>
+<td class="checkbox"><input id="cb-27" name="rev" onclick="$('cbto-28').checked=true;" type="radio" value="e14e244f7b5e9b205d462de4f46745a02bc3c8c9" /></td>
+<td class="checkbox"><input id="cbto-27" name="rev_to" onclick="if ($('cb-27').checked==true) {$('cb-26').checked=true;}" type="radio" value="e14e244f7b5e9b205d462de4f46745a02bc3c8c9" /></td>
+<td class="committed_on">01/14/2011 03:24 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Use #blank? instead of #nil? || #empty?.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4711 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7d0b1b383009dddb535e288f8cbf38b1aa8fb2aa" title="Revision 7d0b1b38">7d0b1b38</a></td>
+<td class="checkbox"><input id="cb-28" name="rev" onclick="$('cbto-29').checked=true;" type="radio" value="7d0b1b383009dddb535e288f8cbf38b1aa8fb2aa" /></td>
+<td class="checkbox"><input id="cbto-28" name="rev_to" onclick="if ($('cb-28').checked==true) {$('cb-27').checked=true;}" type="radio" value="7d0b1b383009dddb535e288f8cbf38b1aa8fb2aa" /></td>
+<td class="committed_on">01/14/2011 03:22 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Respond with 404 instead of 500 when revision/entry is not found in the repository (#7307).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4710 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/98b3a5065756995ff5768c9f354790549fd81509" title="Revision 98b3a506">98b3a506</a></td>
+<td class="checkbox"><input id="cb-29" name="rev" onclick="$('cbto-30').checked=true;" type="radio" value="98b3a5065756995ff5768c9f354790549fd81509" /></td>
+<td class="checkbox"><input id="cbto-29" name="rev_to" onclick="if ($('cb-29').checked==true) {$('cb-28').checked=true;}" type="radio" value="98b3a5065756995ff5768c9f354790549fd81509" /></td>
+<td class="committed_on">01/13/2011 07:04 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: fix error on revision page for empty revision (#7307).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4703 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ebb19c58637cfd9af4264d28e9aaa924a68f294e" title="Revision ebb19c58">ebb19c58</a></td>
+<td class="checkbox"><input id="cb-30" name="rev" onclick="$('cbto-31').checked=true;" type="radio" value="ebb19c58637cfd9af4264d28e9aaa924a68f294e" /></td>
+<td class="checkbox"><input id="cbto-30" name="rev_to" onclick="if ($('cb-30').checked==true) {$('cb-29').checked=true;}" type="radio" value="ebb19c58637cfd9af4264d28e9aaa924a68f294e" /></td>
+<td class="committed_on">01/11/2011 11:04 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>scm: changing two revision diff text at SCM adapter level (#3724).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4698 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2e1bcb2abff6f78f028064299125480cbf3c2c2a" title="Revision 2e1bcb2a">2e1bcb2a</a></td>
+<td class="checkbox"><input id="cb-31" name="rev" onclick="$('cbto-32').checked=true;" type="radio" value="2e1bcb2abff6f78f028064299125480cbf3c2c2a" /></td>
+<td class="checkbox"><input id="cbto-31" name="rev_to" onclick="if ($('cb-31').checked==true) {$('cb-30').checked=true;}" type="radio" value="2e1bcb2abff6f78f028064299125480cbf3c2c2a" /></td>
+<td class="committed_on">01/02/2011 04:45 AM</td>
+<td class="author">Toshi MARUYAMA </td>
+
+  <td class="comments"><p>Changing revision label and identifier at SCM adapter level (#3724, #6092)</p>
+
+
+	<p>Contributed by Yuya Nishihara.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4613 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/03397f605c7ece40b38ebdcf49bd5e4fe9040ac8" title="Revision 03397f60">03397f60</a></td>
+<td class="checkbox"><input id="cb-32" name="rev" onclick="$('cbto-33').checked=true;" type="radio" value="03397f605c7ece40b38ebdcf49bd5e4fe9040ac8" /></td>
+<td class="checkbox"><input id="cbto-32" name="rev_to" onclick="if ($('cb-32').checked==true) {$('cb-31').checked=true;}" type="radio" value="03397f605c7ece40b38ebdcf49bd5e4fe9040ac8" /></td>
+<td class="committed_on">12/20/2010 01:47 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixes valid revision regexp.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4549 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/84dd413f22b9a3900ceaa33d63758f285908ecb1" title="Revision 84dd413f">84dd413f</a></td>
+<td class="checkbox"><input id="cb-33" name="rev" onclick="$('cbto-34').checked=true;" type="radio" value="84dd413f22b9a3900ceaa33d63758f285908ecb1" /></td>
+<td class="checkbox"><input id="cbto-33" name="rev_to" onclick="if ($('cb-33').checked==true) {$('cb-32').checked=true;}" type="radio" value="84dd413f22b9a3900ceaa33d63758f285908ecb1" /></td>
+<td class="committed_on">12/18/2010 01:37 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Restore rev param validation that was removed in r2840.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@4542 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/3bf6790826f5740f79713a05eb9524735ca39b8d" title="Revision 3bf67908">3bf67908</a></td>
+<td class="checkbox"><input id="cb-34" name="rev" onclick="$('cbto-35').checked=true;" type="radio" value="3bf6790826f5740f79713a05eb9524735ca39b8d" /></td>
+<td class="checkbox"><input id="cbto-34" name="rev_to" onclick="if ($('cb-34').checked==true) {$('cb-33').checked=true;}" type="radio" value="3bf6790826f5740f79713a05eb9524735ca39b8d" /></td>
+<td class="committed_on">04/17/2010 08:51 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Add "Repository" menu item after repository creation (#5328).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3680 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/e5d300af0a4d6703b043c05d4178353e7e252bf2" title="Revision e5d300af">e5d300af</a></td>
+<td class="checkbox"><input id="cb-35" name="rev" onclick="$('cbto-36').checked=true;" type="radio" value="e5d300af0a4d6703b043c05d4178353e7e252bf2" /></td>
+<td class="checkbox"><input id="cbto-35" name="rev_to" onclick="if ($('cb-35').checked==true) {$('cb-34').checked=true;}" type="radio" value="e5d300af0a4d6703b043c05d4178353e7e252bf2" /></td>
+<td class="committed_on">02/05/2010 11:57 AM</td>
+<td class="author">Eric Davis </td>
+
+  <td class="comments"><p>Refactor: Pull up several #find_project methods to ApplicationController</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3370 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/488c192286ead874fcdfe04b6acf52e52e5cf9fc" title="Revision 488c1922">488c1922</a></td>
+<td class="checkbox"><input id="cb-36" name="rev" onclick="$('cbto-37').checked=true;" type="radio" value="488c192286ead874fcdfe04b6acf52e52e5cf9fc" /></td>
+<td class="checkbox"><input id="cbto-36" name="rev_to" onclick="if ($('cb-36').checked==true) {$('cb-35').checked=true;}" type="radio" value="488c192286ead874fcdfe04b6acf52e52e5cf9fc" /></td>
+<td class="committed_on">12/18/2009 09:22 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Removes "xxx and return" calls (#4446).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@3185 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/07aa3c55bdc72a7ab3565c5903a4560b6785aac5" title="Revision 07aa3c55">07aa3c55</a></td>
+<td class="checkbox"><input id="cb-37" name="rev" onclick="$('cbto-38').checked=true;" type="radio" value="07aa3c55bdc72a7ab3565c5903a4560b6785aac5" /></td>
+<td class="checkbox"><input id="cbto-37" name="rev_to" onclick="if ($('cb-37').checked==true) {$('cb-36').checked=true;}" type="radio" value="07aa3c55bdc72a7ab3565c5903a4560b6785aac5" /></td>
+<td class="committed_on">10/21/2009 01:07 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Contextual quick search (#3263).<br />Eg. when viewing issues, the quick search will search issues only.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2943 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/30ad78e57da31443a2026b60bd5d8727d9503321" title="Revision 30ad78e5">30ad78e5</a></td>
+<td class="checkbox"><input id="cb-38" name="rev" onclick="$('cbto-39').checked=true;" type="radio" value="30ad78e57da31443a2026b60bd5d8727d9503321" /></td>
+<td class="checkbox"><input id="cbto-38" name="rev_to" onclick="if ($('cb-38').checked==true) {$('cb-37').checked=true;}" type="radio" value="30ad78e57da31443a2026b60bd5d8727d9503321" /></td>
+<td class="committed_on">09/20/2009 11:20 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: RepositoriesController#revision may show wrong revision (#3779).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2898 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7b0cb6aba8715aff00519f200060fbf46ae9bb97" title="Revision 7b0cb6ab">7b0cb6ab</a></td>
+<td class="checkbox"><input id="cb-39" name="rev" onclick="$('cbto-40').checked=true;" type="radio" value="7b0cb6aba8715aff00519f200060fbf46ae9bb97" /></td>
+<td class="checkbox"><input id="cbto-39" name="rev_to" onclick="if ($('cb-39').checked==true) {$('cb-38').checked=true;}" type="radio" value="7b0cb6aba8715aff00519f200060fbf46ae9bb97" /></td>
+<td class="committed_on">09/13/2009 01:14 PM</td>
+<td class="author">Eric Davis </td>
+
+  <td class="comments"><p>Upgraded to Rails 2.3.4 (#3597)</p>
+
+
+	<ul>
+	<li>Ran the Rails upgrade</li>
+		<li>Upgraded to Rails Engines 2.3.2</li>
+		<li>Added a plugin to let Engines override application views.</li>
+		<li>Converted tests to use the new classes:
+	<ul>
+	<li>ActionController::TestCase for functional</li>
+		<li>ActiveSupport::TestCase for units...</li>
+	</ul></li>
+	</ul></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/5b975706932d269a0eceee924558f428bf1cd16c" title="Revision 5b975706">5b975706</a></td>
+<td class="checkbox"><input id="cb-40" name="rev" onclick="$('cbto-41').checked=true;" type="radio" value="5b975706932d269a0eceee924558f428bf1cd16c" /></td>
+<td class="checkbox"><input id="cbto-40" name="rev_to" onclick="if ($('cb-40').checked==true) {$('cb-39').checked=true;}" type="radio" value="5b975706932d269a0eceee924558f428bf1cd16c" /></td>
+<td class="committed_on">09/01/2009 08:13 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">SCM:
+	<ul>
+	<li>add latest changesets for the current directory when browsing the repository and a link to the full log</li>
+		<li>ability to diff a directory (#3575)</li>
+	</ul>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2849 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a4d7a03b142889510c910cfb983a818f61653c11" title="Revision a4d7a03b">a4d7a03b</a></td>
+<td class="checkbox"><input id="cb-41" name="rev" onclick="$('cbto-42').checked=true;" type="radio" value="a4d7a03b142889510c910cfb983a818f61653c11" /></td>
+<td class="checkbox"><input id="cbto-41" name="rev_to" onclick="if ($('cb-41').checked==true) {$('cb-40').checked=true;}" type="radio" value="a4d7a03b142889510c910cfb983a818f61653c11" /></td>
+<td class="committed_on">08/17/2009 10:26 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">SCM browser:
+	<ul>
+	<li>don't show repository commits when showing a subfolder</li>
+		<li>remove obsolete view browse.rhtml</li>
+	</ul>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2843 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/c28b044d6802559a9a2a07af1b7661a1122e5f48" title="Revision c28b044d">c28b044d</a></td>
+<td class="checkbox"><input id="cb-42" name="rev" onclick="$('cbto-43').checked=true;" type="radio" value="c28b044d6802559a9a2a07af1b7661a1122e5f48" /></td>
+<td class="checkbox"><input id="cbto-42" name="rev_to" onclick="if ($('cb-42').checked==true) {$('cb-41').checked=true;}" type="radio" value="c28b044d6802559a9a2a07af1b7661a1122e5f48" /></td>
+<td class="committed_on">08/15/2009 06:41 PM</td>
+<td class="author">Eric Davis </td>
+
+  <td class="comments"><p>Added branch and tag support to the git repository viewer. (#1406)</p>
+
+
+	<p>Many thanks to Adam Soltys and everyone else who tested this patch.</p>
+
+
+	<ul>
+	<li>Updated git test repository so it has a branch with some differences from the master branch</li>
+		<li>Moved redmine diff class into a module so as not to clash with diff-lcs gem which is required by grit...</li>
+	</ul></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/81b84f641d9ed5c5fcca1893559812faecf14b3a" title="Revision 81b84f64">81b84f64</a></td>
+<td class="checkbox"><input id="cb-43" name="rev" onclick="$('cbto-44').checked=true;" type="radio" value="81b84f641d9ed5c5fcca1893559812faecf14b3a" /></td>
+<td class="checkbox"><input id="cbto-43" name="rev_to" onclick="if ($('cb-43').checked==true) {$('cb-42').checked=true;}" type="radio" value="81b84f641d9ed5c5fcca1893559812faecf14b3a" /></td>
+<td class="committed_on">04/07/2009 01:30 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: links to changesets in activity and atom feeds uses project id instead project identifier (#3137).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2663 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1c5a2ddfb07cd4993fa9f28542df51a399e29a6c" title="Revision 1c5a2ddf">1c5a2ddf</a></td>
+<td class="checkbox"><input id="cb-44" name="rev" onclick="$('cbto-45').checked=true;" type="radio" value="1c5a2ddfb07cd4993fa9f28542df51a399e29a6c" /></td>
+<td class="checkbox"><input id="cbto-44" name="rev_to" onclick="if ($('cb-44').checked==true) {$('cb-43').checked=true;}" type="radio" value="1c5a2ddfb07cd4993fa9f28542df51a399e29a6c" /></td>
+<td class="committed_on">02/21/2009 11:04 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Limit the size of repository files displayed inline too.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2505 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/fe28193e4eb9af2dc5262535a29ffde5249568fc" title="Revision fe28193e">fe28193e</a></td>
+<td class="checkbox"><input id="cb-45" name="rev" onclick="$('cbto-46').checked=true;" type="radio" value="fe28193e4eb9af2dc5262535a29ffde5249568fc" /></td>
+<td class="checkbox"><input id="cbto-45" name="rev_to" onclick="if ($('cb-45').checked==true) {$('cb-44').checked=true;}" type="radio" value="fe28193e4eb9af2dc5262535a29ffde5249568fc" /></td>
+<td class="committed_on">02/21/2009 06:04 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Merged Rails 2.2 branch. Redmine now requires Rails 2.2.2.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2493 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ab5e07e83ef2573ae32da1a7ada5398d03777932" title="Revision ab5e07e8">ab5e07e8</a></td>
+<td class="checkbox"><input id="cb-46" name="rev" onclick="$('cbto-47').checked=true;" type="radio" value="ab5e07e83ef2573ae32da1a7ada5398d03777932" /></td>
+<td class="checkbox"><input id="cbto-46" name="rev_to" onclick="if ($('cb-46').checked==true) {$('cb-45').checked=true;}" type="radio" value="ab5e07e83ef2573ae32da1a7ada5398d03777932" /></td>
+<td class="committed_on">02/01/2009 02:54 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Adds a setting to limit the number of revisions displayed on a repository file log (default=100).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2350 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/3f80a89a69b2a6f3290c4ebec3a693c86eccee6a" title="Revision 3f80a89a">3f80a89a</a></td>
+<td class="checkbox"><input id="cb-47" name="rev" onclick="$('cbto-48').checked=true;" type="radio" value="3f80a89a69b2a6f3290c4ebec3a693c86eccee6a" /></td>
+<td class="checkbox"><input id="cbto-47" name="rev_to" onclick="if ($('cb-47').checked==true) {$('cb-46').checked=true;}" type="radio" value="3f80a89a69b2a6f3290c4ebec3a693c86eccee6a" /></td>
+<td class="committed_on">12/22/2008 03:33 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Show view/annotate/download links on repositories/entries and repositories/annotate views (#2367).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2167 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7cea286c2344ee20560437c4a785bf2ce2b9091f" title="Revision 7cea286c">7cea286c</a></td>
+<td class="checkbox"><input id="cb-48" name="rev" onclick="$('cbto-49').checked=true;" type="radio" value="7cea286c2344ee20560437c4a785bf2ce2b9091f" /></td>
+<td class="checkbox"><input id="cbto-48" name="rev_to" onclick="if ($('cb-48').checked==true) {$('cb-47').checked=true;}" type="radio" value="7cea286c2344ee20560437c4a785bf2ce2b9091f" /></td>
+<td class="committed_on">12/15/2008 01:02 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixes repository user mapping submission when a repository username is blank (#2339, Conflicting types for parameter containers).</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2137 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/6f68a3667941537e45c2c62c66330cf6a047508d" title="Revision 6f68a366">6f68a366</a></td>
+<td class="checkbox"><input id="cb-49" name="rev" onclick="$('cbto-50').checked=true;" type="radio" value="6f68a3667941537e45c2c62c66330cf6a047508d" /></td>
+<td class="checkbox"><input id="cbto-49" name="rev_to" onclick="if ($('cb-49').checked==true) {$('cb-48').checked=true;}" type="radio" value="6f68a3667941537e45c2c62c66330cf6a047508d" /></td>
+<td class="committed_on">11/10/2008 02:09 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Eager-load users.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2007 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/79c33bbc838fd837e516fd60569dbcf7917bd534" title="Revision 79c33bbc">79c33bbc</a></td>
+<td class="checkbox"><input id="cb-50" name="rev" onclick="$('cbto-51').checked=true;" type="radio" value="79c33bbc838fd837e516fd60569dbcf7917bd534" /></td>
+<td class="checkbox"><input id="cbto-50" name="rev_to" onclick="if ($('cb-50').checked==true) {$('cb-49').checked=true;}" type="radio" value="79c33bbc838fd837e516fd60569dbcf7917bd534" /></td>
+<td class="committed_on">11/10/2008 01:59 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Maps repository users to Redmine users (#1383).<br />Users with same username or email are automatically mapped. Mapping can be manually adjusted in repository settings. Multiple usernames can be mapped to the same Redmine user.</p>
+
+
+	<p>git-svn-id: svn+ssh://rubyforge.org/var/svn/redmine/trunk@2006 e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/3520961eae873fcbb983414ad8e18500b377c5b7" title="Revision 3520961e">3520961e</a></td>
+<td class="checkbox"><input id="cb-51" name="rev" onclick="$('cbto-52').checked=true;" type="radio" value="3520961eae873fcbb983414ad8e18500b377c5b7" /></td>
+<td class="checkbox"><input id="cbto-51" name="rev_to" onclick="if ($('cb-51').checked==true) {$('cb-50').checked=true;}" type="radio" value="3520961eae873fcbb983414ad8e18500b377c5b7" /></td>
+<td class="committed_on">09/17/2008 12:39 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Render the commit changes list as a tree (#1896).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1870">http://redmine.rubyforge.org/svn/trunk@1870</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2fdf4426cd8f7437f03181a4f3091f239b47f6d6" title="Revision 2fdf4426">2fdf4426</a></td>
+<td class="checkbox"><input id="cb-52" name="rev" onclick="$('cbto-53').checked=true;" type="radio" value="2fdf4426cd8f7437f03181a4f3091f239b47f6d6" /></td>
+<td class="checkbox"><input id="cbto-52" name="rev_to" onclick="if ($('cb-52').checked==true) {$('cb-51').checked=true;}" type="radio" value="2fdf4426cd8f7437f03181a4f3091f239b47f6d6" /></td>
+<td class="committed_on">08/10/2008 11:22 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Moves <code>layout 'base'</code> to ApplicationController.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1727">http://redmine.rubyforge.org/svn/trunk@1727</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/12fbd06c02d44fdb96922154476302f002783e23" title="Revision 12fbd06c">12fbd06c</a></td>
+<td class="checkbox"><input id="cb-53" name="rev" onclick="$('cbto-54').checked=true;" type="radio" value="12fbd06c02d44fdb96922154476302f002783e23" /></td>
+<td class="checkbox"><input id="cbto-53" name="rev_to" onclick="if ($('cb-53').checked==true) {$('cb-52').checked=true;}" type="radio" value="12fbd06c02d44fdb96922154476302f002783e23" /></td>
+<td class="committed_on">07/05/2008 04:59 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Display svn properties in the browser, svn >= 1.5.0 only (#1581).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1627">http://redmine.rubyforge.org/svn/trunk@1627</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/94cf4f258ff61bac4708c9a8dcba5c50b8adcf94" title="Revision 94cf4f25">94cf4f25</a></td>
+<td class="checkbox"><input id="cb-54" name="rev" onclick="$('cbto-55').checked=true;" type="radio" value="94cf4f258ff61bac4708c9a8dcba5c50b8adcf94" /></td>
+<td class="checkbox"><input id="cbto-54" name="rev_to" onclick="if ($('cb-54').checked==true) {$('cb-53').checked=true;}" type="radio" value="94cf4f258ff61bac4708c9a8dcba5c50b8adcf94" /></td>
+<td class="committed_on">06/29/2008 07:13 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Wider SVG graphs in repository stats.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1601">http://redmine.rubyforge.org/svn/trunk@1601</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0223b87612fd536b51c448916dc5fff1284c6b82" title="Revision 0223b876">0223b876</a></td>
+<td class="checkbox"><input id="cb-55" name="rev" onclick="$('cbto-56').checked=true;" type="radio" value="0223b87612fd536b51c448916dc5fff1284c6b82" /></td>
+<td class="checkbox"><input id="cbto-55" name="rev_to" onclick="if ($('cb-55').checked==true) {$('cb-54').checked=true;}" type="radio" value="0223b87612fd536b51c448916dc5fff1284c6b82" /></td>
+<td class="committed_on">06/15/2008 12:11 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>RepositoriesController cleanup with rescue_from.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1555">http://redmine.rubyforge.org/svn/trunk@1555</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ca6e69ec247e10c521f22fba542404720cc2ebff" title="Revision ca6e69ec">ca6e69ec</a></td>
+<td class="checkbox"><input id="cb-56" name="rev" onclick="$('cbto-57').checked=true;" type="radio" value="ca6e69ec247e10c521f22fba542404720cc2ebff" /></td>
+<td class="checkbox"><input id="cbto-56" name="rev_to" onclick="if ($('cb-56').checked==true) {$('cb-55').checked=true;}" type="radio" value="ca6e69ec247e10c521f22fba542404720cc2ebff" /></td>
+<td class="committed_on">06/15/2008 11:47 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: view file at given revision with CVS.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1553">http://redmine.rubyforge.org/svn/trunk@1553</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/b78b62df8d1fd34321cffd3785121da98f64265b" title="Revision b78b62df">b78b62df</a></td>
+<td class="checkbox"><input id="cb-57" name="rev" onclick="$('cbto-58').checked=true;" type="radio" value="b78b62df8d1fd34321cffd3785121da98f64265b" /></td>
+<td class="checkbox"><input id="cbto-57" name="rev_to" onclick="if ($('cb-57').checked==true) {$('cb-56').checked=true;}" type="radio" value="b78b62df8d1fd34321cffd3785121da98f64265b" /></td>
+<td class="committed_on">06/08/2008 12:48 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>SCM browser: ability to download raw unified diffs.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1514">http://redmine.rubyforge.org/svn/trunk@1514</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/ec0525d4975b9cae9982695cb0a19ac9c4bd1a3c" title="Revision ec0525d4">ec0525d4</a></td>
+<td class="checkbox"><input id="cb-58" name="rev" onclick="$('cbto-59').checked=true;" type="radio" value="ec0525d4975b9cae9982695cb0a19ac9c4bd1a3c" /></td>
+<td class="checkbox"><input id="cbto-58" name="rev_to" onclick="if ($('cb-58').checked==true) {$('cb-57').checked=true;}" type="radio" value="ec0525d4975b9cae9982695cb0a19ac9c4bd1a3c" /></td>
+<td class="committed_on">06/08/2008 12:28 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Move unified diff parser out of the scm abstract adapter so it can be reused for viewing attached diffs (#1403).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1513">http://redmine.rubyforge.org/svn/trunk@1513</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/dfe62d7f51b4aadb1034e2e64de2524b30dfd17b" title="Revision dfe62d7f">dfe62d7f</a></td>
+<td class="checkbox"><input id="cb-59" name="rev" onclick="$('cbto-60').checked=true;" type="radio" value="dfe62d7f51b4aadb1034e2e64de2524b30dfd17b" /></td>
+<td class="checkbox"><input id="cbto-59" name="rev_to" onclick="if ($('cb-59').checked==true) {$('cb-58').checked=true;}" type="radio" value="dfe62d7f51b4aadb1034e2e64de2524b30dfd17b" /></td>
+<td class="committed_on">06/08/2008 10:59 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Ability to disable unused SCM adapters in application settings.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1507">http://redmine.rubyforge.org/svn/trunk@1507</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a73f68a185df00db1aaa153f576f106ee752c54d" title="Revision a73f68a1">a73f68a1</a></td>
+<td class="checkbox"><input id="cb-60" name="rev" onclick="$('cbto-61').checked=true;" type="radio" value="a73f68a185df00db1aaa153f576f106ee752c54d" /></td>
+<td class="checkbox"><input id="cbto-60" name="rev_to" onclick="if ($('cb-60').checked==true) {$('cb-59').checked=true;}" type="radio" value="a73f68a185df00db1aaa153f576f106ee752c54d" /></td>
+<td class="committed_on">04/27/2008 06:12 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: Links to repository directories don't work (#1119).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1365">http://redmine.rubyforge.org/svn/trunk@1365</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/596de073f95ff0fdcd7dcdf71bd91838be75756e" title="Revision 596de073">596de073</a></td>
+<td class="checkbox"><input id="cb-61" name="rev" onclick="$('cbto-62').checked=true;" type="radio" value="596de073f95ff0fdcd7dcdf71bd91838be75756e" /></td>
+<td class="checkbox"><input id="cbto-61" name="rev_to" onclick="if ($('cb-61').checked==true) {$('cb-60').checked=true;}" type="radio" value="596de073f95ff0fdcd7dcdf71bd91838be75756e" /></td>
+<td class="committed_on">04/24/2008 02:35 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Commits per author graph: remove email adress in usernames (#1066).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1357">http://redmine.rubyforge.org/svn/trunk@1357</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/154f60edd353c2215b9e1622a2e47bdcc5f70101" title="Revision 154f60ed">154f60ed</a></td>
+<td class="checkbox"><input id="cb-62" name="rev" onclick="$('cbto-63').checked=true;" type="radio" value="154f60edd353c2215b9e1622a2e47bdcc5f70101" /></td>
+<td class="checkbox"><input id="cbto-62" name="rev_to" onclick="if ($('cb-62').checked==true) {$('cb-61').checked=true;}" type="radio" value="154f60edd353c2215b9e1622a2e47bdcc5f70101" /></td>
+<td class="committed_on">04/06/2008 06:35 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fix repository browsing at given revision for various scm and add tests for this.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1329">http://redmine.rubyforge.org/svn/trunk@1329</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/14a2b7e9b5765de3145c63e22affee06f20e33fc" title="Revision 14a2b7e9">14a2b7e9</a></td>
+<td class="checkbox"><input id="cb-63" name="rev" onclick="$('cbto-64').checked=true;" type="radio" value="14a2b7e9b5765de3145c63e22affee06f20e33fc" /></td>
+<td class="checkbox"><input id="cbto-63" name="rev_to" onclick="if ($('cb-63').checked==true) {$('cb-62').checked=true;}" type="radio" value="14a2b7e9b5765de3145c63e22affee06f20e33fc" /></td>
+<td class="committed_on">04/03/2008 12:50 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Verify rev and rev_to params format in RepositoriesController. And turn revision arguments into integers in SubversionAdapter.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1324">http://redmine.rubyforge.org/svn/trunk@1324</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f162337e1b3625da7eedb747f1b2bb4752c27646" title="Revision f162337e">f162337e</a></td>
+<td class="checkbox"><input id="cb-64" name="rev" onclick="$('cbto-65').checked=true;" type="radio" value="f162337e1b3625da7eedb747f1b2bb4752c27646" /></td>
+<td class="checkbox"><input id="cbto-64" name="rev_to" onclick="if ($('cb-64').checked==true) {$('cb-63').checked=true;}" type="radio" value="f162337e1b3625da7eedb747f1b2bb4752c27646" /></td>
+<td class="committed_on">03/19/2008 01:51 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Always show 'View' and 'Annotate' links on repository files (download will be forced when clicking 'View' if the file is binary).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1274">http://redmine.rubyforge.org/svn/trunk@1274</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/93d1b2e0a43982f37b60f6b15b36bc46e3c79f9b" title="Revision 93d1b2e0">93d1b2e0</a></td>
+<td class="checkbox"><input id="cb-65" name="rev" onclick="$('cbto-66').checked=true;" type="radio" value="93d1b2e0a43982f37b60f6b15b36bc46e3c79f9b" /></td>
+<td class="checkbox"><input id="cbto-65" name="rev_to" onclick="if ($('cb-65').checked==true) {$('cb-64').checked=true;}" type="radio" value="93d1b2e0a43982f37b60f6b15b36bc46e3c79f9b" /></td>
+<td class="committed_on">03/17/2008 01:45 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Add Redmine links for repository files using source: and export: keyworkds (#867).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1267">http://redmine.rubyforge.org/svn/trunk@1267</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/3a9b0988c7515371531e47f9eef9f8e60ce352aa" title="Revision 3a9b0988">3a9b0988</a></td>
+<td class="checkbox"><input id="cb-66" name="rev" onclick="$('cbto-67').checked=true;" type="radio" value="3a9b0988c7515371531e47f9eef9f8e60ce352aa" /></td>
+<td class="checkbox"><input id="cbto-66" name="rev_to" onclick="if ($('cb-66').checked==true) {$('cb-65').checked=true;}" type="radio" value="3a9b0988c7515371531e47f9eef9f8e60ce352aa" /></td>
+<td class="committed_on">03/12/2008 04:28 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Merged Git support branch (r1200 to r1226).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1236">http://redmine.rubyforge.org/svn/trunk@1236</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/4abb82fd7bcdd2cdffdd8778a5d9e2fc6a3857dd" title="Revision 4abb82fd">4abb82fd</a></td>
+<td class="checkbox"><input id="cb-67" name="rev" onclick="$('cbto-68').checked=true;" type="radio" value="4abb82fd7bcdd2cdffdd8778a5d9e2fc6a3857dd" /></td>
+<td class="checkbox"><input id="cbto-67" name="rev_to" onclick="if ($('cb-67').checked==true) {$('cb-66').checked=true;}" type="radio" value="4abb82fd7bcdd2cdffdd8778a5d9e2fc6a3857dd" /></td>
+<td class="committed_on">01/25/2008 05:55 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed RepositoriesController: undefined local variable or method `show_error' (broken by r1094).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1104">http://redmine.rubyforge.org/svn/trunk@1104</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/91dc13f4b22c45bee5cfd1d783d6544ae79afa04" title="Revision 91dc13f4">91dc13f4</a></td>
+<td class="checkbox"><input id="cb-68" name="rev" onclick="$('cbto-69').checked=true;" type="radio" value="91dc13f4b22c45bee5cfd1d783d6544ae79afa04" /></td>
+<td class="checkbox"><input id="cbto-68" name="rev_to" onclick="if ($('cb-68').checked==true) {$('cb-67').checked=true;}" type="radio" value="91dc13f4b22c45bee5cfd1d783d6544ae79afa04" /></td>
+<td class="committed_on">01/23/2008 12:25 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Show explicit error message when the scm command failed (eg. when svn binary is not available).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1094">http://redmine.rubyforge.org/svn/trunk@1094</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0faa4568a0ab18277259ad1c89309c3c53fa42de" title="Revision 0faa4568">0faa4568</a></td>
+<td class="checkbox"><input id="cb-69" name="rev" onclick="$('cbto-70').checked=true;" type="radio" value="0faa4568a0ab18277259ad1c89309c3c53fa42de" /></td>
+<td class="checkbox"><input id="cbto-69" name="rev_to" onclick="if ($('cb-69').checked==true) {$('cb-68').checked=true;}" type="radio" value="0faa4568a0ab18277259ad1c89309c3c53fa42de" /></td>
+<td class="committed_on">01/19/2008 06:53 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Highlight the current item of the main menu.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@1076">http://redmine.rubyforge.org/svn/trunk@1076</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/9a1b46fe42873c5fa4c8bb9cf6755eed9e8315db" title="Revision 9a1b46fe">9a1b46fe</a></td>
+<td class="checkbox"><input id="cb-70" name="rev" onclick="$('cbto-71').checked=true;" type="radio" value="9a1b46fe42873c5fa4c8bb9cf6755eed9e8315db" /></td>
+<td class="checkbox"><input id="cbto-70" name="rev_to" onclick="if ($('cb-70').checked==true) {$('cb-69').checked=true;}" type="radio" value="9a1b46fe42873c5fa4c8bb9cf6755eed9e8315db" /></td>
+<td class="committed_on">12/29/2007 06:36 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>New setting added to specify how many objects should be displayed on most paginated lists.<br />Default is: 25, 50, 100 (users can choose one of these values).<br />If one value only is entered in this setting (eg. 25), the 'per page' links are not displayed (prior behaviour)....</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/38b185f1dc4d296eb49c94a3ccff7496b1367c84" title="Revision 38b185f1">38b185f1</a></td>
+<td class="checkbox"><input id="cb-71" name="rev" onclick="$('cbto-72').checked=true;" type="radio" value="38b185f1dc4d296eb49c94a3ccff7496b1367c84" /></td>
+<td class="checkbox"><input id="cbto-71" name="rev_to" onclick="if ($('cb-71').checked==true) {$('cb-70').checked=true;}" type="radio" value="38b185f1dc4d296eb49c94a3ccff7496b1367c84" /></td>
+<td class="committed_on">12/14/2007 12:48 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: empty lines when displaying repository files with Windows style eol.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@993">http://redmine.rubyforge.org/svn/trunk@993</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8c65cc47122b802150bf3591cb4eba4f8c4fb4b4" title="Revision 8c65cc47">8c65cc47</a></td>
+<td class="checkbox"><input id="cb-72" name="rev" onclick="$('cbto-73').checked=true;" type="radio" value="8c65cc47122b802150bf3591cb4eba4f8c4fb4b4" /></td>
+<td class="checkbox"><input id="cbto-72" name="rev_to" onclick="if ($('cb-72').checked==true) {$('cb-71').checked=true;}" type="radio" value="8c65cc47122b802150bf3591cb4eba4f8c4fb4b4" /></td>
+<td class="committed_on">12/02/2007 03:58 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Added Annotate/Blame view for Subversion, CVS and Mercurial repositories.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@947">http://redmine.rubyforge.org/svn/trunk@947</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/db002edabdec9050e6d512ae8759783894b9624a" title="Revision db002eda">db002eda</a></td>
+<td class="checkbox"><input id="cb-73" name="rev" onclick="$('cbto-74').checked=true;" type="radio" value="db002edabdec9050e6d512ae8759783894b9624a" /></td>
+<td class="checkbox"><input id="cbto-73" name="rev_to" onclick="if ($('cb-73').checked==true) {$('cb-72').checked=true;}" type="radio" value="db002edabdec9050e6d512ae8759783894b9624a" /></td>
+<td class="committed_on">12/01/2007 12:15 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><ul>
+	<li>Added links to previous and next revisions on revision view (patch by Cyril Mougel slightly edited)</li>
+		<li>Fixed TimelogController#report december error</li>
+		<li>Fixed ProjectsControllerTest#test_activity 1st and 2nd day of the month failure</li>
+	</ul>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@938">http://redmine.rubyforge.org/svn/trunk@938</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1454a711caf68cd687886ea9b8d44b3a027e6cbc" title="Revision 1454a711">1454a711</a></td>
+<td class="checkbox"><input id="cb-74" name="rev" onclick="$('cbto-75').checked=true;" type="radio" value="1454a711caf68cd687886ea9b8d44b3a027e6cbc" /></td>
+<td class="checkbox"><input id="cbto-74" name="rev_to" onclick="if ($('cb-74').checked==true) {$('cb-73').checked=true;}" type="radio" value="1454a711caf68cd687886ea9b8d44b3a027e6cbc" /></td>
+<td class="committed_on">11/08/2007 02:14 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Diff style (inline or side by side) automatically saved as a user preference.<br />Fixed a Postgres test failure.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@893">http://redmine.rubyforge.org/svn/trunk@893</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/d46e3a501e7bad4242d896de36f02c19b8781143" title="Revision d46e3a50">d46e3a50</a></td>
+<td class="checkbox"><input id="cb-75" name="rev" onclick="$('cbto-76').checked=true;" type="radio" value="d46e3a501e7bad4242d896de36f02c19b8781143" /></td>
+<td class="checkbox"><input id="cbto-75" name="rev_to" onclick="if ($('cb-75').checked==true) {$('cb-74').checked=true;}" type="radio" value="d46e3a501e7bad4242d896de36f02c19b8781143" /></td>
+<td class="committed_on">11/04/2007 06:20 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Pretty URL for the repository browser (Cyril Mougel)</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@880">http://redmine.rubyforge.org/svn/trunk@880</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8ca4d35dcc466df18b0fa6a322d00b030b183d15" title="Revision 8ca4d35d">8ca4d35d</a></td>
+<td class="checkbox"><input id="cb-76" name="rev" onclick="$('cbto-77').checked=true;" type="radio" value="8ca4d35dcc466df18b0fa6a322d00b030b183d15" /></td>
+<td class="checkbox"><input id="cbto-76" name="rev_to" onclick="if ($('cb-76').checked==true) {$('cb-75').checked=true;}" type="radio" value="8ca4d35dcc466df18b0fa6a322d00b030b183d15" /></td>
+<td class="committed_on">10/22/2007 01:45 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Added a bit of AJAX on the SCM browser (tree view).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@862">http://redmine.rubyforge.org/svn/trunk@862</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/9ce5713ee49166a826fcd4355aab825070ddfa07" title="Revision 9ce5713e">9ce5713e</a></td>
+<td class="checkbox"><input id="cb-77" name="rev" onclick="$('cbto-78').checked=true;" type="radio" value="9ce5713ee49166a826fcd4355aab825070ddfa07" /></td>
+<td class="checkbox"><input id="cbto-77" name="rev_to" onclick="if ($('cb-77').checked==true) {$('cb-76').checked=true;}" type="radio" value="9ce5713ee49166a826fcd4355aab825070ddfa07" /></td>
+<td class="committed_on">10/15/2007 02:41 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: log is not displayed when browsing a copy in a svn repository.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@843">http://redmine.rubyforge.org/svn/trunk@843</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/21c97c6a1376a38a3951c57069317c17c81029f8" title="Revision 21c97c6a">21c97c6a</a></td>
+<td class="checkbox"><input id="cb-78" name="rev" onclick="$('cbto-79').checked=true;" type="radio" value="21c97c6a1376a38a3951c57069317c17c81029f8" /></td>
+<td class="checkbox"><input id="cbto-78" name="rev_to" onclick="if ($('cb-78').checked==true) {$('cb-77').checked=true;}" type="radio" value="21c97c6a1376a38a3951c57069317c17c81029f8" /></td>
+<td class="committed_on">09/14/2007 07:34 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Added project module concept.</p>
+
+
+	<p>A project module (eg. issue tracking, news, wiki,...) is a set of permissions that can enabled/disabled at project level.<br />For each project, modules can be enabled on the project settings view ('Modules' tab).<br />This requires a specific permission: 'Select project modules' (if this permission is turned off, only Redmine administrators can choose which modules a project uses)....</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/603e11d7a5aa62f923e7b013cac6c66462131232" title="Revision 603e11d7">603e11d7</a></td>
+<td class="checkbox"><input id="cb-79" name="rev" onclick="$('cbto-80').checked=true;" type="radio" value="603e11d7a5aa62f923e7b013cac6c66462131232" /></td>
+<td class="checkbox"><input id="cbto-79" name="rev_to" onclick="if ($('cb-79').checked==true) {$('cb-78').checked=true;}" type="radio" value="603e11d7a5aa62f923e7b013cac6c66462131232" /></td>
+<td class="committed_on">08/29/2007 12:52 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments">Merged 0.6 branch into trunk.<br />Permissions management was rewritten. Some permissions can now be specifically defined for non member and anonymous users.<br />This migration:
+	<ul>
+	<li>is irreversible (please, don't forget to <strong>backup</strong> your database before upgrading)</li>
+		<li>resets role's permissions (go to "Admin -> Roles &#38; Permissions" to set them after upgrading)...</li>
+	</ul></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/5b35bfd4344e90ee4d1663bb45312d83176efcaa" title="Revision 5b35bfd4">5b35bfd4</a></td>
+<td class="checkbox"><input id="cb-80" name="rev" onclick="$('cbto-81').checked=true;" type="radio" value="5b35bfd4344e90ee4d1663bb45312d83176efcaa" /></td>
+<td class="checkbox"><input id="cbto-80" name="rev_to" onclick="if ($('cb-80').checked==true) {$('cb-79').checked=true;}" type="radio" value="5b35bfd4344e90ee4d1663bb45312d83176efcaa" /></td>
+<td class="committed_on">08/15/2007 07:04 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: nil error on 'commits per month' graph.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@645">http://redmine.rubyforge.org/svn/trunk@645</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2d5ac54d2eb9f49b8a2f65b4469aa6d95a1e85d6" title="Revision 2d5ac54d">2d5ac54d</a></td>
+<td class="checkbox"><input id="cb-81" name="rev" onclick="$('cbto-82').checked=true;" type="radio" value="2d5ac54d2eb9f49b8a2f65b4469aa6d95a1e85d6" /></td>
+<td class="checkbox"><input id="cbto-81" name="rev_to" onclick="if ($('cb-81').checked==true) {$('cb-80').checked=true;}" type="radio" value="2d5ac54d2eb9f49b8a2f65b4469aa6d95a1e85d6" /></td>
+<td class="committed_on">08/02/2007 01:42 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Applied the flash notices patch by Matt Jones (slightly edited).<br />flash[:notice] and flash[:error] are now used for notice/error messages.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@600">http://redmine.rubyforge.org/svn/trunk@600</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/7eba6786d3208254169d799e6eadebaa699a4f27" title="Revision 7eba6786">7eba6786</a></td>
+<td class="checkbox"><input id="cb-82" name="rev" onclick="$('cbto-83').checked=true;" type="radio" value="7eba6786d3208254169d799e6eadebaa699a4f27" /></td>
+<td class="checkbox"><input id="cbto-82" name="rev_to" onclick="if ($('cb-82').checked==true) {$('cb-81').checked=true;}" type="radio" value="7eba6786d3208254169d799e6eadebaa699a4f27" /></td>
+<td class="committed_on">06/29/2007 02:50 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Changesets stored in the database are now displayed on the repository page even if the repository can not be reached (eg. svnserve down).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@579">http://redmine.rubyforge.org/svn/trunk@579</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/438161ad1fd37aadbfa3f5a875540730fd6d70c3" title="Revision 438161ad">438161ad</a></td>
+<td class="checkbox"><input id="cb-83" name="rev" onclick="$('cbto-84').checked=true;" type="radio" value="438161ad1fd37aadbfa3f5a875540730fd6d70c3" /></td>
+<td class="checkbox"><input id="cbto-83" name="rev_to" onclick="if ($('cb-83').checked==true) {$('cb-82').checked=true;}" type="radio" value="438161ad1fd37aadbfa3f5a875540730fd6d70c3" /></td>
+<td class="committed_on">06/12/2007 04:12 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Added basic support for CVS and Mercurial SCMs.<br />Browsing, changesets fetching and diff viewing are implemented.<br />Only tested with local repositories.</p>
+
+
+	<p>Thanks to Ralph Vater for CVS specific code.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@559">http://redmine.rubyforge.org/svn/trunk@559</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/bb1fccb7b7202ec065fdc39646067054580d278f" title="Revision bb1fccb7">bb1fccb7</a></td>
+<td class="checkbox"><input id="cb-84" name="rev" onclick="$('cbto-85').checked=true;" type="radio" value="bb1fccb7b7202ec065fdc39646067054580d278f" /></td>
+<td class="checkbox"><input id="cbto-84" name="rev_to" onclick="if ($('cb-84').checked==true) {$('cb-83').checked=true;}" type="radio" value="bb1fccb7b7202ec065fdc39646067054580d278f" /></td>
+<td class="committed_on">05/15/2007 05:32 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: performance issue on RepositoriesController#revisions when a changeset has a great number of changes (eg. 100,000).<br />Also added pagination for changes on changeset details view.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@535">http://redmine.rubyforge.org/svn/trunk@535</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/75582f80f85528865fa86d93ac57a44337742939" title="Revision 75582f80">75582f80</a></td>
+<td class="checkbox"><input id="cb-85" name="rev" onclick="$('cbto-86').checked=true;" type="radio" value="75582f80f85528865fa86d93ac57a44337742939" /></td>
+<td class="checkbox"><input id="cbto-85" name="rev_to" onclick="if ($('cb-85').checked==true) {$('cb-84').checked=true;}" type="radio" value="75582f80f85528865fa86d93ac57a44337742939" /></td>
+<td class="committed_on">05/10/2007 02:39 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Fixed: error when viewing a file diff from a revision view (only if repository url doesn't point to the root of the repository).</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@528">http://redmine.rubyforge.org/svn/trunk@528</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8614c00c8a3e34e6b081ba2dc1be7985acc4bd4b" title="Revision 8614c00c">8614c00c</a></td>
+<td class="checkbox"><input id="cb-86" name="rev" onclick="$('cbto-87').checked=true;" type="radio" value="8614c00c8a3e34e6b081ba2dc1be7985acc4bd4b" /></td>
+<td class="checkbox"><input id="cbto-86" name="rev_to" onclick="if ($('cb-86').checked==true) {$('cb-85').checked=true;}" type="radio" value="8614c00c8a3e34e6b081ba2dc1be7985acc4bd4b" /></td>
+<td class="committed_on">05/08/2007 11:49 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Text files can now be viewed online when browsing the repository.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@521">http://redmine.rubyforge.org/svn/trunk@521</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0759212a447491d9b886eb489166518b57a9c169" title="Revision 0759212a">0759212a</a></td>
+<td class="checkbox"><input id="cb-87" name="rev" onclick="$('cbto-88').checked=true;" type="radio" value="0759212a447491d9b886eb489166518b57a9c169" /></td>
+<td class="checkbox"><input id="cbto-87" name="rev_to" onclick="if ($('cb-87').checked==true) {$('cb-86').checked=true;}" type="radio" value="0759212a447491d9b886eb489166518b57a9c169" /></td>
+<td class="committed_on">05/01/2007 04:56 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>Added fragment caching for svn diffs.</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@499">http://redmine.rubyforge.org/svn/trunk@499</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2b70760594f268800e9a4f95a914bc23b86d2bd9" title="Revision 2b707605">2b707605</a></td>
+<td class="checkbox"><input id="cb-88" name="rev" onclick="$('cbto-89').checked=true;" type="radio" value="2b70760594f268800e9a4f95a914bc23b86d2bd9" /></td>
+<td class="checkbox"><input id="cbto-88" name="rev_to" onclick="if ($('cb-88').checked==true) {$('cb-87').checked=true;}" type="radio" value="2b70760594f268800e9a4f95a914bc23b86d2bd9" /></td>
+<td class="committed_on">03/29/2007 02:14 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>patch #9627 Add Side by Side in Diff view (Cyril Mougel)</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@390">http://redmine.rubyforge.org/svn/trunk@390</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a84884d5042d0bedada0a744129f96f9a772cff" title="Revision 8a84884d">8a84884d</a></td>
+<td class="checkbox"><input id="cb-89" name="rev" onclick="$('cbto-90').checked=true;" type="radio" value="8a84884d5042d0bedada0a744129f96f9a772cff" /></td>
+<td class="checkbox"><input id="cbto-89" name="rev_to" onclick="if ($('cb-89').checked==true) {$('cb-88').checked=true;}" type="radio" value="8a84884d5042d0bedada0a744129f96f9a772cff" /></td>
+<td class="committed_on">03/26/2007 01:14 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>added changes counts on the "commits per author" svn stat graph</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@385">http://redmine.rubyforge.org/svn/trunk@385</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/e951209d6824361b985032e7c8aa2ad82158ae7d" title="Revision e951209d">e951209d</a></td>
+<td class="checkbox"><input id="cb-90" name="rev" onclick="$('cbto-91').checked=true;" type="radio" value="e951209d6824361b985032e7c8aa2ad82158ae7d" /></td>
+<td class="checkbox"><input id="cbto-90" name="rev_to" onclick="if ($('cb-90').checked==true) {$('cb-89').checked=true;}" type="radio" value="e951209d6824361b985032e7c8aa2ad82158ae7d" /></td>
+<td class="committed_on">03/25/2007 02:18 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>added pagination on revisions list</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@381">http://redmine.rubyforge.org/svn/trunk@381</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0ef114e00641a3cdb8771675a30cae31177b2d61" title="Revision 0ef114e0">0ef114e0</a></td>
+<td class="checkbox"><input id="cb-91" name="rev" onclick="$('cbto-92').checked=true;" type="radio" value="0ef114e00641a3cdb8771675a30cae31177b2d61" /></td>
+<td class="checkbox"><input id="cbto-91" name="rev_to" onclick="if ($('cb-91').checked==true) {$('cb-90').checked=true;}" type="radio" value="0ef114e00641a3cdb8771675a30cae31177b2d61" /></td>
+<td class="committed_on">03/25/2007 01:11 PM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>added simple svn statistics graphs, rendered using SVG::Graph</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@380">http://redmine.rubyforge.org/svn/trunk@380</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/16f9f50f50dbac49b1f791c7c2892420a354bc43" title="Revision 16f9f50f">16f9f50f</a></td>
+<td class="checkbox"><input id="cb-92" name="rev" onclick="$('cbto-93').checked=true;" type="radio" value="16f9f50f50dbac49b1f791c7c2892420a354bc43" /></td>
+<td class="checkbox"><input id="cbto-92" name="rev_to" onclick="if ($('cb-92').checked==true) {$('cb-91').checked=true;}" type="radio" value="16f9f50f50dbac49b1f791c7c2892420a354bc43" /></td>
+<td class="committed_on">03/25/2007 08:12 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>SVN commits are now stored in the database, and added to the activity view and the search engine.<br />New commits are automatically retrieved and stored when consulting the repository in the app. This behaviour can be disabled by unchecking 'Autofecth commits' in configuration settings....</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/fc3ee67b1f3eee644df0de10c44c36251cd3adea" title="Revision fc3ee67b">fc3ee67b</a></td>
+<td class="checkbox"><input id="cb-93" name="rev" onclick="$('cbto-94').checked=true;" type="radio" value="fc3ee67b1f3eee644df0de10c44c36251cd3adea" /></td>
+<td class="checkbox"><input id="cbto-93" name="rev_to" onclick="if ($('cb-93').checked==true) {$('cb-92').checked=true;}" type="radio" value="fc3ee67b1f3eee644df0de10c44c36251cd3adea" /></td>
+<td class="committed_on">03/11/2007 10:06 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>send a 404 when trying to access an unexisting repository</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@328">http://redmine.rubyforge.org/svn/trunk@328</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset even">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/e3becc7c3c53aff0566cd862c13b0bd032da1169" title="Revision e3becc7c">e3becc7c</a></td>
+<td class="checkbox"><input id="cb-94" name="rev" onclick="$('cbto-95').checked=true;" type="radio" value="e3becc7c3c53aff0566cd862c13b0bd032da1169" /></td>
+<td class="checkbox"><input id="cbto-94" name="rev_to" onclick="if ($('cb-94').checked==true) {$('cb-93').checked=true;}" type="radio" value="e3becc7c3c53aff0566cd862c13b0bd032da1169" /></td>
+<td class="committed_on">01/02/2007 03:47 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>ActiveRecord::RecordNotFound exceptions handled more gracefully</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@133">http://redmine.rubyforge.org/svn/trunk@133</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+<tr class="changeset odd">
+
+<td class="id"><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/bc4415850105225b101cdea075b04d44b8700108" title="Revision bc441585">bc441585</a></td>
+<td class="checkbox"></td>
+<td class="checkbox"><input id="cbto-95" name="rev_to" onclick="if ($('cb-95').checked==true) {$('cb-94').checked=true;}" type="radio" value="bc4415850105225b101cdea075b04d44b8700108" /></td>
+<td class="committed_on">12/24/2006 08:38 AM</td>
+<td class="author">Jean-Philippe Lang </td>
+
+  <td class="comments"><p>svn browser merged in trunk</p>
+
+
+	<p>git-svn-id: <a class="external" href="http://redmine.rubyforge.org/svn/trunk@106">http://redmine.rubyforge.org/svn/trunk@106</a> e93f8b46-1217-0410-a6f0-8f06a7374b81</p></td>
+
+</tr>
+
+
+</tbody>
+</table>
+<input type="submit" value="View differences" />
+</form>
+
+
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/354e09811b5d044afb6152efa2cdd38bdeac60a4/changes/app/controllers/repositories_controller.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:41:45 GMT -->
+</html>

@@ -1,0 +1,296 @@
+# ##############################################################
+# 
+# File:      nmlbase.rnc - Main schema definition
+# Version:   $Id$
+# Purpose:   This is the main schema file, it defines the
+#            general topology elements of NML
+# 
+# ##############################################################
+
+
+# ##############################################################
+# Namespace definitions
+# ##############################################################
+
+default namespace nml = 
+    "http://schemas.ogf.org/nml/2012/10/base"
+
+include "nmltypes.rnc"
+
+
+
+NetworkObject =
+  (
+    Identifier ?
+    & IdReference ?
+    & Name ?
+    & Relation *
+    & BaseLocation ?
+    & ( Lifetime | ExistDuring ) ?
+    & Version ?
+    & Parameter *
+  )
+
+Identifier =
+  attribute id { xsd:anyURI }
+
+IdReference =
+  attribute idRef { xsd:anyURI }
+
+Name =
+  element name { xsd:string }
+
+Relation = ExplicitRelation
+
+ExplicitRelation =
+  element relation {
+    attribute type { ExplicitRelationType }
+    & ( BaseNode | BasePort+ | BasePortGroup | BaseLink | BaseLinkGroup)
+  }
+
+Lifetime =
+  element lifetime {
+    StartTime
+    & ( EndTime | Duration ) ?
+  }
+
+ExistDuring = 
+  element existDuring { IdReference }
+
+Version = 
+  attribute version { xsd:unsignedInt }
+
+Parameter = 
+  element parameter { 
+    attribute name { xsd:anyURI }
+    & xsd:string
+  }  
+
+
+# #################################################################
+# This sequence allows any element, attribute, or text (regardless 
+# of name or namespace) into the document when invoked.
+# #################################################################
+
+anyElement = 
+  element * {  
+    attribute * { xsd:string } *
+    & ( anyElement | xsd:string ) ?
+  }
+
+
+## ########################
+## Time elements
+## ########################
+
+StartTime = 
+  element start { xsd:dateTime }
+   
+EndTime = 
+  element end { xsd:dateTime }
+
+Duration =
+  element duration { xsd:duration }
+
+
+## ########################
+## Generic location
+## ########################
+
+BaseLocation = 
+  element Location { LocationContent }
+
+LocationContent =
+  element long { xsd:float } ?
+  & element lat { xsd:float } ?
+  & element country { xsd:float } ?
+  & element unlocode { xsd:string } ?
+  & element name { xsd:string } ?
+  & element address { BaseAddressContent } ?
+
+## address: rfc6351 xCard: vCard XML Representation
+BaseAddressContent = 
+  anyElement *
+
+
+## ########################
+## Generic link
+## ########################
+
+BaseLink = 
+  element Link { BaseLinkContent }
+BaseLinkContent =
+  NetworkObject
+  & attribute encoding { xsd:anyURI } ?
+  & BaseLabel *
+  & anyElement *
+
+
+## ########################
+## Generic port
+## ########################
+
+BasePort = 
+  element Port { BasePortContent }
+BasePortContent =
+  NetworkObject
+  & attribute encoding { xsd:anyURI } ?
+  & BaseLabel *
+  & anyElement *
+
+
+## ########################
+## Generic node
+## ########################
+
+BaseNode = 
+  element Node { BaseNodeContent }
+BaseNodeContent =
+  NetworkObject
+  & anyElement *
+
+
+## ########################
+## Generic Service
+## ########################
+
+BaseService = 
+  BaseAdaptationService
+  | BaseDeadaptationService
+  | BaseSwitchingService
+
+BaseAdaptationService = 
+  element AdaptationService { AdaptationServiceContent }
+AdaptationServiceContent =
+  NetworkObject
+  & attribute adaptationFunction { xsd:anyURI } ?
+  & BasePort *
+
+BaseDeadaptationService = 
+  element DeadaptationService { DeadaptationServiceContent }
+DeadaptationServiceContent =
+  NetworkObject
+  & attribute deadaptationFunction { xsd:anyURI } ?
+  & BasePort *
+
+BaseSwitchingService = 
+  element SwitchingService { SwitchingServiceContent }
+SwitchingServiceContent =
+  NetworkObject
+  & BaseLink *
+
+
+## ########################
+## Label
+## ########################
+
+BaseLabel = 
+  element Label { LabelContent }
+LabelContent =
+  attribute labeltype { xsd:anyURI }
+  & ( attribute value { xsd:string } |
+      ( xsd:string | anyElement* )
+    )
+
+
+## ########################
+## Groups
+## ########################
+
+BaseGroup = 
+  BaseTopology
+  | BaseLinkGroup
+  | BasePortGroup
+  | BaseBidirectionalLink
+  | BaseBidirectionalPort
+
+
+## ########################
+## Generic topology
+## ########################
+
+BaseTopology = 
+  element Topology { BaseTopologyContent }
+BaseTopologyContent =
+  NetworkObject
+  & BaseLink *
+  & BasePort *
+  & BaseNode *
+  & BaseService *
+  & BaseGroup *
+  & anyElement *
+
+
+## ########################
+## Link Group
+## ########################
+
+BaseLinkGroup =
+  element LinkGroup { BaseLinkGroupContent }
+BaseLinkGroupContent = 
+  NetworkObject
+  & attribute encoding { xsd:anyURI } ?
+  & BaseLabelGroup * 
+  & BaseLink *
+  & BaseLinkGroup
+
+
+## ########################
+## Port Group
+## ########################
+
+BasePortGroup =
+  element PortGroup { BasePortGroupContent }
+BasePortGroupContent = 
+  NetworkObject
+  & attribute encoding { xsd:anyURI } ?
+  & BaseLabelGroup *
+  & BasePort *
+  & BasePortGroup *
+
+
+## ########################
+## Bidirectional Link
+## ########################
+
+BaseBidirectionalLink = 
+  element BidirectionalLink { BaseBidirectionalLinkContent }
+BaseBidirectionalLinkContent =
+  NetworkObject
+  & (
+      ( BaseLink & BaseLink ) | 
+      ( BaseLinkGroup & BaseLinkGroup)
+    )
+
+
+## ########################
+## Bidirectional Port
+## ########################
+
+BaseBidirectionalPort = 
+  element BidirectionalPort { BaseBidirectionalPortContent }
+BaseBidirectionalPortContent =
+  NetworkObject
+  & ( 
+      ( BasePort & BasePort )|
+      ( BasePortGroup & BasePortGroup)
+    )
+
+
+## ########################
+## Label Group
+## ########################
+
+BaseLabelGroup = 
+  element LabelGroup { LabelGroupContent }
+LabelGroupContent =
+  attribute labeltype { xsd:anyURI }
+  & ( attribute value { xsd:string } |
+      ( xsd:string | anyElement* )
+    )
+
+
+## root element
+
+start = BaseTopology
+

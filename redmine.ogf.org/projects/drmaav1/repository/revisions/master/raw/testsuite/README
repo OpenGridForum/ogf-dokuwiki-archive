@@ -1,0 +1,40 @@
+DRMAA compliance testsuite
+--------------------------
+The DRMAA working group maintains this testsuite, which allows to check existing DRMAA C implementations for compliance with the specification. The original code was donated by Sun Microsystems, and is currently maintained by Peter Tröger.
+
+The testsuite has a version number, which reflects the amount of tests integrated in the suite. A DRMAA implementation should point out (e.g. in a README file) to which version of the test suite it complies. The version number contains of major version, minor version, and patch level. The major version expresses the regarding version of the DRMAA specification. The minor version expresses the amount and semantics of tests performed by the suite. The patch level is increased in case of bug fixes or adjustments of the implementation.
+
+Changes in the patch level of the testsuite do not break compliance of an implementation. For changed minor versions, DRMAA implementors are HIGHLY encouraged to re-run the tests. For changes in the major version, DRMAA implementors MUST re-run all tests.
+
+A DRMAA implementation shall call itself "DRMAA-compliant" ONLY if all tests of the suite are passing.
+
+Test procedure
+--------------
+* Build the test suite with configure and make. 
+  Afterwards, you should have three files: test_drmaa (the testsuite executable), test_exit_helper and test_kill_helper.
+
+* Start the testsuite with all automated tests:
+    
+  "./test_drmaa ALL_AUTOMATED [sleep command] test_exit_helper test_kill_helper [email]"
+	    
+* [sleep command] must be a program which takes one numerical argument and waits for the according number of seconds. 
+  Usually, you can use "/bin/sleep" here.
+
+* [email] is a valid email address on your system.
+
+* Example, with log file of the output:
+    
+  "./test_drmaa ALL_AUTOMATED /bin/sleep test_exit_helper test_kill_helper root 2>&1 |tee log.txt"
+
+		    
+TODO:
+ - add test case for negative incr in drmaa_run_bulk_jobs
+ - add test case for incr > 1 in drmaa_run_bulk_jobs
+ - check that reaped / unknown jobs in drmaa_synchronize(SESSION_ALL) are ignored
+ - check for error with incorrect contatc string in drmaa_init
+ - check for correct handling of multiple drmaa_exit calls from different threads
+ - check handling of illegal job template handles in all routines
+ - use variable values (instead of literal values) as arguments for DRMAA function calls -> implicit check of the correct DRMAA
+interface signatures, since it leads to compiler warnings (see https://sourceforge.net/tracker/index.php?func=detail&aid=1498447&group_id=139840&atid=746470)
+ - check correctness of drmaa_job_ps() result for finished array job
+ - rewrite MT_EXIT_DURING_SUBMIT_OR_WAIT with explicit synchronization to make sure that the submits are done and the waits aren't before calling drmaa_exit()

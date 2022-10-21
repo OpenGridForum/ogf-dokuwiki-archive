@@ -1,0 +1,334 @@
+% save trees by replacing OGF-mandated 12pt with 10pt
+\documentclass{article} 
+
+\sloppy
+
+% OGF-defined document template stuff 
+\usepackage{ifpdf}
+\usepackage[utf8]{inputenc}
+\usepackage{ifthen}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage{url}
+\usepackage{authblk}
+\usepackage[numbers]{natbib} 
+\bibliographystyle{plainnat} 
+\usepackage[sf,compact]{titlesec} 
+\usepackage[titles]{tocloft}
+\usepackage{parskip} 
+\newcommand{\headerstyle}{\sffamily}
+\usepackage{fancyhdr}
+\addtolength{\headheight}{15pt}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headsep}{20pt}
+\usepackage[headings]{fullpage}  
+\graphicspath{{img/}{./}}
+\renewcommand{\cftsecfont}{\sffamily}
+\renewcommand{\cftsubsecfont}{\sffamily}
+\renewcommand{\cftsubsubsecfont}{\sffamily}
+\renewcommand{\cftsecpagefont}{\sffamily}
+\renewcommand{\cftsubsecpagefont}{\sffamily}
+\renewcommand{\cftsubsubsecpagefont}{\sffamily}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsubsecdotsep}} 
+\setlength{\cftbeforesecskip}{0.5ex}
+\newcommand{\ifnonempty}[2]{\ifthenelse{\isundefined{#1}}{}{\ifthenelse{\equal{#1}{}}{}{#2}}}
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{\fancyplain{}{\headerstyle\docseries}}
+\rhead{\fancyplain{}{\headerstyle\ifthenelse{\isundefined{\revisiondate}}{\publicationdate}{\ifthenelse{\equal{\revisiondate}{}}{\publicationdate}{\revisiondate}}}}
+\lfoot{\headerstyle\ifnonempty{\groupurl}{\groupurl}}
+\rfoot{\headerstyle\thepage}
+\thispagestyle{plain}
+
+% OGF-defined meta data 
+\title{Distributed Resource Management Application API Version 2 (DRMAA) -\\Go Language Binding}  
+\newcommand{\shortdoctitle}{DRMAA}  
+\newcommand{\authorsshort}{Daniel Gruber, Univa}  
+\newcommand{\publicationdate}{September 2014}  
+%\newcommand{\revisiondate}{December 2010}  % Optional: date of last revision of the document
+\newcommand{\copyrightyears}{2014}  
+\newcommand{\docseries}{GFD-R-P.XXX}  % GWD-R, GWD-I or GWD-C (for working drafts), GFD-I, GFD-R, or GFD-C
+\newcommand{\groupname}{DRMAA-WG} 
+\newcommand{\groupurl}{\href{mailto:drmaa-wg@ogf.org}{drmaa-wg@ogf.org}}  
+\newcommand{\documenturl}{\href{http://www.drmaa.org/}}
+
+% Our additional Latex stuff
+\usepackage{todonotes}
+\usepackage{listings}
+\usepackage{tabularx}
+\lstset{language=C, tabsize=2, keywordstyle=\bfseries, basicstyle=\ttfamily\scriptsize,  rangeprefix=////,rangesuffix=////,includerangemarker=false}
+\newcommand{\h}[1]{\texttt{#1}}
+\setcounter{tocdepth}{2}
+\usepackage{csquotes}
+
+%%%%%%%% Enable this block for the annotated version
+%\newcommand{\rat}[1]{ {\tiny(See footnote)}\footnote{#1} }
+%\interfootnotelinepenalty=10000
+%\newcommand{\tbd}[2][] {\todo[caption={#2}, size=\small, #1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2\par}}
+%\usepackage{lineno}
+%\linenumbers
+%%%%%%% Enable this block for the official version
+\newcommand{\rat}[1]{}
+\newcommand{\tbd}[2][] {}
+
+\begin{document}
+
+% OGF-defined title page rendering 
+{\noindent
+\begin{minipage}[t]{3.0in}
+\headerstyle
+\docseries \\
+\ifnonempty{\groupname}{\groupname \\}
+\ifnonempty{\groupurl}{\groupurl \\}
+\ifnonempty{\documenturl}{\documenturl \\}
+\end{minipage}
+\hfill
+\raggedleft
+\begin{minipage}[t]{3.0in}
+\raggedleft
+\headerstyle
+\authorsshort \\
+\publicationdate \\
+\ifnonempty{\revisiondate}{Revised \revisiondate \\}
+\end{minipage}
+}
+
+\begin{center}
+\makeatletter
+\Large\bf\textsf \@title
+\makeatother
+\end{center}
+
+\vspace*{1em}
+\subsection*{Status of This Document}
+
+OGF Proposed Recommendation (GFD-R-P.XX)\\
+
+\rat{
+This is the non-normative annotated version of the specification with line numbers. It includes historical information concerning the content and why features were included or discarded by the working group. It also emphasizes the consequences of some aspects that may not be immediately apparent. This document in only intended for internal working group discussions.
+}	
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% End of header, insert content below this line
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection*{Document Change History}
+\vspace*{-1em}
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{XX}
+\toprule
+\emph{Date} & \emph{Notes} \\
+\midrule
+September  XXth, 2014 & Submission to OGF Editor \\
+October       XXth, 2014 & Updates from public comment period \\
+November   XXth, 2014 & Publication as  GFD-R-P.XXX\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\vspace*{1em}
+
+
+\subsection*{Copyright Notice}
+
+Copyright \copyright \ Open Grid Forum (\copyrightyears).  Some Rights Reserved.  
+Distribution is unlimited.\\
+
+\subsection*{Trademark}
+
+All company, product or service names referenced in this document are used for identification purposes only and may be trademarks of their respective owners. \\
+
+\section*{Abstract}
+
+This document describes the Go language binding for the \emph{Distributed Resource Management Application API Version 2 (DRMAA)}. The intended audience for this specification are DRMAA implementors. \\
+
+\footnotetext[1]{Corresponding author}
+\newpage
+
+\subsection*{Notational Conventions}
+\label{sec:rfc2119}
+
+In this document, C language elements and definitions are represented in a \h{fixed-width} font. 
+
+The key words \enquote{MUST} \enquote{MUST NOT}, \enquote{REQUIRED}, \enquote{SHALL}, \enquote{SHALL NOT}, \enquote{SHOULD}, \enquote{SHOULD NOT}, \enquote{RECOMMENDED}, \enquote{MAY},  and \enquote{OPTIONAL} are to be interpreted as described in RFC 2119~\cite{rfc2119}. 
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\label{sec:introduction}
+
+ The \emph{Distributed Resource Management Application API Version 2 (DRMAA)} specification defines an interface for tightly coupled, but still portable access to the majority of DRM systems. The scope is limited to job submission, job control, reservation management, and retrieval of job and machine monitoring information. 
+
+The \emph{DRMAA root specification} \cite{gfd194} describes the abstract API concepts and the behavioral rules of a compliant implementation, while this document standardizes the representation of API concepts in the Go programming language.
+
+\section{General Design}
+\label{sec:concepts}
+
+The mapping of DRMAA IDL constructs to Go follows a set of design principles. Implementation-specific extensions of the DRMAA Go API SHOULD follow these conventions:
+
+\begin{itemize}
+\item Name spaces of the DRMAA API, as demanded by by the root specification, is realized with the \h{drmaa2\_} Go package name.
+\item The methods are implemented on structs representing the object name from the IDL specification.
+\item Return types are references to allocated structs.
+\item The implementation MAY be based on the C language binding.
+\item Go comes with its own garbage collector. The implementation SHOULD avoids to call wrappers for the functions defined in the C standard for freeing the data. This usually requires that the methods transforms and copies data available in the C API into its own Go specific counterparts.
+\item Nevertheless for complete memory management a destructor or an exit function needs to be called.
+\item Functions are returning additionally an Go type error value. This MAY be casted by the calling function to a drmaa2.Error type which encodes the error reason as a constant, as well as a human readable string representation. The Go implementation MUST provide an return value which fulfills this request (see Error Handling section). 
+\item Go default types are going to be used, i.e. Go maps for dictionaries and slices for lists of return values.
+\item UNSET values are derived from the underlying C DRMAA values.
+\item Time values which define a duration are represented with the Go time.Duration type. An UNSET duration is XXX.
+\end{itemize}
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|l|X|}
+\hline
+DRMAA interface & Go binding prefix \\
+\hline
+\h{DrmaaReflective} & struct methods (Go \h{embedding}) see below \\
+\h{SessionManager} & \h{SessionManager} struct \\
+\h{JobSession} & \h{JobSession} struct \\
+\h{ReservationSession} & \h{ReservationSession} struct \\
+\h{MonitoringSession}  & \h{MonitoringSession} struct \\
+\h{Reservation} & \h{Reservation} struct \\
+\h{Job} & \h{Job} struct \\
+\h{JobArray} & \h{ArrayJob} struct \\
+\h{JobTemplate} & \h{JobTemplate} struct \\
+\h{ReservationTemplate} & \h{ReservationTemplate} struct \\
+\hline
+\end{tabularx}
+\caption{Mapping of DRMAA interface name to Go structs on which methods are defined}
+\label{tab:naming}
+\end{table}
+
+\subsection{Error Handling}
+
+Methods are returning the Go error type. If no error happened then \h{nil} is returned otherwise the error is set. The error MUST be able to be casted to the \h{drmaa2.Error} type which is a pointer to a struct consisting of a constant indicating the error reason as well as a string value which describes the error in human readable form. Both values SHOULD provide the same information as the C API calls to \h{drmaa2\_lasterror} and \h{drmaa2\_lasterror\_text} (if they are called directly after the function call in the same thread).
+
+\subsection{Lists and Dictionaries}
+
+Lists are in the Go binding \h{slices} while Dictionaries are implemented as Go \h{maps}.
+
+\section{Implementation-specific Extensions}
+
+The DRMAA root specification allows the product-specific extension of the DRMAA API in a standardized way.
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|l|X|}
+\hline
+Go method available for an (implementation specific) extensible data structure & Description \\
+\hline
+\h{GetExtension(key) (string, error)} & Returns an value of an implementation specific extension. \\
+\h{SetExtension(key, value string) error} & Sets an extension to a specific value. \\
+\h{DescribeExtension(string) (string, error)} & Returns a string containing a human readable description of the extension.\\
+\h{ListExtensions() []string} & Lists all available extension keys for the specific object. \\
+\hline
+\end{tabularx}
+\caption{Methods available for all extensible DRMAA data structures.}
+\label{tab:naming}
+\end{table}
+
+%\begin{lstlisting}[caption=Code example for implementation-specific extension,label=lst:extension]
+%typedef struct  
+%{
+%     [attributes from drmaa2_jtemplate_s] ...
+%     int gridengine_specific_attr;
+%} gridengine_jtemplate_s;
+%typedef gridengine_jtemplate_s * gridengine_jtemplate; 
+%\end{lstlisting}
+
+\section{Go Public Interface Documentation}
+\label{sec:idl}
+
+The following text shows the complete Go interface description generated by the \h{go doc}? tool.
+
+DRMAA-compliant Go libraries MUST declare all functions and data structures described here. Implementations MAY add custom parts in adherence to the extensibility principles of this specification and the root specification.
+
+The source file is also available at \url{http://www.drmaa.org}.
+
+\lstinputlisting{spec.txt}
+
+\newpage
+
+\section{Contributors}
+
+\textbf{Daniel Gruber}\\
+Univa GmbH\\
+c/o Rüter und Partner\\
+Prielmayerstr. 3\\
+80335 München, Germany\\
+Email: dgruber@univa.com\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Insert content above this line
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Intellectual Property Statement}
+
+ The OGF takes no position regarding the validity or scope of any
+ intellectual property or other rights that might be claimed to
+ pertain to the implementation or use of the technology described in
+ this document or the extent to which any license under such rights
+ might or might not be available; neither does it represent that it
+ has made any effort to identify any such rights.  Copies of claims of
+ rights made available for publication and any assurances of licenses
+ to be made available, or the result of an attempt made to obtain a
+ general license or permission for the use of such proprietary rights
+ by implementers or users of this specification can be obtained from
+ the OGF Secretariat.
+
+ The OGF invites any interested party to bring to its attention any
+ copyrights, patents or patent applications, or other proprietary
+ rights which may cover technology that may be required to practice
+ this recommendation.  Please address the information to the OGF
+ Executive Director.
+
+
+\section{Disclaimer}
+
+ This document and the information contained herein is provided on an
+ ``As Is'' basis and the OGF disclaims all warranties, express or
+ implied, including but not limited to any warranty that the use of
+ the information herein will not infringe any rights or any implied
+ warranties of merchantability or fitness for a particular purpose.
+
+
+\section{Full Copyright Notice}
+
+ Copyright \copyright \ Open Grid Forum (\copyrightyears). Some Rights
+ Reserved.
+
+ This document and translations of it may be copied and furnished to
+ others, and derivative works that comment on or otherwise explain it
+ or assist in its implementation may be prepared, copied, published
+ and distributed, in whole or in part, without restriction of any
+ kind, provided that the above copyright notice and this paragraph are
+ included as references to the derived portions on all such copies and
+ derivative works. The published OGF document from which such works
+ are derived, however, may not be modified in any way, such as by
+ removing the copyright notice or references to the OGF or other
+ organizations, except as needed for the purpose of developing new or
+ updated OGF documents in conformance with the procedures defined in
+ the OGF Document Process, or as required to translate it into
+ languages other than English. OGF, with the approval of its board,
+ may remove this restriction for inclusion of OGF document content for
+ the purpose of producing standards in cooperation with other
+ international standards bodies. 
+
+ The limited permissions granted above are perpetual and will not be
+ revoked by the OGF or its successors or assignees. 
+
+
+% \phantomsection\addcontentsline{toc}{section}{References}
+\section{References}
+\renewcommand{\refname}{}
+\vspace*{-3em}
+\bibliography{bibliography}
+
+\end{document}
+

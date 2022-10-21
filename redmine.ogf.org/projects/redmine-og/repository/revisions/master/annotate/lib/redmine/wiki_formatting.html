@@ -1,0 +1,2046 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/master/annotate/lib/redmine/wiki_formatting.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:42:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>/lib/redmine/wiki_formatting.rb - Annotate - Redmine - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="rsvo5Uvs/OHqzq9AZjxgQ/1mtk/oY58g0kQJMlDTftw="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+  <script src="https://redmine.ogf.org/javascripts/repository_navigation.js?1425381960" type="text/javascript"></script>
+
+<link href="https://redmine.ogf.org/stylesheets/scm.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body class="theme-Ogf redmine controller-repositories action-annotate">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/redmine-og" method="get">
+        <input name="changesets" type="hidden" value="1" />
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/redmine-og" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=repository" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=repository" class="ancestor">IT</a> » Redmine</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/redmine-og" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/redmine-og" class="dmsf">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/repository" class="repository selected">Repository</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+  
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/statistics" class="icon icon-stats">Statistics</a>
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/annotate/lib/redmine/wiki_formatting.rb?rev=" id="revision_selector" method="get">  <!-- Branches Dropdown -->
+      | Branch: 
+    <select id="branch" name="branch"><option value=""></option>
+<option value="1.3-stable">1.3-stable</option>
+<option value="devel">devel</option>
+<option value="master" selected="selected">master</option></select>
+  
+  
+  | Revision: 
+  <input id="rev" name="rev" size="8" type="text" value="master" />
+</form>
+</div>
+
+<h2><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/show">root</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/show/lib">lib</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/show/lib/redmine">redmine</a>
+
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/changes/lib/redmine/wiki_formatting.rb">wiki_formatting.rb</a>
+
+
+@ master
+
+</h2>
+
+<p>
+
+<p>
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/changes/lib/redmine/wiki_formatting.rb">History</a> |
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/entry/lib/redmine/wiki_formatting.rb">View</a> |
+
+
+    Annotate |
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/master/raw/lib/redmine/wiki_formatting.rb">Download</a>
+(5.9 kB)
+</p>
+
+
+</p>
+
+
+
+<div class="autoscroll">
+<table class="filecontent annotate syntaxhl">
+  <tbody>
+    
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L1"><a href="#L1">1</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment"># Redmine - project management software</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L2"><a href="#L2">2</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre><span class="comment"># Copyright (C) 2006-2011  Jean-Philippe Lang</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L3"><a href="#L3">3</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment">#</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L4"><a href="#L4">4</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment"># This program is free software; you can redistribute it and/or</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L5"><a href="#L5">5</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment"># modify it under the terms of the GNU General Public License</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L6"><a href="#L6">6</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment"># as published by the Free Software Foundation; either version 2</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L7"><a href="#L7">7</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment"># of the License, or (at your option) any later version.</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L8"><a href="#L8">8</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre><span class="comment">#</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L9"><a href="#L9">9</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment"># This program is distributed in the hope that it will be useful,</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L10"><a href="#L10">10</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L11"><a href="#L11">11</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L12"><a href="#L12">12</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment"># GNU General Public License for more details.</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L13"><a href="#L13">13</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre><span class="comment">#</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L14"><a href="#L14">14</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment"># You should have received a copy of the GNU General Public License</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L15"><a href="#L15">15</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment"># along with this program; if not, write to the Free Software</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L16"><a href="#L16">16</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="comment"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L17"><a href="#L17">17</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-3">
+        <th class="line-num" id="L18"><a href="#L18">18</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a3e713f2f776b0f2be4c4238661cae3c5b8bfd6" title="Revision 8a3e713f">8a3e713f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="keyword">module</span> <span class="class">Redmine</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-3">
+        <th class="line-num" id="L19"><a href="#L19">19</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a3e713f2f776b0f2be4c4238661cae3c5b8bfd6" title="Revision 8a3e713f">8a3e713f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>  <span class="keyword">module</span> <span class="class">WikiFormatting</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-4">
+        <th class="line-num" id="L20"><a href="#L20">20</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/6fc245327ce5bb4bb75f1378424635e347dfcd02" title="Revision 6fc24532">6fc24532</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>    <span class="keyword">class</span> <span class="class">StaleSectionError</span> &lt; <span class="constant">Exception</span>; <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-4">
+        <th class="line-num" id="L21"><a href="#L21">21</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/6fc245327ce5bb4bb75f1378424635e347dfcd02" title="Revision 6fc24532">6fc24532</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L22"><a href="#L22">22</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>    <span class="class-variable">@@formatters</span> = {}
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L23"><a href="#L23">23</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L24"><a href="#L24">24</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>    <span class="keyword">class</span> &lt;&lt; <span class="class">self</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L25"><a href="#L25">25</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">def</span> <span class="function">map</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L26"><a href="#L26">26</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">yield</span> <span class="predefined-constant">self</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L27"><a href="#L27">27</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L28"><a href="#L28">28</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L29"><a href="#L29">29</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">def</span> <span class="function">register</span>(name, formatter, helper)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-5">
+        <th class="line-num" id="L30"><a href="#L30">30</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0fcc436f226fd58e9463ccc92ad488b4630d14f4" title="Revision 0fcc436f">0fcc436f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">format name '</span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content">' is already taken</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> <span class="class-variable">@@formatters</span>[name.to_s]
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-5">
+        <th class="line-num" id="L31"><a href="#L31">31</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0fcc436f226fd58e9463ccc92ad488b4630d14f4" title="Revision 0fcc436f">0fcc436f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="class-variable">@@formatters</span>[name.to_s] = {<span class="symbol">:formatter</span> =&gt; formatter, <span class="symbol">:helper</span> =&gt; helper}
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-3">
+        <th class="line-num" id="L32"><a href="#L32">32</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a3e713f2f776b0f2be4c4238661cae3c5b8bfd6" title="Revision 8a3e713f">8a3e713f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L33"><a href="#L33">33</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-4">
+        <th class="line-num" id="L34"><a href="#L34">34</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/6fc245327ce5bb4bb75f1378424635e347dfcd02" title="Revision 6fc24532">6fc24532</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">def</span> <span class="function">formatter</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-4">
+        <th class="line-num" id="L35"><a href="#L35">35</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/6fc245327ce5bb4bb75f1378424635e347dfcd02" title="Revision 6fc24532">6fc24532</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        formatter_for(<span class="constant">Setting</span>.text_formatting)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-4">
+        <th class="line-num" id="L36"><a href="#L36">36</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/6fc245327ce5bb4bb75f1378424635e347dfcd02" title="Revision 6fc24532">6fc24532</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-4">
+        <th class="line-num" id="L37"><a href="#L37">37</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/6fc245327ce5bb4bb75f1378424635e347dfcd02" title="Revision 6fc24532">6fc24532</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L38"><a href="#L38">38</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">def</span> <span class="function">formatter_for</span>(name)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-5">
+        <th class="line-num" id="L39"><a href="#L39">39</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0fcc436f226fd58e9463ccc92ad488b4630d14f4" title="Revision 0fcc436f">0fcc436f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        entry = <span class="class-variable">@@formatters</span>[name.to_s]
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L40"><a href="#L40">40</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        (entry &amp;&amp; entry[<span class="symbol">:formatter</span>]) || <span class="constant">Redmine</span>::<span class="constant">WikiFormatting</span>::<span class="constant">NullFormatter</span>::<span class="constant">Formatter</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-3">
+        <th class="line-num" id="L41"><a href="#L41">41</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a3e713f2f776b0f2be4c4238661cae3c5b8bfd6" title="Revision 8a3e713f">8a3e713f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L42"><a href="#L42">42</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L43"><a href="#L43">43</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">def</span> <span class="function">helper_for</span>(name)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-5">
+        <th class="line-num" id="L44"><a href="#L44">44</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0fcc436f226fd58e9463ccc92ad488b4630d14f4" title="Revision 0fcc436f">0fcc436f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        entry = <span class="class-variable">@@formatters</span>[name.to_s]
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L45"><a href="#L45">45</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        (entry &amp;&amp; entry[<span class="symbol">:helper</span>]) || <span class="constant">Redmine</span>::<span class="constant">WikiFormatting</span>::<span class="constant">NullFormatter</span>::<span class="constant">Helper</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-3">
+        <th class="line-num" id="L46"><a href="#L46">46</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a3e713f2f776b0f2be4c4238661cae3c5b8bfd6" title="Revision 8a3e713f">8a3e713f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L47"><a href="#L47">47</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L48"><a href="#L48">48</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">def</span> <span class="function">format_names</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L49"><a href="#L49">49</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="class-variable">@@formatters</span>.keys.map
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-6">
+        <th class="line-num" id="L50"><a href="#L50">50</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/42db3cac06ad7f49dc10c7993e2df54b5bb4b2ab" title="Revision 42db3cac">42db3cac</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L51"><a href="#L51">51</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-4">
+        <th class="line-num" id="L52"><a href="#L52">52</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/6fc245327ce5bb4bb75f1378424635e347dfcd02" title="Revision 6fc24532">6fc24532</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">def</span> <span class="function">to_html</span>(format, text, options = {})
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-7">
+        <th class="line-num" id="L53"><a href="#L53">53</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/34ee5eccda779fed28f775acfb65a65a1e64723f" title="Revision 34ee5ecc">34ee5ecc</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        text = <span class="keyword">if</span> <span class="constant">Setting</span>.cache_formatted_text? &amp;&amp; text.size &gt; <span class="integer">2</span>.kilobyte &amp;&amp; cache_store &amp;&amp; cache_key = cache_key_for(format, options[<span class="symbol">:object</span>], options[<span class="symbol">:attribute</span>])
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L54"><a href="#L54">54</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          <span class="comment"># Text retrieved from the cache store may be frozen</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L55"><a href="#L55">55</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          <span class="comment"># We need to dup it so we can do in-place substitutions with gsub!</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-7">
+        <th class="line-num" id="L56"><a href="#L56">56</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/34ee5eccda779fed28f775acfb65a65a1e64723f" title="Revision 34ee5ecc">34ee5ecc</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          cache_store.fetch cache_key <span class="keyword">do</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L57"><a href="#L57">57</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>            formatter_for(format).new(text).to_html
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L58"><a href="#L58">58</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          <span class="keyword">end</span>.dup
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L59"><a href="#L59">59</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">else</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L60"><a href="#L60">60</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          formatter_for(format).new(text).to_html
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L61"><a href="#L61">61</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L62"><a href="#L62">62</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        text
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L63"><a href="#L63">63</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L64"><a href="#L64">64</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-9">
+        <th class="line-num" id="L65"><a href="#L65">65</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1e8a9da131686eb327d3ee3e31f5b3ac6b1b68bf" title="Revision 1e8a9da1">1e8a9da1</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="comment"># Returns true if the text formatter supports single section edit</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-9">
+        <th class="line-num" id="L66"><a href="#L66">66</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1e8a9da131686eb327d3ee3e31f5b3ac6b1b68bf" title="Revision 1e8a9da1">1e8a9da1</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">def</span> <span class="function">supports_section_edit?</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-9">
+        <th class="line-num" id="L67"><a href="#L67">67</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1e8a9da131686eb327d3ee3e31f5b3ac6b1b68bf" title="Revision 1e8a9da1">1e8a9da1</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        (formatter.instance_methods &amp; [<span class="string"><span class="delimiter">'</span><span class="content">update_section</span><span class="delimiter">'</span></span>, <span class="symbol">:update_section</span>]).any?
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-9">
+        <th class="line-num" id="L68"><a href="#L68">68</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1e8a9da131686eb327d3ee3e31f5b3ac6b1b68bf" title="Revision 1e8a9da1">1e8a9da1</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-9">
+        <th class="line-num" id="L69"><a href="#L69">69</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/1e8a9da131686eb327d3ee3e31f5b3ac6b1b68bf" title="Revision 1e8a9da1">1e8a9da1</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L70"><a href="#L70">70</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="comment"># Returns a cache key for the given text +format+, +object+ and +attribute+ or nil if no caching should be done</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L71"><a href="#L71">71</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">def</span> <span class="function">cache_key_for</span>(format, object, attribute)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L72"><a href="#L72">72</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">if</span> object &amp;&amp; attribute &amp;&amp; !object.new_record? &amp;&amp; object.respond_to?(<span class="symbol">:updated_on</span>) &amp;&amp; !format.blank?
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L73"><a href="#L73">73</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          <span class="string"><span class="delimiter">&quot;</span><span class="content">formatted_text/</span><span class="inline"><span class="inline-delimiter">#{</span>format<span class="inline-delimiter">}</span></span><span class="content">/</span><span class="inline"><span class="inline-delimiter">#{</span>object.class.model_name.cache_key<span class="inline-delimiter">}</span></span><span class="content">/</span><span class="inline"><span class="inline-delimiter">#{</span>object.id<span class="inline-delimiter">}</span></span><span class="content">-</span><span class="inline"><span class="inline-delimiter">#{</span>attribute<span class="inline-delimiter">}</span></span><span class="content">-</span><span class="inline"><span class="inline-delimiter">#{</span>object.updated_on.to_s(<span class="symbol">:number</span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L74"><a href="#L74">74</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L75"><a href="#L75">75</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L76"><a href="#L76">76</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L77"><a href="#L77">77</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="comment"># Returns the cache store used to cache HTML output</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-7">
+        <th class="line-num" id="L78"><a href="#L78">78</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/34ee5eccda779fed28f775acfb65a65a1e64723f" title="Revision 34ee5ecc">34ee5ecc</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">def</span> <span class="function">cache_store</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L79"><a href="#L79">79</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="constant">ActionController</span>::<span class="constant">Base</span>.cache_store
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-8">
+        <th class="line-num" id="L80"><a href="#L80">80</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/2ad8242ae782ea9d87a0d98f8563199da736bdc7" title="Revision 2ad8242a">2ad8242a</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L81"><a href="#L81">81</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>    <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L82"><a href="#L82">82</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L83"><a href="#L83">83</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>    <span class="keyword">module</span> <span class="class">LinksHelper</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L84"><a href="#L84">84</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="constant">AUTO_LINK_RE</span> = <span class="regexp"><span class="delimiter">%r{</span><span class="content">
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L85"><a href="#L85">85</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                      (                          # leading text
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L86"><a href="#L86">86</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                        &lt;</span><span class="char">\w</span><span class="content">+.*?&gt;|                # leading HTML tag, or
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L87"><a href="#L87">87</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                        [^=&lt;&gt;!:'&quot;/]|             # leading punctuation, or
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L88"><a href="#L88">88</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                        ^                        # beginning of line
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L89"><a href="#L89">89</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                      )
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L90"><a href="#L90">90</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                      (
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L91"><a href="#L91">91</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                        (?:https?://)|           # protocol spec, or
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L92"><a href="#L92">92</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                        (?:s?ftps?://)|
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L93"><a href="#L93">93</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                        (?:www</span><span class="char">\.</span><span class="content">)                # www.*
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L94"><a href="#L94">94</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                      )
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L95"><a href="#L95">95</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                      (
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L96"><a href="#L96">96</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                        (</span><span class="char">\S</span><span class="content">+?)                   # url
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L97"><a href="#L97">97</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                        (</span><span class="char">\/</span><span class="content">)?                    # slash
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L98"><a href="#L98">98</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                      )
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L99"><a href="#L99">99</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                      ((?:&amp;gt;)?|[^</span><span class="char">\w</span><span class="char">\=</span><span class="char">\/</span><span class="content">;</span><span class="char">\(</span><span class="char">\)</span><span class="content">]*?)               # post
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L100"><a href="#L100">100</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                      (?=&lt;|</span><span class="char">\s</span><span class="content">|$)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L101"><a href="#L101">101</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>                     </span><span class="delimiter">}</span><span class="modifier">x</span></span> <span class="keyword">unless</span> const_defined?(<span class="symbol">:AUTO_LINK_RE</span>)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L102"><a href="#L102">102</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L103"><a href="#L103">103</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="comment"># Destructively remplaces urls into clickable links</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L104"><a href="#L104">104</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">def</span> <span class="function">auto_link!</span>(text)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L105"><a href="#L105">105</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        text.gsub!(<span class="constant">AUTO_LINK_RE</span>) <span class="keyword">do</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L106"><a href="#L106">106</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          all, leading, proto, url, post = <span class="global-variable">$&amp;</span>, <span class="global-variable">$1</span>, <span class="global-variable">$2</span>, <span class="global-variable">$3</span>, <span class="global-variable">$6</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L107"><a href="#L107">107</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          <span class="keyword">if</span> leading =~ <span class="regexp"><span class="delimiter">/</span><span class="content">&lt;a</span><span class="char">\s</span><span class="delimiter">/</span><span class="modifier">i</span></span> || leading =~ <span class="regexp"><span class="delimiter">/</span><span class="content">![&lt;&gt;=]?</span><span class="delimiter">/</span></span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L108"><a href="#L108">108</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>            <span class="comment"># don't replace URL's that are already linked</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L109"><a href="#L109">109</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>            <span class="comment"># and URL's prefixed with ! !&gt; !&lt; != (textile images)</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L110"><a href="#L110">110</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>            all
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L111"><a href="#L111">111</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          <span class="keyword">else</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L112"><a href="#L112">112</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>            <span class="comment"># Idea below : an URL with unbalanced parethesis and</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L113"><a href="#L113">113</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>            <span class="comment"># ending by ')' is put into external parenthesis</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L114"><a href="#L114">114</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>            <span class="keyword">if</span> ( url[<span class="integer">-1</span>]==<span class="integer">?)</span> <span class="keyword">and</span> ((url.count(<span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="delimiter">&quot;</span></span>) - url.count(<span class="string"><span class="delimiter">&quot;</span><span class="content">)</span><span class="delimiter">&quot;</span></span>)) &lt; <span class="integer">0</span> ) )
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L115"><a href="#L115">115</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>              url=url[<span class="integer">0</span>..<span class="integer">-2</span>] <span class="comment"># discard closing parenth from url</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L116"><a href="#L116">116</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>              post = <span class="string"><span class="delimiter">&quot;</span><span class="content">)</span><span class="delimiter">&quot;</span></span>+post <span class="comment"># add closing parenth to post</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L117"><a href="#L117">117</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>            <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L118"><a href="#L118">118</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>            tag = content_tag(<span class="string"><span class="delimiter">'</span><span class="content">a</span><span class="delimiter">'</span></span>, proto + url, <span class="symbol">:href</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>proto==<span class="string"><span class="delimiter">&quot;</span><span class="content">www.</span><span class="delimiter">&quot;</span></span>?<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.</span><span class="delimiter">&quot;</span></span><span class="symbol">:proto</span><span class="inline-delimiter">}</span></span><span class="inline"><span class="inline-delimiter">#{</span>url<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>, <span class="symbol">:class</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">external</span><span class="delimiter">'</span></span>)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L119"><a href="#L119">119</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>            <span class="string"><span class="delimiter">%(</span><span class="inline"><span class="inline-delimiter">#{</span>leading<span class="inline-delimiter">}</span></span><span class="inline"><span class="inline-delimiter">#{</span>tag<span class="inline-delimiter">}</span></span><span class="inline"><span class="inline-delimiter">#{</span>post<span class="inline-delimiter">}</span></span><span class="delimiter">)</span></span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L120"><a href="#L120">120</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L121"><a href="#L121">121</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L122"><a href="#L122">122</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L123"><a href="#L123">123</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L124"><a href="#L124">124</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="comment"># Destructively remplaces email addresses into clickable links</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L125"><a href="#L125">125</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">def</span> <span class="function">auto_mailto!</span>(text)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L126"><a href="#L126">126</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        text.gsub!(<span class="regexp"><span class="delimiter">/</span><span class="content">([</span><span class="char">\w</span><span class="char">\.</span><span class="content">!#</span><span class="char">\$</span><span class="content">%</span><span class="char">\-</span><span class="content">+.]+@[A-Za-z0-9</span><span class="char">\-</span><span class="content">]+(</span><span class="char">\.</span><span class="content">[A-Za-z0-9</span><span class="char">\-</span><span class="content">]+)+)</span><span class="delimiter">/</span></span>) <span class="keyword">do</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L127"><a href="#L127">127</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          mail = <span class="global-variable">$1</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L128"><a href="#L128">128</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          <span class="keyword">if</span> text.match(<span class="regexp"><span class="delimiter">/</span><span class="content">&lt;a</span><span class="char">\b</span><span class="content">[^&gt;]*&gt;(.*)(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Regexp</span>.escape(mail)<span class="inline-delimiter">}</span></span><span class="content">)(.*)&lt;</span><span class="char">\/</span><span class="content">a&gt;</span><span class="delimiter">/</span></span>)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L129"><a href="#L129">129</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>            mail
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L130"><a href="#L130">130</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          <span class="keyword">else</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L131"><a href="#L131">131</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>            content_tag(<span class="string"><span class="delimiter">'</span><span class="content">a</span><span class="delimiter">'</span></span>, mail, <span class="symbol">:href</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">mailto:</span><span class="inline"><span class="inline-delimiter">#{</span>mail<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>, <span class="symbol">:class</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">email</span><span class="delimiter">&quot;</span></span>)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L132"><a href="#L132">132</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L133"><a href="#L133">133</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L134"><a href="#L134">134</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>      
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L135"><a href="#L135">135</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>    <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L136"><a href="#L136">136</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L137"><a href="#L137">137</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>    <span class="comment"># Default formatter module</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L138"><a href="#L138">138</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>    <span class="keyword">module</span> <span class="class">NullFormatter</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L139"><a href="#L139">139</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">class</span> <span class="class">Formatter</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L140"><a href="#L140">140</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        include <span class="constant">ActionView</span>::<span class="constant">Helpers</span>::<span class="constant">TagHelper</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L141"><a href="#L141">141</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        include <span class="constant">ActionView</span>::<span class="constant">Helpers</span>::<span class="constant">TextHelper</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-11">
+        <th class="line-num" id="L142"><a href="#L142">142</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/9b0acce9c938e6c1bbbe2c1a4138105513a08b33" title="Revision 9b0acce9">9b0acce9</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        include <span class="constant">ActionView</span>::<span class="constant">Helpers</span>::<span class="constant">UrlHelper</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L143"><a href="#L143">143</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        include <span class="constant">Redmine</span>::<span class="constant">WikiFormatting</span>::<span class="constant">LinksHelper</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L144"><a href="#L144">144</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L145"><a href="#L145">145</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">def</span> <span class="function">initialize</span>(text)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L146"><a href="#L146">146</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          <span class="instance-variable">@text</span> = text
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L147"><a href="#L147">147</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f3364b9dce6f13905e94252b732b203203cded96" title="Revision f3364b9d">f3364b9d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L148"><a href="#L148">148</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L149"><a href="#L149">149</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">def</span> <span class="function">to_html</span>(*args)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L150"><a href="#L150">150</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          t = <span class="constant">CGI</span>::escapeHTML(<span class="instance-variable">@text</span>)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L151"><a href="#L151">151</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          auto_link!(t)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L152"><a href="#L152">152</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          auto_mailto!(t)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-10">
+        <th class="line-num" id="L153"><a href="#L153">153</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/739820141a4b625cf5daeab45caf58a9f2600644" title="Revision 73982014">73982014</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          simple_format(t)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L154"><a href="#L154">154</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f3364b9dce6f13905e94252b732b203203cded96" title="Revision f3364b9d">f3364b9d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L155"><a href="#L155">155</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/f3364b9dce6f13905e94252b732b203203cded96" title="Revision f3364b9d">f3364b9d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L156"><a href="#L156">156</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L157"><a href="#L157">157</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">module</span> <span class="class">Helper</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L158"><a href="#L158">158</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">def</span> <span class="function">wikitoolbar_for</span>(field_id)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-2">
+        <th class="line-num" id="L159"><a href="#L159">159</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a8f819d273e25fa28fb492da92125fb06d1ab01" title="Revision 8a8f819d">8a8f819d</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L160"><a href="#L160">160</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L161"><a href="#L161">161</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">def</span> <span class="function">heads_for_wiki_formatter</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-3">
+        <th class="line-num" id="L162"><a href="#L162">162</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a3e713f2f776b0f2be4c4238661cae3c5b8bfd6" title="Revision 8a3e713f">8a3e713f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-1">
+        <th class="line-num" id="L163"><a href="#L163">163</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a57feec16cc937f68116132115a78b96a0cec930" title="Revision a57feec1">a57feec1</a></td>
+        <td class="author">Toshi MARUYAMA</td>
+        <td class="line-code"><pre>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L164"><a href="#L164">164</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">def</span> <span class="function">initial_page_content</span>(page)
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-0">
+        <th class="line-num" id="L165"><a href="#L165">165</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/a3b9a5aa5fe344cf33a47ccbf1d26a95fbe4e255" title="Revision a3b9a5aa">a3b9a5aa</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>          page.pretty_title.to_s
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-3">
+        <th class="line-num" id="L166"><a href="#L166">166</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a3e713f2f776b0f2be4c4238661cae3c5b8bfd6" title="Revision 8a3e713f">8a3e713f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>        <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-3">
+        <th class="line-num" id="L167"><a href="#L167">167</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a3e713f2f776b0f2be4c4238661cae3c5b8bfd6" title="Revision 8a3e713f">8a3e713f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>      <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-3">
+        <th class="line-num" id="L168"><a href="#L168">168</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a3e713f2f776b0f2be4c4238661cae3c5b8bfd6" title="Revision 8a3e713f">8a3e713f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>    <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-3">
+        <th class="line-num" id="L169"><a href="#L169">169</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a3e713f2f776b0f2be4c4238661cae3c5b8bfd6" title="Revision 8a3e713f">8a3e713f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre>  <span class="keyword">end</span>
+</pre></td>
+      </tr>
+      
+    
+      
+      <tr class="bloc-3">
+        <th class="line-num" id="L170"><a href="#L170">170</a></th>
+        <td class="revision">
+        <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/8a3e713f2f776b0f2be4c4238661cae3c5b8bfd6" title="Revision 8a3e713f">8a3e713f</a></td>
+        <td class="author">Jean-Philippe Lang</td>
+        <td class="line-code"><pre><span class="keyword">end</span></pre></td>
+      </tr>
+      
+    
+  </tbody>
+</table>
+</div>
+
+
+
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/master/annotate/lib/redmine/wiki_formatting.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:42:49 GMT -->
+</html>

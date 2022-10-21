@@ -1,0 +1,305 @@
+% !TeX root = draft-ur-v2.tex
+
+\section{Examples}
+
+\subsection{Full example}
+
+Full example including all defined elements. Note that this does not necessarily make a useful working example as some resource blocks do not necessarily make sense when used together in a single record.
+
+\begin{XMLexample}
+<?xml version="1.0" encoding="UTF-8"?>
+<ur:UsageRecord xmlns="http://schema.ogf.org/urf/2013/04/urf"
+    xmlns:ur="http://schema.ogf.org/urf/2013/04/urf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schema.ogf.org/urf/2013/04/urf">
+    <ur:RecordIdentityBlock>
+        <ur:RecordId>"host.example.org/ur/87912469269276"</ur:RecordId>
+        <ur:CreateTime>2013-05-09T09:06:52Z</ur:CreateTime>
+        <ur:Site>"ACME-University"</ur:Site>
+        <ur:Infrastructure>"OSG"</ur:Infrastructure>
+    </ur:RecordIdentityBlock>
+    <ur:SubjectIdentityBlock>
+        <ur:LocalUserId>"johndoe"</ur:LocalUserId>
+        <ur:LocalGroupId>"projectA"</ur:LocalGroupId>
+        <ur:GlobalUserId>"/O=Grid/OU=example.org/CN=John Doe"</ur:GlobalUserId>
+        <ur:GlobalGroupId>"binarydataproject.example.org"</ur:GlobalGroupId>
+        <ur:GlobalGroupAttribute ur:type="subgroup">ukusers</ur:GlobalGroupAttribute>
+    </ur:SubjectIdentityBlock>
+    <ur:ComputeUsageBlock>
+        <ur:CpuDuration>PT3600S</ur:CpuDuration>
+        <ur:WallDuration>PT3600S</ur:WallDuration>
+        <ur:StartTime>2013-05-31T11:00:00</ur:StartTime>
+        <ur:EndTime>2013-05-31T12:00:00</ur:EndTime>
+        <ur:ExecutionHost>
+            <ur:Hostname>"compute-0-1.abel.uio.no"</ur:Hostname>
+            <ur:ProcessId>1042</ur:ProcessId>
+            <ur:Benchmark ur:type="si2k">3.14</ur:Benchmark>
+            <ur:Benchmark ur:type="hepspec">42</ur:Benchmark>
+        </ur:ExecutionHost>
+        <ur:HostType>"org.nordugrid.arex"</ur:HostType>
+        <ur:Processors>1</ur:Processors>
+        <ur:NodeCount>1</ur:NodeCount>
+        <ur:ExitStatus>0</ur:ExitStatus>
+        <ur:Charge>1.75</ur:Charge>
+    </ur:ComputeUsageBlock>
+    <ur:JobUsageBlock>
+        <ur:GlobalJobId>"host.example.org/ab1234/2013-05-09T09:06:52Z"</ur:GlobalJobId>
+        <ur:LocalJobId>"ab1234"</ur:LocalJobId>
+        <ur:JobName>"HiggsGammaGamma42"</ur:JobName>
+        <ur:MachineName>"ce.example.org"</ur:MachineName>
+        <ur:SubmitHost>
+            "nordugrid-cluster-name=ce.example.org,Mds-Vo-name=local,o=grid"
+        </ur:SubmitHost>
+        <ur:SubmitType ur:description="ARC CE">"grid"</ur:SubmitType>
+        <ur:Queue ur:description="execution">"Bigmem"</ur:Queue>
+        <ur:TimeInstant ur:type="Ctime">2013-05-31T10:30:00</ur:TimeInstant>
+        <ur:TimeInstant ur:type="Qtime">2013-05-31T10:31:00</ur:TimeInstant>
+        <ur:TimeInstant ur:type="Etime">2013-05-31T10:59:42</ur:TimeInstant>
+        <ur:ServiceLevel>"Bigmem"</ur:ServiceLevel>
+        <ur:Status>"aborted"</ur:Status>
+    </ur:JobUsageBlock>
+    <ur:MemoryUsageBlock>
+        <ur:MemoryClass>"RAM"</ur:MemoryClass>
+        <ur:MemoryResourceCapacityUsed>14728</ur:MemoryResourceCapacityUsed>
+        <ur:MemoryResourceCapacityAllocated>56437</ur:MemoryResourceCapacityAllocated>
+        <ur:MemoryResourceCapacityRequested>42000</ur:MemoryResourceCapacityRequested>
+        <ur:StartTime>2013-05-31T11:00:00</ur:StartTime>
+        <ur:EndTime>2013-05-31T12:00:00</ur:EndTime>
+        <ur:ExecutionHost>"compute-0-1.abel.uio.no"</ur:ExecutionHost>
+        <ur:HostType>"org.nordugrid.arex"</ur:HostType>
+        <ur:Charge>0.0735</ur:Charge>
+    </ur:MemoryUsageBlock>
+    <ur:StorageUsageBlock>
+        <ur:StorageShare>pool-003</ur:StorageShare>
+        <ur:StorageMedia>disk</ur:StorageMedia>
+        <ur:StorageClass>replicated</ur:StorageClass>
+        <ur:DirectoryPath>/projectA</ur:DirectoryPath>
+        <ur:FileCount>42</ur:FileCount>
+        <ur:StorageResourceCapacityUsed>14728</ur:StorageResourceCapacityUsed>
+        <ur:StorageLogicalCapacityUsed>13617</ur:StorageLogicalCapacityUsed>
+        <ur:StorageResourceCapacityAllocated>14624</ur:StorageResourceCapacityAllocated>
+        <ur:StartTime>2013-05-07T09:31:40Z</ur:StartTime>
+        <ur:EndTime>2013-05-08T09:29:42Z</ur:EndTime>
+        <ur:Host>host.example.org</ur:Host>
+        <ur:HostType>"org.dcache.storage"</ur:HostType>
+        <ur:Charge>0.01473</ur:Charge>
+    </ur:StorageUsageBlock>
+    <ur:CloudUsageBlock>
+        <ur:LocalVirtualMachineId>ab1234</ur:LocalVirtualMachineId>
+        <ur:GlobalVirtualMachineId>
+            host.example.org/ab1234/2013-05-09T09:06:52Z
+        </ur:GlobalVirtualMachineId>
+        <ur:Status>started</ur:Status>
+        <ur:SuspendDuration>PT3600S</ur:SuspendDuration>
+        <ur:ImageId>UbuntuImage2013</ur:ImageId>
+        <ur:MachineName>cloud.example.org</ur:MachineName>
+        <ur:SubmitHost>
+            cloud-name=cloud.example.org,Mds-Vo-name=local,o=cloud
+        </ur:SubmitHost>
+        <ur:TimeInstant ur:type="Ctime">2013-05-31T10:30:00</ur:TimeInstant>
+        <ur:TimeInstant ur:type="Qtime">2013-05-31T10:31:00</ur:TimeInstant>
+        <ur:TimeInstant ur:type="Etime">2013-05-31T10:59:42</ur:TimeInstant>
+        <ur:ServiceLevel>Premium</ur:ServiceLevel>
+    </ur:CloudUsageBlock>
+    <ur:NetworkUsageBlock>
+        <ur:NetworkClass ur:NetworkResourceBandwidth="100000000">"Ethernet"</ur:NetworkClass>
+        <ur:NetworkInboundUsed ur:SourceAddress=192.168.1.12>14728</ur:NetworkInboundUsed>
+        <ur:NetworkOutboundUsed ur:DestinationAddress=192.168.1.21>14728</ur:NetworkOutboundUsed>
+        <ur:Charge>0.0735</ur:Charge>
+    </ur:NetworkUsageBlock>
+</ur:UsageRecord>
+\end{XMLexample}
+
+\subsection{Grid example}
+Example of a possible grid usage record.
+
+\begin{XMLexample}
+<?xml version="1.0" encoding="UTF-8"?>
+<ur:UsageRecord xmlns="http://schema.ogf.org/urf/2013/04/urf"
+    xmlns:ur="http://schema.ogf.org/urf/2013/04/urf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schema.ogf.org/urf/2013/04/urf">
+    <ur:RecordIdentityBlock>
+        <ur:RecordId>"host.example.org/ur/87912469269276"</ur:RecordId>
+        <ur:CreateTime>2013-05-09T09:06:52Z</ur:CreateTime>
+        <ur:Infrastructure>"EGI"</ur:Infrastructure>
+    </ur:RecordIdentityBlock>
+    <ur:SubjectIdentityBlock>
+        <ur:GlobalGroupId>"binarydataproject.example.org"</ur:GlobalGroupId>
+        <ur:GlobalGroupAttribute ur:type="subgroup">ukusers</ur:GlobalGroupAttribute>
+    </ur:SubjectIdentityBlock>
+    <ur:ComputeUsageBlock>
+        <ur:CpuDuration>PT3600S</ur:CpuDuration>
+        <ur:WallDuration>PT3600S</ur:WallDuration>
+        <ur:StartTime>2013-05-31T11:00:00</ur:StartTime>
+        <ur:EndTime>2013-05-31T12:00:00</ur:EndTime>
+        <ur:ExecutionHost>
+            <ur:Hostname>"compute-0-1.abel.uio.no"</ur:Hostname>
+            <ur:ProcessId>1042</ur:ProcessId>
+            <ur:Benchmark ur:type="si2k">3.14</ur:Benchmark>
+            <ur:Benchmark ur:type="hepspec">42</ur:Benchmark>
+        </ur:ExecutionHost>
+        <ur:HostType>"org.nordugrid.arex"</ur:HostType>
+        <ur:ExitStatus>0</ur:ExitStatus>
+    </ur:ComputeUsageBlock>
+    <ur:JobUsageBlock>
+        <ur:GlobalJobId>"host.example.org/ab1234/2013-05-09T09:06:52Z"</ur:GlobalJobId>
+        <ur:MachineName>"ce.example.org"</ur:MachineName>
+        <ur:SubmitHost>
+            "nordugrid-cluster-name=ce.example.org,Mds-Vo-name=local,o=grid"
+        </ur:SubmitHost>
+        <ur:SubmitType ur:description="ARC CE">"grid"</ur:SubmitType>
+        <ur:Queue ur:description="execution">"Bigmem"</ur:Queue>
+        <ur:TimeInstant ur:type="Ctime">2013-05-31T10:30:00</ur:TimeInstant>
+        <ur:TimeInstant ur:type="Qtime">2013-05-31T10:31:00</ur:TimeInstant>
+        <ur:TimeInstant ur:type="Etime">2013-05-31T10:59:42</ur:TimeInstant>
+        <ur:ServiceLevel>"Bigmem"</ur:ServiceLevel>
+        <ur:Status>"aborted"</ur:Status>
+    </ur:JobUsageBlock>
+</ur:UsageRecord>
+\end{XMLexample}
+
+\subsection{Cloud example}
+Example of a possible cloud usage record.
+
+\begin{XMLexample}
+<?xml version="1.0" encoding="UTF-8"?>
+<ur:UsageRecord xmlns="http://schema.ogf.org/urf/2013/04/urf"
+    xmlns:ur="http://schema.ogf.org/urf/2013/04/urf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schema.ogf.org/urf/2013/04/urf">
+    <ur:RecordIdentityBlock>
+        <ur:RecordId>"host.example.org/ur/87912469269276"</ur:RecordId>
+        <ur:CreateTime>2013-05-09T09:06:52Z</ur:CreateTime>
+        <ur:Site>"cesga"</ur:Site>
+        <ur:Infrastructure>"OpenNebula"</ur:Infrastructure>
+    </ur:RecordIdentityBlock>
+    <ur:SubjectIdentityBlock>
+        <ur:LocalUserId>"19"</ur:LocalUserId>
+        <ur:LocalGroupId>"101"</ur:LocalGroupId>
+        <ur:GlobalUserId>"/O=Grid/OU=example.org/CN=John Doe"</ur:GlobalUserId>
+    </ur:SubjectIdentityBlock>
+    <ur:ComputeUsageBlock>
+        <ur:CpuDuration>PT3600S</ur:CpuDuration>
+        <ur:WallDuration>PT3600S</ur:WallDuration>
+        <ur:StartTime>2013-05-31T11:00:00</ur:StartTime>
+        <ur:EndTime>2013-05-31T12:00:00</ur:EndTime>
+        <ur:Processors>1</ur:Processors>
+        <ur:ExitStatus>0</ur:ExitStatus>
+    </ur:ComputeUsageBlock>
+    <ur:MemoryUsageBlock>
+        <ur:MemoryClass>"RAM"</ur:MemoryClass>
+        <ur:MemoryResourceCapacityUsed>1000</ur:MemoryResourceCapacityUsed>
+        <ur:StartTime>2013-05-31T11:00:00</ur:StartTime>
+        <ur:EndTime>2013-05-31T12:00:00</ur:EndTime>
+    </ur:MemoryUsageBlock>
+    <ur:StorageUsageBlock>
+        <ur:StorageResourceCapacityUsed>13617</ur:StorageResourceCapacityUsed>
+        <ur:StartTime>2013-05-07T09:31:40Z</ur:StartTime>
+        <ur:EndTime>2013-05-08T09:29:42Z</ur:EndTime>
+        <ur:Host>host.example.org</ur:Host>
+    </ur:StorageUsageBlock>
+    <ur:CloudUsageBlock>
+        <ur:GlobalVirtualMachineId>
+            https://cloud.cesga.es:3202/compute/00f4b25e-e567-436a-8b74-eb3dc08d2da3 2012-12-28 03:09:38+00:00
+        </ur:GlobalVirtualMachineId>
+        <ur:Status>Completed</ur:Status>
+        <ur:SuspendDuration>PT0S</ur:SuspendDuration>
+        <ur:MachineName>cloud.example.org</ur:MachineName>
+        <ur:SubmitHost>
+            cloud-name=cloud.example.org,Mds-Vo-name=local,o=cloud
+        </ur:SubmitHost>
+    </ur:CloudUsageBlock>
+    <ur:NetworkUsageBlock>
+        <ur:NetworkClass>"Ethernet"</ur:NetworkClass>
+        <ur:NetworkInboundUsed>1000</ur:NetworkInboundUsed>
+        <ur:NetworkOutboundUsed>420</ur:NetworkOutboundUsed>
+    </ur:NetworkUsageBlock>
+</ur:UsageRecord>
+\end{XMLexample}
+
+\subsection{Local example}
+Example of a possible usage record for a local user.
+
+\begin{XMLexample}
+<?xml version="1.0" encoding="UTF-8"?>
+<ur:UsageRecord xmlns="http://schema.ogf.org/urf/2013/04/urf"
+    xmlns:ur="http://schema.ogf.org/urf/2013/04/urf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schema.ogf.org/urf/2013/04/urf">
+    <ur:RecordIdentityBlock>
+        <ur:RecordId>"host.example.org/ur/87912469269276"</ur:RecordId>
+        <ur:CreateTime>2013-05-09T09:06:52Z</ur:CreateTime>
+        <ur:Infrastructure>"OSG"</ur:Infrastructure>
+    </ur:RecordIdentityBlock>
+    <ur:SubjectIdentityBlock>
+        <ur:LocalUserId>"johndoe"</ur:LocalUserId>
+    </ur:SubjectIdentityBlock>
+    <ur:StorageUsageBlock>
+        <ur:StorageResourceCapacityUsed>13617</ur:StorageResourceCapacityUsed>
+        <ur:StartTime>2013-05-07T09:31:40Z</ur:StartTime>
+        <ur:EndTime>2013-05-08T09:29:42Z</ur:EndTime>
+        <ur:Host>"compute-0-1.abel.uio.no"</ur:Host>
+    </ur:StorageUsageBlock>
+</ur:UsageRecord>
+\end{XMLexample}
+
+\subsection{Minimal examples}
+
+\subsubsection{Job record}
+Minimal useful job record for a job run by the ukusers team of the binarydataproject.example.org group.
+
+\begin{XMLexample}
+<?xml version="1.0" encoding="UTF-8"?>
+<ur:UsageRecord xmlns="http://schema.ogf.org/urf/2013/04/urf"
+    xmlns:ur="http://schema.ogf.org/urf/2013/04/urf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schema.ogf.org/urf/2013/04/urf">
+    <ur:RecordIdentityBlock>
+        <ur:RecordId>"host.example.org/ur/87912469269276"</ur:RecordId>
+        <ur:CreateTime>2013-05-09T09:06:52Z</ur:CreateTime>
+    </ur:RecordIdentityBlock>
+    <ur:SubjectIdentityBlock>
+        <ur:GlobalGroupId>"binarydataproject.example.org"</ur:GlobalGroupId>
+        <ur:GlobalGroupAttribute ur:type="subgroup">ukusers</ur:GlobalGroupAttribute>
+    </ur:SubjectIdentityBlock>
+    <ur:ComputeUsageBlock>
+        <ur:CpuDuration>PT3600S</ur:CpuDuration>
+        <ur:WallDuration>PT3600S</ur:WallDuration>
+        <ur:StartTime>2013-05-31T11:00:00</ur:StartTime>
+        <ur:EndTime>2013-05-31T12:00:00</ur:EndTime>
+        <ur:ExecutionHost>
+            <ur:Hostname>"compute-0-1.abel.uio.no"</ur:Hostname>
+        </ur:ExecutionHost>
+        <ur:ExitStatus>0</ur:ExitStatus>
+    </ur:ComputeUsageBlock>
+    <ur:JobUsageBlock>
+        <ur:GlobalJobId>"host.example.org/ab1234/2013-05-09T09:06:52Z"</ur:GlobalJobId>
+        <ur:MachineName>"ce.example.org"</ur:MachineName>
+        <ur:ServiceLevel>"Bigmem"</ur:ServiceLevel>
+        <ur:Status>"aborted"</ur:Status>
+    </ur:JobUsageBlock>
+</ur:UsageRecord>
+\end{XMLexample}
+
+\subsubsection{Storage record}
+An example of a minimal storage record. There is no SubjectIdentity block, which should be interpreted as the record accounts for all usage on the storage system.
+
+\begin{XMLexample}
+<?xml version="1.0" encoding="UTF-8"?>
+<ur:UsageRecord xmlns="http://schema.ogf.org/urf/2013/04/urf"
+    xmlns:ur="http://schema.ogf.org/urf/2013/04/urf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schema.ogf.org/urf/2013/04/urf">
+    <ur:RecordIdentityBlock>
+        <ur:RecordId>"host.example.org/ur/87912469269276"</ur:RecordId>
+        <ur:CreateTime>2013-05-09T09:06:52Z</ur:CreateTime>
+    </ur:RecordIdentityBlock>
+    <ur:StorageUsageBlock>
+        <ur:StorageResourceCapacityUsed>13617</ur:StorageResourceCapacityUsed>
+        <ur:StartTime>2013-05-07T09:31:40Z</ur:StartTime>
+        <ur:EndTime>2013-05-08T09:29:42Z</ur:EndTime>
+        <ur:Host>host.example.org</ur:Host>
+    </ur:StorageUsageBlock>
+</ur:UsageRecord>
+\end{XMLexample}

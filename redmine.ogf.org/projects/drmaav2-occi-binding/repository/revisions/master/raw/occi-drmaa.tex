@@ -1,0 +1,1130 @@
+% save trees by replacing OGF-mandated 12pt with 10pt
+\documentclass[10pt]{article} 
+
+\sloppy
+
+% OGF-defined document template stuff 
+\usepackage{ifpdf}
+\usepackage[utf8]{inputenc}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage{url}
+\usepackage{authblk}
+\usepackage[numbers]{natbib} 
+\bibliographystyle{plainnat} 
+\usepackage[sf,compact]{titlesec} 
+\usepackage[titles]{tocloft}
+\usepackage{parskip} 
+\newcommand{\headerstyle}{\sffamily}
+\usepackage{fancyhdr}
+\addtolength{\headheight}{15pt}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headsep}{20pt}
+\usepackage[headings]{fullpage}  
+\graphicspath{{img/}{./}}
+\renewcommand{\cftsecfont}{\sffamily}
+\renewcommand{\cftsubsecfont}{\sffamily}
+\renewcommand{\cftsubsubsecfont}{\sffamily}
+\renewcommand{\cftsecpagefont}{\sffamily}
+\renewcommand{\cftsubsecpagefont}{\sffamily}
+\renewcommand{\cftsubsubsecpagefont}{\sffamily}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsubsecdotsep}} 
+\setlength{\cftbeforesecskip}{0.5ex}
+\newcommand{\ifnonempty}[2]{\ifthenelse{\isundefined{#1}}{}{\ifthenelse{\equal{#1}{}}{}{#2}}}
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{\fancyplain{}{\headerstyle\docseries}}
+\rhead{\fancyplain{}{\headerstyle\ifthenelse{\isundefined{\revisiondate}}{\publicationdate}{\ifthenelse{\equal{\revisiondate}{}}{\publicationdate}{\revisiondate}}}}
+\lfoot{\headerstyle\ifnonempty{\groupurl}{\groupurl}}
+\rfoot{\headerstyle\thepage}
+\thispagestyle{plain}
+
+% OGF-defined meta data 
+\title{OCCI-DRMAA}  
+\newcommand{\shortdoctitle}{OCCI-DRMAA}  
+\newcommand{\authorsshort}{Peter Tröger, Hasso-Plattner-Institute (Corresponding Author)}  
+\newcommand{\publicationdate}{June 2012}  
+%\newcommand{\revisiondate}{December 2010}  % Optional: date of last revision of the document
+\newcommand{\copyrightyears}{2011-2012}  
+\newcommand{\docseries}{GWD-R-P}  % GWD-R, GWD-I or GWD-C (for working drafts), GFD-I, GFD-R, or GFD-C
+\newcommand{\groupname}{DRMAA-WG / OCCI-WG} 
+\newcommand{\groupurl}{\href{mailto:drmaa-wg@ogf.org}{drmaa-wg@ogf.org} /  \href{mailto:occi-wg@ogf.org}{occi-wg@ogf.org}}  
+\newcommand{\documenturl}{\href{http://www.drmaa2.org/}}
+
+% Our additional Latex stuff
+\usepackage{todonotes}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{framed}
+\lstset{language=[CORBA]IDL, tabsize=2, keywordstyle=\bfseries, basicstyle=\ttfamily,  rangeprefix=////,rangesuffix=////,includerangemarker=false}
+\newcommand{\h}[1]{\lstinline|#1|}
+\setcounter{tocdepth}{2}
+\definecolor{shadecolor}{gray}{0.8}
+\newcommand{\langbind}[1]{\begin{shaded}#1\end{shaded}}
+\usepackage{csquotes}
+\usepackage[nomarkers]{endfloat}
+\renewcommand{\efloatseparator}{\mbox{}}
+
+%%%%%%%% Enable this block for the annotaed version
+%\newcommand{\rat}[1]{ {\tiny(See footnote)}\footnote{#1} }
+%\interfootnotelinepenalty=10000
+%\newcommand{\tbd}[2][] {\todo[caption={#2}, size=\small, #1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2\par}}
+%\usepackage{lineno}
+%\linenumbers
+%%%%%%% Enable this block for the official version
+\newcommand{\rat}[1]{}
+\newcommand{\tbd}[2][] {}
+
+\begin{document}
+
+% OGF-defined title page rendering 
+{\noindent
+\begin{minipage}[t]{3.0in}
+\headerstyle
+\docseries \\
+\ifnonempty{\groupname}{\groupname \\}
+\ifnonempty{\groupurl}{\groupurl \\}
+\ifnonempty{\documenturl}{\documenturl \\}
+\end{minipage}
+\hfill
+\raggedleft
+\begin{minipage}[t]{3.0in}
+\raggedleft
+\headerstyle
+\authorsshort \\
+\publicationdate \\
+\ifnonempty{\revisiondate}{Revised \revisiondate \\}
+\end{minipage}
+}
+
+\begin{center}
+\makeatletter
+\Large\bf\textsf \@title
+\makeatother
+\end{center}
+
+\subsection*{Status of This Document}
+
+Group Working Draft - Proposed Recommendation (GWD-R-P)
+
+\rat{
+This is the non-normative annotated version of the specification with line numbers. It includes information concerning the content and why features were included or discarded by the working group. It also emphasizes the consequences of some aspects that may not be immediately apparent. This document in only intended for internal working group discussions.
+}   
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% End of header, insert content below this line
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\subsection*{Obsoletes}
+
+\subsection*{Document Change History}
+% TODO: Makes this a non-table, otherwise it also travels to the end of the document
+%\begin{table}[ht]
+%\centering
+%\begin{tabularx}{\textwidth}{|X|X|}
+%\hline
+%\emph{Date} & \emph{Notes} \\
+%\hline
+%%xxx & Submission to OGF Editor \\
+%\hline
+%\end{tabularx}
+%\end{table}
+
+\subsection*{Copyright Notice}
+
+Copyright \copyright \ Open Grid Forum (\copyrightyears).  Some Rights Reserved.  
+Distribution is unlimited.
+
+\subsection*{Trademark}
+
+All company, product or service names referenced in this document are used for identification purposes only and may be trademarks of their respective owners. 
+
+\section*{Abstract}
+
+This document is an extension specification in the \emph{Open Cloud Computing Interface (OCCI)} document series. It describes an extension of the \emph{OCCI Core Model} \cite{gfd183} for remote access to a distributed resource management (DRM) system over RESTful protocols such as HTTP. The wire protocol is defined by a OCCI rendering. All interface semantics in this specification are derived from the \emph{Distributed Resource Management Application API Version 2} \cite{gfd194}, so this document also represents a language binding in the DRMAA document series.
+
+The intended audience for this specification are OCCI and DRMAA implementors. Based on this specification, OCCI implementors can extend their backend support to support DRM systems. DRMAA implementors can realize a  remote version of their API implementation. 
+
+\newpage
+
+\subsection*{Notational Conventions}
+\label{sec:rfc2119}
+
+The key words \enquote{MUST} \enquote{MUST NOT}, \enquote{REQUIRED}, \enquote{SHALL}, \enquote{SHALL NOT}, \enquote{SHOULD}, \enquote{SHOULD NOT}, \enquote{RECOMMENDED}, \enquote{MAY},  and \enquote{OPTIONAL} are to be interpreted as described in RFC 2119~\cite{rfc2119}. 
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\label{sec:introduction}
+
+ The \emph{Distributed Resource Management Application API Version 2 (DRMAA)} specification defines an interface for tightly coupled, but still portable access to Distributed Resource Management (DRM) systems. The scope is limited to job submission, job control, reservation management, and retrieval of job and machine monitoring information. The DRMAA root specification \cite{gfd194} describes the abstract API concepts and the behavioral rules of a DRMAA-compliant implementation. The programming language representation of the API is defined by a separate \emph{language binding specification}.  
+ 
+The Open Cloud Computing Interface (OCCI) is a RESTful Protocol and API for all kinds of management tasks. The OCCI Core specification defines the OCCI Core Model \cite{gfd183}. It can be interacted with \emph{renderings} (including associated behaviors) and expanded through \emph{extensions}. For particular domain, extensions specify additional resource types, their attributes and the actions that can be taken on each resource type. OCCI makes an ideal interoperable boundary interface between the web and the internal resource management system of infrastructure providers.
+
+This document acts as OCCI extension for the domain of such DRM systems that are covered by the DRMAA specification. It therefore acts both as OCCI extension and as DRMAA language binding. The OCCI DRMAA extension details how an OCCI implementation can provide control and monitoring functions for a DRM system as a Service API offering.  
+
+Due to the nature of this specification, no functional or protocol description is provided. All behavioral semantics of an implementation MUST be conformant to the DRMAA specification \cite{gfd194}. All syntactical aspects of the access protocol MUST be conformant to a chosen OCCI binding, such as the HTTP binding \cite{gfd185}.
+
+There are other relevant OGF standards for remote APIs in the area of job submission and monitoring. They typically focus on meta-scheduling, while this specification provides a tightly coupled DRM system access with a remote API. OGSA-BES \cite{citemaster_498} defines a service interface for similar job submission purposes, but with strong focus on the abstract notion of resources and WSRF standards \cite{stateful-wsrf}. OCCI-DRMAA interfaces may serve as backend for a OGSA-BES implementation. JSDL \cite{citemaster_428} is a specification for XML-based job description, but OCCI-DRMAA utilizes the more restrictive DRMAA job description scheme for implementing mandatory job attribute support.   
+
+\todo{Add DrmaaReflective mapping}
+\todo{Consider DRMAAv2 errata}
+
+\section{Basic concepts}
+
+Table \ref{tab:kinddefinitions} describes the \emph{Kind} instances for each of the OCCI-DRMAA entities.
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|l|}
+\hline
+Term & Scheme & Title & Related Kind \\
+\hline
+jobsession             & \h{<schema>/drmaa2\#}             & Job Session resource            & \h{<schema>/occi/core\#resource} \\
+reservationsession     & \h{<schema>/drmaa2\#}             & Reservation Session resource    & \h{<schema>/occi/core\#resource} \\
+monitoringsession      & \h{<schema>/drmaa2\#}             & Monitoring Session resource     & \h{<schema>/occi/core\#resource} \\
+job                    & \h{<schema>/drmaa2\#}             & Job resource                    & \h{<schema>/occi/core\#resource} \\
+jobarray               & \h{<schema>/drmaa2\#}             & Job Array resource              & \h{<schema>/occi/core\#resource} \\
+reservation            & \h{<schema>/drmaa2\#}             & Reservation resource            & \h{<schema>/occi/core\#resource} \\
+jobinfo                & \h{<schema>/drmaa2/job\#}         & Job Information Mixin           & - \\
+slotinfo               & \h{<schema>/drmaa2\#}             & Slot Information resource       & \h{<schema>/occi/core\#resource} \\
+queueinfo              & \h{<schema>/drmaa2\#}             & Queue Information resource      & \h{<schema>/occi/core\#resource} \\
+reservationinfo        & \h{<schema>/drmaa2\#}             & Reservation Information resource & \h{<schema>/occi/core\#resource} \\
+machineinfo            & \h{<schema>/drmaa2\#}             & Machine Information resource    & \h{<schema>/occi/core\#resource} \\
+version                & \h{<schema>/drmaa2\#}             & Version Information resource    & \h{<schema>/occi/core\#resource} \\
+jobtemplate            & \h{<schema>/drmaa2\#}             & Job Template resource           & \h{<schema>/occi/core\#resource} \\
+reservationtemplate    & \h{<schema>/drmaa2\#}             & Reservation Template resource   & \h{<schema>/occi/core\#resource} \\
+joblink                & \h{<schema>/drmaa2\#}             & Relation from \h{jobsession} to \h{job} resource & \h{<schema>/occi/core\#link} \\
+reservationlink        & \h{<schema>/drmaa2\#}             & Relation from \h{reservationsession} to \h{reservation} resource & \h{<schema>/occi/core\#link} \\
+\hline
+\end{tabularx}
+\caption{The \emph{Kind} instances defined for OCCI-DRMAA.  The base URL \emph{http://schemas.ogf.org} has been replaced with \h{<schema>} in this table for a better readability experience.}
+\label{tab:kinddefinitions}
+\end{table}
+
+\rat{There was a long debate in the Potsdam F2F meeting about how to map DRMAA structs to OCCI. Due to the possibility of implementation-specific extensions (and for several other reasons), we decided to map DRMAA structs to resources.}
+
+\rat{There was a long debate at OGF 34 if we should model DRMAA templates as serialized structs. This brings potential rendering problems with long OCCI attribute values. Also, the server may want to report differing job templates, which would bloat the \h{job} resource return attributes on every request.}
+
+All instantiatable DRMAA structures are represented as OCCI resources. Original DRMAA methods that return struct instances are mapped to OCCI or HTTP verb actions that return the location of a new struct resource instance. Clients MAY be allowed to create new struct resources by a POST request to the collection URI of the struct resource (e.g. POST /drmaa2/jobinfo/). By using an appropriate content type in a GET request on the struct instance, the client SHOULD be able to retrieve a serialized version of the struct instance.
+
+The \emph{JobInfo} structure of DRMAA represents a set of information items for a job. It is modeled as OCCI mixin, so the \h{jobinfo} mixin is a set of additional information attributes about \h{job} resources. This allows to use it both as reporting and filter configuration data structure. The reporting functionality comes from the combination of a \h{job} resource with the according \h{jobinfo} mixin. Filtering is supported by querying a \h{jobsession} resource that is connected with the \h{jobinfo} mixin for jobs under the given \h{jobinfo} filter constraints (see \cite{gfd183}, Section 4.4.5).
+
+DRMAA templates are data structures that express complex information entities as a whole. They might be modified by a DRM system after their creation, which makes them additional OCCI resources without actions.
+
+The DRMAA session concept models the relationship of \emph{Job} and \emph{JobSession} instances. Similarly, it models the relation between \emph{Reservation} and \emph{ReservationSession} instances. In OCCI-DRMAA, these relationships are represented by OCCI links between the according resource entities. A \h{joblink} resource represents the connection of a job to it's job session. A \h{reservationlink} resource represents the connection of an advance reservation to it's reservation session.
+
+\rat{We model the jobsession <-> job relation as OCCI link, especially for using the lifetime model for links. At least Thijs says there is one. Currently, this demands the server to return ALL such links when a resource is retrieved without filtering (see GFD.185, Section 3.4.5). Upcoming OCCI specs will have pagination support for this.}
+
+Most of the enumeration members from the DRMAA specification are mapped directly to JSON strings. For the \emph{JobTemplatePlaceholder} values, special mapping rules apply (see Table \ref{tab:datatypes}).
+
+In adherence to the DRMAA specification, \emph{reservation}, \emph{reservationsession}, \emph{reservationtemplate} and \emph{reservationlink} only MAY be supported by the OCCI-DRMAA implementation. An implementation MUST either support all of these resource types, or none of them. The support MUST be discoverable through the OCCI Query Interface. All other \emph{Kind} instances MUST be supported. 
+
+\subsection{Callback support}
+
+The DRMAA specification allows the DRMAA API implementation to offer push notification for applications. In OCCI-DRMAA, this is possible for clients by providing a URI as callback target in the \emph{registereventnotification} action.  If the provided URI declares the \emph{http}protocol to be used, then the implementation MUST deliver the notification information via POST to the given endpoint. For all other protocols (i.e. mail://), the behavior is implementation-specific.
+
+\todo{Define serialization of DrmaaNotification struct instance in the callback call}
+
+\subsection{Exceptions}
+
+DRMAA defines a set of exceptions that may be thrown by API activities. In OCCI-DRMAA, the mapping of these exceptions depends on the chosen transport. In case the HTTP transport is used for the OCCI-DRMAA implementation, the error code mapping in Table \ref{tab:exceptions} MUST be applied. 
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|>{\raggedright\arraybackslash}X|}
+\hline
+DRMAA Exception & OCCI-DRMAA HTTP Error Code\\
+\hline
+DeniedByDrmsException & 401, if authorization is not available \\
+DeniedByDrmsException & 403, if authorization is available, but the operation is not allowed \\
+DrmCommunicationException & 500 \\
+TryLaterException & 503, with retry header \\
+TimeoutException & 410 \\
+InternalException & 500 \\
+InvalidArgumentException & 400 \\
+InvalidSessionException & 404 \\
+InvalidStateException & 409 \\
+OutOfResourceException & 503, without retry header \\
+UnsupportedAttributeException & 400 \\
+UnsupportedOperationException & 405 \\
+ImplementationSpecificException & 500 \\
+\hline
+\end{tabularx}
+\caption{Mapping of DRMAA exceptions to HTTP error codes.}
+\label{tab:exceptions}
+\end{table}
+
+\subsection{Type system}
+
+The OCCI core model supports the notion of action attributes as representation for parameters of an invocable operation (see \cite{gfd183}, Section 4.5.4). OCCI attributes always have string values(see \cite{gfd183}, Figure 2). On the other hand, DRMAA has a central definition of utilized parameter types. For this reason, Table \ref{tab:datatypes} defines a mapping from DRMAA-IDL data types to a JSON-based string representation. Accordingly, constant values from DRMAA definitions are mapped to OCCI-DRMAA (see Table \ref{tab:constants}).
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|>{\raggedright\arraybackslash}X|}
+\hline
+DRMAA type & OCCI-DRMAA representation\\
+\hline
+string                 & JSON string \linebreak Example: \h{"/bin/date"} \\
+long / long long       & JSON number \linebreak Example: \h{42} \\
+double                 & JSON float  \linebreak Example: \h{7.02} \\
+boolean                & JSON boolean, defaults to \h{false} if attribute is not set \linebreak Example:  \h{true}, \h{false} \\
+struct                 & JSON dictionary with member names as keys\linebreak Example:  \h{\{"machineName":"node1.drmaa2.org", "slots":42\}} \\
+Dictionary             & JSON dictionary \linebreak Example:  \h{\{"PATH": "/usr/bin", "OMP\_NUM\_THREADS": "64"\}} \\
+enum value             & JSON string \linebreak Example:  \h{"RUNNING"} \\
+JobTemplatePlaceholder & JSON string surrounded by "\$" \linebreak Example: \h{"\$HOME_DIRECTORY\$"} \\ 
+StringList           & JSON array of strings \linebreak Example:  \h{["foo@example.com", "bar@example.com"]} \\
+JobList               & JSON array of \h{job} resource URIs \linebreak Example:  \h{["http://example.com/drmaa2/job/job43", "http://example.com/drmaa2/job/job46"]} \\
+QueueInfoList      & JSON array of strings \linebreak Example:  \\
+MachineList        & JSON array of strings \linebreak Example:  \\
+OrderedStringList      & JSON array of strings \linebreak Example:  \h{["node1.drmaa2.org", "node2.drmaa2.org"]} \\
+OrderedSlotInfoList    & JSON array of JSON dictionaries \linebreak Example:  \h{[\{"machineName": "node1.drmaa2.org", "slots": 42\}]} \\
+AbsoluteTime           & JSON string in ISO8601 format \linebreak Example:  \h{"2003-04-01T13:01:02"} \\
+TimeAmount             & JSON number representing seconds \linebreak Example:  \h{3600} \\
+\hline
+\end{tabularx}
+\caption{The data types used for attributes in OCCI-DRMAA.}
+\label{tab:datatypes}
+\end{table}
+
+\todo{Add missing examples in Table, maybe based on OCCI JSON rendering ideas}
+
+\rat{ReservationList is not needed in the mapping, since OCCI links are used for that in all occasions.}
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|>{\raggedright\arraybackslash}X|}
+\hline
+DRMAA constant & OCCI-DRMAA representation\\
+\hline
+ZERO\_TIME     & JSON number \h{0} \\
+INFINITE\_TIME & JSON number \h{-1} \\
+NOW            & JSON string \h{"now"} \\
+\hline
+\end{tabularx}
+\caption{The constants used in OCCI-DRMAA. }
+\label{tab:constants}
+\end{table}
+
+DRMAAs notion of \h{UNSET} values is mapped to multiplicity of OCCI-DRMAA attributes. All attributes that may hold the value \h{UNSET} MUST be have a multiplicity $0\ldots1$.
+
+\subsection{Capability check}
+\label{sec:drmaacapability}
+
+The \emph{SessionManager::supports()} method in DRMAA allows to check for the implementation support of optional features.  The OCCI-DRMAA binding does not map this enumeration directly, since the different functionality checks are represented by OCCI-ish activities:
+
+\begin{itemize}
+\item \emph{ADVANCE\_RESERVATION}: The client is expected to ask the query interface if the \emph{reservation} resource is supported. \todo{add example code}
+\item \emph{RESERVE\_SLOTS}: The support for this capability is expressed by the \emph{hasReserveSlots} attribute on the \emph{drmaa2} resource (see Table \ref{tab:globalattributes}).
+\item \emph{BULK\_JOBS\_MAXPARALLEL}: The support for this capability is expressed by the \emph{hasMaxParallel} attribute on the \emph{drmaa2} resource (see Table \ref{tab:globalattributes}).
+\item \emph{RT\_STARTNOW}: The support for this capability is expressed by the \emph{hasStartNow} attribute on the \emph{drmaa2} resource (see Table \ref{tab:globalattributes}). 
+\item \emph{CALLBACK}: The client is expected to ask the query interface if the \emph{registerEventNotification} action is supported by this implementation. \todo{add example code}
+\item \emph{JT\_EMAIL, JT\_STAGING, JT\_DEADLINE, JT\_MAXSLOTS, JT\_ACCOUNTINGID, RT\_DURATION, RT\_MACHINEOS, RT\_MACHINEARCH}: The client is expected to ask the query interface if the according job template mixin is supported. \todo{add example code}
+\end{itemize}
+
+\subsection{Blocking wait calls}
+
+DRMAA supports the notion of blocking status wait calls for both the \emph{Job} and the \emph{JobSession} interface. The OCCI-DRMAA extension re-models this approach with the concept of a wait handle URI. The call flow is described in Section \ref{sec:waitjobstart} and Section \ref{sec:waitanyjobstart}. The wait action returns the location of the wait handle, which can be further used for polling GET requests to the server. The server MUST return one of these three possible error codes on such request:
+
+\begin{itemize}
+\item \emph{Still waiting} (HTTP error 404): The blocking wait call is still running, no timeout occurred so far. The wait handle location remains valid.
+\item \emph{Timeout} (HTTP error 410): The blocking call was terminated due to timeout. The wait handle location is now invalid.
+\item \emph{Success} (HTTP error 301): The blocking call was terminated since the wait condition was fulfilled. The wait handle location is now invalid.
+\end{itemize}
+
+\section{OCCI-DRMAA Resources}
+
+DRMAA interfaces represent activities on instantiatable entities. They are mostly modeled as OCCI resources:
+
+\begin{itemize}
+\item A \h{drmaa2} resource represents the container for all OCCI-DRMAA resources and the according functionalities. 
+\item A \h{jobsession} resource acts as container for \h{job} resources and \h{jobarray} resources. 
+\item A \h{reservationsession} resource acts as container for \h{reservation} resources. 
+\item A \h{monitoringsession} resource acts as representation of information about the DRM system on provider side. 
+\item A OCCI-DRMAA \h{job} resource represents one job in the underlying DRM system on provider side. Similarly, the \h{jobarray} resource represents a cluster of jobs.
+\item A \h{reservation} resource represents a successfully created advance reservation in the DRM system.
+\end{itemize}
+
+\todo{Add missing resources in the list}
+
+DRMAA interface methods that trigger state changes in the DRM system map to OCCI actions on OCCI resources. DRMAA functionalities that lead to the creation of instances represented by OCCI resources are available as OCCI resource creation activities (see also \cite{gfd183}, Section 4.4.4 and \cite{gfd185}, Section 3.4.4). DRMAA interface methods that return named instances (i.e. JobSession::getJobArray) are not translated to OCCI actions, since this kind of retrieval is possible by formulating a resource location string explicitely. 
+
+DRMAA IDL interface attributes map to OCCI attributes. The \h{readonly} modifier for DRMAA attributes translates to the immutability property. The concept of optional or possibly \emph{UNSET} attributes in DRMAA is mapped to a OCCI attribute multiplicity of $0\ldots1$. Id-based or name-based referencing of instances (e.g. of a DRMAA session) is replaced by URI-based referencing.
+
+%%%%%%%% root %%%%%%%%
+\subsection{drmaa2}
+
+The DRMAA \emph{SessionManager} interface is represented by the \'drmaa2\' resource. The reference to this resource MUST be retrievable by a request to the OCCI query interface for the following OCCI \emph{kind} scheme:
+
+\url{http://schemas.ogf.org/drmaa2}
+
+The result of this query interface call MUST be one OCCI \emph{Kind} location. This location then is used to determine the location of the \emph{drmaa2} resource, which MUST be a singleton too.  
+
+The \emph{open...} methods of the DRMAA \emph{SessionManager} interface are not mapped to OCCI-DRMAA, since they translate directly to explicitely formulated resource locations.
+
+The \emph{destroy...} methods of the DRMAA \emph{SessionManager} interface are represented by support for the DELETE verb on session resources. \todo{Add example reference}
+
+The \emph{close...} methods of the DRMAA \emph{SessionManager} interface are also not mapped to OCCI-DRMAA, since OCCI assumes stateless clients as basic architectural concept.
+
+The \emph{drmaa2} resource supports the attributes as described in Table \ref{tab:globalattributes}.
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|X|}
+\hline
+Attribute                       & Type            & Multiplicity & Mutability \\
+\hline
+\h{occi.drmaa2.drmsName}        & string          & 1            & Immutable \\ % no UNSET possible
+\h{occi.drmaa2.drmsVersion}     & DRMAA Version   & 1            & Immutable \\ % no UNSET possible
+\h{occi.drmaa2.drmaaName}       & string          & 1            & Immutable \\ % no UNSET possible
+\h{occi.drmaa2.drmaaVersion}    & DRMAA Version   & 1            & Immutable \\ % no UNSET possible
+\h{occi.drmaa2.hasReserveSlots} & Boolean         & 1            & Immutable \\ % no UNSET possible
+\h{occi.drmaa2.hasMaxParallel}  & Boolean         & 1            & Immutable \\ % no UNSET possible
+\h{occi.drmaa2.hasStartNow}     & Boolean         & 1            & Immutable \\ % no UNSET possible
+\hline
+\end{tabularx}
+\caption{Attributes of the \h{drmaa2} resource}
+\label{tab:globalattributes}
+\end{table}
+
+%%%%%%%% jobsession %%%%%%%%
+\subsection{jobsession}
+
+Table \ref{tab:jobsessionactions} describes the actions available for a \h{jobsession} resource. Required attributes on actions are always mutable. Table \ref{tab:jobsessionattributes} describes the attributes delivered on retrieval of a \h{jobsession} resource.
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|l|X|l|}
+\hline
+Action term           & Attributes          & Attribute type      & DRMAA equivalent \\
+\hline
+\h{runjob}            & \h{jobTemplate}     & \h{jobtemplate} URI & JobSession::runJob() \\
+\h{runbulkjobs}       & \h{jobTemplate}     & \h{jobtemplate} URI & JobSession::runBulkJobs() \\
+                      & \h{beginIndex}      & long                & \\
+                      & \h{endIndex}        & long                & \\
+                      & \h{step}            & long                & \\
+                      & \h{maxParallel}     & long                & \\
+\h{waitanystarted}    & \h{job}             & \h{job} URI         & JobSession::waitAnyStarted()\\
+                      & \h{timeout}         & DRMAA TimeAmount    & \\
+\h{waitanyterminated} & \h{job}             & \h{job} URI         & JobSession::waitAnyTerminated()\\
+                      & \h{timeout}         & DRMAA TimeAmount    & \\
+\hline
+\end{tabularx}
+\caption{Actions available for a \h{jobsession} resource}
+\label{tab:jobsessionactions}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|X|}
+\hline
+Attribute                   & Type         & Multiplicity & Mutability \\
+\hline
+\h{occi.drmaa2.contact}     & string       & 1            & Mutable    \\ % no UNSET possible
+\h{occi.drmaa2.sessionName} & string       & 1            & Mutable    \\ % no UNSET possible
+\h{occi.drmaa2.jobCategory} & string       & 0..1         & Immutable  \\ % may have no categories defined
+\hline
+\end{tabularx}
+\caption{Attributes of the \h{jobsession} resource}
+\label{tab:jobsessionattributes}
+\end{table}
+
+The original \h{JobSession::getJobArray} method is not represented as attribute or action. Instead, the server MUST support the retrieval of a specifically named \h{jobarray} resource based on the manual creation of an according URI beginning with \emph{http://schemas.ogf.org/occi/drmaa\#jobarray}. 
+
+The original \h{JobSession:getJobs} method is also not represented as attribute or action. Instead, the \h{jobsession} resource MUST return the references to all attached \h{job} resource instances as \h{joblink} OCCI links. This retrieval operation MUST also support a mixin-based filtering of this \h{job} set. \todo{Not clear how the jobsession resource can transform to the jobsession+jobinfo resource for this activity.}
+
+On creation of a \h{jobsession} resource, the \h{contact} and / or the \h{sessionName} attribute MAY be provided by the client as part of the request. This maps to original DRMAA \emph{SessionManager::createJobSession} method signature.
+
+%%%%%%%% reservationsession %%%%%%%%
+
+\subsection{reservationsession resource}
+
+Table \ref{tab:reservationsessionactions} describes the actions available for a \h{reservationsession} resource. Required attributes on actions are always mutable. Table \ref{tab:reservationsessionattributes} describes the attributes delivered on retrieval of a \h{reservationsession} resource.
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|X|}
+\hline
+Action term            & Required attributes     & Attribute type              & DRMAA equivalent  \\
+\hline
+\h{requestreservation} & \h{reservationTemplate} & \h{reservationtemplate} URI &  ReservationSession::requestReservation() \\
+\hline
+\end{tabularx}
+\caption{Actions available for a \h{reservationsession} resource}
+\label{tab:reservationsessionactions}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|X|}
+\hline
+Attribute       & type   & Multiplicity & Mutability \\
+\hline
+\h{occi.drmaa2.contact}     & string       & 1            & Mutable    \\ % no UNSET possible
+\h{occi.drmaa2.sessionName} & string       & 1            & Mutable    \\ % no UNSET possible
+\hline
+\end{tabularx}
+\caption{Attributes of the \h{reservationsession} resource}
+\label{tab:reservationsessionattributes}
+\end{table}
+
+The original \h{ReservationSession::getReservation} method is not represented as attribute or action. Instead, the server MUST support the retrieval of a specifically named \h{reservation} resource based on the manual creation of an according URI beginning with \emph{http://schemas.ogf.org/occi/drmaa\#reservation}. 
+
+The original \h{ReservationSession:getReservations} method is also not represented as attribute or action. Instead, the \h{reservationsession} resource MUST return the references all attached \h{reservation} resource instances as \h{reservationlink} OCCI links. 
+
+On creation of a \h{reservationsession} resource, the \h{contact} and / or the \h{sessionName} attribute MAY be provided by the client as part of the request. This maps to original DRMAA \emph{SessionManager::createReservationSession} method signature.
+
+%%%%%%%% monitoringsession %%%%%%%%
+
+\subsection{monitoringsession resource}
+
+\todo{Fix this, multiple queue attributes are not allowed in OCCI, use QueueInfoList rendering instead.}
+
+Table \ref{tab:monitoringsessionattributes} describes the attributes delivered on retrieval of a \h{monitoringsession} resource. This resource has no actions defined.
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|X|}
+\hline
+Attribute    & Type  & Multiplicity & Mutability \\
+\hline
+\h{occi.drmaa2.contact}  & string            & 1            & Mutable    \\ 
+\h{occi.drmaa2.queue}    & DRMAA QueueInfo   & 0..*         & Mutable    \\ 
+\h{occi.drmaa2.machine}  & DRMAA MachineInfo & 0..*         & Mutable    \\ 
+\hline
+\end{tabularx}
+\caption{Attributes of the \h{monitoringsession} resource}
+\label{tab:monitoringsessionattributes}
+\end{table}
+
+The original \h{MonitoringSession:getAllJobs} method is not represented as attribute or action. Instead, the \h{monitoringsession} resource MUST return the references to all known \h{job} resource instances as OCCI links. This retrieval operation MUST also support a mixin-based filtering of this \h{job} set. 
+
+The original \h{MonitoringSession:getAllReservations} method is also not represented as attribute or action. Instead, the \h{monitoringsession} resource MUST return the references all known \h{reservation} resource instances as OCCI links. 
+
+The original \h{MonitoringSession:getAllQueues} method is represented with the \h{queue} attribute. On retrieval of the \h{monitoringsession} resource, the implementation MUST return a \h{queue} attribute for each supported queue in the target system. This retrieval operation MUST also support the provisioning of \h{queue} attributes by the client for filtering of the result. Implementations MUST support the filtering by queue name. Implementations MAY support the filtering by implementation-specific \emph{QueueInfo} attributes.
+
+The original \h{MonitoringSession:getAllMachines} method is represented with the \h{machine} attribute. On retrieval of the \h{monitoringsession} resource, the implementation MUST return a \h{machine} attribute for each execution host in the target DRM system. This retrieval operation MUST also support the provisioning of \h{machine} attributes by the client for filtering of the result. Implementations MUST support the filtering by machine name. Implementations MAY support the filtering by other (DRMAA-)mandatory or implementation-specific \emph{MachineInfo} attributes.
+
+On creation of a \h{monitoringsession} resource, the \h{contact} attribute MAY be provided by the client as part of the request. This maps to original DRMAA \emph{SessionManager::openMonitoringSession} method signature.
+
+%%%%%%%% job %%%%%%%%
+
+\subsection{job resource}
+
+Table \ref{tab:jobactions} describes the actions available for a \h{job} resource. Table \ref{tab:jobattributes} describes the attributes delivered for the \h{job} resource.
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|X|}
+\hline
+Action term         & Required attributes & Attribute type    & DRMAA equivalent \\
+\hline
+\h{suspend}         & -                   &  -                & Job::suspend()  \\
+\h{resume}          & -                   &  -                & Job::resume()   \\
+\h{hold}            & -                   &  -                & Job::hold()     \\
+\h{release}         & -                   &  -                & Job::release()  \\
+\h{terminate}       & -                   &  -                & Job::terminate() \\
+\h{waitstarted}     & timeout             & DRMAA TimeAmount  & Job::waitStarted() \\
+\h{waitterminated}  & timeout             & DRMAA TimeAmount  & Job::waitTerminated()\\
+\hline
+\end{tabularx}
+\caption{Actions available for a \h{job} resource}
+\label{tab:jobactions}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|X|}
+\hline
+Attribute    & Type   & Multiplicity & Mutability \\
+\hline
+\h{occi.drmaa2.jobId}       & string              & 1            & Immutable \\ % no UNSET possible
+\h{occi.drmaa2.session}     & \h{jobsession} URI  & 0..1         & Mutable   \\ % 0: job may be outside of a DRMAA session, Mutable: For job creation
+\h{occi.drmaa2.jobTemplate} & \h{jobtemplate} URI & 1            & Mutable   \\ % no UNSET possible, but may be set on job resource creation
+\h{occi.drmaa2.state}       & Enum (DRMAA JobState)     & 1            & Immutable \\ % DRMAA is unclear here, so we do not allow UNSET, since we have UNDETERMINED
+\h{occi.drmaa2.substate}    & string              & 0..1         & Immutable \\ % DRMAA is unclear here, so we allow UNSET
+\hline
+\end{tabularx}
+\caption{Attributes of the \h{job} resource}
+\label{tab:jobattributes}
+\end{table}
+
+The DRMAA \emph{sessionName} attribute was replaced by the \h{session} resource link, which fulfills the same purpose, but fits better to the OCCI semantics.
+
+The \h{jobTemplate} and \h{session} attributes are mutable by the client, in order to allow the implicit triggering of job execution by creating a \h{job} resource. In this case, it MUST be ensured that the client provides both of them with valid values. All other attempts to create \h{job} resources from the client side MUST fail.
+
+\rat{Starting of bulk jobs through this would mess up to much.}
+
+The \h{job} resource can be combined with the \h{jobinfo} mixin. \todo{explain use cases}
+
+%%%%%%%% jobarray %%%%%%%%
+
+\subsection{jobarray resource}
+
+Table \ref{tab:jobarrayactions} describes the actions available for a \h{jobarray} resource. Table \ref{tab:jobarrayattributes} describes the attributes delivered for the \h{jobarray} resource.
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|X|}
+\hline
+Action term         & Required attributes & Attribute type    & DRMAA equivalent \\
+\hline
+\h{suspend}         & -                   &  -                & JobArray::suspend() \\
+\h{resume}          & -                   &  -                & JobArray::resume()  \\
+\h{hold}            & -                   &  -                & JobArray::hold()    \\
+\h{release}         & -                   &  -                & JobArray::release() \\
+\h{terminate}       & -                   &  -                & JobArray::terminate() \\
+\hline
+\end{tabularx}
+\caption{Actions available for a \h{jobarray} resource}
+\label{tab:jobactions}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|X|}
+\hline
+Attribute   & Type                & Multiplicity & Mutability \\
+\hline
+\h{occi.drmaa2.jobArrayId}  & string              & 1            & Immutable \\ % no UNSET possible
+\h{occi.drmaa2.session}     & \h{jobsession} URI  & 0..1         & Immutable \\ % job may be outside of a DRMAA session
+\h{occi.drmaa2.jobTemplate} & \h{jobtemplate} URI & 1            & Immutable \\ % no UNSET possible 
+\hline
+\end{tabularx}
+\caption{Attributes of the \h{jobarray} resource}
+\label{tab:jobattributes}
+\end{table}
+
+The DRMAA \emph{sessionName} attribute was replaced by the \h{session} resource link, which fulfills the same purpose, but fits better to the OCCI semantics.
+
+The original \h{JobArray:jobs} attribute is not represented as attribute or action. Instead, the \h{jobarray} resource MUST return the references to all jobs in the array as OCCI \h{job} links. 
+
+%%%%%%%% reservation %%%%%%%%
+
+\subsection{reservation resource}
+
+Table \ref{tab:reservationactions} describes the actions available for a \h{reservation} resource. Table \ref{tab:reservationattributes} describes the attributes delivered for the \h{reservation} resource.
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|X|}
+\hline
+Action term & Required attributes & Attribute type    & DRMAA equivalent        \\
+\hline
+terminate   & -                   & -                 & Reservation::terminate() \\
+\hline
+\end{tabularx}
+\caption{Actions available for a \h{reservation} resource}
+\label{tab:reservationactions}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|X|}
+\hline 
+Attribute                    & Type                        & Multiplicity & Mutability \\
+\hline
+\h{occi.drmaa2.reservationId} & string                      & 1     & Immutable \\ % no UNSET possible
+\h{occi.drmaa2.session}       & \h{reservationsession} URI  & 0..1  & Mutable   \\ % reservation may be outside of a DRMAA session
+\h{reservationTemplate}      & \h{reservationtemplate} URI & 1     & Mutable   \\ % no UNSET possible
+\hline
+\end{tabularx}
+\caption{Attributes of the \h{reservation} resource}
+\label{tab:reservationattributes}
+\end{table}
+
+The DRMAA \emph{sessionName} attribute was replaced by the \h{session} resource link, which fulfills the same purpose, but fits better to the OCCI semantics.
+
+The \h{reservationTemplate} and \h{session} attributes are mutable by the client, in order to allow the implicit triggering of reservation requesting by creating a \h{reservation} resource. In this case, it MUST be ensured that the client provides both attributes with valid values. All other attempts to create \h{reservation} resources from the client side MUST fail.
+
+%%%%%%%% jobtemplate %%%%%%%%
+
+\subsection{JobTemplate}
+
+Table \ref{tab:jobtemplateattributes} describes the attributes delivered for the \h{jobtemplate} resource. The resource has no actions.
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|l|l|}
+\hline 
+Attribute           & Type                         & Multiplicity & Mutability \\
+\hline
+\h{occi.drmaa2.remoteCommand}       & string                       & 0..1         & Mutable   \\ 
+\h{occi.drmaa2.args}                & DRMAA OrderedStringList      & 0..1         & Mutable   \\
+\h{occi.drmaa2.submitAsHold}        & boolean                      & 0..1         & Mutable   \\
+\h{occi.drmaa2.rerunnable}          & boolean                      & 0..1         & Mutable   \\
+\h{occi.drmaa2.jobEnvironment}      & DRMAA Dictionary             & 0..1         & Mutable   \\
+\h{occi.drmaa2.workingDirectory}    & string                       & 0..1         & Mutable   \\
+\h{occi.drmaa2.jobCategory}         & string                       & 0..1         & Mutable   \\
+\h{occi.drmaa2.email}               & DRMAA StringList             & 0..1         & Mutable   \\
+\h{occi.drmaa2.emailOnStarted}      & boolean                      & 0..1         & Mutable   \\
+\h{occi.drmaa2.emailOnTerminated}   & boolean                      & 0..1         & Mutable   \\ 
+\h{occi.drmaa2.jobName}             & string                       & 0..1         & Mutable   \\
+\h{occi.drmaa2.inputPath}           & string                       & 0..1         & Mutable   \\
+\h{occi.drmaa2.outputPath}          & string                       & 0..1         & Mutable   \\
+\h{occi.drmaa2.errorPath}           & string                       & 0..1         & Mutable   \\
+\h{occi.drmaa2.joinFiles}           & boolean                      & 0..1         & Mutable   \\
+\h{occi.drmaa2.reservationId}       & \h{reservation} URI          & 0..1         & Mutable   \\
+\h{occi.drmaa2.queueName}           & string                       & 0..1         & Mutable   \\
+\h{occi.drmaa2.minSlots}            & long                         & 0..1         & Mutable   \\ 
+\h{occi.drmaa2.maxSlots}            & long                         & 0..1         & Mutable   \\ 
+\h{occi.drmaa2.priority}            & long                         & 0..1         & Mutable   \\ 
+\h{occi.drmaa2.candidateMachines}   & DRMAA OrderedStringList      & 0..1         & Mutable   \\ 
+\h{occi.drmaa2.minPhysMemory}       & long                         & 0..1         & Mutable   \\ 
+\h{occi.drmaa2.machineOS}           & Enum (DRMAA OperatingSystem) & 0..1         & Mutable   \\
+\h{occi.drmaa2.machineArch}         & Enum (DRMAA CpuArchitecture) & 0..1         & Mutable   \\
+\h{occi.drmaa2.startTime}           & DRMAA AbsoluteTime           & 0..1         & Mutable   \\
+\h{occi.drmaa2.deadlineTime}        & DRMAA AbsoluteTime           & 0..1         & Mutable   \\
+\h{occi.drmaa2.stageInFiles}        & DRMAA Dictionary             & 0..1         & Mutable   \\
+\h{occi.drmaa2.stageOutFiles}       & DRMAA Dictionary             & 0..1         & Mutable   \\
+\h{occi.drmaa2.resourceLimits}      & DRMAA Dictionary             & 0..1         & Mutable   \\
+\h{occi.drmaa2.accountingId}        & string                       & 0..1         & Mutable   \\
+\hline
+\end{tabularx}
+\caption{Attributes of the \h{jobtemplate} resource}
+\label{tab:jobtemplateattributes}
+\end{table}
+
+\rat{DRMAA says that all attributes may have the value UNSET on submission, which maps to mupliplicity zero.}
+
+The implementation MUST render all \h{jobtemplate} attributes immutable when the template is linked from a \h{job} resource.
+
+\rat{This is the case when the job template resource represents the properties of a running job. The other case is the creation of a job template resource by the client for job submission purposes.}
+
+%%%%%%%% reservationtemplate %%%%%%%%
+
+\subsection{ReservationTemplate}
+Table \ref{tab:reservationtemplateattributes} describes the attributes delivered for the \h{reservationtemplate} resource. The resource has no actions.
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|l|}
+\hline 
+Attribute           & Type                         & Multiplicity & Mutability \\
+\hline
+\h{occi.drmaa2.reservationName}     & string                       & 0..1         & Mutable   \\
+\h{occi.drmaa2.startTime}           & DRMAA AbsoluteTime           & 0..1         & Mutable   \\
+\h{occi.drmaa2.endTime}             & DRMAA AbsoluteTime           & 0..1         & Mutable   \\
+\h{occi.drmaa2.duration}            & DRMAA TimeAmount             & 0..1         & Mutable   \\
+\h{occi.drmaa2.minSlots}            & long                         & 0..1         & Mutable   \\ 
+\h{occi.drmaa2.maxSlots}            & long                         & 0..1         & Mutable   \\ 
+\h{occi.drmaa2.jobCategory}         & string                       & 0..1         & Mutable   \\
+\h{occi.drmaa2.userACL}             & DRMAA StringList             & 0..1         & Mutable   \\
+\h{occi.drmaa2.candidateMachines}   & DRMAA OrderedStringList      & 0..1         & Mutable   \\ 
+\h{occi.drmaa2.minPhysMemory}       & long                         & 0..1         & Mutable   \\ 
+\h{occi.drmaa2.machineOS}           & Enum (DRMAA OperatingSystem) & 0..1         & Mutable   \\
+\h{occi.drmaa2.machineArch}         & Enum (DRMAA CpuArchitecture) & 0..1         & Mutable   \\
+\hline
+\end{tabularx}
+\caption{Attributes of the \h{reservationtemplate} resource}
+\label{tab:reservationtemplateattributes}
+\end{table}
+
+\rat{DRMAA says that all attributes may have the value UNSET on submission, which maps to mupliplicity zero.}
+
+The implementation MUST render all \h{reservationtemplate} attributes immutable when the template is linked from a \h{reservation} resource.
+
+\rat{This is the case when the reservation template resource represents the properties of a valid reservation. The other case is the creation of a reservation template resource by the client for reservation creation purposes.}
+
+\todo{Describe missing struct resources}
+
+\section{OCCI-DRMAA Mixins}
+
+\todo{Describe optional job template attributes to be mixins, all optional. Leave open if a POST on job template resource adds automatically all mixins, or if the client is doing this. Inherit all mixins from an abstract optional\_jt\_attribute mixin}
+
+\todo{Map job categories to empty mixins, which all inherit from an abstract job category mixin. This allows to distinguish the category mixins from other occi-drmaa mixins. If
+the user attaches such a job category mixin to a job template, ...}
+
+%%%%%%%% jobinfo %%%%%%%%
+
+\subsection{JobInfo}
+
+Table \ref{tab:jobinfoattributes} describes the attributes delivered by the usage of the \h{jobinfo} mixin on a resource. There are no actions defined by this mixin.
+
+\begin{table}[ht]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|l|l|}
+\hline 
+Attribute           & Type                         & Multiplicity & Mutability \\
+\hline
+\h{occi.drmaa2.jobId}               & string                       & 0..1 & Mutable   \\ 
+\h{occi.drmaa2.exitStatus}          & long                         & 0..1 & Mutable   \\
+\h{occi.drmaa2.terminatingSignal}   & string                       & 0..1 & Mutable   \\
+\h{occi.drmaa2.annotation}          & string                       & 0..1 & Mutable   \\
+\h{occi.drmaa2.jobState}            & Enum (DRMAA JobState)        & 0..1 & Mutable   \\
+\h{occi.drmaa2.jobSubState}         & string                       & 0..1 & Mutable   \\
+\h{occi.drmaa2.allocatedMachines}   & DRMAA OrderedSlotInfoList    & 0..1 & Mutable   \\
+\h{occi.drmaa2.submissionMachine}   & string                       & 0..1 & Mutable   \\
+\h{occi.drmaa2.jobOwner}            & string                       & 0..1 & Mutable   \\
+\h{occi.drmaa2.slots}               & long                         & 0..1 & Mutable   \\
+\h{occi.drmaa2.queueName}           & string                       & 0..1 & Mutable   \\
+\h{occi.drmaa2.wallclockTime}       & DRMAA TimeAmount             & 0..1 & Mutable   \\
+\h{occi.drmaa2.cpuTime}             & long                         & 0..1 & Mutable   \\
+\h{occi.drmaa2.submissionTime}      & DRMAA AbsoluteTime           & 0..1 & Mutable   \\
+\h{occi.drmaa2.dispatchTime}        & DRMAA AbsoluteTime           & 0..1 & Mutable   \\
+\h{occi.drmaa2.finishTime}          & DRMAA AbsoluteTime           & 0..1 & Mutable   \\
+\hline
+\end{tabularx}
+\caption{Attributes of the \h{jobinfo} mixin}
+\label{tab:jobinfoattributes}
+\end{table}
+
+Implementations SHOULD consider that some of the \h{jobinfo} attributes are mandatory on job information reporting (see \cite{gfd194}, Section 5.5). All attributes MUST be optional on mixin-based job filtering.
+
+\rat{DRMAA makes no statements on mandatory attributes in the filtering case, so we make all mixin attributes optional. On the other hand, this makes job information reporting more flexible than it should be. For example, an implementation could decide to not report allocatedMachines as job information, which is a violation of the DRMAA spec.}
+
+
+%%%%%%%% Examples %%%%%%%%
+
+\section{Examples with HTTP}
+
+GFD-P-R.185 \cite{gfd185} describes the rendering of OCCI through a RESTful HTTP interface. The following example shows how typical OCCI-DRMAA interactions would be modeled based on this rendering.
+
+\subsection{Query DRMAA interfaces}
+\label{sec:sessionmanager}
+
+\begin{verbatim}
+> GET /-/ HTTP/1.1
+> [...]
+> Category: drmaa2;scheme="http://schemas.ogf.org/drmaa2" 
+
+< HTTP/1.1 200 OK 
+< [...]
+< Category: drmaa2;scheme="http://schemas.ogf.org/drmaa2";class="kind";
+			rel="http://schemas.ogf.org/occi/core#resource";
+            location="/drmaa2/";title="DRMAAv2 Interfaces";
+            attributes="occi.drmaa2.drmsName occi.drmaa2.drmsVersion occi.drmaa2.drmaaName occi.drmaa2.drmaaVersion"
+
+> GET /drmaa2/ HTTP/1.1
+> [...]
+
+< HTTP/1.1 200 OK 
+< Content-type: text/uri-list
+< [...]
+< http://example.com/drmaa2
+\end{verbatim}
+
+\subsection{Determine the DRM system information}
+             
+\begin{verbatim}
+> GET /drmaa2 HTTP/1.1
+> [...]
+
+< HTTP/1.1 200 OK 
+< [...]
+< X-OCCI-Attribute: occi.drmaa2.drmsName="Platform LSF"
+< X-OCCI-Attribute: occi.drmaa2.drmsVersion="{"major":"42", "minor":"0"} 
+< X-OCCI-Attribute: occi.drmaa2.drmaaName="Thijs's OCCI-DRMAA backend"
+< X-OCCI-Attribute: occi.drmaa2.drmaaVersion="{"major":"2", "minor":"17"} 
+< [...]
+\end{verbatim}
+
+\subsection{Get all existing job sessions}
+
+\begin{verbatim}
+> GET /drmaa2/jobsession/ HTTP/1.1
+> [...]
+
+< HTTP/1.1 200 OK 
+< Content-type: text/uri-list
+< [...]
+< http://example.com/drmaa2/jobsession/17
+\end{verbatim}
+
+
+\subsection{Create a job session}
+
+\begin{verbatim}
+> POST /drmaa2/jobsession/ HTTP/1.1
+> [...]
+> X-OCCI-Attribute: occi.drmaa2.contact="headnode.testbed.platform.com"
+> X-OCCI-Attribute: occi.drmaa2.sessionName="MyTestSession"
+> [...]
+
+< HTTP/1.1 201 CREATED 
+< [...] 
+< Location: http://example.com/drmaa2/jobsession/session1
+< [...]
+\end{verbatim}
+
+\subsection{Submit a job}
+
+\emph{Step 1 - Create a \h{jobtemplate} resource}:
+
+\begin{verbatim}
+> POST /drmaa2/jobtemplate/ HTTP/1.1
+> [...]
+> X-OCCI-Attribute: occi.drmaa2.remoteCommand="/bin/date"
+> X-OCCI-Attribute: occi.drmaa2.machineOS="LINUX"
+> X-OCCI-Attribute: occi.drmaa2.email=["peter@troeger.eu","tmetsch@platform.com"]
+> X-OCCI-Attribute: occi.drmaa2.emailOnTerminated=true
+> [...]
+
+< HTTP/1.1 201 CREATED 
+< [...] 
+< Location: http://example.com/drmaa2/jobtemplate/template1
+< [...]
+\end{verbatim}
+
+\emph{Step 2 - Create a \h{job} resource}:
+
+\begin{verbatim}
+> POST /drmaa2/job/ HTTP/1.1
+> [...]
+> X-OCCI-Attribute: occi.drmaa2.session="/drmaa2/jobsession/session1"
+> X-OCCI-Attribute: occi.drmaa2.jobTemplate="/drmaa2/jobtemplate/template1"
+> [...]
+
+< HTTP/1.1 201 CREATED 
+< [...] 
+< Location: http://example.com/drmaa2/job/job43
+< [...]
+\end{verbatim}
+
+\subsection{Fetch filtered list of jobs}
+
+\begin{verbatim}
+> GET /drmaa2/job/ HTTP/1.1
+> [...]
+> X-OCCI-Attribute: occi.drmaa2.queueName="foo"
+> [...]
+
+< HTTP/1.1 200 OK 
+< Content-type: text/uri-list
+< [...]
+< http://example.com/drmaa2/job/job43
+< http://example.com/drmaa2/job/job44
+\end{verbatim}
+
+
+\subsection{Wait for job start}
+\label{sec:waitjobstart}
+
+\begin{verbatim}
+> GET /drmaa2/job/job43?action=waitstarted HTTP/1.1
+> [...] 
+> X-OCCI-Attribute: occi.drmaa2.timeout="..."
+> [...] 
+
+< HTTP/1.1 202 ACCEPTED
+< [...] 
+< Location: /drmaa2/job/job43/waithandle1
+< [...] 
+
+> GET /drmaa2/job/job43/waithandle1 HTTP/1.1
+> [...] 
+< HTTP/1.1 404 NOT FOUND
+
+> GET /drmaa2/job/job43/waithandle1 HTTP/1.1
+> [...] 
+< HTTP/1.1 410 GONE
+
+> GET /drmaa2/job/job43/waithandle1 HTTP/1.1
+> [...] 
+< HTTP/1.1 301 MOVED PERMANENTLY
+< [...] 
+< Location: /drmaa2/job/job43
+< [...] 
+\end{verbatim}
+
+\subsection{Wait for some job to start}
+\label{sec:waitanyjobstart}
+
+\todo{Can the jobs attribute be replaced with some OCCI links input ?}
+
+\begin{verbatim}
+> GET /drmaa2/jobsession/js44?action=waitanystarted HTTP/1.1
+> [...] 
+> X-OCCI-Attribute: occi.drmaa2.timeout="..."
+> X-OCCI-Attribute: occi.drmaa2.jobs=["http://example.com/drmaa2/job/job44", "http://example.com/drmaa2/job/job42"]
+> [...] 
+
+< HTTP/1.1 202 ACCEPTED
+< [...] 
+< Location: /drmaa2/jobsession/js44/waithandle1
+< [...] 
+
+> GET /drmaa2/jobsession/js44/waithandle1 HTTP/1.1
+> [...] 
+< HTTP/1.1 404 NOT FOUND
+
+> GET /drmaa2/jobsession/js44/waithandle1 HTTP/1.1
+> [...] 
+< HTTP/1.1 410 GONE
+
+> GET /drmaa2/jobsession/js44/waithandle1 HTTP/1.1
+> [...] 
+< HTTP/1.1 301 MOVED PERMANENTLY
+< [...] 
+< Location: /drmaa2/job/job42
+< [...] 
+\end{verbatim}
+
+
+\subsection{Query if advanced reservation is supported, negative answer}
+
+\begin{verbatim}
+> GET /-/ HTTP/1.1
+> [...]
+> Category: reservationsession;scheme="http://schemas.ogf.org/drmaa2" 
+
+< HTTP/1.1 204 NOCONTENT 
+< [...]
+\end{verbatim}
+
+\todo{Check OCCI compliance of negative query answer}
+
+\subsection{Query if advanced reservation is supported, positive answer}
+
+\begin{verbatim}
+> GET /-/ HTTP/1.1
+> [...]
+> Category: reservationsession;scheme="http://schemas.ogf.org/drmaa2" 
+
+< HTTP/1.1 200 OK 
+< [...]
+< Category: reservationsession;
+                   scheme="http://schemas.ogf.org/drmaa2";
+                   class="kind";
+                   rel="http://schemas.ogf.org/occi/core#resource";
+                   location="/drmaa2/reservationsession/";
+                   title="DRMAAv2 Advance Reservation Sessions";
+                   attributes="occi.drmaa2.reservationsession.contact 
+                               occi.drmaa2.reservationsession.sessionName"
+\end{verbatim}
+
+\subsection{Query all existing reservation sessions}
+
+\begin{verbatim}
+> GET /drmaa2/reservationsession/ HTTP/1.1
+> [...]
+
+< HTTP/1.1 200 OK 
+< Content-type: text/uri-list
+< [...]
+< http://example.com/drmaa2/reservationsession/rsess5
+< http://example.com/drmaa2/reservationsession/rsess4711
+< http://example.com/drmaa2/reservationsession/rsess42
+\end{verbatim}
+
+\subsection{Request an advance reservation}
+
+\emph{Step 1 - Create a \h{reservationtemplate} resource}:
+
+\begin{verbatim}
+> POST /drmaa2/reservationtemplate/ HTTP/1.1
+> [...]
+> X-OCCI-Attribute: occi.drmaa2.startTime="2012-11-11T11:11:11"
+> X-OCCI-Attribute: occi.drmaa2.endTime="2012-11-12T00:00:00"
+> X-OCCI-Attribute: occi.drmaa2.minSlots=2
+> X-OCCI-Attribute: occi.drmaa2.maxSlots=5000
+> [...]
+
+< HTTP/1.1 201 CREATED 
+< [...] 
+< Location: http://example.com/drmaa2/reservationtemplate/rtpl4711
+< [...]
+\end{verbatim}
+
+\emph{Step 2 - Create a \h{reservation} resource}:
+
+\begin{verbatim}
+> POST /drmaa2/reservation/ HTTP/1.1
+> [...]
+> X-OCCI-Attribute: occi.drmaa2.session="/drmaa2/reservationsession/rsess5"
+> X-OCCI-Attribute: reservationTemplate="/drmaa2/reservationtemplate/rtpl4711"
+> [...]
+
+< HTTP/1.1 201 CREATED 
+< [...] 
+< Location: http://example.com/drmaa2/reservation/rs99xy
+< [...]
+\end{verbatim}
+
+
+\subsection{Control a job}
+
+\begin{verbatim}
+> POST /drmaa2/job/job77?action=suspend HTTP/1.1
+> [...]
+
+< HTTP/1.1 200 OK 
+< [...] 
+\end{verbatim}
+
+\subsection{Fetch serialized information structure}
+
+\todo{Add example for content-type based serialization in GET request to structs}
+
+\subsection{Get the list of machines}
+
+\emph{Step 1 - Create a \h{monitoringsession} resource}:
+
+\begin{verbatim}
+> POST /drmaa2/monitoringsession/ HTTP/1.1
+> [...]
+> X-OCCI-Attribute: occi.drmaa2.contact="headnode.testbed.platform.com"
+> [...]
+
+< HTTP/1.1 201 CREATED 
+< [...] 
+< Location: http://example.com/drmaa2/monitoringsession/monitor8
+< [...]
+\end{verbatim}
+
+\emph{Step 2 - Fetch the \h{monitoringsession} resource to get the machine list}:
+
+\begin{verbatim}
+> GET /drmaa2/monitoringsession/monitor8 HTTP/1.1
+> [...]
+
+< HTTP/1.1 200 OK 
+< [...]
+< X-OCCI-Attribute: occi.drmaa2.machine="{"name":"exec1.testbed.platform.com","available":true,"sockets":4,"coresPerSocket":4,"threadsPerCore":2,"load":0.1,"physMemory":512000,"virtMemory":1000000,"machineOS":"LINUX",...}"
+< X-OCCI-Attribute: occi.drmaa2.machine="{"name":"exec2.testbed.platform.com","available":false,"sockets":1,"coresPerSocket":4,"threadsPerCore":1,"load":1.5,"physMemory":1000000,"virtMemory":2000000,"machineOS":"LINUX",...}"
+< [...]
+\end{verbatim}
+
+\section{Security Considerations}
+\label{sec:security}
+
+Security considerations from a DRM system point of view are clarified by the DRMAA root specification. An implementation MUST consider the regulations and security advices given there. 
+
+The DRMAA API does not specifically assume the existence of a particular security infrastructure in the DRM system. The scheduling scenario described herein presumes that security is handled at the point of interaction with the DRM system. It is assumed that credentials owned by the application using the API are in effect for the DRMAA implementation too, so that it acts as stakeholder for the application. This relays the responsibility of authentication to the OCCI rendering specification that is used to realize the wire protocol of an implementation.
+
+DRMAA implementers SHOULD guard their product against buffer overflows that can be exploited through DRMAA enabled interactive applications or portals. Implementations of the DRMAA API will most likely require a network to coordinate subordinate DRM system requests. However, the API makes no assumptions about the security posture provided by the networking environment. Therefore, application developers SHOULD also consider the security implications of \enquote{on-the-wire} communications in this case.
+
+\section{Contributors}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Insert content above this line
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Intellectual Property Statement}
+
+The OGF takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use of the technology described in this document or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any effort to identify any such rights.  Copies of claims of rights made available for publication and any assurances of licenses to be made available, or the result of an attempt made to obtain a general license or permission for the use of such proprietary rights by implementers or users of this specification can be obtained from the OGF Secretariat.
+
+The OGF invites any interested party to bring to its attention any copyrights, patents or patent applications, or other proprietary rights which may cover technology that may be required to practice this recommendation.  Please address the information to the OGF Executive Director.
+
+\section{Disclaimer}
+
+This document and the information contained herein is provided on an \enquote{as-is} basis and the OGF disclaims all warranties, express or implied, including but not limited to any warranty that the use of the information herein will not infringe any rights or any implied warranties of merchantability or fitness for a particular purpose.
+
+\section{Full Copyright Notice}
+
+Copyright \copyright \ Open Grid Forum (\copyrightyears). Some Rights Reserved.
+
+This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this paragraph are included on all such copies and derivative works. However, this document itself may not be modified in any way, such as by removing the copyright notice or references to the OGF or other organizations, except as needed for the purpose of developing Grid Recommendations in which case the procedures for copyrights defined in the OGF Document process must be followed, or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by the OGF or its successors or assignees.
+
+% \phantomsection\addcontentsline{toc}{section}{References}
+\section{References}
+\renewcommand{\refname}{}
+\vspace*{-3em}
+\bibliography{occi-drmaa}
+\end{document}

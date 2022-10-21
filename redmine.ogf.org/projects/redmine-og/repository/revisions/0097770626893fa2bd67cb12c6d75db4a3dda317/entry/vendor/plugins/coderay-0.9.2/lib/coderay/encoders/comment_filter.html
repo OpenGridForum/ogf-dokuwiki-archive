@@ -1,0 +1,655 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/entry/vendor/plugins/coderay-0.9.2/lib/coderay/encoders/comment_filter.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:43:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>/vendor/plugins/coderay-0.9.2/lib/coderay/encoders/comment_filter.rb - Redmine - Open Grid Forum</title>
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="rsvo5Uvs/OHqzq9AZjxgQ/1mtk/oY58g0kQJMlDTftw="/>
+<link rel='shortcut icon' href='https://redmine.ogf.org/favicon.ico?1425381960' />
+<link href="https://redmine.ogf.org/themes/ogf_redmine/stylesheets/application.css?1425381960" media="all" rel="stylesheet" type="text/css" />
+
+<script src="https://redmine.ogf.org/javascripts/prototype.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/effects.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/dragdrop.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/controls.js?1425381960" type="text/javascript"></script>
+<script src="https://redmine.ogf.org/javascripts/application.js?1425381960" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+Event.observe(window, 'load', function(){ new WarnLeavingUnsaved('The current page contains unsaved text that will be lost if you leave this page.'); });
+//]]>
+</script>
+
+<!--[if IE 6]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1425381960);}
+    </style>
+<![endif]-->
+<link href="https://redmine.ogf.org/plugin_assets/extended_fields/stylesheets/extended_fields.css?1425381960" media="screen" rel="stylesheet" type="text/css" /> <link href="https://redmine.ogf.org/plugin_assets/wiking/stylesheets/wiking.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+<!-- page specific tags -->
+
+  <script src="https://redmine.ogf.org/javascripts/repository_navigation.js?1425381960" type="text/javascript"></script>
+
+<link href="https://redmine.ogf.org/stylesheets/scm.css?1425381960" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body class="theme-Ogf redmine controller-repositories action-entry">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://redmine.ogf.org/login" class="login">Login</a></li>
+<li><a href="https://redmine.ogf.org/account/register" class="register">Register</a></li></ul>    </div>
+    
+    <ul><li><a href="https://redmine.ogf.org/" class="home">Home</a></li>
+<li><a href="https://redmine.ogf.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+
+<div id="header">
+    
+    <div id="quick-search">
+        <form action="https://redmine.ogf.org/search/index/redmine-og" method="get">
+        <input name="changesets" type="hidden" value="1" />
+        <label for='q'>
+          <a href="https://redmine.ogf.org/search/index/redmine-og" accesskey="4">Search</a>:
+        </label>
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text" />
+        </form>
+        
+    </div>
+    
+
+    <h1><a href="https://redmine.ogf.org/projects/operations?jump=repository" class="root">Operations</a> » <a href="https://redmine.ogf.org/projects/it-og?jump=repository" class="ancestor">IT</a> » Redmine</h1>
+
+    
+    <div id="main-menu">
+        <ul><li><a href="https://redmine.ogf.org/projects/redmine-og" class="overview">Overview</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues" class="issues">Issues</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/issues/calendar" class="calendar">Calendar</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/news" class="news">News</a></li>
+<li><a href="https://redmine.ogf.org/dmsf/redmine-og" class="dmsf">Documents</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/files" class="files">Files</a></li>
+<li><a href="https://redmine.ogf.org/projects/redmine-og/repository" class="repository selected">Repository</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">
+        
+        
+  
+  
+
+
+    </div>
+
+    <div id="content">
+        
+        
+
+<div class="contextual">
+  
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/statistics" class="icon icon-stats">Statistics</a>
+
+<form action="https://redmine.ogf.org/projects/redmine-og/repository/entry/vendor/plugins/coderay-0.9.2/lib/coderay/encoders/comment_filter.rb?rev=" id="revision_selector" method="get">  <!-- Branches Dropdown -->
+      | Branch: 
+    <select id="branch" name="branch"><option value=""></option>
+<option value="1.3-stable">1.3-stable</option>
+<option value="devel">devel</option>
+<option value="master">master</option></select>
+  
+  
+  | Revision: 
+  <input id="rev" name="rev" size="8" type="text" value="0097770626893fa2bd67cb12c6d75db4a3dda317" />
+</form>
+</div>
+
+<h2><a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/show">root</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/show/vendor">vendor</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/show/vendor/plugins">plugins</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/show/vendor/plugins/coderay-0.9.2">coderay-0.9.2</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/show/vendor/plugins/coderay-0.9.2/lib">lib</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/show/vendor/plugins/coderay-0.9.2/lib/coderay">coderay</a>
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/show/vendor/plugins/coderay-0.9.2/lib/coderay/encoders">encoders</a>
+
+
+    / <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/changes/vendor/plugins/coderay-0.9.2/lib/coderay/encoders/comment_filter.rb">comment_filter.rb</a>
+
+
+@ 00977706
+
+</h2>
+
+<p>
+
+<p>
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/changes/vendor/plugins/coderay-0.9.2/lib/coderay/encoders/comment_filter.rb">History</a> |
+
+    View |
+
+
+    <a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/annotate/vendor/plugins/coderay-0.9.2/lib/coderay/encoders/comment_filter.rb">Annotate</a> |
+
+<a href="https://redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/raw/vendor/plugins/coderay-0.9.2/lib/coderay/encoders/comment_filter.rb">Download</a>
+(808 Bytes)
+</p>
+
+
+</p>
+
+<div class="autoscroll">
+<table class="filecontent syntaxhl">
+<tbody>
+
+
+  <tr>
+    <th class="line-num" id="L1">
+      <a href="#L1">1</a>
+    </th>
+    <td class="line-code">
+      <pre>(<span class="global-variable">$:</span>.unshift <span class="string"><span class="delimiter">'</span><span class="content">../..</span><span class="delimiter">'</span></span>; require <span class="string"><span class="delimiter">'</span><span class="content">coderay</span><span class="delimiter">'</span></span>) <span class="keyword">unless</span> <span class="keyword">defined?</span> <span class="constant">CodeRay</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L2">
+      <a href="#L2">2</a>
+    </th>
+    <td class="line-code">
+      <pre><span class="keyword">module</span> <span class="class">CodeRay</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L3">
+      <a href="#L3">3</a>
+    </th>
+    <td class="line-code">
+      <pre><span class="keyword">module</span> <span class="class">Encoders</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L4">
+      <a href="#L4">4</a>
+    </th>
+    <td class="line-code">
+      <pre>  
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L5">
+      <a href="#L5">5</a>
+    </th>
+    <td class="line-code">
+      <pre>  load <span class="symbol">:token_class_filter</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L6">
+      <a href="#L6">6</a>
+    </th>
+    <td class="line-code">
+      <pre>  
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L7">
+      <a href="#L7">7</a>
+    </th>
+    <td class="line-code">
+      <pre>  <span class="keyword">class</span> <span class="class">CommentFilter</span> &lt; <span class="constant">TokenClassFilter</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L8">
+      <a href="#L8">8</a>
+    </th>
+    <td class="line-code">
+      <pre>    
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L9">
+      <a href="#L9">9</a>
+    </th>
+    <td class="line-code">
+      <pre>    register_for <span class="symbol">:comment_filter</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L10">
+      <a href="#L10">10</a>
+    </th>
+    <td class="line-code">
+      <pre>    
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L11">
+      <a href="#L11">11</a>
+    </th>
+    <td class="line-code">
+      <pre>    <span class="constant">DEFAULT_OPTIONS</span> = superclass::<span class="constant">DEFAULT_OPTIONS</span>.merge \
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L12">
+      <a href="#L12">12</a>
+    </th>
+    <td class="line-code">
+      <pre>      <span class="symbol">:exclude</span> =&gt; [<span class="symbol">:comment</span>]
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L13">
+      <a href="#L13">13</a>
+    </th>
+    <td class="line-code">
+      <pre>    
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L14">
+      <a href="#L14">14</a>
+    </th>
+    <td class="line-code">
+      <pre>  <span class="keyword">end</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L15">
+      <a href="#L15">15</a>
+    </th>
+    <td class="line-code">
+      <pre>  
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L16">
+      <a href="#L16">16</a>
+    </th>
+    <td class="line-code">
+      <pre><span class="keyword">end</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L17">
+      <a href="#L17">17</a>
+    </th>
+    <td class="line-code">
+      <pre><span class="keyword">end</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L18">
+      <a href="#L18">18</a>
+    </th>
+    <td class="line-code">
+      <pre>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L19">
+      <a href="#L19">19</a>
+    </th>
+    <td class="line-code">
+      <pre><span class="keyword">if</span> <span class="global-variable">$0</span> == <span class="predefined-constant">__FILE__</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L20">
+      <a href="#L20">20</a>
+    </th>
+    <td class="line-code">
+      <pre>  <span class="global-variable">$VERBOSE</span> = <span class="predefined-constant">true</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L21">
+      <a href="#L21">21</a>
+    </th>
+    <td class="line-code">
+      <pre>  <span class="global-variable">$:</span> &lt;&lt; <span class="constant">File</span>.join(<span class="constant">File</span>.dirname(<span class="predefined-constant">__FILE__</span>), <span class="string"><span class="delimiter">'</span><span class="content">..</span><span class="delimiter">'</span></span>)
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L22">
+      <a href="#L22">22</a>
+    </th>
+    <td class="line-code">
+      <pre>  eval <span class="predefined-constant">DATA</span>.read, <span class="predefined-constant">nil</span>, <span class="global-variable">$0</span>, <span class="predefined-constant">__LINE__</span> + <span class="integer">4</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L23">
+      <a href="#L23">23</a>
+    </th>
+    <td class="line-code">
+      <pre><span class="keyword">end</span>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L24">
+      <a href="#L24">24</a>
+    </th>
+    <td class="line-code">
+      <pre>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L25">
+      <a href="#L25">25</a>
+    </th>
+    <td class="line-code">
+      <pre><span class="comment">__END__
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L26">
+      <a href="#L26">26</a>
+    </th>
+    <td class="line-code">
+      <pre>require 'test/unit'
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L27">
+      <a href="#L27">27</a>
+    </th>
+    <td class="line-code">
+      <pre>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L28">
+      <a href="#L28">28</a>
+    </th>
+    <td class="line-code">
+      <pre>class CommentFilterTest &lt; Test::Unit::TestCase
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L29">
+      <a href="#L29">29</a>
+    </th>
+    <td class="line-code">
+      <pre>  
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L30">
+      <a href="#L30">30</a>
+    </th>
+    <td class="line-code">
+      <pre>  def test_filtering_comments
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L31">
+      <a href="#L31">31</a>
+    </th>
+    <td class="line-code">
+      <pre>    tokens = CodeRay.scan &lt;&lt;-RUBY, :ruby
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L32">
+      <a href="#L32">32</a>
+    </th>
+    <td class="line-code">
+      <pre>#!/usr/bin/env ruby
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L33">
+      <a href="#L33">33</a>
+    </th>
+    <td class="line-code">
+      <pre># a minimal Ruby program
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L34">
+      <a href="#L34">34</a>
+    </th>
+    <td class="line-code">
+      <pre>puts &quot;Hello world!&quot;
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L35">
+      <a href="#L35">35</a>
+    </th>
+    <td class="line-code">
+      <pre>    RUBY
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L36">
+      <a href="#L36">36</a>
+    </th>
+    <td class="line-code">
+      <pre>    assert_equal &lt;&lt;-RUBY_FILTERED, tokens.comment_filter.text
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L37">
+      <a href="#L37">37</a>
+    </th>
+    <td class="line-code">
+      <pre>#!/usr/bin/env ruby
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L38">
+      <a href="#L38">38</a>
+    </th>
+    <td class="line-code">
+      <pre>
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L39">
+      <a href="#L39">39</a>
+    </th>
+    <td class="line-code">
+      <pre>puts &quot;Hello world!&quot;
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L40">
+      <a href="#L40">40</a>
+    </th>
+    <td class="line-code">
+      <pre>    RUBY_FILTERED
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L41">
+      <a href="#L41">41</a>
+    </th>
+    <td class="line-code">
+      <pre>  end
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L42">
+      <a href="#L42">42</a>
+    </th>
+    <td class="line-code">
+      <pre>  
+</pre>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <th class="line-num" id="L43">
+      <a href="#L43">43</a>
+    </th>
+    <td class="line-code">
+      <pre>end</span></pre>
+    </td>
+  </tr>
+  
+
+</tbody>
+</table>
+</div>
+
+
+
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> &copy; 2006-2012 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+</body>
+
+<!-- Mirrored from redmine.ogf.org/projects/redmine-og/repository/revisions/0097770626893fa2bd67cb12c6d75db4a3dda317/entry/vendor/plugins/coderay-0.9.2/lib/coderay/encoders/comment_filter.rb by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Oct 2022 17:43:22 GMT -->
+</html>

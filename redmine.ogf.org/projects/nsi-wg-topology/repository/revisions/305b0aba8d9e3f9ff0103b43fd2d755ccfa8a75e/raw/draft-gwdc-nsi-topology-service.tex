@@ -1,0 +1,332 @@
+%!TEX TS-program = pdflatex
+
+%%%% Latex preamble and page formatting %%%%
+
+\documentclass[12pt]{article}  % larger font to compensate for long lines with fullpage
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[pdfborder={0 0 0}]{hyperref} % use hyperref without borders
+\usepackage{ifpdf}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{color}
+\usepackage{listings}
+\usepackage[title,titletoc]{appendix}
+% Read pictures from img/ and current directory
+\graphicspath{{img/}{./}}
+
+%%% GWD/GFD header follows %%%
+% Feel free to make changes, as long as your document follows the guidelines of GFP.152
+
+\usepackage[numbers]{natbib} % Use [1] for references, 
+\bibliographystyle{plainnat} % References show full author name(s) and document URL
+
+\usepackage[sf,compact]{titlesec} % Use sans-serif for section headers
+
+\usepackage[titles]{tocloft} % Format table of contents
+% (tocloft is used, since titletoc is incompatible with xetex.)
+\renewcommand{\cftsecfont}{\sffamily}
+\renewcommand{\cftsubsecfont}{\sffamily}
+\renewcommand{\cftsubsubsecfont}{\sffamily}
+\renewcommand{\cftsecpagefont}{\sffamily}
+\renewcommand{\cftsubsecpagefont}{\sffamily}
+\renewcommand{\cftsubsubsecpagefont}{\sffamily}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsubsecdotsep}} % dots for sections the same as for sections
+\setlength{\cftbeforesecskip}{0.5ex}
+
+\usepackage{parskip} % Blank lines between paragraphs, no indentation.
+
+% font style for headers and footers
+\newcommand{\headerstyle}{\sffamily} % sans-serif
+
+% Set page margins
+\usepackage{fancyhdr}
+\addtolength{\headheight}{15pt}
+\renewcommand{\headrulewidth}{0pt}
+% \setlength{\headrulewidth}{0pt}
+\setlength{\headsep}{20pt}
+\usepackage[headings]{fullpage}  % small margins
+
+% Macro to make some editorial notes
+\newenvironment{note}{\framebox{note:} \color[gray]{0.5}}{}
+
+% Macro to check if (optional) values above are defined or not.
+\newcommand{\ifnonempty}[2]{\ifthenelse{\isundefined{#1}}{}{\ifthenelse{\equal{#1}{}}{}{#2}}}
+
+%%%% Document header and title page %%%%
+
+\title{Network Service Interface Topology Service Distribution Mechanisms}
+\author{Jeroen van der Ham}
+\newcommand{\shortdoctitle}{NSI TS}  % Title used in page header
+% \date{} and \author{} are currently ignored
+\newcommand{\authorsshort}{Jeroen van der Ham, UvA}
+\newcommand{\publicationdate}{December 2012}  % Date of first publication of the document
+% \newcommand{\revisiondate}{August 2012}  % Optional: date of last revision of the document
+\newcommand{\copyrightyears}{2008-2012}  % Years used in copyright notice
+\newcommand{\docseries}{GWD-C}  % GWD-R, GWD-I or GWD-C (for working drafts)
+% \newcommand{\docseries}{GFD.191}  % GFD.000 (for approved documents)
+
+\ifpdf
+\hypersetup{
+    pdftitle = {Network Service Interface Topology Service},
+    pdfauthor = {Jeroen van der Ham},
+    pdfsubject = {Description of distribution mechanisms for the topology service},
+    pdfkeywords = {nsi topology distribution}
+}
+\fi
+
+
+% Define page header and footers
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{\fancyplain{}{\headerstyle\docseries}}
+% use \revisiondate if defined, otherwise \publicationdate for right header:
+\rhead{\fancyplain{}{\headerstyle\ifthenelse{\isundefined{\revisiondate }}{\publicationdate}{\ifthenelse{\equal{\revisiondate}{}}{\publicationdate}{\revisiondate}}}}
+\lfoot{\headerstyle\ifnonempty{\groupurl}{\groupurl}}
+\rfoot{\headerstyle\thepage}
+\thispagestyle{plain}
+
+\begin{document}
+
+% Title page header
+{\noindent
+\begin{minipage}[t]{1.5in}
+\headerstyle
+\docseries \\
+NSI-WG \\
+\href{mailto:nsi-wg@ogf.org}{nsi-wg@ogf.org}
+\end{minipage}
+\hfill
+\raggedleft
+\begin{minipage}[t]{4.5in}
+\raggedleft
+\headerstyle
+\authorsshort \\
+\vspace{1em}
+\publicationdate \\
+\ifnonempty{\revisiondate}{Revised \revisiondate \\}
+\end{minipage}
+}
+
+\vspace{1em}
+\begin{center}
+\makeatletter
+\Large\bf\textsf \@title
+\makeatother
+\end{center}
+
+
+\section*{Status of This Document}
+
+Group Working Draft (GWD), Community Practice (C).
+% TODO: before publication:
+%Grid Final Draft (GFD), Community Practice (C).
+
+
+% \section*{Document Change History}
+% 
+% TODO: use this for formal revisions of this document
+
+\section*{Copyright Notice}
+
+Copyright \copyright \ Open Grid Forum (\copyrightyears).  Some Rights Reserved.  
+Distribution is unlimited.
+
+\phantomsection\addcontentsline{toc}{section}{Abstract}
+\section*{Abstract}
+
+This document describes a normative schema which allows the
+description of service plane objects required for the Network Service Interface Connection Service. Additionally it describes a set of distribution mechanisms for the network topology descriptions.
+
+\phantomsection\addcontentsline{toc}{section}{Contents}
+\tableofcontents
+
+\newcommand{\qq}{\symbol{34}} % 34 is the decimal LaTeX code for "
+\newcommand{\q}{\symbol{39}} % 39 is the decimal LaTeX code for '
+\newcommand{\underscore}{\symbol{95}} % 39 is the decimal LaTeX code for _
+
+\newcommand{\MUST}{\textsc{must}}
+\newcommand{\MUSTNOT}{\textsc{must not}}
+\newcommand{\REQUIRED}{\textsc{required}}
+\newcommand{\SHALL}{\textsc{shall}}
+\newcommand{\SHALLNOT}{\textsc{shall not}}
+\newcommand{\SHOULD}{\textsc{should}}
+\newcommand{\SHOULDNOT}{\textsc{should not}}
+\newcommand{\RECOMMENDED}{\textsc{recommended}}
+\newcommand{\MAY}{\textsc{may}}
+\newcommand{\OPTIONAL}{\textsc{optional}}
+
+\newpage
+
+\section{Introduction}
+
+ The NSI Connection Service requires topology descriptions to do 
+pathfinding. In order to do that some representation of the topology is required. 
+Once represented, some form of topology distribution is also needed. This document 
+describes some requirements for the NSI Topology Service, suggests a short-term 
+implementation and a strategy for better long-term support.
+
+ In the first section we describe what is necessary for the topology 
+to support, what kind of elements should be in there. In the next section we describe 
+the distribution requirements, some possible solutions and a recommended solution 
+for the short-term and also for the longer term\label{h.15n4tpv97j8w}
+
+
+\section{Distribution of NSI Topology}
+
+ Some form of Topology distribution is required in order for an 
+inter-domain NSI network to function. In NSI 1.0 this process was performed out-of-band, 
+mostly through e-mail. For NSI 2.0 we take the opportunity to define an NSI Topology 
+Service for NSI topology exchange, which can support the NSI Connection Service.\label{h.c2129mkn366h}
+
+
+\subsection{Transport and Service plane relationship}
+
+ The NSI Connection Service is implemented on Network Service Agents 
+(NSAs), which together form a network and tree-like structure. This graph represents 
+how reservation requests would propagate through the network, but not necessarily 
+reflects the transport-plane. One NSA may be an aggregation point for other NSAs, 
+not visible from the outside.\label{h.mtia1ajwgzmv}
+
+
+The messaging between the NSAs will happen on the 
+service plane, which is completely separate from the transport plane.\label{h.dc66uw3zo12t}\label{h.ywjdj9kuwkou}
+
+
+\subsection{Elements of a Topology Exchange Mechanism}
+
+ There are three main elements of topology exchange: \label{h.u0b214m8krs}
+
+
+\paragraph{Bootstrapping Topology Exchange}
+
+ To start the initial Network Service the NSAs must be able to 
+find each other, in order to communicate details about the network. So some form 
+of bootstrapping is required, with initial synchronization between domains on both 
+the service plane and the transport plane, i.e. the NSAs of both domains must be 
+able to contact each other, and the details of transport plane connections between 
+them have to be synchronized as well.\label{h.fzohc79rts8y}
+
+
+Initiating a transport plane connection between two 
+networks is not a frequent occurrence, and a longer process, involving out-of-band 
+(for NSI) contact. Part of that process can be that the networks also communicate 
+the access details for the NSAs, thus forming an NSA relationship.\label{h.30v92h80y7jj}
+
+
+\paragraph{Expanding the Topology Exchange}
+
+ Once the neighboring (on the control-plane) NSAs have exchanged 
+details, they can also distribute details about the rest of the network, both the 
+control plane details and connectivity, but also some transport details.\label{h.c1dz1g10oju}
+
+\paragraph{Update Mechanism}
+
+ The transport network is not static, and links are added or removed 
+from time to time. An update mechanism is thus required to inform other NSAs about 
+these kinds of events.\label{h.uzmy62lgeii3}
+
+
+\subsection{Topology Exchange Implementations}
+
+ The above mechanisms can be implemented in five different ways:
+
+
+\paragraph{Centralized Manual Distribution}
+ An initial attempt at topology distribution in the Automated GOLE 
+demonstration was through a central maintainer. This maintainer collected all topology 
+information from the networks involved, gathered all the topology data and sent 
+out a topology file through e-mail. The network maintainers would than download 
+the attachment and insert it into their provisioning system. Updates to the topology 
+were all handled through the central maintainer, distributed through e-mail.\label{h.31tbtceozcoc}
+
+
+While this system worked initially, it soon ran into 
+scaling problems. This system also does not allow to have a good way of doing automatic 
+updates or insertion.
+
+
+\paragraph{Version Controlled Distribution}
+
+ The Automated GOLE demonstration has transitioned into a different 
+distribution mechanism using a Git source code repository, available on GitHub. 
+This mechanism also still has a central maintainer, this also allows networks to 
+manipulate their own topology information. The distribution mechanism is either 
+directly from the GitHub website, or through the git version control system itself. 
+The git system has the added advantage that it is a distributed version control 
+system, so it is not required to download directly from GitHub.\label{h.rtljwvhj8cbo}
+
+
+Bootstrapping and updating all happens through the 
+git system itself.
+
+
+\paragraph{PerfSonar Lookup Service}
+
+ The PerfSonar monitoring system suite also contains a service 
+for looking up information. This service uses a ``home Lookup Service''(hLS) where 
+metadata of information is registered, which is then uploaded into the ``global 
+Lookup Service''(gLS) (this can be cloud of services).\label{h.pg14lxc0zu6o}
+
+
+The retrieval of information happens by first querying 
+the gLS, then the relevant hLS, followed by the service where the actual information 
+is stored.\label{h.tjjrmby8htjk}
+
+
+Since topology information would be stored locally, 
+no update mechanism is necessary, except for location changes of the services itself. 
+However, this method of storing and lookup does require full connectivity between 
+all NSAs to provide and retrieve information, which may not be possible.
+
+
+ A soon to be released (target Dec 2012) updated PS Lookup service 
+will incorporate subscription capabilities, which allow an hLS to push information 
+to a remote hLS and have it cached locally there. By adapting the new Lookup service 
+to store topology, and selectively managing the subscription of data, full connectivity 
+between NSAs would not be necessary to disseminate global topology.
+
+
+\paragraph{HTTP Distribution}
+
+ A common way of distributing information is using the HTTP protocol. 
+The topology files would include links to topology description files, which would 
+allow other domains to directly fetch the topology description.\label{h.efkcsmt7dwgr}
+
+
+However, as with the Lookup Service, this requires 
+direct access between NSAs which may not be possible.\label{h.mbgns4xsvbt4}
+
+
+\paragraph{A Peer-to-Peer Distribution Protocol}
+
+ Another method is to define a new protocol for NSI topology distribution. 
+As explained above the protocol would only require a small set of primitives, and 
+would work directly between peering NSAs.\label{h.jo1it2zr3py}
+
+
+Once an NSA comes up, it contacts its neighbors to 
+request the topology information that they know about, and subscribes to future 
+topology updates. These updates are propogated in a peer-to-peer fashion through 
+the whole network.\label{h.3qkmh8hazvti}
+
+
+The end-result would be that all the NSAs have a 
+global view of the topology, with only local interaction.\label{h.40nvr2if8zj}
+
+
+\subsection{Summarizing Topology Distribution}
+
+ Above we have described five different topology distribution mechanisms, 
+from these five only the version controlled and peer-to-peer systems fit the requirements 
+that the NSI has, others require too much manual operation, or require globally 
+reachable NSAs. The peer-to-peer system would be the best solution with minimal 
+interaction between systems, and no reliance on outside mechanisms. For practical 
+reasons we believe the best solution right now is a version controlled distribution 
+system, and in time evolve to a peer-to-peer distribution protocol.\label{h.j5x37xsutbrh}
+
+
+
+
+\end{document}
