@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-June/000912.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:21 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Opinion Poll: IaaS or PaaS ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Opinion%20Poll%3A%20IaaS%20or%20PaaS%20%3F&In-Reply-To=21606dcf0906140645p21172566o7bb7d3a67e569acb%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000911.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000975.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Opinion Poll: IaaS or PaaS ?</H1>
+    <B>Gary Mazz</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Opinion%20Poll%3A%20IaaS%20or%20PaaS%20%3F&In-Reply-To=21606dcf0906140645p21172566o7bb7d3a67e569acb%40mail.gmail.com"
+       TITLE="[occi-wg] Opinion Poll: IaaS or PaaS ?">garymazzaferro at gmail.com
+       </A><BR>
+    <I>Sun Jun 14 11:52:48 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000911.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000975.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/date.html#912">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/thread.html#912">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/subject.html#912">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/author.html#912">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+I was on the same wavelength as you are until about a 3 days ago, I was 
+getting xVM working on opensolaris. xVM para-virtualization has a 
+concept of a virtual MAC address not tied to a physical MAC. This allows 
+them to create virtual HBA devices that can request IP addresses from  
+DHCP. The virtual MAC helps routers and switches find the VM when its 
+instantiated or transported to another rack or facility.
+
+I'm reconsidered my past position on what's relegated to fabric in lieu 
+of a more comprehensive definition of IaaS.
+
+Lets look at some provider models:
+1) A provider has hard iron that they physically provision for a 
+customer ( the dedicated hw model/ no sharing of anything)
+2) A provider has pooled iron that they logically provision (fixed 
+resources/dedicated hw) specific for a customer ( the LPAR model). This 
+includes blades, minis, 100 cpu racks.
+3) A provider has pooled iron that shared resource provisioning occurs 
+across customers ( the dynamic model).
+
+Irrespective of how the provider model fulfills its services, each are 
+providing specific items: CPUs, memory, network adapters, storage HBAs, 
+raw disk, filers, networks, VPNs, load balancers, web caches, name 
+servers, edge firewalls, etc...
+
+In the first case --- physical partitioning providers, the 
+infrastructure is hard iron and no doubt fabric. In the second two 
+models, LPAR and VM, all of the servers may be partially or completely 
+visualized. We need to address what this really means for the both the 
+providers and the consumers. 
+
+Providers have a pool of resources they provision for each customer. I 
+assume each set of resources would/can be organized into one or more 
+federated accounts. Federations can be further subdivided into 
+administrative resources groups (zones).  Each federation is logically 
+isolated from all other accounts for security and privacy constraints 
+and possibly quality agreements.  The quality, availability, 
+responsiveness, besides types of services offered are several ways 
+providers differentiate themselves.
+
+Consumers receiving federated pool of resources, can administer them 
+according to their IT and business requirements. The administration can 
+include fire walling internal to the federation, VPN connections between 
+federations and zones, and balancing external workload across multiple 
+applications servers, Essentially, executing the same organizational and 
+administrative tasks occurring in private data centers.
+
+Unless there are hard requirements for physical isolation or dedicated 
+hardware, consumers will not care whether their infrastructure is 
+physically partitioned, implemented as LPARs, floating VMs or how 
+closely services are linked to fabric resources.. Consumers will expect 
+or require certain levels of quality from their service..
+
+Bottom line:
+Consumer services are defined by the providers; not all providers offer 
+the same services; and how a provider implements of their services, as 
+far as occi concerns,  are unrelated to their service offerings.
+
+IMO, I don't think we can exclude cloud service providers because their 
+services are too &quot;close&quot; to the fabric. We need to include virtualized 
+hardware parameters like MACs as well as other infrastructure services 
+including DNS, firewalls and VPNs. 
+
+In the world, there are going to be varying degrees of compatibility 
+betweens cloud provider technologies and service offerings. Some 
+differences can be easily be worked around, while other may be 
+irreconcilable; while all supporting and implementing occi.
+
+For example, virtual MACs are a hard reality and a critical attribute 
+for some providers. Even though they are not required by all providers, 
+it may not be a good idea to exclude them. In this case, the OCCI can 
+accommodate both type of providers by acting as a superset for network 
+adapter configurations. A provider not requiring a MAC address for their 
+operations can ignored the parameter.
+
+The idea that ALL occi cloud providers will be 100% inter-operating in 
+the face of differentiated (missing or incompatible)  service offering 
+is unrealistic.  For example, if a consumer has an application requiring 
+infrastructure provided load balancing services, they cannot engage a 
+provider not offering those services. The OCCI cannot reconcile 
+providers with incompatible infrastructures. In this example, the OCCI 
+can only provide a vehicle  for the consumer to assess the capabilities 
+of a provider.
+
+Reiterating, I think we need to include more virtualized services and 
+vituralized hardware configurations.
+
+lemme get a few more cups of coffee...
+
+-gary
+
+
+
+
+Sam Johnston wrote:
+&gt;<i> On Sun, Jun 14, 2009 at 1:35 PM, Gary Mazz &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">garymazzaferro at gmail.com</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">garymazzaferro at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     The question is: &quot; Do operating systems belong in IaaS or PaaS. &quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Definitely IaaS. When you start talking about MAC addresses, VLAN IDs, 
+</I>&gt;<i> etc. you're venturing well into the underlying hardware fabric which 
+</I>&gt;<i> is ultimately someone else's problem - I don't see any of these things 
+</I>&gt;<i> appearing in current IaaS APIs[1].
+</I>&gt;<i>
+</I>&gt;<i> Basically think of infrastructure services as everything up to the 
+</I>&gt;<i> operating system interface (be that an API, CLI or a GUI).
+</I>&gt;<i>
+</I>&gt;<i> Platform services (PaaS) on the other hand include [most of] the 
+</I>&gt;<i> solution stack... any app servers, databases, script/bytecode 
+</I>&gt;<i> interpreters, etc. - think LAMP. You can just take your app and use it 
+</I>&gt;<i> (in many was like it were a virtual machine - which is why the next 
+</I>&gt;<i> step for us will be a small one).
+</I>&gt;<i>
+</I>&gt;<i> Software services (SaaS) then add the application itself.
+</I>&gt;<i>
+</I>&gt;<i> OCCI is most definitely IaaS.
+</I>&gt;<i>
+</I>&gt;<i> Sam
+</I>&gt;<i>
+</I>&gt;<i> 1. That is not to say they're not important - they are, particularly 
+</I>&gt;<i> for &quot;I can't believe it's not cloud&quot; moreso than public cloud, but if 
+</I>&gt;<i> they appear in OCCI they'll be optional.
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000911.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000975.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/date.html#912">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/thread.html#912">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/subject.html#912">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/author.html#912">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-June/000912.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:21 GMT -->
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000676.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] OCCI MC - State Machine Diagram
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20MC%20-%20State%20Machine%20Diagram&In-Reply-To=21606dcf0905131323j3444c26bo22e103eaf1a99f02%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000681.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000677.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] OCCI MC - State Machine Diagram</H1>
+    <B>Andre Merzky</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20MC%20-%20State%20Machine%20Diagram&In-Reply-To=21606dcf0905131323j3444c26bo22e103eaf1a99f02%40mail.gmail.com"
+       TITLE="[occi-wg] OCCI MC - State Machine Diagram">andre at merzky.net
+       </A><BR>
+    <I>Thu May 14 03:23:43 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000681.html">[occi-wg] OCCI MC - State Machine Diagram Please clarify
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000677.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#676">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#676">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#676">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#676">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting [Sam Johnston] (May 13 2009):
+&gt;<i> 
+</I>&gt;&gt;<i>   Quoting [Sam Johnston] (May 13 2009):
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> That was exactly the point of introducing both together - given that
+</I>&gt;&gt;&gt;&gt;&gt;<i> most of the innovation is going to happen server side, clients
+</I>&gt;&gt;&gt;&gt;&gt;<i> should be as dumb as possible. That is, it doesn't matter if a new
+</I>&gt;&gt;&gt;&gt;&gt;<i> state comes along after a client has shipped because it will be
+</I>&gt;&gt;&gt;&gt;&gt;<i> advertised as a potential transition (HATEOAS), perhaps even with
+</I>&gt;&gt;&gt;&gt;&gt;<i> the expected target state.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I totally agree.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Great. Anyone doesn't agree with the need for [and proposed solution
+</I>&gt;&gt;&gt;<i> offering] flexibility in the state model?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Yes, me, I don't think HATEOAS should be applied in this
+</I>&gt;&gt;<i>     context.   But I realise/accept that I maybe the only one
+</I>&gt;&gt;<i>     with that opinion - thats ok.  So I'll say it here one last
+</I>&gt;&gt;<i>     time, for the record, and then will shut up: &quot;a static
+</I>&gt;&gt;<i>     simple state model allows for very simple clients.
+</I>&gt;&gt;<i>     Extensions can be defined via substates, or additional
+</I>&gt;&gt;<i>     transitions.&quot;
+</I>&gt;<i> 
+</I>&gt;<i>    I would counterargue that HATEOAS allows for even simpler clients
+</I>&gt;<i>    because they don't have to worry about hardwiring even a simple state
+</I>&gt;<i>    model. Using HTTP we can even feed them plain $LANG descriptions of
+</I>&gt;<i>    what the transitions and targets are - it doesn't get any easier than
+</I>&gt;<i>    that and you don't have to worry about updating clients to implement
+</I>&gt;<i>    new goodies.
+</I>
+I don't see that.  If  I want to write a client tool which
+starts a resource, I want to make sure the resource is in
+RUNNING state when the client reports success.  But if that
+client (a) has to infer the available states from a
+registry, it cannot posisbly know which state has the
+semantic meaning of RUNNING attached.  Further (b), if the
+client only sees those state transitions it is allowed in
+its current state, how does it know what transition path to
+take to reach that target state?  Is it (I am making those
+up obviously):
+
+  INITIAL -&gt; create() -&gt; CREATED -&gt; elevate() -&gt; ELEVATED () -&gt; run() -&gt;  RUNNING
+
+or
+  
+  INITIAL -&gt; create() -&gt; CREATED -&gt; init() -&gt; INITIALIZED -&gt; run() -&gt; RUNNING
+
+Or should the tool simply fail because it cannot see a run()
+transition in its INITIAL state?
+
+I think HATEOAS works pretty well if a human is in the loop
+who can parse the available transition description, and
+deduce a semantic meaning.  I don't think it makes for
+simple tooling, really.
+
+Then again, I may misunderstand the proposed usage of
+HATEOAS in OCCI.  So, can you help me out: what mechanism
+will avoid the confusion from the example above, if a vendor
+can provide init() and elevate() transitions on the fly,
+with no predefined semantics attached?  How would my tool
+deduce the transition path it needs to enact?
+
+Many thanks, Andre.
+
+
+&gt;<i>    I don't think anyone knows every possible thing that users are going to
+</I>&gt;<i>    want to do with the API (I certainly don't have the confidence to say I
+</I>&gt;<i>    do anyway) but we may need to revisit this point in the name of
+</I>&gt;<i>    interop... Atom categories would be one way to achieve this (e.g. &quot;Cold
+</I>&gt;<i>    Reboot&quot; and &quot;Warm Reboot&quot; might go in the &quot;restart&quot; category).
+</I>&gt;<i>    Sam
+</I>&gt;<i> 
+</I>&gt;<i> References
+</I>&gt;<i> 
+</I>&gt;<i>    1. mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">andre at merzky.net</A>
+</I>
+
+
+-- 
+Nothing is ever easy.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000681.html">[occi-wg] OCCI MC - State Machine Diagram Please clarify
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000677.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#676">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#676">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#676">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#676">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000676.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

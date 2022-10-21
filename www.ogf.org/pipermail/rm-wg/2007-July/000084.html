@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/rm-wg/2007-July/000084.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:34 GMT -->
+<HEAD>
+   <TITLE> [rm-wg] Some Questions :o)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:rm-wg%40ogf.org?Subject=%5Brm-wg%5D%20Some%20Questions%20%3Ao%29&In-Reply-To=46A0081F.5030203%40cnaf.infn.it">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/rm-wg/2007-July/000082.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/rm-wg/2007-July/000085.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[rm-wg] Some Questions :o)</H1>
+    <B>Strong, Paul</B> 
+    <A HREF="mailto:rm-wg%40ogf.org?Subject=%5Brm-wg%5D%20Some%20Questions%20%3Ao%29&In-Reply-To=46A0081F.5030203%40cnaf.infn.it"
+       TITLE="[rm-wg] Some Questions :o)">pstrong at ebay.com
+       </A><BR>
+    <I>Wed Jul 25 02:19:22 CDT 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/rm-wg/2007-July/000082.html">[rm-wg] Some Questions :o)
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/rm-wg/2007-July/000085.html">[rm-wg] Some Questions :o)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/rm-wg/2007-July/date.html#84">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/rm-wg/2007-July/thread.html#84">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/rm-wg/2007-July/subject.html#84">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/rm-wg/2007-July/author.html#84">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Sergio,
+
+I have taken the liberty of perhaps suggesting a slightly different
+breakdown (see attached).  This is based on the following workflow
+
+1.	A consuming Organization agrees one or more Share(s) with an
+Admin Domain for the access to a Computing Service.  That Service may
+comprise a set of Compute Resources and Application Resources.  Share
+could include types of resources, quantities, achievable SLOs and so
+forth.
+2.	The Admin Domain delegates responsibility for delivering a
+specific Share to a specific Computing Service.
+3.	A User within the consuming Organization then submits a Job to
+the Computing Service.  The Job request includes target resource types
+(application types, cpu types?) and desired quantities and so forth
+4.	The Computing Service checks to see if the Job request can be
+fulfilled by matching the Job request details to available Resources
+under it's management.
+5.	If the Job can be fulfilled the Service creates a logical
+Container and maps the Job to it.  In reality, this may mean associating
+an Application Resource with a Computing Resource and then the pair to
+the Job.  The Container is a useful abstraction as other resources may
+be added later.
+
+Whilst I think this is probably nowhere near perfect, I think that
+enumerating your use case and sequence diagram in a way similar to the
+above will make this exercise much quicker.  
+
+In this the Element becomes a Container, which can make use of various
+resources, for example physical machines, virtual servers, application
+binaries, data and so forth, thus providing an execution environment.
+The Container is created on demand when a Job is accepted, based on the
+resources that the Service has available to it, the resource types and
+quantities requested by the job and the resource types and quantities
+still available from the share.
+
+
+
+
+
+-----Original Message-----
+From: Sergio Andreozzi [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/rm-wg">sergio.andreozzi at cnaf.infn.it</A>]
+Sent: Thursday, July 19, 2007 5:56 PM
+To: Strong, Paul
+Cc: Laurence; Sergio Andreozzi; <A HREF="http://www.ogf.org/mailman/listinfo/rm-wg">rm-wg at ogf.org</A>; Balazs Konya
+Subject: Re: Some Questions :o)
+
+Hi Paul,
+
+Strong, Paul wrote:
+&gt;<i> I have been going through the GLUE 2 doc and have a number of
+</I>questions.
+
+great... some comments inline
+
+&gt;<i>    1. Site - Firstly I would strongly suggest renaming to AdminDomain.
+</I>&gt;<i>       More specifically, clearly an admin domain can span multiple
+</I>&gt;<i>       physical locations (which is why site could be a confusing
+</I>name),
+&gt;<i>       the question I have is does an admin domain have a 1 to 1
+</I>mapping
+&gt;<i>       with a real organization, or can an organization have multiple
+</I>&gt;<i>       admin domains (my guess would be yes) and can multiple
+</I>&gt;<i>       organizations present a single admin domain (think a consortium,
+</I>&gt;<i>       or perhaps that consortium is it's own organization).
+</I>
+your proposal matches the naming of CIM if I'm right. As regards the
+mapping, your guess is right, the relationship is many-to-many between
+admin domain and real organizations. We have use cases for all the
+combinations.
+
+&gt;<i>    2. I am still very unclear as to the value of Element (Figure 3).
+</I>It
+&gt;<i>       is an aggregation, but what problem does it solve - management?
+</I>
+this is actually one of the open issues; not everybody agree on it
+
+&gt;<i>       Am I right in assuming that this is actually the &quot;container&quot; for
+</I>a
+&gt;<i>       job?  If so is it genuinely managed such that you do not need to
+</I>&gt;<i>       manage the other elements? 
+</I>
+at the moment, it represents a way to identify via a persistent name the
+concepts that together offer a computing functionality in a Grid.
+
+if you consider this example:
+<A HREF="https://forge.ogf.org/sf/wiki/do/viewPage/projects.glue-wg/wiki/UseCases">https://forge.ogf.org/sf/wiki/do/viewPage/projects.glue-wg/wiki/UseCases</A>
+ForTheComputingElement?_message=1184893697976
+
+all the concepts are necessary to offer the computing functionality;  we
+aggregate all of them and identify by the concept of computing element;
+
+at the moment there are two opinions in the GLUE WG: one is to remove
+the computing element concept and to associate both computing service
+and computing resource to the admin domain; the other is to use the
+computing element as a way to identify these entity and associate it to
+the admin domain
+
+&gt;<i>       The composed of relationship implies
+</I>&gt;<i>       exclusive membership and it would seem to me that most of the
+</I>&gt;<i>       components that comprise the element can and will be managed out
+</I>&gt;<i>       of the context of the ComputeElement.   Actually, more correctly
+</I>-
+&gt;<i>       do compute resources and services share the same life - are they
+</I>&gt;<i>       created and destroyed when the element is?
+</I>
+as regards the lifetime, I agree that the composition relationship is
+too strong; it could be replaced with an aggregation relationship;
+
+here at DMTF I got the hint that the computing element could be an admin
+domain as well, and that admin domains in CIM are composable.
+
+&gt;<i>    3. Figure 4 - it seems ot me that the ComputingService
+</I>&gt;<i>       abstracts Computing Resources.  Shares seem to define a virtual
+</I>&gt;<i>       computing resource, i.e. some part of a resources.  Althought
+</I>the
+&gt;<i>       rest of the text iindicates that it is a utilization target.  If
+</I>&gt;<i>       so, t would seem that it is a policy.  It seems to me that both
+</I>&gt;<i>       concepts are useful.
+</I>
+it could be considered as a &quot;view&quot; on the resources or as an SLA with
+status information on the current usage.
+
+&gt;<i> I have to admit that 2 things would really help me understand this
+</I>&gt;<i> better.  The first would be a sequence diagram that shows the various
+</I>&gt;<i> interactions.  The second is a text use case.
+</I>
+I will work on the sequence diagram, for the text use case you can
+consider the one I mention above for the short term; a more detailed
+example will come
+
+&gt;<i> Let me give you my (probably distorted :o) view of what I think you
+</I>&gt;<i> are trying to build.
+</I>&gt;<i> 
+</I>&gt;<i> i)    You want to provide services that are admin domain specific and
+</I>&gt;<i> that can be shared.
+</I>&gt;<i> ii)    You want these services to execute jobs submitted from anywhere
+</I>&gt;<i> within an authorized virtual organization to be run on the resources
+</I>&gt;<i> within the admin domain, that have been assigned to that service.
+</I>more VO's can be authorized to the use the same service, different
+share; authorization can be also per group/role (sub-structures of VO's)
+
+&gt;<i> iii)    Each job is executed within a container, that the service
+</I>&gt;<i> creates specifically for that job when the job is submitted.
+</I>can you clarify what do you mean by container in this context?
+
+&gt;<i> iv)    The container includes all of the resources (compute, data,
+</I>&gt;<i> application etc.) required by the job to execute.  (Is Share the
+</I>&gt;<i> scalar value of one of the &quot;sides&quot; of the container?)
+</I>
+&gt;<i> v)    There are consumer and supplier side service level policies
+</I>&gt;<i> associated with the job and its container.  One would be a policy
+</I>&gt;<i> defining the target utilization of a resource, thus you would want to
+</I>&gt;<i> run one or more jobs (and thus containers) either sequentially or in
+</I>&gt;<i> parallel in order to meet the target utilization.  Another could be a
+</I>&gt;<i> consumer side request for &quot;sizing&quot; the container, ie saying I need X
+</I>&gt;<i> cpus for the life of the job, or I need Y cpu-minutes for the job
+</I>&gt;<i> 
+</I>&gt;<i> Anyway I think it is the nature of v) that is confusing.
+</I>
+the typical situation is that of an admin domain exposing a computing
+farm to a Grid infrastructure via a Grid interface. Consumers (VO's)
+would sign a contract with the admin domain in order to create a share
+for its users. As you point out, shares contain different types of
+policy: authorization policies for users submitting the jobs, mapping
+policies for resources depending on the service that is required by your
+consumers, other policies can apply to jobs (e.g., max wall time).
+
+Shares can be used in many ways, e.g., you can create a share to handle
+short jobs (small MaxWallTime) so that they don't get stuck by long jobs
+activity; another possibility is shares mapping jobs only to fast
+machines (if your farm handles both old and new ones).
+
+&gt;<i> All enlightenment appreciated ;o)
+</I>
+I hope I increased the intensity of light on the topic ;).
+
+
+Cheers, Sergio
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/rm-wg/attachments/20070725/73b54829/attachment.htm">http://www.ogf.org/pipermail/rm-wg/attachments/20070725/73b54829/attachment.htm</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: GLUE Admin Domains.gif
+Type: image/gif
+Size: 14550 bytes
+Desc: GLUE Admin Domains.gif
+Url : <A HREF="http://www.ogf.org/pipermail/rm-wg/attachments/20070725/73b54829/attachment-0005.gif">http://www.ogf.org/pipermail/rm-wg/attachments/20070725/73b54829/attachment-0005.gif</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: GLUE Core.gif
+Type: image/gif
+Size: 36537 bytes
+Desc: GLUE Core.gif
+Url : <A HREF="http://www.ogf.org/pipermail/rm-wg/attachments/20070725/73b54829/attachment-0006.gif">http://www.ogf.org/pipermail/rm-wg/attachments/20070725/73b54829/attachment-0006.gif</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: GLUE Derived Classes 1.gif
+Type: image/gif
+Size: 50193 bytes
+Desc: GLUE Derived Classes 1.gif
+Url : <A HREF="http://www.ogf.org/pipermail/rm-wg/attachments/20070725/73b54829/attachment-0007.gif">http://www.ogf.org/pipermail/rm-wg/attachments/20070725/73b54829/attachment-0007.gif</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: GLUE Derived Classes 2.gif
+Type: image/gif
+Size: 14990 bytes
+Desc: GLUE Derived Classes 2.gif
+Url : <A HREF="http://www.ogf.org/pipermail/rm-wg/attachments/20070725/73b54829/attachment-0008.gif">http://www.ogf.org/pipermail/rm-wg/attachments/20070725/73b54829/attachment-0008.gif</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: GLUE Relationships.gif
+Type: image/gif
+Size: 74619 bytes
+Desc: GLUE Relationships.gif
+Url : <A HREF="http://www.ogf.org/pipermail/rm-wg/attachments/20070725/73b54829/attachment-0009.gif">http://www.ogf.org/pipermail/rm-wg/attachments/20070725/73b54829/attachment-0009.gif</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/rm-wg/2007-July/000082.html">[rm-wg] Some Questions :o)
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/rm-wg/2007-July/000085.html">[rm-wg] Some Questions :o)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/rm-wg/2007-July/date.html#84">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/rm-wg/2007-July/thread.html#84">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/rm-wg/2007-July/subject.html#84">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/rm-wg/2007-July/author.html#84">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/rm-wg">More information about the rm-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/rm-wg/2007-July/000084.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:34 GMT -->
+</html>

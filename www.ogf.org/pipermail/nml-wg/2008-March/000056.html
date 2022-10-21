@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000056.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] About modelisation of the network description
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20About%20modelisation%20of%20the%20network%20description&In-Reply-To=47CD8DA6.9000409%40es.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000055.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000057.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] About modelisation of the network description</H1>
+    <B>Freek Dijkstra</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20About%20modelisation%20of%20the%20network%20description&In-Reply-To=47CD8DA6.9000409%40es.net"
+       TITLE="[Nml-wg] About modelisation of the network description">fdijkstr at science.uva.nl
+       </A><BR>
+    <I>Wed Mar  5 14:35:59 CST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000055.html">[Nml-wg] About modelisation of the network description
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000057.html">[Nml-wg] About modelisation of the network description
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#56">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#56">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#56">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#56">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Evangelos Chaniotakis wrote:
+
+&gt;<i> I'm on the fence as to whether we need a separate &quot;network&quot; concept.
+</I>&gt;<i> We might need to model administrative domains that run multiple
+</I>&gt;<i> independent networks.
+</I>
+You totally convinced me. So:
+
+DOMAIN = administrative domain = an organisational entity that is 
+responsible for the operational control of resources (including network 
+resources)
+
+NETWORK = a collection of network elements that behaves as a single 
+resource (it is possible to describe the functionality without exposing 
+the internal implementation or detailed internal limitations)
+
+I don't know how to describe VIEW. Evangelos, Aur&#233;lien, do you have 
+suggestions?
+
+
+&gt;<i> Anyway, here's what I think that sort of structure would look like:
+</I>&gt;<i> 
+</I>&gt;<i> - Domain
+</I>&gt;<i> --- View (type = &quot;monitoring&quot;)
+</I>&gt;<i> ------ Network Element
+</I>&gt;<i> ------ Network Element
+</I>&gt;<i> -------- Network Element
+</I>&gt;<i> ------ ....
+</I>&gt;<i> --- View (type = &quot;controlplane&quot;)
+</I>&gt;<i> ------ Network Element
+</I>&gt;<i> ------ Network Element
+</I>&gt;<i> ------ ....
+</I>&gt;<i> --- View (type = &quot;export&quot;)
+</I>&gt;<i> ------ Network Element
+</I>&gt;<i> -------- Network Element
+</I>&gt;<i> ------ Network Element
+</I>&gt;<i> ------ ....
+</I>&gt;<i> 
+</I>&gt;<i> and so on and so forth.
+</I>
+Shouldn't that be:
+
+- Domain
+--- Network
+----- View (type = &quot;monitoring&quot;)
+-------- Network Element
+-------- Network Element
+---------- Network Element
+-------- ....
+----- View (type = &quot;controlplane&quot;)
+-------- Network Element
+-------- Network Element
+-------- ....
+----- View (type = &quot;export&quot;)
+-------- Network Element
+---------- Network Element
+-------- Network Element
+-------- ....
+--- Network
+------ ....
+
+A few questions about your tree.
+* May a single network element occur in multiple views (I assume so)
+* Must a network element be part of only one domain (I assume so)
+* Can a view consist of network elements in multiple domains? (I really 
+don't know about this one, but if true, a view can also be higher in the 
+tree than a network)
+
+Given your tree, am I correct to assume these relations:
+domain:network = 1:many
+   (each network is under control of only one domain)
+network:view = 1:many
+   (a view can only contain network elements within a single domain)
+   alternatively: network:view = many:many
+   (a domain may contain multiple views, and a view may be composed
+   of network elements in multiple domains)
+network element:view = many:many
+   (a network element can occur in multiple views)
+network element:network = many:1
+   (a network element can only be part of one network)
+
+
+Regards,
+Freek
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000055.html">[Nml-wg] About modelisation of the network description
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000057.html">[Nml-wg] About modelisation of the network description
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#56">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#56">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#56">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#56">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000056.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000769.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Is HTTP the HTTP of cloud computing?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Is%20HTTP%20the%20HTTP%20of%20cloud%20computing%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000768.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000835.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Is HTTP the HTTP of cloud computing?</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Is%20HTTP%20the%20HTTP%20of%20cloud%20computing%3F&In-Reply-To="
+       TITLE="[occi-wg] Is HTTP the HTTP of cloud computing?">samj at samj.net
+       </A><BR>
+    <I>Mon May 25 11:14:58 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000768.html">[occi-wg] Is AtomPub already the HTTP of cloud computing?
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000835.html">[occi-wg] Is HTTP the HTTP of cloud computing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#769">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#769">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#769">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#769">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>And finally the conclusion:
+Is HTTP the HTTP of cloud
+computing?&lt;<A HREF="http://samj.net/2009/05/is-http-http-of-cloud-computing.html">http://samj.net/2009/05/is-http-http-of-cloud-computing.html</A>&gt;Ok
+so after asking Is OCCI the HTTP of cloud
+computing?&lt;<A HREF="http://samj.net/2009/05/is-occi-http-of-cloud-computing.html">http://samj.net/2009/05/is-occi-http-of-cloud-computing.html</A>&gt;I
+realised that the position may have already been filled and that the
+question was more Is AtomPub already the HTTP of cloud
+computing?&lt;<A HREF="http://samj.net/2009/05/is-atompub-already-http-of-cloud.html">http://samj.net/2009/05/is-atompub-already-http-of-cloud.html</A>&gt;
+
+After all my strategy for OCCI was to follow Google's example with GData by
+adding some necessary functionality (a search interface, caching directives,
+resource-specific attributes, etc.). Most of the heavy lifting was actually
+being done by AtomPub, thus avoiding a huge amount of tedious and
+error-prone protocol writing (around 20,000 words of it) - something which
+OGF and the OCCI working group isn't really geared up for anyway. This is
+clearly a workable and well-proven approach as it as been adopted
+strategically by both Microsoft and Google and also tactically by Salesforce
+and IBM, among others. Best of all adding things like
+queries&lt;<A HREF="http://code.google.com/apis/gdata/docs/2.0/reference.html#Queries">http://code.google.com/apis/gdata/docs/2.0/reference.html#Queries</A>&gt;and
+versioning&lt;<A HREF="http://code.google.com/apis/gdata/docs/2.0/reference.html#ResourceVersioning">http://code.google.com/apis/gdata/docs/2.0/reference.html#ResourceVersioning</A>&gt;is
+a manageable workload while starting from scratch is most certainly
+not.
+
+But what if there were an easier way? Recall that the problem we are trying
+to solve is exposing a flexible interface to an arbitrarily large collection
+of interconnected compute, storage and network resources. We need to be able
+to describe and manipulate the resources (CRUD), associate them with each
+other via rich links (e.g. links with attributes like local identifiers -
+eth0, sda, etc.) and change their state (start, stop, restart, etc.), among
+other things.
+
+Representational State Transfer (REST)
+
+Actually we're not talking about exposing the resources themselves (that
+would be impossible) but various *representations* of those resources - like
+Plato's shadows on the cave
+walls&lt;<A HREF="http://en.wikipedia.org/wiki/Allegory_of_the_cave">http://en.wikipedia.org/wiki/Allegory_of_the_cave</A>&gt;- this is the
+&quot;REpresentational&quot; in &quot;REpresentational State Transfer
+(REST)&quot;. There's an infinite number of possible representations so it's
+impossible to try to capture them all now, but here's some examples:
+
+   - An Open Virtualisation Format (OVF) serialisation of a compute resource
+   - A platform-specific descriptor file (e.g. VMX)
+   - A complete archive of the virtual machine with its dependencies (OVA)
+   - A graphical image of the console at a given point in time ('snapshot')
+   - A video stream of the console for archiving/audit purposes (ala
+   Citrix's Project
+Iris&lt;<A HREF="http://www.brianmadden.com/blogs/brianmadden/archive/2005/06/08/project-iris-becoming-a-reality-tech-preview-coming-next-month.aspx">http://www.brianmadden.com/blogs/brianmadden/archive/2005/06/08/project-iris-becoming-a-reality-tech-preview-coming-next-month.aspx</A>&gt;
+   )
+   - The console itself (e.g. SSH, ICA, RDP, VNC)
+   - Build documentation (e.g. PDF, ODF)
+   - Esoteric enterprise requirements (e.g. NMS configuration)
+
+It doesn't take a rocket scientist to spot the correlation between this and
+HTTP's existing content negotiation functionality (whereby a client can ask
+for a specific representation of a given resource - e.g. HTML vs PDF) so
+this is already pretty much solved for us (see HTTP's Accept:
+header&lt;<A HREF="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html</A>&gt;for the
+details). For bonus points this information should be exposed in the
+URI as it's not always possible or convenient to set headers ala:
+
+   - <A HREF="http://example.com/.atom">http://example.com/.atom</A> (using filename extensions)
+   - <A HREF="http://example.com/;content-type=text/html">http://example.com/;content-type=text/html</A> (using the full Internet
+   media type)
+
+Web Linking
+
+But what about the links? As I explained
+yesterday&lt;<A HREF="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html</A>&gt;the
+web is built on links embedded in HTML documents using the A tag. Atom
+also provides enhanced linking functionality via the LINK element, where it
+is also possible to specify content types, languages, etc. In this case
+however we want to allow resources to be arbitrary types and more often than
+not we won't have the ability to link within the payload itself. This leaves
+us with two options: put the links in the payload anyway by relying on a
+meta-model like Atom (or one we roll ourselves) or find some way to
+represent them within HTTP itself.
+
+Enter HTTP headers which are also extensible and, as it turns out, in the
+process of being extended (or at least refined) to handle this very
+requirement by fellow down under, Mark Nottingham &lt;<A HREF="http://www.mnot.net/">http://www.mnot.net/</A>&gt;.
+See the &quot;Web Linking&quot; IETF Internet-Draft
+(draft-nottingham-http-link-header&lt;<A HREF="https://datatracker.ietf.org/drafts/draft-nottingham-http-link-header/">https://datatracker.ietf.org/drafts/draft-nottingham-http-link-header/</A>&gt;,
+at the time of writing version
+05&lt;<A HREF="http://www.ietf.org/internet-drafts/draft-nottingham-http-link-header-05.txt">http://www.ietf.org/internet-drafts/draft-nottingham-http-link-header-05.txt</A>&gt;)
+for the nitty gritty details and the ietf-http-wg
+list&lt;<A HREF="http://lists.w3.org/Archives/Public/ietf-http-wg/">http://lists.w3.org/Archives/Public/ietf-http-wg/</A>&gt;for
+some &lt;<A HREF="http://lists.w3.org/Archives/Public/ietf-http-wg/2009AprJun/0211.html">http://lists.w3.org/Archives/Public/ietf-http-wg/2009AprJun/0211.html</A>&gt;
+current&lt;<A HREF="http://lists.w3.org/Archives/Public/ietf-http-wg/2009AprJun/0196.html">http://lists.w3.org/Archives/Public/ietf-http-wg/2009AprJun/0196.html</A>&gt;
+discussions&lt;<A HREF="http://lists.w3.org/Archives/Public/ietf-http-wg/2009AprJun/0103.html">http://lists.w3.org/Archives/Public/ietf-http-wg/2009AprJun/0103.html</A>&gt;.
+Basically it clarifies the existing Link:
+headers&lt;<A HREF="http://tools.ietf.org/html/rfc2068#section-19.6.2.4">http://tools.ietf.org/html/rfc2068#section-19.6.2.4</A>&gt;and the
+result looks something like this:
+
+Link: &lt;<A HREF="http://example.com/TheBook/chapter2">http://example.com/TheBook/chapter2</A>&gt;; rel=&quot;previous&quot;;
+title=&quot;previous chapter&quot;
+
+The Link: header itself is also extensible so we can faithfully represent
+our model by adding e.g. the local device name when linking storage and
+network resources to compute resources and other requisite attributes. It
+would be helpful if the content-type were also specified (Atom allows for
+multiple links of the same relation provided the content-type differs for
+example) but language is already covered by HTTP (it doesn't seem useful to
+advertise French links to someone who already asked to speak English).
+
+It's also interesting to note that earlier versions of the HTTP RFCs
+actually [poorly] specified both the Link:
+headers&lt;<A HREF="http://tools.ietf.org/html/rfc2068#section-19.6.2.4">http://tools.ietf.org/html/rfc2068#section-19.6.2.4</A>&gt;as well as
+LINK &lt;<A HREF="http://tools.ietf.org/html/rfc2068#section-19.6.1.2">http://tools.ietf.org/html/rfc2068#section-19.6.1.2</A>&gt; and
+UNLINK&lt;<A HREF="http://tools.ietf.org/html/rfc2068#section-19.6.1.3">http://tools.ietf.org/html/rfc2068#section-19.6.1.3</A>&gt;methods for
+maintaining links between web resources. John Pritchard had a
+crack at clarification in the Efficient HyperLink Maintenance for
+HTTP&lt;<A HREF="http://ftp.ics.uci.edu/pub/ietf/http/draft-pritchard-http-links-00.txt">http://ftp.ics.uci.edu/pub/ietf/http/draft-pritchard-http-links-00.txt</A>&gt;I-D
+but like most I-Ds this one seems to have died after 6 months, and
+with
+it the methods themselves. It seems to me that adding HTTP methods at this
+time is a drastic (and almost certainly infeasible) action, especially for
+something that could just as easily be accomplished via headers ala
+Set-Cookie: (too bad the I-D doesn't specify how to add/delete/modify
+links!). In the simplest sense a Link: header appearing in a PUT or POST
+could replace the existing one(s) but something more elegant for acting on
+individual links would be nice - probably a discussion worth having on
+the ietf-http-wg
+list &lt;<A HREF="http://lists.w3.org/Archives/Public/ietf-http-wg/">http://lists.w3.org/Archives/Public/ietf-http-wg/</A>&gt;.
+
+Organisation of Information
+
+Looking back to Atom for a second we're still missing some key
+functionality:
+
+   - Atom id -&gt; HTTP URL
+   - Atom updated -&gt; HTTP Last-Modified: Header
+   - Atom title and summary -&gt; Atom/HTTP Slug:
+Header&lt;<A HREF="http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.2">http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.2</A>&gt;or
+equivalent
+   - Atom link -&gt; HTTP Link: Header
+   - Atom category -&gt; ???
+
+Houston, we have a problem. OCCI use cases range from embedded hypervisors
+exposing a single resource to a single entry-point for an entire enterprise
+or the &quot;Great Global Grid&quot; - we need a way to organise, categories and
+search for the information, likely including:
+
+   - Free text search via a Google-style &quot;?q=firewall&quot; syntax
+   - Taxonomy &lt;<A HREF="http://en.wikipedia.org/wiki/Taxonomy">http://en.wikipedia.org/wiki/Taxonomy</A>&gt; via categories (already
+   done &lt;<A HREF="http://www.ibm.com/developerworks/xml/library/x-tipatom4.html">http://www.ibm.com/developerworks/xml/library/x-tipatom4.html</A>&gt; for
+   Atom) for things like &quot;Operating System&quot; and &quot;Data Center&quot;
+   - Folksonomy &lt;<A HREF="http://en.wikipedia.org/wiki/Folksonomy">http://en.wikipedia.org/wiki/Folksonomy</A>&gt; via [user]
+tags (already
+   done &lt;<A HREF="http://edward.oconnor.cx/2007/02/representing-tags-in-atom">http://edward.oconnor.cx/2007/02/representing-tags-in-atom</A>&gt; for
+   Atom and bearing in mind that tag
+spaces&lt;<A HREF="http://microformats.org/wiki/rel-tag#Tag_Spaces">http://microformats.org/wiki/rel-tag#Tag_Spaces</A>&gt;are cool) for
+things like &quot;testlab&quot;
+
+Fortunately the good work already done in this area for Atom would be
+realatively easy to port to a Category: HTTP header, following the
+Link:header example above. In the mean time a standard search
+interface
+(including category support) is trivial and thanks to Google, already
+done&lt;<A HREF="http://code.google.com/apis/gdata/docs/2.0/reference.html#Queries">http://code.google.com/apis/gdata/docs/2.0/reference.html#Queries</A>&gt;
+.
+
+Structured Data Formats
+
+HTML also resolves another pressing issue - what format to use for
+submitting key-value pairs (which constitutes a large part of what we need
+to do with OCCI). It gives us two options:
+
+   - application/x-www-form-encoded&lt;<A HREF="http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1">http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1</A>&gt;which
+is simple but quickly gets messy with encoding and non-ASCII
+   characters
+   - multipart/form-data&lt;<A HREF="http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.2">http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.2</A>&gt;which
+is less efficient but will handle pretty much whatever you throw at it
+   (including large files)
+
+The advantages of being able to create a resource from a web form simply by
+POSTing to the collection of resources (e.g. <A HREF="http://example.com/compute">http://example.com/compute</A>),
+and with HTML 5 by PUTting the resource in place directly (e.g.
+<A HREF="http://example.com/compute/<uuid">http://example.com/compute/&lt;uuid</A>&gt;) are immediately obvious. Not only does
+this help make the human and programmable web one and the same (which in
+turn makes it much easier for developers/users to kick the tyres and
+understand the API) but it means that scripting even advanced tasks with
+curl/wget would be trivial. Plus there's no place for time-wasting religious
+arguments about angle brackets (XML) over curly braces (JSON).
+
+RESTful State Machines
+
+Something else which has not sat well with me until I spent the weekend
+ingesting RESTful Web Services
+&lt;<A HREF="http://oreilly.com/catalog/9780596529260/">http://oreilly.com/catalog/9780596529260/</A>&gt;book (by Leonard
+Richardson &lt;<A HREF="http://www.crummy.com/">http://www.crummy.com/</A>&gt; and Sam
+Ruby&lt;<A HREF="http://intertwingly.net/blog/">http://intertwingly.net/blog/</A>&gt;)
+was the &quot;actuator&quot; concept we picked up from the Sun Cloud APIs. This breaks
+away from RESTful principles by exposing an RPC-style API for triggering
+state changes (e.g. start, stop, restart). Granted it's an improvement on
+the alternative (GETting a resource and PUTting it back with an updated
+state) as Tim Bray explains in RESTful
+Casuistry&lt;<A HREF="http://www.tbray.org/ongoing/When/200x/2009/03/20/Rest-Casuistry">http://www.tbray.org/ongoing/When/200x/2009/03/20/Rest-Casuistry</A>&gt;(to
+which Roy
+Fielding &lt;<A HREF="http://roy.gbiv.com/untangled/2009/it-is-okay-to-use-post">http://roy.gbiv.com/untangled/2009/it-is-okay-to-use-post</A>&gt; and Bill
+de h&#211;ra &lt;<A HREF="http://www.dehora.net/journal/2009/02/03/just-use-post/">http://www.dehora.net/journal/2009/02/03/just-use-post/</A>&gt;also
+responded), but it still &quot;feels funky&quot;. Sure it doesn't make any sense to
+try to &quot;force&quot; a monitored
+status&lt;<A HREF="http://roy.gbiv.com/untangled/2009/it-is-okay-to-use-post#comment-966">http://roy.gbiv.com/untangled/2009/it-is-okay-to-use-post#comment-966</A>&gt;to
+some other value (for example setting a &quot;state&quot; attribute to
+&quot;running&quot;),
+especially when we can't be sure that's the state we'll get to (maybe there
+will be an error or the transition will be dependent on some outcome over
+which we have no control). Similarly it doesn't make much sense to treat
+states as nouns, for example adding a &quot;running&quot; state to a collection of
+states (even if a resource can be &quot;running&quot; and &quot;backing up&quot; concurrently).
+But is using URLs as &quot;buttons&quot; representing verbs/transitions the best
+answer?
+
+What makes more sense [to me] is to request a transition and check back for
+updates (e.g. by polling or HTTP server
+push&lt;<A HREF="http://en.wikipedia.org/wiki/Push_technology">http://en.wikipedia.org/wiki/Push_technology</A>&gt;).
+If it's RESTful to POST comments to an article (which in addition to its own
+contents acts as a collection of zero or more comments) then POSTing a
+request to change state to a [sub]resource also makes sense. As a bonus
+these can be parametrised (for example a &quot;resize&quot; request can be accompanied
+with a &quot;size&quot; parameter and a &quot;stop&quot; request sent with clarification as to
+whether an &quot;ACPI Off&quot; or &quot;Pull Cord&quot; is required). Transitions that take a
+while, like &quot;format&quot; on a storage resource, can simply return HTTP 201
+Accepted so we've got support for asynchronous actions as well - indeed some
+requests (e.g. &quot;backup&quot;) may not even be started immediately. We may also
+want to consider using something like Post Once Exactly
+(POE)&lt;<A HREF="http://www.mnot.net/drafts/draft-nottingham-http-poe-00.txt">http://www.mnot.net/drafts/draft-nottingham-http-poe-00.txt</A>&gt;to
+ensure that requests like &quot;restart&quot; aren't executed repeatedly and
+that
+we can cancel requests that the system hasn't had a chance to deal with yet.
+
+Exactly how this should look in terms of URL layout I'm not sure (perhaps
+<A HREF="http://example.com/<resource">http://example.com/&lt;resource</A>&gt;/requests) but being able to enumerate the
+possible actions as well as acceptable parameters (e.g. an enum for
+variations on &quot;stop&quot; or a range for &quot;resize&quot;) would be particularly useful
+for clients.
+
+Collections
+
+This is all well and good for individual resources, but collections are
+still a serious problem. There are many use cases which involve retrieving
+an arbitrarily large number of resources and making a HTTP request for each
+(as well as requests for enumeration etc.) doesn't make sense. More
+importantly, it doesn't scale - particularly in enterprise environments
+where requests via proxies and filters can suffer from high latency (if not
+low bandwidth).
+
+One potential solution is to strap multiple HTTP message entities together
+as a multipart document, but that's hardly clean and results in some hairy
+coding on the client side (e.g. manual manipulation of HTTP messages that
+would otherwise be fully automated). The best solution we currently have for
+this problem (as evidenced by widespread deployment) is AtomPub so I'm still
+fairly sure it's going to have to make an appearance somewhere, even if it
+doesn't wrap all of the resources by default.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090525/632ca0be/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090525/632ca0be/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000768.html">[occi-wg] Is AtomPub already the HTTP of cloud computing?
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000835.html">[occi-wg] Is HTTP the HTTP of cloud computing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#769">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#769">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#769">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#769">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000769.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

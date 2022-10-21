@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000082.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] Network and domain abstractions
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20Network%20and%20domain%20abstractions&In-Reply-To=47E1528E.2050306%40science.uva.nl">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000090.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000079.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] Network and domain abstractions</H1>
+    <B>John Vollbrecht</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20Network%20and%20domain%20abstractions&In-Reply-To=47E1528E.2050306%40science.uva.nl"
+       TITLE="[Nml-wg] Network and domain abstractions">jrv at internet2.edu
+       </A><BR>
+    <I>Wed Mar 19 14:57:20 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000090.html">[Nml-wg] Network and domain abstractions
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000079.html">[Nml-wg] Contribution requested
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#82">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#82">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#82">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#82">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Mar 19, 2008, at 1:51 PM, Freek Dijkstra wrote:
+&gt;<i> John Vollbrecht wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I would like to pursue the concept of view or model.  My primary  
+</I>&gt;&gt;<i> interest is in terms of how the dynamic circuit path finding and  
+</I>&gt;&gt;<i> path creation will use a topology description.
+</I>&gt;&gt;<i> 1. A &quot;real&quot; topology exists which describes real devices,  
+</I>&gt;&gt;<i> interfaces, and links.  It includes parameters like bw, latency,  
+</I>&gt;&gt;<i> geographic location, and capabilities like switchint  or  
+</I>&gt;&gt;<i> adaptation (e.g. mapping VLANS or doing GFP conversion between  
+</I>&gt;&gt;<i> ethernet and SDH).
+</I>&gt;&gt;<i> 4. On and from this real topology there are derived &quot;views or  
+</I>&gt;&gt;<i> models&quot; which are useful to different applications.  In my mind  
+</I>&gt;&gt;<i> this ability to have a common real topology from which different  
+</I>&gt;&gt;<i> views are created is very powerful.
+</I>&gt;<i>
+</I>&gt;<i> I agree with your statement that it is useful to talk about an  
+</I>&gt;<i> actual network, knowing that it really is that network and not some  
+</I>&gt;<i> abstract view.
+</I>&gt;<i>
+</I>&gt;<i> Could you define &quot;real topology&quot; for me? Is that a single network  
+</I>&gt;<i> (controlled by a single domain), or is that all networks together?
+</I>&gt;<i> If it is all together -- I like to emphasize that I prefer that  
+</I>&gt;<i> there is a concept of a common real topology, but no-one has full  
+</I>&gt;<i> knowledge of this real topology (likely they have a full knowledge  
+</I>&gt;<i> on the local domain, and abstracted views of other domains).
+</I>&gt;<i>
+</I>for me a &quot;real topology&quot; is one that matches physical devices as  
+understood by operational engineers - stuff that has to be installed  
+somewhere.  real topology can be a single domain, a partial domain,  
+all the devices in the world -  the real part is kind of  &quot;not virtual&quot;
+&gt;<i>
+</I>&gt;&gt;<i> 2. The &quot;real&quot; topology includes information about control of  
+</I>&gt;&gt;<i> capabilities - the administrative owner(s), the operational owner 
+</I>&gt;&gt;<i> (s), and any device that can activate the capabilities.
+</I>&gt;<i>
+</I>&gt;<i> Yes, and I would distinguish between the physical &quot;network&quot; class  
+</I>&gt;<i> and the organisational &quot;domain&quot; class (which is the administrator  
+</I>&gt;<i> of a network)
+</I>&gt;<i>
+</I>&gt;<i> A few notes on terminology: after discussions a couple of years  
+</I>&gt;<i> ago, I now distinguish between
+</I>&gt;<i> - juridical owner
+</I>&gt;<i> - economic owner
+</I>&gt;<i> - administrator = operator
+</I>&gt;<i>
+</I>&gt;<i> Where the administrator is the same as the operator: the entity  
+</I>&gt;<i> that enforces policies, and the economic owner is the entity that  
+</I>&gt;<i> decides on policies.
+</I>
+These all seem good to me
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> 3. The real topology has groups - which might be called networks,  
+</I>&gt;&gt;<i> or domains or both.  It is not clear exactly how this will work.
+</I>&gt;<i>
+</I>&gt;<i> You previously said that you want to have a &quot;common&quot; real topology.  
+</I>&gt;<i> Does the grouping of this real topology in domains should also be  
+</I>&gt;<i> common? Thus is it the same for everyone, or could device A be in  
+</I>&gt;<i> domain 8 for me, while it is in domain 11 for you?
+</I>Here is where &quot;real&quot;  topology and views may be different.  In a DCN  
+view domains are the same for everyone.  If it is domain 8 for me, it  
+is domain 8 for you.  but that is just the view
+
+&gt;<i>
+</I>&gt;<i> I hope there is such a common grouping of all network elements into  
+</I>&gt;<i> networks, and everyone sees the same networks. However, I'm fine to  
+</I>&gt;<i> have an additional &quot;view&quot; concept where other entities may see  
+</I>&gt;<i> different views.
+</I>&gt;<i>
+</I>&gt;&gt;<i> DCN views
+</I>&gt;<i> [...]
+</I>&gt;&gt;<i> An internal topological view of a domain will include all the  
+</I>&gt;&gt;<i> capabilities that are in a domain and the devices that contain the  
+</I>&gt;&gt;<i> capabilites.  In the simple case this is all the nodes and links  
+</I>&gt;&gt;<i> in the domain.
+</I>&gt;&gt;<i> An external topological view of a domain includes the links to  
+</I>&gt;&gt;<i> external domains and the internal device to which the link is  
+</I>&gt;&gt;<i> connected.  It also includes the capabilities of the domain to act  
+</I>&gt;&gt;<i> on external links.
+</I>&gt;<i>
+</I>&gt;<i> I do not see why it is necessary to know about the terminating  
+</I>&gt;<i> device for links in the external view. It seems to me that all I  
+</I>&gt;<i> need to know is the encoding of the link, the the capabilities of  
+</I>&gt;<i> the domain ('network' in my terminology) to act on this link.
+</I>
+I think it is necessary because capabilities of the network may be  
+different at different edges.  Also as Jeroen points out it is  
+necessary to be able to make connections.
+
+&gt;<i>
+</I>&gt;&gt;<i> A DCN internal pathfinding view contains Nodes and links for a  
+</I>&gt;&gt;<i> domain.  The nodes and links may correspond to the real topology  
+</I>&gt;&gt;<i> or may be virtual links that are created by combining connections  
+</I>&gt;&gt;<i> between locations into a single link (e.g. 4 GEs between sites are  
+</I>&gt;&gt;<i> treated as a single link for pathfinding purposes) or by splitting  
+</I>&gt;&gt;<i> connections into different links (e.g. STS-1-48= link1, STS-49-96  
+</I>&gt;&gt;<i> = link2).
+</I>&gt;<i>
+</I>&gt;<i> Good. We need a discussion about links. But you seem to suggest  
+</I>&gt;<i> that according to you a &quot;link&quot; is equal to a ITU-T G.805 &quot;link  
+</I>&gt;<i> connection&quot; (that is, logical links). &quot;Splitting&quot; is not a word I  
+</I>&gt;<i> would use though.
+</I>
+could be - I am not familiar with G.805, but this sounds right.
+&gt;<i>
+</I>&gt;<i> Your example is pretty complex. Do you also want to be able to (a)  
+</I>&gt;<i> say that the STS-1-48 link is composed of 48 distinct STS channels?  
+</I>&gt;<i> (b) do you want to be able to say that link1 and link2 are in fact  
+</I>&gt;<i> transported over the same OC-192? If so, you need rather detailed  
+</I>&gt;<i> multiplexing and adaptation classes to describe this.
+</I>yes - but from a DCN pathfinding view I don't care how this is done.
+&gt;<i>
+</I>&gt;&gt;<i> A DCN external pathfinding view contains domains and links between  
+</I>&gt;&gt;<i> domains.  There is some question as to whether a domain should be  
+</I>&gt;&gt;<i> abstracted to look like a node.  My view is that from a DCN  
+</I>&gt;&gt;<i> operational view they are different.
+</I>&gt;<i>
+</I>&gt;<i> So do you propose that we have a distinct &quot;domain&quot; and a &quot;node&quot;  
+</I>&gt;<i> class? Could you define them for me, so I know the difference  
+</I>&gt;<i> between the two?
+</I>A domain is a network of nodes.  The main difference from a DCN   
+point of view is that nodes are internal and routing within a domain  
+uses nodes, routing outside the domain uses domains (or perhaps  
+networks would be better name).  This is basically hierarchical  
+routing, and has to do with the DCN view
+&gt;<i>
+</I>&gt;&gt;<i> routes inside domain are calculated between nodes.  routes between  
+</I>&gt;&gt;<i> domains are calculated between edges of domains.
+</I>&gt;<i>
+</I>&gt;<i> I may do path finding in a completely different way (I may look at  
+</I>&gt;<i> interfaces and the grouping in nodes/devices/domains altogether). I  
+</I>&gt;<i> think such implementation details are firmly out of scope of the  
+</I>&gt;<i> NML. What is in scope is that there is enough information for you  
+</I>&gt;<i> to do the path finding.
+</I>well I think DCN uses a specific grouping and this needs to be  
+included in its &quot;view&quot;
+&gt;<i>
+</I>&gt;&gt;<i> I am not sure if the elements in a path request need to have a  
+</I>&gt;&gt;<i> topological name.
+</I>&gt;<i>
+</I>&gt;<i> How do you want to refer to an element? How other then it's name?  
+</I>&gt;<i> (This is not a rethoric question! A valid answer may be &quot;by it's  
+</I>&gt;<i> properties&quot;.)
+</I>good question.  right now we have domains, nodes, ports and links.   
+these are all potential elements
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Finally, you wrote in your first sentence that you &quot;like to pursue  
+</I>&gt;<i> the concept of view or model&quot;. Good. However, you only defined  
+</I>&gt;<i> &quot;internal topological view&quot; and &quot;external topological view&quot;. I  
+</I>&gt;<i> think that this distinction can already be handled by the &quot;network&quot;  
+</I>&gt;<i> concept. A network has capabilities, external links, and a bunch of  
+</I>&gt;<i> internal network elements. For the internal view, I list it all.  
+</I>&gt;<i> For the external view, I only announce the capabilities and  
+</I>&gt;<i> external links. I do not see the need to define another &quot;view&quot;  
+</I>&gt;<i> class or &quot;model&quot; class to accomplish this.
+</I>but the real topology may not  for example reflect the view of  
+certain physical connections being multiple links.  and it may  
+include a lot more information that is not needed by DCN like  
+physical location or administrative owner.
+&gt;<i>
+</I>&gt;<i> I do like the &quot;view&quot; concept, but I have not really seen a  
+</I>&gt;<i> convincing argument for it. The one that came close was Evangelos  
+</I>&gt;<i> mail of March 4 [1], where he had different views for monitoring  
+</I>&gt;<i> and other services.
+</I>&gt;<i> In the end, we always give a limited set of information to our  
+</I>&gt;<i> neighbours. That is a view on our full topology knowledge of our  
+</I>&gt;<i> own network. That is always possible. However, if we later want to  
+</I>&gt;<i> *refer* to this specific set of information, then we want to name  
+</I>&gt;<i> this &quot;view&quot;.
+</I>I think this is a good starting place.  be sure that all the info of  
+the &quot;real&quot; network is in the topology but give views of it to  
+different applications.  Then applications can define what they need  
+and be sure it is there.  And the topology is maintained in a single  
+place.
+
+John
+
+&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Freek
+</I>&gt;<i>
+</I>
+John Vollbrecht, Senior Network Engineer
+Internet2
+office +1-734-352-4960 | mobile +1-734-395-7890
+
+
+
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000090.html">[Nml-wg] Network and domain abstractions
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000079.html">[Nml-wg] Contribution requested
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#82">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#82">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#82">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#82">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000082.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+</html>

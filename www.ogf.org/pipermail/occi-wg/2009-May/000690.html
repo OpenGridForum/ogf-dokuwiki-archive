@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000690.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] OCCI MC - State Machine Diagram
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20MC%20-%20State%20Machine%20Diagram&In-Reply-To=9D929B64-D447-4616-AE35-4DE533829952%40uk.fujitsu.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000661.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000691.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] OCCI MC - State Machine Diagram</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20MC%20-%20State%20Machine%20Diagram&In-Reply-To=9D929B64-D447-4616-AE35-4DE533829952%40uk.fujitsu.com"
+       TITLE="[occi-wg] OCCI MC - State Machine Diagram">samj at samj.net
+       </A><BR>
+    <I>Thu May 14 08:14:44 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000661.html">[occi-wg] Content Negotiation: Alternative Formats
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000691.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#690">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#690">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#690">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#690">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, May 14, 2009 at 2:58 PM, Roger Menday
+&lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">roger.menday at uk.fujitsu.com</A>&gt;wrote:
+
+&gt;<i> Sam
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Maybe I am getting actuators wrong ... it could be, I like the Sun API,
+</I>&gt;&gt;<i> and they use actuators. But, actually, actuators don't seem that great, and
+</I>&gt;&gt;<i> they have filtered down into the verb part of the noun-attribute-verb model.
+</I>&gt;&gt;<i> And so, I think it is interesting to explore other ways of doing it, which
+</I>&gt;&gt;<i> address (these overlap)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - async concerns
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Status/error fields would be one simple solution to this problem - we
+</I>&gt;<i> already have HTTP 20x error codes to indicate that something is indeed
+</I>&gt;<i> async.
+</I>&gt;<i>
+</I>&gt;<i> I think that is a good way.
+</I>&gt;<i>
+</I>&gt;<i> The thing (that I understand about the actuator) approach, or rather I have
+</I>&gt;<i> not seen documented anywhere, was that POSTing to an actuator URI doesn't
+</I>&gt;<i> seem to create a resource anywhere. So, we can't do that right now.
+</I>&gt;<i>
+</I>&gt;<i> OK, maybe that is something for OCCI 2.0, but why not do it now ?
+</I>&gt;<i>
+</I>
+You need a resource to find an actuator so just poll the same resource for
+status updates - that is, we can have a verbose text status field in
+addition to the enum. To clarify:
+
+   - Actuators that act immediately will return 200 OK.
+   - Those that don't will return 202 Accepted.
+   - Those that create a resource will return 201 Created with a Location:
+   header pointing at the newly created resource (where that could presumably
+   be a feed of resources if you asked for multiple instances).
+
+Ok by you?
+
+
+&gt;<i> An eventlog extension is another.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> - error reporting
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> As above.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> - offering porential of something more than just pressing a button (move a
+</I>&gt;&gt;<i> few dials then press a button, for ex)
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This is likely to be an absolute requirement - I don't want to have to
+</I>&gt;<i> press the start button 50 times to get 50 instances so there will need to be
+</I>&gt;<i> some way to create-en-masse for a start (probably with the flexibility of
+</I>&gt;<i> ranges ala amazon). I may also need to specify cold start vs warm start
+</I>&gt;<i> (e.g. with or without state). I've not really even started thinking about
+</I>&gt;<i> this yet, beyond knowing that there are a few potential solutions.
+</I>&gt;<i>
+</I>&gt;<i> So, actuators don't seem to cover this (?)
+</I>&gt;<i>
+</I>&gt;<i> Modeling state discovery *and* request as part of a model does seems to be
+</I>&gt;<i> a good alternative.
+</I>&gt;<i>
+</I>
+It just means you need to pass parameters to the actuator via a GET or POST
+request (GET comes to mind first but POST works with more/larger
+parameters)... these exceptional cases can go in the registry... for start
+it might be 'min-instances' and 'max-instances' for example.
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> A different perspective is that in the state should be part of the model,
+</I>&gt;&gt;<i> not as a enumerable defined in a registry.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Sure, this is the more formal approach but it's also more rigid/brittle. As
+</I>&gt;<i> we can't hope to predict every state that will ever exist, least of all in a
+</I>&gt;<i> fashion that is understandable/acceptable to everyone, we need to be
+</I>&gt;<i> flexible.
+</I>&gt;<i>
+</I>&gt;<i> Yes, but, the people need to conform to some extent. That's why we are
+</I>&gt;<i> having this JSON vs ATOM discussion, right ? They also need to conform to a
+</I>&gt;<i> basic state model, and then allow states to be specialized if necessary.
+</I>&gt;<i> Don't you actually get this if you have  state modeled as part of a class
+</I>&gt;<i> model; a simple one that everyone can live with - rather like the one in the
+</I>&gt;<i> OGF Reference Model - together with sub-classing for more specialist cases
+</I>&gt;<i> ?
+</I>&gt;<i>
+</I>
+I'm still having trouble making this reconcile - force people into your
+model and you are sure to break something for someone, unless you make it so
+high level as to be meaningless. sub-classing and categories have the same
+result - multiple actuators bundled under one heading... if I want to stop
+the device do I press &quot;shutdown&quot;, &quot;halt&quot;, &quot;acpioff&quot;, &quot;poweroff&quot; or just
+choose one at random? Better bet is to let implementors make sensible
+decisions like &quot;try shutdown, wait a minute then do acpioff followed by
+poweroff if we're still not where we want to be&quot;... think of the &quot;Force
+Quit&quot; and &quot;End Task&quot; options in windows.
+
+States that don't fit are things like &quot;archiving&quot;, &quot;restoring&quot;, &quot;backing
+up&quot;, &quot;cloning&quot;, &quot;transferring&quot;, &quot;transforming&quot;... who's to say there's not
+going to be a &quot;teleporting&quot; state one of these days?
+
+It won't be anarchy and even if it were we'd just add some constraints... in
+any case we won't know until we suck it and see.
+
+
+&gt;<i> So, generically processed by everything at some level. That takes care of
+</I>&gt;<i> brittleness, right ?
+</I>&gt;<i>
+</I>&gt;<i> Roger
+</I>&gt;<i>
+</I>&gt;<i> ps. Actually, I would've thought that having the state of something as a
+</I>&gt;<i> stream of updates inside an feed would appeal to a &quot;atom/atompp for occi&quot;
+</I>&gt;<i> proponent ?
+</I>&gt;<i>
+</I>
+Providing a link to a feed of syslog/eventlog style entries is something
+that I had envisaged, and doing something similar for state changes/requests
+(even as a subset of same) does sounds sensible.
+
+Sam
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090514/34099ceb/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090514/34099ceb/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000661.html">[occi-wg] Content Negotiation: Alternative Formats
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000691.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#690">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#690">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#690">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#690">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000690.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

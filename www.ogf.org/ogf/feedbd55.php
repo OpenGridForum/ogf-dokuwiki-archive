@@ -11,7 +11,7 @@
         <description></description>
         <link>https://www.ogf.org/ogf/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-28T08:10:36+0000</dc:date>
+       <dc:date>2022-09-30T00:17:45+0000</dc:date>
         <items>
             <rdf:Seq>
                 <rdf:li rdf:resource="https://www.ogf.org/ogf/doku.php/events/ogf-41/call_for_session_proposals?rev=1395671821&amp;do=diff"/>

@@ -1,0 +1,750 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-June/000979.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:21 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Opinion Poll: IaaS or PaaS ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Opinion%20Poll%3A%20IaaS%20or%20PaaS%20%3F&In-Reply-To=21606dcf0906210412y11cd9db0ifc34f802d5c7503f%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000942.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000980.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Opinion Poll: IaaS or PaaS ?</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Opinion%20Poll%3A%20IaaS%20or%20PaaS%20%3F&In-Reply-To=21606dcf0906210412y11cd9db0ifc34f802d5c7503f%40mail.gmail.com"
+       TITLE="[occi-wg] Opinion Poll: IaaS or PaaS ?">samj at samj.net
+       </A><BR>
+    <I>Tue Jun 30 13:09:02 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000942.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000980.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/date.html#979">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/thread.html#979">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/subject.html#979">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/author.html#979">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Krishna,
+
+I've been looking further into the current state of play with OVF support
+and doing some tests with various products. I found an interesting InfoWeek
+article including the views of one of my former colleagues at Citrix: &quot;Crosby:
+Walk The Walk, Yes, But Not Down The OVF
+Path&lt;<A HREF="http://www.informationweek.com/blog/main/archives/2008/10/crosby_walk_the.html">http://www.informationweek.com/blog/main/archives/2008/10/crosby_walk_the.html</A>&gt;
+&quot;.
+
+Which brings me back to my original Time To Walk The
+Walk&lt;<A HREF="http://www.informationweek.com/blog/main/archives/2008/10/virtualization_9.html">http://www.informationweek.com/blog/main/archives/2008/10/virtualization_9.html</A>&gt;point.
+If we now have a neutral export/import format, why can't we have a
+&gt;<i> neutral runtime format that everyone could adhere to, saving virtualization
+</I>&gt;<i> customers tons of headaches? OVF isn't it, I now understand. But what will
+</I>&gt;<i> be?
+</I>&gt;<i>
+</I>
+So for runtime formats we've got:
+
+   - VMware using key-value pairs (VMX) which spills over into XML
+   - Sun VirtualBox using a home-grown OVF-style XML format
+   - Microsoft Virtual Server and Virtual PC using another home-grown XML
+   format
+   - Citrix XenServer using a simple INI style key-value pair
+(xmdomain.cfg&lt;<A HREF="http://linux.die.net/man/5/xmdomain.cfg">http://linux.die.net/man/5/xmdomain.cfg</A>&gt;
+   )
+
+The most successful runtime formats by far then are the flat text formats,
+though for safety and extensibility it makes sense to have namespaces ala
+VMX:
+
+usb.present = &quot;TRUE&quot;
+ethernet0.virtualDev = &quot;e1000&quot;
+ethernet0.generatedAddress = &quot;00:0c:29:cd:98:8f&quot;
+
+That is to say that we may want to (somewhat independently of the OCCI
+protocol itself) standardise a runtime descriptor format which allows us to
+describe basic infrastructure - probably only the things that are currently
+exposed by IaaS offerings like cpu cores, memory size, etc.
+
+Sam
+
+On Sun, Jun 21, 2009 at 1:12 PM, Sam Johnston &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">samj at samj.net</A>&gt; wrote:
+
+&gt;<i> Krishna,
+</I>&gt;<i>
+</I>&gt;<i> Native OVF support would certainly be advantageous to OEM offerings
+</I>&gt;<i> including Cisco's Unified Cloud (per Cisco and VMware Enhance
+</I>&gt;<i> Virtualization with Powerful, Scalable Unified Computing System&lt;<A HREF="http://www.vmware.com/company/news/releases/cisco-vmw-oem.html">http://www.vmware.com/company/news/releases/cisco-vmw-oem.html</A>&gt;)
+</I>&gt;<i> and IBM 's WebSphere CloudBurst Appliance (per IBM CloudBurst runs on ESXi&lt;<A HREF="http://blogs.vmware.com/esxi/2009/06/ibm-cloudburst-runs-on-esxi.html">http://blogs.vmware.com/esxi/2009/06/ibm-cloudburst-runs-on-esxi.html</A>&gt;)
+</I>&gt;<i> as these products are based on VMware, which as of the latest release now
+</I>&gt;<i> has full support for OVF&lt;<A HREF="http://www.dmtf.org/about/cloud-incubator/Cloud_Incubator_Quote_Sheet.pdf">http://www.dmtf.org/about/cloud-incubator/Cloud_Incubator_Quote_Sheet.pdf</A>&gt;(presumably meaning as a run-time rather than interchange format). As such
+</I>&gt;<i> we will ensure that it is supported, in that implementations that choose to
+</I>&gt;<i> implement it can both accept and produce OVF representations. Whether we
+</I>&gt;<i> make it an absolute requirement by incorporating it into the OCCI standard
+</I>&gt;<i> is yet to be decided - I'm unconvinced.
+</I>&gt;<i>
+</I>&gt;<i> Following ElasticHosts' example all you would need to create a server is
+</I>&gt;<i> the following (bearing in mind we're currently talking about putting storage
+</I>&gt;<i> and network association metadata in the headers):
+</I>&gt;<i>
+</I>&gt;<i> $ cat &lt;&lt; EOF | curl --url <A HREF="http://example.com/">http://example.com</A> -d @-
+</I>&gt;<i> name TestServer
+</I>&gt;<i> cpu 2000
+</I>&gt;<i> mem 1024
+</I>&gt;<i> EOF
+</I>&gt;<i>
+</I>&gt;<i> Doing the same in OVF would require (at least) tens of lines of XML, and
+</I>&gt;<i> were it easy to generate we wouldn't be seeing questions like &quot;How do you
+</I>&gt;<i> use completely free software to create ovf files for VMware ESXi?&lt;<A HREF="http://stackoverflow.com/questions/681519/how-do-you-use-completely-free-software-to-create-ovf-files-for-vmware-esxi">http://stackoverflow.com/questions/681519/how-do-you-use-completely-free-software-to-create-ovf-files-for-vmware-esxi</A>&gt;&quot;
+</I>&gt;<i> essentially going unanswered.
+</I>&gt;<i>
+</I>&gt;<i> Don't get me wrong - OVF support makes a lot of sense for many use cases...
+</I>&gt;<i> tor example it would be cool to be able to create a VM in a tool like VMware
+</I>&gt;<i> Fusion and upload it directly (save for the ironic lack of OVF support&lt;<A HREF="http://communities.vmware.com/message/947976">http://communities.vmware.com/message/947976</A>&gt;)
+</I>&gt;<i> and public cloud providers I'm sure would be very happy to make it easy for
+</I>&gt;<i> enterprises to upload existing virtualised infrastructure. Making it an
+</I>&gt;<i> absolute requirement is another matter (and one that made a lot more sense
+</I>&gt;<i> with my earlier proposals whereby it would have been carried transparently
+</I>&gt;<i> in Atom's content element).
+</I>&gt;<i>
+</I>&gt;<i> As for my second guessing what other SSOs are up to, these are my opinions
+</I>&gt;<i> based on clues like VMware's recent announcement&lt;<A HREF="http://www.vmware.com/company/news/releases/cloud-initiatives-vmworld.html">http://www.vmware.com/company/news/releases/cloud-initiatives-vmworld.html</A>&gt;that &quot;
+</I>&gt;<i> *as one of the original authors of the Open Virtualization Format (OVF)
+</I>&gt;<i> standard now released from the Distributed Management Task Force (DMTF),
+</I>&gt;<i> VMware will build upon that work by submitting a draft of its VMware vCloud
+</I>&gt;<i> API*&quot;. As they say in French, &quot;les cheins ne font pas des chats&quot;
+</I>&gt;<i> (literally &quot;cats don't make dogs&quot;) so with an existing standard injected
+</I>&gt;<i> this early in the development process it's hard to imagine the result won't
+</I>&gt;<i> look like (if not be [almost] identical to) the VMware API&lt;<A HREF="http://www.vmware.com/support/developer/vc-sdk/visdk400pubs/ReferenceGuide/index.html">http://www.vmware.com/support/developer/vc-sdk/visdk400pubs/ReferenceGuide/index.html</A>&gt;,
+</I>&gt;<i> complete with its 87 Managed Object References, 1331 Data Object Types, 168
+</I>&gt;<i> Enumeration Types and 435 Fault Types.
+</I>&gt;<i>
+</I>&gt;<i> Of course Cisco's a DMTF member so you've got a better chance of verifying
+</I>&gt;<i> this than I do... I've not yet been able to justify coughing up $200 for
+</I>&gt;<i> early access to the docs (assuming they already exist).
+</I>&gt;<i>
+</I>&gt;<i> Sam
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Jun 20, 2009 at 8:11 PM, Krishna Sankar (ksankar) &lt;
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">ksankar at cisco.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>  Sam,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> a)      I suggest you tone down your rhetoric (unless you have proof
+</I>&gt;&gt;<i> that, that is so) on what other SDOs might be doing &#8230; seek to understand
+</I>&gt;&gt;<i> first ;o) OGF (and GGF) has  long history of working with others and we do
+</I>&gt;&gt;<i> not want to singlehandedly reverse that
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> b)      This is the standard NIH syndrome
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> c)       And simpler format usually will get complex as the domain
+</I>&gt;&gt;<i> matures.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> d)      Moreover we can leverage future work done by others as the cloud
+</I>&gt;&gt;<i> computing domain grows and by extension we get more demands for the OCCI
+</I>&gt;&gt;<i> interfaces feature set &#8230;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> e)      BTW, why is it difficult to roll an OVF file ? After all it is an
+</I>&gt;&gt;<i> XML file. Are you having second thoughts on XML format ? ;o) Time to come
+</I>&gt;&gt;<i> clean if that is the case !
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Cheers
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;k/&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> *From:* Sam Johnston [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">samj at samj.net</A>]
+</I>&gt;&gt;<i> *Sent:* Saturday, June 20, 2009 10:21 AM
+</I>&gt;&gt;<i> *To:* Michael Behrens
+</I>&gt;&gt;<i> *Cc:* Krishna Sankar (ksankar); Randy Bias; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> *Subject:* Re: [occi-wg] Opinion Poll: IaaS or PaaS ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'd be surprised if OASIS were working on a new version given it's a DMTF
+</I>&gt;&gt;<i> standard but you're right - it's extensible and it's certainly one format I
+</I>&gt;&gt;<i> expect most, if not all, implementations to support anyway. DMTF are no
+</I>&gt;&gt;<i> doubt very busy rubber stamping VMware's vcloud API at the moment so I doubt
+</I>&gt;&gt;<i> OVF is high on their list of priorities - waiting for news from Thijs
+</I>&gt;&gt;<i> regarding our collaboration with them.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The question then is if we want/need a simpler format ala ElasticHosts:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> cores 2
+</I>&gt;&gt;<i> memory 2048
+</I>&gt;&gt;<i> ...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> We quite probably do (it is after all a fairly simple problem to solve, as
+</I>&gt;&gt;<i> evidenced by the simplicity of your average virtual machine descriptor), and
+</I>&gt;&gt;<i> there are a good few people in support of this. In any case it would be at
+</I>&gt;&gt;<i> least mildly ironic to raise hell over XML in the protocol only to require
+</I>&gt;&gt;<i> it for the data interchange format ;)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Rolling your own OVF file is a bit of a mission compared to sending a few
+</I>&gt;&gt;<i> key value pairs...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sam
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Sat, Jun 20, 2009 at 6:27 PM, Michael Behrens &lt;
+</I>&gt;&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">michael.behrens at r2ad.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The OVF standard is extensible, so perhaps start with that and then extend
+</I>&gt;&gt;<i> as needed.  Does anyone know if OASIS is working on a new version?  If so,
+</I>&gt;&gt;<i> then perhaps a runtime/creation use-case could be submitted.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Krishna Sankar (ksankar) wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Need to understand a little bit more on this.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> a)      Wouldn&#8217;t it be better to add the missing attributes/elements to
+</I>&gt;&gt;<i> OVF than inventing a new format
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> b)      The client has to understand something &#8211; either OVF or some other
+</I>&gt;&gt;<i> representation. So why not add to OVF ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> c)       Finally, are there something fundamentally missing from/totally
+</I>&gt;&gt;<i> incompatible with OVF that it cannot be fixed ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Cheers
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;k/&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> *From:* <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A> [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A>&lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A>&gt;]
+</I>&gt;&gt;<i> *On Behalf Of *Sam Johnston
+</I>&gt;&gt;<i> *Sent:* Thursday, June 18, 2009 4:20 AM
+</I>&gt;&gt;<i> *To:* Randy Bias
+</I>&gt;&gt;<i> *Cc:* <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;&gt;<i> *Subject:* Re: [occi-wg] Opinion Poll: IaaS or PaaS ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, Jun 18, 2009 at 8:32 AM, Randy Bias &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">randyb at neotactics.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  Sure, but that's not the issue.  The issue is VM portability.  It's
+</I>&gt;&gt;<i> important, but difficult.  That's my point.  Specifying the hypervisor of an
+</I>&gt;&gt;<i> image just means the cloud has enough foreknowledge to reject the upload.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Exactly. In fact my main concern is that as OVF is only ever used as a
+</I>&gt;&gt;<i> transport rather than run-time format there are two potentially lossy
+</I>&gt;&gt;<i> transformations (one to bundle up e.g. a VMware virtual machine to OVF and
+</I>&gt;&gt;<i> another to unbundle it to say Hyper-V). Any settings that fall outside of
+</I>&gt;&gt;<i> the OVF net (potentially including critical details such as interface
+</I>&gt;&gt;<i> parameters) will be ignored at best and lost at worst.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If a client wants to make a VM it should not need to understand OVF so we
+</I>&gt;&gt;<i> will have our own, simple descriptor language that I imagine will end up
+</I>&gt;&gt;<i> looking like the stuff in VMX files (example attached). If we are careful
+</I>&gt;&gt;<i> about how we do this we may well be able to solve the VM portability problem
+</I>&gt;&gt;<i> as well - something I'm sure many of the open source projects would be happy
+</I>&gt;&gt;<i> to see.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sam
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     On Jun 14, 2009, at 8:38 PM, Sam Johnston wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Mon, Jun 15, 2009 at 5:05 AM, Randy Bias &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">randyb at neotactics.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    If you don't have this capability then allowing the upload of
+</I>&gt;&gt;<i> completely opaque images and hoping they will have any kind of reasonable
+</I>&gt;&gt;<i> performance on an arbitrary cloud providers system is a pipe dream.  This is
+</I>&gt;&gt;<i> an area badly in need of standardization, but I doubt it will come any time
+</I>&gt;&gt;<i> soon.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Fortunately specifying the type of hypervisor an image is tied
+</I>&gt;&gt;<i> to/optimised for isn't hard...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sam
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Randy Bias, Cloud Strategist
+</I>&gt;&gt;<i> +1 (415) 939-8507 [m], <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">randyb at neotactics.com</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> BLOG: <A HREF="http://cloudscaling.com/">http://cloudscaling.com</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> occi-wg mailing list
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090630/46396590/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090630/46396590/attachment.html</A> 
+-------------- next part --------------
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;Foundry&gt;
+&lt;VM&gt;
+&lt;VMId type=&quot;string&quot;&gt;52 55 dd 96 25 35 51 e6-34 89 f9 e9 fa 4f b6 e2&lt;/VMId&gt;
+&lt;ClientMetaData&gt;
+&lt;clientMetaDataAttributes/&gt;
+&lt;HistoryEventList/&gt;&lt;/ClientMetaData&gt;
+&lt;vmxPathName type=&quot;string&quot;&gt;Debian Lenny.vmx&lt;/vmxPathName&gt;&lt;/VM&gt;&lt;/Foundry&gt;
+-------------- next part --------------
+.encoding = &quot;UTF-8&quot;
+config.version = &quot;8&quot;
+virtualHW.version = &quot;7&quot;
+scsi0.present = &quot;TRUE&quot;
+scsi0.virtualDev = &quot;lsilogic&quot;
+memsize = &quot;512&quot;
+scsi0:0.present = &quot;TRUE&quot;
+scsi0:0.fileName = &quot;Debian Lenny RC2.vmdk&quot;
+ide1:0.present = &quot;TRUE&quot;
+ide1:0.fileName = &quot;/Users/samj/Downloads/debian-Lenny-DI-rc2-amd64-businesscard.iso&quot;
+ide1:0.deviceType = &quot;cdrom-image&quot;
+floppy0.present = &quot;FALSE&quot;
+ethernet0.present = &quot;TRUE&quot;
+ethernet0.connectionType = &quot;nat&quot;
+ethernet0.virtualDev = &quot;e1000&quot;
+ethernet0.wakeOnPcktRcv = &quot;FALSE&quot;
+ethernet0.linkStatePropagation.enable = &quot;TRUE&quot;
+usb.present = &quot;TRUE&quot;
+ehci.present = &quot;TRUE&quot;
+sound.present = &quot;TRUE&quot;
+sound.fileName = &quot;-1&quot;
+sound.autodetect = &quot;TRUE&quot;
+serial0.present = &quot;TRUE&quot;
+serial0.fileType = &quot;thinprint&quot;
+pciBridge0.present = &quot;TRUE&quot;
+pciBridge4.present = &quot;TRUE&quot;
+pciBridge4.virtualDev = &quot;pcieRootPort&quot;
+pciBridge4.functions = &quot;8&quot;
+pciBridge5.present = &quot;TRUE&quot;
+pciBridge5.virtualDev = &quot;pcieRootPort&quot;
+pciBridge5.functions = &quot;8&quot;
+pciBridge6.present = &quot;TRUE&quot;
+pciBridge6.virtualDev = &quot;pcieRootPort&quot;
+pciBridge6.functions = &quot;8&quot;
+pciBridge7.present = &quot;TRUE&quot;
+pciBridge7.virtualDev = &quot;pcieRootPort&quot;
+pciBridge7.functions = &quot;8&quot;
+vmci0.present = &quot;TRUE&quot;
+roamingVM.exitBehavior = &quot;go&quot;
+tools.syncTime = &quot;TRUE&quot;
+displayName = &quot;Debian Lenny&quot;
+guestOS = &quot;other26xlinux-64&quot;
+nvram = &quot;Debian Lenny.nvram&quot;
+virtualHW.productCompatibility = &quot;hosted&quot;
+ft.secondary0.enabled = &quot;TRUE&quot;
+printers.enabled = &quot;TRUE&quot;
+tools.upgrade.policy = &quot;upgradeAtPowerCycle&quot;
+powerType.powerOff = &quot;soft&quot;
+powerType.powerOn = &quot;soft&quot;
+powerType.suspend = &quot;soft&quot;
+powerType.reset = &quot;soft&quot;
+
+extendedConfigFile = &quot;Debian Lenny.vmxf&quot;
+
+ethernet0.addressType = &quot;generated&quot;
+uuid.location = &quot;56 4d 46 21 93 41 13 d9-01 c6 38 94 5d cd 98 8f&quot;
+uuid.bios = &quot;56 4d 46 21 93 41 13 d9-01 c6 38 94 5d cd 98 8f&quot;
+scsi0:0.redo = &quot;&quot;
+vmotion.checkpointFBSize = &quot;65536000&quot;
+pciBridge0.pciSlotNumber = &quot;17&quot;
+pciBridge4.pciSlotNumber = &quot;21&quot;
+pciBridge5.pciSlotNumber = &quot;22&quot;
+pciBridge6.pciSlotNumber = &quot;23&quot;
+pciBridge7.pciSlotNumber = &quot;24&quot;
+scsi0.pciSlotNumber = &quot;16&quot;
+usb.pciSlotNumber = &quot;32&quot;
+ethernet0.pciSlotNumber = &quot;33&quot;
+sound.pciSlotNumber = &quot;34&quot;
+ehci.pciSlotNumber = &quot;35&quot;
+vmci0.pciSlotNumber = &quot;36&quot;
+ethernet0.generatedAddress = &quot;00:0c:29:cd:98:8f&quot;
+ethernet0.generatedAddressOffset = &quot;0&quot;
+vmci0.id = &quot;1573755023&quot;
+
+debugStub.linuxOffsets = &quot;0x0,0xffffffff,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0&quot;
+tools.remindInstall = &quot;TRUE&quot;
+
+scsi0:1.present = &quot;TRUE&quot;
+scsi0:1.fileName = &quot;swap.vmdk&quot;
+
+scsi0:1.redo = &quot;&quot;
+
+scsi0:2.present = &quot;TRUE&quot;
+scsi0:2.fileName = &quot;Debian Lenny.vmdk&quot;
+
+scsi0:2.redo = &quot;&quot;
+-------------- next part --------------
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!-- Sun VirtualBox Machine Configuration --&gt;
+&lt;VirtualBox xmlns=&quot;<A HREF="http://www.innotek.de/VirtualBox-settings"">http://www.innotek.de/VirtualBox-settings&quot;</A> version=&quot;1.7-macosx&quot;&gt;
+  &lt;Machine uuid=&quot;{b085a9dd-e4f2-4461-b867-e12c6bcfa500}&quot; name=&quot;Debian Lenny&quot; OSType=&quot;Debian_64&quot; lastStateChange=&quot;2009-06-30T16:22:15Z&quot;&gt;
+    &lt;ExtraData&gt;
+      &lt;ExtraDataItem name=&quot;GUI/FirstRun&quot; value=&quot;yes&quot;/&gt;
+    &lt;/ExtraData&gt;
+    &lt;Hardware&gt;
+      &lt;CPU count=&quot;1&quot;&gt;
+        &lt;HardwareVirtEx enabled=&quot;true&quot;/&gt;
+      &lt;/CPU&gt;
+      &lt;Memory RAMSize=&quot;256&quot;/&gt;
+      &lt;Boot&gt;
+        &lt;Order position=&quot;1&quot; device=&quot;Floppy&quot;/&gt;
+        &lt;Order position=&quot;2&quot; device=&quot;DVD&quot;/&gt;
+        &lt;Order position=&quot;3&quot; device=&quot;HardDisk&quot;/&gt;
+      &lt;/Boot&gt;
+      &lt;Display VRAMSize=&quot;12&quot; monitorCount=&quot;1&quot; accelerate3D=&quot;false&quot;/&gt;
+      &lt;RemoteDisplay enabled=&quot;false&quot; authType=&quot;Null&quot;/&gt;
+      &lt;BIOS&gt;
+        &lt;ACPI enabled=&quot;true&quot;/&gt;
+        &lt;IOAPIC enabled=&quot;true&quot;/&gt;
+        &lt;Logo fadeIn=&quot;true&quot; fadeOut=&quot;true&quot; displayTime=&quot;0&quot;/&gt;
+        &lt;BootMenu mode=&quot;MessageAndMenu&quot;/&gt;
+        &lt;TimeOffset value=&quot;0&quot;/&gt;
+        &lt;PXEDebug enabled=&quot;false&quot;/&gt;
+      &lt;/BIOS&gt;
+      &lt;DVDDrive passthrough=&quot;false&quot;/&gt;
+      &lt;FloppyDrive enabled=&quot;true&quot;/&gt;
+      &lt;USBController enabled=&quot;true&quot; enabledEhci=&quot;true&quot;/&gt;
+      &lt;Network&gt;
+        &lt;Adapter slot=&quot;0&quot; enabled=&quot;true&quot; MACAddress=&quot;0800279ABA5B&quot; cable=&quot;true&quot; speed=&quot;0&quot; type=&quot;82540EM&quot;&gt;
+          &lt;NAT/&gt;
+        &lt;/Adapter&gt;
+        &lt;Adapter slot=&quot;1&quot; enabled=&quot;false&quot; MACAddress=&quot;0800275BA9E8&quot; cable=&quot;true&quot; speed=&quot;0&quot; type=&quot;82540EM&quot;/&gt;
+        &lt;Adapter slot=&quot;2&quot; enabled=&quot;false&quot; MACAddress=&quot;080027460BD0&quot; cable=&quot;true&quot; speed=&quot;0&quot; type=&quot;82540EM&quot;/&gt;
+        &lt;Adapter slot=&quot;3&quot; enabled=&quot;false&quot; MACAddress=&quot;0800274ED473&quot; cable=&quot;true&quot; speed=&quot;0&quot; type=&quot;82540EM&quot;/&gt;
+        &lt;Adapter slot=&quot;4&quot; enabled=&quot;false&quot; MACAddress=&quot;08002763E533&quot; cable=&quot;true&quot; speed=&quot;0&quot; type=&quot;82540EM&quot;/&gt;
+        &lt;Adapter slot=&quot;5&quot; enabled=&quot;false&quot; MACAddress=&quot;0800273D3A3A&quot; cable=&quot;true&quot; speed=&quot;0&quot; type=&quot;82540EM&quot;/&gt;
+        &lt;Adapter slot=&quot;6&quot; enabled=&quot;false&quot; MACAddress=&quot;0800275FDD28&quot; cable=&quot;true&quot; speed=&quot;0&quot; type=&quot;82540EM&quot;/&gt;
+        &lt;Adapter slot=&quot;7&quot; enabled=&quot;false&quot; MACAddress=&quot;080027EAED00&quot; cable=&quot;true&quot; speed=&quot;0&quot; type=&quot;82540EM&quot;/&gt;
+      &lt;/Network&gt;
+      &lt;UART&gt;
+        &lt;Port slot=&quot;0&quot; enabled=&quot;false&quot; IOBase=&quot;0x3f8&quot; IRQ=&quot;4&quot; hostMode=&quot;Disconnected&quot;/&gt;
+        &lt;Port slot=&quot;1&quot; enabled=&quot;false&quot; IOBase=&quot;0x3f8&quot; IRQ=&quot;4&quot; hostMode=&quot;Disconnected&quot;/&gt;
+      &lt;/UART&gt;
+      &lt;LPT&gt;
+        &lt;Port slot=&quot;0&quot; enabled=&quot;false&quot; IOBase=&quot;0x378&quot; IRQ=&quot;4&quot;/&gt;
+        &lt;Port slot=&quot;1&quot; enabled=&quot;false&quot; IOBase=&quot;0x378&quot; IRQ=&quot;4&quot;/&gt;
+      &lt;/LPT&gt;
+      &lt;AudioAdapter controller=&quot;AC97&quot; driver=&quot;CoreAudio&quot; enabled=&quot;true&quot;/&gt;
+      &lt;SharedFolders/&gt;
+      &lt;Clipboard mode=&quot;Bidirectional&quot;/&gt;
+      &lt;Guest memoryBalloonSize=&quot;0&quot; statisticsUpdateInterval=&quot;0&quot;/&gt;
+      &lt;GuestProperties&gt;
+        &lt;GuestProperty name=&quot;/VirtualBox/HostInfo/GUI/LanguageID&quot; value=&quot;C&quot; timestamp=&quot;1246378935277722000&quot; flags=&quot;&quot;/&gt;
+      &lt;/GuestProperties&gt;
+    &lt;/Hardware&gt;
+    &lt;StorageControllers&gt;
+      &lt;StorageController name=&quot;IDE&quot; type=&quot;PIIX4&quot; PortCount=&quot;2&quot;&gt;
+        &lt;AttachedDevice type=&quot;HardDisk&quot; port=&quot;0&quot; device=&quot;0&quot;&gt;
+          &lt;Image uuid=&quot;{fad90868-100e-456d-abec-839756eec965}&quot;/&gt;
+        &lt;/AttachedDevice&gt;
+      &lt;/StorageController&gt;
+    &lt;/StorageControllers&gt;
+  &lt;/Machine&gt;
+&lt;/VirtualBox&gt;
+-------------- next part --------------
+?&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;
+&lt;!-- Microsoft Virtual Machine Options and Settings --&gt;
+&lt;preferences&gt;
+	&lt;version type=&quot;string&quot;&gt;2.0&lt;/version&gt;
+	&lt;hardware&gt;
+		&lt;memory&gt;
+			&lt;ram_size type=&quot;integer&quot;&gt;512&lt;/ram_size&gt;
+		&lt;/memory&gt;
+		&lt;pci_bus&gt;
+			&lt;scsi_adapter&gt;
+				&lt;controller_count type=&quot;integer&quot;&gt;1&lt;/controller_count&gt;
+				&lt;scsi_controller id=&quot;0&quot;&gt;
+					&lt;adapter_scsi_id type=&quot;integer&quot;&gt;7&lt;/adapter_scsi_id&gt;
+					&lt;adapter_shared type=&quot;boolean&quot;&gt;false&lt;/adapter_shared&gt;
+					&lt;id type=&quot;integer&quot;&gt;1&lt;/id&gt;
+					&lt;location id=&quot;0&quot;&gt;
+						&lt;drive_type type=&quot;integer&quot;&gt;1&lt;/drive_type&gt;
+						&lt;pathname&gt;
+							&lt;absolute type=&quot;string&quot;&gt;i:\virtual_server_drives\winweb-template\winweb-template_drive0.vhd&lt;/absolute&gt;
+							&lt;relative type=&quot;string&quot; /&gt;
+						&lt;/pathname&gt;
+						&lt;undo_pathname&gt;
+							&lt;absolute type=&quot;string&quot; /&gt;
+							&lt;relative type=&quot;string&quot; /&gt;
+						&lt;/undo_pathname&gt;
+					&lt;/location&gt;
+					&lt;location id=&quot;1&quot;&gt;
+						&lt;drive_type type=&quot;integer&quot;&gt;1&lt;/drive_type&gt;
+						&lt;pathname&gt;
+							&lt;absolute type=&quot;string&quot;&gt;i:\virtual_server_drives\winweb-template\winweb-template_drive1.vhd&lt;/absolute&gt;
+							&lt;relative type=&quot;string&quot; /&gt;
+						&lt;/pathname&gt;
+						&lt;undo_pathname&gt;
+							&lt;absolute type=&quot;string&quot; /&gt;
+							&lt;relative type=&quot;string&quot; /&gt;
+						&lt;/undo_pathname&gt;
+					&lt;/location&gt;
+				&lt;/scsi_controller&gt;
+				&lt;scsi_controller id=&quot;1&quot;&gt;
+					&lt;adapter_scsi_id type=&quot;integer&quot;&gt;7&lt;/adapter_scsi_id&gt;
+					&lt;adapter_shared type=&quot;boolean&quot;&gt;false&lt;/adapter_shared&gt;
+				&lt;/scsi_controller&gt;
+				&lt;scsi_controller id=&quot;2&quot;&gt;
+					&lt;adapter_scsi_id type=&quot;integer&quot;&gt;7&lt;/adapter_scsi_id&gt;
+					&lt;adapter_shared type=&quot;boolean&quot;&gt;false&lt;/adapter_shared&gt;
+				&lt;/scsi_controller&gt;
+				&lt;scsi_controller id=&quot;3&quot;&gt;
+					&lt;adapter_scsi_id type=&quot;integer&quot;&gt;7&lt;/adapter_scsi_id&gt;
+					&lt;adapter_shared type=&quot;boolean&quot;&gt;false&lt;/adapter_shared&gt;
+				&lt;/scsi_controller&gt;
+			&lt;/scsi_adapter&gt;
+			&lt;video_adapter&gt;
+				&lt;vram_size type=&quot;integer&quot;&gt;4&lt;/vram_size&gt;
+			&lt;/video_adapter&gt;
+			&lt;ethernet_adapter&gt;
+				&lt;controller_count type=&quot;integer&quot;&gt;1&lt;/controller_count&gt;
+				&lt;ethernet_controller id=&quot;0&quot;&gt;
+					&lt;ethernet_card_address type=&quot;bytes&quot;&gt;0003FF28E0A8&lt;/ethernet_card_address&gt;
+					&lt;id type=&quot;integer&quot;&gt;0&lt;/id&gt;
+					&lt;virtual_network&gt;
+						&lt;id type=&quot;bytes&quot;&gt;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF&lt;/id&gt;
+						&lt;name type=&quot;string&quot;&gt;Unplugged&lt;/name&gt;
+					&lt;/virtual_network&gt;
+				&lt;/ethernet_controller&gt;
+			&lt;/ethernet_adapter&gt;
+			&lt;ide_adapter&gt;
+				&lt;ide_controller id=&quot;1&quot;&gt;
+					&lt;location id=&quot;0&quot;&gt;
+						&lt;drive_type type=&quot;integer&quot;&gt;2&lt;/drive_type&gt;
+						&lt;pathname&gt;
+							&lt;absolute type=&quot;string&quot;&gt;D&lt;/absolute&gt;
+							&lt;relative type=&quot;string&quot; /&gt;
+						&lt;/pathname&gt;
+					&lt;/location&gt;
+				&lt;/ide_controller&gt;
+			&lt;/ide_adapter&gt;
+		&lt;/pci_bus&gt;
+		&lt;standard&gt;
+			&lt;name type=&quot;string&quot;&gt;Virtual Server 2005&lt;/name&gt;
+			&lt;version type=&quot;string&quot;&gt;0001.0000.0000&lt;/version&gt;
+		&lt;/standard&gt;
+		&lt;super_io&gt;
+			&lt;floppy id=&quot;0&quot;&gt;
+				&lt;pathname&gt;
+					&lt;absolute type=&quot;string&quot; /&gt;
+				&lt;/pathname&gt;
+			&lt;/floppy&gt;
+			&lt;parallel_port&gt;
+				&lt;port_type type=&quot;integer&quot;&gt;0&lt;/port_type&gt;
+			&lt;/parallel_port&gt;
+			&lt;serial_port&gt;
+				&lt;connect_immediately type=&quot;boolean&quot;&gt;false&lt;/connect_immediately&gt;
+			&lt;/serial_port&gt;
+		&lt;/super_io&gt;
+		&lt;bios&gt;
+			&lt;bios_guid type=&quot;string&quot;&gt;{20F7FD81-959C-4BA9-853B-9C35E7E35D13}&lt;/bios_guid&gt;
+			&lt;base_board&gt;
+				&lt;serial_number type=&quot;string&quot;&gt;2467-5068-3729-0535-3578-3429-34&lt;/serial_number&gt;
+			&lt;/base_board&gt;
+			&lt;bios_serial_number type=&quot;string&quot;&gt;2467-5068-3729-0535-3578-3429-34&lt;/bios_serial_number&gt;
+			&lt;chassis&gt;
+				&lt;asset_tag type=&quot;string&quot;&gt;2467-5068-3729-0535-3578-3429-34&lt;/asset_tag&gt;
+				&lt;serial_number type=&quot;string&quot;&gt;2467-5068-3729-0535-3578-3429-34&lt;/serial_number&gt;
+			&lt;/chassis&gt;
+			&lt;cmos type=&quot;bytes&quot;&gt;000040000020378002FFFF000000000000000000000000000031004C0707070703B0FFFF208580FF01000000200C01800CFC00000000000000000000000000901A32E252580050E999E62401002784004A2080240000000000085AACFE1032547698BAE400000000000003000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&lt;/cmos&gt;
+			&lt;time_bytes type=&quot;bytes&quot;&gt;26001300150002110907&lt;/time_bytes&gt;
+		&lt;/bios&gt;
+	&lt;/hardware&gt;
+	&lt;integration&gt;
+		&lt;microsoft&gt;
+			&lt;folder_sharing&gt;
+				&lt;enabled type=&quot;boolean&quot;&gt;false&lt;/enabled&gt;
+				&lt;load_allowed type=&quot;boolean&quot;&gt;false&lt;/load_allowed&gt;
+			&lt;/folder_sharing&gt;
+			&lt;heartbeat&gt;
+				&lt;failure_attempts type=&quot;integer&quot;&gt;12&lt;/failure_attempts&gt;
+				&lt;failure_interval type=&quot;integer&quot;&gt;10&lt;/failure_interval&gt;
+				&lt;rate type=&quot;integer&quot;&gt;10&lt;/rate&gt;
+				&lt;time type=&quot;integer&quot;&gt;60&lt;/time&gt;
+			&lt;/heartbeat&gt;
+			&lt;host_time_sync&gt;
+				&lt;enabled type=&quot;boolean&quot;&gt;true&lt;/enabled&gt;
+				&lt;frequency type=&quot;integer&quot;&gt;15&lt;/frequency&gt;
+				&lt;threshold type=&quot;integer&quot;&gt;10&lt;/threshold&gt;
+			&lt;/host_time_sync&gt;
+			&lt;mouse&gt;
+				&lt;allow type=&quot;boolean&quot;&gt;true&lt;/allow&gt;
+			&lt;/mouse&gt;
+			&lt;version&gt;
+				&lt;guest_os&gt;
+					&lt;build_number type=&quot;string&quot;&gt;5.00.2195&lt;/build_number&gt;
+					&lt;long_name type=&quot;string&quot;&gt;Windows&#174; 2000 Server&lt;/long_name&gt;
+					&lt;revision_number type=&quot;string&quot;&gt;Service Pack 4&lt;/revision_number&gt;
+					&lt;short_name type=&quot;string&quot;&gt;Windows&#174; 2000 Server&lt;/short_name&gt;
+				&lt;/guest_os&gt;
+				&lt;additions_number type=&quot;string&quot;&gt;013552&lt;/additions_number&gt;
+			&lt;/version&gt;
+		&lt;/microsoft&gt;
+	&lt;/integration&gt;
+	&lt;properties&gt;
+		&lt;creator&gt;
+			&lt;build type=&quot;string&quot;&gt;1.1.465.292 EE R2&lt;/build&gt;
+			&lt;name type=&quot;string&quot;&gt;Microsoft Virtual Server&lt;/name&gt;
+		&lt;/creator&gt;
+		&lt;modifier&gt;
+			&lt;build type=&quot;string&quot;&gt;1.1.465.292 EE R2&lt;/build&gt;
+			&lt;name type=&quot;string&quot;&gt;Microsoft Virtual Server&lt;/name&gt;
+		&lt;/modifier&gt;
+	&lt;/properties&gt;
+	&lt;settings&gt;
+		&lt;configuration&gt;
+			&lt;account&gt;
+				&lt;name type=&quot;string&quot; /&gt;
+			&lt;/account&gt;
+			&lt;saved_state&gt;
+				&lt;path&gt;
+					&lt;absolute type=&quot;string&quot; /&gt;
+					&lt;relative type=&quot;string&quot; /&gt;
+				&lt;/path&gt;
+			&lt;/saved_state&gt;
+			&lt;next_id type=&quot;integer&quot;&gt;2&lt;/next_id&gt;
+		&lt;/configuration&gt;
+		&lt;disks&gt;
+			&lt;track_disk_cache&gt;
+				&lt;enabled type=&quot;boolean&quot;&gt;true&lt;/enabled&gt;
+			&lt;/track_disk_cache&gt;
+		&lt;/disks&gt;
+		&lt;globalconfigid type=&quot;string&quot;&gt;{13038B3C-65A4-43D9-9223-3C5757A13B2D}&lt;/globalconfigid&gt;
+		&lt;host&gt;
+			&lt;resource_control&gt;
+				&lt;cpu&gt;
+					&lt;cap type=&quot;double&quot;&gt;50.00000000&lt;/cap&gt;
+					&lt;host_processors type=&quot;integer&quot;&gt;2&lt;/host_processors&gt;
+					&lt;reserve type=&quot;double&quot;&gt;0.00000000&lt;/reserve&gt;
+					&lt;weight type=&quot;integer&quot;&gt;100&lt;/weight&gt;
+				&lt;/cpu&gt;
+			&lt;/resource_control&gt;
+		&lt;/host&gt;
+		&lt;notes type=&quot;string&quot; /&gt;
+		&lt;remote_control&gt;
+			&lt;vmrc&gt;
+				&lt;authentication&gt;
+					&lt;type type=&quot;integer&quot;&gt;4&lt;/type&gt;
+				&lt;/authentication&gt;
+				&lt;desktop&gt;
+					&lt;color type=&quot;integer&quot;&gt;0&lt;/color&gt;
+					&lt;x_resolution type=&quot;integer&quot;&gt;800&lt;/x_resolution&gt;
+					&lt;y_resolution type=&quot;integer&quot;&gt;600&lt;/y_resolution&gt;
+				&lt;/desktop&gt;
+				&lt;enabled type=&quot;boolean&quot;&gt;false&lt;/enabled&gt;
+				&lt;encryption&gt;
+					&lt;enable type=&quot;boolean&quot;&gt;false&lt;/enable&gt;
+				&lt;/encryption&gt;
+				&lt;idle_timeout&gt;
+					&lt;enabled type=&quot;boolean&quot;&gt;true&lt;/enabled&gt;
+					&lt;value type=&quot;integer&quot;&gt;900&lt;/value&gt;
+				&lt;/idle_timeout&gt;
+				&lt;port_num type=&quot;integer&quot;&gt;5901&lt;/port_num&gt;
+			&lt;/vmrc&gt;
+		&lt;/remote_control&gt;
+		&lt;shutdown&gt;
+			&lt;quit&gt;
+				&lt;action type=&quot;integer&quot;&gt;0&lt;/action&gt;
+				&lt;was_running type=&quot;boolean&quot;&gt;false&lt;/was_running&gt;
+			&lt;/quit&gt;
+		&lt;/shutdown&gt;
+		&lt;sound&gt;
+			&lt;sound_adapter&gt;
+				&lt;enable type=&quot;boolean&quot;&gt;false&lt;/enable&gt;
+			&lt;/sound_adapter&gt;
+		&lt;/sound&gt;
+		&lt;startup&gt;
+			&lt;automatic&gt;
+				&lt;delay type=&quot;integer&quot;&gt;0&lt;/delay&gt;
+				&lt;type type=&quot;integer&quot;&gt;2&lt;/type&gt;
+			&lt;/automatic&gt;
+		&lt;/startup&gt;
+		&lt;undo_drives&gt;
+			&lt;always type=&quot;boolean&quot;&gt;false&lt;/always&gt;
+			&lt;default_action type=&quot;integer&quot;&gt;1&lt;/default_action&gt;
+			&lt;enabled type=&quot;boolean&quot;&gt;false&lt;/enabled&gt;
+			&lt;purposely_kept type=&quot;boolean&quot;&gt;false&lt;/purposely_kept&gt;
+			&lt;use_default type=&quot;boolean&quot;&gt;true&lt;/use_default&gt;
+		&lt;/undo_drives&gt;
+		&lt;video&gt;
+			&lt;full_screen type=&quot;boolean&quot;&gt;false&lt;/full_screen&gt;
+		&lt;/video&gt;
+	&lt;/settings&gt;
+&lt;/preferences&gt;
+-------------- next part --------------
+name ='miaffw001-at02'
+disk = ['phy:/dev/at02/miaffw001,ioemu:hda,w']
+memory = 512
+builder = hvm
+kernel = /usr/lib/xen/boot/hvmloader
+device_model = /usr/lib/xen/bin/qemu-dm
+boot = c
+vnc = 1
+vncdisplay = 4
+sdl = 0
+apic = 0
+acpi = 0
+vif = ['type=ioemu, bridge=xenbr5', 'type=ioemu, bridge=xenbr6', 'type=ioemu, bridge=xenbr7']
+vcpus = 1
+cpus = 5
+on_poweroff = 'destroy'
+on_reboot = 'restart'
+on_crash = 'restart'
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000942.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000980.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/date.html#979">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/thread.html#979">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/subject.html#979">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/author.html#979">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-June/000979.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:21 GMT -->
+</html>

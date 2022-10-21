@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2012-May/000970.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:51:59 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] PortGroups and Labels for IP/MAC
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=Re%3A%20%5BNml-wg%5D%20PortGroups%20and%20Labels%20for%20IP/MAC&In-Reply-To=%3C6CF0224B-9495-4030-A8BA-538071F514EA%40internet2.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2012-May/000954.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2012-May/000972.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] PortGroups and Labels for IP/MAC</H1>
+    <B>Aaron Brown</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=Re%3A%20%5BNml-wg%5D%20PortGroups%20and%20Labels%20for%20IP/MAC&In-Reply-To=%3C6CF0224B-9495-4030-A8BA-538071F514EA%40internet2.edu%3E"
+       TITLE="[Nml-wg] PortGroups and Labels for IP/MAC">aaron at internet2.edu
+       </A><BR>
+    <I>Thu May 10 08:58:51 EDT 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-May/000954.html">[Nml-wg] PortGroups and Labels for IP/MAC
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-May/000972.html">[Nml-wg] PortGroups and Labels for IP/MAC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/date.html#970">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/thread.html#970">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/subject.html#970">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/author.html#970">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On May 9, 2012, at 5:37 PM, Freek Dijkstra wrote:
+
+&gt;<i> On Labels:
+</I>&gt;<i> 
+</I>&gt;<i> What we have defined are &quot;resource labels&quot;, eg.:
+</I>&gt;<i> * Ethernet VLAN
+</I>&gt;<i> * Ethernet I-SID
+</I>&gt;<i> * Frequency on DWDM / Wavelength on CWDM
+</I>&gt;<i> * ATM VPC
+</I>&gt;<i> * ATM VPI
+</I>&gt;<i> * SONET/SDH STS3c/STM/AUG-1 timeslot
+</I>&gt;<i> * MPLS shim label
+</I>&gt;<i> perhaps even:
+</I>&gt;<i> * SSID on a wifi
+</I>&gt;<i> * strand in a fiber bundle
+</I>&gt;<i> * ...
+</I>&gt;<i> 
+</I>&gt;<i> This label is used for both:
+</I>&gt;<i> * distinguishing between flows on a link (aka channels)
+</I>&gt;<i> * routing and switching (eg. &quot;switch X will forward data from port 1,
+</I>&gt;<i> label 28 to port 4, label 42&quot;)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> So far so good.
+</I>&gt;<i> Now two issues.
+</I>&gt;<i> 
+</I>&gt;<i> 1. On PortGroups:
+</I>&gt;<i> 
+</I>&gt;<i> I assume that each Port is associated with a particular label. This is
+</I>&gt;<i> useful for monitoring, so we can distinguish between e.g. VLAN 120 and
+</I>&gt;<i> VLAN 42.
+</I>&gt;<i> 
+</I>&gt;<i> For path finding, it seem useful to describe a all possible ports (e.g.
+</I>&gt;<i> &quot;all VLANs that can dynamically created&quot;. For this, I propose to
+</I>&gt;<i> introduce a &quot;PortGroup&quot;: which logically can be expanded to many
+</I>&gt;<i> individual Ports.
+</I>&gt;<i> 
+</I>&gt;<i> The idea is still sketchy, but I like some input if this is a good
+</I>&gt;<i> approach. If so, I'll make a proposal.
+</I>
+In the OSCARS world, we've done this, using the label terminology, as &quot;the available labels on a port&quot;. Thus, a single port might have a variety of available labels that could be used on that port. That approach makes more sense to me than introducing a new grouping concept for ports that don't currently exist.
+
+Cheers,
+Aaron
+
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 2. On Destination Labels
+</I>&gt;<i> 
+</I>&gt;<i> The &quot;destination labels&quot;, such as destination IP address or destination
+</I>&gt;<i> MAC address are also used for routing and switching, just like the
+</I>&gt;<i> resource labels above.
+</I>&gt;<i> 
+</I>&gt;<i> Hence I presumed that destination labels could be described the same way
+</I>&gt;<i> as resource labels.
+</I>&gt;<i> I'm longer sure that this is a good idea.
+</I>&gt;<i> 
+</I>&gt;<i> Recall that each Port is associated with exactly one label.
+</I>&gt;<i> 
+</I>&gt;<i> For a host with one IP address 2001:0DB8:B4C6:6AAE::1 this means that is
+</I>&gt;<i> has one ingress Port (for this IP address). On the other hand, it would
+</I>&gt;<i> have 2^128-1 egress Ports (for all possible IP addresses that is can
+</I>&gt;<i> send to).
+</I>&gt;<i> 
+</I>&gt;<i> This discrepancy between ingress Port and egress Ports seems odd to me,
+</I>&gt;<i> and makes me doubt that destination labels are the same things as
+</I>&gt;<i> resource labels.
+</I>&gt;<i> 
+</I>&gt;<i> As stated in my previous email, G.800 thinks it's a different beast: it
+</I>&gt;<i> associates resource labels with the adaptation, while is associates
+</I>&gt;<i> source- and destination labels with the termination.
+</I>&gt;<i> 
+</I>&gt;<i> That's all nice, but I'm still at loss how to describe source- and
+</I>&gt;<i> destination labels in NML and how to deal with them. If you have any
+</I>&gt;<i> idea (good or bad), please share it.
+</I>&gt;<i> 
+</I>&gt;<i> Freek
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> nml-wg mailing list
+</I>&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">nml-wg at ogf.org</A>
+</I>&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">https://www.ogf.org/mailman/listinfo/nml-wg</A>
+</I>
+Internet2 Spring Member Meeting
+April 22-25, 2012 - Arlington, Virginia
+<A HREF="http://events.internet2.edu/2012/spring-mm/">http://events.internet2.edu/2012/spring-mm/</A>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://www.ogf.org/pipermail/nml-wg/attachments/20120510/65ba68cd/attachment-0001.html">http://www.ogf.org/pipermail/nml-wg/attachments/20120510/65ba68cd/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-May/000954.html">[Nml-wg] PortGroups and Labels for IP/MAC
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-May/000972.html">[Nml-wg] PortGroups and Labels for IP/MAC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/date.html#970">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/thread.html#970">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/subject.html#970">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/author.html#970">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2012-May/000970.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:51:59 GMT -->
+</html>

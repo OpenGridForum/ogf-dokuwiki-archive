@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000422.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] feedback on storage entities
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20feedback%20on%20storage%20entities&In-Reply-To=47EB996D.6090806%40cnaf.infn.it">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000409.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000423.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] feedback on storage entities</H1>
+    <B>Maarten.Litmaath at cern.ch</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20feedback%20on%20storage%20entities&In-Reply-To=47EB996D.6090806%40cnaf.infn.it"
+       TITLE="[glue-wg] feedback on storage entities">Maarten.Litmaath at cern.ch
+       </A><BR>
+    <I>Sat Mar 29 22:51:00 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000409.html">[glue-wg] feedback on storage entities
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000423.html">[glue-wg] feedback on storage entities
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#422">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#422">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#422">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#422">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ciao Sergio,
+
+&gt;<i> * For Storage Share
+</I>&gt;<i> 1- add a shared attribute in the storage share which type is boolean; 
+</I>&gt;<i> for &quot;shared&quot; shares, the value should be true
+</I>&gt;<i> 2- add an AggregationLocalID attribute; for the &quot;shared&quot; shares within 
+</I>&gt;<i> the same storage service, this attribute should be assigned with the 
+</I>&gt;<i> same value
+</I>&gt;<i> 
+</I>&gt;<i> in this way, we avoid the creation of one more level of hierarchy and 
+</I>&gt;<i> potential visualization tools which want to show a summary info can 
+</I>&gt;<i> avoid double counting by checking the two attributes that we propose
+</I>
+So, you would publish such a shared Share multiple times, once per VO.
+Each such instance then gives a VO view of that Share.  I do not see a
+problem for the info provider to cook up the correct values for the
+boolean flag and the AggregationLocalID, but I do note that compared
+to the proposal by Felix we lose some functionality: if each of the
+VOs has a _quota_ in the Share, we would publish that number as, say,
+its online TotalSize --&gt; this means we no longer have the _physical_
+TotalSize of the Share published anywhere.  Maybe not a big loss...
+
+&gt;<i> * For Storage Environment:
+</I>&gt;<i> when we mapped the current model to our T1 use case, we found out that 
+</I>&gt;<i> the storage environment is homogeneous; therefore there is not need (at 
+</I>&gt;<i> least for our scenario) to have the capacity to be associated to the 
+</I>&gt;<i> storage environment; the attributes of the storage capacity can be added 
+</I>&gt;<i> to the storage environment
+</I>
+An Environment can have both online and nearline components, and we would
+like to be able to publish sizes for both: if the sizes are incorporated,
+we have to put Online and Nearline in their names, like in GLUE 1.3.
+Fine with me, but I thought there were objections against that?
+
+&gt;<i> * For Storage Resource:
+</I>&gt;<i> since information about free/used/total/reserved space is provided by 
+</I>&gt;<i> the storage environment, we could avoid to have summary info at the 
+</I>&gt;<i> storage resource level; information consumer can aggregate it
+</I>
+The assumption then is that Environments will not overlap: probably OK.
+
+&gt;<i> If the above considerations fit the use cases of other partners, then 
+</I>&gt;<i> the storage capacity would be related only to the storage share.
+</I>
+I think we should handle sizes the same way for Share and Environment:
+either incorporate them, or have them in Capacity objects.
+
+&gt;<i> As regards the today agenda, I removed the following issues since they 
+</I>&gt;<i> do not properly reflect our scenario .
+</I>&gt;<i> 
+</I>&gt;<i> ** consequence of overlapping StorageResource entities
+</I>&gt;<i> *** GPFS 3.1 and GPFS 3.2 share same disks
+</I>&gt;<i> *** if wished to be expressed explicitly -&gt; each GPFS is represented as 
+</I>&gt;<i> own StorageResource
+</I>&gt;<i> *** BUT then : a higher aggregation of capacity numbers muster be given 
+</I>&gt;<i> in the service (again: if wished)
+</I>&gt;<i> *** OR (easier): express GPFS 3.1 and 3.2 in OtherInfo field
+</I>&gt;<i> 
+</I>&gt;<i> in our mapping choice, we have decided to model the three storage 
+</I>&gt;<i> systems managed by GPFS 3.1, GPFS 3.2 and TSM respectively using the 
+</I>&gt;<i> storage environment concept. They do not logically overlap. (See here 
+</I>
+Note: you do not publish the actual implementation names and versions,
+which we want at least for WLCG (see below).
+
+Furthermore, as far as WLCG is concerned you cannot build your T1D1
+setup out of a replica-online and a custodial-nearline Environment!
+
+In WLCG combinations of RetentionPolicy and AccessLatency have _extra_
+meaning that cannot be deduced from those attributes.
+
+Such combinations are called Storage Classes:
+
+    Custodial-Nearline == T1D0 --&gt; disk managed by system
+    Custodial-Online   == T1D1 --&gt; disk managed by client
+    Replica-Online     == T0D1 --&gt; disk managed by client
+
+A Storage Class always has disk, i.e an online component, while the
+Custodial classes also have tape or some other high quality storage;
+if it is tape/dvd/... there is a corresponding nearline component.
+
+What is more, the disk component is managed by the system for T1D0,
+while it is managed by the client (VO) for T1D1 and T0D1.
+
+WLCG needs to have it clear from the schema which Storage Class applies
+to a particular Share.
+
+In principle one could come up with this rule:
+
+    Custodial-Nearline + Replica-Online == Custodial-Online
+
+    T1D0               + T0D1           == T1D1
+
+But then a client that is interested in T1D1 has to query for Shares
+that either are linked to a Custodial-Online Environment, or linked
+to a Custodial-Nearline _and_ a Replica-Online Environment: not nice!
+
+Furthermore, a client interested in T1D0 (T0D1) has to ensure that
+the matching Shares are _not_ also linked to T0D1 (T1D0).
+
+I would quite prefer having a Share always linked to a _single_
+Environment, which itself will have an online component and may also
+have a nearline component.
+
+If we want to have separate implementation names and versions for
+those components, it would seem natural to introduce the split at
+the Resource level instead: an Environment can be linked to an online
+Resource (e.g. with GPFS 3.2) and a nearline Resource (TSM X.Y.Z).
+
+Whichever way, we would like to publish such back-end implementation
+names and versions explicitly.  Flavia has a use case: the name and
+version of the back-end storage system should be available, such that
+it can be deduced from the information system which sites are likely
+to suffer from which open issues.  This is important information for
+debugging operational problems in WLCG (and other grids).
+
+&gt;<i> <A HREF="http://glueman.svn.sourceforge.net/viewvc/*checkout*/glueman/tags/glue-xsd/draft-29/examples/AdminDomain_CNAF.xml?revision=27">http://glueman.svn.sourceforge.net/viewvc/*checkout*/glueman/tags/glue-xsd/draft-29/examples/AdminDomain_CNAF.xml?revision=27</A>)
+</I>&gt;<i> In our scenario, we have one global storage resource composed by three 
+</I>&gt;<i> storage environments.
+</I>&gt;<i> 
+</I>&gt;<i> As a final comment, my opinion is that we should privilege simplicity 
+</I>&gt;<i> and the meta-scheduling use cases more than the monitoring ones. If we 
+</I>&gt;<i> do not manage to converge shortly on a common vision for the storage 
+</I>&gt;<i> resource/storage environment, we should probably postpone the definition 
+</I>&gt;<i> of these entities to a future GLUE  revision and concentrate on the 
+</I>&gt;<i> storage endpoint/storage share consolidation.
+</I>
+I still think we are approaching convergence.
+Thanks,
+	Maarten
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000409.html">[glue-wg] feedback on storage entities
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000423.html">[glue-wg] feedback on storage entities
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#422">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#422">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#422">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#422">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000422.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+</html>

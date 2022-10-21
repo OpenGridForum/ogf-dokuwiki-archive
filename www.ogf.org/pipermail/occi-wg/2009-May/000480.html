@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000480.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Syntax for attributes on links
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Syntax%20for%20attributes%20on%20links&In-Reply-To=a7fcf8300905071527h2ffd9551x3fcfd1a1fbc8836d%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000476.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000481.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Syntax for attributes on links</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Syntax%20for%20attributes%20on%20links&In-Reply-To=a7fcf8300905071527h2ffd9551x3fcfd1a1fbc8836d%40mail.gmail.com"
+       TITLE="[occi-wg] Syntax for attributes on links">samj at samj.net
+       </A><BR>
+    <I>Thu May  7 17:45:04 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000476.html">[occi-wg] Syntax for attributes on links
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000481.html">[occi-wg] Syntax for attributes on links
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#480">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#480">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#480">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#480">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 5/8/09, Benjamin Black &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">b at b3k.us</A>&gt; wrote:
+&gt;<i> Using HTTP URIs and making things globally unique are orthogonal.  You are,
+</I>&gt;<i> again, assuming a specific implementation rather than describing the desired
+</I>&gt;<i> behavior.  You _could_ produce a system using HTTP URIs that were not
+</I>&gt;<i> consistent/unique/etc., just as you could produce a system based on UUIDs
+</I>&gt;<i> that changed as the infrastructure changed.  This is allegedly a RESTful
+</I>&gt;<i> API, please use the techniques of a good RESTful API, like embedding HTTP
+</I>&gt;<i> URIs, and describe the construction and semantics of the pieces as needed.
+</I>
+We were talking before about all URLs appearing in the protocol, which
+does make a lot of sense. UUIDs are universally unique already are
+resolveable if not retrievable from the entry point that served them,
+and don't break when moved or shared. There are pros and cons of both
+approaches bit I think we need to understand the full implications
+before we decide one way or the other.
+
+&gt;<i> Now, will someone please explain why, exactly, we are not basing this work
+</I>&gt;<i> on the Sun API?  I've asked several times now and have either been ignored
+</I>&gt;<i> or gotten hand waving.
+</I>
+There have (unsurprisingly) been public and private calls to rubber
+stamp various APIs but each have their benefits and drawbacks and
+we're trying to pick out the best parts. Single entry points,
+discovery, controllers and some of the structure came from Sun^W
+Oracle Cloud APIs already... the main thing that hasn't (yet) come
+across is JSON.
+
+Sam
+
+
+Sam
+
+
+&gt;<i> On Thu, May 7, 2009 at 2:53 PM, Sam Johnston &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">samj at samj.net</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> On 5/7/09, Benjamin Black &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">b at b3k.us</A>&gt; wrote:
+</I>&gt;&gt;<i> &gt; On Thu, May 7, 2009 at 8:52 AM, Sam Johnston &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">samj at samj.net</A>&gt; wrote:
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Good question and good to see people payong close attentipn. We know
+</I>&gt;&gt;<i> &gt;&gt; we can find the resources at the root of the entry point so I'm more
+</I>&gt;&gt;<i> &gt;&gt; inclined to use the href as an internal pointer than confuse things
+</I>&gt;&gt;<i> &gt;&gt; when there are multiple servers potentially talking about the same
+</I>&gt;&gt;<i> &gt;&gt; resources. we can use 3xx redirects as a kind of resolution system if
+</I>&gt;&gt;<i> &gt;&gt; need be too.
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Sam on iPhone
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I wish I could assume you were joking here.  Of course they should be
+</I>&gt;&gt;<i> HTTP
+</I>&gt;&gt;<i> &gt; URIs!  The confusion in the multi-provider case would come _because_ we
+</I>&gt;&gt;<i> did
+</I>&gt;&gt;<i> &gt; not specify a single entry point.  The logic of exposing some internal
+</I>&gt;&gt;<i> &gt; reference and then using redirects to paper over by translating to an
+</I>&gt;&gt;<i> &gt; external reference eludes me.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Actually it makes a lot of sense. The IDs are UUID based URNs and if
+</I>&gt;&gt;<i> we have a feed we want to be able to link resources together without
+</I>&gt;&gt;<i> having to futz with URLs. The entry point will either have a resource
+</I>&gt;&gt;<i> it gave you or know where to find it anyway so resolution is a
+</I>&gt;&gt;<i> non-problem.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Say we design a system where individual
+</I>&gt;&gt;<i> workstations/servers/clusters/etc each implement OCCI and have a
+</I>&gt;&gt;<i> common network resource then we definitely don't want to get different
+</I>&gt;&gt;<i> pointers from each of them. Same applies for resources that move (e.g.
+</I>&gt;&gt;<i> Live migrations), which would likely be the primary use case dr said
+</I>&gt;&gt;<i> redirects.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sam
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000476.html">[occi-wg] Syntax for attributes on links
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000481.html">[occi-wg] Syntax for attributes on links
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#480">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#480">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#480">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#480">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000480.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

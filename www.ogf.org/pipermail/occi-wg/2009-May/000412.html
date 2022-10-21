@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000412.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Syntax for attributes on links
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Syntax%20for%20attributes%20on%20links&In-Reply-To=21606dcf0905060723o14499d48n21f6f86e1be2621d%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000401.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000414.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Syntax for attributes on links</H1>
+    <B>Richard Davies</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Syntax%20for%20attributes%20on%20links&In-Reply-To=21606dcf0905060723o14499d48n21f6f86e1be2621d%40mail.gmail.com"
+       TITLE="[occi-wg] Syntax for attributes on links">richard.davies at elastichosts.com
+       </A><BR>
+    <I>Wed May  6 11:32:40 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000401.html">[occi-wg] Is OCCI the HTTP of Cloud Computing?
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000414.html">[occi-wg] Syntax for attributes on links
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#412">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#412">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#412">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#412">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Following up the topic of attributes on links after the discussion on our
+call:
+
+
+The original example was:
+
+&gt;<i> &lt;link href=&quot;urn:uuid:4cc8cf62-69a4-4650-9e8c-7d4c516884df&quot;
+</I>&gt;<i>       rel=&quot;<A HREF="http://purl.org/occi/storage#device&quot;">http://purl.org/occi/storage#device&quot;</A> title=&quot;Hard Drive&quot;/&gt;
+</I>
+And as I said before, we also need a device identifier at which to connect
+the storage, making it something like:
+
+&gt;<i> &lt;link type=&quot;ide:0:0&quot; href=&quot;urn:uuid:4cc8cf62-69a4-4650-9e8c-7d4c516884df&quot;
+</I>&gt;<i>       rel=&quot;<A HREF="http://purl.org/occi/storage#device&quot;">http://purl.org/occi/storage#device&quot;</A> title=&quot;Hard Drive&quot;/&gt;
+</I>
+which mapped to JSON as:
+
+&gt;<i> &quot;link&quot;:[
+</I>&gt;<i>   {
+</I>&gt;<i>     &quot;type&quot;:&quot;ide:0:0&quot;
+</I>&gt;<i>     &quot;rel&quot;:&quot;<A HREF="http://purl.org/occi/storage#device&quot;,">http://purl.org/occi/storage#device&quot;,</A>
+</I>&gt;<i>     &quot;href&quot;:&quot;urn:uuid:4cc8cf62-69a4-4650-9e8c-7d4c516884df&quot;,
+</I>&gt;<i>     &quot;title&quot;:&quot;Hard Drive&quot;
+</I>&gt;<i>   }
+</I>&gt;<i> ]
+</I>
+
+I still believe that the &quot;link&quot; here is a figment of conversion from the
+Atom XML format. To write this in something more like native JSON, I'd go
+with:
+
+&quot;ide:0:0&quot;: {
+  &quot;href&quot;:&quot;urn:uuid:4cc8cf62-69a4-4650-9e8c-7d4c516884df&quot;,
+  &quot;title&quot;:&quot;Hard Drive&quot;
+}
+
+since the device identifier is unique for the VM, and clearly specifies this
+as a place where storage is being attached.
+
+
+
+In text format, I'd flatten this data structure as:
+
+ide:0:0|href|4cc8cf62-69a4-4650-9e8c-7d4c516884df
+ide:0:0|title|Hard Drive
+
+or even just:
+
+ide:0:0|4cc8cf62-69a4-4650-9e8c-7d4c516884df
+ide:0:0|title|Hard Drive
+
+Rather than the original:
+
+link|ide:0:0|<A HREF="http://purl.org/occi/storage#device|Hard">http://purl.org/occi/storage#device|Hard</A> Drive|urn:uuid:4cc8cf62-69a4-4650-9e8c-7d4c516884df
+
+
+This is rather cleaner in terms of not having to know what all the possible
+attributes might be, and where they appear in the |-deliminated list.
+
+Cheers,
+
+Richard.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000401.html">[occi-wg] Is OCCI the HTTP of Cloud Computing?
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000414.html">[occi-wg] Syntax for attributes on links
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#412">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#412">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#412">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#412">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000412.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000576.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Simple JSON rendering for OCCI
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Simple%20JSON%20rendering%20for%20OCCI&In-Reply-To=20090512141901.GB11712%40alpha.arachsys.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000569.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000595.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Simple JSON rendering for OCCI</H1>
+    <B>Edmonds, AndrewX</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Simple%20JSON%20rendering%20for%20OCCI&In-Reply-To=20090512141901.GB11712%40alpha.arachsys.com"
+       TITLE="[occi-wg] Simple JSON rendering for OCCI">andrewx.edmonds at intel.com
+       </A><BR>
+    <I>Tue May 12 10:02:42 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000569.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000595.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#576">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#576">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#576">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#576">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Re: The meta-model - and it's related to current model discussions...
+
+This is somewhat incorrect - all providers provide access to their API's over HTTP yet their metamodels are not bound to HTTP in principle. I can send a XML model based on an XML-XSD metamodel over HTTP. I can send that same model over a different transport if I wanted to. The point here is that the model and the optional meta-model are not explicitly bound to the transport.
+
+Sun's models are specified in text [1]. They seem not to use an imported metamodel per say, possibly due to JSON's lack of a mechanism to define schemas (yes there's JSONSchema but not in wide use). In fact Sun's models are very suitable for many of OCCI's needs (as Ben Black noted).
+
+Amazon's [2] as embedded XSD in the WSDL based on W3C XSD (its meta model). All have models, some have metamodels and all are not inherently bound to a particular transport, just a default, prior-agreed one.
+
+Other than that I agree with keeping dependencies to a minimum, like you describe.
+
+Andy
+
+[1] <A HREF="http://kenai.com/projects/suncloudapis/pages/CloudAPISpecificationResourceModels">http://kenai.com/projects/suncloudapis/pages/CloudAPISpecificationResourceModels</A>
+[2] <A HREF="http://soap.amazon.com/schemas2/AmazonWebServices.wsdl">http://soap.amazon.com/schemas2/AmazonWebServices.wsdl</A>
+
+-----Original Message-----
+From: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A> [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A>] On Behalf Of Richard Davies
+Sent: 12 May 2009 15:19
+To: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+Subject: Re: [occi-wg] Simple JSON rendering for OCCI
+
+&gt;<i> &gt; pull in tens of thousands of lines of library code...
+</I>&gt;<i>
+</I>&gt;<i> Nobody's forcing you to pull in any more code for one rendering than
+</I>&gt;<i> another - the Google GData clients have code for working with all of their
+</I>&gt;<i> 16 services and are Apache licensed
+</I>
+As I said this morning, GData libraries do exist for many platforms, but are
+not universal, and do run to tens of thousands of lines of code.
+
+I'm worried having a library of this size as a key dependency for OCCI when
+we could go with a much lighter meta-model (in either JSON or XML) and not
+require the library.
+
+All existing cloud APIs (Amazon, Sun, GoGrid, ElasticHosts, etc.) have
+specified their APIs directly over HTTP rather than over a pre-existing meta
+model.
+
+Should we really be pulling in a dependency which is this large when we have
+a clear choice not to?
+
+Richard.
+_______________________________________________
+occi-wg mailing list
+<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+-------------------------------------------------------------
+Intel Ireland Limited (Branch)
+Collinstown Industrial Park, Leixlip, County Kildare, Ireland
+Registered Number: E902934
+
+This e-mail and any attachments may contain confidential material for
+the sole use of the intended recipient(s). Any review or distribution
+by others is strictly prohibited. If you are not the intended
+recipient, please contact the sender and delete all copies.
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000569.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000595.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#576">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#576">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#576">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#576">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000576.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

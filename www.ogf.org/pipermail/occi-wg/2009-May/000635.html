@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000635.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] OCCI MC - State Machine Diagram
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20MC%20-%20State%20Machine%20Diagram&In-Reply-To=EBC3C42F-33EE-4386-A9C3-1609C3E1DF33%40uk.fujitsu.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000634.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000642.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] OCCI MC - State Machine Diagram</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20MC%20-%20State%20Machine%20Diagram&In-Reply-To=EBC3C42F-33EE-4386-A9C3-1609C3E1DF33%40uk.fujitsu.com"
+       TITLE="[occi-wg] OCCI MC - State Machine Diagram">samj at samj.net
+       </A><BR>
+    <I>Wed May 13 09:36:44 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000634.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000642.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#635">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#635">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#635">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#635">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, May 13, 2009 at 4:20 PM, Roger Menday
+&lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">roger.menday at uk.fujitsu.com</A>&gt;wrote:
+
+&gt;<i>
+</I>&gt;<i> On 13 May 2009, at 15:13, Sam Johnston wrote:
+</I>&gt;<i>
+</I>&gt;<i> On Wed, May 13, 2009 at 3:40 PM, Roger Menday &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">roger.menday at uk.fujitsu.com</A>
+</I>&gt;<i> &gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt; I am not feeling comfortable with having a state model which
+</I>&gt;&gt;<i> &gt; will change on the fly, depending what a resource will
+</I>&gt;&gt;<i> &gt; answer.  For one thing, it will make user interfaces and
+</I>&gt;&gt;<i> &gt; tools really difficult to design:
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;  - should I add a suspend button, even if it works only sometimes?
+</I>&gt;&gt;<i> &gt;  - if it worked once, will it work again?
+</I>&gt;&gt;<i> &gt;  - what can I do if it does not work?  I want to suspend,
+</I>&gt;&gt;<i> &gt;    dammit! ;-)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I don't share your pessimism, but then again, I also think we are
+</I>&gt;&gt;<i> getting our wires crossed. I think there is a lot of help here from
+</I>&gt;&gt;<i> hateoas which does a lot to address your concerns above (??)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> That was exactly the point of introducing both together - given that most
+</I>&gt;<i> of the innovation is going to happen server side, clients should be as dumb
+</I>&gt;<i> as possible. That is, it doesn't matter if a new state comes along after a
+</I>&gt;<i> client has shipped because it will be advertised as a potential transition
+</I>&gt;<i> (HATEOAS), perhaps even with the expected target state.
+</I>&gt;<i>
+</I>&gt;<i> I totally agree.
+</I>&gt;<i>
+</I>
+Great. Anyone doesn't agree with the need for [and proposed solution
+offering] flexibility in the state model?
+
+&gt;<i>
+</I>&gt;<i> The temptation is to assume that infrastructure is a simple problem with a
+</I>&gt;<i> fixed domain but I can assure you this not the case - without allowing for
+</I>&gt;<i> such flexibility each implementor will find themselves having a good chance
+</I>&gt;<i> of running into functions they are not able to expose via the API, or which
+</I>&gt;<i> the API expects but which are not present (for example, if &quot;stop&quot; implicitly
+</I>&gt;<i> results in &quot;destroy&quot; should we offer &quot;stop&quot; at all?).
+</I>&gt;<i>
+</I>&gt;<i> My point was I wanted to talk about the &quot;states as verbs&quot; model which
+</I>&gt;<i> currently on the wiki ...
+</I>&gt;<i>
+</I>
+So the question is do you ask a &quot;RUNNING&quot; resource to &quot;STOP&quot; by pressing a
+button in order to get it to the &quot;STOPPED&quot; state or do you update its status
+from &quot;RUNNING&quot; to &quot;STOPPED&quot;. To me the latter is unclean because who are you
+to say you're going to get to that state immediately, or indeed that you'll
+even get there at all - updating the status of a &quot;STOPPED&quot; machine to
+&quot;RUNNING&quot; makes no sense if there's an operating system error that causes
+the boot to fail for example. I certainly prefer pressing a &quot;START&quot; button,
+having a transitional &quot;STARTING&quot; state with an accurate progress indicator
+and eventually reaching a &quot;RUNNING&quot; state. There's some sense in a
+parametrised &quot;transition-to&quot; function of some sort with an array of
+potential target states but I still think I prefer the actuator approach
+that we currently have.
+
+Sam
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090513/e1259670/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090513/e1259670/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000634.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000642.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#635">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#635">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#635">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#635">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000635.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

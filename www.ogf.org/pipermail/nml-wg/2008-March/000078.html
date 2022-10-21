@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000078.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] Network and domain abstractions
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20Network%20and%20domain%20abstractions&In-Reply-To=47E0248C.4010800%40science.uva.nl">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000077.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000080.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] Network and domain abstractions</H1>
+    <B>John Vollbrecht</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20Network%20and%20domain%20abstractions&In-Reply-To=47E0248C.4010800%40science.uva.nl"
+       TITLE="[Nml-wg] Network and domain abstractions">jrv at internet2.edu
+       </A><BR>
+    <I>Wed Mar 19 08:44:30 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000077.html">[Nml-wg] Network and domain abstractions
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000080.html">[Nml-wg] Network and domain abstractions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#78">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#78">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#78">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I would like to pursue the concept of view or model.  My primary  
+interest is in terms of how the dynamic circuit path finding and path  
+creation will use a topology description.
+
+My thought on how this would work, which may be different than  
+everyone else's, is something like the following.  This is very rough  
+- I offer it for discussion.  The definitions need work, but I hope  
+it gives the idea of what I think would be good in a &quot;model or  
+view&quot;.  I may also misunderstand this, so please correct if needed.
+
+1. A &quot;real&quot; topology exists which describes real devices, interfaces,  
+and links.  It includes parameters like bw, latency, geographic  
+location, and capabilities like switchint  or adaptation (e.g.  
+mapping VLANS or doing GFP conversion between ethernet and SDH).
+
+2. The &quot;real&quot; topology includes information about control of  
+capabilities - the administrative owner(s), the operational owner(s),  
+and any device that can activate the capabilities.
+
+3. The real topology has groups - which might be called networks, or  
+domains or both.  It is not clear exactly how this will work.
+
+4. On and from this real topology there are derived &quot;views or models&quot;  
+which are useful to different applications.  In my mind this ability  
+to have a common real topology from which different views are created  
+is very powerful.
+
+DCN views
+
+An Interdomain Controller is the DCN entity that controls circuit  
+establishment over multiple domains.  A domain is the set of  
+capabilities that are controlled by an IDC.
+
+An internal topological view of a domain will include all the  
+capabilities that are in a domain and the devices that contain the  
+capabilites.  In the simple case this is all the nodes and links in  
+the domain.
+
+An external topological view of a domain includes the links to  
+external domains and the internal device to which the link is  
+connected.  It also includes the capabilities of the domain to act on  
+external links.
+
+A DCN internal pathfinding view contains Nodes and links for a  
+domain.  The nodes and links may correspond to the real topology or  
+may be virtual links that are created by combining connections  
+between locations into a single link (e.g. 4 GEs between sites are  
+treated as a single link for pathfinding purposes) or by splitting  
+connections into different links (e.g. STS-1-48= link1, STS-49-96 =  
+link2).
+
+A DCN external pathfinding view contains domains and links between  
+domains.  There is some question as to whether a domain should be  
+abstracted to look like a node.  My view is that from a DCN  
+operational view they are different.  routes inside domain are  
+calculated between nodes.  routes between domains are calculated  
+between edges of domains.
+
+A DCN path request view includes resources in the request.  It will  
+have parameters for the request (e.g. bw) but will also include  
+specific resources that are available.  I am not sure if the elements  
+in a path request need to have a topological name.  I have called  
+these route objects - there is probably a better name.
+
+A DCN circuit is a path with specific resources at each link and node  
+in the path.  Perhaps there is a better name for this - e.g. it is a  
+link.  From a DCN perspective it is different than the links that are  
+used to create the circuit, and needs a name in the DCN view.
+
+-- I am not sure how different the monitoring view would be.  If the  
+intent is to monitor DCN then I am guessing the view would be the  
+same, perhaps with some information about monitoring devices.
+
+-- I am wondering how this plays with the idea of showing links to  
+applications - perhaps the network view can be limited to showing  
+where applications connect to the net.
+
+
+
+
+On Mar 18, 2008, at 4:22 PM, Freek Dijkstra wrote:
+&gt;<i> Hi Aaron, Evangelos and Aur&#233;lien,
+</I>&gt;<i>
+</I>&gt;<i> I wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> So I, Aaron, and Evangelos (and perhaps Aur&#233;lien and John if they
+</I>&gt;&gt;<i> have the coureage) now have a moral obligation to summarize our
+</I>&gt;&gt;<i> network / domain  / view discussion on the wiki, in order to save
+</I>&gt;&gt;<i> others the ordeal of reading our entire flood of mails from two weeks
+</I>&gt;&gt;<i> ago.
+</I>&gt;<i>
+</I>&gt;<i> I very much hope you are willing to help with this.
+</I>&gt;<i>
+</I>&gt;<i> I just made a first attempt at the wiki:
+</I>&gt;<i> <A HREF="https://forge.gridforum.org/sf/wiki/do/viewPage/projects.nml-wg/wiki/">https://forge.gridforum.org/sf/wiki/do/viewPage/projects.nml-wg/wiki/</A>
+</I>&gt;<i> <A HREF="https://forge.gridforum.org/sf/wiki/do/viewPage/projects.nml-wg/">https://forge.gridforum.org/sf/wiki/do/viewPage/projects.nml-wg/</A> 
+</I>&gt;<i> wiki/Grouping
+</I>&gt;<i> <A HREF="https://forge.gridforum.org/sf/wiki/do/viewPage/projects.nml-wg/">https://forge.gridforum.org/sf/wiki/do/viewPage/projects.nml-wg/</A> 
+</I>&gt;<i> wiki/Interfaces
+</I>&gt;<i>
+</I>&gt;<i> I will try to re-read the rest of the mails, and see if there are  
+</I>&gt;<i> things to add (or better: perhaps we can eliminate some of the  
+</I>&gt;<i> controversies by reaching a consensus!). Please have a look in the  
+</I>&gt;<i> mean time, and add whatever you feel is important feedback you want  
+</I>&gt;<i> to give to the NML WG. I'd say this is your chance to enforce your  
+</I>&gt;<i> superior model on other mortal souls :-)
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Freek
+</I>&gt;<i>
+</I>
+John Vollbrecht, Senior Network Engineer
+Internet2
+office +1-734-352-4960 | mobile +1-734-395-7890
+
+
+
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000077.html">[Nml-wg] Network and domain abstractions
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000080.html">[Nml-wg] Network and domain abstractions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#78">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#78">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#78">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000078.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+</html>

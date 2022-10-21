@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000432.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] feedback on storage entities
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20feedback%20on%20storage%20entities&In-Reply-To=20080331144022.d0c462de.owen.synge%40desy.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000429.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000410.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] feedback on storage entities</H1>
+    <B>Maarten.Litmaath at cern.ch</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20feedback%20on%20storage%20entities&In-Reply-To=20080331144022.d0c462de.owen.synge%40desy.de"
+       TITLE="[glue-wg] feedback on storage entities">Maarten.Litmaath at cern.ch
+       </A><BR>
+    <I>Mon Mar 31 18:20:20 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000429.html">[glue-wg] feedback on storage entities
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000410.html">[glue-wg] FW: [ogsa-hpcp-wg] Reminder: Thursday 27th March 2008 at 9.30 PACIFIC (in a few minutes from now!)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#432">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#432">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#432">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#432">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Owen,
+
+&gt;<i> &gt; Whichever way, we would like to publish such back-end implementation
+</I>&gt;<i> &gt; names and versions explicitly.  Flavia has a use case: the name and
+</I>&gt;<i> &gt; version of the back-end storage system should be available, such that
+</I>&gt;<i> &gt; it can be deduced from the information system which sites are likely
+</I>&gt;<i> &gt; to suffer from which open issues.  This is important information for
+</I>&gt;<i> &gt; debugging operational problems in WLCG (and other grids).
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Dear all,
+</I>&gt;<i> 
+</I>&gt;<i> Could some one please explain why back-end storage system is important
+</I>&gt;<i> for Glue?
+</I>&gt;<i> 
+</I>&gt;<i> The backend tape system which is only applicable to a handful of sites
+</I>
+If e.g. StoRM becomes popular, there may be more than a handful.
+StoRM relies a lot on GPFS to provide the desired functionality
+(e.g. space reservation and just-in-time ACLs).
+Various implementations may come to rely on some NFSv4 release
+that we might want to publish explicitly.
+The upshot of this discussion is that it seems at least undesirable
+to have the schema constrain us to a single implementation name and
+version.
+
+&gt;<i> (less than 14 sites I would guess) does not need to be discovered as we
+</I>&gt;<i> tend to hand code special provision for such sites in our data flow
+</I>&gt;<i> models. We have a white board in desy where we track the deployment of
+</I>&gt;<i> all tier 1's. The data is not so large that it demands discovery for
+</I>&gt;<i> bug fixing.
+</I>&gt;<i> 
+</I>&gt;<i> For me Glue is mostly about Tier 2/3 sites endpoint discovery which
+</I>&gt;<i> have low resources and even lower manpower and yet will be expected to
+</I>&gt;<i> fill in some (not all) of this relational information by hand. I feel
+</I>&gt;<i> that modeling a Tier 1 or a tier 0 is exactly what we should not be
+</I>&gt;<i> focusing upon. Since these sites are already known by name, have FTE's
+</I>&gt;<i> who can fill in Glue schema values by hand (and our Grid specific
+</I>&gt;<i> extensions). Tier 2/3 sites should ideally do less hand coding as
+</I>&gt;<i> manpower is an issue their.
+</I>
+Tier-2 and -3 sites can use YAIM to handle most of the configuration
+issues.  These days the documentation is in fairly good shape and the
+code explicitly requires the necessary parameters to be filled in,
+so it should become easier for sites to publish sensible stuff.
+
+&gt;<i> I'm in favour of a catalogue mapping service so catalogue
+</I>&gt;<i> synchronisation can occur which if such was added to the LCG frame work
+</I>&gt;<i> would make the tiny amount of &quot;monitoring&quot; data in the Glue useless as
+</I>&gt;<i> the catalogues would know what data was used at each site and far more
+</I>&gt;<i> usefully could delete files rather than just know they need to be
+</I>&gt;<i> deleted.
+</I>
+Each of the LHC VOs probably will implement its own catalogue mapping
+or consistency service, but there will be no general service for other
+VOs on EGEE for quite a while, if ever.  Other grids may have the same
+problem.
+
+It is true that having &quot;monitoring&quot; data in the information system
+may lead to false expectations, and can only do a superficial job
+w.r.t. accounting.  Still, we have experience with implementing
+GLUE schema info providers and those we have some control over,
+while a proper accounting service has no clear timeline, AFAIK.
+
+Furthermore, just about everything is optional, so we may decide
+later on that some attributes are not worth the effort after all:
+cf. the storage library in GLUE 1.x, finally deprecated in 1.3.
+
+&gt;<i> Patrick has told me dCache position is to accept all requests we can
+</I>&gt;<i> deliver and fight against all we cant do. Paul now represents dCache
+</I>&gt;<i> for Glue, I just drop and email in now and again.
+</I>&gt;<i> 
+</I>&gt;<i> My comments are not dCache related, I just fear we are missing a rare
+</I>&gt;<i> opportunity to remove attributes from an inter grid standard. I am much
+</I>&gt;<i> happier we extend the Glue to resolve missing services for
+</I>&gt;<i> LCG/OSG/Nordugrid within our grids and MOU's, but to add these as
+</I>&gt;<i> fields all Grids should use seems bloated and bad form, when their
+</I>&gt;<i> function is just to resolve architectural floors in our current grids
+</I>&gt;<i> ability to mange its cataloges. Its consequence is to prevent us
+</I>&gt;<i> focusing on missing data and syncronisation services, make inter
+</I>&gt;<i> operation harder by adding what I see as non use cases, such as data we
+</I>&gt;<i> should just know (backend tape system is not a job selection issue),
+</I>&gt;<i> and dynamic trivia such as poor quality monitoring (that does not
+</I>&gt;<i> include enough data to resolve running out of space anyway which seems
+</I>&gt;<i> the only use case), but that's a longer email. Remember all fields (and
+</I>&gt;<i> worse relations) we add to Glue wont go away for years and the costs
+</I>&gt;<i> are most apparent with tier 2/3 sites. I feel we are not being hard
+</I>&gt;<i> enough on people bringing use cases and looking at alternative
+</I>&gt;<i> solutions. I feel that we could resolve all the SE service discovery
+</I>&gt;<i> with just two (or three to be consistent with the rest of GLue)
+</I>&gt;<i> entities if we removed what I currently see as counter productive use
+</I>&gt;<i> cases.
+</I>
+I agree with your concerns, but here is a possible counter argument:
+if GLUE 2.0 does not include all the 1.3 functionality that users
+and developers appreciate, it may be a long time before we start
+seeing 2.0 used for anything real.  We can take a very purist view
+of what should be in the information system and find that grids
+immediately have to hack it, so that they can get their work done.
+It has happened with GLUE 1.x, it can happen again.
+Cheers,
+	Maarten
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000429.html">[glue-wg] feedback on storage entities
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000410.html">[glue-wg] FW: [ogsa-hpcp-wg] Reminder: Thursday 27th March 2008 at 9.30 PACIFIC (in a few minutes from now!)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#432">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#432">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#432">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#432">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000432.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+</html>

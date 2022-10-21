@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000693.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] OCCI MC - State Machine Diagram
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20MC%20-%20State%20Machine%20Diagram&In-Reply-To=21606dcf0905140434o42ce68b7jac16aefe482db57d%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000686.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000685.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] OCCI MC - State Machine Diagram</H1>
+    <B>Roger Menday</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20MC%20-%20State%20Machine%20Diagram&In-Reply-To=21606dcf0905140434o42ce68b7jac16aefe482db57d%40mail.gmail.com"
+       TITLE="[occi-wg] OCCI MC - State Machine Diagram">roger.menday at uk.fujitsu.com
+       </A><BR>
+    <I>Thu May 14 07:58:50 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000686.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000685.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#693">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#693">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#693">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#693">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Sam
+
+&gt;<i>
+</I>&gt;<i> Maybe I am getting actuators wrong ... it could be, I like the Sun  
+</I>&gt;<i> API, and they use actuators. But, actually, actuators don't seem  
+</I>&gt;<i> that great, and they have filtered down into the verb part of the  
+</I>&gt;<i> noun-attribute-verb model. And so, I think it is interesting to  
+</I>&gt;<i> explore other ways of doing it, which address (these overlap)
+</I>&gt;<i>
+</I>&gt;<i> - async concerns
+</I>&gt;<i>
+</I>&gt;<i> Status/error fields would be one simple solution to this problem -  
+</I>&gt;<i> we already have HTTP 20x error codes to indicate that something is  
+</I>&gt;<i> indeed async.
+</I>
+I think that is a good way.
+
+The thing (that I understand about the actuator) approach, or rather I  
+have not seen documented anywhere, was that POSTing to an actuator URI  
+doesn't seem to create a resource anywhere. So, we can't do that right  
+now.
+
+OK, maybe that is something for OCCI 2.0, but why not do it now ?
+
+&gt;<i> An eventlog extension is another.
+</I>&gt;<i>
+</I>&gt;<i> - error reporting
+</I>&gt;<i>
+</I>&gt;<i> As above.
+</I>&gt;<i>
+</I>&gt;<i> - offering porential of something more than just pressing a button  
+</I>&gt;<i> (move a few dials then press a button, for ex)
+</I>&gt;<i>
+</I>&gt;<i> This is likely to be an absolute requirement - I don't want to have  
+</I>&gt;<i> to press the start button 50 times to get 50 instances so there will  
+</I>&gt;<i> need to be some way to create-en-masse for a start (probably with  
+</I>&gt;<i> the flexibility of ranges ala amazon). I may also need to specify  
+</I>&gt;<i> cold start vs warm start (e.g. with or without state). I've not  
+</I>&gt;<i> really even started thinking about this yet, beyond knowing that  
+</I>&gt;<i> there are a few potential solutions.
+</I>
+So, actuators don't seem to cover this (?)
+
+Modeling state discovery *and* request as part of a model does seems  
+to be a good alternative.
+
+&gt;<i>
+</I>&gt;<i> A different perspective is that in the state should be part of the  
+</I>&gt;<i> model, not as a enumerable defined in a registry.
+</I>&gt;<i>
+</I>&gt;<i> Sure, this is the more formal approach but it's also more rigid/ 
+</I>&gt;<i> brittle. As we can't hope to predict every state that will ever  
+</I>&gt;<i> exist, least of all in a fashion that is understandable/acceptable  
+</I>&gt;<i> to everyone, we need to be flexible.
+</I>
+Yes, but, the people need to conform to some extent. That's why we are  
+having this JSON vs ATOM discussion, right ? They also need to conform  
+to a basic state model, and then allow states to be specialized if  
+necessary. Don't you actually get this if you have  state modeled as  
+part of a class model; a simple one that everyone can live with -  
+rather like the one in the OGF Reference Model - together with sub- 
+classing for more specialist cases ?
+
+So, generically processed by everything at some level. That takes care  
+of brittleness, right ?
+
+Roger
+
+ps. Actually, I would've thought that having the state of something as  
+a stream of updates inside an feed would appeal to a &quot;atom/atompp for  
+occi&quot; proponent ?
+
+
+&gt;<i> State diagrams are as much a personal preference, as evidenced by  
+</I>&gt;<i> the many that exist for different projects - Microsoft vs VMware vs  
+</I>&gt;<i> DMTF vs OGF being the ones I've looked at.
+</I>
+&gt;<i> Sam
+</I>&gt;<i>
+</I>
+
+
+
+______________________________________________________________________
+                                        
+ Fujitsu Laboratories of Europe Limited
+ Hayes Park Central, Hayes End Road, Hayes, Middlesex, UB4 8FE
+ Registered No. 4153469
+ 
+ This e-mail and any attachments are for the sole use of addressee(s) and
+ may contain information which is privileged and confidential. Unauthorised
+ use or copying for disclosure is strictly prohibited. The fact that this
+ e-mail has been scanned by Trendmicro Interscan and McAfee Groupshield does
+ not guarantee that it has not been intercepted or amended nor that it is
+ virus-free. 
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090514/2b52129d/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090514/2b52129d/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000686.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000685.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#693">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#693">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#693">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#693">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000693.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

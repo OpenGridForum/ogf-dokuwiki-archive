@@ -11,7 +11,7 @@
         <description></description>
         <link>https://www.ogf.org/dokuwiki/</link>
         <image rdf:resource="lib/tpl/ogf/images/favicon.ico" />
-       <dc:date>2022-09-28T08:56:18+0000</dc:date>
+       <dc:date>2022-09-30T01:04:45+0000</dc:date>
         <items>
             <rdf:Seq>
                 <rdf:li rdf:resource="https://www.ogf.org/dokuwiki/doku.php/structure/applications?rev=1368995992&amp;do=diff"/>

@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-June/000928.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:21 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Fwd: Clarifications on Web Linking with HTTP
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Fwd%3A%20Clarifications%20on%20Web%20Linking%20with%20HTTP&In-Reply-To=21606dcf0906142027y517d22c5i78398428126f5811%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000980.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000943.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Fwd: Clarifications on Web Linking with HTTP</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Fwd%3A%20Clarifications%20on%20Web%20Linking%20with%20HTTP&In-Reply-To=21606dcf0906142027y517d22c5i78398428126f5811%40mail.gmail.com"
+       TITLE="[occi-wg] Fwd: Clarifications on Web Linking with HTTP">samj at samj.net
+       </A><BR>
+    <I>Sun Jun 14 22:45:14 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000980.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000943.html">[occi-wg] OCCI Conference Call has just started...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/date.html#928">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/thread.html#928">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/subject.html#928">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/author.html#928">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Here's a related discussion at IETF about Web Linking, which has allowed us
+to vastly simplify the descriptor format by moving linking meta-data to the
+HTTP headers (where it arguably belongs).
+
+Sam
+
+---------- Forwarded message ----------
+From: Sam Johnston &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">samj at samj.net</A>&gt;
+Date: Mon, Jun 15, 2009 at 5:27 AM
+Subject: Clarifications on Web Linking with HTTP
+To: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">apps-discuss at ietf.org</A>
+
+
+Morning all,
+
+The HTTP Link: header enables web linking without hypermedia - that
+is, arbitrary content types can be linked (with attriubtes)
+out-of-band rather than within the payload (e.g. HTML) itself. This
+enables the use of HTTP as a meta-model (at least for individual
+resources) without having to resort to Atom, which is potentially
+great news for RESTful APIs.
+
+I am currently working on a real world application of Marks' Web
+Linking I-D[1] (OGF's Open Cloud Computing Interface -
+<A HREF="http://www.occi-wg.org/">http://www.occi-wg.org/</A>) and require clarification on a few points
+(which may want to end up in the I-D).
+
+ - First and foremost, in the absence of the LINK and UNLINK verbs
+originally defined in RFC 2068[2] but specifically omitted from RFC
+2616[3], what is the preferred mechanism for manipulating these links
+via HTTP? It appears that this header is intended for GET requests
+only, but presumably specifying it in POST and PUT requests would be
+one option that avoids the creation of [not so] &quot;new&quot; verbs (bearing
+in mind that short of accepting Link: headers from empty POST/PUT
+requests, it would be necessary to GET and then PUT the entire payload
+to update links - twice if they were reciprocal). While there was an
+attempt a dozen years ago to better define the relevant HTTP verbs[4],
+it strikes me as more sensible to follow the example of the
+Set-Cookie: header for this rather than WebDAV's example of creating
+new verbs (even if we've seen them before) but you guys are the
+experts.
+
+ - Another concern with an arbitrary number of links is that arbitrary
+string length limits may be imposed by user agents, as they are with
+URLs. This should not be a problem where there is one link per header,
+but it may be where the headers are concatenated as described in RFC
+2616[5]. This is a double edged sword however as some user agents have
+only recently added support for multiple headers of the same type[6]
+and it remains a problem for some[7].
+
+ - The introduction of a link relation registry at IANA makes a lot of
+sense, though it would be nice if these were common for HTTP, HTML,
+Atom and other places links appear. Perhaps namespaces (e.g.
+&quot;atom:service&quot; or &quot;occi.state.restart&quot;) would be useful here so as to
+enable significantly more future extensibility.
+
+ - It seems useful to be able to (optionally) specify the type (as in
+content type rather than relation type) of a given link, as is the
+case for Atom. That said, this also seems somewhat redundant with HTTP
+Content Negotiation, but implementations that choose to support the
+&quot;type&quot; attribute may gain some performance and usability advantages
+from doing so. The matter of whether this information belongs in URIs
+(and if so, which side of the '?') or in HTTP headers (or both) is
+still not clear to me as there are pros and cons of each - perhaps the
+relation type is more suitable (or both?) as it's often not possible
+to unambigously determine the relation type from the content type
+(consider modeling people where both fingerprint and portrait
+representations may exist in image/png format).
+
+To be more specific about the requirements, the API models cloud
+infrastructure services (IaaS) and has three main nouns (compute,
+network, storage) which need to be associated with each other with
+attributes on the links (e.g. a compute resource having a network
+resource associated with a local identifier attribute of &quot;eth0&quot;).
+Using Atom as the meta-model worked fine (as evidenced by GData) but
+it now seems possible - at least for individual resources - with HTTP.
+
+Cheers,
+
+Sam
+
+1. <A HREF="http://tools.ietf.org/html/draft-nottingham-http-link-header-05">http://tools.ietf.org/html/draft-nottingham-http-link-header-05</A>
+2. <A HREF="http://tools.ietf.org/html/rfc2068#section-19.6.1">http://tools.ietf.org/html/rfc2068#section-19.6.1</A>
+3. <A HREF="http://tools.ietf.org/html/rfc2616#section-19.6.3">http://tools.ietf.org/html/rfc2616#section-19.6.3</A>
+4. <A HREF="http://ftp.ics.uci.edu/pub/ietf/http/draft-pritchard-http-links-00.txt">http://ftp.ics.uci.edu/pub/ietf/http/draft-pritchard-http-links-00.txt</A>
+5. <A HREF="http://tools.ietf.org/html/rfc2616#section-4.2">http://tools.ietf.org/html/rfc2616#section-4.2</A>
+6. <A HREF="http://www.mail-archive.com/bug-wget@gnu.org/msg00076.html">http://www.mail-archive.com/bug-wget@gnu.org/msg00076.html</A>
+7. <A HREF="http://bugs.python.org/issue1660009">http://bugs.python.org/issue1660009</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090615/96bd9aa9/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090615/96bd9aa9/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000980.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000943.html">[occi-wg] OCCI Conference Call has just started...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/date.html#928">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/thread.html#928">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/subject.html#928">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/author.html#928">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-June/000928.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:21 GMT -->
+</html>

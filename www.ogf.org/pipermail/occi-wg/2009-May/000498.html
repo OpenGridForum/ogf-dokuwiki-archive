@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000498.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Voting result
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Voting%20result&In-Reply-To=90C9A7CA-B6F4-4848-9FD2-EA4B281248DB%40Sun.COM">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000497.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000501.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Voting result</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Voting%20result&In-Reply-To=90C9A7CA-B6F4-4848-9FD2-EA4B281248DB%40Sun.COM"
+       TITLE="[occi-wg] Voting result">samj at samj.net
+       </A><BR>
+    <I>Fri May  8 23:58:06 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000497.html">[occi-wg] Voting result
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000501.html">[occi-wg] Voting result
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#498">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#498">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#498">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#498">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, May 9, 2009 at 1:46 AM, Tim Bray &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">Tim.Bray at sun.com</A>&gt; wrote:
+
+&gt;<i> On May 8, 2009, at 3:55 PM, Sam Johnston wrote:
+</I>&gt;<i>
+</I>&gt;<i>   Oh, here's a dirty secret: both XML and JSON are lousy &quot;wrapper&quot; formats.
+</I>&gt;&gt;<i>  If you have different kinds of things, you're usually better off letting
+</I>&gt;&gt;<i> them stand alone and link back and forth; that hypertext thing.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Right so say I want to create a new resource, or move it from one service
+</I>&gt;&gt;<i> to another, or manipulate its parameters, or any one of an infinite number
+</I>&gt;&gt;<i> of other potential operations - and say this resource is an existing virtual
+</I>&gt;&gt;<i> machine in a binary format (e.g. OVA) or an XML representation of a complex
+</I>&gt;&gt;<i> storage subsystem or a flat text network device config or... you get the
+</I>&gt;&gt;<i> point. It is far simpler for me to associate/embed the resource with its
+</I>&gt;&gt;<i> descriptor directly than to have a two phase process of uploading it and
+</I>&gt;&gt;<i> then feeding a URL to another call.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> By participating in this discussion I'm rapidly developing an obligation to
+</I>&gt;<i> go learn the use-cases and become actually well-informed on the specifics.
+</I>&gt;<i>  And I'm uncomfortable disagreeing with Sam so much, because the work that's
+</I>&gt;<i> being done here seems good.
+</I>&gt;<i>
+</I>
+Thanks, your input is very much appreciated.
+
+
+&gt;<i> But... I just don't buy the argument above.  You can't package binary
+</I>&gt;<i> *anything* into XML (or JSON) without base-64-ing it, blecch.  And here's
+</I>&gt;<i> the dirty secret: a lot of times you can't even package XML into other XML
+</I>&gt;<i> safely, you break unique-id attributes and digital signatures and namespace
+</I>&gt;<i> prefixes and embedded XPaths and so on and so on.  The Web architecture
+</I>&gt;<i> really wants you to deal with resources as homogeneous blogs, that's why
+</I>&gt;<i> media-types are so important.
+</I>&gt;<i>
+</I>
+Payload transparency is a nice to have - that is, learning from OCCI that
+the thing has 2 CPUs and 2Gb RAM, but then being able to peer into embedded
+OVF to determine more advanced parameters. Given the vast majority of the
+payloads we're likely to want to use are going to be XML based (e.g. OVF)
+this should work reasonably well most of the time, and is in any case not
+critical for basic functionality.
+
+I'm not suggesting that someone embed a 40Gb base64 encoded image into the
+OCCI stream, but we can't assume that everything is always going to be flat
+files (VMX) or XML (OVF). Of course Atom &quot;alternate&quot; link relations
+elegantly solve the much of this problem and can even expose situations
+where the resource is available in multiple formats (e.g. VMX and OVF). For
+more advanced use cases I've proposed a bulk transfer API that essentially
+involves creating the resources by some other means and then passing it in
+to OCCI as a href (think regularly rsync'd virtual machines for disaster
+recovery purposes, drag and drop WebDAV interfaces and other stuff that
+implementors will, with any luck, implement).
+
+In any case this approach serves the migration requirement very well - the
+idea of being able to faithfully serialise and/or pass an arbitrarily
+complex collection of machines between implementations seems like utopia but
+it's well within our reach. Being then able to encrypt and/or sign it
+natively is just icing on the cake.
+
+There's absolutely nothing to say that OCCI messages have to be
+ephemeral&lt;<A HREF="http://www.tbray.org/ongoing/When/200x/2006/12/21/JSON">http://www.tbray.org/ongoing/When/200x/2006/12/21/JSON</A>&gt;and
+there are many compelling use cases (from backups to virtual
+appliances)
+where treating resources as documents and collections as feeds make a lot of
+sense - and few where it doesn't.
+
+
+&gt;<i> The wild success of the browser platform suggests that having to retrieve
+</I>&gt;<i> more than one resource to get a job one is not a particularly high hurdle,
+</I>&gt;<i> operationally.
+</I>&gt;<i>
+</I>
+Multiple requests is certainly a problem when you're dealing with a large
+number of resources, as is the case when you're wanting to display, report
+on or migrate even a small virtual infrastructure/data center. This is
+particularly true in enterprise environments where HTML requests tend to
+pass through a bunch of diffferent systems which push latency through the
+roof - I had to make some fairly drastic optimisations even to a GData
+client for Google Apps provisioning recently for exactly this reason and the
+thing would have been completely unusable had I have separate requests for
+each object.
+
+
+&gt;<i>
+</I>&gt;<i>  As an aside I wonder how many times there were conversations like this
+</I>&gt;&gt;<i> previously (where working groups had the blinkers on with the usual &quot;not in
+</I>&gt;&gt;<i> the charter&quot; cop out) and how significant a contributor this inability to
+</I>&gt;&gt;<i> work together was to the WS-* train wreck...
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I'm waiting for someone to write the definitive book on why WS-* imploded.
+</I>&gt;<i>  Probably mostly biz and process probs as you suggest, but I suspect not
+</I>&gt;<i> enough credit is given to the use at the core of XSD and WSDL, which are
+</I>&gt;<i> both profoundly-bad technologies.  But I digress.  Well, it's Friday.
+</I>&gt;<i>
+</I>
+I'd very much like to read this book but as an unbiased observer I do
+believe the blinkers played a critical role. Short of creating ad-hoc links
+between SSOs (as we will with SNIA next wednesday) there aren't really any
+good solutions... having one organisation handle the standardisation or even
+coordination of same is another recipe for disaster. Certainly choosing one
+format over another, especially when all markup ends up looking like
+XML&lt;<A HREF="http://www.megginson.com/blogs/quoderat/2007/01/03/all-markup-ends-up-looking-like-xml/">http://www.megginson.com/blogs/quoderat/2007/01/03/all-markup-ends-up-looking-like-xml/</A>&gt;,
+is not going to prevent the same from recurring, while playing nice in the
+sandpit may well be enough to avoid egregious offenses.
+
+
+&gt;<i>
+</I>&gt;<i>  Remember also that Google are already using this in production for a
+</I>&gt;&gt;<i> myriad resources on a truly massive scale (and have already ironed out the
+</I>&gt;&gt;<i> bugs in 2.0) - the same cannot be said of the alternatives and dropping by
+</I>&gt;&gt;<i> their front door on the way could prove hugely beneficial.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I think you're having trouble convincing people that GData, which is pure
+</I>&gt;<i> resource CRUD, is relevant to cloud-infrastructure wrangling.  I'm a huge
+</I>&gt;<i> fan of GData.
+</I>&gt;<i>
+</I>
+CRUD plays a hugely important role in creating and maintaining virtual
+infrastructure (most resources are, after all, very much document like -
+e.g. VMX/OVF/VMDK/etc.) - just think about the operations clients typically
+need to do and the overwhelming majority of them are, in fact, CRUD. The
+main addition is triggering state changes via actuators/controllers (thanks
+for the great advice&lt;<A HREF="http://www.tbray.org/ongoing/When/200x/2009/03/16/Sun-Cloud">http://www.tbray.org/ongoing/When/200x/2009/03/16/Sun-Cloud</A>&gt;on
+this topic by the way - very elegant) and this is something I believe
+we've done a good job of courtesy custom link relations. The main gaps
+currently relate to how to handle parametrised operations (e.g. resizing a
+storage resource) and how to create arbitrary associations between resources
+(e.g. from compute to its storage and network resources and less obvious
+ones like a logical volume back to its physical container). Oh and on the
+topic of performance, Google use
+projections&lt;<A HREF="http://code.google.com/apis/calendar/docs/2.0/reference.html#Projection">http://code.google.com/apis/calendar/docs/2.0/reference.html#Projection</A>&gt;to
+limit data returned - I was thinking we would return little more than
+IDs
+and titles by default (think discovery - a very common use case) and
+optionally provide a list of extensions (e.g. billing, performance
+monitoring, etc.) that we want to hear back from... this is going to be
+important for calls that take a long time (like summing up usage or
+retrieving the CDATA content) and by default the feed should stream without
+blocking.
+
+At the end of the day we can very easily create something (and essentially
+already have thanks in no small part to Google's pioneering work in this
+area) that can represent anything from a contact or calendar entry to a
+virtual machine or network. The advantages in terms of being able to handle
+non-obvious but equally important tasks such as managing
+users&lt;<A HREF="http://code.google.com/apis/apps/gdata_provisioning_api_v2.0_reference.html#User_Account_URL_Table">http://code.google.com/apis/apps/gdata_provisioning_api_v2.0_reference.html#User_Account_URL_Table</A>&gt;are
+huge.
+
+JSON does make sense for many applications and I'd very much like to cater
+to the needs of JSON users by way of a dedicated Atom to JSON transformation
+(something others can contribute to and benefit from), but I don't believe
+it's at all the right choice for this application. Its main advantages were
+efficiency (much of which is lost thank to remediating security
+issues&lt;<A HREF="http://en.wikipedia.org/wiki/JSON#Security_issues">http://en.wikipedia.org/wiki/JSON#Security_issues</A>&gt;with regular
+expressions - this
+parser code &lt;<A HREF="http://www.json.org/json2.js">http://www.json.org/json2.js</A>&gt; doesn't look any more performant
+than a native XML parser) and being able to bypass browser security, both of
+which are non-issues for us.
+
+Sam
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090509/bfc971d9/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090509/bfc971d9/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000497.html">[occi-wg] Voting result
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000501.html">[occi-wg] Voting result
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#498">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#498">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#498">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#498">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000498.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

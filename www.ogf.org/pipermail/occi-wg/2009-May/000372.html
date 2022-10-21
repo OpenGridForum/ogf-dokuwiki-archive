@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000372.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Extraction of requirements
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Extraction%20of%20requirements&In-Reply-To=EA5BE02A185AFB4086439C0FA8AB391D2824C851%40irsmsx502.ger.corp.intel.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000371.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000369.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Extraction of requirements</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Extraction%20of%20requirements&In-Reply-To=EA5BE02A185AFB4086439C0FA8AB391D2824C851%40irsmsx502.ger.corp.intel.com"
+       TITLE="[occi-wg] Extraction of requirements">samj at samj.net
+       </A><BR>
+    <I>Fri May  1 06:34:18 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000371.html">[occi-wg] Extraction of requirements
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000369.html">[occi-wg] Extraction of requirements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#372">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#372">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#372">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#372">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Afternoon all,
+
+Currently traveling so my contributions have been limited this week
+(including missing the call as I was on a very busy fast train).
+
+I personally don't see any reason to constrain implementors and reckon that
+a registry of attributes (e.g. cpu, mincpu, maxcpu, etc.) ought to suffice
+in terms of making requests. If someone wanted to use a more verbose
+representation (e.g. WS-I) then I would envisage catering for this need by
+embedding it as an opaque payload in the same way that we can carry OVF for
+clouds that support it.
+
+For monitoring I envisage a very simple registry of the most common
+attributes (e.g. memory, cpu, etc.) as well as an equally simple facility to
+allocate namespaces (e.g. SNMP OIDs, Microsoft perfmon counters, etc.).
+
+In both cases I seek a balance of simplicity and flexibility (primarily for
+enterprise/private cloud users), thus giving significant room for innovation
+(e.g. support of WS-Agreement) without sacrificing interoperability
+(implementations can simply ignore a lot of what they don't understand
+provided they understand the bare minimum of required terms).
+
+Sam
+
+On Fri, May 1, 2009 at 10:33 AM, Edmonds, AndrewX &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">andrewx.edmonds at intel.com</A>
+&gt;<i> wrote:
+</I>
+&gt;<i> Yes I would also support the inclusion of Monitoring.
+</I>&gt;<i> Although users can access monitoring data from within a VM these may not be
+</I>&gt;<i> accurate. It would be very useful if a provider would expose certain metrics
+</I>&gt;<i> about a VM or set of VMs that are obtained directly through the hypervisor.
+</I>&gt;<i> What this then might allow users to do it to confirm that what providers are
+</I>&gt;<i> giving them is in fact what they can see from metrics gathered from the VM.
+</I>&gt;<i> There was hints by guys in SAP (here [1]) about the formation of some
+</I>&gt;<i> working group/standard around this type of monitoring notion applied against
+</I>&gt;<i> IaaS.
+</I>&gt;<i>
+</I>&gt;<i> Andy
+</I>&gt;<i>
+</I>&gt;<i> [1]
+</I>&gt;<i> <A HREF="http://groups.google.com/group/cloudforum/browse_thread/thread/8ab6090fa0ec121c">http://groups.google.com/group/cloudforum/browse_thread/thread/8ab6090fa0ec121c</A> &lt;- see Steve Winkler's post
+</I>&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A> [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A>] On Behalf
+</I>&gt;<i> Of Luis Rodero-Merino
+</I>&gt;<i> Sent: 30 April 2009 16:36
+</I>&gt;<i> To: Ignacio Martin Llorente
+</I>&gt;<i> Cc: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> Subject: Re: [occi-wg] Extraction of requirements
+</I>&gt;<i>
+</I>&gt;<i> We would add
+</I>&gt;<i>
+</I>&gt;<i> Identifications/References
+</I>&gt;<i> Monitoring
+</I>&gt;<i>
+</I>&gt;<i> The first would deal with the requirements regarding how elements are
+</I>&gt;<i> to be identified/referenced (which elements have an id? nets, images
+</I>&gt;<i> and VMs only? or also mems, disks...). Regarding 'Monitoring', we
+</I>&gt;<i> think that's an important aspect that also should be included in this
+</I>&gt;<i> specification.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Luis
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Apr 29, 2009 at 6:33 PM, Ignacio Martin Llorente
+</I>&gt;<i> &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">llorente at dacya.ucm.es</A>&gt; wrote:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; We are going to start with the evaluation of the submitted use cases.
+</I>&gt;<i> &gt; I am planing to create a table summarizing requirements for the
+</I>&gt;<i> &gt; different use cases with the following entries:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; A. Functional Requirements
+</I>&gt;<i> &gt; VM Description
+</I>&gt;<i> &gt; VM Management
+</I>&gt;<i> &gt; Network Management
+</I>&gt;<i> &gt; Image Management
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; B. Non-functional Requirements
+</I>&gt;<i> &gt; Security
+</I>&gt;<i> &gt; Quality of Service
+</I>&gt;<i> &gt; Others
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Any suggestion?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Ignacio
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; Ignacio M. Llorente, Full Professor (Catedratico):
+</I>&gt;<i> <A HREF="http://dsa-research.org/doku.php?id=people:llorente">http://dsa-research.org/doku.php?id=people:llorente</A>
+</I>&gt;<i> &gt; DSA Research Group:  web <A HREF="http://dsa-research.org/">http://dsa-research.org</A> and blog
+</I>&gt;<i> <A HREF="http://blog.dsa-research.org/">http://blog.dsa-research.org</A>
+</I>&gt;<i> &gt; Globus GridWay Metascheduler: <A HREF="http://www.gridway.org/">http://www.GridWay.org</A>
+</I>&gt;<i> &gt; OpenNebula Virtual Infrastructure Engine: <A HREF="http://www.opennebula.org/">http://www.OpenNebula.org</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; occi-wg mailing list
+</I>&gt;<i> &gt; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> &gt; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> -----------------
+</I>&gt;<i> Luis Rodero, PhD.
+</I>&gt;<i> Junior Researcher @ Telef&#243;nica I+D
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> occi-wg mailing list
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i> -------------------------------------------------------------
+</I>&gt;<i> Intel Ireland Limited (Branch)
+</I>&gt;<i> Collinstown Industrial Park, Leixlip, County Kildare, Ireland
+</I>&gt;<i> Registered Number: E902934
+</I>&gt;<i>
+</I>&gt;<i> This e-mail and any attachments may contain confidential material for
+</I>&gt;<i> the sole use of the intended recipient(s). Any review or distribution
+</I>&gt;<i> by others is strictly prohibited. If you are not the intended
+</I>&gt;<i> recipient, please contact the sender and delete all copies.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> occi-wg mailing list
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090501/43b34010/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090501/43b34010/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000371.html">[occi-wg] Extraction of requirements
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000369.html">[occi-wg] Extraction of requirements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#372">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#372">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#372">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#372">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000372.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

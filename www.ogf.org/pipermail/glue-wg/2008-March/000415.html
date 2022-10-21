@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000415.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] Some thoughts on storage objects
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20Some%20thoughts%20on%20storage%20objects&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000414.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000424.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] Some thoughts on storage objects</H1>
+    <B>Paul Millar</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20Some%20thoughts%20on%20storage%20objects&In-Reply-To="
+       TITLE="[glue-wg] Some thoughts on storage objects">paul.millar at desy.de
+       </A><BR>
+    <I>Thu Mar 27 16:06:44 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000414.html">[glue-wg] Minutes, Draft 30 and Next call
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000424.html">[glue-wg] Some thoughts on storage objects
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#415">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#415">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#415">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#415">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+As an exercise, I've tried to jot down as precise and complete a description 
+of each GLUE storage object as possible, also describing and how they relate 
+to each other.  I've also tried to do this without any forward-references 
+(so, in theory, the document is readable in a single pass).  In almost all 
+cases, I've left out the attributes.
+
+I don't know how useful this is.  It's just my point-of-view of things as 
+stand now.  I'm sure there are bits that are &quot;wrong&quot; (either I've 
+misunderstood and/or this description breaks a use-case), but if so, 
+helpfully people can point which bits are wrong and (perhaps) it will 
+stimulate some discussion.
+
+BTW, I'm implicitly assuming that StorageEnvironment.RetentionPolicy can be 
+multivalued.  If this isn't true and we have the use-case of the same 
+physical disks being part of, for example, both Custodial and Output storage, 
+then it starts to get complicated.
+
+As always, comments appreciated.
+
+Cheers,
+
+Paul.
+
+---
+
+UserDomain:
+
+ A collection of one or more end-users; a VO is an instance of a
+ UserDomain.  All end-users that interact with the physical storage
+ are a member of a UserDomain and, in general, derive their
+ authorisation from that membership.
+
+
+StorageCapacity:
+
+ A StorageCapacity object describes the ability to store data within a
+ homogeneous storage technology.  This storage technology provides a
+ common access latency.
+
+ All StorageCapacity objects are specified within a certain context.
+ The context is determined by an association between the
+ StorageCapacity object and precisely one other higher-level object.
+ These associations are not listed here, but are described in later sections.
+
+ In general, a StorageCapacity object will record some
+ context-specific information.  Examples of such information include
+ the total storage capacity of the underlying technology and how much
+ of that total has been used.
+
+ The underlying storage technology may affect which of the
+ context-specific attributes are available.  For example, tape storage
+ may be considered semi-infinite, so the total and free attributes have
+ no meaning.  If this is so, then it affects all StorageCapacity objects with
+ the same underlying technology, independent of their context.
+
+ Different contexts may also affect what context-specific attributes
+ are recorded.  This is a policy decision when implementing GLUE, as
+ recording all possible information may be costly and provide no great
+ benefit.
+
+ [Aside: these two reasons are why many of the attributes within
+ StorageCapacity are optional.  Rather than explicitly subclassing
+ the objects and making the values required, it is left deliberately
+ vague which attributes are published.]
+
+ A StorageCapacity may represent a logical aggregation of multiple
+ underlying storage technology instances; for example, a
+ StorageCapacity might represent many disk storage nodes, or many
+ tapes stored within a tape silo.  GLUE makes no effort to record
+ information at this deeper level; but by not doing so, it requires
+ that the underlying storage technology be homogeneous. Homogeneous
+ means that the underlying storage technology is either identical or
+ sufficiently similar that the differences don't matter.
+
+ In most cases, the homogeneity is fairly obvious (e.g., tape storage
+ vs disk-based storage), but there may be times where this distinction
+ becomes contentious and judgement may be required; for example,
+ the quality of disk-base storage might indicate that one subset is
+ useful for a higher-quality service.  If this is so, then it may make
+ sense to represent the different class of disk by different
+ SpaceCapacities.
+
+
+StorageEnvironment:
+
+ A StorageEnvironment is a collection of one or more StorageCapacities
+ with a set of associated (enforced) storage management policies.
+ Examples of these policies are Type (Volatile, Durable, Permanent)
+ and RetentionPolicy (Custodial, Output, Replica).
+
+ StorageEnvironments act as a logical aggregation of
+ StorageCapacities, so each StorageEnvironment must have at least one
+ associated StorageCapacity.  It is the associated StorageCapacities
+ that allow a StorageEnvironment to store data with its advertised
+ policies; for example, to act as (Permanent, Custodial) storage of
+ data.
+
+ Since a StorageEnvironment may contain multiple StorageCapacities, it
+ may describe a heterogeneous environment.  An example of this is &quot;tape
+ storage&quot;, which has both tape back-end and disk front-end into
+ which users can pin files.  Such a StorageEnvironment would have two
+ associated StorageCapacities: one describing the disk storage and
+ another describing the tape.
+
+ If a StorageCapacity is associated with a StorageEnvironment, it is
+ associated with only one.  A StorageCapacity may not be shared
+ between different StorageEnvironments.
+
+ StorageCapacities associated with a StorageEnvironment must be
+ non-overlapping with any other such StorageCapacity and the set of all
+ such StorageCapacities must represent the complete storage available
+ to end-users.  Each physical storage device (e.g., individual disk drive or
+ tape) that an end-user can utilise must be represented by (some part
+ of) precisely one StorageCapacity associated with a StorageEnvironment.
+
+ Nevertheless, the StorageCapacities associated with
+ StorageEnvironments may be incomplete as a site may deploy physical
+ storage devices that are not directly under end-user control; for
+ example, disk storage used to cache incoming transfers.  GLUE makes
+ no effort to record information about such storage.
+
+
+StorageResource:
+
+ A StorageResource is an aggregation of one or more
+ StorageEnvironments and describes the hardware that a particular
+ software instance has under its control.
+
+ A StorageResource must have at least one StorageEnvironment,
+ otherwise there wouldn't be much point publishing information
+ about it. [This isn't a strict requirement, but I think it makes sense
+ to include it.]
+
+ All StorageEnvironments must be part of precisely one
+ StorageResource.  SoftwareEnvironments may not be shared between
+ StorageResources.  This means that all physics hardware must
+ be published under precisely one StorageResource.
+
+
+StorageShare:
+
+ A StorageShare is a logical partitioning of one or more
+ StorageEnvironments.
+
+ Perhaps the simplest example of a StorageShare is one
+ associated with a single StorageEnvironment with a single
+ associated StorageCapacity, and that represents all
+ the available storage of that StorageCapacity.  An example of
+ a storage that could be represented by this trivial
+ StorageShare is the classic-SE.
+
+ StorageSpaces must have one or more associated StorageCapacities.
+ These StorageCapacities provide a complete description of the different
+ homogeneous underlying technologies that are available under the space.
+
+ In general, the number of StorageCapacities associated with a
+ StorageShare is the sum of the number of StorageCapacities associated
+ with each of the StorageShare's associated StorageEnvironments.
+
+ Following from this, there is an implicit association between the
+ StorageCapacity associated with a StorageShare and the corresponding
+ StorageCapacity associated with a StorageEnvironment.  Intuitively, this
+ association is from the fact that the two StorageCapacities share the
+ same underlying physical storage.  This implicit association is not
+ recorded in GLUE.
+
+ StorageSpaces may overlap.  Specifically, given a StorageCapacity
+ (SC_E) that is associated with some StorageEnvironment and which has
+ totalSize TS_E, let the sum of the totalSize attributes for all
+ StorageCapacities that are:
+	1. associated with a StorageSpace, and
+	2. that are implicitly associated with SC_E
+ be TS_S.  If the StorageSpaces are covering then TS_S = TS_E.  If
+ the StorageSpaces overlap, then TS_S &gt; TS_E.
+  [sorry, I couldn't easily describe this with just words without it sounding
+  awful!]
+
+ StorageSpaces may be incomplete.  Following the same definitions
+ as above, this is when TS_S &lt; TS_E.  Intuitively, this happens if
+ the site-admin has not yet assigned all available storage.
+
+ End-users within a UserDomain may wish to store or retrieve files.  The
+ StorageShares provides a complete, abstract description of the
+ underlying storage at their disposal.  No member of a UserDomain may
+ interact with the physical hardware except through a StorageShare.
+
+ The partitioning is persistent through file creation and deletion.  The
+ totalSize attributes (of a StorageSpace's associated StorageCapacties)
+ do not change as a result of file creation or deletion.  [Does GLUE need to
+ stipulate this, or should we leave this vague?]
+
+ A single StorageShare may allow multiple UserDomains to access
+ storage; if so, the StorageShare is &quot;shared&quot; between the different
+ UserDomains.  Such a shared StorageShare is typical if a site
+ provides storage described by the trivial StorageShare (one that
+ covers a complete StorageEnvironment) whilst supporting multiple
+ UserDomains.
+
+
+StorageMappingPolicy:
+
+ The StorageMappingPolicy describes how a particular UserDomain is
+ allowed to access a particular StorageShare.  No member of a
+ UserDomain may interact with a StorageShare except as described by a
+ StorageMappingPolicy.
+
+ The StorageMappingPolicies may contain information that is specific
+ to that UserDomain, such as one or more associated StorageCapacities.
+ If provided, these provide a UserDomain-specific view of their usage
+ of the underlying physical storage technology as a result of their
+ usage within the StorageShare.
+
+ If StorageCapacities are associated with a StorageMappingPolicy,
+ there will be the same number as are associated with the
+ corresponding StorageShare.
+
+
+StorageEndpoint:
+
+ A StorageEndpoint specifies that storage may be controlled through a
+ particular interface.  The SRM protocol is an example of such an
+ interface and a StorageEndpoint would be advertised for each instance
+ of SRM.
+
+ The access policies describing which users of a UserDomain may use
+ the StorageEndpoint are not published.  On observing that a site
+ publishes a StorageEndpoint, one may deduce only that it is valid for
+ at least one user of one supported UserDomain.
+
+
+StorageAccessProtocol:
+
+ A StorageAccessProtocol describes how data may be sent or received.
+ The presence of a StorageAccessProtocol indicates that data may be
+ fetched or stored using this interface.
+
+ Access to the interface may be localised; that is, only available
+ from certain computers.  It may also be restricted to specified
+ UserDomains.  However, neither policy restrictions are published in
+ GLUE.  On observing a StorageAccessProcol, one may deduce only that
+ it is valid for at least one user of one supported UserDomain.
+
+
+StorageService:
+
+ A StorageService is an aggregation of StorageEndpoints,
+ StorageAccessProtocols and StorageResources.  It is the top-level
+ description of the ability to transfer files to and from a site, and
+ manipulate the files once stored.
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000414.html">[glue-wg] Minutes, Draft 30 and Next call
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000424.html">[glue-wg] Some thoughts on storage objects
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#415">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#415">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#415">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#415">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000415.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+</html>

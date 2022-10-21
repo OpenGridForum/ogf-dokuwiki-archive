@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000537.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Is OCCI the HTTP of Cloud Computing?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Is%20OCCI%20the%20HTTP%20of%20Cloud%20Computing%3F&In-Reply-To=4A093247.4030004%40gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000535.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000581.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Is OCCI the HTTP of Cloud Computing?</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Is%20OCCI%20the%20HTTP%20of%20Cloud%20Computing%3F&In-Reply-To=4A093247.4030004%40gmail.com"
+       TITLE="[occi-wg] Is OCCI the HTTP of Cloud Computing?">samj at samj.net
+       </A><BR>
+    <I>Tue May 12 04:36:00 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000535.html">[occi-wg] Is OCCI the HTTP of Cloud Computing?
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000581.html">[occi-wg] Is OCCI the HTTP of Cloud Computing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#537">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#537">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#537">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#537">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Morning Gary,
+
+On Tue, May 12, 2009 at 10:24 AM, Gary Mazz &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">garymazzaferro at gmail.com</A>&gt;wrote:
+
+&gt;<i>
+</I>&gt;<i> I like Tim's explanation.
+</I>&gt;<i>
+</I>&gt;<i> I have some on  some trivial subjects...
+</I>&gt;<i>
+</I>&gt;<i> 1) Are we also talking about using IRIs or URIs only ?
+</I>
+
+There was some discussion about this before with Ben Black - Atom IDs are
+not meant to be dereferenceable so for simplicity (especially w.r.t.
+concurrency and migration/merging of resources safely) there was an earlier
+decision to use version 4 (random) UUID
+URN&lt;<A HREF="http://en.wikipedia.org/wiki/Uniform_Resource_Name">http://en.wikipedia.org/wiki/Uniform_Resource_Name</A>&gt;s
+for the IDs. There was then some contention as to whether link relations
+should specify the URN of the target resource or a dereferenceable URI... I
+prefer the former (bearing in mind that the same resource can appear at
+multiple endpoints, dereferenceable URIs are easily created and working
+internal document references are useful) while Ben prefers the latter. These
+and related topics probably need further discussion re: pros and cons down
+the road.
+
+
+&gt;<i> 2) What is the thoughts on handling foreign markups at endpoints and
+</I>&gt;<i> gateways/bridges ?
+</I>
+
+Foreign markups should/must not be touched (not sure which requirement level
+to use here) as this is the basis of much of our extensibility.
+
+
+&gt;<i> 3) How are the scheme attributes handled for child element when
+</I>&gt;<i> presented without the parent element that has the scheme assignment ?
+</I>
+
+Elaborate - not sure what you mean here.
+
+
+&gt;<i> 4) Can we publish work spaces ? Will work spaces require authorization?
+</I>
+
+Workspaces are neither required nor supported by Google's GData
+implementation so there is good reason to believe that we won't need them.
+If the use case doesn't exist then I'd opt for the simplicity of excluding
+them from the spec.
+
+
+&gt;<i> 5) Will there be top level resources be defined? or will each vendor
+</I>&gt;<i> define their own resources schemes?  How do we preserve proprietary
+</I>&gt;<i> technology?
+</I>
+
+We need to define this, at least at a high level, for interoperability. So
+far I had made provision for three top level categories (compute, storage
+and network) or &quot;types&quot; (what Google call &quot;kinds&quot;).
+
+
+&gt;<i> 6) How are document writers/editors defined and authorized ?
+</I>
+
+Out of scope - I'm not even sure we need to specify how they are
+authenticated (though I have a whitelist on the Resources page already if we
+take an interest in this). Authorisation can range from none (simple XML
+file on embedded web server) to fine grained/field level, depending on the
+implementation. I'm expecting this to be an area where implementors can
+differentiate themselves.
+
+
+&gt;<i> 7) Will there be document caching/synchronization policies and schemes ?
+</I>
+
+Google have used ETags with good
+results&lt;<A HREF="http://globelogger.com/2008/11/gdata-now-compliant-with-atompub.html">http://globelogger.com/2008/11/gdata-now-compliant-with-atompub.html</A>&gt;,
+and this makes a lot of sense given much of the work for clients will be
+keeping their view of the world in sync with reality. Being able to crank up
+a desktop client and have it display a large number of [cached] resources in
+seconds even over a modest link becomes a reality with this approach - and
+web based third-party services like RightScale have similar needs.
+
+
+&gt;<i> 8) How are collection components authorized ? Private/authorized partial
+</I>&gt;<i> lists in collection of public lists ?
+</I>
+
+See above - two different users looking at the same endpoint may or may not
+see different things depending on which resources they are authorised to
+see. Public cloud offerings may have many millions of resources at a single
+endpoint but your average user will only see a small handful, while an
+enterprise setup may have all authenticated users seeing the same thing. I
+don't see much point in trying to burn any of this into the standard.
+
+
+&gt;<i> 9) What are the policies for conformance levels? Will occi define our own ?
+</I>
+
+Possibly, though I would prefer to keep the core simple and require everyone
+to implement it fully and faithfully.
+
+
+&gt;<i> 10) What will the policy be for non-IANA content ?
+</I>&gt;<i>
+</I>
+I'm guessing by this you mean Internet media
+types&lt;<A HREF="http://en.wikipedia.org/wiki/Internet_media_type">http://en.wikipedia.org/wiki/Internet_media_type</A>&gt;that are not
+defined by IANA, in which case we have the usual x-, vnd. and
+prs. namespaces available.
+
+
+&gt;<i> Sorry for the long list..
+</I>&gt;<i>
+</I>
+No problem - the more detailed the discussion the better the result.
+
+Sam
+
+
+&gt;<i> Tim Bray wrote:
+</I>&gt;<i> &gt; On May 11, 2009, at 1:54 PM, Sam Johnston wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; The ideal core protocol would contain no references to
+</I>&gt;<i> &gt;&gt; infrastructure, rather allow manipulation of resources (CRUD,
+</I>&gt;<i> &gt;&gt; linking, actuators) irrespective of what the resource was. It would
+</I>&gt;<i> &gt;&gt; thus be reusable for any resource (as Google have done for 16
+</I>&gt;<i> &gt;&gt; different services and who knows how many different resource types
+</I>&gt;<i> &gt;&gt; already with GData).
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Odd though it may seem, until I saw this I didn't grok what Sam was
+</I>&gt;<i> &gt; proposing.  Maybe I still don't, but let me take a guess:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; You're focusing not so much Atom the RFC4287 data format, but AtomPub
+</I>&gt;<i> &gt; the RFC5023 publishing protocol as implemented notably in GData and
+</I>&gt;<i> &gt; lots of other places, and do generic Web-resource CRUD where the
+</I>&gt;<i> &gt; resources happen to represent cloud infrastructure objects.  Thus you
+</I>&gt;<i> &gt; outsource most of the work of CRUD specification.  Then, you layer
+</I>&gt;<i> &gt; cloud-specific stuff on top of that.  Then collections of servers and
+</I>&gt;<i> &gt; clusters and networks and so on are perforce represented as Atom Feeds.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Is that the essence of it?  -Tim
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; occi-wg mailing list
+</I>&gt;<i> &gt; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> &gt; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> occi-wg mailing list
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090512/c8e8f073/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090512/c8e8f073/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000535.html">[occi-wg] Is OCCI the HTTP of Cloud Computing?
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000581.html">[occi-wg] Is OCCI the HTTP of Cloud Computing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#537">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#537">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#537">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#537">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000537.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

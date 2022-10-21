@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000433.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] Some thoughts on storage objects
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20Some%20thoughts%20on%20storage%20objects&In-Reply-To=200803311906.09995.paul.millar%40desy.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000431.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000416.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] Some thoughts on storage objects</H1>
+    <B>Maarten.Litmaath at cern.ch</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20Some%20thoughts%20on%20storage%20objects&In-Reply-To=200803311906.09995.paul.millar%40desy.de"
+       TITLE="[glue-wg] Some thoughts on storage objects">Maarten.Litmaath at cern.ch
+       </A><BR>
+    <I>Mon Mar 31 18:47:29 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000431.html">[glue-wg] Some thoughts on storage objects
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000416.html">[glue-wg] telecon reminder - today 10 AM (implementation) and 11.30	AM (computing)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#433">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#433">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#433">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#433">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Paul,
+
+&gt;<i> I'm updated the document, but do people feel this is useful?
+</I>&gt;<i> 
+</I>&gt;<i> We could:
+</I>&gt;<i> 	folded the information into the GLUE 2.0 spec,
+</I>
+That would be ideal.  Note that it will need to be adapted if we
+cannot reach agreement on some statement it currently makes.
+
+&gt;<i> 	keep it as an informative (non-normative) document,
+</I>&gt;<i> 	drop it, as being too confusing?
+</I>&gt;<i> 
+</I>&gt;<i> [...]
+</I>&gt;<i> &gt; &gt;  A StorageEnvironment is a collection of one or more StorageCapacities
+</I>&gt;<i> &gt; &gt;  with a set of associated (enforced) storage management policies.
+</I>&gt;<i> &gt; &gt;  Examples of these policies are Type (Volatile, Durable, Permanent)
+</I>&gt;<i> &gt; &gt;  and RetentionPolicy (Custodial, Output, Replica).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Note that we should get rid of the obsolete, confusing Type and Lifetime
+</I>&gt;<i> &gt; attributes in favor of the ExpirationMode copied from SRM v3.
+</I>&gt;<i> 
+</I>&gt;<i> Should we do this with GLUE v2.0?
+</I>
+Yes!  The ExpirationMode was invented to clear up the confusion that
+has arisen from the (mis)use of Type/Lifetime for other purposes.
+
+&gt;<i> (I would be happy with that).
+</I>&gt;<i> 
+</I>&gt;<i> [...]
+</I>&gt;<i> &gt; &gt;  (SC_E) that is associated with some StorageEnvironment and which has
+</I>&gt;<i> &gt; &gt;  totalSize TS_E, let the sum of the totalSize attributes for all
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; |                  ^^^
+</I>&gt;<i> &gt; |                  let TS_S be .....
+</I>&gt;<i> 
+</I>&gt;<i> Err,  I think that one should be TS_E.  totalSize of the StorageShare 
+</I>&gt;<i> associated with the Environment (the one &quot;underneath&quot; the 
+</I>&gt;<i> StorageEnvironment).  In this context the StorageShare represents all of the 
+</I>&gt;<i> physical medium.
+</I>
+Well, you wrote this before:
+
+|<i>     let the sum of the totalSize attributes for all
+</I>|<i>     StorageCapacities that are:
+</I>|<i>           1. associated with a StorageSpace, and
+</I>|<i>           2. that are implicitly associated with SC_E
+</I>|<i>     be TS_S.
+</I>
+I suggested this instead:
+
+|<i>     let TS_S be the sum of the totalSize attributes for all
+</I>|<i>     StorageCapacities that are:
+</I>|<i>           1. associated with a StorageShare, and
+</I>|<i>           2. that are implicitly associated with SC_E
+</I>|<i>     .
+</I>
+Spot the 3 differences!  It reads more easily...
+
+&gt;<i> Somehow, accurately describing what overlapping and incomplete StorageShares 
+</I>&gt;<i> means takes a lot of words!
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> [...]
+</I>&gt;<i> &gt; &gt;  do not change as a result of file creation or deletion.  [Does GLUE need
+</I>&gt;<i> &gt; &gt; to stipulate this, or should we leave this vague?]
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Why mention it at all?  You do not make statements about the behavior
+</I>&gt;<i> &gt; of the other sizes, and I think there is no need to go there...
+</I>&gt;<i> 
+</I>&gt;<i> Well, we could just not mention it; however, I'm a little concerned about 
+</I>&gt;<i> tacit assumptions, and how not everyone has the same set.  I'd hope we can 
+</I>&gt;<i> make all the assumptions explicit.
+</I>&gt;<i> 
+</I>&gt;<i> In this particular case, there's (at least) a couple of models for how a space 
+</I>&gt;<i> could work:
+</I>&gt;<i> 
+</I>&gt;<i>   a. partitioning: I'm allocating 10 TiB, I can store files up to that size of 
+</I>&gt;<i> data (*).  Once I've written 10 TiB of data, I can delete files to create 
+</I>&gt;<i> more space.  This is like having a 10 TiB hard disk to store data.
+</I>&gt;<i> 
+</I>&gt;<i> 	(*) real-life systems have some complications, but considering an
+</I>&gt;<i> 		idealised storage system.
+</I>&gt;<i> 
+</I>&gt;<i>   b. consumable: I'm allocated 10 TiB storage.  I can store files up to that 
+</I>&gt;<i> size of data.  I can delete the files if I like, but deleting files doesn't 
+</I>&gt;<i> allow me to store more files.  Once I've used up that 10 TiB of storage, I 
+</I>&gt;<i> have to ask for more.
+</I>&gt;<i> 
+</I>&gt;<i> (perhaps option b. seems a little crazy, but it might be how StorageShares 
+</I>&gt;<i> would work with archival WORM media).
+</I>
+That example proves my point: one cannot predict/prescribe how a particular
+size attribute will be affected when a file is stored or deleted!
+
+&gt;<i> It seems that everyone in HEP assumes a partitioning model but I don't think 
+</I>&gt;<i> I've seen it stated anywhere.  Other communities might assume a different 
+</I>&gt;<i> model.  If we want information to be sharable (or mergable) I think we should 
+</I>&gt;<i> state clearly any assumptions we're making.  If we don't assume anything, 
+</I>&gt;<i> that should be noted too, so people consuming information know that either:
+</I>&gt;<i> 	1. they can't assume what happens, or
+</I>&gt;<i> 	2. if they assume something, that it's a WLCG convention that they must 
+</I>&gt;<i> revisit when combining data with other information sources.
+</I>
+We must explicitly mention that in general any of the various sizes may be
+an approximation whose exact behavior depends on the underlying technology,
+implementation, load, concurrent usage, ...
+A grid may impose strict(er) requirements on the behavior.
+GLUE just provides a &quot;coat rack&quot; for information.
+Thanks,
+	Maarten
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000431.html">[glue-wg] Some thoughts on storage objects
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000416.html">[glue-wg] telecon reminder - today 10 AM (implementation) and 11.30	AM (computing)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#433">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#433">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#433">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#433">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000433.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2007-December/000249.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 14:09:59 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] Concrete example for alternative primary source [option	P.O]
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20Concrete%20example%20for%20alternative%20primary%20source%20%5Boption%0A%09P.O%5D&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000258.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000252.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] Concrete example for alternative primary source [option	P.O]</H1>
+    <B>Paul Millar</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20Concrete%20example%20for%20alternative%20primary%20source%20%5Boption%0A%09P.O%5D&In-Reply-To="
+       TITLE="[glue-wg] Concrete example for alternative primary source [option	P.O]">paul.millar at desy.de
+       </A><BR>
+    <I>Tue Dec 11 15:32:35 CST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000258.html">[glue-wg] Some questions... [WAS: choosing XML Document	structure for GLUE 2.0 rendering]
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000252.html">[glue-wg] Model Questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/date.html#249">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/thread.html#249">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/subject.html#249">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/author.html#249">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Here's a concrete example, a primary source (a Service) publishes XML with a 
+top-level element of &lt;Service&gt;
+
+Variant #1 (with attributes)
+
+&lt;Service id=&quot;Service-URI&quot; parent=&quot;AdminDomain-URI&quot; name=&quot;Fred&quot;&gt;
+    &lt;!-- service details here --&gt;
+&lt;/Service&gt;
+
+Variant #2 (with no attributes)
+
+&lt;Service&gt;
+  &lt;ID&gt;Service-URI&lt;/ID&gt;
+  &lt;Parent&gt;AdminDomain-URI&lt;/Parent&gt;
+  &lt;Name&gt;Fred&lt;/Name&gt;
+  &lt;!-- further details here --&gt;
+&lt;/Service&gt;
+
+When aggregation happens, the services are collected under their &quot;Parent&quot; 
+(some AdminDomain).  This allows the site information to using the simple 
+One-to-Many mapping to parent/child elements concept.
+
+Here is a worked example.
+
+Consider three services: a CE &amp; SE service (under AdminDomain-1) and an FTS 
+service (under AdminDomain-2).
+
+
+File: service-1.xml
+
+&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;Service&gt;
+  &lt;ID&gt;<A HREF="http://example.org/Service-1</ID">http://example.org/Service-1&lt;/ID</A>&gt;
+  &lt;Parent&gt;<A HREF="http://example.org/AdminDomain-1</Parent">http://example.org/AdminDomain-1&lt;/Parent</A>&gt;
+  &lt;Name&gt;MyCE&lt;/Name&gt;
+&lt;/Service&gt;
+
+File: service-2.xml
+
+&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;Service&gt;
+  &lt;ID&gt;<A HREF="http://example.org/Service-2</ID">http://example.org/Service-2&lt;/ID</A>&gt;
+  &lt;Parent&gt;<A HREF="http://example.org/AdminDomain-1</Parent">http://example.org/AdminDomain-1&lt;/Parent</A>&gt;
+  &lt;Name&gt;MySE&lt;/Name&gt;
+&lt;/Service&gt;
+
+File: service-3.xml
+
+&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;Service&gt;
+  &lt;ID&gt;<A HREF="http://example.org/Service-3</ID">http://example.org/Service-3&lt;/ID</A>&gt;
+  &lt;Parent&gt;<A HREF="http://example.org/AdminDomain-2</Parent">http://example.org/AdminDomain-2&lt;/Parent</A>&gt;
+  &lt;Name&gt;FTS&lt;/Name&gt;
+&lt;/Service&gt;
+
+Here the site is defined through the site.xml file.  This toy example just 
+listing the service URIs and the list of AdminDomain we wish to publish.  The 
+AdminDomains here are void of any additional information.  That information 
+could be included in site.xml, or imported from elsewhere.
+
+To keep things simple, Service elements href attributes use relative URIs to 
+access each service's GLUE/XML info; but the URIs could be absolute and the 
+information collected directly (e.g. via HTTP).
+
+File: site.xml
+
+&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;Site&gt;
+  &lt;ServiceList&gt;
+    &lt;Service href=&quot;service1.xml&quot;/&gt;
+    &lt;Service href=&quot;service2.xml&quot;/&gt;
+    &lt;Service href=&quot;service3.xml&quot;/&gt;
+    &lt;!-- etc. just list all services here --&gt;
+  &lt;/ServiceList&gt;
+
+  &lt;AdminDomainList&gt;
+    &lt;AdminDomain id=&quot;<A HREF="http://example.org/AdminDomain-1"/">http://example.org/AdminDomain-1&quot;/</A>&gt;
+    &lt;AdminDomain id=&quot;<A HREF="http://example.org/AdminDomain-2"/">http://example.org/AdminDomain-2&quot;/</A>&gt;
+    &lt;AdminDomain id=&quot;<A HREF="http://example.org/AdminDomain-3"/">http://example.org/AdminDomain-3&quot;/</A>&gt;
+  &lt;/AdminDomainList&gt;
+&lt;/Site&gt;
+
+Then, just transform this into the GLUE/XML for aggregation:
+
+File: process.xsl
+
+&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;xsl:stylesheet xmlns:xsl=&quot;<A HREF="http://www.w3.org/1999/XSL/Transform"">http://www.w3.org/1999/XSL/Transform&quot;</A>
+                version=&quot;1.0&quot;&gt;
+
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;Grid&gt;
+      &lt;Site&gt;
+	&lt;xsl:apply-templates/&gt;
+      &lt;/Site&gt;
+    &lt;/Grid&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match=&quot;AdminDomain&quot;&gt;
+    &lt;AdminDomain&gt;
+      &lt;ID&gt;&lt;xsl:value-of select=&quot;@id&quot;/&gt;&lt;/ID&gt;
+      &lt;xsl:apply-templates select=&quot;/Site/ServiceList/Service&quot;
+			   mode=&quot;import-admin-service&quot;&gt;
+	&lt;xsl:with-param name=&quot;adminservice-uri&quot; select=&quot;@id&quot;/&gt;
+      &lt;/xsl:apply-templates&gt;
+    &lt;/AdminDomain&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match=&quot;ServiceList/Service[@href]&quot;
+		mode=&quot;import-admin-service&quot;&gt;
+    &lt;xsl:param name=&quot;adminservice-uri&quot;/&gt;
+    &lt;xsl:copy-of select=&quot;document(@href)/Service[Parent=$adminservice-uri]&quot;/&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+
+Transform the site.xml into GLUE/XML aggregated format using XSLT:
+
+xsltproc process.xsl site.xml  &gt; /tmp/out.xml &amp;&amp; xmllint -format /tmp/out.xml
+
+Gives the following output:
+
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;Grid&gt;
+  &lt;Site&gt;
+    &lt;AdminDomain&gt;
+      &lt;ID&gt;<A HREF="http://example.org/AdminDomain-1</ID">http://example.org/AdminDomain-1&lt;/ID</A>&gt;
+      &lt;Service&gt;
+        &lt;ID&gt;<A HREF="http://example.org/Service-1</ID">http://example.org/Service-1&lt;/ID</A>&gt;
+        &lt;Parent&gt;<A HREF="http://example.org/AdminDomain-1</Parent">http://example.org/AdminDomain-1&lt;/Parent</A>&gt;
+        &lt;Name&gt;MyCE&lt;/Name&gt;
+      &lt;/Service&gt;
+      &lt;Service&gt;
+        &lt;ID&gt;<A HREF="http://example.org/Service-2</ID">http://example.org/Service-2&lt;/ID</A>&gt;
+        &lt;Parent&gt;<A HREF="http://example.org/AdminDomain-1</Parent">http://example.org/AdminDomain-1&lt;/Parent</A>&gt;
+        &lt;Name&gt;MySE&lt;/Name&gt;
+      &lt;/Service&gt;
+    &lt;/AdminDomain&gt;
+    &lt;AdminDomain&gt;
+      &lt;ID&gt;<A HREF="http://example.org/AdminDomain-2</ID">http://example.org/AdminDomain-2&lt;/ID</A>&gt;
+      &lt;Service&gt;
+        &lt;ID&gt;<A HREF="http://example.org/Service-3</ID">http://example.org/Service-3&lt;/ID</A>&gt;
+        &lt;Parent&gt;<A HREF="http://example.org/AdminDomain-2</Parent">http://example.org/AdminDomain-2&lt;/Parent</A>&gt;
+        &lt;Name&gt;FTS&lt;/Name&gt;
+      &lt;/Service&gt;
+    &lt;/AdminDomain&gt;
+    &lt;AdminDomain&gt;
+      &lt;ID&gt;<A HREF="http://example.org/AdminDomain-3</ID">http://example.org/AdminDomain-3&lt;/ID</A>&gt;
+    &lt;/AdminDomain&gt;
+  &lt;/Site&gt;
+&lt;/Grid&gt;
+
+[For aesthetics, one could filter out the Parent children from Service 
+elements.]
+
+Is this about right?
+
+Cheers,
+
+Paul.
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000258.html">[glue-wg] Some questions... [WAS: choosing XML Document	structure for GLUE 2.0 rendering]
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000252.html">[glue-wg] Model Questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/date.html#249">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/thread.html#249">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/subject.html#249">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/author.html#249">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2007-December/000249.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 14:09:59 GMT -->
+</html>

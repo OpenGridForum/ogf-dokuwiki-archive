@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000640.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Networks: attributes and verbs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Networks%3A%20attributes%20and%20verbs&In-Reply-To=20090513141637.GA28052%40alpha.arachsys.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000633.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000644.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Networks: attributes and verbs</H1>
+    <B>Alexis Richardson</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Networks%3A%20attributes%20and%20verbs&In-Reply-To=20090513141637.GA28052%40alpha.arachsys.com"
+       TITLE="[occi-wg] Networks: attributes and verbs">alexis.richardson at gmail.com
+       </A><BR>
+    <I>Wed May 13 09:45:44 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000633.html">[occi-wg] Networks: attributes and verbs
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000644.html">[occi-wg] Networks: attributes and verbs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#640">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#640">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#640">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#640">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Richard
+
+Good email!
+
+For the benefit of people catching up ... can we treat this as
+&quot;Proposed completion work on the Model&quot;?  Ignacio is leading the
+document creation process here - see his email about the wiki page.
+If there is stuff that is under the &quot;Still under discussion&quot; flag then
+mark it out as such.  I don't see any but I may be wrong ;-)
+
+alexis
+
+
+
+
+
+On Wed, May 13, 2009 at 3:16 PM, Richard Davies
+&lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">richard.davies at elastichosts.com</A>&gt; wrote:
+&gt;<i> All,
+</I>&gt;<i>
+</I>&gt;<i> For me, the largest gap in the nouns, verbs and attributes is with regards
+</I>&gt;<i> to networks. Here are some thoughts on capabilities which I believe we need
+</I>&gt;<i> and options to implement these - feedback please!
+</I>&gt;<i>
+</I>&gt;<i> Basics
+</I>&gt;<i> ------
+</I>&gt;<i> Networks will be a top level noun, along with servers and storage. Users
+</I>&gt;<i> will link a server to a network to specify that the server is attached to
+</I>&gt;<i> that network. There will be one special network presenting the public
+</I>&gt;<i> internet, and users can create additional private networks for themselves.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The open questions are:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Public static IPs
+</I>&gt;<i> -----------------
+</I>&gt;<i> On all public clouds, customers can purchase static IPs (e.g. Amazon Elastic
+</I>&gt;<i> IP) for uses where a constant server location is helpful (e.g. typical web
+</I>&gt;<i> hosting).
+</I>&gt;<i>
+</I>&gt;<i> We'll need a means for customers to create, list and destroy the public
+</I>&gt;<i> static IPs which they own.
+</I>&gt;<i>
+</I>&gt;<i> Two options:
+</I>&gt;<i> a) Public static IPs are first-class nouns
+</I>&gt;<i> b) They are listed inside the public internet network
+</I>&gt;<i>
+</I>&gt;<i> I'd favour a), which is the case with most public clouds today.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Active networks
+</I>&gt;<i> ---------------
+</I>&gt;<i> At its most basic, a network should behave like a plain ethernet switch - it
+</I>&gt;<i> provides no services at all, and simply connects all the servers which
+</I>&gt;<i> attach to it. Servers are free to chose their own IP addresses, etc.
+</I>&gt;<i>
+</I>&gt;<i> There are a number of active services which are possible on a network:
+</I>&gt;<i> - Central DHCP server
+</I>&gt;<i> - Bridge to a physical VLAN (e.g. containing physical dedicated servers in
+</I>&gt;<i> &#160;colocation with the cloud provider)
+</I>&gt;<i> - Load balancer between several web servers on a private network across to a
+</I>&gt;<i> &#160;single IP on the public internet.
+</I>&gt;<i> - etc.
+</I>&gt;<i>
+</I>&gt;<i> Two options:
+</I>&gt;<i>
+</I>&gt;<i> a) The network object itself can optionally provide these. They are
+</I>&gt;<i> &#160; configured using attributes and verbs on the network.
+</I>&gt;<i> b) There are separate 'appliance' objects which provide these services, and
+</I>&gt;<i> &#160; are linked onto the network just as a server would be (e.g. a 'DHCP
+</I>&gt;<i> &#160; server' appliance and or 'load balancer' appliance).
+</I>&gt;<i>
+</I>&gt;<i> a) feels lighter-weight, but I suspect b) is more powerful. As such the
+</I>&gt;<i> choice depends on how far OCCI wants to go down this route.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Linking to a network
+</I>&gt;<i> --------------------
+</I>&gt;<i> Finally, there are a few attributes which can specified on the link when a
+</I>&gt;<i> server is linked to a network:
+</I>&gt;<i> - The physical interface on the server (nic:0, nic:1, etc.)
+</I>&gt;<i> - Port firewalling rules (e.g. connect server to the internet network, but only
+</I>&gt;<i> &#160;allow port 80 inbound)
+</I>&gt;<i> - IP firewalling rules (e.g. connect server to the private network, and
+</I>&gt;<i> &#160;allow it to communicate on 192.168.0.0-23 but no others)
+</I>&gt;<i> - Local DHCP (e.g. the server operating system is internally configured
+</I>&gt;<i> &#160;to DHCP. I am connecting it to the public internet, and want it to appear
+</I>&gt;<i> &#160;with my assigned public static IP. Please send a DHCP response with that
+</I>&gt;<i> &#160;specific IP address).
+</I>&gt;<i>
+</I>&gt;<i> I think that all of these are best implemented as attributes on the link.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> occi-wg mailing list
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000633.html">[occi-wg] Networks: attributes and verbs
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000644.html">[occi-wg] Networks: attributes and verbs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#640">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#640">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#640">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#640">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000640.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

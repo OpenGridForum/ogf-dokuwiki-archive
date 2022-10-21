@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000071.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] About modelisation of the network description
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20About%20modelisation%20of%20the%20network%20description&In-Reply-To=D10945AB-A8DE-439F-8FF0-9215A5A34279%40internet2.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000066.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000059.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] About modelisation of the network description</H1>
+    <B>Aaron Brown</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20About%20modelisation%20of%20the%20network%20description&In-Reply-To=D10945AB-A8DE-439F-8FF0-9215A5A34279%40internet2.edu"
+       TITLE="[Nml-wg] About modelisation of the network description">aaron at internet2.edu
+       </A><BR>
+    <I>Thu Mar 13 09:01:25 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000066.html">[Nml-wg] About modelisation of the network description
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000059.html">[Nml-wg] About modelisation of the network description
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#71">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#71">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#71">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#71">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>John Vollbrecht wrote:
+&gt;<i> This is to contribute to the conversation about networks and 
+</I>&gt;<i> abstraction.    This is from the point of view of DCN and the need to 
+</I>&gt;<i> do path computation at both the inter and intra network level.
+</I>&gt;<i>
+</I>&gt;<i> In my view the elements in a (interdomain) topology are nodes, links 
+</I>&gt;<i> and networks (or domains).
+</I>&gt;<i>
+</I>&gt;<i> Nodes and links are pretty well understood, and are used for 
+</I>&gt;<i> intradomain routing.
+</I>&gt;<i> Networks and links are used for interdomain routing, and it seems to 
+</I>&gt;<i> me that often the attempt is to &quot;abstract&quot; networks as nodes so they 
+</I>&gt;<i> use the same path finding as is used for nodes and links.
+</I>&gt;<i> There are problems with doing this, because networks are note nodes, 
+</I>&gt;<i> and if abstracted to something other than what they are the abstract 
+</I>&gt;<i> capabilities, with few exceptions, will be different than the real 
+</I>&gt;<i> properties.  For example if a network is abstracted as a single node, 
+</I>&gt;<i> then there is no way to show different capacites between different 
+</I>&gt;<i> edge points.  If the network is abstracted as a mesh where every edge 
+</I>&gt;<i> connect to every other edge, and there as a way to indicate bandwidth 
+</I>&gt;<i> between edge points, then there is no way to show that some 
+</I>&gt;<i> connections between edge points share the same internal path and so 
+</I>&gt;<i> may block each other.
+</I>&gt;<i>
+</I>&gt;<i> In my mind it is good to consider network as a basic topological 
+</I>&gt;<i> element.  When doing interdomain routing, it is done between 
+</I>&gt;<i> networks.  One can use fully qualified links between networks, and can 
+</I>&gt;<i> get these by &quot;lifting&quot; the interdomain links from the topology of each 
+</I>&gt;<i> network.  Routing between networks may need more policy or hints than 
+</I>&gt;<i> routing within a domain, so it may be necessary to share properties of 
+</I>&gt;<i> networks when routing between networks.
+</I>&gt;<i>
+</I>&gt;<i> I realize that this is very similar to creating an abstact view of a 
+</I>&gt;<i> network, but I think it make it clearer what is being done, and it 
+</I>&gt;<i> seems to me does is not harder and may be easier than creating 
+</I>&gt;<i> abstract views.
+</I>&gt;<i>
+</I>&gt;<i> I am interested in what others think about this.
+</I>My idea on the node was simply to define it as such:
+
+A node has interfaces to the outside world and can be comprised of 
+elements underneath.
+
+With that defintion, network simply becomes a subclass of node. That's 
+not to say that it won't be a proper subclass with its own set of 
+attributes, but just that it's a type of node. Passing around node 
+elements with no meaningful way to differentiate them would be silly, 
+but keeping like concepts as similar as possible I think is a good thing.
+
+What we need to have is a clear definition of 'network', how it is going 
+to be used, and why we used the generic term network to describe that 
+concept. How are domain and network different and what is the 
+differentiating factor? If we have the two level approach of a domain 
+has networks but networks only contain nodes/links/ports, why not allow 
+networks in networks? Also, why not allow nodes to be in multiple 
+networks if an external set of interfaces at some level can be defined 
+for that network (thinking in the overlay network perspective). 
+Especially since 'network' is a general term, these kinds of questions 
+need answers.
+
+Thoughts?
+
+Cheers,
+Aaron
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000066.html">[Nml-wg] About modelisation of the network description
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000059.html">[Nml-wg] About modelisation of the network description
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#71">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#71">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#71">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#71">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000071.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000085.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] About modelisation of the network description
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20About%20modelisation%20of%20the%20network%20description&In-Reply-To=47EBE682.1030204%40internet2.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000084.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000086.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] About modelisation of the network description</H1>
+    <B>Evangelos Chaniotakis</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20About%20modelisation%20of%20the%20network%20description&In-Reply-To=47EBE682.1030204%40internet2.edu"
+       TITLE="[Nml-wg] About modelisation of the network description">haniotak at es.net
+       </A><BR>
+    <I>Thu Mar 27 15:57:10 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000084.html">[Nml-wg] About modelisation of the network description
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000086.html">[Nml-wg] About modelisation of the network description
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#85">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#85">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#85">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#85">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Mar 27, 2008, at 11:25 AM, Aaron Brown wrote:
+
+&gt;<i> Things had gotten a bit quiet so I figure I should open up a can of
+</I>&gt;<i> worms :-) .
+</I>&gt;<i>
+</I>&gt;<i> Freek Dijkstra wrote:
+</I>&gt;&gt;<i> In short: name MUST NOT be context-sensitive. I think it is bad if I
+</I>&gt;&gt;<i> can only describe an interface as &quot;eth0 of host3 in network 8&quot;. I  
+</I>&gt;&gt;<i> much
+</I>&gt;&gt;<i> rather say interface &quot;intf639&quot; and only if required tell that it is  
+</I>&gt;&gt;<i> in
+</I>&gt;&gt;<i> &quot;host3&quot; and that &quot;host3&quot; is in &quot;network8&quot;.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Of course, this requires that names are globally unique. I prefer to
+</I>&gt;&gt;<i> use opaque names (any string, without syntax requirements), as long  
+</I>&gt;&gt;<i> as
+</I>&gt;&gt;<i> it is unique. URIs come to mind.
+</I>&gt;<i>
+</I>&gt;<i> If we mandate that *all* naming is completely context independent,  
+</I>&gt;<i> then
+</I>&gt;<i> when given a random identifier, users are completely at a loss  
+</I>&gt;<i> (since no
+</I>&gt;<i> context implies no domain information) as to where to get  
+</I>&gt;<i> information on
+</I>&gt;<i> an element. If the only context it has is &quot;this domain contains  
+</I>&gt;<i> [uuid]&quot;,
+</I>&gt;<i> our schema can work like that except it adds a bit of extra  
+</I>&gt;<i> information
+</I>&gt;<i> on it so you can type-check a given id. For example, if you didn't  
+</I>&gt;<i> want
+</I>&gt;<i> any hierarchy below domain, you could just label everything like:
+</I>&gt;<i>
+</I>&gt;<i> urn:ogf:network:domain=Internet2.edu:node=node1345
+</I>&gt;<i> urn:ogf:network:domain=Internet2.edu:port=intf639
+</I>&gt;<i> urn:ogf:network:domain=Internet2.edu:link=link23
+</I>&gt;<i>
+</I>
+My take on this is that all elements should have a meaningless, globally
+unique identifier with no hierarchical information in it at all. We do  
+need
+human readable information but that can be pushed to other attributes
+or be inferred by relationships.
+
+An example interface:
+
+id = &quot;1311477AD25&quot;
+&quot;interfaceName&quot; =&gt; &quot;TenGigabitEthernet1/1&quot;
+
+How do we know which specific device it belongs to? Well, the device  
+is a
+group so it'd look like:
+
+id = &quot;98821CA88&quot;
+&quot;hostname&quot; =&gt; &quot;chic-sdn1.es.net&quot;
+interfaces:
+	1311477AD25
+	....
+
+And the domain is a group too, like:
+id = &quot;12198DAC&quot;
+&quot;name&quot; =&gt; &quot;ESnet&quot;
+devices:
+	98821CA88
+	....
+
+
+Etc, etc. If our application needs to find out the  
+&quot;domain:device:interface&quot; URN
+format for that interface, it can easily do that if it has the  
+information above - and it
+can also easily resolve to the global identifier if it is given a urn- 
+style &quot;identifier&quot;.
+
+Advantage: if you are looking at just the Interface object you'll only  
+be able to
+find stuff in the scope of the object itself, you won't get the  
+network hierarchy
+or anything like that. This would help us have a nice and clean design  
+with
+well-defined boundaries between objects.
+
+And, as a bonus,  it'll make it easier to anonymize topology data; we  
+can
+just push out ids and relationships rather than hierarchical names, and
+the mapping to the internal stuff would be trivial if we kept the same
+object ids.
+
+Disadvantage: It'll be a bit more cumbersome to look things up - users  
+won't
+be able to just look at an id and immediately know stuff about it. But  
+well, we'll
+have identifier lookup services and tools for that.
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000084.html">[Nml-wg] About modelisation of the network description
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000086.html">[Nml-wg] About modelisation of the network description
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#85">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#85">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#85">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#85">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000085.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+</html>

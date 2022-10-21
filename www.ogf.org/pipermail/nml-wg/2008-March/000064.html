@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000064.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] About modelisation of the network description
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20About%20modelisation%20of%20the%20network%20description&In-Reply-To=47CF57B1.6020408%40internet2.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000063.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000065.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] About modelisation of the network description</H1>
+    <B>Freek Dijkstra</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20About%20modelisation%20of%20the%20network%20description&In-Reply-To=47CF57B1.6020408%40internet2.edu"
+       TITLE="[Nml-wg] About modelisation of the network description">fdijkstr at science.uva.nl
+       </A><BR>
+    <I>Thu Mar  6 02:12:43 CST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000063.html">[Nml-wg] About modelisation of the network description
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000065.html">[Nml-wg] modelisation of the network description and dynamic	circuits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#64">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#64">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#64">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#64">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Aaron,
+
+That's a clear argument!
+Two comments.
+
+
+
+Aaron Brown wrote:
+
+&gt;<i> A network in its most reasonable XML description looks like this:
+</I>&gt;<i> 
+</I>&gt;<i> &lt;network name=&quot;internet2&quot;&gt;
+</I>&gt;<i>    &lt;node name=&quot;host1&quot;&gt;
+</I>&gt;<i>       &lt;port name=&quot;eth0&quot; /&gt;
+</I>&gt;<i>    &lt;/node&gt;
+</I>&gt;<i>    &lt;node name=&quot;host2&quot;&gt;
+</I>&gt;<i>       &lt;port name=&quot;eth0&quot; /&gt;
+</I>&gt;<i>    &lt;/node&gt;
+</I>&gt;<i>    &lt;node name=&quot;host3&quot;&gt;
+</I>&gt;<i>       &lt;port name=&quot;eth0&quot; /&gt;
+</I>&gt;<i>    &lt;/node&gt;
+</I>&gt;<i> &lt;/network&gt;
+</I>
+I strongly oppose the above description. It mixes naming and addressing, 
+which is both inflexible and verbose. The following is so much better:
+
+&gt;<i> &lt;node name=&quot;router1&quot;&gt;
+</I>&gt;<i>    &lt;port name=&quot;eth0&quot; /&gt;
+</I>&gt;<i>    &lt;port name=&quot;eth1&quot; /&gt;
+</I>&gt;<i>    &lt;port name=&quot;eth2&quot; /&gt;
+</I>&gt;<i> &lt;/node&gt;
+</I>
+The reason: the first description describes an object by its properties, 
+rather than its name. (It mixes naming and addressing). Doing so is bad. 
+Beside that the description is longer, it is also less flexible. For 
+example, what if host2 suddenly goes down, and the interface host2_eth0 
+is automatically flipped to host3_eth2. You probably don't want to let 
+your client know all these implementation details, but simply like to 
+refer to the same interface. So: we should name interfaces, 
+independently of the host they are in. The following description is 
+better (modification of your description):
+
+&gt;<i> &lt;network name=&quot;internet2&quot;&gt;
+</I>&gt;<i>    &lt;port name=&quot;host1_eth0&quot; /&gt;
+</I>&gt;<i>    &lt;port name=&quot;host2_eth0&quot; /&gt;
+</I>&gt;<i>    &lt;port name=&quot;host3_eth2&quot; /&gt;
+</I>&gt;<i> 
+</I>&gt;<i>    &lt;comprised-of&gt;
+</I>&gt;<i>        &lt;node name=&quot;host1&quot;&gt;
+</I>&gt;<i>           &lt;port name=&quot;host1_eth0&quot; /&gt;
+</I>&gt;<i>        &lt;/node&gt;
+</I>&gt;<i>        &lt;node name=&quot;host2&quot;&gt;
+</I>&gt;<i>           &lt;port name=&quot;host2_eth0&quot; /&gt;
+</I>&gt;<i>           &lt;port name=&quot;host2_eth3&quot; /&gt;
+</I>&gt;<i>        &lt;/node&gt;
+</I>&gt;<i>        &lt;node name=&quot;host3&quot;&gt;
+</I>&gt;<i>           &lt;port name=&quot;host3_eth2&quot; /&gt;
+</I>&gt;<i>           &lt;port name=&quot;host3_eth4&quot; /&gt;
+</I>&gt;<i>        &lt;/node&gt;
+</I>&gt;<i>        &lt;link name=&quot;link2-3&quot;&gt;
+</I>&gt;<i>           &lt;port name=&quot;host2_eth3&quot; /&gt;
+</I>&gt;<i>           &lt;port name=&quot;host3_eth4&quot; /&gt;
+</I>&gt;<i>        &lt;/link&gt;
+</I>&gt;<i>    &lt;/comprised-of&gt;
+</I>&gt;<i> &lt;/network&gt;
+</I>
+Note that I did name the interfaces (ports) generically. In your 
+previous example, there was no way of knowing that
+
+ &gt;    &lt;port name=&quot;host1_eth0&quot; /&gt;
+
+was the same as
+
+ &gt;        &lt;node name=&quot;host1&quot;&gt;
+ &gt;           &lt;port name=&quot;eth0&quot; /&gt;
+ &gt;        &lt;/node&gt;
+
+By simply using the same name, I now can relate them. I also included
+
+In short: name MUST NOT be context-sensitive. I think it is bad if I can 
+only describe an interface as &quot;eth0 of host3 in network 8&quot;. I much 
+rather say interface &quot;intf639&quot; and only if required tell that it is in 
+&quot;host3&quot; and that &quot;host3&quot; is in &quot;network8&quot;.
+
+Of course, this requires that names are globally unique. I prefer to use 
+opaque names (any string, without syntax requirements), as long as it is 
+unique. URIs come to mind.
+
+
+
+Second, totally different:
+
+&gt;<i> Network seems to be 'domain inside of domain'. If I can subdivide my 
+</I>&gt;<i> domain into 4 large networks, why can't i subdivide my networks into 
+</I>&gt;<i> smaller networks? Relatedly, why can't a node exist in two networks at 
+</I>&gt;<i> once? Example: layer4 overlay network or a VPN.
+</I>
+This is an important one. So far, I said that I prefer that network 
+elements are only part of one network. That is by all means a 
+convention. It is useful because it makes it easy for software to 
+contact the domain, given a certain network element. If the network 
+element can be in more domain, the software does not know who to contact 
+at first.
+
+Of course, you can subdivide. However, my preference at the moment is to 
+use different views. For example, one layer4 overlay view and a real 
+topology view.
+
+This is not a strong preference though. It is just that I have not heard 
+enough use cases to make the relations between network element, network, 
+view and domain more complex than it already is in this discussion.
+
+I let it rest for a couple of days and think about your arguments.
+
+Regards,
+Freek
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000063.html">[Nml-wg] About modelisation of the network description
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000065.html">[Nml-wg] modelisation of the network description and dynamic	circuits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#64">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#64">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#64">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#64">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000064.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+</html>

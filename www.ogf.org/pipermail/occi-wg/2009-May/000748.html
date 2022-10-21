@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000748.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] &quot;Approachability&quot; of API
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20%22Approachability%22%20of%20API&In-Reply-To=20090518112311.GA21330%40alpha.arachsys.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000735.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000757.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] &quot;Approachability&quot; of API</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20%22Approachability%22%20of%20API&In-Reply-To=20090518112311.GA21330%40alpha.arachsys.com"
+       TITLE="[occi-wg] &quot;Approachability&quot; of API">samj at samj.net
+       </A><BR>
+    <I>Tue May 19 14:18:56 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000735.html">[occi-wg] &quot;Approachability&quot; of API
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000757.html">[occi-wg] &quot;Approachability&quot; of API
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#748">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#748">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#748">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#748">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, May 18, 2009 at 1:23 PM, Richard Davies &lt;
+<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">richard.davies at elastichosts.com</A>&gt; wrote:
+
+&gt;<i> Richard Davies wrote:
+</I>&gt;<i> &gt; My feeling is that a POJ/POX rendering is a smaller amount of JSON/XML
+</I>&gt;<i> &gt; [than AtomPub] with less wrapping around it
+</I>&gt;<i>
+</I>&gt;<i> Sam Johnston wrote in a separate thread:
+</I>&gt;<i> &gt; IOW, your average [AtomPub] request to ElasticHosts is going to be
+</I>&gt;<i> &gt; skeletal while your average request to VMware (if they ever implement it)
+</I>&gt;<i> &gt; will be relatively fat. Who cares?
+</I>&gt;<i>
+</I>&gt;<i> This is something which I love to understand better - how skeletal the
+</I>&gt;<i> minimum AtomPub request can be. This would help me to understand how much
+</I>&gt;<i> &quot;weight&quot; which we are taking on comparing AtomPub vs. POX/POJ.
+</I>&gt;<i>
+</I>&gt;<i> Sam - can you help me work this out - I've started below...
+</I>&gt;<i>
+</I>
+Ok, very happy to see this progress to specific technical questions...
+
+
+&gt;<i> &lt;snip&gt;
+</I>&gt;<i> What is the set of changes I need to make to get from this POX to the
+</I>&gt;<i> minimum AtomPub? Assume for this thought experiment that I don't want to
+</I>&gt;<i> benefit from any additional services which AtomPub provides, but just want
+</I>&gt;<i> the same experience as with the POX rendering.
+</I>&gt;<i>
+</I>
+   - Your object element becomes an entry
+   - If you have multiple entries you wrap them in a feed
+   - Atom categories are very flexible - you can have multiple namespaces
+   for a start (e.g. resource types vs operating systems vs user tags) - but
+   otherwise they're pretty close
+   - Attributes go into namespaces - I see this as a feature, not a bug, as
+   it makes what you're talking about clear. For example, compute:cores,
+   memory:size, memory:speed
+   - Links are generic (who says it's IDE anyway... what about [i]SCSI?)
+
+As you can see most of the changes are superficial.
+
+I can name a few:
+&gt;<i>
+</I>&gt;<i> - There's a &lt;feed&gt; tag which wraps all of the entries/objects. It has
+</I>&gt;<i>  various other subtags of its own (e.g. title, subtitle, author). Am I
+</I>&gt;<i>  right that all of these are static and could be bolted on by a server or
+</I>&gt;<i>  ignored by a client which skips straight to the entries?
+</I>&gt;<i>
+</I>
+Yup, and the wrapping feed is optional.
+
+
+&gt;<i> - Am I right that this &lt;feed&gt; tag is only relevant when getting the entire
+</I>&gt;<i>  overall feed? When inserting or updating individual entries we still send
+</I>&gt;<i>  the entry alone.
+</I>&gt;<i>
+</I>
+Yup.
+
+
+&gt;<i> - There are 'updated' tags on every entry. Can these be ignored by clients
+</I>&gt;<i>  and set to the current time by servers?
+</I>&gt;<i>
+</I>
+Yes, but while it's ok to ignore them client side if you don't need them,
+giving accurate information on the server side will allow clients to make
+optimisations. That is, it will work if you don't, but nothing will ever be
+cached.
+
+
+&gt;<i> - All UUIDs are prefixed by urn:uuid:
+</I>&gt;<i>
+</I>
+Yup, they have to be URIs per Atom. That's OK by me - I think there's lots
+of advantages in enforcing use of UUIDs but there's alternatives like the
+tag: namespace and who knows what other resources will need to be modeled in
+future?
+
+
+&gt;<i> - Each entry has a link confirming its own end point (versus the POX
+</I>&gt;<i>  rendering just defines fixed end points for objects).
+</I>&gt;<i>
+</I>
+Entries don't have to be ephemeral - that is, you might be retrieving it
+from a queue, file, cache etc. and it's useful to know where you can find
+the latest version.
+
+
+&gt;<i> - Each entry will have links confirming all of its actuators (versus the
+</I>&gt;<i> POX
+</I>&gt;<i>  rendering just defines a fixed URL scheme for the actuators).
+</I>&gt;<i>
+</I>
+All the URLs we're going to use should be advertised via the protocol -
+configuring only a single entry point makes a lot of sense. It's also
+necessary for HATEOAS - that is, advertising what states and transitions are
+reachable. Templates might be cloneable but not startable for example, and
+we don't know what the future holds in terms of new states/transitions.
+
+
+&gt;<i> - The syntax for linking one noun to another is different, and additionally
+</I>&gt;<i>  specifies a schema for the link (defined as fixed in the direct
+</I>&gt;<i> rendering).
+</I>&gt;<i>
+</I>
+Yup, links can be used to link whatever you like to whatever you like. If
+your network needs to point at an NMS in the form of a compute resource then
+fine.
+
+
+&gt;<i> - I believe that the nouns' attributes will end up inside a &lt;content&gt; tag
+</I>&gt;<i>  inside the entry, rather than being at the top level.
+</I>&gt;<i>
+</I>
+This is something of a religious debate and something that Atom purists
+would probably agree with you on. That said, there's nothing stopping us
+from putting this stuff at the root and leaving the content element for e.g.
+an [X]HTML rendering. In fact you can replace the content element with a
+link element if you want.
+
+
+&gt;<i> - A HTTP DELETE call has to specify an ETag version as part of a delete
+</I>&gt;<i> call
+</I>&gt;<i>
+</I>
+No, but it's safer to do so (e.g. so you don't delete a resource that has
+changed since you retrieved it). It's fine if you don't, but implementations
+could in theory reject your request.
+
+
+&gt;<i> Is that list correct? What else is there?
+</I>
+
+Let me know as you come up with more questions - I have to go get ready for
+an early flight to the Cloud Computing Expo in London (see some of you
+there).
+
+Sam
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090519/f06d3964/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090519/f06d3964/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000735.html">[occi-wg] &quot;Approachability&quot; of API
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000757.html">[occi-wg] &quot;Approachability&quot; of API
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#748">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#748">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#748">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#748">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000748.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

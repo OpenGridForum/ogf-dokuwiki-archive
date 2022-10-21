@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000677.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] OCCI MC - State Machine Diagram
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20MC%20-%20State%20Machine%20Diagram&In-Reply-To=20090514082343.GR1449%40jonas">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000676.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000678.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] OCCI MC - State Machine Diagram</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20MC%20-%20State%20Machine%20Diagram&In-Reply-To=20090514082343.GR1449%40jonas"
+       TITLE="[occi-wg] OCCI MC - State Machine Diagram">samj at samj.net
+       </A><BR>
+    <I>Thu May 14 04:55:48 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000676.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000678.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#677">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#677">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#677">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#677">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, May 14, 2009 at 10:23 AM, Andre Merzky &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">andre at merzky.net</A>&gt; wrote:
+
+&gt;<i> Quoting [Sam Johnston] (May 13 2009):
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;     Yes, me, I don't think HATEOAS should be applied in this
+</I>&gt;<i> &gt;&gt;     context.   But I realise/accept that I maybe the only one
+</I>&gt;<i> &gt;&gt;     with that opinion - thats ok.  So I'll say it here one last
+</I>&gt;<i> &gt;&gt;     time, for the record, and then will shut up: &quot;a static
+</I>&gt;<i> &gt;&gt;     simple state model allows for very simple clients.
+</I>&gt;<i> &gt;&gt;     Extensions can be defined via substates, or additional
+</I>&gt;<i> &gt;&gt;     transitions.&quot;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;    I would counterargue that HATEOAS allows for even simpler clients
+</I>&gt;<i> &gt;    because they don't have to worry about hardwiring even a simple state
+</I>&gt;<i> &gt;    model. Using HTTP we can even feed them plain $LANG descriptions of
+</I>&gt;<i> &gt;    what the transitions and targets are - it doesn't get any easier than
+</I>&gt;<i> &gt;    that and you don't have to worry about updating clients to implement
+</I>&gt;<i> &gt;    new goodies.
+</I>&gt;<i>
+</I>&gt;<i> I don't see that.  If  I want to write a client tool which
+</I>&gt;<i> starts a resource, I want to make sure the resource is in
+</I>&gt;<i> RUNNING state when the client reports success.  But if that
+</I>&gt;<i> client (a) has to infer the available states from a
+</I>&gt;<i> registry, it cannot posisbly know which state has the
+</I>&gt;<i> semantic meaning of RUNNING attached.  Further (b), if the
+</I>&gt;<i> client only sees those state transitions it is allowed in
+</I>&gt;<i> its current state, how does it know what transition path to
+</I>&gt;<i> take to reach that target state?  Is it (I am making those
+</I>&gt;<i> up obviously):
+</I>&gt;<i>
+</I>&gt;<i>  INITIAL -&gt; create() -&gt; CREATED -&gt; elevate() -&gt; ELEVATED () -&gt; run() -&gt;
+</I>&gt;<i>  RUNNING
+</I>&gt;<i>
+</I>&gt;<i> or
+</I>&gt;<i>
+</I>&gt;<i>  INITIAL -&gt; create() -&gt; CREATED -&gt; init() -&gt; INITIALIZED -&gt; run() -&gt;
+</I>&gt;<i> RUNNING
+</I>&gt;<i>
+</I>&gt;<i> Or should the tool simply fail because it cannot see a run()
+</I>&gt;<i> transition in its INITIAL state?
+</I>&gt;<i>
+</I>
+The client must at least know how to create a resource and when it has done
+so successfully a &quot;start&quot; actuator will appear, perhaps with a target state
+of &quot;running&quot; (TBD). In that case it knows that if it pulls the &quot;start&quot;
+handle eventually the resource should end up &quot;running&quot;. Otherwise it could
+know (from the registry) that &quot;start&quot; is the right button to push, but
+that's starting to break HATEOAS principles. We have options - it's just a
+matter of finding the right one.
+
+
+&gt;<i> I think HATEOAS works pretty well if a human is in the loop
+</I>&gt;<i> who can parse the available transition description, and
+</I>&gt;<i> deduce a semantic meaning.  I don't think it makes for
+</I>&gt;<i> simple tooling, really.
+</I>&gt;<i>
+</I>
+I agree that humans are better at this stuff than computers but I'm
+unconvinced this translates to complex tooling.
+
+
+&gt;<i> Then again, I may misunderstand the proposed usage of
+</I>&gt;<i> HATEOAS in OCCI.  So, can you help me out: what mechanism
+</I>&gt;<i> will avoid the confusion from the example above, if a vendor
+</I>&gt;<i> can provide init() and elevate() transitions on the fly,
+</I>&gt;<i> with no predefined semantics attached?  How would my tool
+</I>&gt;<i> deduce the transition path it needs to enact?
+</I>&gt;<i>
+</I>
+The semantics for common functions will be in the registry. It's ones that
+are uncommon and impossible to predict like &quot;translate&quot; and &quot;migrate&quot; that
+we're catering for here, and generally there will need to be some kind of
+client side support for these.
+
+As I said below, &quot;*we may need to revisit this point in the name of interop*&quot;,
+and I suggested categories as one possible solution (e.g. a &quot;starting&quot; vs a
+&quot;stopping&quot; transition)... parametrised transition calls are another... for
+example, how do I tell something to start *without* saved state if saved
+state is present (ala cold start vs resume)?
+
+Sam
+
+
+&gt;<i> &gt;    I don't think anyone knows every possible thing that users are going
+</I>&gt;<i> to
+</I>&gt;<i> &gt;    want to do with the API (I certainly don't have the confidence to say
+</I>&gt;<i> I
+</I>&gt;<i> &gt;    do anyway) but we may need to revisit this point in the name of
+</I>&gt;<i> &gt;    interop... Atom categories would be one way to achieve this (e.g.
+</I>&gt;<i> &quot;Cold
+</I>&gt;<i> &gt;    Reboot&quot; and &quot;Warm Reboot&quot; might go in the &quot;restart&quot; category).
+</I>&gt;<i> &gt;    Sam
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; References
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;    1. mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">andre at merzky.net</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Nothing is ever easy.
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090514/ddc7bf7a/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090514/ddc7bf7a/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000676.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000678.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#677">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#677">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#677">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#677">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000677.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

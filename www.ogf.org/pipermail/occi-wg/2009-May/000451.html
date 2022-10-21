@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000451.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Votes: XML vs. JSON vs. TXT
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Votes%3A%20XML%20vs.%20JSON%20vs.%20TXT&In-Reply-To=20090507135915.GC23426%40Jonas">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000448.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000453.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Votes: XML vs. JSON vs. TXT</H1>
+    <B>Chris Webb</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Votes%3A%20XML%20vs.%20JSON%20vs.%20TXT&In-Reply-To=20090507135915.GC23426%40Jonas"
+       TITLE="[occi-wg] Votes: XML vs. JSON vs. TXT">chris.webb at elastichosts.com
+       </A><BR>
+    <I>Thu May  7 10:07:59 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000448.html">[occi-wg] Votes: XML vs. JSON vs. TXT
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000453.html">[occi-wg] Votes: XML vs. JSON vs. TXT
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#451">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#451">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#451">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#451">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Andre Merzky &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">andre at merzky.net</A>&gt; writes:
+
+&gt;<i> +1 for TXT, as that is most simple, flat, and easy to map to
+</I>&gt;<i> anything else.  Well, you can screw up TXT, too, but we
+</I>&gt;<i> won't, right? ;-)
+</I>
+I'm standing back from the rest of the discussion as I've already advocated
+maximum format simplicity ad nauseam. However, I'll just quickly point out
+that the type of text format I have been proposing is a simple
+
+  KEY VALUE
+  KEY VALUE
+
+format, which can be read by a trivial shell fragment
+
+  while read K V; do [...]; done
+
+Once it gets more complex than that, the sysadmin-friendliness starts to
+evaporate very quickly and you might as well use JSON. (For example, I
+remember another provider telling me that they'd offered CSV and nobody had
+used it. Frankly I'm not surprised given how much of a pain it is to parse
+correctly.)
+
+In our own API, our 'native' format looks like this and it has worked very
+well. The code is simple and clean, feedback from users has been very
+positive, and people really do write five line shell scripts to drive our
+infrastructure in the way they might script their own machines. This was my
+original design aim. Meanwhile, we're able to do admin across the cluster
+with shell one-liners, which would require separate tools if our API were
+more clumsy.
+
+We've structured our keys hierarchically using colons as a separator, so a
+text fragment
+
+  ide:0:0 08c92dd5-70a0-4f51-83d2-835919d254df
+  nic:0:dhcp 91.203.56.132
+  nic:0:model e1000
+
+might be viewed as equivalent to the flat JSON hash
+
+  { &quot;ide:0:0&quot;: &quot;08c92dd5-70a0-4f51-83d2-835919d254df&quot;,
+    &quot;nic:0:dhcp&quot;: &quot;91.203.56.132&quot;,
+    &quot;nic:0:model&quot;: &quot;e1000&quot;
+  }
+
+but equally as equivalent to the nested JSON hashes
+
+  { &quot;name&quot;: &quot;TestServer&quot;, &quot;cpu&quot;:4000, &quot;mem&quot;:2048}
+  
+  { &quot;ide&quot;: {
+       0: {
+         0: &quot;08c92dd5-70a0-4f51-83d2-835919d254df&quot;
+       }
+    },
+    &quot;nic&quot;: {
+      0: {
+        &quot;dhcp&quot;: &quot;91.203.56.132&quot;,
+        &quot;model&quot;: &quot;e1000&quot;
+      }
+    }
+  }
+
+The use of whitespace to separate keys from values and newlines to separate
+records restricts keys (but not values) to contain no spaces, and both keys
+and values to have no leading whitespace or embedded newlines. In our
+environment, this isn't a problem, but you would need to add shell-friendly
+\ escaping to the mix if you wanted to allow demented keys and values in a
+whitespace-separated text format.
+
+Of course, if the standard goes with just JSON, it isn't a disaster from our
+point of view. We'll probably end up offering a small translation binary
+linking against libcurl to access it in the above flattened format. Seems a
+shame to force every casual user to compile and use a tool just to make the
+API usable from their command-line, though, when this isn't currently the
+case with our API.
+
+It'll be hard to sell something like this to end-users as an improvement,
+but definitely less hard-to-sell a little JSON-parsing binary (which I could
+write standalone) than if the tool also needs you to compile and link
+against cumbersome XML and Atom libraries (which I wouldn't even think of
+trying to do standalone). I guess my vote is there strongly anti-xml/atom,
+vaguely positive about json, and strongly positive about simple plaintext.
+
+Cheers,
+
+Chris.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000448.html">[occi-wg] Votes: XML vs. JSON vs. TXT
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000453.html">[occi-wg] Votes: XML vs. JSON vs. TXT
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#451">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#451">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#451">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#451">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000451.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

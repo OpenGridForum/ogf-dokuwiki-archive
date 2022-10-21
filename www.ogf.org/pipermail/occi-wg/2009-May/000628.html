@@ -1,0 +1,460 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000628.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] OCCI MC - State Machine Diagram
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20MC%20-%20State%20Machine%20Diagram&In-Reply-To=20090513100934.GA57642%40Jonas">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000689.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000624.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] OCCI MC - State Machine Diagram</H1>
+    <B>Edmonds, AndrewX</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20MC%20-%20State%20Machine%20Diagram&In-Reply-To=20090513100934.GA57642%40Jonas"
+       TITLE="[occi-wg] OCCI MC - State Machine Diagram">andrewx.edmonds at intel.com
+       </A><BR>
+    <I>Wed May 13 08:17:49 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000689.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000624.html">[occi-wg] Format: 4 distinct decisions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#628">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#628">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#628">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#628">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This is a nice refinement of the current state model and I don't believe we lose anything, in the context of core finite states, with this new representation :-) As you say Andre, it's clearer and simpler.
+
+Andy
+
+-----Original Message-----
+From: Andre Merzky [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">andremerzky at gmail.com</A>] On Behalf Of Andre Merzky
+Sent: 13 May 2009 11:10
+To: Edmonds, AndrewX
+Cc: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">Thijs.Metsch at Sun.COM</A>; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>; Molino, VictorX M
+Subject: Re: [occi-wg] OCCI MC - State Machine Diagram
+
+Hi all,
+
+I would like to follow up on the state model thread, even if people seem to have mostly agreed upon the version documented in the wiki (<A HREF="http://forge.ogf.org/short/occi-wg/states">http://forge.ogf.org/short/occi-wg/states</A>)
+
+I am really unhappy with a number of things:
+
+  - too many states
+  - too many state transitions with no actions (i.e.
+    methods) attached
+  - unclear entry and exit points
+
+Please allow me to elaborate
+
+(1) Too many states:
+
+ All the XXX-ING states (STARTING, SUSPENDING, RESUMING,
+ STOPPING) seem to have no real benefit, apart from  informing the client that a state transition is in  progress.  State transitions, however, should, IMHO, not be  part of a state diagram, unless specific actions can be  performed during that transition.
+
+ For example the STOPPING state: there are no actions  attached to that state, the client can do nothing but wait  until the state reached STOPPED.
+
+ So, why not going to STOPPED immediately, and adding the  transition process to the semantics of the STOPPED state?
+ (e.g., &quot;resources can still be utilized iff they are  required to store or retrieve the VM state&quot;).
+
+
+(2) Too many internal state transitions
+
+ That is related to (1) of course: the diagram has 11  internal state transitions (no actions attached), and 5  external transitions (actions attached)....
+
+ Well, that is not exactly incorrect or anything, but it is  confusing matters.  A state model should help to clarify  what actions cause what state change.
+
+
+(3) unclear entry and exit points
+
+ There is no state where the client can be sure that no  remote resources are utilized anymore - i.e., an  'Destroyed' state is missing.  At some point, a client  needs to have the ability to free remote resources (well,  unless one has garbage collection, but we don't want to go  there, right?)
+
+ STOPPED is not really the same - a STOPPED state can be  moved to STARTING/ACTIVE via start(), so the backend cannot  be allowed to free the resources.
+
+
+I do understand that the XXX-ING states are useful for informative purposes, for example, to allow a GUI to inform the user that a start() request has been received, and the backend is spinning up the machine.  Those types of information can, however, easily provided by additional attributes, or sub-states.
+
+Attached is an alternate state diagram.  It's main purpose is to illustrate that, by limiting the number of states and internal state transitions, one can derive a much simplier (and IMHO cleaner) state diagram.
+
+Cheers, Andre.
+
+
+PS.: Sorry for not using graffle.  Sources are in xfig, so I
+     don't attach them - don't want to get laughed at for using
+     such ancient technology ;-)
+
+
+Quoting [Edmonds, AndrewX] (Apr 20 2009):
+&gt;<i>
+</I>&gt;<i> Updated...
+</I>&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i>
+</I>&gt;<i> I agree - this is fine with me.
+</I>&gt;<i>
+</I>&gt;<i> On Mon, 2009-04-20 at 14:02 +0100, Edmonds, AndrewX wrote:
+</I>&gt;<i> &gt; Sounds like a good comprise J
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; From: Sam Johnston [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">samj at samj.net</A>]
+</I>&gt;<i> &gt; Sent: 20 April 2009 13:52
+</I>&gt;<i> &gt; To: Edmonds, AndrewX
+</I>&gt;<i> &gt; Cc: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">Thijs.Metsch at Sun.COM</A>; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>; Molino, VictorX M
+</I>&gt;<i> &gt; Subject: Re: [occi-wg] OCCI MC - State Machine Diagram
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I'd tend to side with Thijs on this one - having a complete state
+</I>&gt;<i> &gt; machine is a lot less important when the implementation can tell its
+</I>&gt;<i> &gt; clients what the next states are (and the humans what they mean in
+</I>&gt;<i> &gt; plain $LANGUAGE). That said, if you want to add a dotted loop back
+</I>&gt;<i> &gt; to the start then that might help the perfectionists sleep easy.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Sam
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Mon, Apr 20, 2009 at 2:47 PM, Edmonds, AndrewX
+</I>&gt;<i> &gt; &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">andrewx.edmonds at intel.com</A>&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Then conceptually, how do we recover from an error state if we've
+</I>&gt;<i> &gt; exited? Also if we want to support error state recovery, should the
+</I>&gt;<i> &gt; state model reflect this?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -----Original Message-----
+</I>&gt;<i> &gt; From: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">Thijs.Metsch at Sun.COM</A> [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">Thijs.Metsch at Sun.COM</A>]
+</I>&gt;<i> &gt; Sent: 20 April 2009 13:42
+</I>&gt;<i> &gt; To: Sam Johnston
+</I>&gt;<i> &gt; Cc: Edmonds, AndrewX; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>; Molino, VictorX M
+</I>&gt;<i> &gt; Subject: Re: [occi-wg] OCCI MC - State Machine Diagram
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; As I stated before maybe we an add another exit-point instead of a
+</I>&gt;<i> &gt; real state.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Cheers,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -Thijs
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Mon, 2009-04-20 at 14:39 +0200, Sam Johnston wrote:
+</I>&gt;<i> &gt; &gt; On Mon, Apr 20, 2009 at 2:29 PM, Edmonds, AndrewX
+</I>&gt;<i> &gt; &gt; &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">andrewx.edmonds at intel.com</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt;         I updated the state model (attached) to include an error
+</I>&gt;<i> &gt; &gt;         state. Couldn???t see how to delete attachments so maybe
+</I>&gt;<i> &gt; someone
+</I>&gt;<i> &gt; &gt;         here has better luck? I also began to add identifiers to
+</I>&gt;<i> &gt; each
+</I>&gt;<i> &gt; &gt;         process transition but the diagram started to become
+</I>&gt;<i> &gt; cluttered
+</I>&gt;<i> &gt; &gt;         so left them out.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; I would suggest that it's better to keep this clean (though I'm
+</I>&gt;<i> &gt; &gt; impressed that you got as far as you did!). You can reach an error
+</I>&gt;<i> &gt; &gt; state from anywhere - if a machine is found to be corrupt even
+</I>&gt;<i> &gt; &gt; while stopped then a STOPPED-&gt;ERROR transition makes sense for example.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Sam
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         From: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A>
+</I>&gt;<i> &gt; [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A>]
+</I>&gt;<i> &gt; &gt;         On Behalf Of Sam Johnston
+</I>&gt;<i> &gt; &gt;         Sent: 20 April 2009 11:56
+</I>&gt;<i> &gt; &gt;         To: Tino Vazquez
+</I>&gt;<i> &gt; &gt;         Cc: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>; Molino, VictorX M; Thijs Metsch
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         Subject: Re: [occi-wg] OCCI MC - State Machine Diagram
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         Hi Tino,
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         A lot of this is covered in the state registry (which I'll
+</I>&gt;<i> &gt; &gt;         copy below for you) but comments inline nonetheless.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         On Mon, Apr 20, 2009 at 12:35 PM, Tino Vazquez
+</I>&gt;<i> &gt; &gt;         &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">tinova at fdi.ucm.es</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         Howdy everyone,
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         Excellent thread. My three cents:
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         1) I think we should define clearly the semantics of the
+</I>&gt;<i> &gt; &gt;         states. for
+</I>&gt;<i> &gt; &gt;         instance, what is the difference between STOPPED and
+</I>&gt;<i> &gt; &gt;         SUSPENDED? Is it
+</I>&gt;<i> &gt; &gt;         that with SUSPENDED the state is saved and not with STOPPED?
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         Yes, it's exactly that. From the state registry: STOPPED =
+</I>&gt;<i> &gt; &gt;         &quot;The resource is inactive and has no saved state&quot; and
+</I>&gt;<i> &gt; &gt;         SUSPENDED=&quot;The resource is inactive and has saved state&quot;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;                 2) I really think we need an entry state like
+</I>&gt;<i> &gt; &gt;                 &quot;PENDING&quot; or &quot;DEFINED&quot;.
+</I>&gt;<i> &gt; &gt;                 It will help in implementation relying on a
+</I>&gt;<i> &gt; &gt;                 best-effort scheduler to
+</I>&gt;<i> &gt; &gt;                 match VMs and hosts, like EC2 does. This will be the
+</I>&gt;<i> &gt; &gt;                 state where
+</I>&gt;<i> &gt; &gt;                 machines will wait for a host to be available to run
+</I>&gt;<i> &gt; &gt;                 on. Also, I don't
+</I>&gt;<i> &gt; &gt;                 really think that a machine entering its life
+</I>&gt;<i> &gt; &gt; cycle
+</I>&gt;<i> &gt; in
+</I>&gt;<i> &gt; &gt;                 SUSPENDED state
+</I>&gt;<i> &gt; &gt;                 is a good idea.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         I tend to agree, but I'd like the terminology to be
+</I>&gt;<i> &gt; completely
+</I>&gt;<i> &gt; &gt;         unambiguous... something like &quot;NEW&quot; [for this AS].
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;                 3) +1 to the &quot;CRASHED&quot;, &quot;ERROR&quot; or &quot;FAILED&quot; state.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         ABORT[ING|ED] = &quot;The resource encountered an error and is
+</I>&gt;<i> &gt; &gt;         aborting/has aborted&quot;.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;                 What do you think?
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         Some of these transitions take a while so some way of
+</I>&gt;<i> &gt; &gt;         indicating progress (especially interesting for long tasks
+</I>&gt;<i> &gt; &gt;         like live migrations) would be useful. Would prefer a
+</I>&gt;<i> &gt; &gt;         mechanism that worked universally for the API.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         Sam
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         Extensions
+</I>&gt;<i> &gt; &gt;         State control
+</I>&gt;<i> &gt; &gt;                State
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;             Transitions
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;             Description
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         aborting
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         aborted
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         The resource
+</I>&gt;<i> &gt; &gt;         encountered an error
+</I>&gt;<i> &gt; &gt;         and is aborting
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         aborted
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         n/a
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         The resource
+</I>&gt;<i> &gt; &gt;         encountered an error
+</I>&gt;<i> &gt; &gt;         and has aborted
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         active
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         pause, restart,
+</I>&gt;<i> &gt; &gt;         stop, suspend
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         The resource is
+</I>&gt;<i> &gt; &gt;         active
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         resuming
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         aborting, active
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         The resource is
+</I>&gt;<i> &gt; &gt;         becoming active and
+</I>&gt;<i> &gt; &gt;         restoring state
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         pausing
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         aborting, paused
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         The resource is
+</I>&gt;<i> &gt; &gt;         preparing to refuse
+</I>&gt;<i> &gt; &gt;         new requests
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         paused
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         aborting, resume
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         The resource is
+</I>&gt;<i> &gt; &gt;         refusing new
+</I>&gt;<i> &gt; &gt;         requests
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         starting
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         aborting, active
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         The resource is
+</I>&gt;<i> &gt; &gt;         becoming active
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         stopped
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         start
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         The resource is
+</I>&gt;<i> &gt; &gt;         inactive and has no
+</I>&gt;<i> &gt; &gt;         saved state
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         stopping
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         stopped, aborting
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         The resource is
+</I>&gt;<i> &gt; &gt;         becoming inactive
+</I>&gt;<i> &gt; &gt;         and destroying state
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         suspended
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         resume, stop
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         The resource is
+</I>&gt;<i> &gt; &gt;         inactive and has
+</I>&gt;<i> &gt; &gt;         saved state
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         Note: Stable states and user transitions in bold.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; -------------------------------------------------------------
+</I>&gt;<i> &gt; &gt;         Intel Ireland Limited (Branch)
+</I>&gt;<i> &gt; &gt;         Collinstown Industrial Park, Leixlip, County Kildare,
+</I>&gt;<i> &gt; Ireland
+</I>&gt;<i> &gt; &gt;         Registered Number: E902934
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;         This e-mail and any attachments may contain confidential
+</I>&gt;<i> &gt; material for
+</I>&gt;<i> &gt; &gt;         the sole use of the intended recipient(s). Any review or
+</I>&gt;<i> &gt; distribution
+</I>&gt;<i> &gt; &gt;         by others is strictly prohibited. If you are not the
+</I>&gt;<i> &gt; intended
+</I>&gt;<i> &gt; &gt;         recipient, please contact the sender and delete all copies.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; occi-wg mailing list
+</I>&gt;<i> &gt; &gt; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> &gt; &gt; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; Thijs Metsch                        Tel: +49 (0)941 3075-122 (x60122)
+</I>&gt;<i> &gt; <A HREF="http://blogs.sun.com/intheclouds">http://blogs.sun.com/intheclouds</A>
+</I>&gt;<i> &gt; Software Engineer Grid Computing
+</I>&gt;<i> &gt; Sun Microsystems GmbH
+</I>&gt;<i> &gt; Dr.-Leo-Ritter-Str. 7               mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">thijs.metsch at sun.com</A>
+</I>&gt;<i> &gt; D-93049 Regensburg                  <A HREF="http://www.sun.com/">http://www.sun.com</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -------------------------------------------------------------
+</I>&gt;<i> &gt; Intel Ireland Limited (Branch)
+</I>&gt;<i> &gt; Collinstown Industrial Park, Leixlip, County Kildare, Ireland
+</I>&gt;<i> &gt; Registered Number: E902934
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; This e-mail and any attachments may contain confidential material
+</I>&gt;<i> &gt; for the sole use of the intended recipient(s). Any review or
+</I>&gt;<i> &gt; distribution by others is strictly prohibited. If you are not the
+</I>&gt;<i> &gt; intended recipient, please contact the sender and delete all copies.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -------------------------------------------------------------
+</I>&gt;<i> &gt; Intel Ireland Limited (Branch)
+</I>&gt;<i> &gt; Collinstown Industrial Park, Leixlip, County Kildare, Ireland
+</I>&gt;<i> &gt; Registered Number: E902934
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; This e-mail and any attachments may contain confidential material
+</I>&gt;<i> &gt; for the sole use of the intended recipient(s). Any review or
+</I>&gt;<i> &gt; distribution by others is strictly prohibited. If you are not the
+</I>&gt;<i> &gt; intended recipient, please contact the sender and delete all copies.
+</I>--
+Nothing is ever easy.
+-------------------------------------------------------------
+Intel Ireland Limited (Branch)
+Collinstown Industrial Park, Leixlip, County Kildare, Ireland
+Registered Number: E902934
+
+This e-mail and any attachments may contain confidential material for
+the sole use of the intended recipient(s). Any review or distribution
+by others is strictly prohibited. If you are not the intended
+recipient, please contact the sender and delete all copies.
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000689.html">[occi-wg] OCCI MC - State Machine Diagram
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000624.html">[occi-wg] Format: 4 distinct decisions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#628">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#628">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#628">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#628">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000628.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

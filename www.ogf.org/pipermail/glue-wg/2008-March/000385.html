@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000385.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] XSD aligned to draft 27
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20XSD%20aligned%20to%20draft%2027&In-Reply-To=177C701B-59BB-4B10-87DA-B6681432D675%40mcs.anl.gov">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000384.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000386.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] XSD aligned to draft 27</H1>
+    <B>Paul Millar</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20XSD%20aligned%20to%20draft%2027&In-Reply-To=177C701B-59BB-4B10-87DA-B6681432D675%40mcs.anl.gov"
+       TITLE="[glue-wg] XSD aligned to draft 27">paul.millar at desy.de
+       </A><BR>
+    <I>Thu Mar 13 11:44:30 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000384.html">[glue-wg] XSD aligned to draft 27
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000386.html">[glue-wg] XSD aligned to draft 27
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#385">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#385">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#385">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#385">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi JP,
+
+On Thursday 13 March 2008 15:52:56 JP Navarro wrote:
+&gt;<i> I'm less familiar with the XML terminology you use, but I would
+</I>&gt;<i> second your suggestion using commoner terminology: we should be able to
+</I>&gt;<i> independently publish subsets of the GLUE schema hierarchy.  The ability to
+</I>&gt;<i> develop and run independent info-providers for subsets of information is a
+</I>&gt;<i> very useful design. Did I understand your proposal correctly?
+</I>
+More or less.
+
+What I would like to avoid is that storage service infoProviders publish 
+information like:
+
+&lt;Grid&gt;
+	&lt;AdminDomain&gt;
+		&lt;AdminDomain&gt;
+			&lt;StorageService&gt;
+				&lt;ImplementationName&gt;foo&lt;/ImplementationName&gt;
+				&lt;ImplementationVersion&gt;1.0&lt;/ImplementationVersion&gt;
+				&lt;!-- ...etc...  --&gt;
+			&lt;/StorageService&gt;
+		&lt;/AdminDomain&gt;
+	&lt;/AdminDomain&gt;
+&lt;/Grid&gt;
+
+as this requires the SE publisher to know it's part of a distributed Tier-2 
+site (hence the two levels of AdminDomain elements).
+
+That said, the current XSD doesn't seem to support nested AdminDomain 
+elements, which would be needed to describe distributed sites.
+
+An alternative would be for the SE to publish information like:
+
+&lt;StorageService&gt;
+	&lt;ImplementationName&gt;foo&lt;/ImplementationName&gt;
+	&lt;ImplementationVersion&gt;1.0&lt;/ImplementationVersion&gt;
+	&lt;!-- ...etc...  --&gt;
+&lt;/StorageService&gt;
+
+and have the (site-level) aggregation happen at the site level, which would 
+publish information like:
+
+&lt;AdminDomain&gt;
+	&lt;Name&gt;Example Site&lt;/Name&gt;
+	&lt;Services&gt;
+		&lt;ComputingService&gt;
+			&lt;!-- CE information goes here --&gt;
+		&lt;/ComputingService&gt;
+
+		&lt;StorageService&gt;
+			&lt;ImplementationName&gt;foo&lt;/ImplementationName&gt;
+			&lt;ImplementationVersion&gt;1.0&lt;/ImplementationVersion&gt;
+			&lt;!-- ...etc...  --&gt;
+		&lt;/StorageService&gt;
+	&lt;/Services&gt;
+&lt;/AdminDomain&gt;
+
+The final aggregation would encapsulate multiple sites within a Grid element.
+
+&lt;Grid&gt;
+	&lt;AdminDomain&gt;
+		&lt;!-- Site 1 info --&gt;
+	&lt;/AdminDomain&gt;
+
+	&lt;AdminDomain&gt;
+		&lt;!-- Site 2 info --&gt;
+	&lt;/AdminDomain&gt;
+&lt;/Grid&gt;
+
+The disadvantage of this approach is one cannot query the primary SE info (the 
+XML provided by the SE info provider) with exactly the same query one would 
+use when querying top-level aggregation.  For example, to extract all 
+StorageEndpoints for site Example Site, one could use the XPath:
+
+/Grid/**/AdminDomain[Name='Example 
+Site']/Services/StorageService/StorageEndpoint
+
+Something like:
+
+&lt;xsl:styleshet  xmlns:xsl=&quot;<A HREF="http://www.w3.org/1999/XSL/Transform"">http://www.w3.org/1999/XSL/Transform&quot;</A>
+		version=&quot;1.0&quot;&gt;
+	&lt;xsl:variable name=&quot;href&quot; select=&quot;<A HREF="http://glue.example.org/grid-glue"/">http://glue.example.org/grid-glue&quot;/</A>&gt;
+	&lt;xsl:variable name=&quot;site&quot; select = &quot;Example Site&quot;/&gt;
+
+	&lt;xsl:template match=&quot;/&quot;&gt;
+		&lt;xsl:copy-of 
+select=&quot;document($href)/Grid/**/AdminDomain[Name=$site]/Services/StorageService/StorageEndpoint&quot;/&gt;
+	&lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+
+But, if one substituted the URI of the primary information (via the href 
+variable), this particular query wouldn't work: the primary XML would not 
+have the Grid and all AdminDomain elements.
+
+I don't think this is a big deal, though: it makes sense that that query 
+should return no replies when querying the SE info-provider directly, and 
+there are other queries that would work (e.g., select all StorageEndpoints)
+
+The advantage to publish with StorageService as the top-level element is that 
+the SE info-provider need know nothing about the above Glue hierarchy.  This 
+(should) simplify the info-provider and, at the same time, allow the same 
+information to be (easily) published under different GLUE hierarchies.  For 
+example, if a site is a member of more than one Grid.
+
+To me, this advantage outweighs the disadvantage.
+
+
+&gt;<i> One question this raises is how one binds or links these separately
+</I>&gt;<i> published subset documents to each other?  Would we need to introduce
+</I>&gt;<i> attributes in each subset that binds it to other related subsets?
+</I>
+I believe that, currently, how the documents are merged isn't defined.
+
+One approach is to use XSLT to do the merging.  There's a (working) toy 
+implementation that demonstrates that here:
+
+<A HREF="http://www.ogf.org/pipermail/glue-wg/2007-December/000249.html">http://www.ogf.org/pipermail/glue-wg/2007-December/000249.html</A>
+
+HTH,
+
+Paul.
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000384.html">[glue-wg] XSD aligned to draft 27
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000386.html">[glue-wg] XSD aligned to draft 27
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#385">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#385">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#385">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#385">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000385.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+</html>

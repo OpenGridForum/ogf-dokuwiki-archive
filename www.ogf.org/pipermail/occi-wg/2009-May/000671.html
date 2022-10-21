@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000671.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Networks: attributes and verbs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Networks%3A%20attributes%20and%20verbs&In-Reply-To=21606dcf0905131517v1716b272lba86bbc82ddc55d7%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000670.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000672.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Networks: attributes and verbs</H1>
+    <B>Richard Davies</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Networks%3A%20attributes%20and%20verbs&In-Reply-To=21606dcf0905131517v1716b272lba86bbc82ddc55d7%40mail.gmail.com"
+       TITLE="[occi-wg] Networks: attributes and verbs">richard.davies at elastichosts.com
+       </A><BR>
+    <I>Wed May 13 17:43:01 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000670.html">[occi-wg] Networks: attributes and verbs
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000672.html">[occi-wg] Networks: attributes and verbs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#671">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#671">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#671">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#671">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> &gt; &gt; &gt; Linking to a network
+</I>&gt;<i> &gt; &gt; &gt; --------------------
+</I>&gt;<i> &gt; &gt; &gt; Finally, there are a few attributes which can specified on the link
+</I>&gt;<i> &gt; &gt; &gt; when a server is linked to a network:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ...
+</I>&gt;<i> &gt; &gt; &gt; - Local DHCP (e.g. the server operating system is internally
+</I>&gt;<i> &gt; &gt; &gt;   configured to DHCP. I am connecting it to the public internet, and
+</I>&gt;<i> &gt; &gt; &gt;   want it to appear with my assigned public static IP. Please send a
+</I>&gt;<i> &gt; &gt; &gt;   DHCP response with that specific IP address).
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Hmm... sounds unnecessary. Once you've assigned an IP to a server if
+</I>&gt;<i> &gt; &gt; you want to make life easier by offering it over DHCP then go right
+</I>&gt;<i> &gt; &gt; ahead... I don't see the use case otherwise.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; That one's actually pretty important to us at least: &gt;50% of our servers
+</I>&gt;<i> &gt; work this way.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The classic case is that a customer running a standard pre-installed
+</I>&gt;<i> &gt; operating system wants to use one of the public static IPs that they
+</I>&gt;<i> &gt; purchased.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The high-hassle option for them is that they have to go into their OS
+</I>&gt;<i> &gt; and configure the static IP.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; We go with the other option - they can leave their OS configured to
+</I>&gt;<i> &gt; DHCP, and they can specify via the Web UI (or equivalently API) that the
+</I>&gt;<i> &gt; right static IP should be returned to that DHCP request, rather than
+</I>&gt;<i> &gt; just a random free one.
+</I>&gt;<i> 
+</I>&gt;<i> So by &quot;once you've assigned an IP to a server&quot; I mean in OCCI, not in the
+</I>&gt;<i> server. If OCCI knows the server (presumably by MAC address) has a given
+</I>&gt;<i> IP and your DHCP server can talk to the OCCI backend (or vice versa) then
+</I>&gt;<i> there's no special case here... if you can support it then do and people
+</I>&gt;<i> won't have to (but can anyway) configure statics. Have I missed something?
+</I>
+I think we're on the same page(?)
+
+The point I was trying to make was about the mechanism by which we assign
+IPs to a server in OCCI. I think that the assigned IP(s) should be specified
+an attribute of the link between the server and the network.
+
+A less detailed version would be like the last paragraph: just list the
+assigned IP(s) as attributes of the link.
+
+A more detailed version with better support for multiple IPs (e.g. for SSL
+web hosting) would be like my original e-mail in this thread and distinguish
+between two type of IP assignment:
+1) A potentially large set of IPs which the server is permitted to use
+   (i.e. all of the SSL web hosting IPs which they have purchased)
+2) A single IP which is the primary IP to tell the server if it sends a DHCP
+   request
+
+Cheers,
+
+Richard.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000670.html">[occi-wg] Networks: attributes and verbs
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000672.html">[occi-wg] Networks: attributes and verbs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#671">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#671">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#671">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#671">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000671.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

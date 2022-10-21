@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000666.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Networks: attributes and verbs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Networks%3A%20attributes%20and%20verbs&In-Reply-To=20090513141637.GA28052%40alpha.arachsys.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000662.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000669.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Networks: attributes and verbs</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Networks%3A%20attributes%20and%20verbs&In-Reply-To=20090513141637.GA28052%40alpha.arachsys.com"
+       TITLE="[occi-wg] Networks: attributes and verbs">samj at samj.net
+       </A><BR>
+    <I>Wed May 13 15:15:29 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000662.html">[occi-wg] Networks: attributes and verbs
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000669.html">[occi-wg] Networks: attributes and verbs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#666">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#666">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#666">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#666">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, May 13, 2009 at 4:16 PM, Richard Davies &lt;
+<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">richard.davies at elastichosts.com</A>&gt; wrote:
+
+&gt;<i> All,
+</I>&gt;<i>
+</I>&gt;<i> For me, the largest gap in the nouns, verbs and attributes is with regards
+</I>&gt;<i> to networks. Here are some thoughts on capabilities which I believe we need
+</I>&gt;<i> and options to implement these - feedback please!
+</I>&gt;<i>
+</I>
+Good work so far, thanks.
+
+
+&gt;<i> Basics
+</I>&gt;<i> ------
+</I>&gt;<i> Networks will be a top level noun, along with servers and storage. Users
+</I>&gt;<i> will link a server to a network to specify that the server is attached to
+</I>&gt;<i> that network. There will be one special network presenting the public
+</I>&gt;<i> internet, and users can create additional private networks for themselves.
+</I>&gt;<i>
+</I>
+Networks and storage can attach to networks remember. +1 for generic links.
+
+Internet could be a well known UUID, but may be better not to specify as
+there are different &quot;types&quot; of internet (fast, slow, filtered, unfiltered,
+etc.). I know this was something I suggested myself but i'm not sure it
+pulls its weight... maybe it does... at least it should be optional (think
+offline setups).
+
+
+&gt;<i> The open questions are:
+</I>&gt;<i>
+</I>&gt;<i> Public static IPs
+</I>&gt;<i> -----------------
+</I>&gt;<i> On all public clouds, customers can purchase static IPs (e.g. Amazon
+</I>&gt;<i> Elastic
+</I>&gt;<i> IP) for uses where a constant server location is helpful (e.g. typical web
+</I>&gt;<i> hosting).
+</I>&gt;<i>
+</I>&gt;<i> We'll need a means for customers to create, list and destroy the public
+</I>&gt;<i> static IPs which they own.
+</I>&gt;<i>
+</I>&gt;<i> Two options:
+</I>&gt;<i> a) Public static IPs are first-class nouns
+</I>&gt;<i> b) They are listed inside the public internet network
+</I>&gt;<i>
+</I>&gt;<i> I'd favour a), which is the case with most public clouds today.
+</I>&gt;<i>
+</I>
+Ok be sure to include IPv6 addresses though. Oh, and IPX/SPX since we've got
+an old novell server. And appletalk... you get the point. While we're there
+I guess we should make storage LUNs first class citizens too. How about
+compute peripherals?
+
+Obviously I'm joking - IPs belong to networks and thus should hang off
+networks. Need a &quot;type&quot; attribute for ipv4, ipv6, ipx/spx, etc.
+
+Active networks
+&gt;<i> ---------------
+</I>&gt;<i> At its most basic, a network should behave like a plain ethernet switch -
+</I>&gt;<i> it
+</I>&gt;<i> provides no services at all, and simply connects all the servers which
+</I>&gt;<i> attach to it. Servers are free to chose their own IP addresses, etc.
+</I>&gt;<i>
+</I>&gt;<i> There are a number of active services which are possible on a network:
+</I>&gt;<i> - Central DHCP server
+</I>&gt;<i> - Bridge to a physical VLAN (e.g. containing physical dedicated servers in
+</I>&gt;<i>  colocation with the cloud provider)
+</I>&gt;<i> - Load balancer between several web servers on a private network across to
+</I>&gt;<i> a
+</I>&gt;<i>  single IP on the public internet.
+</I>&gt;<i> - etc.
+</I>&gt;<i>
+</I>&gt;<i> Two options:
+</I>&gt;<i>
+</I>&gt;<i> a) The network object itself can optionally provide these. They are
+</I>&gt;<i>   configured using attributes and verbs on the network.
+</I>&gt;<i> b) There are separate 'appliance' objects which provide these services, and
+</I>&gt;<i>   are linked onto the network just as a server would be (e.g. a 'DHCP
+</I>&gt;<i>   server' appliance and or 'load balancer' appliance).
+</I>&gt;<i>
+</I>&gt;<i> a) feels lighter-weight, but I suspect b) is more powerful. As such the
+</I>&gt;<i> choice depends on how far OCCI wants to go down this route.
+</I>&gt;<i>
+</I>
+I'm happy with a combination... it makes sense to set &quot;dhcp: true&quot; on a
+network segment but it makes more sense to configure an advanced application
+level firewall (like a Netscaler
+VPX&lt;<A HREF="http://www.citrix.com/English/ps2/products/feature.asp?contentID=1689968">http://www.citrix.com/English/ps2/products/feature.asp?contentID=1689968</A>&gt;)
+as a compute resource. Bonus points for being able to supply the device
+configuration via OCCI (*cough*XML*cough*). Firewall rules should probably
+be associated with a specific network connection, which may be non-trivial
+but increasingly relevant/important (devices should have no access by
+default when introduced and anything from pinholes to application level
+firewalls applied thereafter).
+
+
+&gt;<i> Linking to a network
+</I>&gt;<i> --------------------
+</I>&gt;<i> Finally, there are a few attributes which can specified on the link when a
+</I>&gt;<i> server is linked to a network:
+</I>&gt;<i> - The physical interface on the server (nic:0, nic:1, etc.)
+</I>
+
+Definitely, but this should make sense for the device - your eth0 is my en0
+is his &quot;Local Area Connection&quot; and for network devices you have stuff like
+&quot;1/1&quot;. We don't care - add it as an attribute and forget about it.
+
+
+&gt;<i> - Port firewalling rules (e.g. connect server to the internet network, but
+</I>&gt;<i> only
+</I>&gt;<i>  allow port 80 inbound)
+</I>
+
+We don't need to specify it, but we should consider it something someone
+will have to implement in due course.
+
+
+&gt;<i> - IP firewalling rules (e.g. connect server to the private network, and
+</I>&gt;<i>  allow it to communicate on 192.168.0.0-23 but no others)
+</I>
+
+Ditto. This configuration could be arbitrarily complex (specifying HTTP
+verbs, URL regexps, etc.) and is probably device dependent at least until
+standardised. Yet another place where embedding/linking arbitrary content
+types will be required.
+
+
+&gt;<i> - Local DHCP (e.g. the server operating system is internally configured
+</I>&gt;<i>  to DHCP. I am connecting it to the public internet, and want it to appear
+</I>&gt;<i>  with my assigned public static IP. Please send a DHCP response with that
+</I>&gt;<i>  specific IP address).
+</I>&gt;<i>
+</I>
+Hmm... sounds unnecessary. Once you've assigned an IP to a server if you
+want to make life easier by offering it over DHCP then go right ahead... I
+don't see the use case otherwise.
+
+
+&gt;<i> I think that all of these are best implemented as attributes on the link.
+</I>&gt;<i>
+</I>
+Yup, and more.
+
+Sam
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090513/dce53321/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090513/dce53321/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000662.html">[occi-wg] Networks: attributes and verbs
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000669.html">[occi-wg] Networks: attributes and verbs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#666">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#666">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#666">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#666">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000666.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

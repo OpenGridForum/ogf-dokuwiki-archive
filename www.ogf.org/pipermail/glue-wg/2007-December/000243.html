@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2007-December/000243.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 14:01:31 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] Values with additional sematic meaning.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20Values%20with%20additional%20sematic%20meaning.&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000242.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000245.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] Values with additional sematic meaning.</H1>
+    <B>Paul Millar</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20Values%20with%20additional%20sematic%20meaning.&In-Reply-To="
+       TITLE="[glue-wg] Values with additional sematic meaning.">paul.millar at desy.de
+       </A><BR>
+    <I>Wed Dec  5 06:18:36 CST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000242.html">[glue-wg] [ogsa-wg] Nov 29 - Info Model call minutes
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000245.html">[glue-wg] Values with additional sematic meaning.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/date.html#243">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/thread.html#243">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/subject.html#243">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/author.html#243">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+One of the complaints I've heard from people is that GLUE schema doesn't have 
+a mechanism for knowing that certain results are invalid.  In my &quot;spare 
+time&quot;, I put together some material that might be of use here.
+
+Of course, this is just a first draft; comments gratefully appreciated.
+
+Cheers,
+
+Paul.
+
+PS.
+my thanks to Graeme Steward for his comments and suggestions.
+
+-------------
+
+GLUE proposal on values with additional semantic meaning.
+----
+
+
+Introduction
+---
+
+GLUE Schema provides a common method of providing information about a
+Grid such that specific knowledge of that Grid is not needed to
+appreciate its current state.
+
+The current GLUE schema assumes that all information is available and
+that any static information has been correctly configured.  This is not
+always true: for whatever reason, information may be temporary or more 
+permanently unavailable or some static information may be left unconfigured.
+
+These imply that some additional (semantic) meaning of values is
+needed.  This is most naturally accommodated by returning a special (or
+&quot;illegal&quot;) value: a value that should not occur during normal
+operation.
+
+This is already in practise; however it is not specified within GLUE, so 
+different implementations can choose different values.  Knowledge of whether 
+a particular value is valid then becomes information-provider specific, going 
+against the spirit of the GLUE Schema.
+
+This document aims to rationalises and standardises values that have some
+additional semantic meaning.  It is split into two further sections: use-cases
+and proposed values.
+
+
+Use-cases:
+---
+
+Two scenarios are considered:
+
+Scenario 1. a static value has no (good) default value and has not
+been configured.
+
+Some static values have no good default value.  This may be because
+the configuration requires some knowledge of a site's configuration or
+for some other reason.  Whilst this value should be altered to reflect
+the site's configuration this might not happen[1], so exposing the
+application's default configuration.  Given there is no (good) default
+value, what should this value be?
+
+[1] We note the available of tools such as YAIM to assist in
+configuration of EGEE sites, which will reduce the likelihood of this
+scenario.  However, 1. not all sites are configured with YAIM, 2. not
+all Grids have a tool like YAIM, 3. Upgrading components may result in
+changes in configuration, so increasing the likelihood of this
+problem.
+
+
+
+Scenario 2. information provider is unable to obtain a dynamic value.
+
+A dynamic value is provided by an information provider by querying the
+Grid resource.  This query will use a number of ancillary resources
+(e.g., DNS, network hardware) that might fail; the service itself
+might fail.  Given a lack of information[2], what value should the
+information provider return?
+
+[2] If caching of previous results is available, temporary failures
+may be mitigated.  However, it is an open question for how long any
+such cached information should be permitted.
+
+
+Proposed illegal values:
+---
+
+This section describes a number of values that can be represented
+within a given address space (e.g., UTF-8, Integers, FQDNs, IPv4
+address space).
+
+With Scenario 1, configuration SHOULD use these default values
+wherever possible; likewise, dynamic information provides SHOULD use
+these default values whenever they wish to indicate a problem
+gathering information.
+
+The semantic meaning SHOULD BE limited to simply that the value is
+invalid and is not to be relied upon.  A client using this information
+SHOULD NOT draw any conclusions as to why the information is invalid
+from the information presented here.
+
+
+1. All GLUE-specific enumerated types:
+	SHOULD use the designated &quot;unknown&quot; value.
+
+  Rational:
+
+  If a value is unknown, it should be specified as such.  Either this
+  or the GLUE schema clearly state that, should some values be unknown
+  that the whole entry should not be reported.
+
+
+2. Simple strings (UTF-8): SHOULD use &quot;ILLEGALVALUE&quot;.
+
+  Rational:
+ 
+  Upper-case letters make it easier to spot and a single word avoids
+  white-space issues.
+
+  This is a default option for strings that have no widely-known
+  structure.  If a value is from a more restrictive sub-type
+  (e.g. FQDNs), then the rules for more restrictive form SHOULD be
+  used.
+
+
+3. Fully qualified domain names: SHOULD use a hostname ending
+	&quot;invalid.&quot; for scenario 2. and either &quot;example.org.&quot;
+	or &quot;example.com.&quot; for scenario 1.
+
+  Rational:
+
+  RFC 2606 reserves the &quot;.invalid&quot; TLD as always invalid and clearly
+  so.  For dynamic information a value of &quot;unknown.invalid.&quot; MAY be
+  used.  If an alternative is used, it SHOULD use the TLD &quot;.invalid&quot;.
+
+  RFC 2606 also defines the &quot;.example&quot; TLD and two second-level
+  domains: &quot;example.org&quot; and &quot;example.com&quot;.  These domains have the
+  advantage of ending with a recognisable TLD, so looking like a DNS
+  name.  Default configuration SHOULD use DNS names that end
+  &quot;.example.com.&quot; or &quot;.example.org.&quot;
+
+  The final dot at the end of the DNS name SHOULD be included as it
+  prevents local DNS expansion.
+
+
+4. IPv4 addr: SHOULD use 192.0.2.250
+
+  Rational:
+
+  There are several portions of IPv4 addresses that should not appear
+  on a network, but none that are documented as being illegal.  Using
+  an arbitrary address leads to the risk of side-effects.
+
+  The best option is an IP address from the 192.0.2.0/24 subnet.  This
+  subnet is defined in RFC 3330 as &quot;TEST-NET&quot; for use in documentation
+  and example code.  Although any IPv4 address from 192.0.2.0/24 MAY
+  be used, the above address SHOULD use for consistency.
+
+
+5. IPv6 addr: SHOULD use 2001:DB8::FFFF
+
+  Rational:
+
+  There is no documented illegal IPv6 address.  RFC 3849 reserves the
+  address prefix 2001:DB8::/32 for documentation.  For consistency,
+  the address SHOULD BE the one noted above.
+
+
+6. Counting/Natural numbers:
+	SHOULD use 0
+
+  Rational:
+
+  Counting- (also known as Natural-) numbers exclude the number zero,
+  so information provider SHOULD use this value to indicate an illegal
+  value.
+
+
+7. Integers:
+	SHOULD use MAXINT (maximum value representable in the domain).
+		For int32 this is 2,147,483,647
+		 &quot;  uint32 this is 4,294,967,295
+		 &quot;  int64 this is 9,223,372,036,854,775,807
+		 &quot;  uint64 this is 18,446,744,073,709,551,615
+
+  Rational:
+
+  For non-negative integers, all numbers expressible within the
+  encoding (int32/uint32/etc...) are valid so there is no safe choice.
+  Although any value may be chosen, the value least likely to be
+  encountered in any given domain is that domain's maximum value.
+
+  If an unsigned integer is encoded as a signed integer, it is
+  possible to use negative numbers safely.  However, these numbers
+  will be unrepresentable if the number is stored as an unsigned
+  integer.
+
+  For values that might be a positive, zero or a negative integer, all
+  numbers expressible within the encoding (unsigned int) are valid so
+  there is no safe choice.  For consistency, the MAXINT value SHOULD
+  be used.
+
+  Information providers SHOULD NOT attempt to conveying further
+  semantic distinction by using more than one illegal number.
+
+
+8. Filenames:
+	SHOULD use &quot;ILLEGALPATH&quot;.
+
+  Rational:
+
+  As with the simple string, a single upper-case word is recommended.
+
+
+9. Uniform Resource Identifier (URI): schema-specific
+
+  Rational:
+
+  RFC 3986 defines URIs as a &quot;federated and extensible naming system.&quot;
+  All URIs start with a schema-name part and no schema-name has been
+  reserved for illegal or example values.  For any given URI schema,
+  it may be possible to define an illegal value within that
+  name-space.  If a value has only one valid schema, the illegal value
+  should be taken from that schema.  If several schemata are possible,
+  one should be chosen.
+
+  For schemata that include a reference to an Internet host
+  (e.g. http, httpg, mailto), an illegal value SHOULD be derived by
+  using an illegal FQDN (see above).
+
+  For other schemata, some element should indicate that the value is
+  illegal.  This is subject to further work.
+
+
+10. X509 Distinguished Names:
+	SHOULD include a RDN of CN=ILLEGALUSER
+
+  Rational:
+
+  X509 uses a X500 namespace, represented as several RDNs concatinated
+  by commas.  The final RDN is usually a single common name (CN).
+
+  It is possible for more than one CN to be present, allowing
+  inclusion of additional sematic meaning.  This is outwith the scope
+  of the document.
+
+
+
+Definition of words:
+---
+
+The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;,
+&quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this
+document are meant as described in RFC 2119.  A brief summary is given
+here.
+
+
+1. MUST (or &quot;REQUIRED&quot; or &quot;SHALL&quot;) means that no deviation is allowed
+   from conforming software.
+
+2. MUST NOT (or &quot;SHALL NOT&quot;) means complete prohibition of this
+   behaviour with conforming software.
+
+3. SHOULD (or &quot;RECOMMENDED&quot;) means that there may be reasons why
+   conforming software does not to adopt this behaviour, but all the
+   effects of an alternative behaviour must be understood and
+   considered before choosing a different course.
+
+4. SHOULD NOT (or &quot;NOT RECOMMENDED&quot;) means that there may be reasons
+   why conforming software adopts this behaviour, but all the
+   effects of an alternative behaviour must be understood and
+   considered before choosing a different course.
+
+5. MAY (or &quot;OPTIONAL&quot;) means an item is completely optional.
+
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000242.html">[glue-wg] [ogsa-wg] Nov 29 - Info Model call minutes
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000245.html">[glue-wg] Values with additional sematic meaning.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/date.html#243">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/thread.html#243">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/subject.html#243">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/author.html#243">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2007-December/000243.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 14:01:32 GMT -->
+</html>

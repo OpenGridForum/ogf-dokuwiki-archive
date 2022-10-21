@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/jsdl-wg/2008-August/001095.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 14:20:16 GMT -->
+<HEAD>
+   <TITLE> [jsdl-wg] Parameter Sweep new artefact
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:jsdl-wg%40ogf.org?Subject=%5Bjsdl-wg%5D%20Parameter%20Sweep%20new%20artefact&In-Reply-To=48AD65A4.30704%40manchester.ac.uk">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/jsdl-wg/2008-August/001094.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/jsdl-wg/2008-August/001096.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[jsdl-wg] Parameter Sweep new artefact</H1>
+    <B>Michel Drescher</B> 
+    <A HREF="mailto:jsdl-wg%40ogf.org?Subject=%5Bjsdl-wg%5D%20Parameter%20Sweep%20new%20artefact&In-Reply-To=48AD65A4.30704%40manchester.ac.uk"
+       TITLE="[jsdl-wg] Parameter Sweep new artefact">Michel.Drescher at uk.fujitsu.com
+       </A><BR>
+    <I>Thu Aug 21 08:16:17 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/jsdl-wg/2008-August/001094.html">[jsdl-wg] Parameter Sweep new artefact
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/jsdl-wg/2008-August/001096.html">[jsdl-wg] ParameterSweep draft 15
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/jsdl-wg/2008-August/date.html#1095">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/jsdl-wg/2008-August/thread.html#1095">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/jsdl-wg/2008-August/subject.html#1095">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/jsdl-wg/2008-August/author.html#1095">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Donal,
+
+I had thought about this and personally intentionally discarded the  
+argument of &quot;ugliness&quot; - XML documents are per se ugly. ;-)
+
+But you definitely have a point in validating becomes difficult.
+
+Therefore I join forces with you, and define the Document in XML  
+Schema as follows:
+
+---------- SNIP ---------- SNIP ---------- SNIP ---------- SNIP  
+----------
+   &lt;xsd:element name=&quot;NamespaceBinding&quot;&gt;
+     &lt;xsd:complexType&gt;
+       &lt;xsd:attribute name=&quot;ns&quot; type=&quot;xsd:anyURI&quot; use=&quot;required&quot;/&gt;
+       &lt;xsd:attribute name=&quot;prefix&quot; type=&quot;xsd:NCName&quot; use=&quot;required&quot; /&gt;
+     &lt;/xsd:complexType&gt;
+   &lt;/xsd:element&gt;
+
+   &lt;xsd:element name=&quot;DocumentNode&quot; substitutionGroup=&quot;sweep:Parameter&quot;&gt;
+     &lt;xsd:complexType&gt;
+       &lt;xsd:sequence&gt;
+         &lt;xsd:element ref=&quot;sweep:NamespaceBinding&quot; minOccurs=&quot;1&quot;  
+maxOccurs=&quot;unbounded&quot; /&gt;
+         &lt;xsd:element name=&quot;Match&quot; type=&quot;xsd:string&quot; /&gt;
+       &lt;/xsd:sequence&gt;
+     &lt;/xsd:complexType&gt;
+   &lt;/xsd:element&gt;
+---------- SNIP ---------- SNIP ---------- SNIP ---------- SNIP  
+----------
+
+The example therefore would change as follows:
+
+---------- SNIP ---------- SNIP ---------- SNIP ---------- SNIP  
+----------
+&lt;sweep:DocumentNode&gt;
+     &lt;sweep:NamespaceBinding ns=&quot;<A HREF="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">http://schemas.ggf.org/jsdl/2005/11/jsdl-posix</A> 
+&quot; prefix=&quot;foo&quot; /&gt;
+     &lt;sweep:NamespaceBinding ns=&quot;<A HREF="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">http://schemas.ggf.org/jsdl/2005/11/jsdl-posix</A> 
+&quot; prefix=&quot;bar&quot; /&gt;
+     &lt;sweep:Match&gt;//foo:POSIXApplication/bar:Argument[4]&lt;/sweep:Match&gt;
+&lt;/sweep:DocumentNode&gt;
+---------- SNIP ---------- SNIP ---------- SNIP ---------- SNIP  
+----------
+
+Cheers,
+Michel
+
+On 21 Aug 2008, at 13:55, Donal K. Fellows wrote:
+
+&gt;<i> Michel Drescher wrote:
+</I>&gt;&gt;<i> The following is a brief example how the DocumentNode element would  
+</I>&gt;&gt;<i> be  used in a Sweep:
+</I>&gt;&gt;<i> &lt;sweep:DocumentNode
+</I>&gt;&gt;<i>         mapping=&quot;<A HREF="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">http://schemas.ggf.org/jsdl/2005/11/jsdl-posix</A> foo <A HREF="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">http://schemas.ggf.org/jsdl/2005/11/jsdl-posix</A> 
+</I>&gt;&gt;<i>    bar&quot;&gt;
+</I>&gt;&gt;<i>     //foo:POSIXApplication/bar:Argument[4]
+</I>&gt;&gt;<i> &lt;sweep:DocumentNode&gt;
+</I>&gt;&gt;<i> Note that the example is quite artificial as it binds the same   
+</I>&gt;&gt;<i> namespace to two different prefixes. Nonetheless, it is a valid  
+</I>&gt;&gt;<i> example.
+</I>&gt;<i>
+</I>&gt;<i> For myself, I'd not use a list of strings in a mapping attribute  
+</I>&gt;<i> because
+</I>&gt;<i> that's not just awkward to validate, but also ugly! Instead I'd go  
+</I>&gt;<i> with:
+</I>&gt;<i>
+</I>&gt;<i>  &lt;sweep:DocumentNode&gt;
+</I>&gt;<i>    &lt;sweep:Map uri=&quot;<A HREF="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix"">http://schemas.ggf.org/jsdl/2005/11/jsdl-posix&quot;</A>
+</I>&gt;<i>        prefix=&quot;foo&quot;/&gt;
+</I>&gt;<i>    &lt;sweep:Map uri=&quot;<A HREF="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix"">http://schemas.ggf.org/jsdl/2005/11/jsdl-posix&quot;</A>
+</I>&gt;<i>        prefix=&quot;bar&quot;/&gt;
+</I>&gt;<i>    &lt;sweep:Match&gt;//foo:POSIXApplication/bar:Argument[4]&lt;/sweep:Match&gt;
+</I>&gt;<i>  &lt;/sweep:DocumentNode&gt;
+</I>&gt;<i>
+</I>&gt;<i> I suppose this would be a good point to note that the prefixes for a
+</I>&gt;<i> particular group of Map terms would need to be unique. The scope of  
+</I>&gt;<i> the
+</I>&gt;<i> uniqueness is really tight though, so I've no problem with it. But  
+</I>&gt;<i> this
+</I>&gt;<i> is all just my take on things. (Gah! The W3C really ought to do a  
+</I>&gt;<i> way to
+</I>&gt;<i> embed XPath in XML without all this crud, but that's outside the scope
+</I>&gt;<i> of JSDL-WG for sure, and of OGF too...)
+</I>&gt;<i>
+</I>&gt;<i> Donal.
+</I>
+--
+Michel Drescher
+Fujitsu Laboratories of Europe, Ltd.
+Hayes Park Central
+Hayes End Road
+Hayes, Middlesex UB4 8FE
+Reg. No. 4153469
+
++44 20 8606 4834
+<A HREF="http://www.ogf.org/mailman/listinfo/jsdl-wg">Michel.Drescher at uk.fujitsu.com</A>
+
+
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/jsdl-wg/2008-August/001094.html">[jsdl-wg] Parameter Sweep new artefact
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/jsdl-wg/2008-August/001096.html">[jsdl-wg] ParameterSweep draft 15
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/jsdl-wg/2008-August/date.html#1095">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/jsdl-wg/2008-August/thread.html#1095">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/jsdl-wg/2008-August/subject.html#1095">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/jsdl-wg/2008-August/author.html#1095">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/jsdl-wg">More information about the jsdl-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/jsdl-wg/2008-August/001095.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 14:20:16 GMT -->
+</html>

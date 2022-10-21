@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000597.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Simple JSON rendering for OCCI
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Simple%20JSON%20rendering%20for%20OCCI&In-Reply-To=936729D3-49A7-4E4C-BF71-52EC715CDAB7%40Sun.COM">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000680.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000569.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Simple JSON rendering for OCCI</H1>
+    <B>M. David Peterson</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Simple%20JSON%20rendering%20for%20OCCI&In-Reply-To=936729D3-49A7-4E4C-BF71-52EC715CDAB7%40Sun.COM"
+       TITLE="[occi-wg] Simple JSON rendering for OCCI">xmlhacker at gmail.com
+       </A><BR>
+    <I>Tue May 12 17:32:12 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000680.html">[occi-wg] Simple JSON rendering for OCCI -deployment	configurations
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000569.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#597">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#597">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#597">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#597">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, May 12, 2009 at 2:23 PM, Tim Bray &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">Tim.Bray at sun.com</A>&gt; wrote:
+
+&gt;<i>
+</I>&gt;<i>  .NET, <A HREF="http://www.google.com/search?q=json%20.net">http://www.google.com/search?q=json%20.net</A>
+</I>&gt;<i>  turns up lots of stuff including from Microsoft's own Codeplex.
+</I>
+
+There's even native support for JSON inside of Silverlight[1] which for a
+company as XML-heavy as MSFT says quite a bit.
+
+Javascript/Python/Ruby, no problem.  PHP I have no first-hand info,
+&gt;<i> but since half the Ajax-heavy sites in the planet are PHP-backed, I
+</I>&gt;<i> can't imagine it's an issue.   -T
+</I>
+
+Yup.  At this stage of the game when to use JSON and when to use XML for
+data serialization comes down to some pretty basic rules:
+
+* If you're working with:
+
+    * Mixed content (e.g. this is &lt;i&gt;an example&lt;/i&gt; of mixed
+&lt;strong&gt;content&lt;/strong&gt;),
+    * Mixed vocabularies (e.g. &lt;foo xmlns=&quot;<A HREF="http://example.com/foo"">http://example.com/foo&quot;</A>
+xmlns:bar=&quot;<A HREF="http://example.com/foo/bar"">http://example.com/foo/bar&quot;</A>&gt;&lt;bar:baz/&gt;&lt;/foo&gt;)
+    * Data which requires schema-based validation (e.g.
+&lt;html&gt;&lt;body&gt;&lt;head&gt;&lt;title&gt;This is illegal&lt;/title&gt;&lt;/head&gt;&lt;/body&gt;&lt;/html&gt;)
+
+...  you're only option is XML.
+
+* If you're working with:
+
+    * Structured data (e.g. { name: &quot;foo&quot;, bar: &quot;Yes please!&quot; } )
+    * Data from one or more sources that can happily coexist within a single
+namespace (e.g. { name: &quot;foo&quot;, bar: &quot;Yes please!&quot;, baz: [1, 2, 3] } )
+    * Data that doesn't require schema-based validation (e.g. { baz: [1, 2,
+3], bar: &quot;Yes please!&quot;, name: &quot;foo&quot; } )
+
+Then use the format that is easier to work with from a developers
+perspective for the use case at hand.  In most cases that means JSON, at
+least from a web development perspective, as you tend to be working directly
+with the data as is w/o need for further filtering and/or transformation. In
+/some/ cases that means XML as it /does/ require further filtering and/or
+transformation into something else.
+
+For the record, as big of a believer I am in the fact that XSLT actually
+/does/ cure cancer, from my own perspective when you're not required to use
+XML for the reasons mentioned above and yet you choose to just because it
+can easily be transformed into something else via XSLT you're making the
+wrong decision. Use JSON and if you find yourself in a situation where you
+actually need the power of XSLT to transform and/or filter the data
+represented by the JSON object, write a recursive function that converts the
+JSON object into a DOM object to then transform and/or filter it as you best
+see fit.
+
+Just my two cents.
+
+[1]
+<A HREF="http://msdn.microsoft.com/en-us/library/system.runtime.serialization.json(VS.95">http://msdn.microsoft.com/en-us/library/system.runtime.serialization.json(VS.95</A>).aspx
+
+
+-- 
+/M:D
+
+M. David Peterson
+Co-Founder &amp; Chief Architect, 3rd&amp;Urban, LLC
+Email: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">m.david at 3rdandUrban.com</A> | <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">m.david at amp.fm</A>
+Mobile: (206) 999-0588
+<A HREF="http://3rdandurban.com/">http://3rdandUrban.com</A> | <A HREF="http://amp.fm/">http://amp.fm</A> |
+<A HREF="http://broadcast.oreilly.com/m-david-peterson/">http://broadcast.oreilly.com/m-david-peterson/</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090512/d948126a/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090512/d948126a/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000680.html">[occi-wg] Simple JSON rendering for OCCI -deployment	configurations
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000569.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#597">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#597">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#597">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#597">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000597.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000370.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Extraction of requirements
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Extraction%20of%20requirements&In-Reply-To=20090430152249.GA29113%40alpha.arachsys.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000373.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Extraction of requirements</H1>
+    <B>Edmonds, AndrewX</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Extraction%20of%20requirements&In-Reply-To=20090430152249.GA29113%40alpha.arachsys.com"
+       TITLE="[occi-wg] Extraction of requirements">andrewx.edmonds at intel.com
+       </A><BR>
+    <I>Fri May  1 03:33:11 CDT 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000373.html">[occi-wg] Extraction of requirements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#370">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#370">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#370">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#370">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Very interesting and a healthy dose of reality :-)
+A question - if VMs are just processes (yes KVM ;-)) then can't I get close to the 1st two rules noted using cpulimit* (for CPU) and ulimit (for memory)?
+
+Yes you are right these types of rules are quite dependent on hypervisor implementations, therefore as you say, vendor extensions could be the initial way to support such functionality. Nevertheless I think we should accommodate such scaling rules as I can only imagine the flexibility of hypervisors increasing and improving over time.
+
+Andy
+
+*cpulimit: at least on a linux type system, cores show themselves as CPUs therefore my maximum cpu utilisation on a machine with 4 cores is 400%. I can limit a KVM process to one cpu artificially by setting cpulimit to only allow 100% CPU utilisation (100/400 = 25%, 25% of a 4 core/cpu machine is 1). Now limited, I can rebind at runtime the cpulimit process to 200% (50%, 2 core/cpu) and in doing so artificially give another cpu to a VM. This approach is not &quot;pure&quot; but shows that runtime adjustment of CPU numbers is possible.
+
+-----Original Message-----
+From: Richard Davies [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">richard.davies at elastichosts.com</A>]
+Sent: 30 April 2009 16:23
+To: Edmonds, AndrewX
+Cc: Ignacio Martin Llorente; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+Subject: Re: [occi-wg] Extraction of requirements
+
+&gt;<i> Would be interesting to hear from either Richard or Chris does it add
+</I>&gt;<i> value to be able to declare vertical scaling rules a priori as well as
+</I>&gt;<i> having the ability to change parameters at runtime - another valuable
+</I>&gt;<i> piece of functionality in any IaaS interface.
+</I>
+Short answer - fixed parameters are generally sufficient in an IaaS API:
+
+- For a single server, different technical aspects have very different
+  scaling behaviours. With typical operating systems many of these changes
+  (mem, cpu, disk) require a reboot, so there is no gain in defining scaling
+  rules for those rather than having the user specify the new parameters
+  when they reboot. Network is the exception, but is complex enough that I
+  think we're looking at vendor extensions here.
+
+- For multiple servers, there is scope to define scaling rules for all
+  dimensions in terms of when additional server instances should be added.
+  However, this is typically done above the IaaS API by management software
+  such as RightScale.
+
+&gt;<i> For a machine:
+</I>&gt;<i> - Set memory utilisation to 512MB but allow to grow to 1GB if demand
+</I>&gt;<i> exceeds minimum capacity
+</I>
+Very hard to implement with typical virtualization platforms and operating
+systems - e.g. Windows would require a reboot to notice that additional
+physical RAM is available.
+
+In theory this could be implemented on a running server with something like
+the KVM / VMware ESX balloon driver. In practise ElasticHosts and others do
+not do this - users reboot their servers to change their total RAM.
+
+&gt;<i> - Set number of CPUs to 2 but allow to grow to 4 if demand exceeds
+</I>&gt;<i> minimum capacity
+</I>
+Even harder to implement. I can't think of a common server OS which supports
+changing the number of CPU cores at runtime without a reboot.
+
+However, changing the priority of the virtual machine versus others on the
+same virtualization host is practical whilst it is running, without any
+modification or reboot of the contained OS.
+
+&gt;<i> - Set disk space to 5GB but allow to grow to 10GB if demand exceeds
+</I>&gt;<i> minimum capacity
+</I>
+This would make sense if storage were provided in terms of a quota for
+files, however we (and most other IaaS) provide &quot;disks&quot; - a block device
+which the customer partitions and formats. Here again, an increase in
+storage means repartitioning and hence typically a reboot.
+
+&gt;<i> - Set network bandwidth to 10GB/s but allow to grow to 20GB/s if
+</I>&gt;<i> demand exceeds minimum capacity
+</I>
+This is the case in which vertical scaling rules are useful - if a customer
+has bought a 10Mbps pipe with 50GB of transfer then what should happen when
+their website is slashdotted?
+
+ElasticHosts current algorithm is to always give all customers the maximum
+available burst capacity (typically 100Mbps shared pipe), but to email
+customers and then cut their link when they exceed their prepaid transfer
+quota.
+
+This isn't ideal, and I can easily imagine customers wanting to specify more
+complicated rules (e.g. email when they hit 90% of transfer quota, then
+throttle bandwidth for last 10%). Unfortunately the range of possible
+policies is so great that I think we'll looking at vendor extensions rather
+than the core API here.
+
+Cheers,
+
+Richard.
+-------------------------------------------------------------
+Intel Ireland Limited (Branch)
+Collinstown Industrial Park, Leixlip, County Kildare, Ireland
+Registered Number: E902934
+
+This e-mail and any attachments may contain confidential material for
+the sole use of the intended recipient(s). Any review or distribution
+by others is strictly prohibited. If you are not the intended
+recipient, please contact the sender and delete all copies.
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000373.html">[occi-wg] Extraction of requirements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#370">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#370">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#370">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#370">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000370.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

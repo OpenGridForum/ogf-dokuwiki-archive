@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000476.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Syntax for attributes on links
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Syntax%20for%20attributes%20on%20links&In-Reply-To=21606dcf0905071453r5de19c1fhd193c4520a505483%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000472.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000480.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Syntax for attributes on links</H1>
+    <B>Benjamin Black</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Syntax%20for%20attributes%20on%20links&In-Reply-To=21606dcf0905071453r5de19c1fhd193c4520a505483%40mail.gmail.com"
+       TITLE="[occi-wg] Syntax for attributes on links">b at b3k.us
+       </A><BR>
+    <I>Thu May  7 17:27:06 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000472.html">[occi-wg] Syntax for attributes on links
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000480.html">[occi-wg] Syntax for attributes on links
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#476">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#476">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#476">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#476">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Using HTTP URIs and making things globally unique are orthogonal.  You are,
+again, assuming a specific implementation rather than describing the desired
+behavior.  You _could_ produce a system using HTTP URIs that were not
+consistent/unique/etc., just as you could produce a system based on UUIDs
+that changed as the infrastructure changed.  This is allegedly a RESTful
+API, please use the techniques of a good RESTful API, like embedding HTTP
+URIs, and describe the construction and semantics of the pieces as needed.
+
+Now, will someone please explain why, exactly, we are not basing this work
+on the Sun API?  I've asked several times now and have either been ignored
+or gotten hand waving.
+
+
+Ben
+
+On Thu, May 7, 2009 at 2:53 PM, Sam Johnston &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">samj at samj.net</A>&gt; wrote:
+
+&gt;<i> On 5/7/09, Benjamin Black &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">b at b3k.us</A>&gt; wrote:
+</I>&gt;<i> &gt; On Thu, May 7, 2009 at 8:52 AM, Sam Johnston &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">samj at samj.net</A>&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Good question and good to see people payong close attentipn. We know
+</I>&gt;<i> &gt;&gt; we can find the resources at the root of the entry point so I'm more
+</I>&gt;<i> &gt;&gt; inclined to use the href as an internal pointer than confuse things
+</I>&gt;<i> &gt;&gt; when there are multiple servers potentially talking about the same
+</I>&gt;<i> &gt;&gt; resources. we can use 3xx redirects as a kind of resolution system if
+</I>&gt;<i> &gt;&gt; need be too.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Sam on iPhone
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I wish I could assume you were joking here.  Of course they should be
+</I>&gt;<i> HTTP
+</I>&gt;<i> &gt; URIs!  The confusion in the multi-provider case would come _because_ we
+</I>&gt;<i> did
+</I>&gt;<i> &gt; not specify a single entry point.  The logic of exposing some internal
+</I>&gt;<i> &gt; reference and then using redirects to paper over by translating to an
+</I>&gt;<i> &gt; external reference eludes me.
+</I>&gt;<i>
+</I>&gt;<i> Actually it makes a lot of sense. The IDs are UUID based URNs and if
+</I>&gt;<i> we have a feed we want to be able to link resources together without
+</I>&gt;<i> having to futz with URLs. The entry point will either have a resource
+</I>&gt;<i> it gave you or know where to find it anyway so resolution is a
+</I>&gt;<i> non-problem.
+</I>&gt;<i>
+</I>&gt;<i> Say we design a system where individual
+</I>&gt;<i> workstations/servers/clusters/etc each implement OCCI and have a
+</I>&gt;<i> common network resource then we definitely don't want to get different
+</I>&gt;<i> pointers from each of them. Same applies for resources that move (e.g.
+</I>&gt;<i> Live migrations), which would likely be the primary use case dr said
+</I>&gt;<i> redirects.
+</I>&gt;<i>
+</I>&gt;<i> Sam
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090507/60c8ab57/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090507/60c8ab57/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000472.html">[occi-wg] Syntax for attributes on links
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000480.html">[occi-wg] Syntax for attributes on links
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#476">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#476">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#476">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#476">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000476.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

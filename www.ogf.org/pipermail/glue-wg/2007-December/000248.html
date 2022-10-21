@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2007-December/000248.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:32 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] Some questions... [WAS: choosing XML Document structure	for GLUE 2.0 rendering]
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20Some%20questions...%20%5BWAS%3A%20choosing%20XML%20Document%20structure%0A%09for%20GLUE%202.0%20rendering%5D&In-Reply-To=475E2395.1080601%40cnaf.infn.it">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000256.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000250.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] Some questions... [WAS: choosing XML Document structure	for GLUE 2.0 rendering]</H1>
+    <B>Paul Millar</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20Some%20questions...%20%5BWAS%3A%20choosing%20XML%20Document%20structure%0A%09for%20GLUE%202.0%20rendering%5D&In-Reply-To=475E2395.1080601%40cnaf.infn.it"
+       TITLE="[glue-wg] Some questions... [WAS: choosing XML Document structure	for GLUE 2.0 rendering]">paul.millar at desy.de
+       </A><BR>
+    <I>Tue Dec 11 09:34:57 CST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000256.html">[glue-wg] [reminder vote] choosing XML Document structure for	GLUE 2.0 rendering
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000250.html">[glue-wg] Some questions... [WAS: choosing XML Document structure for GLUE 2.0 rendering]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/date.html#248">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/thread.html#248">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/subject.html#248">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/author.html#248">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Sergio, rest-of-list,
+
+On Tuesday 11 December 2007 06:43:49 Sergio Andreozzi wrote:
+&gt;<i> &gt; <A HREF="http://www.doodle.ch/participation.html?pollId=sg4v8qvy3h4h6d9t">http://www.doodle.ch/participation.html?pollId=sg4v8qvy3h4h6d9t</A>
+</I>&gt;<i>
+</I>&gt;<i> this is a gentle reminder for the voting about XML document structure.
+</I>&gt;<i> Please, express your opinion by December, 12. If you choose for option
+</I>&gt;<i> 3. or 6. you are invited to send your alternative as well.
+</I>
+Sorry I'm new to this discussion, but the current proposals don't make much 
+sense to me.  Looking at the discussion[1] further confuses me.  At the risk 
+of disrupting this process, I'd like to ask some questions...
+
+[1] 
+<A HREF="http://forge.ogf.org/sf/wiki/do/viewPage/projects.glue-wg/wiki/GLUE2XMLSchema">http://forge.ogf.org/sf/wiki/do/viewPage/projects.glue-wg/wiki/GLUE2XMLSchema</A>
+
+First, I see that one of the rules is ID is an element.  Why is this?  It 
+seems we're reinventing the wheel here: XML already defines the concept of an 
+ID (see [2] and [3]), which is used in related standards ([4], [5], etc...).  
+Why not just use this?
+
+[2]   <A HREF="http://www.w3.org/TR/2006/REC-xml11-20060816/#sec-attribute-types">http://www.w3.org/TR/2006/REC-xml11-20060816/#sec-attribute-types</A>
+[3]   <A HREF="http://www.w3.org/TR/2005/REC-xml-id-20050909">http://www.w3.org/TR/2005/REC-xml-id-20050909</A>
+[4]   <A HREF="http://www.w3.org/TR/1999/REC-xslt-19991116">http://www.w3.org/TR/1999/REC-xslt-19991116</A>
+[5]   <A HREF="http://www.w3.org/TR/1999/REC-xpath-19991116">http://www.w3.org/TR/1999/REC-xpath-19991116</A>
+
+Is the plan to render (nearly) everything as elements rather than attributes?  
+GLUE has many items have &quot;required&quot; (1) or &quot;optional&quot; (0..1) cardinality and 
+contain no further markup, so I feel they would, for the most part, be better 
+rendered as an XML attributes.
+
+Is the proposed GLUE/XML intended to be used by services when they publish 
+information about themselves for site-level aggregate?  If so, the current 
+proposal (the rule that One-to-Many relationships are represented as 
+parent-child) looks as if a Service must know site-level information (such as 
+AdminDomain).  This is undesirable for data normalisation.
+
+As an alternative, suppose One-to-Many relationships be represented as either 
+an XML element hierarchy or (for top-level elements, only) as an attribute 
+(&quot;parent&quot;, say) that has type URI and contains the URI of the containing 
+element's ID.  A service could publish its information and only have to know 
+the parent element's URI.
+
+Finally (just as a general comment) my impression is that there is too great 
+an emphasis on XML Schema; because of this, the GLUE/XML rendering appears 
+hampered by limitations of XSD and the rules are designed as if the XML is to 
+fit what XSD supports (e.g., the &quot;extensible enumerations&quot; section).  If so, 
+I feel this is &quot;putting the cart before the horse&quot;: I feel the XML should 
+convey precise and compact representation of the schema, whilst being easy to 
+parse and comprehend.  &quot;Hacks&quot; to support extensibility in the XSD, like 
+&lt;State&gt; vs &lt;RunningState&gt;, obfuscate the XML in favour of XML passing XSD 
+validation checks.
+
+(I'm in favour of providing a validation mechanism, but does the validation 
+needs to be strong?  If it's a choice between having a simple XML design that 
+can only be validated weakly via XSD or a complex XML that can be strongly 
+validated, I'd perfer the former.)
+
+Cheers,
+
+Paul.
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000256.html">[glue-wg] [reminder vote] choosing XML Document structure for	GLUE 2.0 rendering
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000250.html">[glue-wg] Some questions... [WAS: choosing XML Document structure for GLUE 2.0 rendering]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/date.html#248">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/thread.html#248">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/subject.html#248">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/author.html#248">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2007-December/000248.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:32 GMT -->
+</html>

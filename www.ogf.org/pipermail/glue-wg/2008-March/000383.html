@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000383.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] XSD aligned to draft 27
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20XSD%20aligned%20to%20draft%2027&In-Reply-To=47D8257F.2000801%40cnaf.infn.it">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000381.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000384.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] XSD aligned to draft 27</H1>
+    <B>Paul Millar</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20XSD%20aligned%20to%20draft%2027&In-Reply-To=47D8257F.2000801%40cnaf.infn.it"
+       TITLE="[glue-wg] XSD aligned to draft 27">paul.millar at desy.de
+       </A><BR>
+    <I>Thu Mar 13 08:51:49 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000381.html">[glue-wg] XSD aligned to draft 27
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000384.html">[glue-wg] XSD aligned to draft 27
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#383">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#383">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#383">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#383">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Sergio,
+
+On Wednesday 12 March 2008 19:48:31 Sergio Andreozzi wrote:
+&gt;<i> XSD for GLUE 2.0 - draft 27
+</I>&gt;<i> <A HREF="http://forge.cnaf.infn.it/plugins/scmsvn/viewcvs.php/glue/xml/schema/GLUE2.">http://forge.cnaf.infn.it/plugins/scmsvn/viewcvs.php/glue/xml/schema/GLUE2.</A>
+</I>&gt;<i>xsd?rev=1344&amp;root=omii-europe&amp;view=log
+</I>
+From a quick look, I spotted that the XSD defines a namespace:
+	xmlns:glue=&quot;<A HREF="http://glue2"/">http://GLUE2&quot;</A>
+
+To my mind, this is broken: it should be a URI with FQDN + path.  The path 
+should include the year and/or a version number, allowing some version 
+control.
+
+On a related note, we were going to discuss the XML binding with regard to 
+primary documents; but, I don't believe this discussion took place. 
+Discussing GLUE-2.0 &quot;abstract&quot; (independent of any binding) has taken 
+priority.
+
+My concern was that, with the current binding, all valid documents are 
+required to express the complete GLUE hierarchy.  The current XSD expresses 
+this by requiring documents have a &quot;Grid&quot; top-level element to be valid.
+
+This requirement does not come from XML and XSD.  Moreover, I believe that, by 
+GLUE-2.0/XML introducing this requirement,  an unnecessary burden will be 
+placed on the info-providers.  This will make implementing them harder, 
+require explicit configuration and so make the process needlessly more 
+fragile.
+
+It would also prevents the information being published into more than one 
+GLUE-based information system.
+
+As a specific proposal, I suggest that other elements be allowed as top-level 
+elements; for example, that a StorageService be a valid top-level element.  
+The primary document from a StorageService info-provider should have a 
+StorageService as its top-level element.
+
+i.e., just added:
+
+        &lt;element name=&quot;StorageService&quot; type=&quot;glue:StorageService_t&quot;/&gt;
+
+after the Grid one, near the beginning of the XSD.
+
+Cheers,
+
+Paul.
+
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000381.html">[glue-wg] XSD aligned to draft 27
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000384.html">[glue-wg] XSD aligned to draft 27
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#383">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#383">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#383">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#383">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000383.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+</html>

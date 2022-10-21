@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000807.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Incorporating units into OCCI
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Incorporating%20units%20into%20OCCI&In-Reply-To=4A1C1130.20308%40spmetric.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000797.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000808.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Incorporating units into OCCI</H1>
+    <B>Benjamin Black</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Incorporating%20units%20into%20OCCI&In-Reply-To=4A1C1130.20308%40spmetric.com"
+       TITLE="[occi-wg] Incorporating units into OCCI">b at b3k.us
+       </A><BR>
+    <I>Tue May 26 17:32:40 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000797.html">[occi-wg] Incorporating units into OCCI
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000808.html">[occi-wg] Incorporating units into OCCI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#807">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#807">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#807">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#807">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ian,
+
+having recently attempted the task of translating seamlessly between XML
+-&gt;JSON-&gt;ruby hashes, i have a very low opinion of this sort of type
+declaration.  it makes moving between representations a bear and most
+commonly results in eliminating the unit-specifier and normalizing to a
+known base (see option 4 below).
+
+a 3rd option you did not mention is something like this:
+
+&lt;memory&gt;
+   &lt;size&gt;2&lt;/size&gt;
+   &lt;units&gt;GB&lt;/size&gt;
+&lt;/memory&gt;
+
+a 4th option, which i rather prefer since the units stuff tends to be
+relevant to and consumed by humans via UI rather than machines via API, is
+not to use units at all.
+
+&lt;memory&gt;2147483648&lt;/memory&gt;
+
+either of the above is far easier to transform to and from non-XML
+representations, in my experience, with the latter being zero effort.  a
+couple extra bytes won't harm us and we adhere to my first engineering rule:
+the best solution to a problem is not to have it in the first place.
+
+
+b
+
+On Tue, May 26, 2009 at 8:56 AM, Ian Stokes-Rees &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">ijstokes at spmetric.com</A>&gt;wrote:
+
+&gt;<i>  I finished my PhD thesis on a RESTful model for grid computing a few years
+</I>&gt;<i> ago.  I did some work on formalizing XML-based descriptors, including
+</I>&gt;<i> units/scaling.  You may find that some of the material in Appendix B and C
+</I>&gt;<i> is useful:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://crystal.harvard.edu/~ijstokes/thesis/RESTfulGrid-StokesRees-Thesis.pdf<http://crystal.harvard.edu/~ijstokes/thesis/RESTfulGrid-StokesRees-Thesis.pdf">http://crystal.harvard.edu/~ijstokes/thesis/RESTfulGrid-StokesRees-Thesis.pdf&lt;http://crystal.harvard.edu/%7Eijstokes/thesis/RESTfulGrid-StokesRees-Thesis.pdf</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> I envisioned two options: i) units were specified in attributes on an
+</I>&gt;<i> element:
+</I>&gt;<i>
+</I>&gt;<i> &lt;memory type=&quot;GB&quot;&gt; 2 &lt;/memory&gt;
+</I>&gt;<i>
+</I>&gt;<i> ii) units were specified in-line and needed to be parsed:
+</I>&gt;<i>
+</I>&gt;<i> &lt;memory&gt;  2 GB &lt;/memory&gt;
+</I>&gt;<i>
+</I>&gt;<i> At the time I felt that &quot;type&quot; provided a more generic modifier on a value
+</I>&gt;<i> than &quot;units&quot;, and would allow things like:
+</I>&gt;<i>
+</I>&gt;<i> &lt;start type=&quot;USDate&quot;&gt;5/21/2009&lt;/start&gt;
+</I>&gt;<i>
+</I>&gt;<i> or
+</I>&gt;<i>
+</I>&gt;<i> &lt;start type=&quot;EUDate&quot;&gt;21/5/2009&lt;/start&gt;
+</I>&gt;<i>
+</I>&gt;<i> I provide 5 sets of &quot;type&quot; modifiers: time, frequency, metric, binary,
+</I>&gt;<i> transfer.  No rocket science, but perhaps providing an cut-down portion of
+</I>&gt;<i> the schemas will be helpful, so I include them below.
+</I>&gt;<i>
+</I>&gt;<i> Ian
+</I>&gt;<i>
+</I>&gt;<i> &lt;xs:simpleType name=&quot;TimeTypeList&quot;&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;fs&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;ps&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;ns&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;us&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;ms&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;s&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;sec&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;second&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;min&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;minute&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;h&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;hr&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;hour&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;d&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;day&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;wk&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;week&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;mon&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;month&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;yr&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;year&quot;/&gt;
+</I>&gt;<i>
+</I>&gt;<i> &lt;xs:simpleType name=&quot;MetricTypeList&quot;&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;f&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;p&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;n&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;u&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;m&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;K&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;M&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;G&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;T&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;P&quot;/&gt;
+</I>&gt;<i>
+</I>&gt;<i> &lt;xs:simpleType name=&quot;FrequencyTypeList&quot;&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;Hz&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;KHz&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;MHz&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;GHz&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;THz&quot;/&gt;
+</I>&gt;<i>
+</I>&gt;<i> &lt;xs:simpleType name=&quot;BinaryTypeList&quot;&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;B&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;KB&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;MB&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;GB&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;TB&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;PB&quot;/&gt;
+</I>&gt;<i>
+</I>&gt;<i> &lt;xs:simpleType name=&quot;TransferTypeList&quot;&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;Kb/s&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;Mb/s&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;Gb/s&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;Tb/s&quot;/&gt;
+</I>&gt;<i> &lt;xs:enumeration value=&quot;Pb/s&quot;/&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> occi-wg mailing list
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090526/1ef59cde/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090526/1ef59cde/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000797.html">[occi-wg] Incorporating units into OCCI
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000808.html">[occi-wg] Incorporating units into OCCI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#807">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#807">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#807">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#807">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000807.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

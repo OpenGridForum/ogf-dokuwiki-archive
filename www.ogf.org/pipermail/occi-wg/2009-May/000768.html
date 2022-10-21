@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000768.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Is AtomPub already the HTTP of cloud computing?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Is%20AtomPub%20already%20the%20HTTP%20of%20cloud%20computing%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000767.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000769.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Is AtomPub already the HTTP of cloud computing?</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Is%20AtomPub%20already%20the%20HTTP%20of%20cloud%20computing%3F&In-Reply-To="
+       TITLE="[occi-wg] Is AtomPub already the HTTP of cloud computing?">samj at samj.net
+       </A><BR>
+    <I>Mon May 25 11:13:36 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000767.html">[occi-wg] Is OCCI the HTTP of Cloud Computing?
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000769.html">[occi-wg] Is HTTP the HTTP of cloud computing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#768">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#768">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#768">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#768">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Second post in the three-post series:
+Is AtomPub already the HTTP of cloud
+computing?&lt;<A HREF="http://samj.net/2009/05/is-atompub-already-http-of-cloud.html">http://samj.net/2009/05/is-atompub-already-http-of-cloud.html</A>&gt;A
+couple of weeks ago I asked Is OCCI the HTTP of cloud
+computing?&lt;<A HREF="http://samj.net/2009/05/is-occi-http-of-cloud-computing.html">http://samj.net/2009/05/is-occi-http-of-cloud-computing.html</A>&gt;I
+explained the limitations of HTTP in this context, which basically
+stem
+from the fact that the payloads it transfers are opaque. That's fine when
+they're [X]HTML because you can express links between resources within the
+resources themselves, but what about when they're some other format - like
+OVF describing a virtual machine as may well be the case for OCCI? If I want
+to link between a virtual machine and its network(s) and/or storage
+device(s) then I'm out of luck... I need to either find an existing
+meta-model or roll my own from scratch.
+
+That's where Atom (or more specifically, AtomPub) comes in... in the
+simplest sense it adds a light, RESTful XML layer to HTTP which you can
+extend as necessary. It provides for collections (a 'feed' of multiple
+resources or 'entries' in a single HTTP message) as well as a simple
+meta-model for linking between resources, categorising them, etc. It also
+gives some metadata relating to unique identifiers, authors/contributors,
+caching information, etc., much of which can be derived from HTTP (e.g. URL
+&lt;-&gt; Atom ID, Last-Modified &lt;-&gt; updated).
+
+Although it was designed with syndication in mind, it is a very good fit for
+creating APIs, as evidenced by its extensive use in:
+
+   - Google's GData &lt;<A HREF="http://code.google.com/apis/gdata/">http://code.google.com/apis/gdata/</A>&gt;
+   - Microsoft's Live
+Services&lt;<A HREF="http://www.25hoursaday.com/weblog/CommentView.aspx?guid=8c8b2311-96c9-41b9-badd-51e68d4ce995">http://www.25hoursaday.com/weblog/CommentView.aspx?guid=8c8b2311-96c9-41b9-badd-51e68d4ce995</A>&gt;
+   - IBM's Lotus
+Connections&lt;<A HREF="http://www.ibm.com/developerworks/lotus/library/connections-deploy-pt6/">http://www.ibm.com/developerworks/lotus/library/connections-deploy-pt6/</A>&gt;
+   - SalesForce.com's Google Apps
+Integration&lt;<A HREF="http://www.dehora.net/journal/2008/06/24/salesforcecom-and-google-integration-atompub/">http://www.dehora.net/journal/2008/06/24/salesforcecom-and-google-integration-atompub/</A>&gt;
+
+I'd explain in more detail but Mohanaraj Gopala Krishnan has done a great
+job already in his AtomPub, Beyond
+Blogs&lt;<A HREF="http://www.slideshare.net/mohangk/atompub-beyond-blogs?type=presentation">http://www.slideshare.net/mohangk/atompub-beyond-blogs?type=presentation</A>&gt;presentation.
+
+The only question that remains is whether or not this is the best we can
+do... stay tuned for the answer. The biggest players in cloud computing seem
+to think so (except Amazon, whose APIs predate Google's and Microsoft's) but
+maybe there's an even simpler approach that's been sitting right under our
+noses the whole time.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090525/24ec6362/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090525/24ec6362/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000767.html">[occi-wg] Is OCCI the HTTP of Cloud Computing?
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000769.html">[occi-wg] Is HTTP the HTTP of cloud computing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#768">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#768">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#768">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#768">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000768.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

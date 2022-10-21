@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000062.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] About modelisation of the network description
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20About%20modelisation%20of%20the%20network%20description&In-Reply-To=47CF1FED.1040705%40internet2.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000061.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000063.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] About modelisation of the network description</H1>
+    <B>Freek Dijkstra</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20About%20modelisation%20of%20the%20network%20description&In-Reply-To=47CF1FED.1040705%40internet2.edu"
+       TITLE="[Nml-wg] About modelisation of the network description">fdijkstr at science.uva.nl
+       </A><BR>
+    <I>Wed Mar  5 18:04:06 CST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000061.html">[Nml-wg] About modelisation of the network description
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000063.html">[Nml-wg] About modelisation of the network description
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#62">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#62">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#62">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#62">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Aaron,
+
+Good points.
+
+To me, a &quot;Node&quot; is a network element with switching capability and 
+interfaces. I love that concept.
+
+&quot;Network&quot; and &quot;Device&quot; classes are subsets of the more generic &quot;Node&quot; 
+concept. (Subclasses in a UML relational diagram.) A Device is a Node 
+with some additional properties (for example a device has a Location, 
+while a Network is not bound to a single location).
+
+If we want to have a &quot;View&quot; object that can also describe network 
+elements in multiple domains, all I can think of is just a &quot;Group&quot; (of 
+network elements), but NOT a Node subclass. (Feel free to counter this 
+argument. Maybe my imagination is limited!)
+
+Both &quot;View&quot; and &quot;Network&quot; are groupers.
+
+Groups exist only because we humans like to talk about them and refer to 
+them. We like to abstract things, and that is very useful. A path 
+finding may ignore these groups and only looks at the switching 
+capabilities (I've got a path finding that totally ignores devices and 
+domains, and only looks at interfaces, adaptations and switch matrices).
+
+In my view, the difference between &quot;View&quot; and &quot;Network&quot; is that a 
+network element can only be in ONE &quot;Network&quot;, but can occur in multiple 
+&quot;Views&quot;. This is an arbitrary distinction, but to me a very useful one. 
+The restriction of network takes away a bit of flexibility, but in 
+return my control plane software becomes much more simple. And I like that.
+
+
+To summarize:
+
+Device:   a node, not a group.
+Network:  a node, a group. A network elt. can be in only 1 network.
+View:     not a node, a group. A network elt. can be in multiple views.
+
+Are we missing something? Perhaps Aur&#233;lien's Model concept:
+Model:    a node, a group. A network elt. can be in multiple models.
+(if I understood correctly, that is)
+
+I'm currently fine with &quot;just&quot; the above 3 concepts.
+
+Regards,
+Freek
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 249 bytes
+Desc: OpenPGP digital signature
+Url : <A HREF="http://www.ogf.org/pipermail/nml-wg/attachments/20080306/6bfe34d9/attachment.bin">http://www.ogf.org/pipermail/nml-wg/attachments/20080306/6bfe34d9/attachment.bin</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000061.html">[Nml-wg] About modelisation of the network description
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000063.html">[Nml-wg] About modelisation of the network description
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#62">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#62">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#62">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#62">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000062.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+</html>

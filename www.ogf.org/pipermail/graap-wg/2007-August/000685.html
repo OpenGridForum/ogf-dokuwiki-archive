@@ -1,0 +1,272 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/graap-wg/2007-August/000685.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 21:53:18 GMT -->
+<HEAD>
+   <TITLE> [GRAAP-WG] Feedback on &quot;Challenges in EU Grid Contracts&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:graap-wg%40ogf.org?Subject=%5BGRAAP-WG%5D%20Feedback%20on%20%22Challenges%20in%20EU%20Grid%20Contracts%22&In-Reply-To=20070827065237.GG3276%40crater.bbswl">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000681.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000688.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[GRAAP-WG] Feedback on &quot;Challenges in EU Grid Contracts&quot;</H1>
+    <B>parkinm at cs.man.ac.uk</B> 
+    <A HREF="mailto:graap-wg%40ogf.org?Subject=%5BGRAAP-WG%5D%20Feedback%20on%20%22Challenges%20in%20EU%20Grid%20Contracts%22&In-Reply-To=20070827065237.GG3276%40crater.bbswl"
+       TITLE="[GRAAP-WG] Feedback on &quot;Challenges in EU Grid Contracts&quot;">parkinm at cs.man.ac.uk
+       </A><BR>
+    <I>Tue Aug 28 02:50:14 CDT 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000681.html">[GRAAP-WG] Feedback on &quot;Challenges in EU Grid Contracts&quot;
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000688.html">[GRAAP-WG] Feedback on &quot;Challenges in EU Grid Contracts&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/date.html#685">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/thread.html#685">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/subject.html#685">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/author.html#685">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Karl,
+
+Thanks for taking the time to read our paper. 
+
+On Aug 27 2007, Karl Czajkowski wrote:
+
+&gt;<i> Michael, I just read &quot;Challenges in EU Grid Contracts&quot; for the first
+</I>&gt;<i> time after seeing it linked from Toshi's wiki page updates.  I thought
+</I>&gt;<i> it might be useful to address several topics in the paper regarding
+</I>&gt;<i> WS-Agreement, though I have a suspicion that some of these issues may
+</I>&gt;<i> have been addressed long ago by others...
+</I>
+Maybe they have been addressed long ago, but they aren't clear (to me 
+anyway) from the spec and as someone who wasn't involved in the 
+specification process.
+
+&gt;<i> 1. There is an assertion that WS-Agreement does not support
+</I>&gt;<i>    acknowledgement of receipt of an offer independent of the
+</I>&gt;<i>    acceptance decision.  This is incorrect, as the PendingAgreement
+</I>&gt;<i>    construct is specifically defined for this purpose: the
+</I>&gt;<i>    CreatePendingAgreement factory pattern returns an EPR to a
+</I>&gt;<i>    PendingAgreement which is yet to be accepted or rejected.
+</I>&gt;<i> 
+</I>&gt;<i>    This feature was motivated by a different observation that a
+</I>&gt;<i>    decision process might be too slow to perform during a
+</I>&gt;<i>    SOAP-over-HTTP in/out message, but it equally addresses your
+</I>&gt;<i>    concern of knowing that the offer was received before the decision
+</I>&gt;<i>    process is complete. (A WS-* purist position could be that message
+</I>&gt;<i>    acknowledgement is a transport-level problem rather than a SOAP
+</I>&gt;<i>    problem, but we had to bow to the practical use of
+</I>&gt;<i>    SOAP-over-HTTP...)
+</I>
+Yes, I agree. The pending state (though personally I think 'received offer' 
+is clearer) can be used to run tasks scheduling algorithms, for instance, 
+like our paper says.
+
+However, I don't think a message acknowledgement (in its most general 
+sense) is &quot;a transport-level problem&quot; (I'm not sure if you were agreeing or 
+disagreeing to this point and what your reference to SOAP/HTTP means - it 
+isn't clear).
+
+For example, how do I know that a service didn't crash between the 
+transport-level message being accepted and the application processing it?
+
+Therefore in this scenario the application-level - not the network-level - 
+must acknowledge message receipt (when acknowledgements are used).
+
+&gt;<i> 2. There is an allowance for external acceptance notification
+</I>&gt;<i>    channels, though I admit this is not emphasized in the
+</I>&gt;<i>    text. Present in the base protocol are the Acceptance port type and
+</I>&gt;<i>    the agreement state resource property, both of which may be used
+</I>&gt;<i>    simultaneously on the same agreement. It is the state model which
+</I>&gt;<i>    allows for transitions to accepted state independent of the other
+</I>&gt;<i>    protocol operations.  There is nothing to disallow other
+</I>&gt;<i>    notification paths such as email, facsimile, registered mail, etc.
+</I>&gt;<i>    (but, see next issue).
+</I>&gt;<i> 
+</I>&gt;<i> 3. A significant difference between WS-Agreement and the contract law
+</I>&gt;<i>    model described in the paper is the moment of acceptance: in
+</I>&gt;<i>    WS-Agreement, acceptance is defined as the moment the responder
+</I>&gt;<i>    chooses to accept, and is not dependent on sending an acceptance
+</I>&gt;<i>    message to the initiator.  This difference becomes clear in unusual
+</I>&gt;<i>    asynchronous/lossy message environments and/or contested
+</I>&gt;<i>    agreements.
+</I>
+Yes, and since the publication of this paper we have learnt that this model 
+of acceptance is also valid in contract law. It is called the 'mailbox 
+rule' and (in a nutshell) says that as soon as the offeree 'posts' their 
+acceptance the contract is made. Though it must be stated in advance that 
+this is being used and not the traditional method we described in our 
+paper. The protocol we are writing up uses the 'mailbox rule' model because 
+(if the offeree was the service provider) it leads to the resources the 
+contract is being made for being 'locked' - which I think we agree is an 
+unacceptable situation - until the service provider knows the accept 
+message has been received.
+
+&gt;<i>    This is a crucial technical point in WS-Agreement. In order to
+</I>&gt;<i>    define the acceptance moment as when the acceptance is delivered to
+</I>&gt;<i>    the initiator (as in your contract law discussion) would require a
+</I>&gt;<i>    reliable delivery model where some trustworthy (third-party)
+</I>&gt;<i>    observer can witness the delivery.
+</I>
+No, not necessarily. Note that business (generally) operates quite well 
+without third-parties and often uses unreliable messaging to form 
+contracts. There is also a well-known example (in legal circles, anyway) 
+used to illustrate the loss of acceptance messages where the mailbox rule 
+is not being applied, i.e. when acceptance is delivered to the offeror. It 
+does not require a &quot;reliable delivery model&quot; or &quot;a trustworthy observer&quot; to 
+be in place.
+
+The legal example, using the more correct terminology of 'offeror' and 
+'offeree' in place of initiator and responder, is as follows and should be 
+understandable when applied to a distributed computing environment. The 
+offeree shouts an acceptance message to the offeror. Just the offeree does 
+so a plane passes overhead and the offeror does not hear the acceptance 
+message (i.e. it is lost). The legal position is that it is upto the sender 
+of the message to make sure the acceptance message gets through. Thus, the 
+offeree keeps sending the message until they know it is understood.
+
+But, as you point out below, the offeror may choose to ignore (or claim not 
+to receive) the accept message. However, because of the semantics of an 
+offer, the offeror is bound to its contents if accepted so there is also an 
+responsibility on the offeror to make sure they know the status of any 
+offer that they make (and not make offers they do not intend to fulfil). 
+The semantics of the message are critical in this protocol - hence my 
+question to Dominic in my original email about the meaning of his 'offer' 
+message.
+
+There are also other rules in contract law that help deal with this 
+situation.
+
+The meaning of an offer (along with the experience gained over many years 
+of forming contracts in distributed environments gathered by the legal 
+community) makes the protocol inherent in contract law 'work': once an 
+offer is made the offeror cannot walk away or choose not to take part if 
+the offeree accepts that offer - even if they don't get the accept message.
+
+An offer is binding, unless it has been revoked. Therefore the offeror 
+should always want to receive the accept so they can plan/reserve funds/do 
+whatever they need to do - even if it is to ask that the contract is 
+terminated immediately - as part of their side of the contract. If they 
+don't then they will be at risk of breaking the contract and liable to the 
+penalties therein.
+
+&gt;<i>    At risk of confusing the terminology, a way to characterize such a
+</I>&gt;<i>    variant of our protocol might be:
+</I>&gt;<i> 
+</I>&gt;<i>    1. initiator sends offer to responder.
+</I>&gt;<i> 
+</I>&gt;<i>    2. responder chooses to accept.
+</I>&gt;<i> 
+</I>&gt;<i>    3. responder attempts to send acceptance notice.
+</I>&gt;<i> 
+</I>&gt;<i>    4. reliable message channel observes delivery of (3) and acceptance
+</I>&gt;<i>       is now true.
+</I>&gt;<i> 
+</I>&gt;<i>    Given our presumption of an Internet-like environment without any
+</I>&gt;<i>    secure, third-party channel to &quot;serve&quot; notices, this does nothing
+</I>&gt;<i>    more than &quot;rotate&quot; the participant roles by one unidirectional
+</I>&gt;<i>    message.  In effect, it is really the &quot;initiator&quot; in step (4) who
+</I>&gt;<i>    decides acceptance by choosing to receive the acceptance notice or
+</I>&gt;<i>    not, because it is not possible to prove that he received a message
+</I>&gt;<i>    unless he acknowledges it!  
+</I>
+I agree, this is why we use the 'mail box' rule as otherwise we get into 
+evidential issues about how many times the accept was attempted to be 
+delivered, etc. But the offeror is still contracted whether they like it or 
+not.
+
+&gt;<i> Thus, his offer is not really
+</I>&gt;<i>    obligating, as he can shirk his responsibilities by choosing not to
+</I>&gt;<i>    acknowledge the acceptance.
+</I>
+About &quot;his offer is not really obligating&quot;. How so?
+
+An offer is binding/obligating once made (again, unless revoked) therefore 
+by &quot;shirking their responsibilities&quot; they may be breaking the contract and 
+open to recourse.
+
+If it's not an offer then the offeree cannot accept it. 
+
+The message must be an offer/not be an offer. It can't be a non-obligating 
+offer, in that case it would be something else.
+
+&gt;<i>    Thus, I would say the above &quot;contract law&quot;-style sequence of:
+</I>&gt;<i> 
+</I>&gt;<i>       offer/accept/receipt-as-decision 
+</I>&gt;<i> 
+</I>&gt;<i>    is indistinguishable in practice from:
+</I>&gt;<i> 
+</I>&gt;<i>       invite/offer/accept-as-decision
+</I>&gt;<i> 
+</I>&gt;<i>    As there must be some party in the system that first knows the
+</I>&gt;<i>    decision before this information is distributed asynchronously to
+</I>&gt;<i>    all parties, we make the responder be the observer! 
+</I>
+Yes, contract law has an inherent bias towards the offeree who knows the 
+decision first and is what (I think) you're saying. In a distributed system 
+there will always be a lack of consistency somewhere (unless you sacrifice 
+availability).
+
+A side question: what do you mean by &quot;this information is distributed 
+asynchronously to all parties&quot;. I thought WS-Agreement was 1:1 and the 
+acceptance by the offeree only had to se sent (or made available) to the 
+offeror? (i.e. one party). What &quot;other parties&quot; do you mean?
+
+&gt;<i>    Finally, as I
+</I>&gt;<i>    described it in a previous email.  WS-Agreement supports this
+</I>&gt;<i>    through the slightly more general:
+</I>&gt;<i> 
+</I>&gt;<i>       advertise/offer/accept-as-decision
+</I>&gt;<i> 
+</I>&gt;<i>    where you could restrict or otherwise optimize access to
+</I>&gt;<i>    advertisements in order to effect a directed invitation.  (It is
+</I>&gt;<i>    considered somewhat out of scope for WS-Agreement to define how
+</I>&gt;<i>    advertisements are retrieved, e.g. what sort of publishing or
+</I>&gt;<i>    information dispersal architecture is used for discovery.)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I hope this helps clarify the technical solution embodied in
+</I>&gt;<i> WS-Agreement.
+</I>
+Thanks for taking the time to privide these clarifications. However they 
+don't address the other question of the resource provider having to 'lock' 
+it's resources in a 2PC-style when it makes an offer, as was also discussed 
+(and a solution proposed) in our paper.
+
+Thanks again,
+
+Michael.
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000681.html">[GRAAP-WG] Feedback on &quot;Challenges in EU Grid Contracts&quot;
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000688.html">[GRAAP-WG] Feedback on &quot;Challenges in EU Grid Contracts&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/date.html#685">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/thread.html#685">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/subject.html#685">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/author.html#685">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/graap-wg">More information about the graap-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/graap-wg/2007-August/000685.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 21:53:18 GMT -->
+</html>

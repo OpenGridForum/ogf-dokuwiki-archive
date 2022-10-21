@@ -1,0 +1,385 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2007-December/000258.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:32 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] Some questions... [WAS: choosing XML Document	structure for GLUE 2.0 rendering]
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20Some%20questions...%20%5BWAS%3A%20choosing%20XML%20Document%0A%09structure%20for%20GLUE%202.0%20rendering%5D&In-Reply-To=475F2723.8060001%40cnaf.infn.it">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000250.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000249.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] Some questions... [WAS: choosing XML Document	structure for GLUE 2.0 rendering]</H1>
+    <B>Paul Millar</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20Some%20questions...%20%5BWAS%3A%20choosing%20XML%20Document%0A%09structure%20for%20GLUE%202.0%20rendering%5D&In-Reply-To=475F2723.8060001%40cnaf.infn.it"
+       TITLE="[glue-wg] Some questions... [WAS: choosing XML Document	structure for GLUE 2.0 rendering]">paul.millar at desy.de
+       </A><BR>
+    <I>Mon Dec 17 09:10:23 CST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000250.html">[glue-wg] Some questions... [WAS: choosing XML Document structure for GLUE 2.0 rendering]
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000249.html">[glue-wg] Concrete example for alternative primary source [option	P.O]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/date.html#258">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/thread.html#258">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/subject.html#258">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/author.html#258">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Sergio,
+
+I've interleaved my comments below.
+
+For the most part, the comments are mildly in favour of using xml:id; but I'm 
+concerned that the primary information XML will be unnecessarily hard for the 
+information providers.
+
+On Wednesday 12 December 2007 01:11:15 Sergio Andreozzi wrote:
+&gt;<i> Paul Millar ha scritto:
+</I>&gt;<i> &gt; First, I see that one of the rules is ID is an element.  [....]
+</I>&gt;<i> &gt; [3]   <A HREF="http://www.w3.org/TR/2005/REC-xml-id-20050909">http://www.w3.org/TR/2005/REC-xml-id-20050909</A>
+</I>&gt;<i>
+</I>&gt;<i> the previous version of the XML rendering proposal had the ID as
+</I>&gt;<i> attribute, then after a discussion in the last telecon we agreed to
+</I>&gt;<i> change it to element.
+</I>&gt;<i> I actually do not have a strong opinion on this.
+</I>
+Yes, I too don't feel this is a big issue.  I think there's an opportunity to 
+use an existing standard.  There might get some leverage if GLUE/XML uses the 
+attribute-based xml:id ID, but it's certainly not essential.
+
+&gt;<i> As regards your 
+</I>&gt;<i> references, the most interesting to me is [3]. I would say that we are
+</I>&gt;<i> not reinventing the wheel because we are doing something different.
+</I>&gt;<i> [3] defines a way to attach a unique ID (unique within an XML document)
+</I>&gt;<i> to an XML element. 
+</I>
+True, although I think the emphasis with xml:id is providing a unique 
+reference point in a schema-type invariant way.
+
+GLUE could define an attribute within its namespace (via XSD, as glue:ID, for 
+example).  But, by using xml:id, a XML parser (that supports xml:id) can 
+infer the attribute has type unique-ID without having to understand the 
+definition in the DTD / XSD / RelaxNG etc.  Because of this, simple 
+(non-validating) parsers can still identify xml:id as a &quot;global document 
+identifier&quot; and treat it accordingly.
+
+The benefit for us is we don't have to provide DTD and XSD and RelaxNG and ... 
+for an XML parser to understand what xml:id &quot;means&quot;.  The GLUE/XML 
+implementation(s) may choose to provide these, but it's optional.
+
+&gt;<i> We are defining a property of a Grid concept (ID) 
+</I>&gt;<i> which is supposed to be globally unique and is a URI.From a semantical
+</I>&gt;<i> viewpoint they are different. They sit in different namespaces,
+</I>&gt;<i> therefore there should be no problem for that (if you see problems,
+</I>&gt;<i> please let me know).
+</I>
+I'm not sure I completely follow you here.  The two are separate namespaces, 
+but have similar properties.  So, isn't mapping the GLUE ID as xml:id a 
+choice GLUE/XML is free to make?
+
+The GLUE Schema's ID attribute (&quot;GLUE-ID&quot; to prevent confusion) is a globally 
+unique URI: a unique &quot;name&quot; within any aggregation of valid GLUE.  
+(Presumably it's a URI to allow easy delegation of the namespace within a 
+distributed community.)  The ID attribute is a required value for certain 
+GLUE components (Service, UserDomian, AdminDomain, ...)
+
+The current GLUE/XML mapping (as far as I understand it) provides an XML 
+element for major GLUE grid component; in particular, those components that 
+require a GLUE-ID are represented as XML elements.
+
+The XML attribute xml:id describes a globally unique string: a unique &quot;name&quot; 
+within any aggregation of valid XML.  So, one can injectively map GLUE-ID 
+into xml:id; i.e., any valid GLUE-ID can be written as a unique, valid 
+xml:id.
+
+Whilst there is no requirement for GLUE/XML to use xml:id (as you say, the two 
+are separate), there's also no reason not to.  GLUE/XML mapping is free to 
+define that xml:id is to be used or (as currently) to use a schema-specific 
+declaration: the ID element.
+
+Here is a list of the advantages and disadvantages I could think of:
+
+Advantages of using xml:id
+  o  it's the W3C recommended way of doing &quot;this sort of thing.&quot;
+  o  ID-like semantics are built into parsers that support xml:id (which might 
+not support more general validation),
+  o  potential &quot;reuse&quot; of GLUE-ID with other XML software and standards,
+  o  There is not GLUE-specific behavior when combining different GLUE XML 
+files: no need to hard-coded the value or derive behavior from some 
+DTD/XSD/...
+  o  ..others? ..
+
+Disadvantages of using xml:id:
+  o  the mapping between GLUE-ID and xml:id is no surjective: there are valid 
+xml:id values that are not valid GLUE-ID values (does this matter?)
+  o  xml:id is an attribute rather than an element.
+  o  some issues with Canonical XML (although xml:id considers xml-c14n to be 
+broken in this and some other respects)
+  o  .. others? ..
+
+&gt;<i> &gt; Is the plan to render (nearly) everything as elements rather than
+</I>&gt;<i> &gt; attributes?
+</I>&gt;<i>
+</I>&gt;<i> in the last telecon, we agreed that we'll use attributes only for
+</I>&gt;<i> metadata-like properties (basically CreationTime and Validity, see Sec.
+</I>&gt;<i> 4.1 of the spec), while all the rest will be mapped to XML elements.
+</I>
+[Maybe section 4.2 (&quot;metadata&quot;), rather than 4.1.]
+
+&gt;<i> &gt; GLUE has many items have &quot;required&quot; (1) or &quot;optional&quot; (0..1) cardinality
+</I>&gt;<i> &gt; and contain no further markup, so I feel they would, for the most part,
+</I>&gt;<i> &gt; be better rendered as an XML attributes.
+</I>&gt;<i>
+</I>&gt;<i> given my experience, this choice is mainly a matter of style. Attributes
+</I>&gt;<i> can be only of simple types and single-value.
+</I>&gt;<i> Going for elements gives more flexibility for future changes and also is
+</I>&gt;<i> probably more usable (people don't have to remember which properties are
+</I>&gt;<i> single value, i.e. attributes or multi-value. i.e. elements when writing
+</I>&gt;<i> queries).
+</I>
+Sure, this isn't a big deal and is largely a matter of style.  Always using 
+elements does tend to inflate the document size, which may matter when 
+providing a large amount of information.
+
+There are some GLUE attributes that could probably be rendered as XML 
+attributes, but it's no big deal.
+
+&gt;<i> &gt; [Problem with primary producer having to know too much]
+</I>&gt;<i>
+</I>&gt;<i> the proposal is intended to be used by both primary services (e.g.,
+</I>&gt;<i> OGSA-BES, SRM) which want to advertise their characteristics and by
+</I>&gt;<i> information services (both primary publishers and aggregators).
+</I>&gt;<i> For primary services, the only constraint is to know the ID of their
+</I>&gt;<i> AdminDomain. That's all. They are not supposed to publish other
+</I>&gt;<i> AdminDomain attributes.
+</I>
+OK, but the example primary document &quot;A&quot; (P.A option, when voting) contained 
+more information that this: it showed a complete hierarchy, as if the service 
+were alone in the Grid.
+
+&gt;<i> The AdminDomain ID will be used to perform the aggregation at the
+</I>&gt;<i> higher-level.
+</I>&gt;<i>
+</I>&gt;<i> The reason for which I prefer Option A is because it looks easier to
+</I>&gt;<i> make queries by AdminDomain (no need for join). And at the aggregation
+</I>&gt;<i> level, you have all info under a certain AdminDomain aggregated under a
+</I>&gt;<i> single element.
+</I>
+N.B. Here, I'm referring to my option P.O [4], where the primary information 
+is presented as a sub-tree of the full GLUE/XML.  This is analogous to how 
+DocBook provides aggregation where files may (individually) contain a Book 
+(or Article), Part, Chapter, and so on.  Aggregation happens through &quot;other 
+means&quot; (with DocBook this is typically via XInclude, with the toy example [4] 
+it is included in the XSLT)
+
+[4] <A HREF="http://www.ogf.org/pipermail/glue-wg/2007-December/000249.html">http://www.ogf.org/pipermail/glue-wg/2007-December/000249.html</A>
+
+I'm not sure I follow how it is easier to make queries: the queries (against 
+the complete, aggregated GLUE/XML infoset) are just as easy.
+
+However, the problem I see with this is that if the storage-element were to 
+provide information that is directly queryable (with identical queries as the 
+final GLUE/XML) is the info-provider will needs to know its ancestor 
+hierarchy (parent, parent's parent, etc); specifically, how many domains (and 
+of what type) are &quot;above&quot; it.
+
+For example, suppose a Tier-2 site has three AdminDomains within their 
+combined Domain, the final (aggregated) published XML would look like:
+	&lt;Grid&gt;
+		&lt;Domain&gt;
+			&lt;Name&gt;SCOTGRID&lt;/Name&gt;
+			&lt;Description&gt;Scotland's distributed grid site&lt;/Description&gt;
+
+			&lt;!-- Further Domain-level information here --&gt;
+
+			&lt;AdminDomain&gt;
+				&lt;Name&gt;SCOTGRID-GLA&lt;/Name&gt;
+				&lt;Description&gt;The ScotGrid site at University of Glasgow&lt;/Description&gt;
+
+				&lt;!-- Further AdminDomain-level information here --&gt;
+
+				&lt;StorageService&gt;
+					&lt;!-- Further StorageService information here --&gt;
+
+					&lt;StorageResource&gt;
+						&lt;ID&gt;<A HREF="glue://gla.scotgrid.ac.uk/SE&lt;/ID">glue://gla.scotgrid.ac.uk/SE&lt;/ID</A>&gt;
+						&lt;Name&gt;ScotGrid-GLA DPM instance&lt;/Name&gt;
+						&lt;ImplementationName&gt;DPM&lt;/ImplementationName&gt;
+						&lt;!-- ...etc... --&gt;
+					&lt;/StorageResource&gt;
+				&lt;/StorageService&gt;		
+			&lt;/AdminDomain&gt;
+		&lt;/Domain&gt;
+	&lt;/Grid&gt;
+
+So, if I've understood the primary information &quot;A&quot; option (P.A.) correctly, 
+the storage service would publish XML like:
+	&lt;Grid&gt;
+		&lt;Domain&gt;
+			&lt;AdminDomain&gt;
+				&lt;StorageService&gt;
+					&lt;!-- Further StorageService information here --&gt;
+
+					&lt;StorageResource&gt;
+						&lt;ID&gt;<A HREF="glue://gla.scotgrid.ac.uk/SE&lt;/ID">glue://gla.scotgrid.ac.uk/SE&lt;/ID</A>&gt;
+						&lt;Name&gt;ScotGrid-GLA DPM instance&lt;/Name&gt;
+						&lt;ImplementationName&gt;DPM&lt;/ImplementationName&gt;
+					&lt;/StorageResource&gt;
+				&lt;/StorageService&gt;		
+			&lt;/AdminDomain&gt;
+		&lt;/Domain&gt;
+	&lt;/Grid&gt;
+
+What's bad here is that the info-provider must know its hierarchy: that it 
+inside an AdminDomain, within inside a Domain.  This is ugly; it should not 
+need to know this!
+
+In contrast, a Tier-1 site might have no containing Domain.  A storage service 
+must then publish information like:    
+	&lt;Grid&gt;
+		&lt;AdminDomain&gt;
+			&lt;StorageService&gt;
+				&lt;!-- Storage Service info here --&gt;
+			&lt;/StorageService&gt;		
+		&lt;/AdminDomain&gt;
+	&lt;/Grid&gt;
+
+An alternative (option P.O, see [4]) allows services to provide only the 
+information they know (by directly examining the software) and a hint 
+(the &quot;site-level&quot; GLUE-ID), this can be avoided.
+
+In fact the &quot;parent&quot; back-link isn't needed: it just makes configuring the 
+site-level aggregation a little easier.  One could configure parent-child 
+links explicitly (e.g. Services within AdminDomains) and avoid having to 
+specify the Parent within the child.
+
+To me, this makes much more sense: each service is (genuinely) providing only 
+the information it knows.
+
+Admin sites would aggregate (as with site-level BDIIs currently) and Domains 
+then aggregate from multiple AdminSites, as necessary.
+
+&gt;<i> I don't know how MDS 4 performs aggregations at higher 
+</I>&gt;<i> level and if this is compatible with its strategies. This is something
+</I>&gt;<i> to be investigated.
+</I>
+Yes, it would be interested to compare: I don't know too much about MDS-4
+
+
+&gt;<i> &gt; As an alternative, suppose One-to-Many relationships be represented as
+</I>&gt;<i> &gt; either an XML element hierarchy [...]
+</I>&gt;<i>
+</I>&gt;<i> yep, this is an option as well. Many options are available. Probably, we
+</I>&gt;<i> should make one step back and clarify what we want to optimize.
+</I>&gt;<i> In my opinion, we should concetrate on giving the final user the easiest
+</I>&gt;<i> and more intuitive way to query the properties.
+</I>
+OK.   I've two additional (friendly) amendments:
+
+  a. adjust this to:
+	&quot;[easiest and most intuitive way to query] the final, aggregated GLUE/XML 
+Schema.&quot;
+
+  b. also add:
+	&quot;make it easy for components to provide the necessary information.&quot;
+
+&gt;<i> For sure, we need more experience on this with a number of queries to be
+</I>&gt;<i> written for different approaches.
+</I>&gt;<i> One advantage that I like of option A. is that a query would remain
+</I>&gt;<i> valid if you query either the primary source of information or the
+</I>&gt;<i> aggregated layer.
+</I>
+Whilst I agree this would be nice, do we have a use-case for users querying 
+the primary source of information directly?
+
+I skimmed through the use-case document and searched for keywords 
+(&quot;primary&quot;, &quot;source&quot;, &quot;provider&quot;, etc..), but couldn't find any requirement 
+for end-users to query information providers directly.
+
+Given the flexible hierarchy by (potentially) nesting an AdminDomain within 
+multiple Domains, this could be difficult to achieve without requiring that 
+primary sources of information know something of the global structure.
+
+&gt;<i> Consider this for instance. A simple XPath to ask for a service which
+</I>&gt;<i> type is org.glite.wms part of a certain adminDomain:
+</I>&gt;<i>
+</I>&gt;<i> /glue:Grid/AdminDomain[ID='urn:admindomain:t1.infn.it']/Service[Type='org.g
+</I>&gt;<i>lite.wms']
+</I>
+[sorry, v. minor point: assuming GLUE provides an XML-namespace, wouldn't the 
+query have to specify the namespace-uri at each level?
+  /glue:Grid/glue:AdminDomain[glue:ID='urn:...']/glue:Service[glue:Type=...
+]
+
+&gt;<i> this query works both at the primary source level and aggregated level
+</I>&gt;<i> and is also quite simple to me.
+</I>
+Again, do we really need to provide a service where end-users can query the 
+information provided by the primary sources in an identical fashion to the 
+complete (aggregated) resource?
+
+I understand it would be nice (mostly for debugging reasons), but I don't see 
+how this can be done without *every* primary info-provider within a Grid 
+knowing (at least something of) the grid structure, in order to provide the 
+correct XML documents.  I feel this would be quite an inflexible solution.
+
+&gt;<i> Of course, we need a larger set of queries to be used for evaluation.
+</I>
+I suspect that XPath will be sufficient to query the aggregated GLUE/XML: once 
+you get your head around XPath, it's pretty intuitive and friendly.
+
+
+&gt;<i> &gt; [XML Schema balance...]
+</I>&gt;<i>
+</I>&gt;<i> we are trying to find the right balance and mainly preserving easy of
+</I>&gt;<i> use. In the rules, I mentioned the option of SubstitutionGroups for
+</I>&gt;<i> completeness, but this is not the current selected option.
+</I>&gt;<i> At the moment, we prefer to go for the annotation option
+</I>&gt;<i>
+</I>
+[snip: agreement on simple XML design over complicated, strongly validing 
+design]
+
+&gt;<i> Thanks for your constructive feedback. I hope we can dedicate one more
+</I>&gt;<i> call before XMas to XML rendering so that we can refine all these
+</I>&gt;<i> choices and align about the rationale behind them.
+</I>&gt;<i> Please, keep contributing as opinion from different perspectives help us
+</I>&gt;<i> to make better choices.
+</I>
+I'll do my best!
+
+Cheers,
+
+Paul.
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000250.html">[glue-wg] Some questions... [WAS: choosing XML Document structure for GLUE 2.0 rendering]
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-December/000249.html">[glue-wg] Concrete example for alternative primary source [option	P.O]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/date.html#258">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/thread.html#258">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/subject.html#258">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-December/author.html#258">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2007-December/000258.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:32 GMT -->
+</html>

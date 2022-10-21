@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000724.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Atompub: Can we see an example of top level storage	and network rendering ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Atompub%3A%20Can%20we%20see%20an%20example%20of%20top%20level%20storage%0A%09and%20network%20rendering%20%3F&In-Reply-To=4A0F659F.60808%40gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000723.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000734.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Atompub: Can we see an example of top level storage	and network rendering ?</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Atompub%3A%20Can%20we%20see%20an%20example%20of%20top%20level%20storage%0A%09and%20network%20rendering%20%3F&In-Reply-To=4A0F659F.60808%40gmail.com"
+       TITLE="[occi-wg] Atompub: Can we see an example of top level storage	and network rendering ?">samj at samj.net
+       </A><BR>
+    <I>Sun May 17 05:46:16 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000723.html">[occi-wg] Atompub: Can we see an example of top level storage and network rendering ?
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000734.html">[occi-wg] Atompub: Can we see an example of top level storage and network rendering ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#724">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#724">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#724">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#724">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Gary,
+
+On Sun, May 17, 2009 at 3:17 AM, Gary Mazz &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">garymazzaferro at gmail.com</A>&gt; wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Can we see a concrete example of top level storage and network rendering
+</I>&gt;<i> with one layer of decomposition ? I'd like to know what it will look
+</I>&gt;<i> like, especially  with links applied.
+</I>&gt;<i>
+</I>
+The reference implementation at <A HREF="http://occitest.appspot.com/">http://occitest.appspot.com/</A> currently
+generates
+valid Atom&lt;<A HREF="http://validator.w3.org/feed/check.cgi?url=http%3A%2F%2Foccitest.appspot.com">http://validator.w3.org/feed/check.cgi?url=http%3A%2F%2Foccitest.appspot.com</A>&gt;and
+while it has basic links between resources, it lacks things like the
+local identifier (e.g. &quot;eth0&quot; or &quot;sda&quot;) because there are a number of ways
+to skin this particular cat:
+
+   - add them where possible as generic attributes in the main occi
+   namespace (only really applies to the local identifier, but it does
+   generally make sense to give a local handle to any resource):
+   &lt;link ... occi:localname=&quot;eth0&quot; network:address=&quot;1.2.3.4&quot; /&gt;
+   - add them as specific attributes in the extension namespaces (e.g.
+   network:interface, storage:device)
+   &lt;link ... network:interface=&quot;eth0&quot; network:address=&quot;1.2.3.4&quot; /&gt;
+   - add them as elements under the link element
+   &lt;link ... &gt;
+     &lt;network:interface&gt;eth0&lt;/network:interface&gt;
+     &lt;network:address type=&quot;ipv4&gt;1.2.3.4&lt;/network:address&gt;
+   &lt;/link&gt;
+   - some combination (
+   &lt;link ... occi:localname=&quot;eth0&quot;&gt;
+     &lt;network:address type=&quot;ipv4&gt;1.2.3.4&lt;/network:address&gt;
+   &lt;/link&gt;
+
+I got the idea of having them as elements under the link element from
+Microsoft's Astoria team blog &lt;<A HREF="http://blogs.msdn.com/astoriateam/">http://blogs.msdn.com/astoriateam/</A>&gt;,
+specifically the post on Related entries and feeds: links and link
+expansion&lt;<A HREF="http://blogs.msdn.com/astoriateam/archive/2008/02/18/related-entries-and-feeds-links-and-link-expansion.aspx">http://blogs.msdn.com/astoriateam/archive/2008/02/18/related-entries-and-feeds-links-and-link-expansion.aspx</A>&gt;.
+The suggestion has been expanded and is approved
+of&lt;<A HREF="http://blogs.msdn.com/astoriateam/archive/2008/02/18/related-entries-and-feeds-links-and-link-expansion.aspx#8573352">http://blogs.msdn.com/astoriateam/archive/2008/02/18/related-entries-and-feeds-links-and-link-expansion.aspx#8573352</A>&gt;by
+Joe Gregorio/Google too.
+
+This is *very* relevant for performant/scalable serialisation/migration of
+infrastructure between providers (e.g. portability)... it means essentially
+that we can follow Tim's suggestion of using links to advertise e.g. OVF
+versions of resources, but then when required we can also dereference and
+safely include the content inline under the link element:
+
+&lt;link href=&quot;<A HREF="http://example.com/810a39a0-f8a4-49f7-8844-0399b4499c6f.ovf"">http://example.com/810a39a0-f8a4-49f7-8844-0399b4499c6f.ovf&quot;</A>&gt;
+&gt;<i>   &lt;content type=&quot;application/ovf+xml&quot;&gt;
+</I>&gt;<i>     &lt;!-- OVF content here --&gt;
+</I>&gt;<i>   &lt;/content&gt;
+</I>&gt;<i> &lt;/link&gt;
+</I>&gt;<i>
+</I>
+Obviously one would only dereference links when requested to do so, and even
+if they were dereferenced (e.g. by clicking &quot;Save As...&quot; on your cloud) they
+wouldn't get in the way of simpler implementations that don't care about
+them. It's about as clean &amp; elegant as we're ever going to get if we're
+expecting portability.
+
+Incidentally currently storage and networking devices don't link to anything
+(though they could - a virtual network pointing back at a physical one or a
+logical volume pointing back at a physical RAID). The compute resources are
+more interesting because they point to both. If you're having trouble
+retrieving the feed in its current form I've attached it for you.
+
+Sam
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090517/27258347/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090517/27258347/attachment.html</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: occitest.xml
+Type: text/xml
+Size: 12160 bytes
+Desc: not available
+Url : <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090517/27258347/attachment.xml">http://www.ogf.org/pipermail/occi-wg/attachments/20090517/27258347/attachment.xml</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000723.html">[occi-wg] Atompub: Can we see an example of top level storage and network rendering ?
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000734.html">[occi-wg] Atompub: Can we see an example of top level storage and network rendering ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#724">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#724">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#724">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#724">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000724.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

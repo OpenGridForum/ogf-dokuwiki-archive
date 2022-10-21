@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000463.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Votes: XML vs. JSON vs. TXT
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Votes%3A%20XML%20vs.%20JSON%20vs.%20TXT&In-Reply-To=DF9F4FC5-2EA5-49C8-9DF4-B57A30076C27%40sun.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000469.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000464.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Votes: XML vs. JSON vs. TXT</H1>
+    <B>Marc-Elian B&#233;gin</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Votes%3A%20XML%20vs.%20JSON%20vs.%20TXT&In-Reply-To=DF9F4FC5-2EA5-49C8-9DF4-B57A30076C27%40sun.com"
+       TITLE="[occi-wg] Votes: XML vs. JSON vs. TXT">meb at sixsq.com
+       </A><BR>
+    <I>Thu May  7 13:33:33 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000469.html">[occi-wg] Votes: XML vs. JSON vs. TXT
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000464.html">[occi-wg] Votes: XML vs. JSON vs. TXT
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#463">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#463">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#463">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#463">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Correct me if I'm wrong but I understand that the service we're  
+considering here is a RESTFul web-service, and further following a  
+resource oriented architecture (see Ruby and Richardson's RESTFul Web  
+Services book).
+
+In any generic RPC protocol, you need to define verbs and messages  
+(methods and parameters).  With RESTFul and ROA, since we're  
+manipulating resources, the HTTP verbs (GET, PUT, POST, DELETE, etc)  
+provide a pretty clear semantic.  So what's left is the messages that  
+are exchanged between the client and the server.
+
+Another observation is that, and this is based on my personal  
+experience so feel free to contradict me, with 'big web-services' &#224; la  
+SOAP, the only way to reach interoperability between SOAP (and WSDL)  
+tooling is to keep thing really simple (and stay away from the WS-*  
+stuff as much as possible).  And even armed with amazingly advanced  
+tooling, the in order to reach interoperability, the messages  
+(parameters) have to be simple... otherwise the cost of  
+interoperability goes up... and fast.
+
+So we need to keep the messages simple.
+
+As a user of the service, I want to be able to paste in my browser the  
+url to a resource and get something I understand, which means (X)HTML,  
+with the right hyperlinks to the resource's neighbours and possible  
+actions I can perform on these resources... right there in my  
+browser!  But if I'm a javascript, I probably want JSON or text.  And  
+if I'm Excel, I probably want CSV or text.  And if I'm Python or Java,  
+XML works.  And if I don't like any of these, I grab the XML and  
+transform it on the fly into something I like.
+
+I know, we're not in a design room in front of a white board... we're  
+trying to define a standard, but I think it's important to set the  
+scene in terms of implementation so that we know more or less what the  
+real thing's going to look like.
+
+Getting back to your question... I think that to be successful, OCCI  
+Web Services will have to embrace the reality of today's web, which is  
+to support a number of content-types.  And while I do realise that  
+from a standardisation point-of-view I'm suggesting to raise the bar a  
+little for v1.0, I don't think it's a problem.  And the reason for  
+that is 'simplicity'.  So if we're finding that our life becomes  
+difficult in specifying the messages in XML, JSON and TEXT, then we  
+might want to re-evaluate our complexity level.
+
+Having said all that, we can start with one language and add others as  
+we go along.  But then the choice become which one's first.  The  
+argument against XML is that we can very quickly throw complexity  
+which will bite us later when
+we try to express the same in a simpler language.  On the other hand,  
+we can start with TEXT or JSON to mitigate that risk, but then it's  
+more work to transform.
+
+Perhaps to finish... and in good SCRUM fashion... why don't we let who  
+ever has spare cycles produce a naive implementation of what we've got  
+now, in whatever his/her prefer language, and we look at it together!   
+If we don't like it, we throw it away and start again... but we'll  
+have learned something.  But this is only possible if we take small  
+steps at a time, otherwise it hurts to throw too much away... and pain  
+is not fun!!
+
+To conclude... I think we need to keep things simple... and if it's  
+simple it won't be a problem to support a wide range of content- 
+types.  If we don't want to do them all right away, but want to keep  
+the complexity beast at bay... we should then take small steps, have a  
+look at a running system, make sure it implements the spec properly,  
+realign and start again.
+
+Cheers,
+
+Meb
+PS.  In doubt... write code ;-)
+
+
+
+
+On May 7, 2009, at 6:56 PM, Tim Bray wrote:
+
+&gt;<i> On May 7, 2009, at 1:12 AM, Marc-Elian Begin wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I'm currently using restlet to build RESTFul web-services (very  
+</I>&gt;&gt;<i> nice by
+</I>&gt;&gt;<i> the way) in Java.  In such a framework, generating the requested  
+</I>&gt;&gt;<i> format
+</I>&gt;&gt;<i> based on the requests's 'Content-Type' attribute is trivial (as  
+</I>&gt;&gt;<i> long as
+</I>&gt;&gt;<i> the transformation is available).  This means that my WS can talk
+</I>&gt;&gt;<i> (x)html when the user's a human (me), or XML or JSON or plain/text.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So for me multi-format is mandatory...
+</I>&gt;<i>
+</I>&gt;<i> Could you expand on you you get from &quot;Generating multiple formats is  
+</I>&gt;<i> easy for me based on my implementation tools&quot; to &quot;multi-format is  
+</I>&gt;<i> mandatory&quot;?
+</I>&gt;<i>
+</I>&gt;<i> The intervening steps in the argument are not self-evident.  -T
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000469.html">[occi-wg] Votes: XML vs. JSON vs. TXT
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000464.html">[occi-wg] Votes: XML vs. JSON vs. TXT
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#463">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#463">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#463">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#463">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000463.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

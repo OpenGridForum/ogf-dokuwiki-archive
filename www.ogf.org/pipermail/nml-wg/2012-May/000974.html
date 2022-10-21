@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2012-May/000974.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:51:59 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] PortGroups and Labels for IP/MAC
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=Re%3A%20%5BNml-wg%5D%20PortGroups%20and%20Labels%20for%20IP/MAC&In-Reply-To=%3C4FB0F510.8060100%40nordu.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2012-May/000972.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2012-May/000975.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] PortGroups and Labels for IP/MAC</H1>
+    <B>Jerry Sobieski</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=Re%3A%20%5BNml-wg%5D%20PortGroups%20and%20Labels%20for%20IP/MAC&In-Reply-To=%3C4FB0F510.8060100%40nordu.net%3E"
+       TITLE="[Nml-wg] PortGroups and Labels for IP/MAC">jerry at nordu.net
+       </A><BR>
+    <I>Mon May 14 08:05:36 EDT 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-May/000972.html">[Nml-wg] PortGroups and Labels for IP/MAC
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-May/000975.html">[Nml-wg] PortGroups and Labels for IP/MAC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/date.html#974">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/thread.html#974">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/subject.html#974">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/author.html#974">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I Have some comments I will just list:
+
+a.) How would you describe a flow space?   If you are identifying VLANs 
+and other virtual flow identifiers, we should consider how combinations 
+of frame characteristics could identify a specific topological link (or 
+&quot;flow&quot;) Can we bind these to define a single flow identifier.  This is 
+obviously a question of how NML applies in OpenFLOW architectures...?
+
+b) A similar question for optical wave bands.  Bands are variable width 
+optical spectrum  rather than fixed single wave ITU channels.  They can 
+be optically tuned and routed - effectively routing whole groups of 
+waves.  I don't know specifically how the bands are officially defined 
+(continuous frequency ranges or discrete granularity).  But there is 
+hardware that support such wave bands today...
+
+c) Has there been any discussion about the use of the TPID field 
+(ethertype) in the ethernet frame for topological link characterization 
+purposes?  A physical link may be hard wired to be 802.3 framed by merit 
+of the interface.  But the behaviour of the frames - and sometimes the 
+format of those frames - is dependent upon the Ethertype field 
+(TPID).    For instance, many protocols have TPIDs reserved - IPv4, 
+IPv6, ARP, tagged frames, doubly tagged frames, etc.  The implication is 
+that the physical 802.3 transport framing may carry *many* different 
+types of streams which are differentiated by the TPID field. Our notions 
+of single VLANs as connections really means TPID=8100 &amp;&amp; VLAN=x. 802.1Q 
+VLANs and PBB are simply particular subsets of possible wire framing.  
+What is the abstract definition that NML uses to define a topologically 
+significant link layer connection?     As Freek alludes, [virtual] 
+labels are part of the  information that identify the topological 
+link/connection/...
+
+d) The proposed notion of PortGroups sounds like it addresses an issue 
+that NSI was sparring with - If an ingress/egress endpoint of a link or 
+connection is identified by the topological n-tuple that uniquely 
+identifies the characteristics of datagrams belonging to that &quot;flow&quot;, 
+then you have this issue of potentially thousands, or hundreds of 
+thousands, of endpoints associated with each link - and different 
+subsets of the n-tuple defining different groups or flows.  IMO, looking 
+at the n-tuple in the abstract, and defining Ports, or port groups, as 
+formal terminal groupings of varous n-tuple permutations, has merit.   
+So I think it is useful to work on this notion (!)
+
+e) Finally, With respect to Aaron's comments about Ports that don't 
+exist (:-) (...I hope I understand the context properly...) - but they 
+*do* actually exist.  Just because they are virtual ports or virtual 
+endpoints, or not yet assigned to a crossconnect does not make them 
+immaterial or non-existent.  I think this goes to a widespread gut sense 
+that virtual ports makes topology DBs too big...   I agree that this 
+&quot;feels&quot; inelegant, but IMO this is not a scaling issue.  I think we 
+confuse a couple issues that makes us think it all becomes intractable 
+or ineffiecient:  first, managing large groups of [virtual] endpoints is 
+a data base issue, and nothing we are thinking of exceeds present 
+database capabalities to do this.  Second, there are effieicent ways to 
+optimize the management o these resources for sparse utilization or for 
+high utilization.   Third, is pathfinding - as we increase the degree of 
+fan-out of our topological nodes, we get an exponential increase in the 
+theoretical time to perform a PF search - if we use the same 
+O(n^3)algorithms.  So the theoretical complexity of the problem has not 
+changed with increase endpoints, just our expected runtime increases.  
+Fourth, if you define a zillion endpoints in your network, it is 
+presumably because you think you may need them...right?  And if you 
+think there is a likelyhood that you will actually use them, then you 
+still have the problem of managing them as they are allocated.  So if 
+they are potential for allocation, we have to manage them, so we still 
+have the problem.    Fifth, with the increase in degree of the virtual 
+topological fanout, we have a problem of coherency - how do we 
+communicate state changes of these endpoints to PFs in a global network 
+who may want to consider using these endpoints?  It begs the question of 
+- does every PF need to know about every state change or every 
+endpoint?  If not, how would this work?   These are hard issues, and 
+frankly these are the issues that have caused previous attempts at 
+connections oriented topology management and path finding to be deemed 
+impractical.  So making sure we understand how we intend to use the 
+topology information is critical - and defining processes that properly 
+implement those uses is far more important than worrying about the size 
+of the topology DB.  IMO.  :-)
+
+Thanks!
+Jerry
+
+On 5/10/12 8:58 AM, Aaron Brown wrote:
+&gt;<i>
+</I>&gt;<i> On May 9, 2012, at 5:37 PM, Freek Dijkstra wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> On Labels:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What we have defined are &quot;resource labels&quot;, eg.:
+</I>&gt;&gt;<i> * Ethernet VLAN
+</I>&gt;&gt;<i> * Ethernet I-SID
+</I>&gt;&gt;<i> * Frequency on DWDM / Wavelength on CWDM
+</I>&gt;&gt;<i> * ATM VPC
+</I>&gt;&gt;<i> * ATM VPI
+</I>&gt;&gt;<i> * SONET/SDH STS3c/STM/AUG-1 timeslot
+</I>&gt;&gt;<i> * MPLS shim label
+</I>&gt;&gt;<i> perhaps even:
+</I>&gt;&gt;<i> * SSID on a wifi
+</I>&gt;&gt;<i> * strand in a fiber bundle
+</I>&gt;&gt;<i> * ...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This label is used for both:
+</I>&gt;&gt;<i> * distinguishing between flows on a link (aka channels)
+</I>&gt;&gt;<i> * routing and switching (eg. &quot;switch X will forward data from port 1,
+</I>&gt;&gt;<i> label 28 to port 4, label 42&quot;)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So far so good.
+</I>&gt;&gt;<i> Now two issues.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1. On PortGroups:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I assume that each Port is associated with a particular label. This is
+</I>&gt;&gt;<i> useful for monitoring, so we can distinguish between e.g. VLAN 120 and
+</I>&gt;&gt;<i> VLAN 42.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For path finding, it seem useful to describe a all possible ports (e.g.
+</I>&gt;&gt;<i> &quot;all VLANs that can dynamically created&quot;. For this, I propose to
+</I>&gt;&gt;<i> introduce a &quot;PortGroup&quot;: which logically can be expanded to many
+</I>&gt;&gt;<i> individual Ports.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The idea is still sketchy, but I like some input if this is a good
+</I>&gt;&gt;<i> approach. If so, I'll make a proposal.
+</I>&gt;<i>
+</I>&gt;<i> In the OSCARS world, we've done this, using the label terminology, as 
+</I>&gt;<i> &quot;the available labels on a port&quot;. Thus, a single port might have a 
+</I>&gt;<i> variety of available labels that could be used on that port. That 
+</I>&gt;<i> approach makes more sense to me than introducing a new grouping 
+</I>&gt;<i> concept for ports that don't currently exist.
+</I>&gt;<i>
+</I>&gt;<i> Cheers,
+</I>&gt;<i> Aaron
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2. On Destination Labels
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The &quot;destination labels&quot;, such as destination IP address or destination
+</I>&gt;&gt;<i> MAC address are also used for routing and switching, just like the
+</I>&gt;&gt;<i> resource labels above.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hence I presumed that destination labels could be described the same way
+</I>&gt;&gt;<i> as resource labels.
+</I>&gt;&gt;<i> I'm longer sure that this is a good idea.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Recall that each Port is associated with exactly one label.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For a host with one IP address 2001:0DB8:B4C6:6AAE::1 this means that is
+</I>&gt;&gt;<i> has one ingress Port (for this IP address). On the other hand, it would
+</I>&gt;&gt;<i> have 2^128-1 egress Ports (for all possible IP addresses that is can
+</I>&gt;&gt;<i> send to).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This discrepancy between ingress Port and egress Ports seems odd to me,
+</I>&gt;&gt;<i> and makes me doubt that destination labels are the same things as
+</I>&gt;&gt;<i> resource labels.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As stated in my previous email, G.800 thinks it's a different beast: it
+</I>&gt;&gt;<i> associates resource labels with the adaptation, while is associates
+</I>&gt;&gt;<i> source- and destination labels with the termination.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> That's all nice, but I'm still at loss how to describe source- and
+</I>&gt;&gt;<i> destination labels in NML and how to deal with them. If you have any
+</I>&gt;&gt;<i> idea (good or bad), please share it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Freek
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> nml-wg mailing list
+</I>&gt;&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">nml-wg at ogf.org</A> &lt;mailto:<A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">nml-wg at ogf.org</A>&gt;
+</I>&gt;&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">https://www.ogf.org/mailman/listinfo/nml-wg</A>
+</I>&gt;<i>
+</I>&gt;<i> Internet2 Spring Member Meeting
+</I>&gt;<i> April 22-25, 2012 - Arlington, Virginia
+</I>&gt;<i> <A HREF="http://events.internet2.edu/2012/spring-mm/">http://events.internet2.edu/2012/spring-mm/</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> nml-wg mailing list
+</I>&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">nml-wg at ogf.org</A>
+</I>&gt;<i> <A HREF="https://www.ogf.org/mailman/listinfo/nml-wg">https://www.ogf.org/mailman/listinfo/nml-wg</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://www.ogf.org/pipermail/nml-wg/attachments/20120514/7bbff042/attachment.html">http://www.ogf.org/pipermail/nml-wg/attachments/20120514/7bbff042/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-May/000972.html">[Nml-wg] PortGroups and Labels for IP/MAC
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2012-May/000975.html">[Nml-wg] PortGroups and Labels for IP/MAC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/date.html#974">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/thread.html#974">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/subject.html#974">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2012-May/author.html#974">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2012-May/000974.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:51:59 GMT -->
+</html>

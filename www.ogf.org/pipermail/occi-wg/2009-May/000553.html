@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000553.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Simple JSON rendering for OCCI
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Simple%20JSON%20rendering%20for%20OCCI&In-Reply-To=20090512113921.GE4275%40arachsys.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000550.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000561.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Simple JSON rendering for OCCI</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Simple%20JSON%20rendering%20for%20OCCI&In-Reply-To=20090512113921.GE4275%40arachsys.com"
+       TITLE="[occi-wg] Simple JSON rendering for OCCI">samj at samj.net
+       </A><BR>
+    <I>Tue May 12 08:06:23 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000550.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000561.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#553">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#553">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#553">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#553">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, May 12, 2009 at 1:39 PM, Chris Webb &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">chris.webb at elastichosts.com</A>&gt;wrote:
+
+&gt;<i> Sam Johnston &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">samj at samj.net</A>&gt; writes:
+</I>&gt;<i>
+</I>&gt;<i> &gt; These are both valid alternatives but given our ultimate aim is to reduce
+</I>&gt;<i> &gt; costs it makes [a lot] more sense to have a primary format which supports
+</I>&gt;<i> &gt; mechanical transforms than to externalise the development to implementors
+</I>&gt;<i> &gt; (and then expect the results to be interoperable).
+</I>&gt;<i>
+</I>&gt;<i> Something implicit here is worth highlighting: this route only leads to
+</I>&gt;<i> interoperability if the extra formats are mandatory, not if they're
+</I>&gt;<i> optional.
+</I>&gt;<i>
+</I>
+No, this route leads to interoperability *provided at least one format is
+mandatory*. I don't rate myself enough to say which alternative formats will
+be most useful today, let alone tomorrow, so if the number of required
+formats exceeds 1 (it need not IMO) then it should be no more than 2 or 3
+and we should make life as easy as possible for implementors (think
+transforms).
+
+
+&gt;<i> Otherwise, I can write an OCCI-compliant tool in bash which talks KEY VALUE
+</I>&gt;<i> text, but it won't be able to connect to Richard's front-end (which only
+</I>&gt;<i> understands JSON) or use another provider's front-end (which only
+</I>&gt;<i> understands Atom).
+</I>&gt;<i>
+</I>
+Right, obviously at least one format needs to be mandated and that format
+should obviously be as widely supported and easily translated to others as
+possible. Simplicity, while important, is secondary IMO - oversimplifying
+has the same result as overcomplicating.
+
+
+&gt;<i> The option of making one format mandatory and the others optional won't
+</I>&gt;<i> fly,
+</I>&gt;<i> because in that case the only way you write code that's guaranteed to work
+</I>&gt;<i> is to use the mandatory format, whereupon you've effectively converged on a
+</I>&gt;<i> single rendering in all but name.
+</I>&gt;<i>
+</I>
+ ...so we should just converge on a single rendering and be done with it?
+There is absolutely value in convenience formats, as evidenced by Google's
+JSON renderer... without them we wouldn't be able to do things like setup
+cron jobs to run regular tasks or write scripts to automate routine tasks
+such as failover.
+
+Quoting your own insightful &quot;Designing a great HTTP
+API&lt;<A HREF="http://www.elastichosts.com/blog/2009/01/01/designing-a-great-http-api/">http://www.elastichosts.com/blog/2009/01/01/designing-a-great-http-api/</A>&gt;&quot;
+post from earlier in the year (because I couldn't have said it better or
+clearer myself):
+
+&gt;<i> Simple syntax means making it easy for any user with a standard tool to
+</I>&gt;<i> call the API. *If you can&#8217;t call the API with curl from a single line of
+</I>&gt;<i> shell then your API** is not good enough*. This rules out many of today&#8217;s
+</I>&gt;<i> cumbersome XML-RPC and SOAP APIs, although *you will want **XML as an
+</I>&gt;<i> option for users who are using XML**-friendly languages*.
+</I>&gt;<i>
+</I>&gt;<i> We believe in:
+</I>&gt;<i>
+</I>&gt;<i>    -
+</I>&gt;<i>
+</I>&gt;<i>    Choice of syntax: Different users will find different syntax most
+</I>&gt;<i>    natural. At the unix shell, space-deliminated text rules. From
+</I>&gt;<i>    Javascript, you&#8217;ll want JSON. From Java, you may want XML. Some tools
+</I>&gt;<i>    parse x-www-form-encoded data nicely. *A great HTTP API** makes every
+</I>&gt;<i>    command available with data in all of these formats for all of these users
+</I>&gt;<i>    *, specified with either different URLs or MIME content types. (OK, we
+</I>&gt;<i>    admit that we&#8217;ve only released text/plain ourselves so far, but *the
+</I>&gt;<i>    rest are coming very soon!*).
+</I>&gt;<i>    -
+</I>&gt;<i>
+</I>&gt;<i>    Don&#8217;t reinvent the wheel: Smart people designed the internet. There are
+</I>&gt;<i>    good existing mechanisms for security (e.g. SSL/TLS), authentication
+</I>&gt;<i>    (e.g. HTTP auth), error codes (e.g. HTTP status codes), etc. Use them,
+</I>&gt;<i>    and don&#8217;t invent your own, unlike one UK payment gateway who invented a
+</I>&gt;<i>    simple XOR encryption which is vulnerable&lt;<A HREF="https://support.protx.com/forum/Topic6841-23-1.aspx">https://support.protx.com/forum/Topic6841-23-1.aspx</A>&gt;to a known plaintext attack and didn&#8217;t fix it when we pointed this out!
+</I>&gt;<i>
+</I>&gt;<i> Sam
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090512/58091f7d/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090512/58091f7d/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000550.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000561.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#553">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#553">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#553">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#553">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000553.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2007-June/000052.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:46:39 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] GLUE2.0's Computing Element
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20GLUE2.0%27s%20Computing%20Element&In-Reply-To=921b10450705290000j394cb615hbbdd7f72a9cb8c3e%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2007-June/000055.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2007-June/000058.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] GLUE2.0's Computing Element</H1>
+    <B>Laurence Field</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20GLUE2.0%27s%20Computing%20Element&In-Reply-To=921b10450705290000j394cb615hbbdd7f72a9cb8c3e%40mail.gmail.com"
+       TITLE="[glue-wg] GLUE2.0's Computing Element">Laurence.Field at cern.ch
+       </A><BR>
+    <I>Fri Jun  1 16:25:06 CDT 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-June/000055.html">[glue-wg] Fwd: GLUE2.0's Computing Element
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-June/000058.html">[glue-wg] GLUE2.0's Computing Element
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/date.html#52">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/thread.html#52">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/subject.html#52">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Gerson,
+
+The schema is in an early draft state and therefore might still need a 
+little work to get it into good shape. If you have any suggestions on 
+how to improve the schema or can see any problems please let us know. I 
+will try an answer you question based on what I understand of the 
+current draft.
+
+What is important is to first understand the entities that we are 
+dealing with and the relationships between them.
+
+For me a cluster represents a set of resources that are managed, which 
+essentially is a batch system with a master server. The queue represents 
+two things; an end point and a policy.  The GRAM service is an interface 
+to the batch system and therefore an end point.
+
+How you represent these things depends on the implementation.
+
+1) If the job attributes are passed to the batch system, then based on 
+these it should decide which queue (policy) best matches the 
+requirements. In such a scenario,
+you would then publish two services (end points), one for each batch 
+system, and the gateway should route the job to the relevant batch 
+system based on which service (end point) was used.
+
+2) If the the job requirements are not passed though, then you have to 
+consider each queue to be a different endpoint and hence have a service 
+(end point) per batch system and per queue (policy). The gateway would 
+then route the job also to the correct queue.
+
+In either case the policy (queue) would be advertised as a share. 
+However, in the second case I am not sure how the end point is linked to 
+the policy.
+
+
+Laurence
+
+
+
+
+
+Gerson Galang wrote:
+&gt;<i> Hi all,
+</I>&gt;<i>
+</I>&gt;<i> Can you show me how to represent the setup I have below using the new 
+</I>&gt;<i> structure of the GLUE 2.0 entities?
+</I>&gt;<i>
+</I>&gt;<i> - our site manages 2 clusters
+</I>&gt;<i> - each cluster runs a PBS queuing system
+</I>&gt;<i> - each queueing system manages three queues: small, medium, large
+</I>&gt;<i> - globus is installed on a separate box -- called the gateway box. we 
+</I>&gt;<i> run only one instance of the GRAM service on this box. anyone running 
+</I>&gt;<i> a grid job at our site will have to specify the 
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/glue-wg">name-of-queue at name-of-pbs-server</A> in the queue element of their RSL to 
+</I>&gt;<i> pick which queue they want to submit their jobs to.
+</I>&gt;<i>
+</I>&gt;<i> It is not mentioned anywhere in the InitialSketch wiki ( 
+</I>&gt;<i> <A HREF="http://forge.gridforum.org/sf/wiki/do/viewPage/projects.glue-wg/wiki/InitialSketchOnEntities">http://forge.gridforum.org/sf/wiki/do/viewPage/projects.glue-wg/wiki/InitialSketchOnEntities</A>) 
+</I>&gt;<i> that the CE is still an abstraction of a queue. The relationship of a 
+</I>&gt;<i> ComputingService to a CE is also many to one which makes it hard for 
+</I>&gt;<i> one GRAM service to be able to submit jobs to a number of CEs (if ever 
+</I>&gt;<i> a CE is still equivalent to a queue). Does this mean that we will have 
+</I>&gt;<i> redundant info for the ComputingResource, ExecutionEnvironment, and 
+</I>&gt;<i> ApplicationEnvironment for every GRAM service (for each queue) we 
+</I>&gt;<i> provide?
+</I>&gt;<i>
+</I>&gt;<i> Is it safe to assume that the ComputingResource, ExecutionEnvironment, 
+</I>&gt;<i> and ApplicationEnvironment entities in GLUE 2.0 are equivalent to the 
+</I>&gt;<i> Cluster, SubCluster and Software entities of GLUE 1.3 respectively?
+</I>&gt;<i>
+</I>&gt;<i> You have a comment in the form of a question under the &quot;element&quot; 
+</I>&gt;<i> section of the wiki which says: &quot;can we have multiple resources 
+</I>&gt;<i> (computing resources &lt;=&gt; clusters) served by the same service 
+</I>&gt;<i> instance?&quot;. My answer is yes and isn't my use case above an example of it?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> Gerson
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> glue-wg mailing list
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/glue-wg">glue-wg at ogf.org</A>
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/glue-wg">http://www.ogf.org/mailman/listinfo/glue-wg</A>
+</I>&gt;<i>   
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-June/000055.html">[glue-wg] Fwd: GLUE2.0's Computing Element
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-June/000058.html">[glue-wg] GLUE2.0's Computing Element
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/date.html#52">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/thread.html#52">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/subject.html#52">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2007-June/000052.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:46:39 GMT -->
+</html>

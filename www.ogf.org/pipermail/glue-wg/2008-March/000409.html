@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000409.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] feedback on storage entities
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20feedback%20on%20storage%20entities&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000407.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000422.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] feedback on storage entities</H1>
+    <B>Sergio Andreozzi</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20feedback%20on%20storage%20entities&In-Reply-To="
+       TITLE="[glue-wg] feedback on storage entities">sergio.andreozzi at cnaf.infn.it
+       </A><BR>
+    <I>Thu Mar 27 07:56:13 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000407.html">[glue-wg] telecon reminder
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000422.html">[glue-wg] feedback on storage entities
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#409">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#409">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#409">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#409">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Felix,
+
+today I won't be able to connect due to phone/network unavailability 
+here at CNAF because of  our data center renovation. 
+
+Tomorrow, I plan to stay at home so I can call/connect.
+
+Anyway, I'm sending you a number of thoughts on the current storage 
+entities model:
+
+- &quot;Shared&quot; Storage Share
+
+the solution of relating a storage capacity to a storage mapping policy 
+to  advertise  used space per  policy seems to over-complicate the 
+model; the storage capacity concept is being adopted by different 
+entities with slightly different meaning and this leads to a not very 
+intuitive and usable model;
+
+our proposal is to act as follows:
+
+* For Storage Share
+1- add a shared attribute in the storage share which type is boolean; 
+for &quot;shared&quot; shares, the value should be true
+2- add an AggregationLocalID attribute; for the &quot;shared&quot; shares within 
+the same storage service, this attribute should be assigned with the 
+same value
+
+in this way, we avoid the creation of one more level of hierarchy and 
+potential visualization tools which want to show a summary info can 
+avoid double counting by checking the two attributes that we propose
+
+* For Storage Environment:
+when we mapped the current model to our T1 use case, we found out that 
+the storage environment is homogeneous; therefore there is not need (at 
+least for our scenario) to have the capacity to be associated to the 
+storage environment; the attributes of the storage capacity can be added 
+to the storage environment
+
+* For Storage Resource:
+since information about free/used/total/reserved space is provided by 
+the storage environment, we could avoid to have summary info at the 
+storage resource level; information consumer can aggregate it
+
+If the above considerations fit the use cases of other partners, then 
+the storage capacity would be related only to the storage share.
+
+As regards the today agenda, I removed the following issues since they 
+do not properly reflect our scenario .
+
+** consequence of overlapping StorageResource entities
+*** GPFS 3.1 and GPFS 3.2 share same disks
+*** if wished to be expressed explicitly -&gt; each GPFS is represented as 
+own StorageResource
+*** BUT then : a higher aggregation of capacity numbers muster be given 
+in the service (again: if wished)
+*** OR (easier): express GPFS 3.1 and 3.2 in OtherInfo field
+
+in our mapping choice, we have decided to model the three storage 
+systems managed by GPFS 3.1, GPFS 3.2 and TSM respectively using the 
+storage environment concept. They do not logically overlap. (See here 
+<A HREF="http://glueman.svn.sourceforge.net/viewvc/*checkout*/glueman/tags/glue-xsd/draft-29/examples/AdminDomain_CNAF.xml?revision=27">http://glueman.svn.sourceforge.net/viewvc/*checkout*/glueman/tags/glue-xsd/draft-29/examples/AdminDomain_CNAF.xml?revision=27</A>)
+In our scenario, we have one global storage resource composed by three 
+storage environments.
+
+As a final comment, my opinion is that we should privilege simplicity 
+and the meta-scheduling use cases more than the monitoring ones. If we 
+do not manage to converge shortly on a common vision for the storage 
+resource/storage environment, we should probably postpone the definition 
+of these entities to a future GLUE  revision and concentrate on the 
+storage endpoint/storage share consolidation.
+
+Cheers, Sergio
+
+
+
+
+-- 
+Sergio Andreozzi
+INFN-CNAF,                    Tel: +39 051 609 2860
+Viale Berti Pichat, 6/2       Fax: +39 051 609 2746
+40126 Bologna (Italy)         Web: <A HREF="http://www.cnaf.infn.it/~andreozzi">http://www.cnaf.infn.it/~andreozzi</A>
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000407.html">[glue-wg] telecon reminder
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000422.html">[glue-wg] feedback on storage entities
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#409">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#409">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#409">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#409">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000409.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000766.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Unlocking the formats deadlock
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Unlocking%20the%20formats%20deadlock&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000796.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000774.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Unlocking the formats deadlock</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Unlocking%20the%20formats%20deadlock&In-Reply-To="
+       TITLE="[occi-wg] Unlocking the formats deadlock">samj at samj.net
+       </A><BR>
+    <I>Mon May 25 11:07:12 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000796.html">[occi-wg] OCCI Model UML, XSD, XML, Code...
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000774.html">[occi-wg] Unlocking the formats deadlock
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#766">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#766">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#766">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#766">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Afternoon all,
+
+As you know I spent last week evangelising OCCI at the Cloud Computing Expo
+in Prague (Monday/Tuesday) and Cloud Computing Expo in London
+(Wednesday/Thursday), presenting the Introduction to the Open Cloud
+Computing Interface&lt;<A HREF="http://docs.google.com/Present?docid=ddqm27m2_298fsf9mqdg">http://docs.google.com/Present?docid=ddqm27m2_298fsf9mqdg</A>&gt;presentation
+at both. I was only scheduled for Prague but the organisers
+found a spot on the technical track in London too. I also ended up on the
+panels at both which was even more opportunities to talk about cloud
+interop. I'll be in Portugal for Cloud Views from Wednesday and will try to
+get involved in OGF 26 time permitting as well. By now people certainly know
+we exist and that we're doing real (hopefully good) work.
+
+Unfortunately we're somewhat stuck on the formats decision despite hours of
+face to face discussion with 1/2 a dozen of the more active working group
+members (myself, Alexis, Chris &amp; Richard from ElasticHosts and the Fujitsu
+guys). While this is not at all unusual for technical discussions we do need
+to fairly urgently find a solution before people (myself included) lose
+interest and wander off. I can't overstate how important this working group
+is to the future of cloud computing and both of the alternatives are rather
+unpalatable:
+
+   - On one side we have Amazon EC2 APIs which are not only encumbered but
+   inelegant and inflexible (at least in the context of the enterprise use
+   cases I spend most of my time thinking about - no offense intended). Other
+   APIs designed to expose the functionality of a single implementation fall
+   into the same category and while they meet their specific needs well, we
+   need to expose the current and future functionality of all current and
+   future implementations, not just one today. At the extreme end of the
+   simplicity scale you have text-based APIs which we all now agree won't meet
+   our needs.
+   - At the other end of the scale we have VMware's vCloud API which has
+   been injected into the DMTF process, following in the footsteps of OVF. I
+   fully expect the resulting &quot;open API&quot; to be almost word-for-word identical
+   to the new VMware APIs which is something the
+DIGISTAN&lt;<A HREF="http://www.digistan.org/">http://www.digistan.org/</A>&gt;guys call &quot;vendor
+   capture &lt;<A HREF="http://www.digistan.org/open-standard:definition">http://www.digistan.org/open-standard:definition</A>&gt;&quot;. Unlike the
+   public cloud APIs, this will be well-suited for enterprise and you can be
+   sure that service providers will deploy VMware en masse to provide it as
+   part of their [semi-]private &quot;I can't believe it's not cloud&quot; offerings.
+   Good on them for being first and forcing the rest of the industry to follow
+   their lead.
+
+This working group's job is to find the middle ground - something which is
+simple enough to be useful for public cloud offerings but extensible enough
+to be useful for more challenging tasks (e.g. enterprise). This is also
+critical for hybrid clouds (unless you're all happy to implement DMTF's APIs
+in addition to your own). The business case is easily justified even if only
+on the basis of getting access to customers who are currently kicking the
+tyres with tactical deployments but unable to deploy strategically.
+
+As you know I have been pushing Atom[Pub] hard, perhaps too hard, and the
+XML-xenophobes have dug their heels in as a result. It was made painfully
+obvious in London that blanket application of AtomPub to the problem isn't
+going to fly with at least one of them and to that end I've spent the
+weekend working on paring it back where it's not absolutely necessary. I've
+also purchased and read O'Reilly's RESTful Web
+Services&lt;<A HREF="http://oreilly.com/catalog/9780596529260/">http://oreilly.com/catalog/9780596529260/</A>&gt;book by Leonard
+Richardson &lt;<A HREF="http://www.crummy.com/">http://www.crummy.com/</A>&gt; and Sam Ruby from cover to cover and am
+largely sold on their concept of a Resource Oriented Architecture
+(ROA)&lt;<A HREF="http://www.infoq.com/resource/articles/richardson-ruby-restful-ws/en/resources/04.pdf">http://www.infoq.com/resource/articles/richardson-ruby-restful-ws/en/resources/04.pdf</A>&gt;-
+do read this sample chapter if you have time.
+
+Fortunately I think I've found a simple, elegant solution which obviates the
+need for Atom (at least where collections are not required). I've captured
+it in a series of 3 blog posts which I'll forward to the list for the sake
+of convenience and the archives.
+
+Cheers,
+
+Sam
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090525/d91a5633/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090525/d91a5633/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000796.html">[occi-wg] OCCI Model UML, XSD, XML, Code...
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000774.html">[occi-wg] Unlocking the formats deadlock
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#766">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#766">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#766">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#766">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000766.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

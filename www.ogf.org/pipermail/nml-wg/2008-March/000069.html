@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000069.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] modelisation of the network description and dynamic circuits
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20modelisation%20of%20the%20network%20description%20and%20dynamic%0A%20circuits&In-Reply-To=47D0CF1F.1090000%40science.uva.nl">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000068.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000084.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] modelisation of the network description and dynamic circuits</H1>
+    <B>Aaron Brown</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20modelisation%20of%20the%20network%20description%20and%20dynamic%0A%20circuits&In-Reply-To=47D0CF1F.1090000%40science.uva.nl"
+       TITLE="[Nml-wg] modelisation of the network description and dynamic circuits">aaron at internet2.edu
+       </A><BR>
+    <I>Fri Mar  7 06:26:46 CST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000068.html">[Nml-wg] modelisation of the network description and dynamic	circuits
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000084.html">[Nml-wg] About modelisation of the network description
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#69">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#69">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#69">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#69">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Freek Dijkstra wrote:
+&gt;<i> I strongly disagree with this ad-hoc solution:
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i>           &lt;link id=&quot;I2_host2_eth1_link&quot; /&gt;
+</I>&gt;&gt;<i>           &lt;vlanAvailability&gt;400-800&lt;/vlanAvailability&gt;
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> Because:
+</I>&gt;<i> * the semantic is very technology specific. I rather see a more general 
+</I>&gt;<i> model (in this case such as the label concept in GMPLS or multiplexing 
+</I>&gt;<i> adaptation in G.805).
+</I>&gt;<i> * the syntax is very ad-hoc. The power of XML is that you can compose 
+</I>&gt;<i> properties of object in detail. Why use regexp syntax like &quot;400-800&quot; 
+</I>&gt;<i> instead of &lt;range&gt;&lt;min&gt;400&lt;/min&gt;&lt;max&gt;800&lt;/max&gt;&lt;/range&gt;
+</I>&gt;<i>   
+</I>The focus of my example was more on clarity (single port vs. multiple 
+port) than a specific set of requirements. In the more general model, 
+there'd be a property that elements could have describing the possible 
+sub-element that can be constructed. In this case, it would be the set 
+of vlans. So, it might look like this:
+
+&lt;sub-elements-options type=&quot;vlans&quot;&gt;
+    &lt;range&gt;...&lt;/range&gt;
+    &lt;range&gt;...&lt;/range&gt;
+    &lt;range&gt;...&lt;/range&gt;
+&lt;/sub-element-options&gt;
+
+Sonet channels could look similar:
+
+&lt;sub-elements-options type=&quot;sonetChannels&quot;&gt;
+    &lt;range&gt;...&lt;/range&gt;
+    &lt;range&gt;...&lt;/range&gt;
+    &lt;range&gt;...&lt;/range&gt;
+&lt;/sub-element-options&gt;
+
+The sub-element-options might even be a better way of describing the 
+possible choices for a virtual port since the specific one has not yet 
+been selected:
+
+&lt;network id=&quot;I2&quot;&gt;
+    &lt;!-- define a logical interface between NY and Paris --&gt;
+    &lt;port id=&quot;I2_NY_to_GEANT-Paris&quot;&gt;
+        &lt;sub-element-options type=&quot;elementChoice&quot;&gt;
+            &lt;!-- include references to the actual physical ports --&gt;
+            &lt;port id=&quot;I2_host1_eth0&quot; /&gt;
+            &lt;port id=&quot;I2_host2_eth1&quot; /&gt;
+        &lt;/sub-element-options&gt;
+    &lt;/port&gt;
+
+    &lt;!-- define the physical interface/link from host1 in NY to Paris --&gt;
+    &lt;node id=&quot;I2_host1&quot;&gt;
+        &lt;port id=&quot;I2_host1_eth0&quot;&gt;
+           &lt;link id=&quot;I2_host1_eth0_link&quot; /&gt;
+        &lt;/port&gt;
+    &lt;/node&gt;
+
+    &lt;!-- define the physical interface/link from host2 in NY to Paris --&gt;
+    &lt;node id=&quot;I2_host2&quot;&gt;
+        &lt;port id=&quot;I2_host2_eth1&quot;&gt;
+           &lt;link id=&quot;I2_host2_eth1_link&quot; /&gt;
+        &lt;/port&gt;
+    &lt;/node&gt;
+
+&lt;/network&gt;
+
+Is this in line with what you were thinking?
+
+Cheers,
+Aaron
+
+&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> My question is how one describes a link as a set of VLANS
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> John, I'll write how we describe adaptations later. That first requires
+</I>&gt;<i> a discussion on what a &quot;layer&quot; is (an OSI layer, technology, or sublayer
+</I>&gt;<i> withing a technology). For now, please see e.g. the mail Jeroen sent to
+</I>&gt;<i> the list recently about how adaptations are done in ITU-T G.805.
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Case 2 - Between I2-NY and GEANT-Paris we want to create multiple GE 
+</I>&gt;&gt;<i> circuits which can be used to create connections between I2 and GEANT.  
+</I>&gt;&gt;<i> One way to do this seems to be to create a &quot;traffic engineering-link&quot; 
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> According to G.805, a link connection (= TE link above) can be made on a
+</I>&gt;<i> server layer by terminating a network connection on a client layer.
+</I>&gt;<i>
+</I>&gt;<i> Either we simply want to describe that TE link, or we want to describe
+</I>&gt;<i> the terminated and adaptated network connection that creates the TE
+</I>&gt;<i> link. Possibly we want a model were we can do both. How exactly this is
+</I>&gt;<i> described is open. I guess we first need to discuss what a &quot;path&quot; is
+</I>&gt;<i> (I'd say G.805 tandem connection) and what a link is (I'd say G.805 link
+</I>&gt;<i> connection), and also what a layer is.
+</I>&gt;<i>
+</I>&gt;<i> We haven't discussed these concepts so far. So feel free to step in and
+</I>&gt;<i> make suggestions about classes and relations.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Freek
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> nml-wg mailing list
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/nml-wg">nml-wg at ogf.org</A>
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/nml-wg">http://www.ogf.org/mailman/listinfo/nml-wg</A>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000068.html">[Nml-wg] modelisation of the network description and dynamic	circuits
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000084.html">[Nml-wg] About modelisation of the network description
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#69">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#69">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#69">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#69">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000069.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+</html>

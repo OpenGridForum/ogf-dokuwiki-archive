@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000551.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Simple JSON rendering for OCCI
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Simple%20JSON%20rendering%20for%20OCCI&In-Reply-To=167204d20905120415qee36dcob2d3dc902883318d%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000546.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000552.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Simple JSON rendering for OCCI</H1>
+    <B>Andre Merzky</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Simple%20JSON%20rendering%20for%20OCCI&In-Reply-To=167204d20905120415qee36dcob2d3dc902883318d%40mail.gmail.com"
+       TITLE="[occi-wg] Simple JSON rendering for OCCI">andre at merzky.net
+       </A><BR>
+    <I>Tue May 12 07:41:49 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000546.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000552.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#551">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#551">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#551">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#551">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quoting [Alexis Richardson] (May 12 2009):
+&gt;<i> 
+</I>&gt;<i> Andy
+</I>&gt;<i> 
+</I>&gt;<i> It's not completely obvious to me how people can interoperate on just
+</I>&gt;<i> a model, nor how normative renderings can be plural.
+</I>
+That is indeed difficult to define, IMHO.  My (biased)
+example is the SAGA spec in OGF (Simple API for Grid
+Applications): the API specification is language neutral,
+but several renderings for Java, C++, Python etc exist, and
+will be normative in their own right (spec documents are
+WIP).
+
+The abstract specification includes a number of syntactic
+and (more so) semantic guidelines which MUST be  followed by
+the renderings, to maintain common nouns, verbs and
+attributes (no surprise, he?).  But language specific
+deviations are allowed, were sensible (error handling,
+booststrapping, etc).
+
+Interopn can indeed only effectively defined for the
+individual renderings.  We believe, however, that
+implementations of different renderings are assumed
+interoperable, if the respective test suites result in the
+same backend operations.
+
+For SAGA, that is difficult to prove - the API is too large
+for that.  For OCCI, with its limites set of
+nouns/verbs/attribs, that may very well be possible.
+
+FWIW, other APIs in OGF went a similar route, most notably
+DRMAA.  Their original spec is in C, but after several
+renderings emerged for Java, Python, etc, a language neutral
+spec (IDL) was created to derive these bindings from.
+Interop again is defined via test suites.
+
+Note: a different to OCCI is that neithe SAGA nor DRMAA talk
+about protocols, but *only* about client side APIs, rendered
+in higher level programming languages.  
+
+My $0.02,
+
+  Andre.
+
+
+&gt;<i> alexis
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Tue, May 12, 2009 at 11:53 AM, Edmonds, AndrewX
+</I>&gt;<i> &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">andrewx.edmonds at intel.com</A>&gt; wrote:
+</I>&gt;<i> &gt; I'd (again) agree with this and would re-iterate Alexander's (Papaspyrou) earlier point on approach and process:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &quot;The canonical way to cope with this issue [formats] (which, by the way, has proved right many times in the past) in many WGs within OGF is to separate this step not only in design, but also in specification: have an abstract &quot;modeling&quot; part in the spec which clearly defines the semantics the data, and one or more normative renderings for the abstract model.&quot;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; It would also seem to me that although we have the noun-verb-attribute reasoning it might need to be expressed in an easier form to communicate, say graphically.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Andy
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -----Original Message-----
+</I>&gt;<i> &gt; From: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A> [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A>] On Behalf Of Roger Menday
+</I>&gt;<i> &gt; Sent: 12 May 2009 11:43
+</I>&gt;<i> &gt; To: Richard Davies
+</I>&gt;<i> &gt; Cc: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> &gt; Subject: Re: [occi-wg] Simple JSON rendering for OCCI
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On 12 May 2009, at 11:20, Richard Davies wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;&gt; Therein lies the problem - there are no &quot;standard tools&quot; nor any
+</I>&gt;<i> &gt;&gt;&gt; way to
+</I>&gt;<i> &gt;&gt;&gt; specify a cross-platform mechanical transform for JSON (at least
+</I>&gt;<i> &gt;&gt;&gt; not yet).
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Yes, I agree with you there - if we're going with multiple formats
+</I>&gt;<i> &gt;&gt; it'll be
+</I>&gt;<i> &gt;&gt; easier to define XML -&gt; JSON than JSON -&gt; XML.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Hi Richard,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Rather than transforming across the actual formats, there seems to be
+</I>&gt;<i> &gt; a interest in defining a model and then describe how to render onto
+</I>&gt;<i> &gt; various data formats. So, rendering-down, rather then transforming-
+</I>&gt;<i> &gt; across. (?)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The data formats discussion is a tricky one to resolve, as there's
+</I>&gt;<i> &gt; things to like in each of JSON, ATOM and key-value. That said, the
+</I>&gt;<i> &gt; &quot;compliant, but non-interoperable implementations through supporting
+</I>&gt;<i> &gt; multiple representations&quot; is a strong argument for a single format.
+</I>&gt;<i> &gt; Whatever that may be ...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; regards
+</I>&gt;<i> &gt; Roger
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Richard.
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; occi-wg mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> &gt;&gt; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Roger Menday (PhD)
+</I>&gt;<i> &gt; &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">roger.menday at uk.fujitsu.com</A>&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Senior Researcher, Fujitsu Laboratories of Europe Limited
+</I>&gt;<i> &gt; Hayes Park Central, Hayes End Road, Hayes, Middlesex, UB4 8FE, U.K.
+</I>&gt;<i> &gt; Tel: +44 (0) 208 606 4534
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ______________________________________________________________________
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &#160;Fujitsu Laboratories of Europe Limited
+</I>&gt;<i> &gt; &#160;Hayes Park Central, Hayes End Road, Hayes, Middlesex, UB4 8FE
+</I>&gt;<i> &gt; &#160;Registered No. 4153469
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &#160;This e-mail and any attachments are for the sole use of addressee(s) and
+</I>&gt;<i> &gt; &#160;may contain information which is privileged and confidential. Unauthorised
+</I>&gt;<i> &gt; &#160;use or copying for disclosure is strictly prohibited. The fact that this
+</I>&gt;<i> &gt; &#160;e-mail has been scanned by Trendmicro Interscan and McAfee Groupshield does
+</I>&gt;<i> &gt; &#160;not guarantee that it has not been intercepted or amended nor that it is
+</I>&gt;<i> &gt; &#160;virus-free.
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; occi-wg mailing list
+</I>&gt;<i> &gt; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> &gt; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i> &gt; -------------------------------------------------------------
+</I>&gt;<i> &gt; Intel Ireland Limited (Branch)
+</I>&gt;<i> &gt; Collinstown Industrial Park, Leixlip, County Kildare, Ireland
+</I>&gt;<i> &gt; Registered Number: E902934
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; This e-mail and any attachments may contain confidential material for
+</I>&gt;<i> &gt; the sole use of the intended recipient(s). Any review or distribution
+</I>&gt;<i> &gt; by others is strictly prohibited. If you are not the intended
+</I>&gt;<i> &gt; recipient, please contact the sender and delete all copies.
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; occi-wg mailing list
+</I>&gt;<i> &gt; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> &gt; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> occi-wg mailing list
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>
+
+
+-- 
+Nothing is ever easy.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000546.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000552.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#551">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#551">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#551">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#551">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000551.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

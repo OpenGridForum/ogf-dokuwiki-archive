@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/ogsa-wg/2007-June/002751.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:46:38 GMT -->
+<HEAD>
+   <TITLE> [ogsa-wg] [OGSA-AUTHZ] [ogsa-authn-bof] Notes from Joint OGSA WG AuthN/AuthZ call
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:ogsa-wg%40ogf.org?Subject=%5Bogsa-wg%5D%20%5BOGSA-AUTHZ%5D%20%5Bogsa-authn-bof%5D%20Notes%20from%20Joint%20OGSA%0A%20WG%20AuthN/AuthZ%20call&In-Reply-To=ea2af9bd0706251759l74378be3r62d432e1bab30dcd%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/ogsa-wg/2007-June/002748.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/ogsa-wg/2007-June/002753.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[ogsa-wg] [OGSA-AUTHZ] [ogsa-authn-bof] Notes from Joint OGSA WG AuthN/AuthZ call</H1>
+    <B>David Chadwick</B> 
+    <A HREF="mailto:ogsa-wg%40ogf.org?Subject=%5Bogsa-wg%5D%20%5BOGSA-AUTHZ%5D%20%5Bogsa-authn-bof%5D%20Notes%20from%20Joint%20OGSA%0A%20WG%20AuthN/AuthZ%20call&In-Reply-To=ea2af9bd0706251759l74378be3r62d432e1bab30dcd%40mail.gmail.com"
+       TITLE="[ogsa-wg] [OGSA-AUTHZ] [ogsa-authn-bof] Notes from Joint OGSA WG AuthN/AuthZ call">d.w.chadwick at kent.ac.uk
+       </A><BR>
+    <I>Tue Jun 26 11:37:48 CDT 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/ogsa-wg/2007-June/002748.html">[ogsa-wg] [OGSA-AUTHZ] [ogsa-authn-bof] Notes from Joint OGSA	WG AuthN/AuthZ call
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/ogsa-wg/2007-June/002753.html">[ogsa-wg] [OGSA-AUTHZ] [ogsa-authn-bof] Notes from Joint OGSA	WG AuthN/AuthZ call
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/date.html#2751">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/thread.html#2751">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/subject.html#2751">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/author.html#2751">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Tom
+
+Tom Scavo wrote:
+&gt;<i> At a recent OGF AuthZ WG meeting (OGF19 or 20, I forget, but it's in
+</I>&gt;<i> the minutes), I mentioned the need for an X.509 Binding for SAML
+</I>&gt;<i> Assertions.  We do this already in Globus CAS and GridShib, but it
+</I>&gt;<i> needs to be vetted and refined.
+</I>
+At OGF 20 we revisited this issue and agreed that we need one for SAML 
+Attribute Assertions (but note, not for SAML Authz Decision Statements 
+or Authn assertions, just for the attributes in order to be able to pull 
+them).
+
+
+&gt;<i> 
+</I>&gt;<i> I recently learned about a project in EU that is binding XACML to
+</I>&gt;<i> X.509, so perhaps we need a more general X.509 Binding for XML with
+</I>&gt;<i> separate profiles for SAML, XACML, and so forth.
+</I>
+Do you have the name of this project? Its not EGEE is it?
+
+&gt;<i> 
+</I>&gt;<i> Once we have a standard X.509 Binding,
+</I>
+and the purpose of this would be to remove the use of SSL/TLS?? and to 
+bind at the application layer rather than the transport layer?
+
+  we can profile attribute-based
+&gt;<i> authz using both pushed and pulled SAML assertions.  We've implemented
+</I>&gt;<i> a prototype along these lines and numerous issues have come up, which
+</I>&gt;<i> need vetting and further discussion.
+</I>
+When you say SAML assertions, this is too generic, since there are three 
+types of assertions. Which ones do you mean?
+
+&gt;<i> 
+</I>&gt;<i> And finally there is the wholly unexplored territory of proxied SAML
+</I>&gt;<i> assertions, which most people believe are necessary to bridge campuses
+</I>&gt;<i> and grids, but there's absolutely no agreement how this should be
+</I>&gt;<i> done.
+</I>
+You are correct. Proxying is another ball game. Which brings its own 
+problems and conflicts (such as wanting authoritative assertions signed 
+by their sources on the one hand, but going via a proxy and not knowing 
+who the source is, on the other).
+
+What we need to do I believe is
+
+i) specify the protocols that are needed regardless of the bindings (so 
+that the same XML constructs can be passed via a Java API, an SSL 
+session, an X.509 binding or whatever). So far we have identified 3 of 
+these, one for pulling attribute assertions, one for validating 
+credentials and one for getting an authz decision.
+
+ii) specify a set of bindings that should be supported for the above.
+
+regards
+
+David
+
+
+&gt;<i> 
+</I>&gt;<i> Tom Scavo
+</I>&gt;<i> NCSA
+</I>&gt;<i> 
+</I>&gt;<i> On 6/25/07, Blair Dillaway &lt;<A HREF="http://www.ogf.org/mailman/listinfo/ogsa-wg">blaird at microsoft.com</A>&gt; wrote:
+</I>&gt;&gt;<i> I don't remember any serious discussion of chartering work in this 
+</I>&gt;&gt;<i> area, either within the AuthZ WG or elsewhere. So I can only surmise 
+</I>&gt;&gt;<i> people haven't felt this area is adequately mature. The sessions Von 
+</I>&gt;&gt;<i> hosted on Grid-Shib technology at OGF's last year certainly indicated 
+</I>&gt;&gt;<i> a diverse set of approaches were being explored.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Did you and Von discuss this in drafting the current charter? Do you 
+</I>&gt;&gt;<i> believe things have evolved to the point where we could build critical 
+</I>&gt;&gt;<i> mass around work in this area? (Of course, I'd love to hear from 
+</I>&gt;&gt;<i> anyone who thinks the OGF should be doing work in this area.)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Regards,
+</I>&gt;&gt;<i> Blair
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> David Chadwick wrote:
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Hi Blair
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Interestingly there is one aspect of authz that has a significant
+</I>&gt;&gt;<i> &gt; amount
+</I>&gt;&gt;<i> &gt; of user interest and that is merging attributes from Shibboleth and
+</I>&gt;&gt;<i> &gt; Grids to be used together for authz decision making. But this is
+</I>&gt;&gt;<i> &gt; currently not within the scope of the OGF OGSA Authz group's work plan.
+</I>&gt;&gt;<i> &gt; So what does this indicate?
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; regards
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; David
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; *****************************************************************
+</I>&gt;&gt;<i> &gt; David W. Chadwick, BSc PhD
+</I>&gt;&gt;<i> &gt; Professor of Information Systems Security
+</I>&gt;&gt;<i> &gt; The Computing Laboratory, University of Kent, Canterbury, CT2 7NF
+</I>&gt;&gt;<i> &gt; Skype Name: davidwchadwick
+</I>&gt;&gt;<i> &gt; Tel: +44 1227 82 3221
+</I>&gt;&gt;<i> &gt; Fax +44 1227 762 811
+</I>&gt;&gt;<i> &gt; Mobile: +44 77 96 44 7184
+</I>&gt;&gt;<i> &gt; Email: <A HREF="http://www.ogf.org/mailman/listinfo/ogsa-wg">D.W.Chadwick at kent.ac.uk</A>
+</I>&gt;&gt;<i> &gt; Home Page: <A HREF="http://www.cs.kent.ac.uk/people/staff/dwc8/index.html">http://www.cs.kent.ac.uk/people/staff/dwc8/index.html</A>
+</I>&gt;&gt;<i> &gt; Research Web site:
+</I>&gt;&gt;<i> &gt; <A HREF="http://www.cs.kent.ac.uk/research/groups/iss/index.html">http://www.cs.kent.ac.uk/research/groups/iss/index.html</A>
+</I>&gt;&gt;<i> &gt; Entrust key validation string: MLJ9-DU5T-HV8J
+</I>&gt;&gt;<i> &gt; PGP Key ID is 0xBC238DE5
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; *****************************************************************
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i>   ogsa-authz-wg mailing list
+</I>&gt;&gt;<i>   <A HREF="http://www.ogf.org/mailman/listinfo/ogsa-wg">ogsa-authz-wg at ogf.org</A>
+</I>&gt;&gt;<i>   <A HREF="http://www.ogf.org/mailman/listinfo/ogsa-authz-wg">http://www.ogf.org/mailman/listinfo/ogsa-authz-wg</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>
+-- 
+
+*****************************************************************
+David W. Chadwick, BSc PhD
+Professor of Information Systems Security
+The Computing Laboratory, University of Kent, Canterbury, CT2 7NF
+Skype Name: davidwchadwick
+Tel: +44 1227 82 3221
+Fax +44 1227 762 811
+Mobile: +44 77 96 44 7184
+Email: <A HREF="http://www.ogf.org/mailman/listinfo/ogsa-wg">D.W.Chadwick at kent.ac.uk</A>
+Home Page: <A HREF="http://www.cs.kent.ac.uk/people/staff/dwc8/index.html">http://www.cs.kent.ac.uk/people/staff/dwc8/index.html</A>
+Research Web site: <A HREF="http://www.cs.kent.ac.uk/research/groups/iss/index.html">http://www.cs.kent.ac.uk/research/groups/iss/index.html</A>
+Entrust key validation string: MLJ9-DU5T-HV8J
+PGP Key ID is 0xBC238DE5
+
+*****************************************************************
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/ogsa-wg/2007-June/002748.html">[ogsa-wg] [OGSA-AUTHZ] [ogsa-authn-bof] Notes from Joint OGSA	WG AuthN/AuthZ call
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/ogsa-wg/2007-June/002753.html">[ogsa-wg] [OGSA-AUTHZ] [ogsa-authn-bof] Notes from Joint OGSA	WG AuthN/AuthZ call
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/date.html#2751">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/thread.html#2751">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/subject.html#2751">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/author.html#2751">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/ogsa-wg">More information about the ogsa-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/ogsa-wg/2007-June/002751.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:46:38 GMT -->
+</html>

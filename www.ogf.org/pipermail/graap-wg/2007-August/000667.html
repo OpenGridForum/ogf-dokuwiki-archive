@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/graap-wg/2007-August/000667.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 21:53:18 GMT -->
+<HEAD>
+   <TITLE> [GRAAP-WG] Modification to the wiki Page on Renegotiating an	established Agreement
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:graap-wg%40ogf.org?Subject=%5BGRAAP-WG%5D%20Modification%20to%20the%20wiki%20Page%20on%20Renegotiating%20an%0A%09established%20Agreement&In-Reply-To=000801c7e589%24c704f6a0%24b084380a%40Sakurai">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000666.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000668.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[GRAAP-WG] Modification to the wiki Page on Renegotiating an	established Agreement</H1>
+    <B>Michael Parkin</B> 
+    <A HREF="mailto:graap-wg%40ogf.org?Subject=%5BGRAAP-WG%5D%20Modification%20to%20the%20wiki%20Page%20on%20Renegotiating%20an%0A%09established%20Agreement&In-Reply-To=000801c7e589%24c704f6a0%24b084380a%40Sakurai"
+       TITLE="[GRAAP-WG] Modification to the wiki Page on Renegotiating an	established Agreement">parkinm at cs.man.ac.uk
+       </A><BR>
+    <I>Fri Aug 24 03:35:50 CDT 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000666.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating an	established Agreement
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000668.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating an	established Agreement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/date.html#667">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/thread.html#667">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/subject.html#667">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/author.html#667">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Toshi, Dominic,
+
+As no-one else has replied...
+
+On 23 Aug 2007, at 15:30, Toshiyuki Nakata wrote:
+
+&gt;&gt;<i> So, yes, there are problems but it looks like a lot of people want to
+</I>&gt;&gt;<i> have this extra commit message. Are there any written records on the
+</I>&gt;&gt;<i> pros and cons of having the 2PC?
+</I>&gt;<i>
+</I>&gt;<i> I think this info. is very important.
+</I>
+A 2PC-type protocol works well when you control everything. However,  
+where autonomous services are involved in (possibly) different  
+administrative domains (such as in a business environment) the cons  
+of using the 2PC style in agreements like this are well understood,  
+for example:
+
+* Skeen's paper [1] on commit protocols describes why 2PC is a  
+blocking protocol.
+
+* Pat Helland (formally Amazon, now Microsoft) describes the 2PC  
+protocol as the &quot;anti-availability protocol&quot; [2] because of the fact  
+it can block the transaction manager (Dominic, this would be the AR  
+in your protocol). As he says: &quot;[2pc] is best used sparingly&quot;.
+
+(Toshi - I also direct you to his article on &quot;accountants don't use  
+erasers&quot; [3] about why agreements should not be overwritten).
+
+* Mark McKeown also has a blog article [4] about the difficulty of  
+distributed consensus, which is essentially what you're trying to  
+achieve (FTA: &quot;consensus was originally called agreement&quot;).
+
+* If you want a lighter read the Wikipedia article [5] also discusses  
+2PC's blocking.
+
+About the Mobach, et. al. paper [6] - the last three steps in Figure  
+2.4 are a 2PC-type protocol. When the 'DC' (from the paper) returns  
+the 'agreement offer' to 'A' they are blocked from offering those  
+resources to anyone else (although this is an assumption because the  
+paper doesn't say explicitly what the 'agreement offer' actually means).
+
+Imagine the scenario: DC returns an offer to A1 saying 'these  
+resources for &#8364;10&quot;. Meanwhile A2, who is prepared to pay &#8364;10,000 for  
+the same resources cannot make the agreement because DC has offered  
+them to A1. A2 then goes and makes an agreement with another DC (e.g.  
+another business) and A1 decides they don't want the resources and  
+return a reject message. DC has lost &#8364;10,000 of income it could have  
+made because of the protocol it is using.
+
+If A1 is a proxy for a competitor of DC it could repeatedly keep  
+asking for offers it never intends to agree to meaning DC may loose  
+revenue...
+
+Dominic: before I comment further on your proposed protocol what  
+semantics are you attaching to the 'offer' message that the AR  
+returns to the AI? Does the offer mean 'if you accept I will  
+guarantee providing what is contained in this offer' or does it mean  
+something else?
+
+Michael.
+
+[1] <A HREF="http://www.cs.cornell.edu/courses/cs614/2004sp/papers/Ske81.pdf">http://www.cs.cornell.edu/courses/cs614/2004sp/papers/Ske81.pdf</A>
+[2] <A HREF="http://blogs.msdn.com/pathelland/archive/2007/05/20/soa-and-">http://blogs.msdn.com/pathelland/archive/2007/05/20/soa-and-</A> 
+newton-s-universe.aspx
+[3] <A HREF="http://blogs.msdn.com/pathelland/archive/2007/06/14/accountants-">http://blogs.msdn.com/pathelland/archive/2007/06/14/accountants-</A> 
+don-t-use-erasers.aspx
+[4] <A HREF="http://betathoughts.blogspot.com/2007/06/brief-history-of-">http://betathoughts.blogspot.com/2007/06/brief-history-of-</A> 
+consensus-2pc-and.html
+[5] <A HREF="http://en.wikipedia.org/wiki/Two-phase_commit">http://en.wikipedia.org/wiki/Two-phase_commit</A>
+[6] www.iids.org/publications/scpe06.pdf
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000666.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating an	established Agreement
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000668.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating an	established Agreement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/date.html#667">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/thread.html#667">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/subject.html#667">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/author.html#667">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/graap-wg">More information about the graap-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/graap-wg/2007-August/000667.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 21:53:18 GMT -->
+</html>

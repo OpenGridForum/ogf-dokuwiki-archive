@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/ogsa-wg/2007-June/002763.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:46:38 GMT -->
+<HEAD>
+   <TITLE> [ogsa-wg] [glue-wg] New draft of GLUE 2.0 Specification
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:ogsa-wg%40ogf.org?Subject=%5Bogsa-wg%5D%20%5Bglue-wg%5D%20New%20draft%20of%20GLUE%202.0%20Specification&In-Reply-To=921b10450706271859y4a1f4bc5m456ddfb845989ba7%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/ogsa-wg/2007-June/002761.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/ogsa-wg/2007-June/002764.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[ogsa-wg] [glue-wg] New draft of GLUE 2.0 Specification</H1>
+    <B>Sergio Andreozzi</B> 
+    <A HREF="mailto:ogsa-wg%40ogf.org?Subject=%5Bogsa-wg%5D%20%5Bglue-wg%5D%20New%20draft%20of%20GLUE%202.0%20Specification&In-Reply-To=921b10450706271859y4a1f4bc5m456ddfb845989ba7%40mail.gmail.com"
+       TITLE="[ogsa-wg] [glue-wg] New draft of GLUE 2.0 Specification">sergio.andreozzi at cnaf.infn.it
+       </A><BR>
+    <I>Thu Jun 28 07:34:37 CDT 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/ogsa-wg/2007-June/002761.html">[ogsa-wg] [Cancelled Event] Information Service (Laurence Field and	Adrian Toth) @ 2007-06-28 8am - 9am ()
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/ogsa-wg/2007-June/002764.html">[ogsa-wg] Bugfix for containers doc
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/date.html#2763">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/thread.html#2763">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/subject.html#2763">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/author.html#2763">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Gerson,
+
+Gerson Galang wrote:
+&gt;<i> Thanks for integrating our requirements into the new GLUE 2.0 spec. What 
+</I>&gt;<i> you have in the draft will work for us now.
+</I>&gt;<i> 
+</I>&gt;<i> The only thing I want to comment on is the ComputingShare's relationship 
+</I>&gt;<i> with the ComputingResource and ComputingService entities. If a 
+</I>&gt;<i> ComputingShare is an abstraction of a queue 
+</I>
+this is not always the case. That's why we have a different 
+naming/definition. For instance, in the LSF batch system you can use 
+hierarchical fair sharing in order to define different utilization 
+targets for jobs entering the same queue. The scheduling will consider 
+the group to which the job was mapped.
+
+
+Therefore you can have, for instance, one queue with three different 
+utilization targets for group A, B and C or three queues for each of 
+them. At the GLUE level, they will appear the same, via the share concept.
+
+&gt;<i> and the ComputingElement is 
+</I>&gt;<i> an abstraction of the Batch System, 
+</I>
+in the new version, the batch system is associated to the computing 
+resource. I realize that we have to clean up the properties list (moving 
+the batch system specific from computing element to computing resource).
+
+&gt;<i> then there should be a direct &gt;
+</I>&gt;<i> association between the ComputingShare and the ComputingElement. Having 
+</I>&gt;<i> the ComputingShare linked to the ComputingService will introduce a 
+</I>&gt;<i> number of replicated instances of the same ComputingShare on all the 
+</I>&gt;<i> ComputingServices which is not really necessary. Attached is the diagram 
+</I>&gt;<i> again to refresh your memory on what I think it should look like. 
+</I>&gt;<i> Anyway, just my 2 cents..
+</I>
+I think the relationship between a share and the service is needed 
+because you can expose a certain share via a certain service, while 
+another share with another service. You should be able to know which 
+share for which resource is accessible via a certain service interface.
+
+We will add detailed information in the doc revision.
+
+Cheers, Sergio
+
+&gt;<i> 
+</I>&gt;<i> Cheers,
+</I>&gt;<i> Gerson
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On 6/27/07, *Sergio Andreozzi* &lt; <A HREF="http://www.ogf.org/mailman/listinfo/ogsa-wg">sergio.andreozzi at cnaf.infn.it</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="http://www.ogf.org/mailman/listinfo/ogsa-wg">sergio.andreozzi at cnaf.infn.it</A>&gt;&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;<i>     Hi everybody,
+</I>&gt;<i> 
+</I>&gt;<i>     we have just uploaded a new draft of the GLUE 2.0 specification.
+</I>&gt;<i> 
+</I>&gt;<i>     Here are the main changes:
+</I>&gt;<i> 
+</I>&gt;<i>     - clarify difference between computing resource and computing element
+</I>&gt;<i>     - from Gerson Galang use case: single computing service in front of two
+</I>&gt;<i>     different batch systems
+</I>&gt;<i>     - general clean-up
+</I>&gt;<i>     - inclusion of first UML Class diagram for Storage Element (description
+</I>&gt;<i>     to be added)
+</I>&gt;<i>     - added activity entity
+</I>&gt;<i>     - promoted share entity as a main concept
+</I>&gt;<i> 
+</I>&gt;<i>     you can find it in the draft section of GLUE WG document repository:
+</I>&gt;<i>     <A HREF="http://forge.ogf.org/sf/docman/do/listDocuments/projects.glue-wg/docman.root.drafts">http://forge.ogf.org/sf/docman/do/listDocuments/projects.glue-wg/docman.root.drafts</A>
+</I>&gt;<i>     &lt;<A HREF="http://forge.ogf.org/sf/docman/do/listDocuments/projects.glue-wg/docman.root.drafts">http://forge.ogf.org/sf/docman/do/listDocuments/projects.glue-wg/docman.root.drafts</A>&gt;
+</I>&gt;<i> 
+</I>&gt;<i>     we plan to provide a preview of the new changes in the tomorrow call of
+</I>&gt;<i>     the OGSA Resource Management Design Team phonecall:
+</I>&gt;<i>     <A HREF="http://www.google.com/calendar/event?eid=N25vaWg5MjQ4NTRzOWJpdTU0c3VwMWZzcmMgb2dzYS53Z0Bt&amp;ctz=America/Chicago">http://www.google.com/calendar/event?eid=N25vaWg5MjQ4NTRzOWJpdTU0c3VwMWZzcmMgb2dzYS53Z0Bt&amp;ctz=America/Chicago</A>
+</I>&gt;<i>     &lt;<A HREF="http://www.google.com/calendar/event?eid=N25vaWg5MjQ4NTRzOWJpdTU0c3VwMWZzcmMgb2dzYS53Z0Bt&amp;ctz=America/Chicago">http://www.google.com/calendar/event?eid=N25vaWg5MjQ4NTRzOWJpdTU0c3VwMWZzcmMgb2dzYS53Z0Bt&amp;ctz=America/Chicago</A>&gt;
+</I>&gt;<i> 
+</I>&gt;<i>     (we apologize for the short-term advise)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i>     We will set up a phonecall next week for the GLUE WG. Comments/questions
+</I>&gt;<i>     are always welcome.
+</I>&gt;<i> 
+</I>&gt;<i>     Best regards,
+</I>&gt;<i> 
+</I>&gt;<i>     Sergio and Balazs
+</I>&gt;<i> 
+</I>&gt;<i>     --
+</I>&gt;<i>     Sergio Andreozzi
+</I>&gt;<i>     INFN-CNAF,                    Tel: +39 051 609 2860
+</I>&gt;<i>     Viale Berti Pichat, 6/2       Fax: +39 051 609 2746
+</I>&gt;<i>     40126 Bologna (Italy)         Web:
+</I>&gt;<i>     <A HREF="http://www.cnaf.infn.it/~andreozzi">http://www.cnaf.infn.it/~andreozzi</A>
+</I>&gt;<i>     &lt;<A HREF="http://www.cnaf.infn.it/~andreozzi">http://www.cnaf.infn.it/%7Eandreozzi</A>&gt;
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     glue-wg mailing list
+</I>&gt;<i>     <A HREF="http://www.ogf.org/mailman/listinfo/ogsa-wg">glue-wg at ogf.org</A> &lt;mailto:<A HREF="http://www.ogf.org/mailman/listinfo/ogsa-wg">glue-wg at ogf.org</A>&gt;
+</I>&gt;<i>     <A HREF="http://www.ogf.org/mailman/listinfo/glue-wg">http://www.ogf.org/mailman/listinfo/glue-wg</A>
+</I>&gt;<i>     &lt;<A HREF="http://www.ogf.org/mailman/listinfo/glue-wg">http://www.ogf.org/mailman/listinfo/glue-wg</A>&gt;
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>
+
+-- 
+Sergio Andreozzi
+INFN-CNAF,                    Tel: +39 051 609 2860
+Viale Berti Pichat, 6/2       Fax: +39 051 609 2746
+40126 Bologna (Italy)         Web: <A HREF="http://www.cnaf.infn.it/~andreozzi">http://www.cnaf.infn.it/~andreozzi</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/ogsa-wg/2007-June/002761.html">[ogsa-wg] [Cancelled Event] Information Service (Laurence Field and	Adrian Toth) @ 2007-06-28 8am - 9am ()
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/ogsa-wg/2007-June/002764.html">[ogsa-wg] Bugfix for containers doc
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/date.html#2763">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/thread.html#2763">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/subject.html#2763">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/ogsa-wg/2007-June/author.html#2763">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/ogsa-wg">More information about the ogsa-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/ogsa-wg/2007-June/002763.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:46:38 GMT -->
+</html>

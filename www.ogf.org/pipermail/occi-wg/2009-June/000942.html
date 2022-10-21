@@ -1,0 +1,296 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-June/000942.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:21 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Opinion Poll: IaaS or PaaS ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Opinion%20Poll%3A%20IaaS%20or%20PaaS%20%3F&In-Reply-To=9FA16888AD1BF64ABCE6C2532CCEB98A07AB55E3%40xmb-sjc-219.amer.cisco.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000941.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000979.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Opinion Poll: IaaS or PaaS ?</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Opinion%20Poll%3A%20IaaS%20or%20PaaS%20%3F&In-Reply-To=9FA16888AD1BF64ABCE6C2532CCEB98A07AB55E3%40xmb-sjc-219.amer.cisco.com"
+       TITLE="[occi-wg] Opinion Poll: IaaS or PaaS ?">samj at samj.net
+       </A><BR>
+    <I>Sun Jun 21 06:12:40 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000941.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000979.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/date.html#942">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/thread.html#942">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/subject.html#942">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/author.html#942">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Krishna,
+
+Native OVF support would certainly be advantageous to OEM offerings
+including Cisco's Unified Cloud (per Cisco and VMware Enhance Virtualization
+with Powerful, Scalable Unified Computing
+System&lt;<A HREF="http://www.vmware.com/company/news/releases/cisco-vmw-oem.html">http://www.vmware.com/company/news/releases/cisco-vmw-oem.html</A>&gt;)
+and IBM 's WebSphere CloudBurst Appliance (per IBM CloudBurst runs on
+ESXi&lt;<A HREF="http://blogs.vmware.com/esxi/2009/06/ibm-cloudburst-runs-on-esxi.html">http://blogs.vmware.com/esxi/2009/06/ibm-cloudburst-runs-on-esxi.html</A>&gt;)
+as these products are based on VMware, which as of the latest release now
+has full support for
+OVF&lt;<A HREF="http://www.dmtf.org/about/cloud-incubator/Cloud_Incubator_Quote_Sheet.pdf">http://www.dmtf.org/about/cloud-incubator/Cloud_Incubator_Quote_Sheet.pdf</A>&gt;(presumably
+meaning as a run-time rather than interchange format). As such
+we will ensure that it is supported, in that implementations that choose to
+implement it can both accept and produce OVF representations. Whether we
+make it an absolute requirement by incorporating it into the OCCI standard
+is yet to be decided - I'm unconvinced.
+
+Following ElasticHosts' example all you would need to create a server is the
+following (bearing in mind we're currently talking about putting storage and
+network association metadata in the headers):
+
+$ cat &lt;&lt; EOF | curl --url <A HREF="http://example.com/">http://example.com</A> -d @-
+name TestServer
+cpu 2000
+mem 1024
+EOF
+
+Doing the same in OVF would require (at least) tens of lines of XML, and
+were it easy to generate we wouldn't be seeing questions like &quot;How do you
+use completely free software to create ovf files for VMware
+ESXi?&lt;<A HREF="http://stackoverflow.com/questions/681519/how-do-you-use-completely-free-software-to-create-ovf-files-for-vmware-esxi">http://stackoverflow.com/questions/681519/how-do-you-use-completely-free-software-to-create-ovf-files-for-vmware-esxi</A>&gt;&quot;
+essentially going unanswered.
+
+Don't get me wrong - OVF support makes a lot of sense for many use cases...
+tor example it would be cool to be able to create a VM in a tool like VMware
+Fusion and upload it directly (save for the ironic lack of OVF
+support&lt;<A HREF="http://communities.vmware.com/message/947976">http://communities.vmware.com/message/947976</A>&gt;)
+and public cloud providers I'm sure would be very happy to make it easy for
+enterprises to upload existing virtualised infrastructure. Making it an
+absolute requirement is another matter (and one that made a lot more sense
+with my earlier proposals whereby it would have been carried transparently
+in Atom's content element).
+
+As for my second guessing what other SSOs are up to, these are my opinions
+based on clues like VMware's recent
+announcement&lt;<A HREF="http://www.vmware.com/company/news/releases/cloud-initiatives-vmworld.html">http://www.vmware.com/company/news/releases/cloud-initiatives-vmworld.html</A>&gt;that
+&quot;
+*as one of the original authors of the Open Virtualization Format (OVF)
+standard now released from the Distributed Management Task Force (DMTF),
+VMware will build upon that work by submitting a draft of its VMware vCloud
+API*&quot;. As they say in French, &quot;les cheins ne font pas des chats&quot; (literally
+&quot;cats don't make dogs&quot;) so with an existing standard injected this early in
+the development process it's hard to imagine the result won't look like (if
+not be [almost] identical to) the VMware
+API&lt;<A HREF="http://www.vmware.com/support/developer/vc-sdk/visdk400pubs/ReferenceGuide/index.html">http://www.vmware.com/support/developer/vc-sdk/visdk400pubs/ReferenceGuide/index.html</A>&gt;,
+complete with its 87 Managed Object References, 1331 Data Object Types, 168
+Enumeration Types and 435 Fault Types.
+
+Of course Cisco's a DMTF member so you've got a better chance of verifying
+this than I do... I've not yet been able to justify coughing up $200 for
+early access to the docs (assuming they already exist).
+
+Sam
+
+On Sat, Jun 20, 2009 at 8:11 PM, Krishna Sankar (ksankar) &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">ksankar at cisco.com</A>
+&gt;<i> wrote:
+</I>
+&gt;<i>  Sam,
+</I>&gt;<i>
+</I>&gt;<i> a)      I suggest you tone down your rhetoric (unless you have proof that,
+</I>&gt;<i> that is so) on what other SDOs might be doing &#8230; seek to understand first ;o)
+</I>&gt;<i> OGF (and GGF) has  long history of working with others and we do not want to
+</I>&gt;<i> singlehandedly reverse that
+</I>&gt;<i>
+</I>&gt;<i> b)      This is the standard NIH syndrome
+</I>&gt;<i>
+</I>&gt;<i> c)       And simpler format usually will get complex as the domain
+</I>&gt;<i> matures.
+</I>&gt;<i>
+</I>&gt;<i> d)      Moreover we can leverage future work done by others as the cloud
+</I>&gt;<i> computing domain grows and by extension we get more demands for the OCCI
+</I>&gt;<i> interfaces feature set &#8230;
+</I>&gt;<i>
+</I>&gt;<i> e)      BTW, why is it difficult to roll an OVF file ? After all it is an
+</I>&gt;<i> XML file. Are you having second thoughts on XML format ? ;o) Time to come
+</I>&gt;<i> clean if that is the case !
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Cheers
+</I>&gt;<i>
+</I>&gt;<i> &lt;k/&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> *From:* Sam Johnston [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">samj at samj.net</A>]
+</I>&gt;<i> *Sent:* Saturday, June 20, 2009 10:21 AM
+</I>&gt;<i> *To:* Michael Behrens
+</I>&gt;<i> *Cc:* Krishna Sankar (ksankar); Randy Bias; <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i>
+</I>&gt;<i> *Subject:* Re: [occi-wg] Opinion Poll: IaaS or PaaS ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I'd be surprised if OASIS were working on a new version given it's a DMTF
+</I>&gt;<i> standard but you're right - it's extensible and it's certainly one format I
+</I>&gt;<i> expect most, if not all, implementations to support anyway. DMTF are no
+</I>&gt;<i> doubt very busy rubber stamping VMware's vcloud API at the moment so I doubt
+</I>&gt;<i> OVF is high on their list of priorities - waiting for news from Thijs
+</I>&gt;<i> regarding our collaboration with them.
+</I>&gt;<i>
+</I>&gt;<i> The question then is if we want/need a simpler format ala ElasticHosts:
+</I>&gt;<i>
+</I>&gt;<i> cores 2
+</I>&gt;<i> memory 2048
+</I>&gt;<i> ...
+</I>&gt;<i>
+</I>&gt;<i> We quite probably do (it is after all a fairly simple problem to solve, as
+</I>&gt;<i> evidenced by the simplicity of your average virtual machine descriptor), and
+</I>&gt;<i> there are a good few people in support of this. In any case it would be at
+</I>&gt;<i> least mildly ironic to raise hell over XML in the protocol only to require
+</I>&gt;<i> it for the data interchange format ;)
+</I>&gt;<i>
+</I>&gt;<i> Rolling your own OVF file is a bit of a mission compared to sending a few
+</I>&gt;<i> key value pairs...
+</I>&gt;<i>
+</I>&gt;<i> Sam
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Jun 20, 2009 at 6:27 PM, Michael Behrens &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">michael.behrens at r2ad.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i> The OVF standard is extensible, so perhaps start with that and then extend
+</I>&gt;<i> as needed.  Does anyone know if OASIS is working on a new version?  If so,
+</I>&gt;<i> then perhaps a runtime/creation use-case could be submitted.
+</I>&gt;<i>
+</I>&gt;<i> Krishna Sankar (ksankar) wrote:
+</I>&gt;<i>
+</I>&gt;<i> Need to understand a little bit more on this.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> a)      Wouldn&#8217;t it be better to add the missing attributes/elements to
+</I>&gt;<i> OVF than inventing a new format
+</I>&gt;<i>
+</I>&gt;<i> b)      The client has to understand something &#8211; either OVF or some other
+</I>&gt;<i> representation. So why not add to OVF ?
+</I>&gt;<i>
+</I>&gt;<i> c)       Finally, are there something fundamentally missing from/totally
+</I>&gt;<i> incompatible with OVF that it cannot be fixed ?
+</I>&gt;<i>
+</I>&gt;<i> Cheers
+</I>&gt;<i>
+</I>&gt;<i> &lt;k/&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> *From:* <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A> [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A>&lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg-bounces at ogf.org</A>&gt;]
+</I>&gt;<i> *On Behalf Of *Sam Johnston
+</I>&gt;<i> *Sent:* Thursday, June 18, 2009 4:20 AM
+</I>&gt;<i> *To:* Randy Bias
+</I>&gt;<i> *Cc:* <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i> *Subject:* Re: [occi-wg] Opinion Poll: IaaS or PaaS ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Jun 18, 2009 at 8:32 AM, Randy Bias &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">randyb at neotactics.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>  Sure, but that's not the issue.  The issue is VM portability.  It's
+</I>&gt;<i> important, but difficult.  That's my point.  Specifying the hypervisor of an
+</I>&gt;<i> image just means the cloud has enough foreknowledge to reject the upload.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Exactly. In fact my main concern is that as OVF is only ever used as a
+</I>&gt;<i> transport rather than run-time format there are two potentially lossy
+</I>&gt;<i> transformations (one to bundle up e.g. a VMware virtual machine to OVF and
+</I>&gt;<i> another to unbundle it to say Hyper-V). Any settings that fall outside of
+</I>&gt;<i> the OVF net (potentially including critical details such as interface
+</I>&gt;<i> parameters) will be ignored at best and lost at worst.
+</I>&gt;<i>
+</I>&gt;<i> If a client wants to make a VM it should not need to understand OVF so we
+</I>&gt;<i> will have our own, simple descriptor language that I imagine will end up
+</I>&gt;<i> looking like the stuff in VMX files (example attached). If we are careful
+</I>&gt;<i> about how we do this we may well be able to solve the VM portability problem
+</I>&gt;<i> as well - something I'm sure many of the open source projects would be happy
+</I>&gt;<i> to see.
+</I>&gt;<i>
+</I>&gt;<i> Sam
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     On Jun 14, 2009, at 8:38 PM, Sam Johnston wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Jun 15, 2009 at 5:05 AM, Randy Bias &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">randyb at neotactics.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>    If you don't have this capability then allowing the upload of completely
+</I>&gt;<i> opaque images and hoping they will have any kind of reasonable performance
+</I>&gt;<i> on an arbitrary cloud providers system is a pipe dream.  This is an area
+</I>&gt;<i> badly in need of standardization, but I doubt it will come any time soon.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Fortunately specifying the type of hypervisor an image is tied to/optimised
+</I>&gt;<i> for isn't hard...
+</I>&gt;<i>
+</I>&gt;<i> Sam
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Randy Bias, Cloud Strategist
+</I>&gt;<i> +1 (415) 939-8507 [m], <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">randyb at neotactics.com</A>
+</I>&gt;<i>
+</I>&gt;<i> BLOG: <A HREF="http://cloudscaling.com/">http://cloudscaling.com</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>
+</I>&gt;<i> occi-wg mailing list
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090621/b2a3d900/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090621/b2a3d900/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000941.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000979.html">[occi-wg] Opinion Poll: IaaS or PaaS ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/date.html#942">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/thread.html#942">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/subject.html#942">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/author.html#942">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-June/000942.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:21 GMT -->
+</html>

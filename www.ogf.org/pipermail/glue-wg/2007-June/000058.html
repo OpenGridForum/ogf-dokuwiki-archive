@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2007-June/000058.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:46:39 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] GLUE2.0's Computing Element
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20GLUE2.0%27s%20Computing%20Element&In-Reply-To=46608EB2.8030508%40cern.ch">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2007-June/000052.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2007-June/000061.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] GLUE2.0's Computing Element</H1>
+    <B>Gerson Galang</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20GLUE2.0%27s%20Computing%20Element&In-Reply-To=46608EB2.8030508%40cern.ch"
+       TITLE="[glue-wg] GLUE2.0's Computing Element">gerson.sapac at gmail.com
+       </A><BR>
+    <I>Mon Jun  4 20:01:47 CDT 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-June/000052.html">[glue-wg] GLUE2.0's Computing Element
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-June/000061.html">[glue-wg] GLUE2.0's Computing Element
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/date.html#58">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/thread.html#58">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/subject.html#58">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/author.html#58">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Laurence, Sergio,
+
+For me a cluster represents a set of resources that are managed, which
+&gt;<i> essentially is a batch system with a master server. The queue represents
+</I>&gt;<i> two things; an end point and a policy.  The GRAM service is an interface
+</I>&gt;<i> to the batch system and therefore an end point.
+</I>&gt;<i>
+</I>&gt;<i> How you represent these things depends on the implementation.
+</I>&gt;<i>
+</I>&gt;<i> 1) If the job attributes are passed to the batch system, then based on
+</I>&gt;<i> these it should decide which queue (policy) best matches the
+</I>&gt;<i> requirements. In such a scenario,
+</I>&gt;<i> you would then publish two services (end points), one for each batch
+</I>&gt;<i> system, and the gateway should route the job to the relevant batch
+</I>&gt;<i> system based on which service (end point) was used.
+</I>
+
+What you have desribed above might not work for us.  The GRAM does not have
+the restriction of only being able to submit (interface) to one batch system
+(PBS server for our case). Even if we have more than one cluster at our
+site, we can easily pick which queue and cluster we want to run our job on
+by having the queue element specified in the RSL..
+
+&lt;queue&gt;<A HREF="http://www.ogf.org/mailman/listinfo/glue-wg">small at pbsserver1</A>&lt;/queue&gt;
+
+An instance of the WSGRAM service can only have one unique endpoint and if
+we implement the setup you've described above, we'll need to run one GT4
+container for each batch system (cluster) we are managing here at our site.
+
+2) If the the job requirements are not passed though, then you have to
+&gt;<i> consider each queue to be a different endpoint and hence have a service
+</I>&gt;<i> (end point) per batch system and per queue (policy). The gateway would
+</I>&gt;<i> then route the job also to the correct queue.
+</I>
+
+Same comment as above.
+
+In either case the policy (queue) would be advertised as a share.
+&gt;<i> However, in the second case I am not sure how the end point is linked to
+</I>&gt;<i> the policy.
+</I>
+
+Here's how we can probably fix the problem..
+- remove the association between the ComputingService and Share
+- directly link Share to the ComputingElement (the queuing system). The
+ComputingElement won't be a computing element if it doesn't provide at least
+one Share (a queue).
+- multiplicity of the link between the ComputingElement and ComputingService
+should be &quot;1..*&quot; on the ComputingElement side
+
+Attached is  a UML diagram of the changes I made to the original diagram.
+
+Cheers,
+Gerson
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/glue-wg/attachments/20070605/61560e21/attachment.htm">http://www.ogf.org/pipermail/glue-wg/attachments/20070605/61560e21/attachment.htm</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: glue2.0-ce.jpg
+Type: image/jpeg
+Size: 17112 bytes
+Desc: not available
+Url : <A HREF="http://www.ogf.org/pipermail/glue-wg/attachments/20070605/61560e21/attachment-0001.jpg">http://www.ogf.org/pipermail/glue-wg/attachments/20070605/61560e21/attachment-0001.jpg</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-June/000052.html">[glue-wg] GLUE2.0's Computing Element
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2007-June/000061.html">[glue-wg] GLUE2.0's Computing Element
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/date.html#58">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/thread.html#58">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/subject.html#58">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2007-June/author.html#58">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2007-June/000058.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:46:39 GMT -->
+</html>

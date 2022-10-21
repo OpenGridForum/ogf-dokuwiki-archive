@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000065.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+<HEAD>
+   <TITLE> [Nml-wg] modelisation of the network description and dynamic	circuits
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20modelisation%20of%20the%20network%20description%20and%20dynamic%0A%09circuits&In-Reply-To=47CFA77B.3070301%40science.uva.nl">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000064.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000067.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nml-wg] modelisation of the network description and dynamic	circuits</H1>
+    <B>John Vollbrecht</B> 
+    <A HREF="mailto:nml-wg%40ogf.org?Subject=%5BNml-wg%5D%20modelisation%20of%20the%20network%20description%20and%20dynamic%0A%09circuits&In-Reply-To=47CFA77B.3070301%40science.uva.nl"
+       TITLE="[Nml-wg] modelisation of the network description and dynamic	circuits">jrv at internet2.edu
+       </A><BR>
+    <I>Thu Mar  6 16:23:15 CST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000064.html">[Nml-wg] About modelisation of the network description
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000067.html">[Nml-wg] modelisation of the network description and dynamic circuits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#65">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#65">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#65">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#65">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This has been a great thread, and I would like to throw in a couple  
+ideas about how DCN setup works or could work to get your ideas.
+
+First -  There are a couple cases where the obvious way of describing  
+a network doesn't work for DCN.
+Case 1 - We have a network with an ethernet interface to a switch.   
+The switch is statically configured to take some VLANS to one  
+endpoint and other VLANS to other networks.  The way we have talked  
+about handling this is to create a separate link for each VLAN group.
+
+I am not good at XML so I will write this as
+
+domain=Internet2
+node=Boston-Ciena
+port = ethenet-A
+link = bu.edu
+
+domain=Internet2
+node=Boston-Ciena
+port = ethenet-A
+link = tufts.edu
+
+Now  in the properties (I  think) for each link will be included the  
+allowable VLANS.
+My question is how one describes a link as a set of VLANS
+
+Case 2 - Between I2-NY and GEANT-Paris we want to create multiple GE  
+circuits which can be used to create connections between I2 and  
+GEANT.  One way to do this seems to be to create a &quot;traffic  
+engineering-link&quot; between NY and Paris.  The GE Ports are used when  
+making a connection, and the points of the link have to determine  
+which ports are available in much the same way that we determine  
+which VLANS are available now.  This seems to me to be equivalent to  
+creating a &quot;virtual&quot; link between NY and Paris.
+
+I think Aaron said this would be possible (I may have  
+misunderstood).  If so I am wondering how this would be represented  
+in the topology schema, and then how it is presented - presumably as  
+a &quot;view&quot; or model to DCN.
+
+John
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000064.html">[Nml-wg] About modelisation of the network description
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/nml-wg/2008-March/000067.html">[Nml-wg] modelisation of the network description and dynamic circuits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/date.html#65">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/thread.html#65">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/subject.html#65">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/nml-wg/2008-March/author.html#65">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/nml-wg">More information about the nml-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/nml-wg/2008-March/000065.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 13:33:14 GMT -->
+</html>

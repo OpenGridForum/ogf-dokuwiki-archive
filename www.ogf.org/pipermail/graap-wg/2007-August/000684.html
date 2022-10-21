@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/graap-wg/2007-August/000684.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 21:53:18 GMT -->
+<HEAD>
+   <TITLE> [GRAAP-WG] Modification to the wiki Page on Renegotiating	an	established Agreement
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:graap-wg%40ogf.org?Subject=%5BGRAAP-WG%5D%20Modification%20to%20the%20wiki%20Page%20on%20Renegotiating%0A%09an%09established%20Agreement&In-Reply-To=46D30F1C.9070604%40battre.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000683.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000686.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[GRAAP-WG] Modification to the wiki Page on Renegotiating	an	established Agreement</H1>
+    <B>Karl Czajkowski</B> 
+    <A HREF="mailto:graap-wg%40ogf.org?Subject=%5BGRAAP-WG%5D%20Modification%20to%20the%20wiki%20Page%20on%20Renegotiating%0A%09an%09established%20Agreement&In-Reply-To=46D30F1C.9070604%40battre.de"
+       TITLE="[GRAAP-WG] Modification to the wiki Page on Renegotiating	an	established Agreement">karlcz at univa.com
+       </A><BR>
+    <I>Mon Aug 27 21:21:39 CDT 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000683.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating an established Agreement
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000686.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating an	established Agreement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/date.html#684">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/thread.html#684">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/subject.html#684">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/author.html#684">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Aug 27, Dominic Battre modulated:
+
+&gt;<i> I tried to digest that and this is what I came up with:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://cit-server.cit.tu-berlin.de/trac/negmgr/wiki/TwoPhaseCommit">https://cit-server.cit.tu-berlin.de/trac/negmgr/wiki/TwoPhaseCommit</A>
+</I>&gt;<i> 
+</I>&gt;<i> (I used my wiki because it supports tables)
+</I>&gt;<i> 
+</I>&gt;<i> It would be great, if you could have a brief look at it and tell me
+</I>&gt;<i> whether this is what you had in mind.
+</I>&gt;<i> 
+</I>
+Well, your example looks like a solution with a new invitation
+message.  The basic 2PC/advance reservation idiom, as already
+illustrated in the advance reservatione example in the spec, would be:
+
+   Consumer                                    Provider
+   (as Initiator)                              (as Responder)
+
+   a. discovery
+
+                     &lt;--- template ---
+
+   b. prepare
+
+                      --- createAgreement(SLA1) ---&gt;
+
+                     &lt;--- accept --- (or reject to abort preparation)
+
+   c. commit
+
+                      --- createAgreement(SLA2) ---&gt;
+
+                     &lt;--- accept --- (reject would be a serious failure)
+
+
+The discovery phase (a) is not emphasized in WS-Agreement because it
+was assumed to be an area where OGSA would provide other
+solutions. The basic WSRF resource property model was considered
+sufficient to capture the template model and allow basic query, but
+one hopes there will be search services where a consumer could locate
+providers with relevant templates.  It might also include other 
+non-obligating queries regarding resource availability.
+
+The SLA1 in phase (b) is the advance reservation and captures the
+resource requirements that are needed for the co-allocation.  Due to
+the limited negotiation model in WS-Agreement, the co-allocation
+solution must already be concretely proposed here, e.g. the time of
+resource availability is part of the SLA1 terms, since the
+consumer/initiator has to make consistent advance reservation
+proposals to all providers involved in the transaction. The only
+answer available in the protocol is &quot;yes/no&quot; as to whether they can
+prepare as requested in SLA1.  (If you are looking for a
+proposal/counter-offer pattern, that is an entirely different issue
+than this 2PC synchronization.  That, indeed, requires a new
+negotiation protocol, though it is possible to define was as an
+extension or complement to WS-Agreement.)
+
+If preparation fails, the initiator can cancel/destroy any existing
+reservations to abort the 2PC transaction.  Therefore, as I mentioned
+previously, a cost model with cheap advance reservation+cancellation
+is required to allow this idiom.  One would expect that the cost of
+reservation goes up the longer it is held, e.g. to discourage
+aggressive use of 2PC resulting in live-lock of resources.
+
+The SLA2 in phase (c) is the actual &quot;job&quot; or whatever was intended to
+be co-scheduled.  It makes claims on the appropriate SLA1 which should
+mean that the provider is obligated to accept this claim, since he
+already promised the resources.  Thus, rejection at this time is
+unexpected and indicates a violation, so the 2PC semantics would fall
+apart here.  (Note, this is no different than any other way that a
+non-trusted/partially-trusted party could choose to violate 2PC
+protocols.)
+
+
+karl
+
+-- 
+Karl Czajkowski
+Software Architect
+
+Univa Corporation
+1001 Warrenville Road, Suite 550
+Lisle, IL 60532
+
+<A HREF="http://www.ogf.org/mailman/listinfo/graap-wg">karlcz at univa.com</A>
+www.univa.com
+________________________________________________________________
+www.univa.com.
+
+The Leaders of Open Source Cluster and Grid Software
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000683.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating an established Agreement
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/graap-wg/2007-August/000686.html">[GRAAP-WG] Modification to the wiki Page on Renegotiating an	established Agreement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/date.html#684">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/thread.html#684">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/subject.html#684">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/graap-wg/2007-August/author.html#684">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/graap-wg">More information about the graap-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/graap-wg/2007-August/000684.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 21:53:18 GMT -->
+</html>

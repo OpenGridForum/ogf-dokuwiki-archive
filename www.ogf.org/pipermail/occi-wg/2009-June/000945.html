@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-June/000945.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:21 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Ambiguity regarding Collections
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Ambiguity%20regarding%20Collections&In-Reply-To=8abf61f70906241255lb3ca444oeae8b5f1561521ac%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000944.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000946.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Ambiguity regarding Collections</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Ambiguity%20regarding%20Collections&In-Reply-To=8abf61f70906241255lb3ca444oeae8b5f1561521ac%40mail.gmail.com"
+       TITLE="[occi-wg] Ambiguity regarding Collections">samj at samj.net
+       </A><BR>
+    <I>Wed Jun 24 15:11:42 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000944.html">[occi-wg] Ambiguity regarding Collections
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000946.html">[occi-wg] Ambiguity regarding Collections
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/date.html#945">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/thread.html#945">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/subject.html#945">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/author.html#945">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Jun 24, 2009 at 9:55 PM, &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">shlomo.swidler at gmail.com</A>&gt; wrote:
+
+&gt;<i> [I've been a lurker here since the very beginning of this list. I'm an
+</I>&gt;<i> end-user, interested in using OCCI to allow me to minimize the vendor
+</I>&gt;<i> lock-in of my cloud deployments. I have experience in writing and
+</I>&gt;<i> implementing specs of the JSR kind.]
+</I>&gt;<i>
+</I>&gt;<i> There seems to me to be some potential ambiguity in the &quot;spec&quot;
+</I>&gt;<i> regarding collections. I'm referring to the HTML attached [1] to the
+</I>&gt;<i> most recent Conference Call agenda (which I did not attend, so forgive
+</I>&gt;<i> me if this was discussed).
+</I>&gt;<i>
+</I>
+Great - we discussed how the specification would be documented on today's
+call and there was some concern that it wouldn't be long/formal enough if we
+continue on as I've started but I'd prefer to produce something that is as
+concise as possible (ideally no more than a few pages).
+
+
+&gt;<i> The document says:
+</I>&gt;<i> Operations that return multiple resources (e.g. categories, searches)
+</I>&gt;<i> are rendered as an Atom feed with an Atom entry per resource.
+</I>&gt;<i>
+</I>&gt;<i> Does this mean that a conforming implementation can, if there is only
+</I>&gt;<i> a single resource to return, choose to return it as a collection of
+</I>&gt;<i> length 1 OR as a &quot;flat&quot; description without Atom wrapping? Or, does it
+</I>&gt;<i> mean that &quot;operations that, by their nature, can potentially return
+</I>&gt;<i> multiple resources (such as search) will return these results
+</I>&gt;<i> enumerated via an Atom feed REGARDLESS of how many results there are&quot;?
+</I>&gt;<i>
+</I>
+My initial plan was to use Atom regardless of the cardinality (following
+Google's example with GData which is essentially just AtomPub) but there was
+stiff opposition to XML. The simplest way to retain the flexibility while
+dropping the absolute requirement for XML support in the clients was to
+shift metadata to the HTTP headers for individual resources. That is to say:
+
+ - If you retrieve a representation of a single resource you will get just
+the representation itself (with the metadata out of harm's way in the
+headers)
+ - If you instead request something that *could* return multiple resources
+(e.g. a category, search, etc.) then you will receive a feed with zero or
+more entries.
+
+Cheers,
+
+Sam
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090624/20432e31/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090624/20432e31/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000944.html">[occi-wg] Ambiguity regarding Collections
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000946.html">[occi-wg] Ambiguity regarding Collections
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/date.html#945">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/thread.html#945">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/subject.html#945">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/author.html#945">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-June/000945.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:21 GMT -->
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000773.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] OCCI Model UML, XSD, XML, Code...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20Model%20UML%2C%20XSD%2C%20XML%2C%20Code...&In-Reply-To=21606dcf0905250956m5b254bd5j4c984aa9bb47dba1%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000771.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000782.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] OCCI Model UML, XSD, XML, Code...</H1>
+    <B>Edmonds, AndrewX</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20OCCI%20Model%20UML%2C%20XSD%2C%20XML%2C%20Code...&In-Reply-To=21606dcf0905250956m5b254bd5j4c984aa9bb47dba1%40mail.gmail.com"
+       TITLE="[occi-wg] OCCI Model UML, XSD, XML, Code...">andrewx.edmonds at intel.com
+       </A><BR>
+    <I>Mon May 25 12:53:58 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000771.html">[occi-wg] OCCI Model UML, XSD, XML, Code...
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000782.html">[occi-wg] OCCI Model UML, XSD, XML, Code...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#773">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#773">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#773">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#773">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Cheers for the feedback! &#9786; Inline&#8230;
+
+Andy
+PS: I removed the CC&#8217;ed folk &#8211; only wanted originally to notify them directly of their mentioning in the original mail.
+
+From: Sam Johnston [mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">samj at samj.net</A>]
+Sent: 25 May 2009 17:56
+To: Edmonds, AndrewX
+Cc: <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>; Richard Davies; Gary Mazz; Roger Menday; Andre Merzky
+Subject: Re: OCCI Model UML, XSD, XML, Code...
+
+Andy,
+
+Thanks for your efforts - I find it easiest to look at this rendering&lt;<A HREF="http://forge.ogf.org/sf/wiki/do/viewAttachment/projects.occi-wg/wiki/NounsVerbsAndAttributes/occi-instance.xml">http://forge.ogf.org/sf/wiki/do/viewAttachment/projects.occi-wg/wiki/NounsVerbsAndAttributes/occi-instance.xml</A>&gt; to work out what it boils down to and I can't help but to notice there are already some strong similarities with Atom (as well as some serious limitations courtesy the &quot;simplification&quot;):
+[AE: ] Compare atom to many other models and I&#8217;m sure there&#8217;s a reasonably easy mapping. The rendering may not be perfect, I&#8217;ll be the first to admit it &#9786; If there are other limitations do please list them. I&#8217;d be keen to hear.
+
+ *   How do I tell the difference between resources without a unique identifier (Atom &quot;id&quot;)
+[AE: ] The current OCCI nouns/verbs/attributes do not specify this, hence a requirement. I&#8217;ve only taken what&#8217;s on the wiki and worked with that along
+
+ *   How do I tell when the resource was updated (Atom &quot;updated&quot;) and/or what version it is (ETag)
+[AE: ] Same as above
+
+ *   How do I find one or more resources by search/category/tag/etc.?
+[AE: ] See occi:Tag
+
+ *   How do I represent a single object?
+[AE: ] See occi:Compute or indeed occi:Resource
+
+ *   How do I differentiate between tag vocabularies - &quot;small&quot; and &quot;virtualmachine&quot; are talking about two completely different concepts (Atom &quot;category&quot;)
+[AE: ] &#9786; tag == folksonomy. I guess you are referring to ontology?
+
+ *   How do I create generic links to supporting resources e.g. screenshots, consoles, etc. (Atom &quot;link&quot;)
+[AE: ] See my first answer. Also occi:Link &#8211; oops my bad this is there but should be xs:complexType not xs:attributeGroup. I&#8217;ll update this.
+
+ *   How do I create associations with arbitrary resources e.g. users (Atom &quot;link&quot;)
+[AE: ] See first answer. Extend atom:linkType or simply import it. Arbitrary? I thought OCCI was focused on the specific domain of Infrastructure and we spent time on extracting core nouns.
+
+ *   How do I carry critical information that we nonetheless consider out of scope (e.g. OVF)
+[AE: ] can introduce xsd:anyType into the model easily
+
+ *   How do we extend the spec? (e.g. rinse &amp; repeat)
+[AE: ] Extend the XSD.
+
+ *   How do vendors/users extend the spec? (e.g. namespaces?)
+[AE: ] As above plus some notions of governance from OCCI, yet to be discussed.
+
+ *   How do I import/export resource(s) (e.g. OVA)
+[AE: ] Now we&#8217;re into application specific functionality/features&#8230; something of an orthogonal for modelling activities. Perhaps closest here is model transforms.
+
+ *   etc.
+[AE: ] The more requirements the better. In fact OCCI does not define the base units of attribute values that are part of the model. I don&#8217;t think these can be found within Atom. Perhaps there&#8217;s an XSD out there that we could import and reuse those based units (e.g. MB, MHz etc). Also it would be nice to be able to add arbitrary infrastructure related parameters to any entity in the model.
+You need not answer these questions but the thought exercise should leave you with something that looks almost identical to Atom. I know because this was the exact process I used to arrive at Atom in the first place - library and information science is similar regardless of the subject.
+[AE: ] Ah I did it anyway &#9786;
+
+Following a (long) conversation over (numerous) beers with Alexis on Friday I have come to the conclusion that the meta-model is quite separate from the representation, which is to say that collections, organisation, association, etc. can be done generically while providing a simple &quot;OCCI&quot; representation of the various resources is a domain-specific task.
+[AE: ] Meta-model constrains the model. The model defines how a model instance can be created. Representation is the model instance and can be rendered. So in my view they are related, albeit through 2 levels of indirection.
+For the former (meta-model) HTTP and/or Atom clearly make the most sense but for the latter we need to be careful not to end up reinventing CIM. Gary's list of network attributes gave me pause over the weekend and I think the best way to filter this is to consider what functionality is supplied rather than what functionality is demanded. That is to say, today public cloud providers do IPv4 so we provide attributes for IPv4. If multiple vendors do IPv6 we add IPv6. If nobody does IPX/SPX then too bad for those who need it. This stuff still needs to go somewhere though, which is why multiple representations are essential.
+[AE: ] I agree on this (being careful not extending CIM). In fact this is one of OVF&#8217;s strengths. It&#8217;s quite easy to include elements and attributes defined in the RASD schema in OVF, allowing people extending OVF reach into a huge library of entity definitions. Regarding IP issues and hence specific technology dependencies, I remember you describing a solution where we not concentrate on such details but rather assign compute resources (VM) to networks by tag. Whatever came of that?
+
+If it wasn't already clear, I'm very anti the approach of modeling the problem and blatting out one or more representations, irrespective of the delimiters used. A lot of good work has already been done on HTTP and Atom meta-models and giving everyone else the forks by creating yet another domain-specific language is not something I plan to be in any way associated with... the result will almost certainly be an interop train wreck not unlike WS-*
+[AE: ] The modelling approach through to XSD is just one that was followed by the Atom folks in one way or another to arrive at a domain-specific model for the publishing and manipulation of content. If you don&#8217;t model the problem &#8211; even on paper, napkin or beer mat how do you expect to fully understand it? /joke If you wish not to be domain-specific then might I introduce you to my little friend void* :-D
+With atom imho if you want to use it other than publish blog articles then you will have to create something more domain specific &#8211; I wouldn&#8217;t be attempting to cout my void* to atom:entry and hope someone understand the content within atom:entry.
+
+In summary I'd like to see us use Atom where absolutely necessary (e.g. collections) and raw HTTP with multiple representations everywhere else. One of those representations can be a restricted syntax based on features with multiple deployments (but users would also be free to send/receive OVF or even their own home grown guff if they want).
+[AE: ] That&#8217;s perfectly fine but what will those representations look like? Who will define them? How will you verify them? If we&#8217;re not using even Atom, what will it be?
+
+Sam
+On Mon, May 25, 2009 at 5:57 PM, Edmonds, AndrewX &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">andrewx.edmonds at intel.com</A>&lt;mailto:<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">andrewx.edmonds at intel.com</A>&gt;&gt; wrote:
+I've been spent some time on the proposed meta-model [1] and model [1] UML that is up on the wiki along with the inputs of others. Following some discussions with Roger and Andre, I decided to take the model in its UML form and create the corresponding XSD. In fact Roger might have the a RDF version of the XSD sometime. This XSD can be found here [2]. Now I don't class myself as a XSD expert so any comments, updates etc are appreciated. From this XSD I was able to generate an API to create and manipulate an in-memory representation of a model instance. This example code can be found here [3]. It's Java and uses XMLBeans[4], but there are many other libraries out there that will allow the generation of an API in languages such as Python[5], Ruby[6], CSharp[7] (typically any language that has SOAP libraries will have an XSD class generator). After rendering the in-memory model the XML rendering is specific but adheres to the OCCI model schema and can be viewed here[8]. Again how things appear in the XML can be tweaked via iteration of the schema. For those JSON peeps out there there's an already XSLT transform sheets out there that will convert this XML to JSON using different conventions [9][10].
+
+This model is abstract in a sense it does not import any dependencies, such as Atom. @Sam perhaps you could take what I've done and either by way of model inheritance or composition show how Atom would integrate with this model?
+
+My view on Atom is that it is useful as a wrapper to renderings of OCCI model instances. If I wanted to publish an OCCI model via Atom then I'd insert a model instance rendering into an atom:entry element (note we could include JSON via CDATA but this is where JSON perhaps gets a little ugly). This would be OCCI using Atom by way of composition and would allow both Atom and OCCI live harmoniously together or separately and not require Atom dependencies should that be the choice of a provider. What's important is that the OCCI model be it via Atom or something else could be understood by a receiving system. Using Atom with OCCI by way of inheritance makes the previous &quot;with or without&quot; approach a little more difficult as there's a hard-dependency on Atom.
+
+Atom reminds me somewhat of WS-Agreement, SOAP etc. It doesn't solve your domain-specific model problems (i.e. what you are trying to represent - OCCI==Infrastructure), only provide a means to send this content about and mechanisms supporting this but perhaps not directly to the model contained as content. We still have to understand and represent our noun/verb/attribute triplets. Atom doesn't really help out bar the features it offers by way of sitting on top of HTTP. Now of course you can extend Atom base types (in fact AFAIK they're just xs:complexTypes W3C XSD types) but the point is you have to extend them to _something_. That something is your domain specific model. There is value however in Atom, not from the model point of view - it's a very simple model. The value in Atom is in the directions the specifications gives pertaining to Atom service behaviour. Another way to view Atom is the interoperability glue in between the now almost commonly accepted cloud stack of Infrastructure -&gt; Platform -&gt; Service. This is where OCCI could learn quite an amount but when you consider that the basis of these behaviours are steeply entrenched in REST design principles it's easy to see 1) why Atom is attractive 2) that you don't necessarily need Atom to have correct and/or standard service behaviour - just adopt good, sound REST design principles!
+
+On more specifics and related to the attributes of each noun, we are still rather under-specified especially in the Storage and Network nouns. @Richard and @Gary (in separate threads) started a useful discussion on attributes for these nouns. Perhaps you two guys could add your findings and suggestions to the wiki?
+
+Andy
+
+PS: for those of you wanting to run the code I've exported the eclipse project and can be found here [11].
+
+[1] <A HREF="http://forge.ogf.org/sf/wiki/do/viewPage/projects.occi-wg/wiki/NounsVerbsAndAttributes">http://forge.ogf.org/sf/wiki/do/viewPage/projects.occi-wg/wiki/NounsVerbsAndAttributes</A>
+[2] <A HREF="http://forge.ogf.org/sf/wiki/do/viewAttachment/projects.occi-wg/wiki/NounsVerbsAndAttributes/occi.xsd">http://forge.ogf.org/sf/wiki/do/viewAttachment/projects.occi-wg/wiki/NounsVerbsAndAttributes/occi.xsd</A>
+[3] <A HREF="http://forge.ogf.org/sf/wiki/do/viewAttachment/projects.occi-wg/wiki/NounsVerbsAndAttributes/OCCITest.java">http://forge.ogf.org/sf/wiki/do/viewAttachment/projects.occi-wg/wiki/NounsVerbsAndAttributes/OCCITest.java</A>
+[4] <A HREF="http://xmlbeans.apache.org/">http://xmlbeans.apache.org</A>
+[5] <A HREF="http://www.rexx.com/~dkuhlman/generateDS.html<http://www.rexx.com/~dkuhlman/generateDS.html">http://www.rexx.com/~dkuhlman/generateDS.html&lt;http://www.rexx.com/%7Edkuhlman/generateDS.html</A>&gt;
+[6] <A HREF="http://dev.ctor.org/soap4r/browser/trunk/bin/xsd2ruby.rb">http://dev.ctor.org/soap4r/browser/trunk/bin/xsd2ruby.rb</A>
+[7] <A HREF="http://xsd2code.codeplex.com/Wiki/View.aspx">http://xsd2code.codeplex.com/Wiki/View.aspx</A>
+[8] <A HREF="http://forge.ogf.org/sf/wiki/do/viewAttachment/projects.occi-wg/wiki/NounsVerbsAndAttributes/occi-instance.xml">http://forge.ogf.org/sf/wiki/do/viewAttachment/projects.occi-wg/wiki/NounsVerbsAndAttributes/occi-instance.xml</A>
+[9] <A HREF="http://code.google.com/p/xml2json-xslt/">http://code.google.com/p/xml2json-xslt/</A>
+[10] <A HREF="http://www.bramstein.com/projects/xsltjson/">http://www.bramstein.com/projects/xsltjson/</A>
+[11] <A HREF="http://forge.ogf.org/sf/wiki/do/viewAttachment/projects.occi-wg/wiki/NounsVerbsAndAttributes/OCCIModel-eclipse-project.zip">http://forge.ogf.org/sf/wiki/do/viewAttachment/projects.occi-wg/wiki/NounsVerbsAndAttributes/OCCIModel-eclipse-project.zip</A>
+
+Andy Edmonds
+skype: andy.edmonds
+tweets: @dizz
+tel: +353 (0)1 6069232
+
+IT Research - IT Innovation Centre - Intel Ireland Ltd.
+Intel Ireland Limited (Branch)
+Collinstown Industrial Park, Leixlip, County Kildare, Ireland
+Registered Number: E902934
+
+This e-mail and any attachments may contain confidential material for
+the sole use of the intended recipient(s). Any review or distribution
+by others is strictly prohibited. If you are not the intended
+recipient, please contact the sender and delete all copies.
+
+
+-------------------------------------------------------------
+Intel Ireland Limited (Branch)
+Collinstown Industrial Park, Leixlip, County Kildare, Ireland
+Registered Number: E902934
+
+This e-mail and any attachments may contain confidential material for
+the sole use of the intended recipient(s). Any review or distribution
+by others is strictly prohibited. If you are not the intended
+recipient, please contact the sender and delete all copies.
+
+-------------------------------------------------------------
+Intel Ireland Limited (Branch)
+Collinstown Industrial Park, Leixlip, County Kildare, Ireland
+Registered Number: E902934
+
+This e-mail and any attachments may contain confidential material for
+the sole use of the intended recipient(s). Any review or distribution
+by others is strictly prohibited. If you are not the intended
+recipient, please contact the sender and delete all copies.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090525/49142af4/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090525/49142af4/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000771.html">[occi-wg] OCCI Model UML, XSD, XML, Code...
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000782.html">[occi-wg] OCCI Model UML, XSD, XML, Code...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#773">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#773">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#773">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#773">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000773.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

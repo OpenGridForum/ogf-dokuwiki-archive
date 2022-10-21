@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000595.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Simple JSON rendering for OCCI
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Simple%20JSON%20rendering%20for%20OCCI&In-Reply-To=20090512141901.GB11712%40alpha.arachsys.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000576.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000582.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Simple JSON rendering for OCCI</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Simple%20JSON%20rendering%20for%20OCCI&In-Reply-To=20090512141901.GB11712%40alpha.arachsys.com"
+       TITLE="[occi-wg] Simple JSON rendering for OCCI">samj at samj.net
+       </A><BR>
+    <I>Tue May 12 16:03:58 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000576.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000582.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#595">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#595">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#595">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#595">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, May 12, 2009 at 4:19 PM, Richard Davies &lt;
+<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">richard.davies at elastichosts.com</A>&gt; wrote:
+
+I'm worried having a library of this size as a key dependency for OCCI when
+&gt;<i> we could go with a much lighter meta-model (in either JSON or XML) and not
+</I>&gt;<i> require the library.
+</I>&gt;<i>
+</I>
+The existing client libraries are a convenience, not a &quot;key dependency&quot; -
+you can use native XML parsers and only a few lines of code if you prefer
+and the result will look very similar to its JSON counterpart. I assure you
+there is no &quot;much lighter meta-model&quot;, having gone through the process to
+arrive where we are today. Each resource has:
+
+   - Common attributes (ID, Title)
+   - Resource specific attributes (CPU Speed, Memory)
+   - Taxonomical information (Categories)
+   - Generic Links (to other resources as well as descriptor files,
+   screenshots, console, snapshots, etc.)
+
+This maps perfectly to Atom and while I'm well aware of your concerns about
+generic links I quickly start running into problems when trying to describe
+screenshots, snapshots, consoles and other cruft we can't possibly hope to
+predict. Aside from that there is virtually no difference outside of the
+delimeters.
+
+All existing cloud APIs (Amazon, Sun, GoGrid, ElasticHosts, etc.) have
+&gt;<i> specified their APIs directly over HTTP rather than over a pre-existing
+</I>&gt;<i> meta
+</I>&gt;<i> model.
+</I>&gt;<i>
+</I>
+And Google? Microsoft? Salesforce? The fact they are all using AtomPub (two
+of them strategically) is a very strong message as to its suitability in
+heterogeneous cloud environments. Even VMware's vCloud is XML based so we
+know what the top end of town wants/needs/will end up using.
+
+What we need to find is the midpoint between the ElasticHosts API (plain
+text) and DMTF APIs (heavyweight XML) that satisfies the needs of all cloud
+infrastructure users... it's logical that this would end up being &quot;just
+enough XML&quot; rather than &quot;a little bit more than plain text&quot; (JSON).
+
+In fact it's worse than that... by going with JSON and ruling a line between
+private and public cloud in the form of a separate API for each we would
+essentially be forcing users to choose between the two. The only alternative
+then is for public cloud providers to implement DMTF's standards in order to
+reach the bigger fish as OCCI will be inadequate for their needs
+(enterprises still [believe they] have needs for stuff like IPX/SPX that we
+have no intention of specifying but should nonetheless allow for).
+
+Should we really be pulling in a dependency which is this large when we have
+&gt;<i> a clear choice not to?
+</I>&gt;<i>
+</I>
+XML support is natively present in any language worth using which is more
+than can be said for the alternative.
+
+Sam
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090512/1c679bb7/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090512/1c679bb7/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000576.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-May/000582.html">[occi-wg] Simple JSON rendering for OCCI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/date.html#595">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/thread.html#595">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/subject.html#595">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-May/author.html#595">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-May/000595.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:22 GMT -->
+</html>

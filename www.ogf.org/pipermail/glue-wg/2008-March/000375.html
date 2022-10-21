@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000375.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+<HEAD>
+   <TITLE> [glue-wg] nordugrid feedback
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20nordugrid%20feedback&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000373.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000397.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[glue-wg] nordugrid feedback</H1>
+    <B>Yuji Saeki</B> 
+    <A HREF="mailto:glue-wg%40ogf.org?Subject=%5Bglue-wg%5D%20nordugrid%20feedback&In-Reply-To="
+       TITLE="[glue-wg] nordugrid feedback">ysaeki at grid.nii.ac.jp
+       </A><BR>
+    <I>Mon Mar 10 07:50:07 CDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000373.html">[glue-wg] nordugrid feedback
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000397.html">[glue-wg] NAREGI requirements (was Re:  nordugrid feedback)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#375">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#375">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#375">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#375">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+These are our particular needs in terms of
+
+(1) Advance reservation (and bulk job submission):
+NAREGI grid-level scheduler can make advanced reservation of computing resources
+in the job execution management. Users can submit their jobs without resource
+reservation as well as with it, where not all of LRMS are equipped with advanced
+reservation function. So the NAREGI grid-level scheduler has to know which of
+batch queues can accept advanced reservation requests or don't accept jobs
+without reservation (reservation necessary).
+And it also supports bulk job submission, where not all of LRMS are equipped with
+array job submission function.
+So we require our information model to include the propterties:
+  Reservability and ReservasionNecessary to a batch queue,
+  BulkSubmissionAvailable to a LRMS.
+We can deal with them as a NAREGI specific extension and put them in the key-value pair.
+
+(2)  Job monitoring:
+When an application program, which consists of multiple components, starts to execute
+on computer systems belonging to multiple sites in NAREGI environment, each of the
+components has to get information about the systems where other components run
+to transfer data among them.
+
+Yuji
+
+
+Sergio Andreozzi wrote:
+
+&gt;<i> Hi Yuji,
+</I>&gt;<i>
+</I>&gt;<i> Yuji Saeki ha scritto:
+</I>&gt;<i> &gt; The xml example is made from information in RDB tables used by other NAREGI
+</I>&gt;<i> &gt; services, for example, by the meta-scheduler to find candidate set of resources
+</I>&gt;<i> &gt; for job execution. I think that our basic requirements are met in current glue 2
+</I>&gt;<i> &gt; except for our particular needs in terms of advanced resource reservation and
+</I>&gt;<i> &gt; job monitoring.
+</I>&gt;<i> &gt;
+</I>&gt;<i> it would be interesting for the group to have more details on what is
+</I>&gt;<i> not covered, specifically advance reservation and job monitoring.
+</I>&gt;<i> Can you provide more details?
+</I>&gt;<i> &gt; I'm in Japan for the preparation for new version of our middleware and
+</I>&gt;<i> &gt; I'll look at the new version of GLUE2.xsd and change the translator for new
+</I>&gt;<i> &gt; glue2 and NAREGI version in a month.
+</I>&gt;<i> &gt;
+</I>&gt;<i> this is still subject to changes. I would recommend you to wait for the
+</I>&gt;<i> end of the month before starting a new revision.
+</I>&gt;<i>
+</I>&gt;<i> Cheers, Sergio
+</I>&gt;<i> &gt; Yuji
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Sergio Andreozzi wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; Hello Yuji,
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Yuji Saeki ha scritto:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; I tried to make a glue2 xml example of our NAREGI resource/service description
+</I>&gt;<i> &gt;&gt;&gt; based on the recent glue2.xsd (rev1240) linked from the glue group's wiki page.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; The attached file is the output of a JAXB application program which retrieves
+</I>&gt;<i> &gt;&gt;&gt; information about our middleware test environment ( 5 small clusters) from
+</I>&gt;<i> &gt;&gt;&gt; NAREGI information service, translates it from current NAREGI schema to
+</I>&gt;<i> &gt;&gt;&gt; the glue2 draft schema and makes an xml document according to the glue2.xsd.
+</I>&gt;<i> &gt;&gt;&gt; I haven't applied it to the grid of multiple admin domains yet.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt; thanks for this implementation experience. This is really valuable for
+</I>&gt;<i> &gt;&gt; validating what we are doing.
+</I>&gt;<i> &gt;&gt; There is a new version of the XML rendering available in the repository,
+</I>&gt;<i> &gt;&gt; you may want to have a look.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; As regards, your experience, can you comment on the suitability of
+</I>&gt;<i> &gt;&gt; current GLUE for the NAREGI needs?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; BTW, are you at OGF? If so, we can talk about it.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Cheers, Sergio
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; regards,
+</I>&gt;<i> &gt;&gt;&gt; Yuji Saeki
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Balazs Konya wrote:
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Hi,
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Recently, NorduGrid started to look at the potential xml rendering of the
+</I>&gt;<i> &gt;&gt;&gt;&gt; current glue2 draft. We tried to follow INFN's initial attempt (linked from the
+</I>&gt;<i> &gt;&gt;&gt;&gt; glue group's wiki page:
+</I>&gt;<i> &gt;&gt;&gt;&gt; <A HREF="http://forge.ogf.org/sf/wiki/do/viewPage/projects.glue-wg/wiki/GLUE2XMLSchema">http://forge.ogf.org/sf/wiki/do/viewPage/projects.glue-wg/wiki/GLUE2XMLSchema</A>),
+</I>&gt;<i> &gt;&gt;&gt;&gt; nevertheless we run into several questions.
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Please find our questions/suggestions collected on a newly created wiki page:
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; <A HREF="http://forge.ogf.org/sf/wiki/do/viewPage/projects.glue-wg/wiki/FeedbackGLUE2Draft">http://forge.ogf.org/sf/wiki/do/viewPage/projects.glue-wg/wiki/FeedbackGLUE2Draft</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Sergio, I suggest to go through our items during one of the scheduled phone
+</I>&gt;<i> &gt;&gt;&gt;&gt; meetings.
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Tomorrow or the day after i'll make our glue2 xml examples of a homogeneous
+</I>&gt;<i> &gt;&gt;&gt;&gt; cluster, desktop machine, a multi-service computer box available too (i have to
+</I>&gt;<i> &gt;&gt;&gt;&gt; clean them a bit, first).
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Meanwhile i encourage every potential glue2 users that they start putting
+</I>&gt;<i> &gt;&gt;&gt;&gt; together small XML/LDAP/SQL examples of their resource/service descriptions.
+</I>&gt;<i> &gt;&gt;&gt;&gt; The glue2 draft has reached that level it is feasible to start creating
+</I>&gt;<i> &gt;&gt;&gt;&gt; examples. This is the best way to provide feedback to the glue group.
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; regards,
+</I>&gt;<i> &gt;&gt;&gt;&gt; Balazs Konya
+</I>&gt;<i> &gt;&gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt;&gt; glue-wg mailing list
+</I>&gt;<i> &gt;&gt;&gt;&gt; <A HREF="http://www.ogf.org/mailman/listinfo/glue-wg">glue-wg at ogf.org</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt; <A HREF="http://www.ogf.org/mailman/listinfo/glue-wg">http://www.ogf.org/mailman/listinfo/glue-wg</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; ------------------------------------------------------------------------
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt;&gt; glue-wg mailing list
+</I>&gt;<i> &gt;&gt;&gt;&gt; <A HREF="http://www.ogf.org/mailman/listinfo/glue-wg">glue-wg at ogf.org</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt; <A HREF="http://www.ogf.org/mailman/listinfo/glue-wg">http://www.ogf.org/mailman/listinfo/glue-wg</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt; --
+</I>&gt;<i> &gt;&gt; Sergio Andreozzi
+</I>&gt;<i> &gt;&gt; INFN-CNAF,                    Tel: +39 051 609 2860
+</I>&gt;<i> &gt;&gt; Viale Berti Pichat, 6/2       Fax: +39 051 609 2746
+</I>&gt;<i> &gt;&gt; 40126 Bologna (Italy)         Web: <A HREF="http://www.cnaf.infn.it/~andreozzi">http://www.cnaf.infn.it/~andreozzi</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; glue-wg mailing list
+</I>&gt;<i> &gt; <A HREF="http://www.ogf.org/mailman/listinfo/glue-wg">glue-wg at ogf.org</A>
+</I>&gt;<i> &gt; <A HREF="http://www.ogf.org/mailman/listinfo/glue-wg">http://www.ogf.org/mailman/listinfo/glue-wg</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Sergio Andreozzi
+</I>&gt;<i> INFN-CNAF,                    Tel: +39 051 609 2860
+</I>&gt;<i> Viale Berti Pichat, 6/2       Fax: +39 051 609 2746
+</I>&gt;<i> 40126 Bologna (Italy)         Web: <A HREF="http://www.cnaf.infn.it/~andreozzi">http://www.cnaf.infn.it/~andreozzi</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000373.html">[glue-wg] nordugrid feedback
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/glue-wg/2008-March/000397.html">[glue-wg] NAREGI requirements (was Re:  nordugrid feedback)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/date.html#375">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/thread.html#375">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/subject.html#375">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/glue-wg/2008-March/author.html#375">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/glue-wg">More information about the glue-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/glue-wg/2008-March/000375.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Oct 2022 15:01:33 GMT -->
+</html>

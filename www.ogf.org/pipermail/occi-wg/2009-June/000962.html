@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ 
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-June/000962.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:21 GMT -->
+<HEAD>
+   <TITLE> [occi-wg] Storage Verbs (was Re: OCCI Dashboard)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Storage%20Verbs%20%28was%20Re%3A%20OCCI%20Dashboard%29&In-Reply-To=4A438EEF.9010807%40gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000960.html">
+   <LINK REL="Next"  HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000961.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[occi-wg] Storage Verbs (was Re: OCCI Dashboard)</H1>
+    <B>Sam Johnston</B> 
+    <A HREF="mailto:occi-wg%40ogf.org?Subject=%5Bocci-wg%5D%20Storage%20Verbs%20%28was%20Re%3A%20OCCI%20Dashboard%29&In-Reply-To=4A438EEF.9010807%40gmail.com"
+       TITLE="[occi-wg] Storage Verbs (was Re: OCCI Dashboard)">samj at samj.net
+       </A><BR>
+    <I>Thu Jun 25 09:57:07 CDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000960.html">[occi-wg] Storage Verbs (was Re:  OCCI Dashboard)
+</A></li>
+        <LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000961.html">[occi-wg] Templates (was Re:  OCCI Dashboard)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/date.html#962">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/thread.html#962">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/subject.html#962">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/author.html#962">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Jun 25, 2009 at 4:51 PM, Gary Mazz &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">garymazzaferro at gmail.com</A>&gt; wrote:
+
+&gt;<i>
+</I>&gt;<i> If we move to adding life cycle management to storage, it will open a can
+</I>&gt;<i> of worms. If anything, we should adopt a quality of service metric for
+</I>&gt;<i> storage and let the provider figure out the best way to implement.
+</I>&gt;<i>
+</I>&gt;<i> Items like capacity management, attaches, disconnects and failure
+</I>&gt;<i> management are OS features out of scope for this spec.
+</I>&gt;<i>
+</I>
+I generally agree (especially about having &quot;what&quot; rather than &quot;how&quot;
+specifications), but people are going to need to have levers to pull which
+will largely depend on the implementation. We only need to lock down that
+which we care about for interop right now (much of which is already handled
+by CRUD operations).
+
+Sam
+
+
+&gt;<i> Sam Johnston wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> On Thu, Jun 25, 2009 at 3:45 PM, &lt;<A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">shlomo.swidler at gmail.com</A> &lt;mailto:
+</I>&gt;&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">shlomo.swidler at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    2. Amazon has distinct nouns for &quot;Volumes&quot; and &quot;Snapshots&quot;. Amazon's
+</I>&gt;&gt;<i>    snapshots are not mountable, you can only &quot;copy&quot;/&quot;clone&quot; (not sure
+</I>&gt;&gt;<i>    which OCCI verb is the correct one here) an Amazon EBS snapshot into a
+</I>&gt;&gt;<i>    new EBS drive. The OCCI API seems to imply that the result of the verb
+</I>&gt;&gt;<i>    &quot;image&quot; on a drive yields another drive. So there may be a need to
+</I>&gt;&gt;<i>    introduce either a new noun &quot;drive snapshot&quot; that is not linkable to
+</I>&gt;&gt;<i>    any compute noun, or to otherwise differentiate between drives that
+</I>&gt;&gt;<i>    are mountable and drives that are not mountable.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> We plan to expose a basic set of well-defined nouns which implementors are
+</I>&gt;&gt;<i> able to use in an interoperable fashion. This will include basic
+</I>&gt;&gt;<i> functionality like clone (possibly with parameters like &quot;full&quot; vs &quot;cow&quot;) but
+</I>&gt;&gt;<i> things like &quot;format&quot;, &quot;check&quot;, &quot;backup&quot;, etc. may or may not be specified.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Note that a &quot;mount&quot; is currently done by creating an association between a
+</I>&gt;&gt;<i> compute and a storage resource (specifying the local identifier - eg &quot;sda&quot;).
+</I>&gt;&gt;<i> I can't think of a sensible way to advertise &quot;mountability&quot; (short of
+</I>&gt;&gt;<i> throwing errors when it fails), and having an &quot;attach&quot; verb on storage
+</I>&gt;&gt;<i> devices which accepts a compute device as a parameter feels fugly.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sam
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------------------------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> occi-wg mailing list
+</I>&gt;&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">occi-wg at ogf.org</A>
+</I>&gt;&gt;<i> <A HREF="http://www.ogf.org/mailman/listinfo/occi-wg">http://www.ogf.org/mailman/listinfo/occi-wg</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://www.ogf.org/pipermail/occi-wg/attachments/20090625/a4528082/attachment.html">http://www.ogf.org/pipermail/occi-wg/attachments/20090625/a4528082/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000960.html">[occi-wg] Storage Verbs (was Re:  OCCI Dashboard)
+</A></li>
+	<LI>Next message: <A HREF="https://www.ogf.org/pipermail/occi-wg/2009-June/000961.html">[occi-wg] Templates (was Re:  OCCI Dashboard)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/date.html#962">[ date ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/thread.html#962">[ thread ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/subject.html#962">[ subject ]</a>
+              <a href="https://www.ogf.org/pipermail/occi-wg/2009-June/author.html#962">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://www.ogf.org/mailman/listinfo/occi-wg">More information about the occi-wg
+mailing list</a><br>
+</body>
+<!-- Mirrored from www.ogf.org/pipermail/occi-wg/2009-June/000962.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Oct 2022 22:35:21 GMT -->
+</html>
