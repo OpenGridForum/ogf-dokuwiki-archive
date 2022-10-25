@@ -1,0 +1,355 @@
+--------------------------------------------------------------------
+
+SAGA Use Case Template:
+=======================
+
+Name of use case:                   DIRAC : Distibuted infrastructure with remote agent Control
+Contact (name and address):         Garonne vincent (garonne@cppm.in2p3.fr),CPPM, 163 avenue de Luminy, case 902, 13288 Marseille cedex 09.
+  
+
+1. General Information:
+-----------------------
+
+  This section consists of check-boxes to provide some context in
+  which to evaluate the use case.
+  
+  1.1 Which best describes your organisation:
+  
+    Industry                     [ ]
+    Academic                     [X]
+    Other                        [ ]
+       Please specify:           ...................................
+                       
+                       
+  1.2 Application area:    
+                       
+    Astronomy                    [ ]
+    Particle physics             [X]
+    Bio-informatics              [ ]
+    Environmental Sc.            [ ]
+    Image analysis               [ ]
+    Other                        [ ]
+       Please specify:           ...................................
+  
+  
+  1.3 Which of the following apply to or best describe this use case
+      Multiple selections are possible, please prioritize with numbers
+      from 1 (low) to 5 (high):
+  
+    Database                     [2]
+    Remote steering              [?]
+    Visualization                [?]
+    Security                     [3]
+    Resource discovery           [5]
+    Resource scheduling          [5]
+    Workflow                     [2]
+    Data movement                [3]
+    High Throughput Computing    [5]
+    High Performance Computing   [1]
+    Other                        [ ]
+        Please specify:          ...................................
+  
+  
+  1.4 Are you an:
+  
+    Application user             [ ]
+    Application developer        [ ]
+    System administrator         [ ]
+    Service developer            [X]
+    Computer science researcher  [X]
+    Other                        [ ]
+        Please specify:          ...................................
+  
+
+        
+2. Introduction:
+----------------
+  
+  2.1 Provide a paragraph introduction to your use case.  Background
+      to the project is another alternative. (E.g. 100 words).
+
+The LHCb experiment is one of four particle physics experiments
+currently in development at CERN, the European Particle Physics
+Laboratory.  Once operational, the LHCb detector will produce data at
+a rate of 4 Gb/s, representing observations of collisions of
+sub-atomic particles.  This massive quantity of data (3 peta per year)
+then needs to be distributed around the world for the 500 physicists
+at 100 sites to be able to carry out analysis.  Even before this
+analysis of real physics data can begin a large number of monte- carlo
+parameter sweep simulations are required to verify aspects of the
+detector design, algorithms, and theory.  While the four Large Hadron
+Collider (LHC) experiments have coordinated with CERN to produce the
+LHC Computing Grid (LCG) \cite{LCG}, there is still a requirement
+within LHCb to manage and track computing tasks, provide a set of
+common services specific to LHCb, and to be able to make use of
+hardware and software resources not incorporated into LCG.  DIRAC
+architecture (Distributed Infrastructure with Remote Agent Control)
+which has been developed to meet these requirements and provide a
+generic, robust grid computing environment.
+
+
+  2.2 Is there a URL with more information about the project ?
+
+ DIRAC:            http://dirac.cern.ch
+ LHCb experiment:  http://lhcb.web.cern.ch/lhcb/
+  
+3. Use Case to Motivate Functionality Within a Simple API:
+----------------------------------------------------------  
+  
+  Provide a scenario description to explain customers' needs.  E.g. "move
+  a file from A to B," "start a job."
+  
+  Please include figures if possible.
+
+  If your use case requires multiple components of functionality, please  
+  provide separate descriptions for each component, bullet points of 50
+  words per functionality are acceptable.
+   
+MC simulation/Production: 
+ User: a production manager 
+  Job submission: bunch of jobs
+  Mode of submission: Organized jobs are planned in advance and perform a homogenous set of tasks.
+  Goal: produce a big amount of data on a period, CPU bound , parameter sweep application
+  Requirements: High Troughput computing 
+(Group and end user) Analysis: 
+
+<>User: Many users
+Requirements: response time (as opposed to total throughput)
+Mode of submission: Chaotic jobs are submitted by many users acting more or less independently, and encompass a wide variety of tasks. The input is typically a selection/analysis algorithm to be applied to a very large dataset(i/o bound). Users can submit jobs of this kind at any time, simultaneously asking for the common input datasets.
+
+
+  4. Customers:
+-------------
+
+  Describe customers of this use case and their needs. In particular,
+  where and how the use case occurs "in nature" and for whom it occurs.  
+  E.g. max 40 words
+
+  
+  
+
+  
+5. Involved Resources:
+----------------------
+
+  5.1 List all the resources needed: e.g. what hardware, data,
+      software might be involved.
+
+  Resources: Standart cluster accessible trough a batch system, grid system (e.g LCG) 
+  Software : linux and python interpreter
+  
+  5.2 Are these resources geographically distributed?
+
+  Yes. spread over the world
+
+  
+  5.3 How many resources are involved in the use case?  E.g. how
+      many remote tasks are executing at the same time?
+
+ 60 computing sites representating something like 5000 nodes
+
+  
+  5.4 Describe your codes and tools: what sort of license is
+      available, e.g. open or closed source license; what sort 
+      of third party tools and libraries do you use, and what is 
+      their availablility;  do you regularly work from source 
+      code, or use pre-compiled applications; what languages 
+      are your applications developed in (if relevant), e.g. 
+      Fortran, C, C++, Java, Perl, or Python.
+
+ Dirac use no license and it's a free project.  DIRAC can be
+ decomposed into four sections: Services, Agents, Resources, and User
+ Interface.  The core of the system is a set of independent,
+ stateless, distributed services.  The services are meant to be
+ administered centrally and deployed on a set of high availability
+ machines.  Resources refer to the distributed storage and computing
+ resources available at remote sites, beyond the control of central
+ administration.  Access to these resources is abstracted via a common
+ interface.  Each computing resource is managed autonomously by an
+ Agent, which is configured with details of the site and site usage
+ policy by a local administrator.  The Agent runs on the remote site,
+ and manages the resources there, job monitoring, and job submission.
+ An Agent can be deployed on a gatekkeeper of a  large cluster or just
+ on a single worker node of the LCG grid. PBS, LSF, BQS, Condor, LCG,
+ Globus can be used as the DIRAC computing resources.
+
+ The User Interface allows access to the Central Services, for
+ control, retrieval, and monitoring of jobs and files. It consists of
+ a small set of distributed stateless Core Services, which are
+ centrally managed, and Agents which are managed by each computing
+ site.
+
+ The current implementation has been written largely in Python, due to
+ the rich set of library modules available, its object oriented
+ nature, and the ability. The workload management system (WMS)
+ components use XML-RPC and instant messaging Jabber protocols for
+ communication which increases the overall reliability of the
+ system. The jobs handled by the WMS are described using Classad
+ library which facilitates the interoperability with other grids.
+to rapidly prototype design ideas.   
+
+For all Service and Job state persistence, a MySQL database is used.
+ 
+  5.5 What information sources do you require, e.g. certificate
+      authorities, or registries.
+
+  
+
+  
+  5.6 Do you use any resources other than traditional compute 
+      or data resources, e.g. telescopes, microscopes, medical 
+      imaging instruments.
+
+  Usually some mass storage (HPSS) are used in several sites called "Tiers 0".
+
+  
+  5.7 How often is your application used on the grid or grid-like 
+      systems?
+
+      [X] Exclusively
+      [ ] Often (say 50-50)
+      [ ] Ocassionally on the grid, but mostly stand-alone
+      [ ] Not at all yet, but the plan is to.
+
+
+
+  
+6. Environment:
+---------------
+
+  Provide a description of the environment your scenario runs in,
+  for example the languages used, the tool-sets used, and the user
+  environments (e.g. shell, scripting language, or portal).
+
+ 
+By keeping the implementation in Python, Clients and Agents only
+require a Python interpreter for installation.  These components which
+are distributed to the users and computing centers are also very small
+--- less than one megabyte compressed --- which further facilitates a
+rapid installation or update of the software.  Software required for
+jobs is installed in a paratrooper approach, which is to say that each
+job installs all software it requires, if it is not already available.
+This software is cached and made available for future jobs run by the
+same Agent.
+
+  
+7. How the resources are selected:
+----------------------------------
+
+  7.1 Which resources are selected by users, which are inherent 
+      in the application, and which are chosen by system
+      administrators, or by other means?  E.g. who is specifying 
+      the architecture and memory to run the remote tasks?  
+   
+ When the user submit their jobs they specify their requirement (data
+ need, CPU required, and so on), then the system tries to find the
+ resource which match well theses requirements.
+
+  
+  7.2 How are the resources selected? E.g. by OS, by CPU power,
+      by memory, don't care, by cost, frequency of availability
+      of information, size of datasets?
+  
+ DIRAC uses a 'pull' paradigm where Agents request tasks 
+ whenever they detect their local resources are available. 
+ The collaborating central Services allow new components to be 
+ plugged in easily. These Services can perform functions such as 
+ scheduling optimization, task prioritization, job splitting and merging, 
+ to name a few.
+ 
+  7.3 Are the resource requirements dynamic or static?
+ 
+ The resource requirement are both of them static , e.g. for the cpu
+ requirement and dynamic for the data requirement in regard with where
+ the data are avalaible.
+  
+8. Security Considerations:
+---------------------------
+
+  8.1 What things are sensitive in this scenario: executable code, 
+      data, computer hardware?  I.e. at what level are security 
+      measures used to determine access, if any?
+
+The acces to the ressources must be secure and the tracability must be
+guarantee. The system adminitrator woudl like to know who has done
+something in the grid. This information is also to do the accounting
+of the system
+
+  
+  8.2 Do you have any existing security framework, e.g. Kerberos 5,
+      Unicore, GSI, SSH, smartcards?
+  
+  No.
+  
+  
+  8.3 What are your security needs: authentication, authorisation,
+      message protection, data protection, anonymisation, audit 
+      trail, or others?
+  
+authentication, authorisation,
+  
+  8.4 What are the most important issues which would simplify your
+      security solution?  Simple API, simple deployment, integration
+      with commodity technologies.  
+  
+We are looking now the integration with web services technologies
+based on apache3, mod python, grid site which should provides the gsi
+security infrastructure.
+  
+9. Scalability:
+---------------
+
+  What are the things which are important to scalability and to what
+  scale - compute resources, data, networks ?
+  
+This system needed to be quickly and easily deployed across fourty or
+more sites, with little effort from local site administrators, either
+for installation or maintenance.  Similarly, users needed to be able
+to access the system from anywhere, with a minimal set of tools.  The
+need to support intense computational load also required the system to
+be responsive and scalable, supporting over 10,000 simultaneous
+executing jobs, and 100,000 queued jobs.The final system must be able
+to deal with 30000 cpus and to manipulate store and analyse something 
+like 2 peta per year.
+  
+10. Performance Considerations:
+-------------------------------
+
+  Explain any relevant performance considerations of the use case.
+
+  
+11. Grid Technologies currently used:
+-------------------------------------
+
+  If you are currently using or developing this scenario, which grid
+  technologies are you using or considering?
+
+  
+All Client/Service and Agent/Service communication is done via XML-RPC
+calls, which are lightweight and fast.  Furthermore, instantiating and
+exposing the API of a Service as a multi-threaded XML-RPC server in
+Python is extremely straight forward and robust.  We are lookink now
+to use apache+mod python with a security infrastructure that have a real
+web services and oriented services architecture.
+  
+  
+12. What Would You Like an API to Look Like?
+--------------------------------------------  
+  
+  Suggest some functions and their prototypes which you would like
+  in an API which would support your scenario.
+
+  ?
+
+  
+  
+13. References:
+---------------
+  
+ @InProceedings{DIRAC_GRID,
+ author = {{Garonne, V. and Stokes-Rees, I. and Tsaregorodsev, A.}},
+ title = {{DIRAC: A Scalable Lightweight Architecture for High Throughput Computing}},
+ booktitle = {Grid 2004, 5th IEEE/ACM International Workshop on Grid Computing},
+ year = 2004,
+ month = {November}}
+ 

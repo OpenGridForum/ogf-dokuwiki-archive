@@ -1,0 +1,147 @@
+OGSA Teleconference - 10 August 2006
+====================================
+
+* Participants
+
+  Andrew Grimshaw (UVa)
+  Jay Unger (IBM)
+  Frank Siebenlist (ANL)
+  Steven Newhouse (OMII)
+  Takuya Mori (NEC)
+  Marvin Theimer (Microsoft)
+  Jem Treadwell (HP)
+  Duane Merrill (UVa)
+  David Chadwick (U of Kent)
+  Andreas Savva (Fujitsu)
+  Donal Fellows (UoM)
+
+  Minutes: Takuya Mori, Andreas Savva
+
+* OGSA authorization call-out proposal review (Frank, 20 min)
+
+Reference:
+"Functional Components of Grid Service Provider Authorisation Service
+Middleware"
+https://forge.gridforum.org/sf/go/doc13724?nav=1
+
+David presented a draft document, "Functional Components of Grid
+Service Provider Authorisation Service Middleware", which was sent to
+the OGSA-AuthZ and OGSA-WG list on Aug 9.  (The document was based on
+discussions between Von, Frank and David.)
+
+David introduced functional components, Policy Enforcement Point
+(PEP), Credential Validation Service (CVS) and PDP (Policy Decision
+Point) and showed four types of interactions between the components
+(See Fig.1 to Fig.4 in the document).  David proposed to define two
+protocols, one for CVS and the other for PDP.
+
+The followings are the points of his proposal.
+- CVS is used to validate credentials and to issue valid attributes of
+  Access Requestors.
+- CVS is passed authenticated name and credentials.
+- CVS determines if the credential is trust worthy and returns valid
+  attributes.
+- An administrator manages two types of rules, auhtz decision rules and
+  rules to resolve trust relationships
+- CVS makes use of XACML policy query interface, but it is not
+  necessarily be an XACML policy engine behind the interface.
+- CVS is needed to separate authentication and authorization.
+
+Various questions and answers arouse during the presentation and some
+major points made clear in the discussion were:
+  - The two protocols are intended to support all the configuration
+    shown in the figures
+  - Revisions of the two "OGSI" profiles are also in the scope of
+    current activities of the OGSA-AuthZ-WG.
+  - Defining attributes values (terms and semantics) is not in the
+    scope of current activities of the OGSA-AuthZ-WG, but in its
+    future scope.
+The discussion were suspended until Aug 28 due to the running out of
+the meeting time.
+
+The followings are some interactions during the discussion.
+* The scope of the work (1)
+Q: Does the two protocols cover all the configurations shown in
+   the figures?  The protocols shown in the figures look different.
+A: Yes, the both protocols can cover all the configuration.  The
+   current OGSA-Authz profiles can handle this kind of interactions.
+Q: The current profiles are not "OGSA" profiles.  These are "OGSI"
+   profiles.
+A: The difference between "OGSI" and "OGSA" is small for OGSA-Authz
+   profiles.  Revisions of these two profiles are also on the table.
+
+* How to define service I/F of applications
+Q: As an application desginer, do I need to choose appropriate one?
+  * long interactions were taken place which Takuya couldn't perfectly
+    follow, but if Takuya understood well, the answer from the authz
+    wg is: *
+A: Interafces of applications will not be affected.  It is the
+   middleware which speaks the protocols.  Authorization is taken
+   place behind the infrastructure.
+
+* The scope of the work (2)
+Q: The architecture for authorization has not clearly been defined.
+   What the OGSA-AuthZ-WG are going to define?  Do we need to define
+   all the comopnents?  Various terms and semantics also needs to
+   be defined for attributes and policies.  These also should be
+   standardized.
+A: The OGSA-AuthZ-WG did the similar things in the past,
+   the credential formats and terms over the SAML Attribute Assertion
+   and the X.509 Attribute Certs.
+Q: It covers a different interop level - only attribute name or type
+   level - not the values.
+A: The OGSA-AuthZ-WG focuses only on the interface level.
+   David doesn't have a need to define values. (at this moment?)
+   The WG needs to define them later in the future. 
+
+* Security Profile (Core, Secure Channel) Public Comment Review
+
+** Core profile review 
+
+   - l.340: Added text to restrict to single key
+     - Why must more than one keys be ignored? Why disallow raising a
+       fault?
+       - No specific reason, so agreed to soften the text to allow
+         implementations to throw a fault.
+
+   - l.167: R0301: defines that the keyinfo must be added
+   - Agreed to move the previous restriction (l.340) from the appendix
+     here, as a restriction in the main body of the profile.
+
+** Secure Channel profile
+
+   - l.70: Public comment was whether this profile "must this be used
+     by all services?"
+     - Revised text is still not clear enough.
+     - Takuya will re-revise to clearly state that this profile is not
+       mandated.
+     - Andreas volunteered to review the text before call.
+   - l.130: Usage of special terms
+     - l.190: added citations as well
+     - It is a good idea to use defined words in other places, e.g.,
+       l.158, in the same manner as the OGSA WSRF BP.
+     - Takuya to make sure these terms are used consistently.
+   - l.214 (Sec.3.4): Addition of cryptographic algorithms
+     - Original action was to list the recommended ciphers because the
+       Security BP allows arbitrary ciphersuites. Takuya has put
+       together a list but has not included it yet.
+       - There are ~30 ciphersuites that are not recommended
+     - Takuya will send out proposal and will add list to the
+       document.
+
+** Next steps 
+
+   Takuya will update the documents per the review.
+
+   Next security call is August 28, but might be moved depending on
+   how the discussion on the list goes.
+
+* EMS Scenarios
+
+  Reviewed document restructuring---making the scenarios build on each
+  other in a more natural fashion. The changes are not fully completed
+  yet but seem to be in the right direction.
+
+  AI-0810a: Donal to look into the relation of the EPS and CDL
+            (retrieval, update, etc). (Eventually this should probably
+            become a separate scenario.)

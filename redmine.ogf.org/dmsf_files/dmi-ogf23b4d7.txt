@@ -1,0 +1,138 @@
+OGF23 - DMI Session - 2 June 2008
+=================================
+
+Notes: Mario Antonioletti
+
+Presentations available from:
+
+	http://tinyurl.com/59yucb
+        (if GridForge is up)
+
+Steven Newhouse gave an overview of the OGSA-DMI. 
+
+Notes correspond to exceptions outside the presentation.
+
+DMI is now a proposed recommendation - the functional specification
+document for DMI is to be up at the OGF web site later this week.  The
+document went to public comment at the last OGF - got some good
+comments - these have been addressed and the document was
+re-submitted. All that remains is to show that the DMI specification
+works.
+
+David Martin suggested that perhaps OGSA-DMI should give the document
+a final check to pick up any typos. Steven Newhouse countered by
+saying that he thinks it is not worth going through the spec until the
+final changes derived from the implementation phase are made.
+
+Steven described what an EPR (End Point Reference) is for people that
+are not familiar with the concept.
+
+The typical process for DMI: a client gets in touch with DTF (Data
+Transfer Factory) - it examines at the DEPRs given to it by the client
+and inspects these to see how data can be transferred from the source
+to the sink. This then creates an EPR for a Data Transfer Instance
+(DTI)- the client uses the DTI to get a status of the transfer. The
+DTI manages the transfer of data from the source to the sink.
+
+Mario asks where the data EPR comes from and as it happens Steven
+has a number of slides that shows where these are obtained from.
+
+In the first instance the expectation is that the DEPRs will be minted
+by the client in the absence of other mechanisms.
+
+...
+
+Erwin asked about future work: is DMI thinking of managing bulk
+transfers.  Response is that we can already specify bulk transports
+through the source or the sink - from source to sink but not from
+multiple sources to multiple sinks.
+
+Another use case was proposed - use metadata to discover data as
+opposed to supplying data EPR, then the DTF could use that to look for
+the data. The response: can use third parties to do that - feed a
+service metadata that then returns Data EPRs which can then be
+provided to a DTF.
+
+Michel Drescher takes over to talk about renderings and Interop.
+
+Currently only have a functional specification that only specifies
+the core behaviour.
+
+We are going to do two different renderings: plain WS (non-WSRF)
+rendering and a WSRF rendering. The WSRF rendering will be on top of
+the non-WSRF rendering (call it WS-I). With WSRF we could be OGSA-BP
+compliant which would give us more constraints - other issue is how
+WSRF compliant it is (how many of the optional operations should be
+supported?).
+
+Mario comments that as we are called OGSA-DMI maybe that implies that
+we should be OGSA-BP compliant.
+
+...
+
+For the WSRF rendering the DMI Factory could have Resource Property
+Value Change Notification.
+
+Could do similar stuff for the DTI.
+
+Aligned to the Resource Management life cycle which fits in quite
+nicely.
+
+We already have some renderings available on GridForge. Still need to
+decide what WSRF rendering features we want and then define normative
+renderings,
+
+OGSA-DMI ask for a possible implementation from EGEE - no commitment
+as yet.
+
+Interop issues: security - disabled security for the ByteIO interop
+testing that Michel was involved in and this then happened
+successfully. DMI spec is silent on security other than for the access
+security token(s) that is\are passed - validating security is not the
+primary concern here - in previous interop tests security has been a
+major headache for as opposed to testing the specification. Can
+compose DMI with security but it makes specification validation
+difficult.
+
+Protocols used to verify the spec: ftp?
+Protocol security: is the same username password enough?
+
+Guideline should be to do as little as possible but as much as
+necessary.
+
+4-way principle for validation:
+
+	- my client vs my service
+	- your client vs your service
+	- my client vs your service
+	- your client vs my service
+
+Do we want to move data between Microsoft and Fujitsu? Probably not.
+
+An aggressive time line is proposed - have something ready by the next
+OGF.
+
+David Martin asked about WS-I vs WSRF interoperability - WS-I vs WS-I
+implementations; WS-I vs WSRF; WSRF vs WSRF - this could be done. Some
+implementations will not support WSRF - Microsoft implementation will
+not be WSRF compliant; Fujitsu will be WSRF compliant.
+
+Could there be a compliant implementation that would not inter-operate?
+The WSRF stuff would be a superset of the WS-I stuff. 
+
+The normative description in the functional spec is around shared data
+types.  There are normative documents that will describe the WSRF/WS-I
+renderings.  They will go through the recommendation track
+separately. The documents will be fairly short (excluding the
+XML/WSDL).
+
+Important to get this tested against these published documents.
+Get drafts of the rendering for comment for OGF24.
+
+Source/Sink - expect ftp server with user name and password; http as a
+source - could use a put for a sink ... maybe. Question as to whether
+GridFTP could be used because of certificate issues.
+
+Looking for implementors. Steven implemented 75% of the DMI spec in an
+afternoon so there is no massive barrier. Asked D-grid and Virginia
+explicitly if they might consider the OGSA-DMI spec.

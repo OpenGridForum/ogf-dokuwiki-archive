@@ -1,0 +1,42 @@
+* Communication
+
+For compatibility all services must be able to support same set of wire protocol. Suggestio is to use following stack:
+  1. TCP/IP (obvious)
+  2. SSL3, TLS1 with SSL2 initialization (for compatibility reasons). SSL2 must be forbidden. Set of ciphers need to be defined - we could use  "WS-I Basic Security Profile (BSP) v1.1". This layer is optional. If present and mutual authentication is used (prefered) then identity of requestor may be derived from here.
+  3. HTTP - version 1.1. No special requirements. No need to apply any security
+  4. SOAP - version 1.2. WS-Security may be applied. If used then then identity of requestor is be derived from here.
+
+
+* Delegation
+
+Client provides credential tokens contianing information needed for Execution Service to perform various opration on behalf of job owner or other entity.
+Tokens are assigned to job description parts to define token per delegated operation. Possible token types are suggested:
+  - username/password for various protocols (like FTP, HTTP)
+  - public part of X.509 credentials (or reference) with reference to private part (may be remote service) - private parts must not be included in job descriptions or in other way passed over internet.
+  - generic SAML assertion - may be VOMS SAML attribute for example
+  - reference to remote credentials service with possibly credentials needed to pass authentication
+  - reference to other token in same document (for reducing document size)
+   
+Token must specify its scope (which operations it applies to, maybe also including communication protocols and which endpoints) - maybe some pieces of WS-Policy can be used for this purpose.
+
+Tokens are not required to be understood and supported by Execution service.
+
+Tokens or token groups may be marked as required. In this case Execution Service must reject job request if it can't understand how to apply token. The purpose of that mark is to allow alternative communications/operations to be performed even if service can't support all credential tokens. Also service is not required to fully analyze which credentials are critical and which can be used alternatively.
+
+Tokens do not have to be validated by Execution Service. That is a task of service which is accessed by Execution Service on behalf of job's owner.
+
+Following things need to be defined:
+
+1. XML element for JSDL to hold token.
+2. Way to bind tokens to protocols and endpoints (WS-Policy?)
+3. Few most essential tokens need to be defined and shpuld be supported by implementations - username/password(hash), X.509 credentials, generic SAML token (for Unicore), MyProxy reference (for gLite), references.
+
+
+** X.509 delegation
+
+X.509 credentials need special treatment because their delegation is multi-step (at least 2) procedure. Following approach is suggested:
+  1. Define additional port type for performing first steps of delegation procedure - maybe built out of WS-Security elements.
+  2. Define X.509 delegation session - its ID is used through all steps and also as reference in job description. Session is used to keep intermidiate state and outcome of delegation procedure.
+  3. Make it possible (optional) to have last step combined with job submission request - X.509 public credential embedded into job description.
+  4. Preferably this port type should be implemented directly by execution service. If not possible, then session ID must contain reference to service implementing delegation port type and there must be some out-of-scope way to communicate between execution service and delegation service. Endpoint of delegation service in this case should be somehow discoverable from description of execution service.
+

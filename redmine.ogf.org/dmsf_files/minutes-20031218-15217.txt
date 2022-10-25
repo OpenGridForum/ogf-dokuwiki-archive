@@ -1,0 +1,277 @@
+OGSA Teleconference - December 18, 2003
+=======================================
+
+* Participants
+
+  Theo Dimitrakos (RL)
+  Andrew Grimshaw (UVa)
+  Hiro Kishimoto (Fujitsu)
+  Fred Maciel (Hitachi)
+  Takuya Mori (NEC)
+  Andreas Savva (Fujitsu)
+  Frank Siebenlist (ANL)
+  Ravi Subramaniam (Intel)
+
+  Minutes: Andreas Savva
+
+
+* Summary of actions from this call
+
+  - Action: Hiro to update and repost the teleconference schedule.  
+  - Action: Hiro and Andreas volunteer to go through document,
+            pick out the comments that are still valid and delete the
+            obsolete ones.
+  - Action: Revisit the "owner" discussion.
+  - Action: Frank and Takuya to come up with a simple use case
+          (perhaps a component of the Commercial Center one) and
+          express it using Frank's terminology.
+  - Action: Need more use cases (1 or 2) >Frank
+  - Action: Andrew to look into providing a data use case (access across
+            organizational boundaries)
+  - Action: Andrew to give an introduction to the Legion model
+                Focus on authorization aspect (not the authentication
+                aspect) 
+           - Hiro to schedule it keeping in mind that Andrew cannot
+             commit to doing it before Jan 23.
+
+* Early discussion
+
+** PE discussion minutes (2003/12/15) - approved
+
+** Information & Monitoring minutes
+
+   - Approval postponed as minutes are not available yet. (Andreas
+     apologized for the delay)
+
+** Teleconf schedule changes
+
+  - Agreed to swap CMM and Comments teleconferences. 
+
+  - Action: Hiro to update and repost the teleconference schedule.
+
+  - Andrew pointed out that some comments may be obsolete due to
+    changes in the document. No point spending time on a
+    teleconference trying to decide what is valid and what is not.
+
+  - Action: Hiro and Andreas volunteer to go through document,
+            pick out the comments that are still valid and delete the
+            obsolete ones.
+
+** AOB - None.
+
+* Security discussion
+
+  - Went through Frank's and Takuya's presentations.
+
+** "Guidelines for use case specification" (Frank Siebenlist)
+
+   URL: https://forge.gridforum.org/projects/ogsa-wg/document/usecase-formal/en/1
+
+   - Motivation is to agree on informal but 'strict' terminology to
+     help us write use cases that are easy to understand and reason
+     about.
+
+*** p2
+
+   Proposal: Come up with naming or specification convention
+             (informal) to make things clear
+
+   (Essentially how to talk about context)
+
+   Define loosely (in english) what terms mean, e.g., group membership.
+
+*** p3
+
+    For expository reasons
+
+    Naming convention:
+
+           user_name@administrative.domain
+
+           Include "administrative.domain" because we often want to
+           discuss scenarios crossing administrative domains; make it
+           easier to discuss multi-domain scenarios
+
+    Unique identifiers
+
+    Associated with authentication identity, assertions
+
+*** p4
+
+    Identities used as "issuers" in policy statements
+
+    A lot of discussion on "MUST be associated" 
+         - how about ACLs; multiple people associated
+         - only talking about the issuer of the policy
+
+         The discussion on acls and delegation scenario boiled down to 
+         administration of policy vs administration of 'object' to
+         which policy applies.
+
+*** p5 
+
+    Difference between "resource policy" and "resource owner policy"
+
+    A lot of discussion on 
+         who is "root" authority for a resource
+
+         Frank wanted to make the point that each resource has its own
+         local policy
+
+         Unique authorization authority? yes.
+
+     - "owner" has initial authorization to set authorization policy 
+       (bootstrap mechanism)
+
+     - Possible to transfer ownership to someone else? 
+       - (Frank) No!
+       - But does it also depend on the resource?
+       - (Frank) Ok, maybe in some cases.
+
+     - Group of owners?
+       - No. Always comes down to one.(?)
+
+     - Andrew: Have to be careful with definitions so as not to make it
+               difficult to express certain kinds of policies.
+
+     - Action: Revisit the "owner" discussion.
+
+*** p6
+       
+       A lot of discussion on whether "a statement MUST have an issuer"
+
+         - Statement without issuer is meaningless
+         - Sometimes it may be an implicit issuer?
+
+         - who is responsible to ensure validity of statement?
+           - all statements MUST be (cryptographically) validated
+
+         - Need for "context for authorization policy" leads to MUST
+       
+         - It is possible to ignore issuer (your choice)
+
+       Basically comes down to 
+
+                 NOT "A statement MUST have an issuer"
+                 BUT "A statement HAS an issuer"
+
+       Attribute authority
+
+       Any identity can be used to make assertions
+
+       Statements on behalf of other issuers.  
+                  Can trust someone to make assertion 
+                  (assertions can be pushed with request (implementation))
+
+                  Cannot make someone else issuer but can make an
+                  assertion on behalf of someone if authorized (chain)
+
+*** p8       
+
+    Either trust someone directly or a chain of trust exists
+
+    Motivation here is to be careful and show how fine grain model the
+    use case expects/requires.
+
+*** p9
+
+    Summary of rules for naming
+
+    Agreed that we don't want to constrain what can be expressed by
+    our choice of vocabulary.
+
+** "Usecases and requirements for OGSA-Security" (Takuya)
+
+  URL: https://forge.gridforum.org/projects/ogsa-wg/document/ogsa-security-uc/en/1
+  
+  Takuya walked us through the presentation. There was not a lot of
+  time so many details omitted.
+
+*** p3 VO
+
+   Who issues policies? 
+
+       Who says who can create VO: 
+
+           In this case: manager of (e.g.) Grid_1 or the VO factory
+
+           A number of entities here that are not explicitly
+           mentioned. Frank's naming convention may help clarify
+           issues.
+
+    (Consolidation or management or consistency of policies across
+    grid_1, grid_2)
+
+*** p6
+
+   Job transferred between centers: who trusts what?
+
+       trust is between data centers
+       
+       could Charlie say that he does not trust other data centers?
+       
+       conflicts could be resolved at contract negotiation?
+
+                  do contracts relate policies? what is the role of
+                  the contract (SLA)
+
+                  resources that Alice can use from Bob
+                  contract only between A & B 
+
+                  SLAs do not (necessarily) relate or express policy
+
+        Here Frank's naming conventions would help clarify things.
+
+*** Conclusion
+
+   "Dynamic establishment" is the case when there is no related data
+   center and we'd have to go out and find one
+
+   This use case is based on the commercial data center UC which assumes
+   an existing relationship.
+
+   (Missed a comment on agreeing on trust etc between VOs: WS-Agreement, WS-Trust?)
+
+*** Security Services slide
+
+   Summary of related work and which group is doing what.
+
+* Wrap up
+
+  Agreed that *eventually* Takuya should rewrite this use case using
+  Frank's terminology to make things clearer. But it is a complex UC
+  and we should start with something simpler first.
+
+  Action: Frank and Takuya to come up with a simple use case
+          (perhaps a component of the Commercial Center one) and
+          express it using Frank's terminology.
+
+  Action: Need more use cases (1 or 2) >Frank
+
+  Action: Andrew to look into providing a data use case (access across
+          organizational boundaries)
+
+  Some discussion on 
+        steady state of system vs bootstrap use cases 
+
+               When trying to discover a new resource you already need
+               to have some trust in place to be able to drive/guide
+               the process
+
+               bootstrap from low level of trust to some higher level.
+
+               separate
+                        - relationship between organizations in a VO
+                                  (relation between resources)
+                        - dynamic discovery of such entities (VO) that
+                          are not trusted.
+                                  
+        
+   Action: Andrew to give an introduction to the Legion model
+                Focus on authorization aspect (not the authentication
+                aspect) 
+           - Hiro to schedule it keeping in mind that Andrew cannot
+             commit to doing it before Jan 23.
+
+   Last teleconf of year: 
+        Hiro thanked everyone for their efforts over the past year.

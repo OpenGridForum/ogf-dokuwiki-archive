@@ -1,0 +1,211 @@
+OGSA Teleconference May 19, 2004
+================================
+
+* Participants
+
+  Sachiko Wada (Ascade) 
+  Ravi Subramaniam (Intel) 
+  Dave Snelling (Fujitsu)
+  Chris Smith (Platform)
+  Andreas Savva (Fujitsu)
+  Fred Maciel (Hitachi)
+  Hiro Kishimoto (Fujitsu)
+  Bill Horn (IBM)
+  Andrew Grimshaw (UVa)
+
+  Apologies: Latha Srinivasan
+
+  Notes: Andreas Savva
+
+* Early Discussion
+
+** No minutes for approval
+
+** Agenda bashing.
+
+  - Review of teleconf schedule and status of drafts
+
+  - Requirements draft out shortly before the call
+  - EMS (PE) draft out before the call
+  - Data draft
+    - Out before call. Essentially the same as the text included in
+      OGSA v16.
+    - Might have to come and review it again after data call review.
+
+  - Self-management draft
+    - Review scheduled for next call (Monday) but it does not look
+      likely that a (final) draft will be ready by then.  (Only had 2
+      calls so far and are at outline level plus some text.)
+
+  - Context draft
+    - Jeffrin will try to do a draft, espl Policy management, since it
+      is relevant to self-management.
+    - Contributors to the Context section are needed. Contact Hiro
+      and/or Jeffrin.
+
+  - Design teams should make sure that teleconference announcements
+    are sent to the OGSA list not just to the design team members.
+
+* GGF11
+
+  Action: Panel ideas, send to DaveS, Andrew, Hiro asap.
+
+  - Plan for next OGSA draft (for GGF11)
+    - Produce the draft about a week before GGF11
+    - Design teams should keep working on their sections separately
+      and submit their final text by the end of May to Andreas
+    - Andreas will put the document together
+
+* EMS review
+
+  - Andrew added WS- prefix (WS-EMS) to raise the question of whether
+    this is something that we should be doing in general
+    - Agreed to remove for now (maybe use OGSA-EMS instead)
+
+  - Outline of document
+    - What's in it and what's not (e.g., provisioning)
+
+  - Demand/Supply meta-pattern
+    - (Comment that workload optimization appears more than once in
+      the figure; Andrew to check)
+
+  - The explanation is reduced a bit and does not go into interface
+    details. (The more detailed text is still in the older document
+    and will be used for future versions.)
+
+  - Container: CMM managed resource -> WSDM
+
+  - Scenarios: Not just legacy job execution. Cover other scenarios
+    like system patch, etc.
+
+  - Fred had some comments on the usage of 'resource'
+    - There is a resource subsection but doesn't cover just resources
+    - There are resource 'things' in other sections
+    - Also contrast with CMM doc resource definitions and examples,
+      e.g., job is resource.
+    
+  - Add another section "Interactions with OGSA" and explicitly move
+    deployment/configuration there
+  - Rename resource section
+
+  - Chris pointed out that the term "data container" is
+    misleading. 
+    - 'container' has a lot of extra baggage and gives the wrong image
+      (this entity does not contain the data anyway)
+    - Searching for another term. 
+    - It's maintains metadata; relates handle (via access mechanism)
+      to data.
+    - Tentatively came up with "persistency data management service"
+      (this may change)
+    - Also there is no mention of maintaining meta-data in the
+      description; put back in.
+
+  - Some discussion on whether to change reservation to agreement
+    - Reservation as one type of agreement
+    - Breaking it out identifies the need for (domain) term language
+    - WS-Agreement is an infrastructure service
+    - Is there a reservation service or not. E.g., a broker may look
+      like a reservation service it but is actually doing reservations
+      on behalf of clients by talking to resources. (And reservation
+      lies with resource.)
+    - So reservation as an agreement pattern
+    - Patterns are relevant to EMS; and somethings are implemented as patterns
+
+  Action: Ravi to do revision of how he thinks this text should be
+          presented and send to Andrew
+
+* Data review
+
+  - This draft was reviewed in a data call
+  - Some things to do:
+    - Add more scenarios (e.g., direct access)
+    - Transparency discussion needs more work
+    - Client api: add motivation
+    - Information dissemination group to send material on notification
+    - Add EMS to interactions with rest of OGSA
+    - Legal and Ethical restrictions rewrite 'have to' -> may, etc. 
+    - See data call minutes for more details.
+
+  - Not sure how to fit in supply/demand meta-pattern for data
+    - Supply: as a data source 
+    - Provisioning: makes it available
+    - Demand: where it is used: e.g., end user. Might include caching
+      services, replication etc.
+    - Also Indirection (caching) as an optimization mechanism.
+    - Also Replication as supply side optimization
+    - It's ok for a consumer (demand side) to be also a producer
+      (supply side)
+    
+  Action: DaveB to do a draft just re-using the concept. It doesn't
+          have to fit exactly.
+
+  - No major objections to draft so far. Design team is eager to start
+    talking about arhitecture.
+
+* Requirements review
+
+  - Draft by Andreas, Sachiko, Hiro.
+  - Revised based on comments from interim. Not all comments are
+    included yet. Some things to do are added as a list at the end of
+    the section. (Text that has just been added or still needs work is
+    sometimes highlighed in yellow.)
+    
+  - 1.3 was changed to "Resource Optimization" but might be better to
+        change to just "Optimization" (it is not just for resource.)
+  - 1.9 'pattern' rather a requirement.
+
+  - Standard protocols: 
+    -  Andrew suggested adding some text like "...as well to simplify
+       to transition to using Grids" because existing
+       standards/protocols (e.g., NFS, CIFS, etc) should be leveraged
+       to ease/promote adoption
+  - Ease of use: Part of using standard protocols e.g., cifs, nfs.
+
+  - Might be better to call out as Design goals rather than requirements
+    - Ease-of-use
+    - Extensibility
+    - Availability
+    - Administrative cost
+
+  - Andrew did a draft of the Design Philosophy section. One idea is
+    to take out from the requirements section some of the items above
+    and put there, but it is not clear if that section will be ready
+    in time for GGF11.
+
+  - Add more text on characteristics of grid systems: long lived and evolving
+  - Make sure that the section is talking about things that are at the
+    same level or have the same intent
+
+  - Discussion on whether to leave use case table in or not
+    - Andreas is thinking of removing it since all references to use
+      cases were removed from requirements. Might put it as an
+      appendix and refer to it.
+    - If there is a reference to use cases then also refer to the use
+      cases in the tier2 document too. Requirements are also driven
+      from some of those use cases.
+    - If the table is left in then also add a table for the tier2 use
+      cases
+
+  - Think of what the system provides vs what the user requires (espl,
+    since use cases are presented)
+
+  - Add more on adapticity (all sections after 1.8)
+    - Quality of what the system provides vs dynamic environment
+    
+  - Functions provided for manageability vs  functions to manage
+
+  - More on non-functional requirements. (Some things have been added
+    after 1.9)
+
+  - From Ravi's comments: It is not clear what infrastructure refers to.
+
+  - Rewrite "OGSA should" to something more readable.
+
+  - Protection: Might include things like data encryption,
+    anti-virus, mutual authorization
+  - Protection of data, services, intrusionm system of being corrupted,
+    malicious or unauthorized use.
+  - Text mentions protection. Consider if some of the above should
+    also be added.
+
+  Action: Ravi to send some text relating to his comments to Andreas.

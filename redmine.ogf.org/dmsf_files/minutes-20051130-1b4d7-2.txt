@@ -1,0 +1,193 @@
+OGSA Teleconference - 30 November 2005
+======================================
+
+* Participants
+
+  Hiro Kishimoto (Fujitsu)
+  Fred Maciel (Hitachi)
+  Tom Maguire (EMC)
+  Steve McGough (IC)
+  Mark Morgan (UVa)
+  Takuya Mori (NEC)
+  Andreas Savva (Fujitsu)
+  Ellen Stokes (IBM)
+  Ravi Subramaniam (Intel)
+  Jem Treadwell (HP)
+
+  Apologies: Steven Newhouse
+
+  Minutes: Andreas Savva
+
+* November 28 minutes approved with no changes
+
+* UML tool update
+
+  - RSM was chosen; no objections so far. 
+  - Ellen is following up on how to get licenses.
+    - (It is used by DMTF already so it is possible.)
+
+* Meeting planning 
+
+** GGF16
+
+  - Proposal to organize just the default 2 sessions. 
+    - It worked well last time and also allowed WG members to attend
+      other sessions as well. The separate one day F2F should allow
+      enough time for more detailed discussions.
+    - One session could be 'Outreach'. But 'Outreach' last time was
+      not well attended. There are two possibilities:
+      - Andrew G's proposal to have a 'Town Hall' style meeting
+        instead. Talk with Andrew to get more details
+      - An outreach session as a 'deep-dive' for a specific capability
+        to introduce the group's work in more detail.
+    - The second session was a joint-wg discussion. Last time it was
+      EMS-CDDLM. Having a similar joint discussion with another group
+      might be a good idea.
+
+  - The deadline for session requests is Dec. 14. 
+    - Groups requesting sessions after Dec 2 must have an up-to-date
+      charter; not a problem since OGSA's new charter was approved
+      recently.
+
+** GGF16 B2B F2F
+
+  - OGSA-WG has been asked not to overlap its B2B F2F with GGF
+    sessions. So this time the back-to-back meeting will be on Friday
+    only.
+  - A room at IBM Athens has been reserved. But it may not have
+    internet access. 
+   - Hiro is also looking for a room at a University in Athens and if
+     it offers internet access the meeting may be moved there instead.
+  - In any case a final decision for the venue should be made by the
+    end of December.
+
+** GGF16/F2F Actions
+
+  - Hiro will send out a topic request to the list
+    - For both the GGF16 joint session and for the one day F2F. The
+      choice for the joint session to be based on people's
+      availability (and whether they can attend the Friday F2F) and
+      how big the topic is (fits in 90 minutes).
+    - Review choices next week
+
+** Jan. 2006 interim meeting
+
+  - Agenda reviewed once on a call. Hiro is updating it and will
+    review it once more. 
+  - Hiro will also do a zoomerang survey to confirm people's
+    availability.
+
+* BES Information model review
+
+  - Ellen sent out a ppt before the call. Only slide 4 was reviewed on
+    the call.  (Slides 1-3 are carried over from an earlier
+    presentation and slide 5 is redundant and will be deleted.)
+
+  - Slide 4 is based on work between Ellen, Andrew and Mark and is a
+    first step in working out the minimal set of required and optional
+    information for a BES container.
+  - At this point, this work does not consider activities that may be
+    started within the container.
+
+** Operating System:
+  - It seems to be accurate for a server box but does it cover other
+    possibilities such as 'Java VM' or batch system (e.g., PBS)?
+    - This is probably covered by the value of OSType.
+  - Is this the best way to map to CIM?
+    - There are probably some missing bits. The motivation is for this 
+      to describe an operating environment
+    - The attributes are constrained to be specific to a BES container
+      but it is expected that there will be a new class in CIM
+      (Service Container) and that the BES container will be the
+      constrained profile version of this Service Container (and not a
+      subclass).
+    - The classes are not shown yet
+
+  - Other attributes: These are attributes that need to be explored
+    further.  E.g., libraries/packages are actually part of the
+    application model in CIM and it is not clear how best to fit them
+    in yet.
+
+** Processor:
+   - What is the difference between the '# of processes' here and the
+     'number of processes' in the Operating System?
+     - It is not clear and needs to be reviewed again.
+   - 'Load for computer systems', '# of processes': They don't seem so
+     specific to Processor.
+   - (Have to also think of virtualization: What is real or virtual in
+     CIM. This is an ongoing discussion within CIM.)
+ 
+** Networking  
+   - This is just an initial attempt. Current scheduling systems do
+     not require this kind of information.
+   - Still it seems strange that even simple descriptions such as the
+     number of cards or their bandwidth are not part of the Optional
+     list.
+   
+** Disk
+  - Not discussed yet. To revisit later.
+
+** Filesystem
+   - Why is 'casesensitive' or 'filesystemtype' optional?
+     - Most systems do not use these for scheduling
+
+** ServiceContainer
+   - The attributes listed after the first two items in the list
+     should be optional not required.
+
+** Management interfaces
+   - Which of these are functional vs management interfaces? There are
+     different perspectives, with the consensus that 'Stop' and
+     'Start' are probably management but less sure about the rest.
+   - This is another item to discuss again in more detail within the
+     design team. 
+
+** Overall
+
+   - Consensus that this is a good step forward. It does need more
+     work.
+   - How many pages would a completed profile take? 
+     - It should not exceed 50 pages.
+
+   - Next review? 
+     - Ellen's schedule is full in December. Work will continue within
+       the smaller group and it may be possible to have another review
+       in January before the F2F.
+
+   - Jan 9 is probably the only full OGSA call possible in January
+     before the F2F(+). But a smaller group could use one of the call
+     slots to have a review.
+
+ (+) Note: GFSG meeting is planned for the week before the OGSA F2F.
+ 
+* MDC presentation review
+
+  - Reviewed presentation posted by Ravi to gridforge. Fred made
+    revisions on the presentation during the call. Summary of main
+    changes below:
+    - Add EMC to Contributors slide
+    - 'Concepts and Fundamental' document should be changed to
+      Architecture document
+    - Add that OGSA profiles are styled after WS-I profiles and are
+      extensions of WS-I BP etc
+    - Naming - details are under discussion but at an abstract level
+      the content is ok
+    - Need more graphics for OGSA Data: Ravi to ask Dave B
+    - Newer version for 'Typical Pattern': Andreas to send to Ravi
+      (Done)
+    - Add CMM GFD # and also do the same for other published documents
+      showing on the slides.
+  - Comments to Ravi by Monday latest. The presentation is planned for
+    Tuesday.
+  - Fred will upoad as next version, tidy up the folder and send email
+    how to uploade new versions of existing documents. (Done)
+
+* Next call
+
+** Monday
+
+  - 'BSP - Secure channel profile' (draft expected Friday)
+  - Architecture and Glossary 1.5 review
+
+** Wednesday 
+   - Naming & EMS

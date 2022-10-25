@@ -1,0 +1,105 @@
+GFS-WG #1 RNS
+
+Wednesday, Oct 5, 2005
+12:30am to 2:00pm
+
+Note taker: Osamu Tatebe (AIST)
+
+Agenda
+------
+1. RNS update      Manuel Pereira (IBM)
+2. GFS profile     Manuel Pereira (IBM)
+
+Meeting
+-------
+1. RNS update
+
+o Resource Namespace Service
+ - A multi-faceted approach for addressing the needs of access to
+   resources within a distributed network or grid
+ - Facilitates a uniform and universal namespace where:
+  - Names resolve to ultimate target addresses
+  - Names are hierarchically managed
+  - Names may be used in human interface applications and browsable
+ - Utilizes document style messaging
+ - Intended to facilitate namespace services for a wide variety of
+   Grid services
+  - OGSA Basic Profile compliant Web service capable of providing
+    namespace services for any addressable entity by registering an
+    Endpoint Reference 
+
+o RNS Three-tier Naming Architecture
+
+ human interface names - logical references - endpoint references
+ - mapping from human interface names to endpoint references,
+   and mapping from human interface names to logical references
+ - optional RNS resolver porttype that maps from logical references
+   to endpoint references
+
+o operations
+ - naming
+  create, delete, list, lookup, update
+ - implicit
+  move, rename, mkdir
+ - extensibility
+  {delete,insert,update}Property, listProperties
+
+o draft status
+ - all file system specific features has been factored out
+ - final round of internal review and comments
+ - plan to submit to GFD editor in Nov 2005
+   - 15day GFSG Comment
+   - 60day public comment
+ - ownership of RNS travisions to OGSA-naming WG
+ - GFS-WG to begin GFS Naming Profile now
+
+o RNS
+ - was ready for submission in early Aug
+ - OGSA F2F comments
+  - reference to virtual directory
+  - simplify junctions
+ - reference implementation
+  - RNS service provider implementation
+  - RNS service consumer implemenattions
+   - namespace administration graphical user interface
+   - command-line (core API library)
+  - IBM alphaWorks
+  - Globus toolkit
+
+Q: how do you handle secrity, access control
+A: access control is needed, but it is not included for now.  We need
+   discussion with security folks.
+
+o RNS Recent Revisions
+ - New section: binding to RNS
+  - virtual directory can now be directly referenced
+  - changed "full paths" to "relative paths"
+ - Removed "Type" Property
+  - namespace entries are now either Virtual directories or Junctions
+  - alias and referral is a junction to a virtual directory
+ - Revised Referral Message Mechanism
+  - removed RNSJunctionFault
+    accomodate new binding approach, instead, send back an EPR
+    including PathRemainder
+ - Junction Revisions
+  - rns:Path
+  - rns:PathRemainder
+ - New Sections
+  - Service Binding
+  - IteratorContext
+    * important, need to be emphasized
+  - Absolute Paths
+    * spaning multiple context
+
+o telecon next week to finalize the spec
+
+2. GFS profile
+
+o profile
+
+  checksum, checksumType, complete, mutablesource, readonly,
+  replicacopy, size, timestamp, version
+
+o need more usecase
+
+C: checksum should be digest

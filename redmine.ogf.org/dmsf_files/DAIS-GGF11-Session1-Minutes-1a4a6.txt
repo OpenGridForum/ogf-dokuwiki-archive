@@ -1,0 +1,360 @@
+DAIS Session 1 - GGF 11 - 07/06/04
+==================================
+
+Chair:      Dave Pearson.
+Note taker: Mario Antonioletti
+
+Dave welcomes people to the DAIS session.
+
+Agenda for this session
+
+   1. Introduction. Review of Activities to Date: Dave Pearson 
+   2. Grid Data Services Specification Update: Norman Paton 
+   3. Discussion of Grid Data Service Specification Issues: Norman Paton 
+
+----
+1. Introduction. Review of Activities to Date: Dave Pearson 
+
+A copy of the presentation is available at: 
+
+ http://forge.gridforum.org/projects/dais-wg/document/GGF11-DAIS1-Intro/en/1
+
+Dave Pearson presents an overview of the scope and goals of
+DAIS. 
+
+OGSA-DAI is mentioned as an eventual reference implementation of DAIS.
+
+A timeline of DAIS activities through previous GGF meetings was
+presented.
+
+For GGF9 the DAIS documents were refactored into separate documents: a
+core document, a relational and XML realisations that extend the core
+document.
+
+Dave publicises the fact that a files BOF is taking place at this GGF
+which may add another realisation. Dave also publicise the Infod
+working group meeting.
+
+Other things of note:
+
+  - Minor changes have been made to the DAIS charter since GGF10. 
+  - The other DAIS sessions scheduled for GGF11 are advertised.
+  - The documents produced for GGF11 are mentioned
+    - an updated core document
+    - an updated relational realisation document
+    - an updated xml realisation document
+    - a document discussing different mappings of DAIS to different WS specs
+
+Dave introduces Norman Paton who is to give an update on the changes
+that have been made to the core specification since GGF10.
+
+----
+
+2. Grid Data Services Specification Update: Norman Paton 
+
+A copy of the presentation is available at:
+
+http://forge.gridforum.org/projects/dais-wg/document/GGF11-DAIS1-CoreAndIssues/en/1
+
+No one is expected to implement the core specification directly - this
+is done through the realisations.
+
+The name of the specification has changed from "The Grid Data Service
+Specification" to the "Web Services Data Access and Integration".
+This reflects the fact that we see the specification as being relevant
+outside the Grid Service area.
+
+There are implicit and explicit references to other specifications.
+
+Sastry Malladi: does it currently have an explicit dependence on WSRF?
+
+It does in the mapping section. The group however does not have an
+official position on WSRF yet. This mapping is thus currently
+indicative.
+
+DAIS has been working with other working groups - e.g. the DMTF
+through the CIM GGF WG to prevent replication of work.
+
+Q: when it says that it is focused on structured data what about APIs
+   that expose data resources as structured data - does this specs
+   deal with that?
+
+If there is another type of data resource then the specs have been
+factored in such a way that a new document can be produced to cater
+for this.
+
+Q: what determines the realisation - the data resource type or the
+   data format? i.e. a relational resource could expose data as xml ...
+
+This would be an implementation detail.
+
+The documents are currently all drafts but hope to make these
+specifications. The specs are informed by the "OGSA Data Services" and
+"Scenarios for Mapping DAIS Concepts" documents. The latter two
+document will remain as informational documents.
+
+Since GGF10 have removed the dependency on OGSI and have reorganise
+the documents to try and remove external dependencies.
+
+A data service is a web service that corresponds to one of the DAIS
+specifications.
+
+Q: does a data mining system count as a data resource? i.e. it is a
+   sink ... you have defined a data resource as being kind of broad.
+
+It could be. If a data mining system exposes a suitable API
+you could make it into a data resource. Maybe it should be 
+tightened up.
+
+Norman goes over terminology (specified in the slides).
+
+The specification does not mandate how interfaces are composed into
+services. You could put relational and xml interfaces on data
+resources that support both models.
+
+Guy Rixon: in the context of a data service is there an implication if
+           you revisit a service that the underlying database is the
+           same, i.e the names of things do not change?
+
+The spec does not state that the names of things do not change.
+
+Malcolm Atkinson: this is an important point. Identifying the data is
+                  important Need to determine whether you are talking
+                  to the same resource.
+
+                  Need a specific global naming scheme - if you use an
+                  end point resource as in WS-Addressing then there is
+                  no requirement that the EPR will point the same
+                  thing.
+
+Norman: the first part of the spec is mapping independent
+
+Sastry: how you name a data resource should be independent of the mapping.
+
+Currently a name is exposed which is not the same as a WSRF end point
+reference. If you do not use WSRF you could a context token to
+identify the data resource.
+
+...
+
+Maybe should not say anything about identity in this part of the
+presentation as this is tied to the mapping used. Tricky to resolve
+this issue without considering the mapping.
+
+The behavioural properties should not change over time as the
+semantics of the service are not well defined over this transition
+point.
+
+Do not have many data descriptions items as we are looking for
+something that is generic for all types of the data resources. If you
+thin that something has been missed out then do let us know.
+
+Sastry: how are the properties described in the WSDL?
+
+That is mapping specific. This currently is a resource property but it
+could be done in another way if you were to use another mapping.
+
+Behavioural properties are listed which characterise how the service
+behaves when interacting with a consumer. Norman again asks whether
+the list is complete and whether the definitions provided are
+adequate. Transaction behavioural properties are presented as an
+illustration of the use of behavioural properties.
+
+Sastry: WS-DAI - the core does not have a WSDL specification? Is there
+        any WSDL?
+
+There is a little. If we were using WSDL 2.0 there might be some more.
+There is a lot more in the realisations.
+
+For the behavioural properties there are type definitions in the core
+spec that can be used.
+
+Guy: you do not seem to have any general interfaces for the curation
+     of data that associate metadata with data?
+
+Not yet.
+
+Malcolm: ? (did not catch what Malcolm said but it was a supporting
+         statement about what Guy had made)
+
+David Martin: that is the metadata question. 
+
+(Question directed at Steve Langella who has had BOFs at two previous GGF
+ meetings in order to set up a GGF RG.)
+
+Steve Langella: trying to form a group at GGF or possibly work within
+                the context of the Semantic Grid... trying to resolve
+                this for this GGF. Looking for a home at this point
+                to carry this work out.
+
+David: it's a tough problem to even define what metadata models are.
+
+We have been associating our metadata with the data.
+
+Sastry: is the scope of DAIS set on accessing data resources or is it
+        about how to virtualise the data resource in the context of
+        the Grid? If it's the former what is the difference with
+        existing products ... you do not cover the virtualisation...
+
+We are not trying to do something new as such ...
+
+Sastry: virtualisation is different ... you are trying to define an 
+        interface ... virtualisation hides how the data access is done ...
+
+Dave Pearson: this comes down to whether we are just putting a wrapper
+              round JDBC and what the value of that is ... the owner
+              of the data will determine what you can see ... in a
+              scientific data environment you will want to give people
+              access to these data resource and give people the
+              ability to run queries ... this came out of requirements
+              that came out of initial work in the UK ...
+
+Sastry: defining an interface to a data resource has nothing to do
+        with Grid...
+
+We are going to get into a debate on the definition of Grids ... if
+we can characterise the question more precisely we can come back to it
+during the data services session.
+
+In the core document message patterns are presented that provide
+templates that are substantiated by the realisations. A relational
+example of a message exchange is given.
+
+Data factory allows representations of data to be exposed at the
+service end through a suitable interface. There are no operations
+defined in the core spec - this is left to the realisations but
+a set of message patterns are established the details of which
+are filled in by the realisation documents.
+
+We do not define data management at the moment. This arose from
+the OGSA Data Services document. There is work going on elsewhere.
+There are three aspects of management:
+
+      - managing the resource
+      - managing the service
+      - managing the service-resource relationship
+
+David: do you think WSDM is going to produce enough detail?
+
+They are going to provide the framework.
+
+Sastry: WSDM are going to provide the framework - it is up to the
+        working groups to provide the details.
+
+Brian Collins: there is a complex relationship of working groups
+               ...  we liaise with CIM which feeds into WSDM in
+               OASIS... other groups are addressing this ... they may
+               not do so to the required detail ... we need to keep an
+               eye on what is going in that space ....
+
+Sastry: that is the right approach ... this group should not define
+        management...
+
+Currently we have a holding position to see what happens in this space.
+
+Dave: currently out of scope but we would like someone else to put
+      it in their scope ...
+
+Malcolm: this group should still define the requirements so that when
+         a framework comes out we can see if this meets the
+         requirements ...
+
+This is a sensible suggestion. We have been actively interacting with
+other groups. Some of the use cases identified by this group have
+been used to drive the work in the CIM group.
+
+Have avoided mapping issues as there is going to be a discussion at
+a later DAIS sessions. 
+
+Only one slide is given showing aspects of the present mapping to
+WSRF.
+
+Malcolm: surprised that a data resource point maps to an End Point
+        Reference... the web service may manage many resources ... you
+        may require more than just the end point reference ... each
+        web service may identify the resource differently and web
+        services may use different identifiers ... we should ensure
+        that if we have two identities they refer to different
+        resources ... we could have the same name mapping to different
+        resource through different web services ...
+
+In this mapping users see resources identified by end point references,
+an additional name property is available as an identifier... there
+is an issue then on how WSRF identifies the resource and how the
+resource is actually identified. More discussion on this is expected
+at the mapping session.
+
+Norman goes over the remaining DAIS session and sessions that are
+of relevance to DAIS.
+
+----
+
+3. Discussion of Grid Data Service Specification Issues: Norman Paton 
+
+The same set of slides were used for this part of the presentation.
+
+Norman lists some of the DAIS issues already identified:
+
+       - have we missed anything out
+       - are there anything that are should be addressed...
+
+...
+
+David: WS-Security ....
+
+Sastry: WS-Security only gives the way of passing the stuff ... need an
+        operation to pass the credentials....
+
+Is this out of scope?
+
+Guy: if you want to use WS-Security you have to do per port type....
+
+David: that is not a WS-Security issue it is an implementation...
+
+...
+
+Sastry: you need an operation to get the credentials....
+
+Need to look at the WS-Security and how this impacts on DAIS.
+
+Malcolm: there is an issue as to whether files are going to be 
+        incorporated within the DAIS framework ...
+
+There is a BOF to address this ...
+
+Malcolm: so it's still undecided ...
+
+This will be examined at the BOF. They will examine something that
+is going to fit in this framework. Still not clear whether this
+will function within this group or as its own group.
+
+Guy: given that your resource is a writable should there be
+     behavioural characteristics defining who can write to it?
+
+We expose functionality that is provided by an underlying resource
+... for relational resources if you have access to the database and
+are authenticated to write you will have the associated privileges
+... these things are described by the CIM model ... you raise an
+interesting question as to whether this should be a behavioural
+property....
+
+Malcolm: need an accounting model ... may have a 1Gb for 1 day or 0.1
+         Gb for 10 days.... the accounting model is much more subtle
+         if the data resource is doing this ... if it's doing it then
+         we need access to this ...
+
+There are lots of properties that would come through the CIM model that
+are related to management ... we may not provide mechanism.
+
+Guy: this is metadata relating to a resource ... need to have that
+     metadata available at the interface
+
+That is a fair point. CIM does not have these properties available 
+at the moment....
+
+Malcolm: ... need to provide an interface to what can provide that kind
+         of information ... need a way of enquiring ...
+
+----
+
+

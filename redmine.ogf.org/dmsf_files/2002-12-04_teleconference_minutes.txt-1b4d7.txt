@@ -1,0 +1,123 @@
+Minutes of the Twelth OGSI-WG Teleconference
+04/Dec/2002 @ 21:30-23:00 GMT
+
+Attendees:
+
+Karl Czajkowski <USC/ISI>
+Frank Siebenlist <ANL>
+Shel Finkelstein <Sun>
+Jeff Frey <IBM>
+Steve Graham <IBM>
+Bill Horn <IBM>
+John Rofrana <IBM>
+Andreas Savva <Fujitsu>
+Dave Snelling <Fujitsu>
+Pete Vanderbilt <NASA>
+
+1. Approval of Minutes - OK.
+
+2. Review actions
+
+Action: Jeff Frey to draw up a description of how to integrate the 'implicit' verses 'SDE' state dichotomy. Also look into other issues of coherency control. - Pending
+
+Action: Steve T&G to push on W3C to get what we need (portType extension without breaking encapsulation). Take ownership. - Pending
+
+Action: Tom Maguire and John R, not being happy with the mutability language, will propose new language reflecting the current meaning. - Pending.
+
+Action: Steve G & John R to update Service Data document and integrate the Set service Data Document - Done
+
+Action: Dave S Faults summary. - Pending
+
+Action: Steve Graham and Pete to drive the creation of an XML Schema for the specification (#35) - Pending decision of service data and some pointers on WSDL 1.2 syntax.
+
+Action: Dave Snelling and Andrew Grimshaw to look at requirements and solutions for pull like semantics - Pending
+
+Action: Steve G. and Jeff F. to send new position on topic based notification - Done
+
+Action: Shel will follow-up Events use cases for events and notification - Done.
+
+Resolution: All event like proposals (e.g. from a request for a simple deliver w/ ack based on Service Data through to the full support of topics) were punted. They should be looked at in the OGSA-WG and sent back to us for V1.1 or to other WGs. We will monitor WS activity in the meantime.
+
+The reasons for this decision included the limited time to discuss and reslove what could be a very big time consumer; the number of proposals already on the table plus those from places like DAIS; and that it was dependent on a better collective understanding of service Data (which means we can't even start discussing it yet).
+
+Action: Dave S to put a proposition for registration portType, together
+with exact text. - Pending
+
+Action: Andrew G to write a document describing the options for reslover behavior. - Pending
+
+Action: Steve Graham to craft language for recommendations to developers for use of resolvers (#17) - Pending
+
+Action: Steve T. Email list of proposed resolve->verified bugs. - Pending
+
+Action: Pete V. and Steve T. to propose a more general solution to the extensibility argument pattern, see bug 34. - Pending.
+
+Action: Pete V. to create XML schema for locator elements, see bug 37. - Done.
+
+3. Resolve the Lifetime of GSH question.
+
+Background: GSHs are never recycled. GSRs have variable lifetimes, possibly quite short. Both may contain internal life-cycle attributes, as the details of each are outside the spec. The gsdl:serviceLocator contains zero or more gsdl:serviceHandle elements and zero or more gsdl:serviceReference elements. The questions to answer are where do we put life time attributes and are the required?
+
+  1- On the gsdl:serviceReference elements
+  2- On the gsdl:serviceHandle elements
+  3- On the gsdl:serviceLocator container itself
+
+Process: Agree that these are the questions that need to be answered and then answer them.
+
+The process was agreed after clarification that handles and references are put together in the locator (i.e. there is not separate structures in the locator for each).
+
+It was noted that 1 and 3 mean different things: (1) refers to the lifetime of the individual references and (3) referred to the binding between GSHs and GSRs in the locator. However, life time attributes on 3 was also though to be confusing, as some interpreted is as service of GSH lifetime.
+
+Resolution:
+
+There will be no life time attributes on the handle or the locator as a whole.
+
+The goodFrom and goodUntil will be listed as optional attributes on the reference. See bug 37 for example format. Text should be crafted along the following lines:
+
+"Clients SHOULD NOT expect to connect to a service, via the given GSR, before goodFrom or after goodUntil."
+
+4. Review and agree actions on the proposed WS-ServiceData paper posted yesterday. See
+      [ogsi-wg] changes to WS-ServiceData Wed Dec 4, 2002  01:19:24 GMT
+
+Process: Go through the document by section.
+
+Time was thought to be too short and the key section of service Data semantics was not yet included in the document. This section is in a draft from Jeff F, under review by Steve G. and should see the light very soon.
+
+5. Buggzilla Sweep from Bug 39 time permitting.
+
+No action.
+
+6. Matters Arising
+
+We discussed the question of mutability and modifiability, without making firm resolutions. The proposal in the Service Data paper however, met with a good reception, however the language may change before the next release. For reference, current proposal is likely to be:
+
+   modifiable : 
+      boolean -  Can the client modify the SDE subject to mutability constraints?
+
+   mutability : 
+      constant - WSDL only; can't be changed; Union of all contributions from portTypes.
+      setOnce  - Can only be set once. in the WSDL, by the service, or by the client subject to modifiable.
+      extend   - May only be extended, No delete allowed.
+      mutable  - Freely changeable.
+
+See the proposal for detailed language. Note that some of these names have changed and that we are not yet happy with setOnce.
+
+7. Next Meeting:
+
+December 11, Wednesday pm (US & Europe) or Thursday am (Asia-Pacific) at:
+
+    13.30-15.00 US Pacific (e.g. Los Angeles)
+    14.30-16.00 US Mountain (e.g. Denver)
+    15.30-17.00 US Central (e.g. Chicago)
+    16.30-18.00 US Eastern (e.g. New York)
+    21.30-23.00 GMT
+    21.30-23.00 UK (e.g. London)
+    22.30-00.00 Central Europe (e.g. Paris)
+    06.30-08.00 Japan (next day)
+
+Teleconferences are scheduled for:
+    December 18
+    January 8, 15
+
+The teleconference information for all remaining scheduled teleconferences is:
+    1-484-630-8733
+    Passcode: 72316

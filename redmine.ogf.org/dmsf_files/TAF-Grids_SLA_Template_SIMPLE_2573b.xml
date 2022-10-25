@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsag:AgreementTemplateType
+	wsag:TemplateId="TG-FMS-Template"	   	
+  	xmlns:wsag="http://schemas.ggf.org/graap/2007/03/ws-agreement"
+  	xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/03/addressing" 
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  	xmlns:tg="http://www.beingrid.eu/TAF-Grids/Schema"	
+  	xsi:schemaLocation="TAF-Grids.xsd http://www.beingrid.eu/TAF-Grids/Schema">
+ 
+  <wsag:Name>TAF-Grids Fraud Management System SLA Template</wsag:Name>
+  <wsag:Context>
+    <wsag:AgreementResponder xsi:type="xsd:string">TG-FMS</wsag:AgreementResponder>
+    <wsag:AgreementInitiatior xsi:type="xsd:string"/><!-- To include the TADIG -->
+    <wsag:ServiceProvider>AgreementResponder</wsag:ServiceProvider>
+    <wsag:ExpirationTime>2009-12-31T23:59:59.000</wsag:ExpirationTime>
+  </wsag:Context>
+
+  <wsag:Terms>
+    <wsag:All>
+      <wsag:ServiceDescriptionTerm wsag:Name="DataFederation" wsag:ServiceName="TG-FMS">
+        <DataFederation xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+     		<DataUpdatePeriod xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:integer">15</DataUpdatePeriod>
+     		<DataFormat xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string">TD.35</DataFormat>
+     		<DataSource xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:anyURI"></DataSource>
+		</DataFederation>
+      </wsag:ServiceDescriptionTerm>
+
+      <wsag:GuaranteeTerm wsag:Name="ProviderObligations" wsag:Obligated="ServiceProvider">
+        <wsag:ServiceScope wsag:ServiceName="TG-FMS"/>          
+        <wsag:ServiceLevelObjective>
+          <wsag:CustomServiceLevel xsi:type="xsd:string">
+            <!--tg:SystemAvailability></tg:SystemAvailability>
+            <tg:SystemResponseTime></tg:SystemResponseTime-->
+            MIN_SYSTEM_AVAILABILITY IS 99.0
+          </wsag:CustomServiceLevel>
+        </wsag:ServiceLevelObjective>
+        <wsag:BusinessValueList>
+          <wsag:Importance>1</wsag:Importance>
+          <wsag:Penalty>
+            <wsag:AssessmentInterval>
+              <wsag:TimeInterval>PT15M</wsag:TimeInterval>              
+            </wsag:AssessmentInterval>
+            <wsag:ValueUnit>EUR</wsag:ValueUnit>
+            <wsag:ValueExpression xsi:type="xsd:integer">1000</wsag:ValueExpression>
+          </wsag:Penalty>          
+        </wsag:BusinessValueList>
+      </wsag:GuaranteeTerm>
+
+      <wsag:GuaranteeTerm wsag:Name="FraudProtectionGuarantees" wsag:Obligated="ServiceProvider">
+        <wsag:ServiceScope wsag:ServiceName="TG-FMS">
+        </wsag:ServiceScope>
+        <wsag:ServiceLevelObjective>
+          <wsag:CustomServiceLevel xsi:type="xsd:string">
+            <!--g:MaxRevenueLoss></tg:MaxRevenueLoss-->  
+            MAX_REVENUE_LOSS IS 0.1         
+          </wsag:CustomServiceLevel>
+        </wsag:ServiceLevelObjective>
+        <wsag:BusinessValueList>
+          <wsag:Importance>1</wsag:Importance>
+          <wsag:Penalty>
+            <wsag:AssessmentInterval>
+              <wsag:TimeInterval>PT15M</wsag:TimeInterval>              
+            </wsag:AssessmentInterval>
+            <wsag:ValueUnit>EUR</wsag:ValueUnit>
+            <wsag:ValueExpression xsi:type="xsd:integer">1000</wsag:ValueExpression>
+          </wsag:Penalty>
+        </wsag:BusinessValueList>
+      </wsag:GuaranteeTerm>
+      
+      <wsag:GuaranteeTerm wsag:Name="ConsumerObligations" wsag:Obligated="ServiceConsumer">
+        <wsag:ServiceScope>
+          <wsag:ServiceName>TG-FMS</wsag:ServiceName>
+        </wsag:ServiceScope>
+        <wsag:ServiceLevelObjective>
+          <wsag:CustomServiceLevel xsi:type="xsd:string">
+            <!-- All the CDR files are accessible and available -->
+            <!-- tg:DataSourceAvailability>100</tg:DataSourceAvailability--><!--percentage-->
+            DATA_SOURCE_AVAILABILITY IS 100
+          </wsag:CustomServiceLevel>
+        </wsag:ServiceLevelObjective>
+        <wsag:BusinessValueList>
+          <wsag:Importance>2</wsag:Importance>
+          <wsag:Penalty>
+            <wsag:AssessmentInterval>
+              <wsag:TimeInterval>PT15M</wsag:TimeInterval><!--xs:duration-->
+            </wsag:AssessmentInterval>
+            <wsag:ValueUnit>EUR</wsag:ValueUnit>
+            <wsag:ValueExpression xsi:type="xsd:integer">1000</wsag:ValueExpression>
+          </wsag:Penalty>
+        </wsag:BusinessValueList>
+      </wsag:GuaranteeTerm>
+
+	 </wsag:All>      
+  </wsag:Terms>
+  
+  <wsag:CreationConstraints>  
+    <wsag:Item Name="SystemAvailability">
+      <wsag:Location>
+        /wsag:Template/wsag:Terms/wsag:All/wsag:GuaranteeTerm[wsag:Name='ProviderObligations']/wsag:ServiceLevelObjective/wsag:CustomServiceLevel
+      </wsag:Location>
+      <ItemConstraint>
+          <xsd:minInclusive xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="float">99.00</xsd:minInclusive>
+          <!--percentage-->
+          <xsd:maxInclusive xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="float">100</xsd:maxInclusive>        
+      </ItemConstraint>
+    </wsag:Item>
+    
+    <wsag:Item Name="MaxRevenueLoss">
+      <wsag:Location>
+        /wsag:Template/wsag:Terms/wsag:All/wsag:GuaranteeTerm[wsag:Name='FraudProtectionGuarantees']/wsag:ServiceLevelObjective/wsag:CustomServiceLevel
+      </wsag:Location>
+      <ItemConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+          <xsd:minInclusive xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="float">0.1</xsd:minInclusive>
+          <!--percentage-->
+          <xsd:maxInclusive xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="float">3.0</xsd:maxInclusive>
+      </ItemConstraint>
+    </wsag:Item>
+  </wsag:CreationConstraints>
+  
+</wsag:AgreementTemplateType>

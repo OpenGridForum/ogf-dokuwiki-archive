@@ -1,0 +1,53 @@
+SAGA - Security Discussion
+Bellflower: 9:00-10:30 Monday 29th January 2007
+Goal: Ensure that the security concepts in SAGA honor the middleware OGF definition.
+
+Introduction of OGF application area items for this week by Dieter Kranzmueller.
+
+Quick presentation of the security of SAGA to new members and security members: Blair Dillaway and David de Groen.
+
+Q: (Blair Dillaway) The problem is that the middleware must be known by the user in order to setup the right context. 
+A: (Andre) Yes indeed this is an issue that remains. At the moment we specify the technique used by the context, i.e. X509.
+
+Blair Dillaway: A more abstract solution would be better, i.e. a simple certificate. 
+
+3 proposals form David Chadwick:
+1) Explicit knowledge of the application
+2) Send certificates, the middleware can then recognize what to do with.
+3) Send a binary block to the middleware, the middleware is super smart and can reconstruct context. Needs to implement an Oracle.
+
+Second proposal is the most realistic. Third is near impossible to implement due to the Oracle.
+
+Put a pool of certificates to the API, SAGA choose the best out of the pool.
+Problems: Some models might not support this or is not suited. If one certificate fits it might not support all we want to do, how do we know that?
+A model with login-password is often limited to 3 trials before refusing access. If the 3 first certificates fail, then we cannot connect anymore. How to handle that?
+
+Q: (Thilo) How can we make SAGA independent?
+A: (Andre) Have a system that is deployment dependent, not API dependent, i.e Teragrid certificate instead of an X509. 
+
+Cert Token Types: 
+TODO: Andre and Blair will synchronize by e-mail to get the necessary information.
+
+Namespace introduction. Is ACL a good choice to use? Is their any approach in the security area other then the ACL ? Simpler and better defined?
+Q: (Thilo) What do you want to do?
+A: (Andre) example from the use cases. 
+
+Q: Why not have a proposal that is higher and more abstract then ACL?
+A: Andre asks if a "<idtype>-<id>" model is better. Yes this would be better. Another possible "urn/uri" might be.
+
+Q: (Andre) Group model?
+A: No difference, this is the same thing.
+
+Callback model might cause some impossibility in the implementation. Example taken from the stream API. Reuse the permission model for setting access control on streams etc.
+TODO: Check if semantics for setting access permissions is well defined. (Andre)
+
+Q: Notion of session management?
+A: No
+
+Q: (Thilo) Can the model be implemented?
+A: Yes 
+
+TODO: Add flags in the document where the security group must check it, then send it. (Andre).
+
+Session Closed 10:10
+%

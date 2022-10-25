@@ -1,0 +1,229 @@
+DAIS Session 3: XML and Relational Realisations
+-----------------------------------------------
+
+GGF10, 12th March
+
+Chair: Norman Paton
+Notes: Mario Antonioletti (mario@epcc.ed.ac.uk)
+
++-----------------------------------------------------------
+Presentations available from:
+
+	       https://forge.gridforum.org/projects/dais-wg
+               Documents->GGF Documents/GGF10/Presentations
+
+Make sure that the document filter is working correctly.
+Unattributed statements in general belong to the speaker
+at that point in time.
++-----------------------------------------------------------
+
+Norman introduces the session and gives some background on the
+specifications.
+[See the Document_Structures presentation on Grid Forge].
+
+In future try to minimise the dependency of 
+DAIS specifications on other specs. Explore mappings up to
+and perhaps beyond GGF11. Recast the specs for GGF11 but may
+not include mappings. These will be included later.
+
+Potential Structure (suggested in the slide)
+
+Mapping of the specification to an infrastructure will be included at
+the end of the spec.
+
+Alec: we found the same need some time ago .... did you consider a
+      notation that could be used for specifying your spec?
+
+Norman: we did not find one.
+
+Malcolm Atkinson: WSDL is not changing and as that is being used
+                  already then that should still be used .....
+
+Norman: we will provide wsdl and xml schema ... quite a lot of the
+        material will be independent of the mappings, we believe. The
+        capabilities will also be independent of the mappings. A lot
+        of that could be nailed precisely - the mapping will most
+        probably affect the SOAP headers or at least that is the hope.
+
+Simon: We have not used wsdl from other infrastructures ....
+
+Norman: are there any comments from any other groups? We are not
+        unique in being in this position. ... if people have comments
+        or bright ideas then do let us know?
+
+Malcolm: specs are now being partitioned into differnt layers ... in a
+         primer it would be useful to show users how to compile these
+         into a useful framework ... need for a primer.
+
+Norman: I fully accept that ... will deal with that in a later session.
+
+----
+
+Susan Malaika present status of the relational specification
+[See the Relational_Realization_Specification_Update presentation on Grid
+ Forge.]
+
+Set out the agenda for her presentation.
+Showed the document structure hierarchy that currently exists within DAIS.
+Relational specification describes the extensions from the base spec.
+The relational specification was not re-issued for this GGF. 
+We did not make any changes - it still uses ogsi.
+Planning to make changes for GGF11.
+For the relational spec we are issuing SQL as opposed to any other kind of
+request. You can get the whole result set or you can have the result held
+for you. You can do updates. There has been discussion as to whether there
+should be DDL as well as DML. 
+The base spec is tryi8ng to come with terms to describe the behaviour.
+In the relational spec we have to fit within the base as it evolves
+and make sure that material provided in the base spec can be applied to
+the relational realisation.
+
+There are some other things that we need to do more work on that are
+specific to relational databases. Logical constructs from a relational
+database (listed in the slide).
+
+There are other properties with physical schema and database system
+capabilities. Some of these may overlap with the terms. This needs
+to be clarified for GGF11.
+
+Description properties may be derived from other groups/specifications
+
+	    - CIM
+	    - ISO spec
+	    - JDBC Metadata
+
+we need to decide which pieces we pick up from where.
+
+Review of specification activities in the XML/Relational world.
+
+       - DMTF CIM 2.9 (extend this for the Grid environment)
+       - SQL 2003 has extensions of SQL to support XML - may include
+         XPath, XQuery
+
+Norman: is CIM not paradigm indepenedent?
+
+You are right at the higher level but for the database characteristics
+is it not relational...?
+
+Norman: I don't think that there is anything that is relational specific ...
+
+You are right. It is very high level what's in there for database.
+There is no table/column at this point.
+
+      - JDBC Webrowse JSR114
+
+we are not java specific but there is a definition for annotating results
+in XML ...
+
+Malcolm: group has chosen to postpone their mappings ... you may care
+         to use different mappings this is an inefficient one....
+
+Susan: JDBC has evolved ... it has improved.
+
+Malcolm: but there is copying of data ... we should not bind to
+         specifications that will introduce inefficiencies ...
+
+Susan: but this is only a particular example ... we do not necessarily
+       have to use this ...
+
+SQL 2003 ... we need to be able to represent sql in xml. There is an
+XML representation of query-response (jsr114). All vendors have their
+own implementation - annotating a result set. In SQL 2003 can publish
+SQL result sets in xml - the result set will be tagged up. Also have a
+native xml type in databases ... when you retrieve it, it will be in
+xml.  We tag result sets in DAIS in xml - it could be that this xml is
+generated at the relational database level. There is also some synergy
+taking place between the SQL and XQuery groups.
+
+What people are doing with xml in relational databases:
+
+     - work with xml but it is stored in the database without the 
+       tags (shredded xml)
+
+Norman: the xml spec has been done assuming that we are working with a
+        native xml database ... do we have to provide support for
+        shredded databases?
+
+When you shred an XML all information about the original xml is
+lost. You have to know that the original document was xml. Shredding
+is not standardised.  It's on the SQL standardisation list but has not
+been done yet. At present every vendor has got their own
+implementation.
+
+An example of a shredded piece of xml is shown (see slides).
+
+Dave Pearson: you can hide that ... you can have an xml view of the
+              relational view...
+
+Discussion about the mapping relational<->xml and the bearing this has
+on DAIS and whether DAIS should do this. View is that that work should
+be part of the SQL standardisation effort and not DAIS.
+
+Norman: what impact does this have on us? 
+
+We may want to have a little paper or some observations. SQL can have
+XML operations - pass things as strings so that should not matter to us. 
+The results can already be in xml - again I do not think that this 
+matters. We do not need to know that they are shredding or publishing.
+
+Norman: given an xml document and a document that is shredded into
+        relational database - can you then run an XPath query on the
+        shredded tables?
+
+No one to my knowledge is offering this capability over shredded tables.
+
+Went over some of the issues for the relational specification (these
+are in the slides).
+
+For GGF11:
+
+    - resolve issues
+    - achieve consistency with base spec
+    - continue relationship with CGS and DMTF
+
+----
+
+Amy Krause gives an update on the XML realisation.
+[See the XML_Realization_Specification_Update on Grid Forge]
+
+
+Amy went over the structure of her presentation.
+
+Specification mostly the same as was in OGSI 1.0, follows the model of
+the base spec.
+
+Have mostly removed WS-Agreement, moved operations to different portTypes,
+added more inputs/outputs/faults to some operations.
+
+The document will have greater changes for GGF11.
+
+Review of the existing XML specifications that are relevant to the XML
+specification (see the slides).
+
+A question was made about the distinction between XQuery and XQueryX.
+
+There were some terms for the xml realisations (in slides)
+
+Asked for input for GGF11.
+
+Norman: what do you mean versioning support?
+
+Instance level versioning.
+
+Dave Pearson: the list of terms are slightly different from the ones that 
+              Susan had?
+
+I did not include the ones that Simon already had.
+
+Issues are similar to the other specs. The operations have not really
+changed over the last 2 or 3 GGFs. Steve and Shannon have done an
+implementation.
+
+Future work:
+
+       - achieve consistency
+       - identify metadata properties
+       - identify and define terms.
+
+Question about the status of XUpdate. XUpdate not an official spec but
+XQuery will include update capabilities.

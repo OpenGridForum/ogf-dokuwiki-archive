@@ -1,0 +1,73 @@
+** Participants **
+
+David Snelling, Fujitsy
+Hiro Kishimooto, Fujitsy
+Andreas Savva, Fujitsy
+Michel Drescher, Fujitsy
+Jay Unger, IBM
+Jun Tatemura, NEC (via phone)
+
+* Jun walks the group through the document "Designing a POSIX component in CDL"
+  written by Jun and with latest edits from Hiro.
+
+* Hiro asks Jun to correct his edits while walking through the document.
+  - The newly added elements "cdl:CodeBase" and "cdl:ArchiveType" are 
+    effectively the same as "cdl:Binary".
+    * An example in the document is provided how to use these elemeents.
+
+* Andreas asks whether the "cdl:ArchiveTye" element is a global element, or an 
+  anonmous sub-element of "cdl:PosixApplication". 
+
+* cdl:PosixApplication is an abstract base type. It is extended to e.g. define
+  the BLAST appplication ddescription for a CDDLM system.
+
+* [example XML document] Andreas asks whether the name of a declared file
+  system can be a child element instead of being part of the element name 
+  itself.
+  - Yes, this is possible, as given in a proposal later in this document.
+
+* Andreas asks whether there is a way to define that the value of an element 
+  comes from another element in that CDL document, or whether that is out of 
+  scope of CDDLM.
+  - This is out of scope of CDDLM[?]
+
+* Hiro proposes to remove the Environment Variable concept from CDDLM.
+  - Because components can give predefined information that otherwise
+    would have to be encoded in Environment Variables.
+  - The Environment Variables concept os too general to transport such 
+    semantically special information like cdl:Hostname (where the applicaiton
+    is to be deployed to).
+
+* The group discusses the Environment Variable cconcept, particularly the 
+  possibility that, through CDL, the values of certain environment variables
+  can be retrieved from the target deployment system. The group shows 
+  consensus that the CDL document needs to carry enviroment variables that
+  must be set on the target system so that the configured application can run.
+
+* The group discusses the relationships between "cdl:FileSystem" declarations 
+  and the definition of "lazy environment variables". In particular, the group
+  is wondering about the exact mechanismms how the operation that provides the
+  provisioning of the requested FileSystem feeds back the moint point of that
+  file system into the appropriate environment variable
+
+PROPOSAL 1a: Use XPath 2.0 as an interface between the CDL document 
+ 	     and the CDL components
+PROPOSAL 1b: Use xsd:ID/xsd:IDREF to allow relations between elements in
+    	     CDL documents
+
+* Proposals 1a and 1b are recommendations for the further development of CDDLM
+
+PROPOSAL 2: Eliminate the EnvironmentVariable concept from the PosixComponent
+	    (CDL plugin)
+
+* Proposal 2 is specific to the OGSA EMS scenarios document.
+
+** Action Items **
+
+1) Revise the scenario document (i.e. examples) so that proposal 2 is fulfilled
+   (Andreas, Hiro)
+
+2) Feed back proposals 1a and 1b to the CDDLM Working Group, i.e. pass back 
+   the minutes to the WG. Ask Michel in case of any questions related to these 
+   proposals.
+   (Jun)

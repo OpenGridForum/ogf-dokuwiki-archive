@@ -1,0 +1,69 @@
+Here comes our contribution to discussion of Information modell and BES 
+usecases.
+The fact is that - as I mentioned in the meeting - we use interface part 
+of the current BES spec. So we implemented a some pure web services 
+which talks this BES interfaces.
+
+The architecture is the following:
+We have a lot of Linux cluster system in our country and we try to 
+provide middleware to our users to use this resources as easy as it 
+can.  Every cluster runs own  batch system like Condor or SGE and we 
+choosed the BES as a common interface to this batch systems. So we have 
+a services - currently it is called Job Controller (JC) but the name 
+dosen\'t really important - which talks the BES and local batch system 
+running on resources. The jobs are represented by the JSDL documents in 
+our system so our scheduler service only make some decision which BES 
+service will be used to run a jobs. It is true that in our system the JC 
+which talks the BES interfaces does a lot of thing from the stage in and 
+out files and translate JSDL to submit language of local batch system 
+and monitor jobs. So in this case we have to describe resources with 
+attributes to make decision on the scheduler. Currently, we are in the 
+beginning of this work but actually we use these type of attributes to 
+descriobe our cluster resources: We know this is the really toy 
+description but it was useful in every day work:
+
+LRMSType: type of Local Resource Manager services like Condor, PBS, LFS etc.
+OperatingSystem: name of operating system of front end node of cluster 
+(we assume here the homogenous cluster resources)
+Architecture
+CpuNum
+RunningJob: jobs in running state in the queue
+FreeCpuNum
+OwnedCpuNum: how many cpu are used by the running jobs
+JobNum: total length of queue
+DataStorageTotal: total size of local disk space (here assume  shared  
+storage system used by  cluster nodes)
+DataStorageFree:
+TempStorageTotal: total size of temporaly storage used by jobs (like 
+size of  /tmp mount point)
+TempStorageFree
+
+We also use the BES interfaces in the SuperScheduler level of architecture.
+We also have service which talks BES interface but it is represnets only 
+a single desktop machine. In this case we are using the following 
+attributes (the status is the same: this is only the toy but is is works):
+
+OperatingSystem
+Architecture
+CpuNum: because it can be the SMP system
+TotalPhysicalMemory
+FreePhysicalMemory
+TotalVirtualMemory
+FreeVirtualMemory
+LoadAvg: 5min average
+DataStorageTotal
+DataStorageFree
+TempStorageTotal
+TempStorageFree
+
+We know these attributes and modell is less useful in general case but 
+probably can be the a good starting point to understand what real grid 
+system providers would like to see in resource descriptions and 
+information modells.
+
+-- 
+
+Regards,
+Ferenc Szalai
+NIIF, Hungary
+www.niif.hu

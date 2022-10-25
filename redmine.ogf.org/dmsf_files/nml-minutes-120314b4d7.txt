@@ -1,0 +1,65 @@
+NML session 1
+Pi day!
+
+NML-NSI integration
+NMLPorts & Links
+Subtopology
+Port identifier
+
+NML Session 2
+XML Examples
+Syntax
+Subtopology
+VLANs
+Versioning
+
+Freek descibes schema, Domain, Network and Adaptation function seem not used.
+
+
+
+DTOX vs NML
+DTOX connectedTo relation, describes connections between two ports, does not use Links. The idea is that two connected ports are basically the same target if they are connected (SDP).
+
+(USECASE!) Richard: SRLG groups and physical diverse implementations are sometimes required.
+
+Jerry: technology layers: technology is a way to implement a layer
+Jerry: how do you implement switching and adaptation, is it generic? Yes it is, Freek shows paramaters in the examples.
+
+Hierarchical topologies
+Jerry: hierarchy should be explicitly defined.
+
+problem with finding objects. In NSI objects are defined as a pair of (network,localid). This breaks the opaqueness of URNs, may also be a problem with hiearchical topologies.
+
+subtopologies and aliases
+versioning is a way to define different aliases.
+
+NML supports some different ways of describing aliases or mapping. Up to NSI to pick a way to do that.
+
+NML proposes using query fragments in URNs to be able to describe type=value pairs. Up to NSI to what to use.
+
+NML Examples:
+- CamelCase for Classes & camelCase for attributes
+- relation: we have no preference for xml namespacing of relation names. Roman proposes using namespaces for type attribute <nml:Relation nml-ext:type="hasExample">
+- service: service also uses type attribute, RDF uses "nmlserv:Switchingtype rdfs:subClassOf nml:Service ."
+- hasTopology: is used as default relation, implicitly defined by nesting. Other relations can be defined explicitly.
+- relations have a direction, the verb of the relation should signify that, so we propose to use hasPort, hasNode, hasService
+- hasPort vs hasInboundPort/hasOutboundPort
+- how do we relate the BidirectionalPorts ?
+- aliasing in subtopologies: Jerry is volunteering to make a proposal, this seems an NSI extension to NML
+- unclear whether alias describes port adjacency, or identity relations of NML objects
+- vlan description: Link with multiple source and multiple sink ports, parameter noReturnTraffic
+- adaptation (service) discussion, how to relate label
+	Freek believes that we need to add attributes to adaptations.
+
+- mailinglist: label: nml:label proposed, with type attribute, perhaps also namespace?
+- mailinglist: serialCompound: we prefer isSerialCompoundLink
+- mailinglist: hierarchy of relations: hasNode, hasInboundPort, isSink, or do we want to keep with has: hasNode, hasInboundPort, <-hasSink--
+ 
+need to define list of:
+ - label types
+ - relation types
+ - service types
+ 
+ 
+ 
+ 

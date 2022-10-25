@@ -1,0 +1,530 @@
+OGSA F2F Minutes - Sep 3-4, 2003
+================================
+
+* 1-1) Early Discussion
+
+  Assignment of minute takers (D. Snelling, A. Savva)
+
+* Participants
+
+  Shel Finkelstein (SUN)
+  Ian Foster (Argonne National Lab)
+  Andrew Grimshaw (U of Virginia & Avaki) 
+  Hiro Kishimoto (Fujitsu)                
+  Fred Maciel (Hitachi)                   
+  Takuya Mori (NEC)                       
+  Inderpal Narang (IBM)
+  Jeffrin Von Reich (HP)                  
+  Andreas Savva (Fujitsu)                 
+  Frank Siebenlist(Argonne National Lab)  
+  Dave Snelling (Fujitsu)                 
+  Ravi Subramaniam (Intel)                
+  Jay Unger (IBM)                         
+  James Warnes (IBM)
+  Ming Xu (Platform)
+
+* Announcement of GGF IP Policy
+
+* Minutes of late teleconference: no comments - approved.
+
+* Agenda Bashing and AOB:
+
+- Call for discussion of
+   - Feedback to GFSG about the proposed Provisioning(HP) & Business
+     Computing(IBM) BoFs
+   - WSDM/CMM Interface
+   - Discussion of use of OGSA tag (branding)
+   - Web Services convergence with OGSA.
+   - Web Services convergence with OGSI.
+   - Discussion of instance vs context approach.
+
+Resolved: All agree to use OGSI concepts (mapped to OGSI terminology)
+          with the understanding that these concepts may shift over
+          time.  See "Visual Tour of OGSA".
+
+    Comment: The idea is to separate concepts (OGSI/OGSA) clearly and
+             focus on upper layers. A lot of the stuff (handles,
+             serviceGroup, etc) in OGSI are used further up as is. If
+             there is re-definition of these terms it will affect the
+             upper levels. One idea is to define the upper layers
+             using OGSI concepts and not the specific terminology used
+             in OGSI v1.
+
+(re-)Resolved: To start a concepts table/glossary. 
+         - HK made a first definition for some program execution
+           terms.
+         - Identify other terms during discussion; get definitions
+           from group.
+         - Owners: AG (& RS)
+
+Resolved: High level concepts to ogsi terminology mapping
+          - Owners: JU, DS, SF
+
+    Comment: One idea was to do a primer that describes general
+             OGSI concepts and presents the current OGSI spec as one
+             realization of these concepts.
+
+* 1-4) Review of Program Execution
+
+Review of MX's and RS's drafts.
+
+Need a set of assumptions about the hosting environment. Also need to
+identify those concepts that need to be addressed and by which working
+groups in GGF.
+
+Assumptions:
+
+   - Entities (jobs, executables, data sets, ...) need to be
+     virtualized (i.e. have a GSH).
+
+   - Also many implicit assumptions have to be exposed: e.g., talking
+     about filepaths might imply a global filesystem, and so on.
+
+Resolved: Meet outside the F2F to discuss the details. AG took down
+          names and will setup calls (using HP/Intel/? teleconf
+          facilities).
+    Key output: Basic abstractions and assumptions.
+
+    Comment: The idea of forming sub-groups in order to brainstorm
+             (possibly with other related groups) before the GGF came
+             up a number of times. See also logging.
+
+<Check list>
+1. Is Level of detail correct?
+2. High level architectural review
+
+   - Job: Possibly a hierarchical concept(*), named (GSH). There is a
+          leaf concept. The Job can be managed.
+
+          (*)See RS's categorization [Workload[Job[Task[Tasklets]]]]
+
+   - Resource Requirements for a Job - Part of the Job. Possibly
+     without GHSs.
+
+   - Resource Providers - Wrapped as services with GSHs advertising
+     themselves.
+
+   - Resource Provisioning - ???
+
+   - Scheduler - ??? Uses reservations and brokers?
+
+   - Policy and access control. 
+
+   - Delegation management/restriction.
+
+   - ....
+
+3. Identify what are mandatory or optional
+4. Do we agree on list of service descriptions?
+5. Identify missing piece
+
+   - Related groups: jsdl, drmaa, cmm, ... ?
+   - Legacy code and its relation to ogsa
+   - Access control should be addressed
+   - Required access rights must be described as part of job
+     description
+   - Including delegation (restricted credentials)
+   - ...
+
+* 1-2) GridForge best practice discussion
+
+  - Need trackers that can capture the relevant email list discussion.
+  - Need a bulk download mechanism --- personal copy for offline
+    access.
+
+Not fully resolved, yet.
+
+  - Emails that just includes pointers complicates the replication
+    problem. On the other hand, large attachments are generally not
+    appreciated.
+
+  - Why isn't there an "[ogsa-wg]" in the subject to make filtering
+    easier? (Did IF get an action to look into it?)
+
+* Terminology     
+
+** Do we need the term "Platform"?
+
+Resolved: Drop "Platform" from this document. Add a note in the
+          document that elsewhere OGSA should be used as an adjective.
+
+** What are the core services?
+
+Resolved: Don't think about what are core services now, but
+          acknowledge that they exist and will (hopefully) fall out as
+          a result of the processes.
+
+* Is it services or interfaces? 
+
+(re-)Resolved: We describe services (mostly in terms of function,
+          semantics, organization, and interactions) and leave the
+          interface definition to the working groups that will develop
+          them in detail.
+
+   Comments:
+        - Do part of the factoring (mainly for initial guidance) but
+          undersatnd that more detailed work may later cause changes.
+        - Protocols must also figure here and how to make sure that
+          things actually work together.
+
+   Glossary:     
+        - "interface" here is used in the WSDL 1.2 sense.
+
+
+* 2-2) Data services in section 5.2 discussion
+
+Because OGSA Data Services relies on WS-Agreement, there was a long
+discussion on the IP background of WS-Agreement, in particular its use
+and reference to WS-Policy.
+
+Action: Jay to push (GRAAP-WG) to 'clean' WS-Agreement, in the sense
+        that it does not use the WS-Policy framework for its terms.
+        E.g., instead use some equivalent term framework.
+
+Jay provided a summary of key issues with respect the data services. 
+   - Naming through instances.
+   - Specialized portTypes for various access mechanisms.
+   - The service instance concept is probably required.
+   - OGSA relationship mgmt refers to CMM (probably).
+   - Used to include virtualization of multiple sources; it was taken
+     out. (Federation is still in.)
+   - Discussion of policy resolution (decidability). Conclusion - it
+     is hard.
+
+Resolved: The current language could be a bit more abstract, but this
+          is not necessary. (Owner is still IF.)
+
+* 2-1) Review Core services in section
+
+** ServiceDomain, Service composition, orchestration, workflow
+
+Options:
+
+   - OGSI in the workflow - BP for composition
+   - Build on or modify BP to meet OGSA needs
+   - Proceed in parallel with a composition analysis group.
+
+   Comments: "OGSI in the workflow" means that OGSI is used as an
+             implementation platform for BP. OGSI constructs (e.g.,
+             gsh/gsr) are not visible, however.
+
+Resolved: Assess what our requirements are and put them in the
+          document.  Don't explicitly state our approach at this
+          stage.  Highlight issues that need to be considered:
+          e.g. dynamic runtime vs. static "compile" time composition;
+          instance and state composite state; is a composed GS a GS?
+
+Continue to work this issue.
+
+** Handle resolution
+
+Resolved: Issues we need to address in OGSA:
+          Boot strap, cross gsh scheme (and VO) registration,
+          resolution caching.
+
+  Comments:
+   - Resolver caches as first class citizens (of architecture)
+     - I.e., have names, are GS, etc
+     - How is it different from saying the resolver is built as a
+       cache? E.g., introduce semantics that let you tell the cache
+       what are bad mappings so you don't see them (again).
+
+       - Invalidation is already in OGSI (see exclusion set).
+
+   - Scalability because we expect a huge number of service instances.
+     - But a service might only talk with services close to it;
+       implies a small(er) number.
+
+   - Gateways between grid systems (e.g., VOs) using different handle
+     schemes. The client shouldn't care about the gsh scheme of the
+     handle it wants to resolve.
+
+   - Many of these things also came up in past OGSI-WG meetings.
+
+** VO
+
+Key features of a VO:
+   - A VO provides a membership assertion authority 
+     (VO is like a CA?)
+   - Optional factory
+   - It is a Registry (specialization of serviceGroup)
+   - Bidirectional-references to members
+       - Forward links are reliable; back pointers are not necessarily
+         reliable.
+       - Links rather than a separate db/entity that maintains the
+         'back' links.
+       - Links might cross organizational boundaries.
+
+   - VOs of VOs are possible
+     - Note to JU: VO hierarchical need.  (And possibly overlapping
+       at the physical layer. Also interested in meta-data about VOs.)
+
+   - VO can be a type of "context" for requests
+
+     Comment: Role of VOs in the context of agreements. (What is/can
+              be delegated?)
+
+Resolved: Membership need not be agreed jointly by the VO and the
+          member.
+
+Resolved: VOs (or members thereof) can delegate authorization rights
+          to parent VOs. Propagation of rights may be prohibited by
+          members.
+
+Note that membership may be contingent on agreement to certain policy
+agreements.
+
+   Comment: Have to also consider what happens when the VO changes
+            some part of its policy. May need all members to agree
+            before changes can be accepted.
+
+Resolved: We will need additional artifacts so that VOs support a
+          strong trust concept.
+
+Resolved: It is NOT necessary to add functionality to the GSH naming
+          scheme to support VOs.
+
+   Comment: There is a desire to be sure that when you get a name it
+            really refers to the 'right' thing (secure name). But we
+            may be mixing authentication and identity. Also if you put
+            a public key in name (so the name carries some proof) then
+            key rollover (if your key is compromised) is tough.
+
+Resolved: We do NOT want to factor a VO into its bag part (registry?)
+          and the trust model. This will be done by the WG that takes
+          this up.
+
+Resolved: The VO MUST include: GSH plus a set of security bits to make
+          the implementation of a membership authority possible.  The
+          VO MAY contain other information.
+
+Proposal: It must be possible to decorate a VO with policy.
+
+Proposal: Create and add/remove are separate operations.
+
+Proposal: There needs to be a portType on member service instances to
+          describe their memberships in a VO. This is optional, but
+          recommended.
+
+    Comment:
+      - Does this separate portType only contain serviceData or does
+        it also contain operations?
+      - How do you manage the membership content?
+
+Action: Identify which WG is going to solve all the problems we can't
+        do today!!
+
+   Comments: 
+     - Should we have a separate session for VOs in GGF9?
+     - VO work is still in early stages. Should there be a GGF9
+       session?
+
+** Security
+
+Rejected: The picture should be deleted. It is expected to appear
+          again in the documents from the working groups.
+
+Resolved: The picture should remain, but with more elaboration in the
+          text and how the security aspects are used in other parts of
+          the architecture. Emphasize and distinguish grid specifics.
+
+   Comment: No trust relationhip may be the big difference between
+            grid & traditional environments.
+
+Resolved: Security interactions should be part of the
+          architecture. But the mechanisms and protocols are outside
+          the architecture.
+
+** Discovery
+
+New text added by Ian is OK.
+
+Action: But more detail is needed. Make sure that both GSH to Info and
+        Info to GSH functions are supported.
+
+Resolved: There needs to be a framework to integrate the propagation
+          and/or searching of information in the discovery process.
+
+Resolved: May be extended by the VO concept.
+
+  Comment: index (meta-data) perhaps also associated with a VO
+
+Is this a Registry?
+
+** Metering & Accounting, Logging, Messaging & Queueing, Events, Fault
+   detection/management
+
+Presentation by JW.
+  - support for legacy logger: both for wrapping and for native
+    access.
+  - micro-second access to logs (if you directly coupled)
+
+Do we really need logging at the Grid level? Several good answers
+supporting a yes answer.
+
+    - E.g, wide area logging is important, debugging, etc. 
+
+Comments: 
+  - Logging code points --- where you can plugin logs transparently to
+    the application/requestor.
+    - And an admin i/f to control how/when pick log events.
+
+  - Distinguish between static & dynamic logging events
+    - static: Subscribe to them explicitly
+    - dynamic: A call made into the service triggers logging events to
+      be sent to the caller.
+    - Might also want a combination of the two.
+
+  - Common set of mechanisms/events for a number of related services
+    (logging, metering/accounting, etc.)
+
+Key Requirement Categories:
+   - Generation:
+   - Propagation:
+   - Collection (Virtualization):
+   - Processing:
+
+Channels:
+   - Data/Event
+   - Control
+
+Task: What is the set of services/mechanisms needed to address all the
+      above efficiently?
+
+Action: AG do draft on events. 
+Action: JW to setup subgroup - Interested: AG, DS, JVR, RS, FS....
+
+* 4-2) GGF9 session preparation
+
+** GGF9 session plan, Preparation for GGF9 session, Decide which
+   groups to invite
+
+Action: HK and chairs of DRMAA to decide in to which session to work
+        in DRMAA.
+ 
+  Comment: It is unclear how DRMAA fits in to OGSA. Is it an API to
+           the grid or is it an API to a DRM that is wrapped by a grid
+           service? Hence the problem of where (and to a certain
+           extent, if) to invite them.
+
+Resolved: Ask the visiting WGs to:
+   - Look at the OGSA document, particularly the section we think
+     applies to their working group and present their reaction to the
+     meeting.
+   - Talk to us about how their work fits into OGSI, OGSA, and 
+     Service Oriented Architecture.
+   - Is our draft understanding of the work in your service area
+     complete, consistent, concepts, ...?
+   - Highlight and mismatches they see.
+   - Present/discuss for about 15 Minutes at the OGSA session.
+   - Expect 10 minutes discussion.
+
+Action: Hiro/Dave - Mail to chairs of named working groups.
+
+Action: Hiro - Add Grid file systems R/W-G to the session 2.
+
+** Discussion of use of OGSA tag (branding)
+
+Resolved: The following constitute an OGSA (brand) compliant GGF WG:
+   1) Demonstrate that they were operating within the OGSI framework.
+   2) The work needs to fit (plug point) into the Open Grid Services
+      Architecture as defined by our document.
+   3) From a process perspective, they engage actively with us and
+      other OGSA related working group - contribute use cases, etc.
+   4) Use OGSA as an adjective. 
+
+Resolved: At GGF9 present the above ideas in each session as part of
+          the "branding" process.
+
+** Installation & deployment (or Provisioning/Business Grid BoFs)
+
+There will be installation and deployment (boot strapping, mother
+factories, trust roots, interoperating grids, evolution of grids
+(change management and versioning), migration) etc in the
+architecture, but it is not clear how to fit it all in at this time.
+
+Note that life cycle management (including dismantling) is addressed
+in the abstract by CMM/WSMF.
+
+The workflow constructs for other parts of the architecture may be
+used here.
+
+Two BoFs are scheduled for GGF9 around this topic (HP & IBM
+driven). OGSA-WG has been asked to comment.
+
+Action: HK to tell the steering committee that we see some overlap in
+        the proposals. The overlap appears in provisioning and
+        deployment and a combined BoF in this area from both groups
+        would be a good idea. The wider scope of the Business Grid
+        proposal seems to overlap with many other groups (e.g. OGSA),
+        which will make the focus difficult to determine.
+
+Action: AG to send out a reference to the configuration management
+        dissertation again.
+
+** Problem determination
+
+Action: Add support to the architectural framework for the self-*
+        features. There are many capabilities needed to support this.
+
+** Policy & Agreements
+
+Postponed. We need to know what a policy is. We need some examples.
+
+  Comments: 
+    - This is a research problem; not clear how to generalize. In
+      other words we do not have enough to build a framework.
+    - Agreement terms might offer examples.
+    - Policy based system >HP.
+
+Resolved: Also talk to GRAAP (Ohio, Oct 6 @ 12:00-13:30) and the
+          Policy RG.
+
+* 4-3) Review use case document (60min)
+
+     - Discussion on Working group use cases completion and
+       assignments - 5 min
+     - Verification of use case deliverables for GGF9 - 15 min
+     - Review and discussion on the new use cases presented so far (to
+       be continued after face to face ) - 40 min
+
+Request for 30 minutes on the next conference call. 
+
+Actions: Update UCs to v2 format. Write missing text and ask for
+         comments from original authors.
+         - "RealityGrid" - DS
+         - "P2P"  - AS
+         - "Persistent Archive" - TM
+
+* AOB 
+
+- Call for discussion of
+   - Feedback to GFSG about the proposed Provisioning(HP) & Business
+     Computing(IBM) BoFs - Done (See ** Installation & deployment (or
+     Provisioning/Business Grid BoFs))
+   - WSDM/CMM Interface - Skip and pass to CMM/WSDM meeting.
+   - Discussion of use of OGSA tag (branding) - Done
+
+** WS & OGSA/I
+
+   - Web Services convergence with OGSA.
+   - Web Services convergence with OGSI.
+
+The WS world has the same problem as OGSA with respect to branding
+plus IP issues, e.g. WS-*.
+
+Actions for OGSI-WG: Look for "faults" in WS proposals with respect to
+OGSI, e.g. WS-Addressing.
+
+  Comments:
+    - WSDL 1.2 is probably going to be a watershed event when it comes
+      out (perhaps early spring 2004).
+    - Hopefully a 'body' of work will come out at the time/by then.
+    - Might trigger a 2.0 ogsi spec.
+
+**  Discussion of instance vs context approach.
+
+Postponed.
+
+* Adjourned.
+

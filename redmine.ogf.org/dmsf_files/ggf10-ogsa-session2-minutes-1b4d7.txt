@@ -1,0 +1,101 @@
+GGF10 - OGSA-WG Session 2
+=========================
+
+* Program Execution Services, Andrew Grimshaw
+
+  - Presentation overview:
+    - Basic problem: provision and execute services (and legacy apps) in
+      a grid.
+    - Terminology review: container, vault, job, job manager,...
+      - Still using ogsi terms in the background.
+    - Clarification on vault: container for persistent state.
+    - Composite resources
+    - Different entities (interfaces) do not necessarily map to
+      distinct services.
+    - Also showing related services that are used by PE but are not
+      defined by PE, e.g., deployment and configuration (CDDLM)
+    - Walkthrough of service relationships
+
+** Discussion
+
+  - Candidate set generator:
+    - Is there any time limit within which the results can be used
+      (or when do results become stale)?
+    - The results are the decision (set) at that instant in time. No
+      guarantees. 
+    - Will need to verify further that results can be used by, say, EPS.
+      - Even then it might still be the case that the schedule is not
+        right after it is produced; might need to rework.
+    - Inter-dependency between candidate sets (if you are scheduling
+      related jobs)
+
+  - One job, one name/gsh (single identity). State is in the job
+    document. The job may not be running anywhere.
+    - Is state passed around all the time? Not necessarily. (Maybe
+      just a reference to the state.)
+    - Different services might refer to and use different job
+      information, e.g., the job reference in some cases, the job
+      description in other places.
+
+  - Talking about 'class' relationship is oversimplification;
+    relationship may be more like a directed graph.
+
+  - Checkpoint and migration support?
+    - (Limitations of sharing state might make it very difficult ...)
+    - If functionality (job migration i/f) is exposed then there may
+      be a number of restrictions that can/should be put on resources
+      as well as on other services to support this capability.
+
+  - Push and pull model of queuing or candidate set generator
+    - Allow for not just centralized but also P2P style of
+      interactions.
+
+  - Composition of a set of these entities might be an instance of
+    another entity, e.g, csg+eps+...=container from someone else's
+    point of view. (hierarchical containment model - encapsulation)
+    - Keep in mind that these are interfaces not services. Composition
+     (incl. hierarchical composition) is possible
+    - Hierarchical composition of containers might make things more
+      complicated (but not that much more difficult...)
+    - Might make it simpler in the long run. E.g., job manager might
+      not be that different from a (kind of) container?
+  
+  - Does OGSA-WG just define architecture or does it plan to go to a
+    much more precise/low level/implementation level definition?
+    - OGSA-WG does not do detailed definitions. Detailed work is
+      expected to be done by other, more specialist, groups. The
+      responsibility of the WG is to make sure things fit together.
+
+  ** Nothing cast in stone; comments/suggestions welcome **
+
+* OGSA "Names", Andrew Grimshaw
+  
+  - Multi-level naming schemes are common in distributed systems
+  - Very useful to support indirection or for simplicity
+  - Usually 2 or 3 level schemes
+  - 'Human' Names: 
+    - path (main focus)
+    - attribute (in ogsa as part of information services)
+  - OGSI had GSH - GSR mapping. 
+  - WSRF covers most but not all requirements, e.g., no identity.
+
+  - OGSA Naming
+    - For human consumption; path names 
+    - Core idea is "string" to address mapping
+    - Not architectural but 'syntactic sugar'
+    - Directory services to manage mappings
+
+** Discussion
+
+  - Name space uniqueness or scope?
+    - Uniqueness is not required property (see multilists).
+    - No semantics that entries point to the same 'entity'
+
+  - Grid file system connection (name space)
+    - This naming proposal is not restricted to pointing to just
+      files; entity at the end may be anything including a file.
+    - Requirements may be different; e.g., uniqueness may be very
+      important for file systems.
+    - Might be worth exploring relationship with new GFS-WG.
+
+  - See also paper in GGF10 workflow workshop.

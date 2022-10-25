@@ -1,0 +1,217 @@
+Minutes from the GSA RG meeting at GGF12.
+Sessions:
+ - Sep 21,  9 a.m. - 10:30 a.m., Room: D002
+   o session was cancelled due to overlap with OGSA-EMS session
+ - Sep 21,  3:30 p.m. - 5:00 a.m., Room: D002
+
+Minutes taken by Uwe Schwiegelshohn (US),
+some additions by Ramin Yahyapour (RY)
+
+Session slides and minutes are available on GridForge:
+https://forge.gridforum.org/docman2/ViewCategory.php?group_id=133&category_id=783
+
+-------------------------------------------------
+Attendance list was distributed.
+About 45 people participated in the session.
+
+
+
+0. Short Introduction and agenda (RY)
+- GSA-RG started at GGF 10 in March.
+- Goal is the identification of a Grid scheduling architecture.
+  It is not the scope of this group to define scheduling algorithms.
+- It is expected that there will be not just a single scheduling
+  strategy that suits the "Grid". Moreover, there will probably
+  be many different scheduling approaches; many scheduling instances
+  will interact with each other.
+- Therefore it is reasonable to identify common requirements of 
+  a Grid scheduling architecture, so that different implementations
+  are possible. Grid Scheduling will have to interact with many services
+  and rely on many protocols etc. However, currently many of the core
+  services are not developed with Grid scheduling in mind.
+  Therefore, a key task of this group is the identification what
+  is necessary from a grid scheduler point of view.
+  
+- Document roadmap:
+  o identify use-cases (started GGF10, first version made
+                        available)
+  o identify requirements on components and services for
+    Grid scheduling  (starting now, GG12)
+
+
+1. Review of previous work on use cases (RY)
+- Some use-cases have been submitted and are available in the currently
+  on GridForge available document.
+- Scope and setting of the use-cases differ significantly.
+- Reminder: The use-case document is not for describing existing
+  Grid scheduling solutions from projects. Moreover, it is about
+  specific application scenarios where Grid scheduling is used.
+  The doc is necessary for understanding and concluding why 
+  something is necessary.
+ToDo: 
+- the authors/editors might revise their contributions in regards
+  to these remarks.
+- additional contributions are welcome.
+- the OGSA-EMS design team is also reviewing use-cases that can be 
+  helpful for GSA-RG  
+
+
+2. Philipp Wieder presented an example of a scheduling architecture 
+based on one of the use cases.
+- see slides on GridForge
+
+
+3. Identifying required services (RY)
+
+- Next milestones of the Group is:
+   - Deriving requirements from the use cases
+   - Identify required components/Services of a Grid scheduling 
+     architecture
+
+- At GGF11 the following first list has been compiled of grid 
+  scheduling-relevant components to which interaction and coordination 
+  is necessary:
+  
+    o Information Service
+    o Job/Workflow Description
+    o Requirement Description
+    o Resource Discovery
+    o Reservation
+    o Monitoring/Notification
+    o Job Execution
+    o Security
+    o Accounting/Billing
+    o Data Management
+    o Interface to Local RMS
+
+- Ramin went through a derived list with examples about expected
+  functionalities from these components/services (see following comments).
+- Such a list must be extended and put in a document as a reference
+  for discussion/exchange with other groups.
+
+3.1 Information Service
+Relevant to Grid Scheduling:
+- coherent access to static and dynamic information
+- Dynamic information include data about planned or forecasted
+  future events.
+   o e.g.: existing reservations, scheduled tasks, future availabilities
+   o not available by most current implementations
+- privacy concerns have to be considered.
+   o not all of the information can be made available
+   o but anonymized information would help also
+- information service should also cover resource types as network 
+  and data
+
+added during discussion:
+- access to historic information 
+   o useful for some schedulers strategies that make predictions
+
+
+3.2 Job/Workflow/Requirement Description
+Relevant to Grid Scheduling:
+- access to information about the job specificy (what is the job?)
+- and job requirements (what is required for the job?)
+- need for workflow description
+  o the Grid scheduler should be able to schedule a whole workflow
+  o e.g. DAG formulation
+  
+3.3 Reservation Management/Agreement and Negotiation
+Relevant to Grid Scheduling:
+- Interaction between scheduling instances, between resource/agreement 
+  providers and agreement initiators (higher-level scheduler)
+  - access to tentative information necessary
+  - negotiations might take very long
+  - individual scheduling objectives to be considered
+  - probably market-oriented and economic scheduling needed
+    such approaches often require many negotiation steps.
+  
+- Need for combining agreements from different providers
+  o coordinate complex resource requests or workflows
+  o Maintain different negotiations at the same time
+  o probable several levels of negotiations, agreement commitment 
+    and reservation
+
+3.4 Accounting and Billing
+Relevant to Grid Scheduling:
+- access/interface to budget information
+  o charging for allocation, reservations; preliminary allocation
+    of budgets.
+- refunding in terms of resource/SLA failure, re-scheduling etc.
+
+3.5 Job Management Services
+Relevant to Grid Scheduling:
+- Link to execution services to fulfill scheduled allocations
+- feedback on resource or job failures
+- interface to cancel or modify scheduled job executions
+- monitoring of agreement and execution status
+
+
+3.6 Monitoring Services
+Relevant to Grid Scheduling:
+- Monitoring of
+    resource conditions, 
+    agreements,
+    schedules,
+    program execution,
+    SLA conformance,
+    workflow
+
+3.7 Interaction with Data Management
+Relevant to Grid Scheduling:
+- Access to information about the location of data sets
+- information about transfer costs
+- schedules about data transfers and data availability
+- coordination with network or other resources
+
+- Data management has many similarities with general grid scheduling:
+   o access to similar services
+   o similar tasks to execute
+   o interaction necessary
+
+
+
+3.8 Are services missing in this list?
+From the discussion in the session:
+
+- what about "provisioning"?
+   o no clear definition 
+   o distinction between scheduling and job execution?
+
+- "Network Management"?
+   o good point, added to the list.
+
+- "Historic Information"?
+   o good point, addition to the requirements in 
+     information services
+   
+- "Performance Prediction"?
+   o good point, added to the list.
+
+3.9 Next steps:
+- several volunteers for compiling the document about the required
+  components/services
+- use the presented list as a starting point and extend it.
+- have a first draft ready until GGF13, March 05
+
+
+4. Cooperation with OGSA-EMS design team
+- The OGSA-EMS team touches similar problems as GSA-RG.
+  o identifying required services including Grid scheduling
+  o however they are also splitting up the scheduling process itself;
+    this is not part of GSA-RG as it is expected that there will be 
+    many different approaches on Grid scheduling. Therefore, it is 
+    not scope of GSA-RG to define actual scheduling algorithms/strategies.
+    Moreover, it is anticipated to identify components and structure 
+    of a Grid scheduling architecture that allows many different
+    implementations. 
+
+Nevertheless, both groups can benefit from close cooperation to
+exchange experiences, use cases etc.
+Ramin tries to monitor OGSA-EMS discussion, but is not sure about 
+the available time. Other volunteers would be welcome.
+    
+
+5. Conclusion and next activities:
+see above:
+- revise and extend use-case document
+- start document on required services and components 

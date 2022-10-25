@@ -1,0 +1,127 @@
+GGF Grid File System Working Group
+----------------------------------
+IBM Almaden Research Center
+Apr.23.2004
+
+Participants
+-------------
+Arun Jagatheesan, SDSC
+Bryan Banister, SDSC
+Andy Hospodor, Santa Clara University
+Manuel Pereira,IBM
+Leo Luan, IBM
+Cameron Bahar, Storage Machines
+Ken Wood,  Hitachi
+Osamu Tatebe, AIST
+Jane Xu, IBM
+Chung-hao Tan, IBM
+
+Morning Session - Opening comments
+-------------------------------------
+- Welcome to participate in writing the working document. Co-authors list will
+  be determined later.
+- Welcome to introduce other research topics in our working group.
+
+
+--- PRESENTATIONS OF RELATED WORK --------
+
+Arun - A Language for Grid File System
+----------------------------------------
+- Use Case / Example (the existing system running at SDSC)
+  - Render various sources of physical data into a uniform, logical view
+  - Multiple organization can be grouped into a virtual organization.
+  - Question specific to SDSC project
+    - Namespace, file collection, file layout
+    - Security, ACL, security across organizations
+    - Replications
+    - Queries based by semantic
+    - Customed client-side drivers, API for application
+
+- Need for standard description language
+  - Description of XML Schema of data entities
+    - Virtual directory, data set, ACL, listing
+    - What is "data set"? need to clarify  
+      (other GGF working group also define data set)
+    - How do we handle differnet version of a file? How do we view them?
+  - Description of logical resources, opeartions
+
+- Language Requirement
+  - simple yet flexible
+  - aggregation of operations
+  - asynchrnonous execution
+  - promote using existing standard (e.g. XQuery)
+  - can easily be extended
+
+- DGL
+  - examples of operations
+  - Component
+
+- How does this fit into the existing proposals from other gorup 
+  (e.g. data access group)?
+  - There would be a new working group focus on file access.
+  - Our working group focus on namespace management.
+
+
+Osamu - Architecture of Grid File System
+----------------------------------------
+- Have a modified NFS server or POSIX client library look up info from 
+  "File System Directory Service".
+  - Standardize the interface between "File System Directory Service" and 
+    clients
+  - Define the "terminalogy" used in the interface
+  - However, we do not need to standardize the layout/design of the
+    "File System Directory".
+  - Specification of File access services is out of the scope of this design.
+  - Besides Web Services interface, should we allow other kinds of interfaces?
+    - Acceptance issue, interop issue.
+
+
+Leo - GNS(VFDS) Architecture
+----------------------------
+- Architecture overview
+  - GNS Jnct, VDir, PFSN, LFSN, LFN
+  - paper is available in the GGF website
+- Component
+  - Global Namespace Service
+  - Location Service
+- GNS mapping table
+  - Node <-> Type <-> Target
+    e.g. /gfs/ggf.org   <->  GNS Jnct  <->  gns://gns.ggf.org
+- Location service mapping table
+  - Logical Name <->  Physical Name
+    (may have more thanone physical location for a logical name)
+    e.g.  rls://rls.ibm.com/lfsn/SGEmployData   
+          <->  cifs://nas3.tucson.ibm.com/employeeData
+- GNS rendering example
+  - NFSv2/3, NFSv4, CIFS, can be a multi-protocol proxy
+  - can possibly leverage other GGF WG work on location service
+  - Security issue, authenication across multiple domains
+  
+  
+---------- DISCUSSION ON THE DOCUMENTS TO BE DELIVERED -------
+- Web Services (not Grid Services any more)
+  - Directory PortType
+    - Virtual Directory
+    - Junctions
+  - Atributes and Status
+    - Should we have status (open, lock)?
+    
+- Define the correct terminology for our works
+  - Virtual Filesystem Directory Service
+     - Grid Namesapce
+       - Virtual directories
+       - Junctions (logical or physical files, filesystem, 
+           other filesystem directory service instances)
+     - GSH = an instance of namespace server
+     - What is Virtual File Handle?
+       VFH = GSH + ID 
+- Assemble a team to prepare the directory service document 
+   deliverable to GGF
+- Two documents
+  - Directory service
+    - logical directory service management
+    - manage and use namespace
+  - Architecture
+    - logical filesystem management
+    - interaction with other services
+    - various kinds of resources

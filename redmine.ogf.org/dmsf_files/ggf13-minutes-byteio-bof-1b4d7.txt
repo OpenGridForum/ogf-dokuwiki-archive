@@ -1,0 +1,445 @@
+Byte IO BOF at GGF13 - 14/03/05
+===============================
+
+Agenda:
+
+Charter discussion:
+
+	Background & Use cases
+	Proposed interfaces
+
+	- Seven questions
+	- Existing WG or a new WG?
+	- Milestones
+	- Stake holder, co-chairs
+
++----
+
+Dave Berry gives a background presentation regarding the formation of the ByteIO working group and presents some simple use cases.
+
+Other use cases have arisen in the data design calls but have not written these up. 
+
+Malcolm Atkinson: Unclear to what extent the use cases are free
+                  standing or fit in the context of something else,
+                  e.g. in DAIS you need to do the query before you get
+                  the result. Not clear what the purpose of the use
+                  cases is.  ...  The context in which one may want to
+                  do this is not one where a file is involved.
+
+
+Dave Berry: may need to drill down on these use case.
+
+Andrew Grimshaw: in the OGSA Data Design team have tried to come up
+                 with a basic idea that applies over various groups,
+                 one might expect groups like DAIS might be able to
+                 support cursors and reads through this portType -
+                 files too as well as their own portTypes. Have not
+                 quite cracked how you deal with cursors.
+
+Malcolm: when you are doing this kind of thing you may want to know
+         what is happening with the buffering system.
+
+Cees de Laat: byte IO assumes that you are at a given layer - are you
+              going to do byte order and translation of types?
+
+Dave: Not at the moment, unless pushed to do so.
+
+Cees: are translations going to operate at the byte IO layer or above?
+
+Andrew: the translation would be in a layer above.
+
+Dave: would agree with that.
+
+Mark Morgan: I agree that it should be higher order.
+
+
+Mark Morgan presents presents a draft interface for byte IO.
+
+Does reads and write. Write may not be applicable to all services.
+
+A lot of groups need interfaces to read data from a file. Need a varied client API.
+
+Cees: You do not have a rewind operation. All that you need is an offset.
+
+Malcolm: what about restarting and continuing after a failure?
+
+...
+
+Assume that if you can't write an entire block you get a
+fault. Following the C#/Java model.
+
+truncAppend can be used to truncate a file.
+
+Malcolm: would expect to get information before I start working
+     - expected lifetime
+     - security model: encrypted, compressed, ...
+     - multiple read/single read
+
+Most of these are outwith the scope of this interface.
+
+Mark: there is some stuff that you would like to know:
+
+    - file size
+
+    Most applications will read until you get to the end.
+
+A WSRF rendering would use a WS-Resource. Trying to avoid jumping into
+one of the camps at the moment. The metadata is important but do
+not want to talk about these things yet.
+
+Malcolm: trying to find out where the boundaries for this group are.
+
+Andrew: want to avoid scope creep.
+
+Malcolm: Want to be clear what you are going to
+         do and what you are not going to do in the charter.
+         Makes it clear that you have thought about them and presents
+         an invitation for other groups to do the work.
+
+Mark: an important target would be to do have a mapping from NFS or CIFS.
+      if they consider it important then we should talk about it.
+
+Dave: we are not just looking at files - looking at other types of data.
+
+Malcolm: size would not work with streams ...
+
+Mark: the procfile system has infinite streams and labels then as
+      being of 0 size.
+
+Dave: modification time would be beyond our scope. Have a separate
+      part of the architecture that allows you to address different
+      types of data.
+
+Neil Chue Hong: moving away from byteIO to a fileIO system. Try to
+                keep it small.
+
+Malcolm: in the case where you have a result that is being
+         materialised as it is being consumed ... if you ask for a
+         smaller offset in this example then you will have problems as
+         the data is no longer available. You need to classify the
+         data sources in some way.
+
+        Truncate and write may not be allowed in some systems.
+
+Andrew: also depends on permissions. Some OS will not tell you whether
+        you can or cannot do something.
+
+Mark: will you talk about file pointers? For basic IO keeping file
+      pointers /cursors is a mistake. Unnecessarily prevents the
+      client from dealing with this. Provides a burden on the service.
+
+...
+
+Cees: if a client opens a session it opens a file - that translates
+      into a session and that should translate to a byteIO if you
+      open another session you ...
+
+Andrew: can share session wrapper ...
+
+Malcolm: there are various other types of data sources - data coming
+         out from a simulation, from an instrument,... these kinds of
+         model make it quite hard to have a semantics for a data
+         transport that depends on positions which you have at the
+         moment.
+
+Andrew: I disagree if you do not pick up data from a frame buffer then
+        you are using the wrong abstractions or your application
+        should be putting the data somewhere when you are using it.
+
+..
+
+Cees: if the data source were a random number generator and if you were
+     to do a rewind would you get the same numbers? or if you open a
+     session and write some data and if you rewind do you get a new
+     session?
+
+Andrew: the session wrapper service is not something that is going to
+        be done by this group ... it is just an example ... another
+        thing that came up is, when using this abstraction, other than
+        in files - one thing that we were not clear about is whether
+        you can set the cursor in a result set in a database ...
+
+Malcolm: some DBMS provide with a low level interface that allows you
+         to do that if it has been materialised
+
+Dave Pearson: why would you want to read a blob from a database? 
+
+Andrew: once you do that you cannot necessarily go back to that position...
+
+Allen Luniewski: if you serialise the data and put it somewhere else...
+
+Malcolm: no! in databases you do not want to do extra copies ...
+
+Andrew: this is not a byte moving interface ... the name used to be BasicFile...
+
+Malcolm: if it's basic file i/f then that's fine but I thought the file
+         group were doing that
+
+Andrew: this is supposed to work with RMS
+
+Osamu Tatebe: GFS provides a name space. GFS wants to standardise its
+              architecture...
+
+Andrew: this is an interface not an API.
+
+Malcolm: if I have 6 sets of data that are going to be collected by a
+         client you don't seem to have a way of identify which file
+         you are obtaining an offset from.
+
+Dave: you assume that you have an EPR for every data set you generate.
+
+Andrew: the EPR is equivalent to a file name.
+
+Dave: the service could map an EPR to a set of things but that is the
+      service.  We are assuming that you have an address and the lower
+      level name.
+
+Cees: still puzzled as to what level you operate: do you write files
+      and then read them or is it to write to files ... different
+      operating systems may put in extra bytes - ....
+
+Dave: it gives back whatever virtualisation the OS provides.
+
+Andrew: this is just one pieces of a series of things the design group
+        has been looking at ... similar things have been done at
+        Avaki. They have done this on top of different OS. This looks
+        like the C library interface ... that is what the OS gives
+        you.
+
+Osamu: the data transfer protocol question is not answered.
+
+Dave: one possibility would be to use SOAP attachments, ...
+
+Malcolm: would these be made available to implementors  ....
+
+Andrew: in so far that you are using XML these should be invisible ...
+        we may need to add a channel to blast the data but do not want
+        to get into that
+
+Malcolm: you have not specified what the basic unit of transport are.
+
+Dave: that is something that we have deferred to the WG -  that topic seems a
+      sensible one to include.
+
+Malcolm: it might be implemented as metadata but it still needs to be
+         defined.
+
+Andrew: most of the time you can't find out and when you can you can't
+        do anything about it.
+
+Cees: is the offset size 32 or 64 bit...?
+
+Mark: 64 bit
+
+....
+
+Moving on:
+
+Have 40 minutes left to discuss the charter and who is going to do it.
+
+Are we agreed that there is some functionality that can be used.
+
+Malcolm: if this was generated could DAIS/OGSA-DAI use this?
+
+Neil: speaking for OGSA-DAI and some of the work that is being done in
+      nextGrid we could certainly do something with something like this 
+      ...
+
+Tom Sugden: we have interfaces that deal with data at the block level
+            ...
+
+Cees: what you are talking about is higher up the stack ...
+
+Neil: we would probably want to map to this and buy interoperability.
+
+Dave: is this specific data in files or more generic?
+
+Neil: shipping bytes in general.
+
+...
+
+Dave: Sounded to me like there is interest in going ahead.
+
+Dave Pearson: People do hold binary structure in relational systems
+              but those are objects and are complete in themselves as
+              a whole. You read at a block level.
+
+Dave: the motivating example came from eDiamond ... looking at picking
+      up parts of an image at a time where the image was one element in 
+      a row set.
+
+Malcolm: or even a small set of pixels in an image.
+
+Cees: you also said an interesting thing ... if you want to read bytes
+      of a remote file ...
+
+Dave: do not have an answer regarding protocols.
+
+Malcolm: if I'm reading blocks of data 10Gb at a time then you would
+         use GridFTP.
+
+Guy Rixon: similar thing has been happening in astrophysics. Never use
+           SOAP to send the data. Anything that is serious is going to
+           be passed on to another streaming mechanism.
+
+Dave: this is something that has to be looked at. There
+      may be details and problems that need to be fixed ... it looks
+      like there is interest so I suggest we go ahead unless the GFS
+      wants to go and do this ....
+
+Looking at the questions posed by the GFSG:
+
+- Is the scope sufficiently focused?
+
+  There seems to be a general consensus although there have been one
+  or two things mentioned and perhaps we should specifically state
+  some things that are out of scope.
+
+- are the topics that the group plans to address clear and relevant ...
+
+  yes.
+
+- will the formation of the group foster (consensus-based) work that would 
+  be done otherwise.
+
+Malcolm: have been waiting for this for a long time.
+
+Mark: a lot of groups are looking for this.
+
+- do the groups activities overlap inappropriately with those of
+  another GGF group ...
+
+Malcolm: the grid file service people? ...
+
+Dave: no.
+
+Malcolm: the other one is Infod...
+
+   ...has the relationship with the OGSA architecture been determined?
+
+Dave: yes 
+
+Malcolm: so would it go in Dave Snelling's infrastructure 
+
+Dave: ... would probably go in the data ...
+
+Seven people put up their hand that they would want to get involved in this Working Group.
+
+Dave: is that enough to get started?
+
+Cees: it depends on your milestones. For one document yes. For many - not.
+
+The deliverables and mile stones are discussed:
+
+Assumes 3 documents:
+
+	- use cases
+	- interface document
+	- experiences document
+
+The use cases is required by the area director to define the scope.
+
+Cees: you should write what part of the use cases is covered by this
+      solution.
+
+Malcolm: would like to see a mapping of one or two places where you
+         want to use it ... and what you do with the buffering.
+
+Dave: Mark has implemented the interfaces and could find another -
+      NextGrid and ByteIO.
+
+Hidemoto Nakeda: Why was the name changed from FileIO to ByteIO?
+
+There are streams that you would like to use for this.
+
+Hidemoto: the file pointer can be used as a file pointer and as a
+          stream pointer.  We can't use this interface to stream data
+          ... we are considering to use ByteIO for visualisation but
+          we cannot use this which we found to be very disappointing
+          ... your thing is fileIO. The best thing for us if you also
+          deal with the stream thing but the interface you are showing
+          ...
+
+Mark: we can cover some streaming cases that you cover.
+
+Dave: would be very useful to have your use case
+
+Hidemoto: in that case it would be ok ...
+
+Mark: maybe the intention of the group is correct but not the name.
+
+Dave: the timetable is ambitious but can people put the effort in?
+
+Mark: Mark and Andrew are going to put the effort so the answer is yes ...
+
+Allen: you started with something that is simple but there is a danger
+       of feature creep
+
+Malcolm: that is why I want to the charter to be tightened up.
+
+Dave: if were to do something fairly simple ...would people be able to
+      put the time in.
+
+Neil: from NextGrid ... this looks similar to something that we need
+      to investigate in 2 months time.... the experiences doc looks
+      kind of short...
+
+
+
+Dave: don't think that the scope paragraph is sufficient...
+      try to specify what is ruled out.
+
+Guy: is writing streams out of scope?
+
+Dave: probably yes.
+
+...
+
+Discussion as to what is in scope and what is out scope.
+
+...
+
+Cees: do you want to say anything about error recover/handling?
+
+Mark: certainly error detection.
+
+Malcolm: but I also want to know whether you can recover.
+
+Mark: but still if I say examining CIFS and NFS...
+
+Malcolm: but some of these are bad ...
+
+Cees: want to abstract away from these ...
+
+...
+
+Malcolm: want to rule out concurrency management as being out scope,
+         security and encryption are also all out of scope.
+
+...
+
+Cees: is error handling in scope?
+
+Mark: at the client or the service? At the client then that is out of
+      scope.
+
+Malcolm: what is behaviour on synchronous access - does an operation
+         block or does it notify that the bytes are not ready?
+         i.e. does it reply immediately or not?
+
+Guy: if you specify that it is a stateful service then that has an
+     impact?
+
+Dave: this group would probably work within WSRF.
+
+Malcolm: the spec should say if there are any things that will constrain the
+         protocol or not. Might want to have space in your
+         properties. Better if you can do it in such a way so that you
+         do not force the transport properties.
+
+Cees: keep it simple.
+
+Proposed chairs: Mark Morgan and Neil Chue Hong.
+
+
+

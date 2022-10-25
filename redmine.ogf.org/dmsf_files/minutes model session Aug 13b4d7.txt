@@ -1,0 +1,204 @@
+OGSA F2F meeting information modeling - 13 August 2007
+======================================================
+
+* Participants
+
+Hiro Kishimoto
+Andreas Savva
+Michel Drescher
+Mark Morgan
+Ellen Stokes
+David Snelling
+Donal Fellows
+Steve McGough
+Vesselin Novov
+Fred Machiel
+
+Note Taker: Hiro Kishimoto
+
+* Information Architecture document
+
+Ellen goes over her revised document.
+
+** The Overall Model for Grid Resources
+
+Hiro asks Ellen if this document includes recent agreed coordination 
+among Reference Model WG (RM-WG), GLUE-WG, and OGSA-WG?
+
+Ellen affirms and explained that three drafts from each WG 
+(including this document) will be available before OGF21 and becomes 
+ready for public comment before OGF22. This document will show 
+coherence view of those WGs' efforts.
+
+** Model for OGSA Resource
+
+A working assumption about the three bubble diagram is;
+- GLUE is more like a blue bubble
+- CIM is certainly red bubble
+GLUE includes aggregation across CSes and it is new to current CIM 
+class. SNIA is working on defining a new class (a view class to provide
+different views of aggregate information) to CIM as well. 
+GLUE schema is higher level and usable information to consumers.
+
+Donal asks if algorithmic mapping from red to blue is still true?
+Ellen thinks that a couple of cases utilize algorithmic mapping.
+Although she agrees that in case of DMTF delegate sub class 
+definition to OGF/GLUE then mapping is not necessary.
+
+Ellen believes that GLUE-WG focuses on light (simple) class and 
+view. They fall into blue bubble instead of red bubble.
+
+Hiro asks if CIM rendering of GLUE schema means that GLUE-WG will 
+use DMTF's rendering specification.
+
+Ellen believes GLUE-WE won't adopt WS-CIM XML rendering.
+
+Rough consensus is that at least in the short term, we wil use three bubble diagram. And GLUE is blue one and CIM is red.
+
+Saying that what "GLUE schema is based on CIM" means? 
+Ellen thinks GLUE-WG should work on mapping algorithm even if they
+won't define formally.
+
+Andreas says JSDL just has human operational algorithms.
+GLUE-WG may has the similar mapping but that is not their current 
+focus.
+
+GLUE-WG is thinking to put their necessary classes into
+CIM-core but it is not easy from the Ellen's experience.
+These classes may be new base classes, view types of classes, or
+perhaps a CIM extension.
+
+All agree that it is difficult to discuss these without concrete 
+proposal. 
+
+Although view may need to change some CIM class, View is not in CIM 
+and there are some discussion in several CIM group in the past. SNIA 
+has proposed to add their view class to CIM but there is no conclusion 
+at DMTF on their proposal.
+
+OGF should join forces with SNIA to get the concept of views
+added to CIM.  It is easier to deal with DMTF if more than one alliance
+partner is asking for the same additions.
+
+Ellen will beef-up chapter 2 to show the coherent relationship among
+OGSA, GLUE, and RM.
+
+** Example
+
+Example chapter should be revised base on the recent GLUE works.
+
+** OGSA model architecture
+
+Steve says "condor class-ad" includes two things;
+- language to use
+- term to use
+OGSA-WG doesn't pick up either launguate or term. Thus he proposes
+to change "based on" to "approach based on." Ellen agrees.
+
+Andreas says that model is two way but one-way is also useful.
+
+We need to understand how glue schema document uses schema.
+
+Ellen thinks that GLUE-WG is working on information model and has not really
+started data model yet; although, expect data model to be similar to GLUE 1.1.
+
+It is difficult to drill down here if GLUE-WG is not ready for data model. Ellen sees two options;
+- Start to discussion here by ourselves and review it with GLUE-WG later
+- Punt it now and come back later
+
+Ellen prefers the second option. She proposes that OGSA goes first 
+and puts necessary requirements to GLUE-WG with concrete examples.
+No objection.
+
+Ellen asks if there any preference to use XQuery or XPath?
+Michel answers that languages does not have any differences and 
+using unique name makes XQuery very easy to use. E.g. "name" is too 
+much generic, but "host name" or "os name" is specific enough and 
+maybe unique at all.
+
+By using XQuery and/or Xpath, we want to maintain compatibility with 
+current JSDL 1.0. Matching between capability and requirement (JSDL) 
+is implementation issue and can be out of JSDL spec.
+
+JSDL allows people to put their own schema as extension.
+Can GLUE do the same thing as what we did in JSDL 1.0?
+Ellen says they are close but worry about complexity.
+
+Capability information can be incomplete. If resource does not 
+advertise attribute e.g. memory size, you cannot use such resource 
+but if is not mandatory you can ignore it. But how to express it in 
+XQuery?
+
+Should we enforce people to use XQuery? Also enforce people to use
+ranking language? In simplest case, you need not.
+
+There are two different issues; requirement and ranking, we should 
+discuss them separately.
+
+Just focus requirement at this moment to keep things simple.
+
+We agree that XPath is the first step to the Ellen's direction.
+
+Michel's demonstaration is two-ways but using XQuery.
+Can we show two-way matching using XPath instead?
+Simple XQuery uses just XPath.
+
+We should maintain compatibility and ease of use of JSDL 1.0.
+Utilize JSDL extension mechanism and leave matching as 
+implementation issue.
+
+Andreas says JSDL xquery (xpath) extension is now under discussion.
+
+step 1) Extend JSDL 1.0 for requreiment request and implict capability.
+step 2) Profile XPath 1.0/2.0 for inteoperation
+
+Should we go XQuery as step 2 instead of XPath 1 or 2?
+Is XPath 2 is just profile or xquery? Is XQuery superset of xpath2
+
+Agree to ask JSDL-WG to work on a series of usecases
+
+use cases
+- jsdl 1.0
+- jsdl 1.0 plus extension for 'and' only requirements
+- jsdl 1.0 plus extension for 'or' only requirements
+- preference: e.g Red Hat over any linux
+- weighting
+- optionality
+
+Ellen asks when she revises this arch document, should she also 
+include the above intermediate steps in the document?
+
+Hiro proposes to put intermediate steps into an appendix and 
+the end-game in main body of the document. All agrees.
+
+Ellen says goal is two-way matching and one-way is an internal step. 
+We don't prohibit two-way in anyway. JSDL does not disable two-way 
+but not focus on it at this moment.  Perhaps JSDL and GLUE should
+do their XML documents to include both capabilities section and
+requirements sections, but first implementations of JSDL may have
+capabilities section empty and GLUE may have requirements section
+empty.
+
+** Any other questions
+
+Hiro asks how to put reference model work into three bubble diagram?
+
+Ellen thinks blue bubble is aggregated abstraction of red bubble.
+Purple bubble (represent reference model) be placed over blue one 
+and has relationships to blue one. Should red bubble (CIM) should 
+comply with RM?
+
+Dave thinks RM (purple bubble) is high level representation of both red and blue 
+bubbles. RM also includes life-cycle and (very small number of) 
+common operations. RM comes from data center management area. RM 
+includes policy and is overlapped with glue but not yet discussed.
+
+Action Items.
+
+AI-0813a: Ellen to do major text revision.
+
+AI-0813b: JSDL-WG to send text to Ellen including usecases,
+          requirements, and ranking.
+
+AI-0813c: Dave to explain how RM fits into three bubble diagram and 
+          send text to Ellen.

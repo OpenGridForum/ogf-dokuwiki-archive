@@ -1,0 +1,529 @@
+INFOD Current Actions
+=====================
+
+This is a list of current actions.  Each action has a serial number, once it
+is closed it is moved to a companion document of closed actions.
+
+==============================================================================
+
+
+10      Update R-GMA scenario with operations as per Chicago F2F June 05
+ 
+        - Date: 1 Jul 2005
+        - Owner: Steve F
+        - Target date: 29 Nov 2005
+
+        This cannot be performed until a later INFOD spec supports the POBOX
+
+
+21      Update the charter, to reflect new schedule
+
+        The text has been simplified
+
+        - Date: 1 Jul 2005
+        - Owners: Susan 
+        - target date: 27 Oct 2005 
+
+
+22      Produce a plan for at least two implementations
+
+        - Date: 1 Jul 2005
+        - Owner: 
+        - target date: GGF16
+
+        This may be hard to do - Arjun
+        Dieter will send a document about ref implementations
+
+
+28      Produce interaction diagram to guide readers in understanding general usage
+
+        - Date: 21 Jul 2005
+        - Owner: Chris
+        - target date: 29 Nov 2005
+
+        Some progress made 
+
+
+29      Write up consumer service requirement - is this addressed by POBOX?
+
+        - Date: 21 Jul 2005
+        - Owner: Steve F.
+        - Target date: 29 Nov 2005
+
+
+36      Look at WSN to see how they have cleaned up soap/web-services header
+        contents description
+
+        - Date: 25 Aug 2005
+        - Owner: Arjun
+        - Target date: 17 Nov 2005
+
+
+46     Justify message structure and map to the patterns.
+
+       This should resolve issue 2
+
+       In addition to properties supported by most messaging systems
+       such as JMS and CORBA that treat messages as lightweight
+       entities consisting of a header and a body, INFOD provides
+       additional features to enable message tracking and additional
+       routing capabilities. For example, the message ids allow the
+       messages to be uniquely attributed to the publishers and
+       uniquely identify its dissemination path. The header contains
+       fields used for message routing and identification; the body
+       contains the application data being sent. The semantics of the
+       header elements are as follows:
+
+       - Id \226 Uniquely identifies a message and attributes it to a
+       verifiable publisher.
+
+       - Length \226 The length of the message, including manifest and
+       payload.
+
+       - Type \226 Uniquely identifies a message type, for xml message
+       types this refers to xsd format of the message.
+
+       - Correlation Id \226 Uniquely identifies a group of
+       messages. For multiple nested groupings multiple correlation
+       ids may be associated with the message.
+
+       - Priority \226 A sender provided priority associated with the
+       message.
+
+       - Retry \226 The number of times the disseminator will retry to
+       deliver this message. The sender specifies this parameter for
+       enactment by the disseminator.
+
+       - SenderEPR \226 End point reference to enable any routing node
+       to be able to interact with the sender.
+
+       - DestinationEPR \226 The end destination EPR where the message
+       routing needs to be terminated.
+
+       - OriginalId \226 A message may have resulted by split, merge
+       or join of different messages, the original id points to the
+       originating message.
+
+       - SequenceNo \226 For ordered delivery of message in a
+       correlation (as specified by CorrelationId) the sequence number
+       specifies the order of consumption of message. This number does
+       not mean that sequence will be observed at each stage of
+       routing, but is required to be enforced at the point of
+       consumption.
+
+       - Signature \226 The encryption key for the message.
+
+       - EncryptionAlgorithm \226 The name of the encryption
+       algorithm.
+
+       - Characterset \226 The character set for the message.
+
+       - Form \226 single or multi-byte character set
+
+       - OpChar \226 operational characteristics.
+
+       - userProperty \226 A set of user defined name value pairs.
+
+       - Flags \226 A set of property attributes for message routing.
+
+       Patterns for dissemination
+
+       Following are the important properties of various message deliveries
+
+       - Ordered sequence of message delivery
+
+       &#61607; Create a correlationId to identify a sequence.
+
+       &#61607; Associate an incremental sequenceNo with each message.
+
+       &#61607; End the sequence by creating new correlations.
+
+       - Transactional message delivery
+
+       &#61607; Create a correlationid
+
+       &#61607; Set routing flags for transactional and guaranteed
+       delivery.
+
+       &#61607; Set retry to allow recovery while routing
+
+       &#61607; Create nested correlationid at each stage of
+       propagation in the dissemination network.
+
+       &#61607; Set acknowledgement flag on at each step of routing.
+
+       - Broadcast of messages
+
+       &#61607; SetDestinationEPR to NULL
+
+       &#61607; Retry will be ignored by disseminator.
+
+       &#61607; Priority may be ignored by disseminator.
+
+       - Date 3 Oct 2005
+       - Owner: Shailendra and Vijay
+       - Target: 1 Dec 2005
+
+
+49     Reconsider the manifest name and to give it a name that is
+       consistent with its content.
+
+       Webster dictionary defines Manifest as ?To be the evidence off?,
+       The content of the manifest reveals routing information of a
+       message.
+
+       Steve F is unhappy with this and so takes the action over 
+
+       The agreed word is "Trail". The change needs to go into the
+       Spec then it will be DONE
+
+       Changes consist of 'Manifest' will be changed to 'Trail' in 3.9.1,
+       typo in message: 'body' should be actually 'trail' and finally trail
+       should be defined as an array.
+
+       - Date 3 Oct 2005
+       - Owner: Cecile
+       - Target: 10 Nov 2005
+
+
+50     Explain the need for incorporating information in the INFOD
+       messages to deal with the integration of SOAP and asynchronous
+       messaging
+
+       On successful call to consume operation, a message is
+       transferred to the consumer. As the services supporting the
+       INFOD protocol do not need to know the details of the message
+       structure the message need not be necessarily type checked at
+       the web services (soap transport layer). There for a message
+       may be wrapped inside a soap message as a binary object. As
+       messages are binary objects, introduction of new message
+       formats does not require services to be dynamically rebinding
+       for runtime type checking.  Binary format also provides the
+       messages to have a different encryption key then the
+       messages. Therefore there exists a canonical mapping between
+       SOAP messages and INFOD messages.
+
+       - Date 3 Oct 2005
+       - Owner: Shailendra and Vijay
+       - Target: 1 Dec 2005
+
+
+
+52     Explore the use of the subscription interface with the registry
+       manager to notify publishers and consumers of changes to the
+       contents of the registry manager (e.g., changes to
+       subscriptions, changes to publishers, changes to consumers) -
+       in other words explore the registry manager acting as a
+       publisher
+
+       This should resolve issue 7
+
+       - Date 3 Oct 2005
+       - Owner: Vijay
+       - Target: 1 Dec 2005
+
+
+53     Explore the message layout for create subscription, etc ...
+
+       - Date 3 Oct 2005
+       - Owner: Vijay and Shailendra
+       - Target: 31 Oct 2005
+       - Closed: 17 Nov 2005
+
+
+55     Create/revise use case in accordance with new template: ChS (Chemsecure)
+
+       - Date 3 Oct 2005
+       - Owner: Ronny
+       - Target: 29 Nov 2005
+
+       Work has started.  Also see action 58
+
+
+56     Create/revise use case in accordance with new template: Media
+
+       - Date 3 Oct 2005
+       - Owner: Stephen D
+       - Target: 29 Nov 2005
+
+
+58     Create/revise use case in accordance with new template: Sensor
+
+       - Date 3 Oct 2005
+       - Owner: Arjun
+       - Target: 29 Nov 2005
+
+       Will be revised in conjuntion with the ChemSecure case - action 55
+
+
+59     Create/revise use case in accordance with new template: 3rd party delivery
+
+       - Date 3 Oct 2005
+       - Owner: Dieter
+       - Target: 29 Nov 2005
+
+       Work has started  
+
+
+60     Assemble the use case and pattern document
+
+       Include mention of the desirability of a bank balance
+       notification use case and an e-mail filter use case
+
+       - Date: 3 Oct 2005
+       - Owner: Susan
+       - Target: 15 Dec 2005
+
+
+61     Produce propoasal for managing groups and transactions 
+
+       - Date: 3 Nov 2005
+       - Owner: Dieter
+       - Target: 29 Nov 2005
+
+       Work has started
+
+
+62     Make Section 3 naming consistent with Appendix supplied by
+       Shailendra.
+
+       - Date: 8 Dec 2005
+       - Owner: Cecile
+       - Target: 22 Dec 2005
+
+
+63     Make section 2 consistent with section 3.
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+64     Complete the object model for INFOD and place on gridforge
+
+       This is to help with XML generation, to understand what we are
+       talking about in the use cases, to cross check the interfaces
+       in the use cases
+
+       - Date: 8 Dec 2005
+       - Owner: Stephen and Chris
+       - Target: 22 Dec 2005
+
+
+65     Cleanup headings in  accordance with Steve Fisher' remarks
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+66     Remove all items that should not be mentioned in the base document 
+
+       e.g., POBoxes, and Disseminators which might go into another
+       document
+       
+       Do global search
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+ 
+
+67     Merge references for use case and patterns doc
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+68     Page 4: Define and explain vocabulary on page 4 when it is first
+       mentioned
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+ 
+
+69     Page 4 typo - last but not least, associations and relationships
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+70     Identify the requirements that are not satisfied in this 
+       specification
+
+       Keep the whole set of requirements though
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+71     Remove non-goals
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+72     Page 7 - Four kinds of objects - all have EPRs : (1) entity, 
+       (2) vocabulary, (3) vocabulary instance, (4) association
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+73     Avoid font smaller than 10 pt  - also remove color 
+
+       See figure 3
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+74     Page 7 - par 1 - Send Dieter paragraph to clarify: whether 
+       vocabulary is compulsory or not
+              
+       - Date: 8 Dec 2005
+       - Owner: Steve
+       - Target: 22 Dec 2005
+
+75     Remove publication type and home disseminator
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+76     Review register vocabulary and version issues
+
+       - Date: 8 Dec 2005
+       - Owner: Cecile and Shailendra
+       - Target: 22 Dec 2005
+
+
+77     Remove the word important (see Steve Fisher e-mail)
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+78     Page 7  - sort out vocabularies - introduce sub-section between 
+       2 and 2.1 (see Stephen Davey e-mail)
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+79     Delete register vocabulary as it is covered in Section 3
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+80     Review 2.1 and 2.1 because a lot of it is covered in Section 3 
+
+       So section 2 becomes overview
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+81     Suggestion from Steve Fisher - consider the hybrid XML and BNF 
+       notation used in WSN
+
+       Referered to as Pseudo-schema
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+82     Clean up section 2 (use prose not bullets) and remove references 
+       to names with INFOD_*,, EPR,
+
+       - Date: 8 Dec 2005
+       - Owner: Dieter
+       - Target: 22 Dec 2005
+
+
+83     Remove Pause and ResumePublisher operations from Registry
+
+       - Date: 8 Dec 2005
+       - Owner: Cecile
+       - Target: 22 Dec 2005
+
+
+84     Change getMData to getMetadata or getMetaData
+
+       - Date: 8 Dec 2005
+       - Owner: Cecile
+       - Target: 22 Dec 2005
+
+
+85     Have another go at re-writing the paragraph p18 for the Consumer operation
+
+       - Date: 8 Dec 2005
+       - Owner: Cecile
+       - Target: 22 Dec 2005
+
+
+86     Remove Pause/Resume Consumer
+
+       - Date: 8 Dec 2005
+       - Owner: Cecile
+       - Target: 22 Dec 2005
+
+
+87    Update all create operations with the description below
+
+      '... is used to create an infod xxx entity in the infod
+       registry' instead of spitting out 'the infod consumer
+       creates... itself'. so removing the 'role' of the person
+       issuing the create operation
+
+       - Date: 8 Dec 2005
+       - Owner: Cecile
+       - Target: 22 Dec 2005
+
+
+88     Investigate the need for the publish interface on publisher 
+       and description of publishing 
+
+       - Date: 8 Dec 2005
+       - Owner: Shailendra and Dieter
+       - Target: 22 Dec 2005
+
+
+89     In 3.2.1 to have the full  the full xml from the appendix for 
+       create publisher
+
+       So that other sections can refer to it and only have sub-set of
+       the info
+
+       - Date: 8 Dec 2005
+       - Owner: Cecile
+       - Target: 22 Dec 2005
+
+
+90     Page 40 - INFOD Entity and another INFOD entity
+ 
+       See Stephen Davey's e-mail
+
+       - Date: 8 Dec 2005
+       - Owner: Cecile
+       - Target: 22 Dec 2005
+
+
+91     Implement changes in her reply to Stephen Davey.
+
+       - Date: 8 Dec 2005
+       - Owner: Cecile
+       - Target: 22 Dec 2005

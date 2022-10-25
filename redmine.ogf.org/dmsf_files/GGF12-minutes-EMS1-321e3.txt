@@ -1,0 +1,106 @@
+GGF12 OGSA EMS design team session #1
+=====================================
+note taker: Hiro Kishimoto, Andreas Savva
+
+Sept. 21 (Tues), 9am-10:30am, VUB D005
+
+* Early discussion
+
+- IP Policy note
+- Agenda
+
+* OGSA v2 process by Hiro
+
+Hiro gives general (not EMS specific) explanation of process and
+deliverables of the series of OGSA v2 documents.
+
+Ramin (GSA-RG co-chair) explains the work of GSA-RG.
+Hiro: What's your definition of "schedule"
+
+Ramin explains their (broader) definition of schedule, it includes
+brokering, reservation, local and global scheduling.
+
+Hiro shows OGSA demand-supply diagram and asks GSA-RG if it is
+compatible to their view
+
+GSA-RG says some terms in the diagram has no definition, thus it is
+unclear what they mean.
+
+* EMS presentation by Ravi
+
+** Job explanation (p11)
+   - Relationship between job and task
+     - Ramin: Does job consist of multiple tasks?
+     - Ravi: Yes, it does.
+     - (Note: Ravi's explanation is that job contains 'tasks'; this is
+       not the same 'task' term used in v1 so it is confusing)
+
+   - Why make a distinction between job and workflow? From the
+     client's point of view the job even if it is a workflow is a
+     'single' job.
+     - Working definition of (OGSA) 'job' is different
+
+   - Specific interfaces not described; still at abstract level
+   - JSDL does not describe job state; only describes the job
+     description at submission time
+
+** Job manager (p12)
+
+   - Why is job manager a proxy for job?
+     - Job manager can manage collection of jobs
+     - Q: Can workflow manager be a JM?  Ravi: Yes.
+
+     - JM is optional; don't need to have it for every job
+     - Job grouping can be based on some property (e.g., jobs belong
+       to a workflow) or could be some user defined grouping. 
+     - But these are different functionalities, even though the i/f
+       might look very similar.
+
+     - GSA: Current EMS architecture seems to depend too much depend
+       on existing schedulers.
+       - Hiro: We start from existing ones but make it generic.
+
+   - Definition of job manager seems overly complex; proposal to
+     simpify by specifying only the minimum required functionality
+     first
+     - E.g., drop stuff like 'can provide job steering...'
+     - Just a job factory and collection portypes; not yet a service
+       (that is implementation)
+
+** Services to manage/driver resources (p13)
+
+   - Why does it include job steering/scheduling functions
+     - Why is it different from 'scheduling' e.g., preemption
+     - Introduce the idea of being able to modify the schedule plan
+       during execution; after the initial schedule is formulated
+
+   - Why is this separation of functions necessary (eps, csg)?
+     - It is possible to have various interfaces implemented by a
+       single service; specify them separately to allow various
+       compositions
+
+   - Candidate set generator
+     -  Does not include temporal constraints; split up to 'identify'
+        separate phases
+        - But in practice these phases are closely intertwined; there
+          is an iteration between the static & dynamic phases
+     - Probably documentation gives the wrong impression; phases are
+       not expected to be separated in an airtight manner.
+
+GGF12 OGSA Information services design team session #2
+======================================================
+note taker: Hiro Kishimoto
+
+* Naming service by Andrew
+
+Andrew goes over his slides; terms, transparency, and properties.
+He says our problem is not so much technical as political;
+Every SDOs and industrial players, e.g. IBM, HP, MS, DMTF, OASIS,
+WSDM, need naming service for distributed computing and they are under
+developing their own naming services. Since it is so important, it is
+not easy to agree on single naming services.
+
+Rough consensus is: Attaching statement about "check it if ok or not"
+to Andrew's naming document and bring it to them.
+
+A.I. Andrew will update his doc and sends it out to the list (DONE).

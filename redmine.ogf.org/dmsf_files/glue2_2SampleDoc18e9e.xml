@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<glue:Entities
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:glue='http://schemas.ogf.org/glue/2009/03/spec_2.0_r1'
+    xsi:schemaLocation='http://schemas.ogf.org/glue/2009/03/spec_2.0_r1 glue2_2.xsd'>
+        
+    <glue:Location>
+        <glue:ID>location1</glue:ID>
+        <glue:Associations>
+            <glue:ServiceID>service1</glue:ServiceID>
+        </glue:Associations>
+    </glue:Location>
+    
+    <glue:Contact>
+        <glue:ID>contact1</glue:ID>
+        <glue:Detail>http://some.uri/embedding/contact/info</glue:Detail>
+        <glue:Type>general</glue:Type>
+        <glue:Associations>
+            <glue:ServiceID>service1</glue:ServiceID>
+        </glue:Associations>
+    </glue:Contact>
+    
+    <glue:Contact>
+        <glue:ID>contact2</glue:ID>
+        <glue:Detail>http://some.uri/embedding/contact/info2</glue:Detail>
+        <glue:Type>general</glue:Type>
+        <glue:Associations>
+            <glue:ServiceID>service1</glue:ServiceID>
+        </glue:Associations>
+    </glue:Contact>
+    
+    <glue:Domains>
+        <glue:UserDomain BaseType="Domain"> 
+            <glue:ID>userdomain1</glue:ID>
+            <glue:Associations>
+                <glue:PolicyID>123</glue:PolicyID>
+                <glue:PolicyID>1235</glue:PolicyID>
+            </glue:Associations>
+        </glue:UserDomain>
+        
+        <!-- Sample GOCDB NGI Mapping -->
+        <glue:AdminDomain BaseType="Domain">
+            <glue:ID>adminDomain1</glue:ID>
+            <glue:Name>NGI_UK</glue:Name>
+            <glue:Extensions>
+                <glue:Extension>
+                    <glue:LocalID>SecurityEmail</glue:LocalID>
+                    <glue:Key>SecurityEmail</glue:Key>
+                    <glue:Value>UKNGI-Security@jiscmail.ac.uk</glue:Value>
+                </glue:Extension>
+            </glue:Extensions>
+            <glue:Description>United Kingdon NGI</glue:Description>
+            <glue:WWW>http://www.ukngi.ac.uk</glue:WWW>
+            <glue:Distributed>true</glue:Distributed> 
+            <glue:Associations>
+                <glue:ServiceID>service3</glue:ServiceID>
+                <glue:AdminDomainAggregationID>adminDomain2</glue:AdminDomainAggregationID>
+                <glue:ContactID>contact1</glue:ContactID>
+                <glue:ContactID>contact2</glue:ContactID>
+                <glue:LocationID>location1</glue:LocationID>
+            </glue:Associations>
+        </glue:AdminDomain>  
+    
+      
+        <!-- Sample GOCDB Site Mapping -->
+        <glue:AdminDomain BaseType="Domain">
+            <glue:ID>adminDomain2</glue:ID>
+            <glue:Name>GRID-LCG2</glue:Name>
+            <glue:Extensions>
+                <glue:Extension>
+                    <glue:LocalID>ProductionInfrastructure</glue:LocalID>
+                    <glue:Key>Target Infrastructure</glue:Key>
+                    <glue:Value>Production</glue:Value> 
+                </glue:Extension>
+                <glue:Extension>
+                    <glue:LocalID>CertificationStatus</glue:LocalID>
+                    <glue:Key>Certification Status</glue:Key>
+                    <glue:Value>Certified</glue:Value> 
+                </glue:Extension>
+            </glue:Extensions>
+            <glue:Description>Site Description</glue:Description>
+            <glue:WWW>http://www.some.service</glue:WWW>
+            <glue:Distributed>false</glue:Distributed> 
+            <glue:Associations>
+                <glue:ServiceID>computingService1</glue:ServiceID>
+                <glue:ServiceID>storageService1</glue:ServiceID>
+                <glue:AdminDomainParticipationID>adminDomain2</glue:AdminDomainParticipationID>
+                <glue:ContactID>contact1</glue:ContactID>
+                <glue:ContactID>contact2</glue:ContactID>
+                <glue:LocationID>location1</glue:LocationID>
+            </glue:Associations>
+        </glue:AdminDomain> 
+    </glue:Domains>     
+    
+    <glue:Services>
+        <!-- Sample GOCDB Service Mapping -->    
+        <glue:Service BaseType="Service">
+            <glue:ID>service1</glue:ID>
+            <glue:Extensions>
+                <glue:Extension>
+                    <glue:LocalID>HostDN</glue:LocalID>
+                    <glue:Key>HostDN</glue:Key>
+                    <glue:Value>/C=UK/O=eScience/OU=CLRC/L=RAL/CN=someHostDN</glue:Value> 
+                </glue:Extension>
+                <glue:Extension>
+                    <glue:LocalID>Scope</glue:LocalID>
+                    <glue:Key>Scope</glue:Key>
+                    <glue:Value>EGI</glue:Value> 
+                </glue:Extension>   
+            </glue:Extensions>
+            <glue:Capability>executionmanagement.jobexecution</glue:Capability>
+            <glue:Type>CREAM-CE</glue:Type>
+            <glue:QualityLevel>production</glue:QualityLevel>
+            <glue:StatusInfo>http://creamce123.statusinfo.ac.uk/page</glue:StatusInfo>
+            <glue:Complexity>some extra info</glue:Complexity>
+            <glue:Associations>
+                <glue:EndpointID>124</glue:EndpointID>    
+            </glue:Associations>
+        </glue:Service> 
+    
+    
+        <glue:ComputingService BaseType="Service">
+            <glue:ID>computingService1</glue:ID>
+            <glue:Type></glue:Type>
+            <glue:QualityLevel>production</glue:QualityLevel>
+            <glue:Associations>
+                <glue:ComputingEndpointID>computingEndpoint1</glue:ComputingEndpointID> 
+                <!--<ToStorageServiceID>332</ToStorageServiceID>-->
+            </glue:Associations>
+        </glue:ComputingService>
+   
+        <glue:StorageService BaseType="Service">
+            <glue:ID>storageService1</glue:ID>
+            <glue:Type></glue:Type>
+            <glue:QualityLevel>production</glue:QualityLevel>
+            <glue:Associations>
+                <glue:StorageEndpointID>storageEndpoint1</glue:StorageEndpointID>    
+            </glue:Associations>
+        </glue:StorageService>
+    </glue:Services>
+     
+    <glue:Endpoints>
+        <!-- Sample Service Endpoint Mapping -->
+        <glue:Endpoint BaseType="Endpoint">
+            <glue:ID>endpoint1</glue:ID>
+            <glue:Extensions>
+                <glue:Extension>
+                    <glue:LocalID>Classification</glue:LocalID>
+                    <glue:Key>Class</glue:Key>
+                    <glue:Value>UNSCHEDULED</glue:Value>
+                </glue:Extension>
+                <glue:Extension>
+                    <glue:LocalID>Severity</glue:LocalID>
+                    <glue:Key>Severity</glue:Key>
+                    <glue:Value>OUTAGE</glue:Value>
+                </glue:Extension>   
+            </glue:Extensions>
+            <glue:URL>uri://some.url.ac.uk/service</glue:URL>
+            <glue:InterfaceName></glue:InterfaceName>
+            <glue:QualityLevel>development</glue:QualityLevel>
+            <glue:HealthState>ok</glue:HealthState>
+            <glue:ServingState>production</glue:ServingState>
+            <glue:DowntimeAnnounce>2012-03-29T12:30:00Z</glue:DowntimeAnnounce>
+            <glue:DowntimeStart>2012-04-29T12:30:00Z</glue:DowntimeStart>
+            <glue:DowntimeEnd>2012-05-29T12:30:00Z</glue:DowntimeEnd>
+            <glue:DowntimeInfo>We had a power outage!</glue:DowntimeInfo>
+            <glue:Associations>
+                <glue:ServiceID>service1</glue:ServiceID>
+            </glue:Associations>
+        </glue:Endpoint>
+    
+        <glue:ComputingEndpoint BaseType="Endpoint">
+            <glue:ID>computingEndpoint1</glue:ID>
+            <glue:URL>uri://some.url.ac.uk/service</glue:URL>
+            <glue:InterfaceName></glue:InterfaceName>
+            <glue:QualityLevel>development</glue:QualityLevel>
+            <glue:HealthState>ok</glue:HealthState>
+            <glue:ServingState>production</glue:ServingState>
+            <glue:Associations>
+                <glue:ComputingServiceID>service2</glue:ComputingServiceID>
+            </glue:Associations>
+        </glue:ComputingEndpoint>
+    
+    
+        <glue:StorageEndpoint BaseType="Endpoint">
+            <glue:ID>storageEndpoint1</glue:ID>
+            <glue:URL>uri://some.url.ac.uk/service</glue:URL>
+            <glue:InterfaceName></glue:InterfaceName>
+            <glue:QualityLevel>development</glue:QualityLevel>
+            <glue:HealthState>ok</glue:HealthState>
+            <glue:ServingState>production</glue:ServingState>
+            <glue:Associations>
+                <glue:StorageServiceID>123</glue:StorageServiceID>
+            </glue:Associations>
+        </glue:StorageEndpoint>
+    </glue:Endpoints>
+    
+    <glue:Shares>
+        <glue:ComputingShare BaseType="Share">
+            <glue:ID>computingShare1</glue:ID>
+            <glue:ServingState>production</glue:ServingState>
+            <glue:Associations>
+                <glue:ComputingServiceID>34</glue:ComputingServiceID>
+            </glue:Associations>
+        </glue:ComputingShare>
+    
+        <glue:StorageShare BaseType="Share">
+            <glue:ID>storageShare1</glue:ID>
+            <glue:ServingState>production</glue:ServingState>
+            <glue:SharingID>someid</glue:SharingID>
+            <glue:AccessLatency>online</glue:AccessLatency>
+            <glue:Associations>
+                <glue:StorageServiceID>storageService1</glue:StorageServiceID>
+            </glue:Associations>
+        </glue:StorageShare>
+    </glue:Shares>
+    
+    <glue:Managers>
+        <glue:ComputingManager BaseType="Manager">
+            <glue:ID>computingManager1</glue:ID>
+            <glue:ProductName>adfadf</glue:ProductName>
+            <glue:Associations>
+                <glue:ComputingServiceID>computingService1</glue:ComputingServiceID>
+            </glue:Associations>
+        </glue:ComputingManager>
+    
+        <glue:StorageManager BaseType="Manager">
+            <glue:ID>storageManager1</glue:ID>
+            <glue:ProductName>adfadf</glue:ProductName>
+            <glue:Associations>
+                <glue:StorageServiceID>storageService1</glue:StorageServiceID>
+            </glue:Associations>
+        </glue:StorageManager>
+    </glue:Managers>
+    
+    <glue:Resources>
+        <glue:DataStore BaseType="Resource">
+            <glue:ID>dataStore1</glue:ID>
+            <glue:Type>disk</glue:Type>
+            <glue:Latency>online</glue:Latency>
+            <glue:Associations>
+                <glue:StorageManagerID>storageManager1</glue:StorageManagerID>
+            </glue:Associations>
+        </glue:DataStore>
+    
+        <glue:ExecutionEnvironment BaseType="Resource">
+            <glue:ID>executionEnvironment1</glue:ID>
+            <glue:Platform>linux</glue:Platform>
+            <glue:MainMemorySize>123</glue:MainMemorySize>
+            <glue:OSFamily></glue:OSFamily>
+            <glue:ConnectivityIn>true</glue:ConnectivityIn>
+            <glue:ConnectivityOut>true</glue:ConnectivityOut>
+            <glue:Associations>
+                <glue:ComputingManagerID>computingManager1</glue:ComputingManagerID>
+            </glue:Associations>
+        </glue:ExecutionEnvironment>
+    </glue:Resources>
+    
+    <glue:Activities>
+        <glue:Activity BaseType="Activity">
+            <glue:ID>http://activity1.ac.uk/1</glue:ID>
+            <glue:Associations/>
+        </glue:Activity>
+    
+        <glue:ComputingActivity BaseType="Activity">
+            <glue:ID>computingActivity1</glue:ID>
+            <glue:State>some state</glue:State>
+            <glue:Owner>someone</glue:Owner>
+            <glue:Associations/>
+        </glue:ComputingActivity>
+    </glue:Activities>
+    
+    <glue:Policies>
+        <glue:AccessPolicy BaseType="Policy">
+            <glue:ID>accessPolicy1</glue:ID>
+            <glue:Scheme></glue:Scheme>
+            <glue:Rule></glue:Rule>
+            <glue:Associations>
+                <glue:EndpointID>endoint1</glue:EndpointID>
+                <glue:UserDomainID>userDomain1</glue:UserDomainID>
+            </glue:Associations>
+        </glue:AccessPolicy>
+    
+        <glue:MappingPolicy BaseType="Policy">
+            <glue:ID>mappingPolicy1</glue:ID>
+            <glue:Scheme></glue:Scheme>
+            <glue:Rule></glue:Rule>
+            <glue:Associations>
+                <glue:ShareID>share1</glue:ShareID>
+                <glue:UserDomainID>userDomain1</glue:UserDomainID>
+            </glue:Associations>
+        </glue:MappingPolicy>
+    </glue:Policies>
+</glue:Entities>

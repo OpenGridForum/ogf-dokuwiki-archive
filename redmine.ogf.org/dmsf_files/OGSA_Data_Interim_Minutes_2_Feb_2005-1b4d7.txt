@@ -1,0 +1,539 @@
+OGSA Data Meeting -- Imperial College, London - 3 February 2005
+===============================================================
+
+* Participants
+	Mark Morgan (UVa)
+	Andrew Grimshaw (UVa)
+	Dave Berry (National eScience Centre)
+	Steven Newhouse (OMII)
+	William Lee (Imperial College, London)
+	Steve McGough (Imperial College, London)
+	Djaoui, Abdeslem (Rutherford Appleton Laboratory)
+	Simon Laws (IBM)
+	Mario Antonioletti (EPCC)
+
+	Minutes:	Mark Morgan
+
+
+* Objectives
+------------
+1) BOF scope & charter discussion/decision (what will it be about?)
+	- RNS - in GFS - need to accelerate/focus
+	- byte I/O
+2) Integrate ByteIO, RNS, DAIS
+3) Meta-data (attributes, Resource Description, etc.)
+4) Data Transfer
+	-- Stream data rapidly without a lot of copies
+	-- 3rd party dissemination of information
+	-- Do these two overlap, etc.
+
+* InfoD is now modelled on WS-N.
+	- If you want to do the classical pub/sub, then WS-N is appropriate
+	- But what InfoD is really trying to do is look at it from the publisher
+		side rather then through subscriber side.
+	- InfoD is not going to do the bulk transfers for data.
+
+* Should Byte/IO be in GFS.
+	- It seems to fit.
+	- It would be slightly changing their charter (since their document says
+		that they are going to produce two documents).
+
+* Third Objective is "meta-data".
+	- Interesting thing about meta-data for resources is the way in which
+		a "two core" model would deal with this.
+
+* Meta-data rename:
+	- Attributes
+	- Resource Description
+	- etc.
+
+* RNS and Basic File stuff in general (Byte IO) and DAIS
+	- Explored the notion of using basic file idea to read results
+		of DAIS queries.
+	- In DAIS you submit a query.
+		> if simple, you get it back as a chunk in the response.
+		> you can also create a new resource which is the result of that
+			query and you can read stuff back from that result
+			-- (read next n tuples).
+	- Putting this into byte io thing, two things
+		> no longer reading bytes, but tuples
+		> could be XML
+		> relational DB scenario -- the cursor might be held on the server.
+	Q:  In a database, can you always explicitly move the cursor.
+	Q:  Is it true that we hold the cursor on the server?
+	
+	- Even in the caes of a basic file, where do you hold the cursor?
+		> If we have a file and a client, is the cursor in the file,
+			or the client.
+			-- Both can be done.
+				^ If you wanted to have a different file service that held the
+					cursor for you, then you could establish a new 
+					resource (file w/ pointer).
+				^ Takes the WSRF of the original, and all it really has is a
+					file pointer.
+				^ It supports read and write, but without offsets
+				^ The point is that the primitive type is still the 
+					underlying basic file type.
+	- There is a generic pattern that you can  make a query on a service and
+		have the response be a new endpoint.
+		> In addition, we could make a query and specify the type of result
+			that we want.
+	- One good basic pattern is to have everything contain a basic type of
+		file interface.
+		> You can always add special operations to special kinds of files
+			-- For example, 2D files could have "read row", "read col",
+				"read blocK" operations as well as the simple reads.
+		> If we applied this principle to database results, then I could very
+			simply just read the file and the interface should just return to
+			me the stringified bytes (or XML) of this.
+		> This seems to be the right model.
+			-- DAIS has an issue to provide a generic interface for everything
+		> The common interface should be read (not write).
+	- Another question is , regarding XML and other tree structured data,
+		then what operations do you have?
+		> SAX for example.
+		> Couldn't you just say that the tuple is the XML Element.
+		> In DAIS you can issue an XQuery.  The target is a collection
+			(seq of XML Docs) to which you give XPath.  Result 
+			is sequence.  You can then iterate through the XML sequence.
+		> Could Data do something similar and create results in new resources.
+	- DAIS can be asked to return various types from queries:
+		> Byte Files
+		> Tuple File
+		> XML
+	- If it were a Tuple file, then it could be another database.
+	- Each of these types exports a different interface, but they would all
+		support the byte file interface of a read.
+	- The output from the queries have types
+		> you can then build other operations or transforms on this data.
+	- Can a database ever return a stream?
+		> Certainly it could be modelled as a stream.
+		> Continuous queries in databases?
+	- Can we stream any of the above result types
+		(Byte Files, Tuple File, XML, etc.)
+	- We don't want to dive too quickly into the 0th case,
+		we lose site of the goals.
+		> We can theorize about the interfaces without worrying too much about
+			how they are going to be implemented.
+		> The implementation has to be possible, but we don't have to worry
+			too much about it.
+	- Andrew originally proposed three layer data which had base and derived
+		data separately.
+		> Dave convinced Andrew that base and derived are really the same.
+	- Streams and "Malcolm's" Transfers
+		> Fits in this model very well.
+		> Suppose we had streamed XML data.  Like a pipe
+			-- you can push stuff in and pull it out. 
+				^ let's ignore the hard case of multiple pushers or pullers.
+			-- Implementation-wise, you'd want to have one where it was made up
+				of three components
+				^ one that represented the pipe itself
+			-- You could have a stub gen for .NET or java that when you opened
+				this thing (ala Tannenbaums Ameoba and Globe projects)...
+				When you attach to a shared data structure, this queue object,
+				it's state would be distributed between the clients.
+				Only when they open up do you talk to the pipe, otherwise,
+				you bit blast when you open it up from the original source.
+				^ There is some controlling element that knows about both ends.
+				^ The transfer in the bit blast may or may not be SOAP.
+					% No one is assuming the data transfer channel is SOAP
+					% The control channel is, but not the data channel
+			-- Want to be able to say that I want to create a tube (pipe)
+				or use an existing one...
+				^ I open /tubes/myTube.
+			-- If I am the producer, I open and use write interface.
+			-- If I'm a consumer, then open and read.
+			-- Want to be able to subtype these tubes to be pure text, struct,
+				etc. just like we did for files.
+				^ We don't always want the tubes to be text,
+					% sometimes you send data in the native binary format.
+			-- Suggest that the tube have an attribute that describes the
+				type of data that is being transferred
+			-- Alternative is to instead of having abstract type of tube,
+				the services have a type themselves and an interface that...
+				^ if it's a producer and I register to get a stream of
+					typed things).
+				^ Externally I could hook these things up
+					% sounds more like InfoD model we once saw.
+
+* RNS and Byte IO
+	- Don't think the full byte io interface should be the common element
+	- Should be reading only perhaps.
+	- So, we have a read interface, and a write interface.
+	- Most things like XML stream, etc. might support only the read byte
+		interface.
+	- Also argue that a service container might have a read interface.
+	- Suppose you have an RNS namespaec.
+		> You have some data directories, an apps directory, and a directory of
+			compute resources (CEs).
+		> One of the things you want to do once you have RNS is build services 
+			like NFS, CIFS, etc.
+			-- Make the namespace look like a filesystem.
+			-- Just like the /proc filesystem in linux,
+		> then you can also cat out host containers stuff, etc.
+		> This is why the idea of everyone implementing the read-byte
+			interface is appealing.
+		> Then we can use a lot of existing tooling to look at everything.
+		> Strictly speaking, you dont' "HAVE" to support this interface, but
+			at least you can ask, "Do you support this?".
+	- We should distinguish between the servies and APIS.
+	- Should the SAGA API be part of the OGSA plan
+		> assuming that it is a reasonable API.
+	- Users don't like to change their code.  Any API shouldn't be part of
+		the architecture.
+		> You have to be careful writing APIs because they can imply
+			architectures.
+	- Currently RNS maps strings to EPRs and strings to abstract names
+		> They have a resolver for resolving abstract names to EPRs
+		> Opinion might be that resolver piece be separated out from the
+			RNS mapping.
+		> There is confusion about what RNS does, so the two should be
+			separated out in the document.
+		> Does every EPR have an abstract name.
+			-- If instead of EPR we said WS-Address, then we could easily see
+				things happening in WS-Address that would mean we would never
+				have an abstract name.
+			-- WS-Address can have logical address instead of physical address.
+		> The whole discussion in Naming is that abstract name should be
+			happening at a lower level then OGSA (i.e. Web Service Level).
+		> You may have one service that does both mappings, but conceptually
+			they are two different things.
+			-- Particularly since we don't know what an AbstractName is.
+			-- For now, let's just go with String to EPR.
+	- Can you name parts of a resource?
+		> Shouldn't be mandated that you provide a name for every component,
+			but you should absolutely be able to name a sub-component if you
+			want.
+		> According to definition, a resource must be a manageable thing.
+			OGSA shouldn't redefine the term resources.
+			-- Web architecture says that a resource is anything that has a
+				URI and can be identified.
+			-- OGSA can then go and define additional things like a
+				"Manageable Resource".  
+		> Therefore, a resource should be something that can be identified and
+			addressed.
+		> Does it make more sense to say that a WS-Address can be used to name
+			a resource, or a piece of a resource.
+			-- Using the Reference Properties for example.
+				If you phrase it that you are passing additional parameters to
+				help your application parse the message, then it might sound
+				more acceptable.
+			-- We want to be able to name things or parts of things.
+
+* Actions on RNS
+	- Ask please, Manuel, drop last file bits
+	- Split out the AN->ER bits
+	- Please send us a new draft by Korea
+
+* How does this fit in with everything else?
+* Can we use RNS to name things in Data, EMS, Database, etc.?
+	- The answer seems yes
+	- You can name a DAIS service, it could generate a new result which
+		could be named, etc.
+* In OGSA we have outreach sessions -- if RNS is coming to be one of the
+	products in OGSA (it isn't in a base profile yet, but it should be),
+	should we ask GFS to have an outreach session?
+	- This is probably premature -- let's not do that.
+	-If they can give us a draft by Korea, UVa could commit to doing an
+		implementation.
+* Is there anything we need to do in DAIS relating to RNS?
+	- Should map straight on to DAIS data service, but you'll have to do a bit
+		to make it happen automatically.
+	- We could have grid-link (link this EPR into the file system).
+
+* Byte I/O
+	- We have the strawman interface.  
+	- It wasn't too controversial.
+	- We have an implementation.  
+	- We need to form a BOF
+		> OR, do we ask GFS to do it?
+	- Client or server side file pointers
+		> Client side -- you cak always created a derived type off of that
+			which keeps the file pointer for you.
+	- Is DAIS happy with the notion of being able to read the result of a
+		query as stream of bytes?
+	- We would want to have meta-data which described file content type.
+	- There is a set of suggested attributes.
+		-- Access and Delivery mechanisms....
+		-- etc.
+		-- We don't really want all of this on a basic file.
+		-- See architecture document
+	- There are pieces of information not only about the channel type,
+		but the data in the channel
+
+Suggested Members of the Group
+------------------------
+	Mark Morgan
+	Dave Berry
+	Simon Laws
+	Globus XIO
+	Gavin McCance or Peter Kunst
+	
+* We should write a charter to do this quickly.
+
+* The GFS people were willing to do the RNS stuff.  But clearly their
+	mindset is that they want to produce the things they are setting out to do.
+	- On the architecture side they haven't done as much yet.
+	- They want to produce something.
+	- We can talk to them and get their insight on the filesystem stuff.
+	- They might want to produce a document that says
+		"we think this fits in with what the OGSA Data is doing" whereas taking
+		on the byte IO stuff might be too much.
+	- Seems like they are already doing this.  Is this GSF or GSM.
+		> Seems like GSF.
+	- EGEE have the POSIX stuff as well.
+
+* RDF is a set of triples, but it doesn't describe what is in those.
+	- We have talked about Metadata belonging to a service.
+	- We have also talked about the interface of a registry or something.
+	- We might want to take the approach that logically the metadata belongs
+		to the service, but could reside somewhere else technically.
+	- We could describe, here are the metadata we think might be part of
+		various interfaces.
+* We tend to talk about services, resources, data types, etc.
+	- Lots of different ways to talk about structure of data itself which is a 
+		huge discussion in and of itself. 
+	- When we talk about metadata, we talk about describing your data source.
+	-  We are going to try and drop metadata term.  
+	- Primary interest is in the properties or attributes that describe the
+		data resource such as structure, availability, etc.
+		> But still there are loads of things.  It's not a small problem.
+		> In the InfoD registry, there is a place holder for publications,
+			subscriptions, etc. as well as data sources.
+		> Not aware of a standard for describing files.
+		> Not aware of a standard on what information about a file there is.
+
+* We haven't discussed initial base profile, but we sort of assume we want one
+	with data, rns, io, etc. in it.
+
+* Regarding the GGF sessions, there are 2 data design team sessions at GGF 13.
+	- The first is for initial data profile
+	- The second is about data transfer.
+	- Not sure what to do with the initial profile.
+		> It should contain RNS, ByteIO, DAIS and possibly GridFTP?
+		> Someone has to start writing it.
+		> RNS though should probably be in the OGSA Base profile.
+
+* Andrew should present something to the OGSA working group about RNS so that
+	they know what it is.
+
+* The initial data profile document could be quite simple.
+	-- These are the standards/specifications about it
+	-- Don't know how many optional parts there would be
+	-- The initial profile might be quite simple
+	-- Work on the initial profile really needs someone to take an initial
+		step at writing the doc.
+	-- Pressure to produce something by the end of the year.
+	-- Could use the first session of GGF13 to talk about Byte IO
+	-- Probably there isn't an immediate need to start writing a document.
+
+* If we have ideas about the data profile, then a short information
+	document would be a good idea -
+	- sort of a statement of intent...
+	- a discussion of what's going on and here are the directions that we 
+		are looking at at the moment.
+	- People will see that there is activity and won't go off and start
+		duplicating....
+	- Some sort of statement of intent could hopefully get approved.
+
+* Probably doesn't make much sense to discuss InfoD at this point because
+	things are at a VERY early stage.
+	- In InfoD you don't define topics, you describe evaluations (things
+		like SQL select statements, etc.).
+* There will be a joint session between InfoD and Management at the GGF Korea.
+* InfoD will have a draft for GGF13.  Right now it isn't really filled in.
+* How to read different types and how to specify different types.
+	- In DAIS you have a way to specify the query and result formats.
+	- Also need a mechanism for interfacing with various result types.
+		> This might go in a data profile -- How to use various result types.
+* Both on the input and the output there is a certain amount of flexibility
+	you have to deal with.  
+	- There are attributes that tell you what kinds of things you have to
+		deal with.
+		> Might indicate things like SQL version, database version, etc.
+	- And on the way out (results), what formats?  
+		> RowSet, etc....
+	- Do we need to specify interfaces for reading these various result types?
+		> You could do it as an API, or you could do it as a service interface.
+	- But, we should define a representative set of service interfaces.
+	- There isn't necessarily a direct relationship between the 
+		data source, and the interface.
+		> Sometimes you can "fake" interfaces.
+* DAIS has a general document talking about the templates they are using
+	- XML
+	- relational
+	- file.
+	- The file one is basically the byte IO stuff.
+	- Currently they have two types of messages.
+		> Those that return data to the caller.
+			-- The caller specifies the query, and the return type
+				^ (a QName currently).
+		> The second pattern is the factory pattern
+			-- you specify the query, and parameters and qname of a port type
+				that you want to be supported by the result service.
+	- There isn't a consolidated list of the input and output formats or
+		interfaces.  Rather, it's extensible.
+	- But is there a list of well known ones?
+		> There is a model.
+		> In the XML case, there is one for collection access,
+			-- XPath access
+			-- XQuery access,
+			-- XUpdateAccess.  
+		> In the Relational case
+			-- SQLAccess
+			-- ResposeAccess
+			-- SQLRowsetAccess.
+		> These are all defined in DAIS.
+		> A service might have both a SQL Access as well as XPath Access
+			interface.
+			-- Nothing is said aobut prohibiting this.
+			-- Some combinations might be impractible, but that is left up
+				to service authors.
+		> Mechanisms for selecting the types is not perfect right now.
+	- In the really general case, I want to find some data services that have
+		information about "foobar".
+		> I get some abstract name or EPR back saying, this service is the one.
+		> How do I ask, "Do you support SQL?  XQuery?" etc.
+			-- DAIS doesn't supprt general properties.
+			-- They support ones that support specific properties.
+			-- This point has come up before about having the general access 
+				method/message.  Maybe the same should supply to properties.
+	- XUpdate is debatable as to it's staying around.
+		> XQuery will soon have some update, so it may subsume XUpdate.
+	- XMLCollection is not a standard, it was defined by DAIS.
+		> This is sort of gray in it's definition.  
+		> XML Databases are set up as a collection of documents.
+			-- It's not clear that that is the general scheme of things for
+				all databases in the future.
+		> This seems similar to WS-ServiceGroup.
+	- If you execute XPathQueryFactory, and I get an EPR back, how do I read
+		that data back from the EPR.
+		> This EPR has a WSDL, but there is no definitive statement about what
+			this interface will be.
+		> It's up to the service to define it.
+	- DAIS should start with an extensible list of the result interfaces.
+		> Should have something basic that everyone agrees on about
+			"this means this" type of thing.
+		> From the architecture point of view, you make it general, but when
+			you get to a specification, you want to be more concrete about what
+			is understood.
+		> You could put it in the profile, but it would be better if the group
+			put something about it in the spec.
+		> The problem in the DAIS spec is that you are defining interfaces,
+			not services.
+	- Ultimately, you have to say
+		> this is what this thing is
+		> here are the inputs
+		> here are the outputs, 
+		> etc.
+	- DAIS has specific interfaces for doing specific things.
+
+	- Is there a way of acessing a WSDL interface.
+		> We could use the namespace of the interface for talking about the
+			type.
+		> DAIS could use the QName of the Port type for the type.
+	- How does a user of a particular service understand the various types.
+		> He doesn't necessarily
+		> It's up to the caller to understand what he means.
+		> There isn't a specification that says that you get from service
+			a to b by specifying this factory.
+		> This makes people slightly uncomfortable right now
+	- At the end of the day, the client has to know exactly what he is doing
+	- Some predefined things would be possible though.
+	- At the moment, you are basically asking for port types,
+		but not DAIS port types.
+	- A bit concerned on how you specify the port types that we want results
+		in.
+		> Can we delegate this to someone to suggest something on how to do.
+		> DAIS should probably take a look at that.
+		> DAIS says, go with what we have as a default, and allow that to be
+			extended later.
+		> In the architecture we want to do this, and we don't currently know
+			of a mechanism for doing this.
+		> This is a very nice pattern, but you again have to be able to type
+			things.
+* Cursors:
+	- You can take something that doesn't have a cursor, wrap it so it does
+	- What about the opposite?  Can you take something with a cursor and
+		pretend it doesn't?
+		> this is much harder.
+		> Resource creation s lightweight -- 'ish....
+		> The implementation of a database has the cursor built in.
+	- Will it be efficient to go to database and say I want a byte Io result.
+	- Problem is that a database isn't required to support backword cursors.
+	- What about access control.
+	- Access to db's is often connection oriented.
+	- Currently, we've said that there aren't any sessions.
+	- Basically it sounds that the wrapping of sessionless sources to give us
+		sessioned services is a reasonable model.
+
+* Action Items
+	- Report out to OGSA design team what we've been up to.
+
+* Replication
+	- Why?
+		> Use case for InfoD
+		> Useful part of any practical data grid
+			-- EGEE
+			-- Globus
+			-- Avaki
+			-- SRB
+	- Very little in the way of standardization
+	- How do we take this forward?
+		> Breakout session in England
+	- Objective <availability | performance>
+		> Performance
+		> caching
+		> whole file replication
+		> replication and caching
+		> future -- semantic aware distributed services
+		> Problem is, we can't assume that things don't change.
+	- Callbacks are problematic
+		> Delivery Guarantees
+		> Coherence Windows
+		> Unnecessary Updates
+	- Coherence Windows help a lot.
+		> Sometimes customers don't want access to fail for any reason
+		> Additional meta data says you agressively pre-copy things out
+		> Additional meta data says you can go ahead and service things out of
+			the cache even if the network is partitioned.
+	- Transactions, Two Phase Commits, etc.
+		> File systems don't have a commit protocol
+		> Can you introduce that commit protocol on top
+			-- There is a huge amount of legacy code that won't give you the
+				markers you need to do this.
+		> We need to distinguish between replication and caching
+			-- Replication is a form of caching.
+	- If you have a read only file, then use replication.
+	- If a file is not read only, then use a cache coherence window.
+		> It happens all the time
+		> The user doesn't need to know about it.
+		> We have existance proofs that this can be done.
+		> We're not saying that not everything has to do this.
+	- Replication is sort of like pre-loading cache.
+	- Caches might want to know about other caching services.
+	- It's easiest to generalize this as caches, and then say that there are
+		extra dials and knobs for pre-fetching, etc.
+	- InfoD is handling how you specify replication parameters,
+		but not actually dealing with how to implement it.
+	- Would infod cope with lazy cache coherence issue?
+		> There is no reason why it wouldn't.
+	- Is it set up to do that?
+		> It's not set up to do anything at the moment, but it's something
+			that could be looked into.
+	- Replication may depend on how dynamic your data is.
+	- Locus, Jerry Popek at UCLA had a great ability to survive network
+		partitioning.
+	- At some point we have to start a new activity to do replication
+	- We should have a phone call on replication and caching
+		> We should get various people invovled (globus, egee, etc.)
+	- Distributed Transaction Management is also related.
+		> Coherence in memory system and file system are well defined with
+			no notion of transactions.
+			-- From each thread's point of view, what do they see?
+			-- Does any given thread see a consistent set of updates in
+				terms of ordering?
+* What is a data service?
+	- There was some question about the definition in DAIS being too strict.
+* Currently Base Profile allows you to say that a service is compliant with
+	OGSA v. X profile, etc.

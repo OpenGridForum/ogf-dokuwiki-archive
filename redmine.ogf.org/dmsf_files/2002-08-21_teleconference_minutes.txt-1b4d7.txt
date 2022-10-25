@@ -1,0 +1,110 @@
+Minutes of the Third OGSI-WG Teleconference
+21/Aug/2002 @ 15:00-16:30 GMT
+
+Attendees:
+
+Tim Banks <IBM>
+Karan Bhatia <Entropia>
+Karl Czajkowski <ISI>
+Denis Gannon <U of Indiana>
+Andrew Grimshaw <Avaki>
+Fred Maciel <Hitachi>
+Y. Masuoka <Hitachi>
+Andreas Savva <Fujitsu>
+David Snelling <Fujitsu>
+Steve Tuecke <ANL>
+Peter Vanderbilt <NASA>
+
+Minutes of 14 Aug 2002 Teleconference were approved as published to the list.
+
+Technical Discussion:
+
+    Instance destruction
+      #15 Combine SetTerminationTime and Destroy
+      #14 SetTerminationTime of "forever"
+
+Steve Tuecke outlined the technical issues to be discussed. These were augmented as the discussion proceeded.
+
+1) Do we need to have a generic set termination policy method, of which time would be a variant?
+
+Andrew: KISS with several seconds.
+
+Agreement reached on not having such a generic set policy method.
+
+1a) During (1) Karan: Asked if there was some notification to the client as to wether a service no longer existed or if something else had gone wrong. 
+
+Karl: Suggested that this was a property of the binding and that a resolver could provide this information could be provided as an error to a resolution request.
+
+1b) Karl: Asked if some kind of client key could be provided to say if a given client could set termination time. It was agreed that this was a binding level issue similar to that of access to Service Data.
+
+2) Do we need one or two set termination time methods and what should they be called? We also discussed the meaning of "zero" and "infinity" time values.
+
+Denis: wanted to know how often a client needed to check the termination time.
+
+Others also raised questions about the effect of termination time in a multiple client context. There was a general reiteration of the fact that all soft state management functions were in the form of hints and therefore, in the end a service could do as dictated by its own policy (including changing it policy). One specific example was that a service could have it termination time changed to "2 hours from now" when it had previously said "infinity." It was again noted that authorization of changes to termination time was a binding property.
+
+It was agreed that there should be two methods and Service Data Elements with termination time properties. Following several dry runs at terminology, the following table describes our conclusions.
+
+                  Intent of Client         Meaning in a 
+Concept           Invoking the method      Service Data Element
+---------------------------------------------------------------
+Terminate After   zero => Don't Care       zero => No promises
+                  infinity => Stay forever infinity => No plans to die
+
+Terminate Before  zero => Die ASAP         zero => Trying to die
+                  infinity => Don't care   infinity => No plans to die
+
+
+Note that in this table 'zero' and 'infinity' are place holders that will be replaced by the abstractions proposed by the work on time stamps.
+
+Other language discussed included: Min/max termination time, Stay alive until, die after, dead before, and unbounded and undefined.
+
+3) Should there also be an explicit destroy method or should Terminate_Before(zero) provide this functionality?
+
+Although apparently redundant, we agreed to retain explicit destroy (even if only implemented as syntactic sugar). Arguments along the lines of what is familiar to programmers and a clean, visible state management model prevailed.
+
+4) Should these three operations be part of the GridService portType or form the basis of a life time management portType?
+
+It was agreed to put all three methods in the GS portType. Reasons provided included, Andrew: Lifetime management was thought to be fundamental enough to the GS concept that it warranted inclusion in the base GS portType. Steve: Also, clients could be coded to adopt a given "pattern" of behavior and then be able to rely on it, even for services that only provide limited implementations of lifetime management.
+
+General Note: The GSS should provide for notification of termination time and destruction related events.
+
+General Note: Following discussions of what SDE were and weren't mandatory, we were reminded that even our mandatory SDE's were subject to element by element authorization based on binding information.
+
+General Question: Should there be some way to tell a client that a given method in a portType is 'optional' be provided in the specification or should the client expect it, and adapt if it is not provided?
+
+5) Next Meeting:
+
+Time:
+  Wednesday, August 28
+     08:00-09:30 US Pacific (GMT - 7)
+     09:00-10:30 US Mountain (GMT - 6)
+     10:00-11:30 US Central (GMT - 5)
+     11:00-12:30 US Eastern (GMT - 4)
+     15:00-16:30 GMT
+     16:00-17:30 UK (GMT + 1)
+     17:00-18:30 Central Europe (GMT + 2)
+     00:00-01:30 Japan
+
+Place:
+  Phone:
+	Phone number: 1-484-630-5376
+	Pass code: 93031
+  IRC:
+     DALnet
+     #ogsi
+
+6) Open Issues, from which an agenda will emerge:
+
+    Registration
+      #20 Is WS-Inspection document required in registry?
+
+    Time
+      #16 Absolute or relative termination time
+      #13 Use Measured TimeStamps
+      #22 What if SDE lifetime attributes are not specified?
+      #23 Expressing "forever" in SDE lifetime attributes
+
+    Factory
+      #05 Factory extensibility
+      #19 Reduce Factory::CreateService output parameters

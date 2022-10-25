@@ -1,0 +1,708 @@
+OGSA-WG F2F --- February 9-10, 2004
+===================================
+
+  Location:
+        San Diego Supercomputing Center (SDSC), UCSD, San Diego, US
+
+  Participants
+
+        Abdeslem Djaoui (Rutherford Labs)
+        Michael Fraenkel (IBM)
+        Jeff Frey (IBM)
+        Andrew Grimshaw (University of Virginia)
+        Bill Horn (IBM)
+        Hiro Kishimoto (Fujitsu)
+        Takashi Kojo (NEC)
+        Takuya Mori (NEC)
+        Andreas Savva (Fujitsu)
+        Frank Siebenlist (Argonne National Labs)
+        Chris Smith (Platform)
+        David Snelling (Fujitsu)
+        Ravi Subramaniam (Intel)
+        Mary Thomas (Texas Advanced Computing Center)
+        Jem Treadwell (HP)
+        
+  Call-in
+        Dejan Milojicic (HP)
+        Fred Maciel (Hitachi)
+        Jeffrin VON-Reich (HP)
+
+  Minutes: Andreas Savva
+           (with contributions from Takuya Mori)
+
+------------------------------------------------------------------------
+* Summary of Actions (per section)
+
+** Use case actions: 
+
+    - Reality grid: Dave to check with Stephen Pickles.
+    - IT infrastructure: Ravi will do for GGF10
+    - P2P: Andreas to follow up with original author and try to
+      complete for GGF10
+    - Data: Andrew to get data use case for GGF10
+
+** Naming
+
+   Action: Andrew to think about what properties are needed for naming
+           and revisit this discussion. In particular the meaning of
+                name
+                address
+                identity
+                (Jeff: these are all distinct)
+
+** Categories (Taxonomy)
+
+  Actions: 
+           - Do management picture (high level, intuitively looks
+             meaningful, quite possibly wrong)
+           - Ravi to find his lost (taxonomy) presentation
+           - Jeff to bring back a view (categorization/taxonomy); work
+             from the existing document.
+             - Other people are welcome to do the same.
+           - Do a couple of profiles
+             1. PE > ? Owner Andrew as PE leader
+             2. ?
+           - (Everyone should think of the granularity problem. What
+             level should we go down to.)
+
+** PE
+
+  Action: Andrew to delete job wrapper from the architecture figure
+
+  Actions:
+    Move forward to define
+      job i/f (ways of interacting with it) (job is a ws-resource)
+      job document
+
+      Andrew to do initial draft for job, container, but other input
+      is welcome.
+
+      job, job manager, container,
+      relationships
+      lifecycles
+
+** JSDL
+
+  Action: Andreas to look into arranging for Frank to give a short
+          presentation on security requirements for JSDL at GGF10.
+
+** Security 
+
+  Action: Frank and Takuya to take the use case and proposal to the
+          related GGF security WGs and get buy in.
+
+** Job Contents Service 
+
+  Action: Andreas to do revision of the Job Contents Service document,
+          e.g., renaming terms and adding explanation. Discuss once
+          more on a call prior to GGF10 for inclusion in document
+
+** GGF10
+
+   Action: Hiro to post the updated GGF10 session plan.
+
+   Action: Jeff Frey to get Jeff Nick to give the flagship
+           presentation for the opening session of the OGSA oveview
+           session. (Get Jay to do the presentation without putting in
+           WSRF stuff.)
+           (Make sure that people know that OGSA is active and that
+           WSRF does not change things. Set the tone for the
+           sessions.)
+
+** Teleconference schedule
+
+   Action: Hiro to post the updated teleconference schedule.
+
+** Logging 
+
+  Action: Bill to remove vendor identifying information from logging text.
+
+  Action: Takuya to talk with Bill and provide text for the security
+          aspect of the logging service.
+------------------------------------------------------------------------
+
+* Milestone review
+
+  Plan is
+       Use case final draft for GGF10
+       OGSA doc: update for GGF10, final for GGF11
+       Roadmap: first draft for GGF11
+
+  - Schedule is pretty tough; the WG is committed to keeping it
+  - Agreed to cut down/remove immature parts
+  - Might want to consider doing the OGSA doc in the style expected by
+    the WS community (OGSI was criticised for not doing so)
+
+* Agenda bashing
+
+  - Decided to rearrange the sessions.
+  - Also to drop Data discussion (no update) and add Naming discussion.
+
+* Use case document
+
+  Many UCs are complete. The document will be submitted for GGF10.
+  Try to update the incomplete ones or drop them from the next
+  version.
+
+  Actions: 
+    - Reality grid: Dave to check with Stephen Pickles.
+    - IT infrastructure: Ravi will do for GGF10
+    - P2P: Andreas to follow up with original author and try to
+      complete for GGF10
+    - Data: Andrew to get data use case for GGF10
+
+  Also need use cases to be reviewed by at least one person.
+
+  Andrew volunteered to get (pay for) a professional
+  english/construction reviewer; need to give her sufficient time.
+
+  Must do technical review first before english review
+
+  - Volunteer technical reviewers
+    - Andrew volunteered to volunteer grad students
+    - Hiro 
+    - Jem
+    - Jeffrin
+
+  Jeffrin is owner(editor) and will drive process
+
+  Jeffrin also raised the need to find (replacement or extra)
+  post-GGF10 editor for the use case document.
+
+* Naming
+
+  - Need for abstract, persistent naming (names without address
+    information embedded in them)
+  - GSH as one example; but not (necessarily) human readable 
+  - Lost something with the move to WSRF (explicit addresses used)
+  - Thinking of 3 layers: 
+             human meaningful naming - abstract    - address
+              predicates -              'ws-naming' - ws-addressing
+
+  - Tentatively called WS-Naming
+    - Think about it in OGSA-WG; then kick it out to another group.
+
+   Andrew gave an example of Legion operations
+          context{,multi}lookup (set, or multi-set)
+          contextpathlookup
+          contextadd
+          contextremove
+          :
+
+   Basic requirements
+     1. A service to map: human-readable-name -> abstract name
+     2. human-readable-string may be something like a path (well known
+        by computer users)
+
+   - The meaning is up to the user. Do not (cannot) standardize
+     it. Uniqueness is up to the user.
+
+   Agreed on the need to have human to machine name translation.
+   Agreed on need for rebinding(renewing) translations
+
+   Proposal for 3 layers:
+            human meaningful - abstract - address
+
+   Unresolved: Is an abstract name really needed? 
+      (or rather why 3 levels and not 2)
+
+      Why is abstract+address (=renewable reference) as one level not enough?
+      - uniqueness (identity) (and way of reasoning that follows
+        with it)
+      - EPRs address need to have stable addresses (with renewability)
+        regardless of identity
+      - with EPRs identity was ignored (avoid all issues with what is
+        equivalence etc)
+        - reduce the need for multiple logical names for things.
+      - identity is one possible way of extending EPRs
+   
+   Action: Andrew to think about what properties are needed for naming
+           and revisit this discussion. In particular the meaning of
+                name
+                address
+                identity
+                (Jeff: these are all distinct)
+
+   From the whiteboard:
+                name                  path/name/predicate
+
+                (identity)
+        {       abstract  (GSH)         binding (EPR)
+RR      {
+        {       
+        {       Address   (GSR)
+
+
+* Categories (Taxonomy)
+
+  What is Core?
+       Core as bootstrap > no
+       Core as something that is always guaranteed to be there. >no
+  Core is a catch-all term; everything not explicitly put under any
+  other category.
+     
+  Taxonomy figure is unsuitable for what we are trying to express. It
+  mixes different concepts.
+        Profiles (way things are used) and
+        service categorization.
+
+  Agreed that there are problems with current categorization
+         At the moment mixing service description and ways of using
+         services (profiles) such as PE
+
+  (Proposal: Instead of layering or usage patterns define/talk about
+  the functional i/f of services)
+
+  Possible different views: 
+           e.g. management view (resources/services as manageable
+           entities)
+           functional view of accomplishing things
+
+  Proposal: Multiple categorization (to show/highlight different aspects)
+            aka multiple taxonomies;
+                high level one; e.g., (3 PE,Data,Core)
+                lower level one(s)
+
+  Services are not the only things we want to characterize. What about
+  models, schemas, ... how to express these
+
+  Consider other ways to structure the document; Come up with a
+  strawman first
+
+  Proposal: Also do profiles (out of scope at the moment)
+
+  Proposal: Throw away taxonomy altogether and have a (laundry) list
+            of services and do profiles to organize interaction(usage)
+            patterns
+  
+  Proposal: A taxonomy where services that can go in multiple places
+
+  Actions: 
+           - Do management picture (high level, intuitively looks
+             meaningful, quite possibly wrong)
+
+           - Ravi to find his lost presentation
+           - Jeff to bring back a view (categorization/taxonomy); work
+             from the existing document.
+             - Other people are welcome to do the same.
+           - Do a couple of profiles
+             1. PE > ? Owner Andrew as PE leader
+             2. ?
+           - (Everyone should think of the granularity problem. What
+             level should we go down to.)
+
+* Information Services
+
+  - Logging, message broker, directory
+  - Calling these information services is not right
+  (session interrupted) 
+
+* PE
+
+  Andrew presented from 2 hand drawn figures (to be included)
+
+**  Fig.1 <overall picture>
+
+  job manager
+      [square boxes are documents (e.g., jsdl)]
+      manages jobs over job lifetime, e.g., including restart
+
+  Container
+        contains jobs
+        has attributes for discovery etc
+        context
+
+  Job document
+      jsdl + more
+
+  Job 
+      grid service created when submitted, before it actually runs.
+
+  Information services: used for discovery
+
+  CSG
+        does physical mapping
+
+  EPS
+        does temporal mapping
+        may interact with CGS
+
+  Container gets a description of what it needs to do to be ready for
+  a job? And prepares by talking with Provisioning/Deployment.
+
+  (Not all functionality needs to be there as separate services.)
+
+**  Fig 2. Job centric picture  
+
+  job i/f is superset of job wrapper
+
+  - Are all services instantiated via jobs? not necessarily.
+  - A particular implementation does not have to have everything
+
+  - job wrapper
+    - Is job wrapper i/f visible as a separate entity (i.e., is it part
+      of the architecture or not)?
+    - does it have a different lifecycle or not? 
+      > It is just part of one state of the job (running)
+  - Performance or certain patterns of usage that might require to
+    bypass job wrapper. It is implementation and shouldn't be in the
+    model.
+  - Agreed to get rid of job wrapper from architecture
+
+  Action: Andrew to delete job wrapper from the architecture figure
+
+  - Difference between Job and Job Manager
+    - Job manager manages one or more jobs
+    - Job Manager provides aggregation of (composite) jobs 
+      - (it could be some kind of workflow engine)
+
+  - What is job
+     - the manageable aspect (an extension of WSDM model)
+     - the actual 'job'
+
+     (Discussion of what is the lifecycle, e.g., association of job
+     with container, what functionality is available at which point in
+     the lifecycle)
+
+     CDDLM deployment lifecycle as one example.
+
+  - PE started with focus on legacy job support. Are those
+    requirements and the abstractions relevant for non-legacy jobs?
+    They seem to be (or we think so until proven otherwise).
+  - There are different subtypes/special types of jobs, providing
+    more specialized i/fs
+
+  Actions:
+    Move forward to define
+      job i/f (ways of interacting with it) (job is a ws-resource)
+      job document
+
+      Andrew to do initial draft for job, container, but other input
+      is welcome.
+
+      job, job manager, container,
+      relationships
+      lifecycles
+
+  Persistent storage
+           e.g., something running in a container accesses something in
+           a persistent store
+
+           persistent store is another instance of manageable
+           resource
+           Brainstorming:
+             relationship of (job running in container) with
+             (persistent storage) as a new composite manageable
+             resource that can be managed by a generic job(resource)
+             manager
+
+           (Composition is optional; you may want to dynamically build
+           it if the overhead is not too much or you may
+           not. Relationships are dynamically created)
+
+  Set of manageable resources
+    base resource class (container(execution: j2ee, ...), persistent (storage))
+    relationships 
+
+* CDDLM 
+
+  A more detailed proposal was prepared but has not been discussed
+  sufficiently within the CDDLM-WG. Discussion was postponed. Instead
+  focused on Lifecycle diagram and division of work between CDDLM and OGSA.
+
+**  Lifecycle diagram
+
+  Note that deployment by CDDLM means not just installing things but
+  also bringing them to the running state.
+  
+  Proposal: Separate into 2 phases (installing, actually running)
+
+            provisioning = scheduling, acquiring, preparing (last is deployment)
+
+                preparing = Associating job with container and kicking off job 
+
+            Everything up to preparing > OGSA PE
+            Preparing onwards > CDDLM
+
+  After a service is instantiated on container it becomes a manageable
+  entity (resource)
+
+  - WSDM(CMM) states : up, down
+  - CDDLM refines states: e.g., if 'down' do actions to reach 'up'
+    state and defines intermediate states.
+
+
+* JSDL update
+  
+  - JSDL-WG is currently focused on attribute definition. First draft
+    out for GGF10.
+  - JSDL should be usable by WS-Agreement, but not just by WS-Agreement.
+  - Initial feedback and proposal from GRAAP-WG. JSDL-WG will
+    collaborate more closely once the attribute definitions are more
+    mature.
+  - A lot of groups are involved: EPCC, Cadence, IC, Globus, DRMAA,
+    (SGE), Fujitsu. No one from Condor.
+
+  - Is a fixed set of attributes needed? Couldn't everything be done
+    by introspecting the service that will receive the job request?
+    - A basic set is needed for interoperability.  A basic description
+      of a job can then be shared easily.
+    - The set can be extended to define new attributes; the vocabulary
+      is not fixed. It is a starting point.
+  - (OGSA PE) Job and JSDL both desribe "Job"?  What's the difference?
+    - Job can contain multiple documents.  
+    - JSDL focus is on job subscription.
+  - Is there any assumption that the document is submitted to a
+    service? > No.
+
+  At some point we have to look at the models (resource, etc) implied
+  by the job description and make sure the overall OGSA platform
+  architecture is coherent.
+
+  - JSDL is looking for contributors for security attributes. 
+    - Currently identity category has some attributes that could be
+      used as generic terms for security.
+
+  - Frank went over a slide showing a scenario where an initial job
+    submission allows the scheduler to use certain rights and those
+    rights are restricted every time the job is delegated to a lower
+    level scheduler. 
+
+    Though this is one important scenario it is not the only
+    one. E.g., Sometimes it may be necessary/useful for the scheduler
+    to use its own credentials to extend the rights given to the job.
+    Or certain job steps/actions might require extended rights. E.g.,
+    to stage in data.
+
+    Need some way to tie in/map JSDL description to rights and
+    authorization policy description.
+
+  - Open issue how to associate job and credentials or security
+    context, what is the correct granularity level, etc.
+  - It is important to be able to pass hints down to the security
+    layers.
+  - JSDL needs more input from security people. Especially useful
+    would be Frank's and Takuya's participation.
+
+  Action: Andreas to look into arranging for Frank to give a short
+          presentation on security requirements for JSDL at GGF10.
+
+* Security
+
+  - Is a VO something that has to be treated differently from an RO?
+  - Is a VO hierarchy needed? (Isn't the hierarchy effectively
+    flattened when the VO is created?)
+
+  - Rights: access control, authorization
+  - Local policy can always override global/VO policy
+
+  - VO context is document or service?
+    - At this point it is a concept
+      - Either points to some authorization service
+      - Carry some attributes
+
+  VO may also have some other capabilities like mapping functions,
+  membership. (e.g., collection of services, users). Not just context.
+
+  How do you delegate access rights to another entity?
+  - For example,
+    - resource X belonging to entity A can be used by entity B
+    - as policy statements.
+  - A policy language that can express such concepts is needed.
+
+  - When you delegate admin rights you don't actually change anything
+    at the resource.
+      
+  - How does all this tie in with AuthZ, or other GGF security WGs?
+    - It is an independent effort of Frank and Takuya. 
+
+  Action: Frank and Takuya to take the use case and proposal to the
+          related GGF security WGs and get buy in.
+
+* Job Contents Service
+
+  - It looks very similar if not the same as the Job Manager. What is
+    the relation/difference?
+    - It is a specialized data service that maintains data that will
+      be used to eventually instantiate jobs. E.g., the logical
+      structure of the job. It is not a job manager. It also maintains
+      the content that will be deployed to the container eventually.
+  - The user is the business application manager. The entity setting
+    up the contents that will be used later on to instantiate the job,
+    after the job document is submitted.
+
+  - It is possible to describe all that stuff in Job Description or
+    put them in to this kind of repository.  Repository can be used
+    for effciency.
+
+  - 'User data' is constant data; does not change. If it does then it
+    is not placed here but passed as an argument defined in submission
+    document.
+    - If the data is large there is just a reference to it; small data
+      can be included.
+
+  Agreed that term 'user data' is misleading and should be changed.
+
+  - Why isn't this just a repository; what's special about it? Is it
+    not equivalent to a Global Namespace and a Globally Accessible
+    Directory System?
+
+    - In commercial situation, it is unlikely to share distributed
+      file systems (across businesses)
+
+    - The motivation is to treat disparate but related things
+      (everything that will be used to build the job) as a logical
+      unit.
+
+  Agreed that the name is not appropriate ('Job' has different meaning
+  already). Perhaps more appropriately call this 'Application....' or
+  "Executable Management Repository".
+
+  - Isn't this one part of the software installation (lifecycle)?
+    - Yes. The (pre-)step of putting things in place to be used later.
+
+  - Connection with CDDLM.
+    - Some parts (configuration description) map to CDDLM components,
+      e.g, CDL.
+    - If difference is not big, why not just extend CDDLM
+
+  Agreed that this service has a place as part of (deployment and
+  configuration option of) a binary management system for P.E.
+
+  Action: Andreas to do revision of the Job Contents Service document,
+          e.g., renaming terms and adding explanation. Discuss once
+          more on a call prior to GGF10 for inclusion in document
+
+* CMM
+
+  - Aim is to define manageability in OGSA. Start with definition of
+    basic terminology about management and resource.
+
+  - 'grid resources' vs 'managed resource'
+    - managed resource: any resource that can be managed
+    - grid resource: something that can be consumed (usually something
+      physical)
+    - Is the division artificial or not? (How does the introduction of
+      the term 'Grid Resource' help in the model?)
+    - Aim is to put things in historical perspective. And clarify what
+      the existing definitions are.
+    - Proposal to stop partitioning things into grid and non-grid.
+    - The term 'consumable resource' instead of 'grid resource' was
+      suggested but again the term is not right; all resources are
+      consumable.
+
+  - In what way is supply-side/demand-side different from client/server?
+    - A service can be a client or a server 
+    - When a service is a provider it is on the supply side; when it
+      is a consumer it is on the demand side.
+    - So supply/demand is a term that describes the role of entities
+      in the architecture.
+   
+  - A lot of confusion about creating this kind of new
+    terminology. 
+    - Proposal to talk about interfaces: A service implements an
+      interface or uses it. Or interfaces are mixed together or
+      composed. I.e., focus on normative terms.
+  
+    - There are two types of terminology. Normative terminology and
+      terminology that helps map concepts to real world. These terms
+      (supply/demand) talk about the relationship and role of entities
+      in the architecture. There is eventually a mapping from the
+      second type of terms to the first.
+
+  - Side discussion on Provisioning
+    - Not provisioning as a service (or activity) but as a set of
+      (provisionable) interfaces that are implemented by
+      resources. (Leading to a composed resource model. The actions to
+      provision a resource are part of the composed resource
+      model. Some service initiates this activity, which may be
+      triggered by a call to a factory.)
+    - Provisioning is a service in the abstract; any service may take
+      on that role, e.g., a job manager may take actions that lead to
+      something being provisioned.
+
+  - Side discussion on what is the right way of doing things:
+    - What is the right level of abstraction (without dictating
+      implementation and without letting particular implementations
+      dictate the architecture). It is not right to just implement
+      what's out there. (It's the problem, not the solution.) Need for
+      big picture. There is a tension between the two and the 'time to
+      market.'
+
+  - What is the contribution of GGF/OGSA to a management framework?
+    - WSDM owns majority of work on the base manageability model,
+      including how to talk about relationships. (generalized i/fs)
+    - OGSA would then provide interfaces that can do higher level
+      things such as provisioning. (specialized i/fs)
+
+* Producer/Consumer 
+
+  - Review and comparison with WS-Notification (from point of view of
+    GMA)
+    - Can't get old data (pre-subscription)
+      - This is additional functionality that one could add by
+        extending base interface or building it separately.
+      - It is suprising that the spec actually includes an operation
+        to get the last one.
+    - Producer does not have to be a web service; consumer does.
+      - Would like something similar on the consumer side. One could
+        build an adapter to do this. Requires pull. (WS-Notification
+        is mainly push model.)
+    - No defined mechanism for consumers to find producers.
+
+  - GMA:
+    - Broker between consumers and producers. Separates the process of
+      finding producers from delivery of messages to consumers.
+    - Producers participate in GMA by registering to directory (MUST)
+    - Consumers MAY register with directory 
+    - (Directory could include WS-Addressing (EPR) information to the
+      producers or consumers)
+
+    - Message broker is made up of {producer i/f, directory, consumer i/f}
+    - Client-producer and Client-consumer are entities existing
+      outside the broker box.
+    - Producer and consumer are public interfaces; the directory is
+      broker internal behaviour and does not have to be exposed.
+
+  - In OGSA include the public interfaces (producer and consumer).
+
+* GGF10 planning
+
+** Session 1
+
+   Action: Jeff Frey to get Jeff Nick to give the flagship
+           presentation for the opening session of the OGSA oveview
+           session. (Get Jay to do the presentation without putting in
+           WSRF stuff.)
+           (Make sure that people know that OGSA is active and that
+           WSRF does not change things. Set the tone for the
+           sessions.)
+
+** Session 2 
+** Session 3
+   
+   Action: Hiro to talk to Ian/Jay about the data session.
+
+** Session 4 
+
+   Change to Management, security, naming.
+
+Action: Hiro to post the updated GGF10 session plan.
+
+* Teleconference schedule leading up to GGF10.
+
+  - Not call on Friday Feb. 12. 
+  - Will have call on Monday Feb. 16.
+  - Worked out the teleconference schedules.
+
+  Action: Hiro to post the updated teleconference schedule.
+
+* Logging review
+
+  Action: Bill to remove vendor identifying information from logging text.
+
+  Security aspect. What is special as applied to logs; is it not the
+  same as for other data?
+
+  Action: Takuya to talk with Bill and provide text for the security
+          aspect of the logging service.

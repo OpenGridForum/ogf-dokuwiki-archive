@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    The OGF takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use of the technology described in this document or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any effort to identify any such rights. Copies of claims of rights made available for publication and any assurances of licenses to be made available, or the result of an attempt made to obtain a general license or permission for the use of such proprietary rights by implementers or users of this specification can be obtained from the OGF Secretariat.
+    
+    The OGF invites any interested party to bring to its attention any copyrights, patents or patent applications, or other proprietary rights which may cover technology that may be required to practice this recommendation. Please address the information to the OGF Executive Director.
+    
+    Copyright (C) Open Grid Forum (2007). All Rights Reserved.
+    
+    This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this paragraph are included on all such copies and derivative works. However, this document itself may not be modified in any way, such as by removing the copyright notice or references to the OGF or other organizations, except as needed for the purpose of developing Grid Recommendations in which case the procedures for copyrights defined in the OGF Document process must be followed, or as required to translate it into languages other than English.
+    
+    The limited permissions granted above are perpetual and will not be revoked by the OGF or its successors or assigns.
+    This document and the information contained herein is provided on an "AS IS" basis and THE OPEN GRID FORUM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."
+    
+-->
+
+<wsdl:definitions name="Lifecycle"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:wsa="http://www.w3.org/2005/08/addressing"
+    xmlns:rmlc="http://schemas.ogf.org/rm/2007/05/lifecycle"
+    xmlns:wsrf-rp="http://docs.oasis-open.org/wsrf/rp-2"
+    xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2"
+    targetNamespace="http://schemas.ogf.org/rm/2007/05/lifecycle">
+    
+    <!-- Types Definitions -->
+    
+    <wsdl:types>
+        
+        <xsd:schema
+            targetNamespace="http://schemas.ogf.org/rm/2007/05/lifecycle"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+            
+            <xsd:include schemaLocation="./Lifecycle.xsd"/>
+            
+            <xsd:import namespace="http://www.w3.org/2005/08/addressing"
+                schemaLocation=" http://www.w3.org/2005/08/addressing/ws-addr.xsd"/>
+            
+            <xsd:import namespace="http://docs.oasis-open.org/wsrf/rw-2"
+                schemaLocation="http://docs.oasis-open.org/wsrf/rw-2.xsd"/>
+
+        </xsd:schema>
+        
+    </wsdl:types>
+    
+    <!-- Fault Messages -->
+    
+    <wsdl:message name="InvalidStateFault">
+        <wsdl:part name="InvalidStateFault"
+            element="rmlc:InvalidStateFault"/>
+    </wsdl:message>
+    
+    <wsdl:message name="CommissionFailedFault">
+        <wsdl:part name="CommissionFailedFault"
+            element="rmlc:CommissionFailedFault"/>
+    </wsdl:message>
+    
+    <wsdl:message name="ActivateFailedFault">
+        <wsdl:part name="ActivateFailedFault"
+            element="rmlc:ActivateFailedFault"/>
+    </wsdl:message>
+    
+    <wsdl:message name="DeactivateFailedFault">
+        <wsdl:part name="DeactivateFailedFault"
+            element="rmlc:DeactivateFailedFault"/>
+    </wsdl:message>
+    
+    <wsdl:message name="DecommissionFailedFault">
+        <wsdl:part name="DecommissionFailedFault"
+            element="rmlc:DecommissionFailedFault"/>
+    </wsdl:message>
+    
+    <wsdl:message name="TerminateFailedFault">
+        <wsdl:part name="TerminateFailedFault"
+            element="rmlc:TerminateFailedFault"/>
+    </wsdl:message>
+    
+    <!-- Operation Messages -->
+    
+    <wsdl:message name="CommissionRequest">
+        <wsdl:part name="CommissionRequest"
+            element="rmlc:CommissionRequest"/>
+    </wsdl:message>
+    <wsdl:message name="CommissionResponse">
+        <wsdl:part name="CommissionResponse"
+            element="rmlc:CommissionResponse"/>
+    </wsdl:message>
+    
+    <wsdl:message name="ActivateRequest">
+        <wsdl:part name="ActivateRequest"
+            element="rmlc:ActivateRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ActivateResponse">
+        <wsdl:part name="ActivateResponse"
+            element="rmlc:ActivateResponse"/>
+    </wsdl:message>
+    
+    <wsdl:message name="DeactivateRequest">
+        <wsdl:part name="DeactivateRequest"
+            element="rmlc:DeactivateRequest"/>
+    </wsdl:message>
+    <wsdl:message name="DeactivateResponse">
+        <wsdl:part name="DeactivateResponse"
+            element="rmlc:DeactivateResponse"/>
+    </wsdl:message>
+    
+    <wsdl:message name="DecommissionRequest">
+        <wsdl:part name="DecommissionRequest"
+            element="rmlc:DecommissionRequest"/>
+    </wsdl:message>
+    <wsdl:message name="DecommissionResponse">
+        <wsdl:part name="DecommissionResponse"
+            element="rmlc:DecommissionResponse"/>
+    </wsdl:message>
+    
+    <wsdl:message name="TerminateRequest">
+        <wsdl:part name="TerminateRequest"
+            element="rmlc:TerminateRequest"/>
+    </wsdl:message> 
+    <wsdl:message name="TerminateResponse">
+        <wsdl:part name="TerminateResponse"
+            element="rmlc:TerminateResponse"/>
+    </wsdl:message>
+    
+    <!-- Port Type Definitions -->
+    
+    <wsdl:portType name="LifecyclePortType" wsrf-rp:ResourceProperties="rmlc:LifecycleResourceProperties">
+        
+        <wsdl:operation name="Commission">
+            <wsdl:input message="rmlc:CommissionRequest"/>
+            <wsdl:output message="rmlc:CommissionResponse"/>
+            <wsdl:fault name="ResourceUnknownFault"
+                message="wsrf-rw:ResourceUnknownFault"/>
+            <wsdl:fault name="InvalidStateFault"
+                message="rmlc:InvalidStateFault"/>
+            <wsdl:fault name="CommissionFailedFault"
+                message="rmlc:CommissionFailedFault"/>
+        </wsdl:operation>
+        
+        <wsdl:operation name="Activate">
+            <wsdl:input message="rmlc:ActivateRequest"/>
+            <wsdl:output message="rmlc:ActivateResponse"/>
+            <wsdl:fault name="ResourceUnknownFault"
+                message="wsrf-rw:ResourceUnknownFault"/>
+            <wsdl:fault name="InvalidStateFault"
+                message="rmlc:InvalidStateFault"/>
+            <wsdl:fault name="ActivateFailedFault"
+                message="rmlc:ActivateFailedFault"/>
+        </wsdl:operation>
+        
+        <wsdl:operation name="Deactivate">
+            <wsdl:input message="rmlc:DeactivateRequest"/>
+            <wsdl:output message="rmlc:DeactivateResponse"/>
+            <wsdl:fault name="ResourceUnknownFault"
+                message="wsrf-rw:ResourceUnknownFault"/>
+            <wsdl:fault name="InvalidStateFault"
+                message="rmlc:InvalidStateFault"/>
+            <wsdl:fault name="DeactivateFailedFault"
+                message="rmlc:DeactivateFailedFault"/>
+        </wsdl:operation>
+        
+        <wsdl:operation name="Decommission">
+            <wsdl:input message="rmlc:DecommissionRequest"/>
+            <wsdl:output message="rmlc:DecommissionResponse"/>
+            <wsdl:fault name="ResourceUnknownFault"
+                message="wsrf-rw:ResourceUnknownFault"/>
+            <wsdl:fault name="InvalidStateFault"
+                message="rmlc:InvalidStateFault"/>
+            <wsdl:fault name="DecommissionFailedFault"
+                message="rmlc:DecommissionFailedFault"/>
+        </wsdl:operation>
+        
+        <wsdl:operation name="Terminate">
+            <wsdl:input message="rmlc:TerminateRequest"/>
+            <wsdl:output message="rmlc:TerminateResponse"/>
+            <wsdl:fault name="ResourceUnknownFault"
+                message="wsrf-rw:ResourceUnknownFault"/>
+            <wsdl:fault name="InvalidStateFault"
+                message="rmlc:InvalidStateFault"/>
+            <wsdl:fault name="TerminateFailedFault"
+                message="rmlc:TerminateFailedFault"/>
+        </wsdl:operation>
+        
+    </wsdl:portType>
+    
+</wsdl:definitions>
+
+

@@ -1,0 +1,393 @@
+OGSA January 2006 Interim Meeting
+=================================
+
+  Location: Sunnyvale, CA
+  Date:     19/1/2006, morning
+
+* Participants
+
+  Hiro Kishimoto
+  Dave Snelling
+  Andreas Savva
+  Darren Pulsipher
+  Fred Brisard
+  Dave Berry
+  Steve McGough
+  Neil Chue Hong
+  Allen Luniewski
+  Takuya Mori
+  Andrew Grimshaw
+  Mark Morgan
+  Chuck Spitz
+
+  Bridge:
+        Mario Antonioletti
+        Stephen Davey
+
+  Notetaker: Neil Chue Hong
+             (Changes by Andreas Savva)
+
+* ByteIO session
+
+Started session by screening www.405themovie.com - played using ByteIO
+(DIME/FTP) to access the file.  Cool!
+
+Dave: Does the interface simplifies if you remove  strided read? 
+- Yes
+
+Andreas: Does long mean 64 bits? 
+- Yes
+
+Hiro: Why is the return type of seekWrite void?  What if there is an error?
+- An error would throw a fault
+
+?: Why is seekOrigin a URI? 
+- Essentially have defined three qnames as URIs, rather than a URI as
+  a generic locator.  
+  - Could do as an enum, but noone has complained with this approach.
+
+Hiro: what happens if someone seekWrites backwards.
+- This can fail, if the stream does not allow it, but may work if the
+  stream supports it.
+
+Andreas: Do you write zeroes if seekWriting  backwards?
+- You pass over the data unchanged, if going past end of stream. Is
+  implemented similar to UNIX (POSIX semantics), i.e.  bytes to pad
+  are undefined.
+- Does the document specify the semantics for this clearly? Check
+  this.
+
+Currently in GFSG review.
+Will revise the docs as go through PC comments.
+
+DEMO: demonstrated FTP interface using ByteIO (easy to get Windows to
+interface with it) and a set of command line utilities.
+
+EPCC addresses uses lowlevel Java functions to a  particular URL but will
+write a different address  in the <To> field which means the MS client
+cannot  use this.
+
+Looking at <To> field and using it as a dispatcher.
+
+Service is at http://foobar/blah/byteio
+
+<EPR>
+<To>http://byteio/?/ResourceName</To>
+</EPR>
+
+There is no information in the To field to point it  to the service. We'll
+look at this and try for  interop at GGF16.
+
+GFSG is working on a template for interop documents. We should work
+with them (Stephen Pickles?)
+
+Does GFSG have a template for experience documents  - what should they
+contain?
+
+Dave B: you're using URIs to define transfer mechanisms. Does OGSA as
+a whole have a policy on the use of URIs?
+
+E.g. what happens if we use URIs to identify transfer messages
+elsewhere?
+
+Dave S: If you are using ByteIO as a mechanism, then you should use
+the ByteIO one. If not, there is no problem with having a plethora of
+mechanism definitions.
+
+Dave B: recommend OGSA create a central list of mechanisms
+
+Neil: just now, think it's better to just let groups own the lists,
+when other groups need them refer back to OGSA. Only problem is when
+two groups overlap. This needs coordination.
+
+Dave B: e.g. DMIS should refer to byteio mechanisms and add a GridFTP
+transfer mechanism.
+
+Andreas: which version are you using of e.g. MTOM, DIME.  We need to
+define this properly in the document, and also support this in the URI
+defining the transfer mechanism.
+
+Final words:
+
+- Give comments on the spec
+- Next is interop between the three implementations
+- What do we need to write in an interop and experiences document?
+
+* OGSA Data session
+
+** Data Architecture review
+
+Chapter 3: Architectural Context
+================================
+
+Are you going to treat storage as a separate thing?
+- Get GSM to contribute this part
+
+Dave S: DAIS doesn't have DBMS management in scope.  A lot of the OGSA
+     stuff is starting to border on management, how does this parallel
+     into the
+Andrew: More similar to storage management.
+
+Neil: some use cases available for database migration. Strategies for
+      grid-wide management strategies but may also be similar to
+      configuration and deployment and provisioning
+
+Andrew: replication of databases
+
+Hiro: Is database migration is a requirement? DBs are big and ...
+  - Might be storing day by day updates and it is not too difficult to
+    do
+  - But do need real cases that require this functionality
+
+Andrew: Design team on Information Services is not producing things,
+        which is holding up other teams.
+
+Takuya: What do you mean by Site and VO management?
+- Dave B: mean the relationship between site management of resources
+  and VO management of resources.
+  - It is the interaction/usage of these and NOT VO management itself
+
+Andreas: Do you have any specific requirements on EMS?
+- Probably the dependency is the other way round
+- Will require support for provisioning, e.g. database deployment
+- Common reservation interface for different resources?
+- Need more interaction with EMS to identify requirements 
+
+- Transactions:
+  - Could also think of them as a kind of session; need to look
+    further
+
+Fred M: When do you need info model for data services?
+     CIM used for storage related stuff.
+
+Mario: wanted to get a namespace decided so can import from CIM model
+       - Potentially multiple entry points into the CIM model
+       - XML realisation of CIM model.
+       - Still working on all of this
+
+Things to name
+==============
+
+Dave S: Naming: the other table you need is what you are going to do
+with all these names once you've created them? Would be useful to
+provide another document with this information - Stephen Davey?
+
+Chapter 4: Security
+===================
+
+Dave S: have you looked at what happens to policies when something
+happens to the data. In other words, what policy is applied to
+derivative views of data.
+  - For example, patient data may have looser policy if randomized
+    (removing identifying info, etc)
+  - It seems that a lot of the use cases have to do with medical
+    applications and privacy
+
+Andrew: but then it becomes a new data item
+
+Takuya: Attribute based authorisation only focuses on service based
+invocation. Dave is talking about another aspect of security.
+
+Andrew: Not clear that XACML can cover all access control cases.
+
+Dave S: where are the equivalent access control points in the the data
+access pattern? is it the same as jobs? You have more dynamic
+resources in data and it is often tied to the particular query.
+
+Chapter 5 - Data Description
+============================
+
+Dave S: should give slides to David Martin and Malcolm Atkinson to
+provide input to the roadmap.
+
+Hiro: Why service description under data description?
+- more for context than anything else
+- not convinced it's needed
+
+Ch 6 - Data Transfer
+====================
+
+Andrew: replicate a data container e.g. database, from one place to
+another. Want a mechanism for copying the state of the service. A
+useful porttype generally to be able to serialise state.
+
+Dave S: this is much more low level, just looking at policies for
+transfer mechanisms. But ability to serialise and migrate state is
+another important thing.
+
+Hiro: already separated access protocol (ByteIO) from transfer
+protocol (GridFTP).
+
+Very keen to ensure that DMIS work can be made generic in the future. 
+
+Andrew: seems DMIS is at a different level from what you're requiring here.
+
+Neil: agree, this is another access protocol and does not cover things
+like choosing endpoints for transfer mechanisms.
+
+Chapter 7 - Data Access
+=======================
+
+InfoD provides for third party delivery but is felt to be too complicated.
+
+WS-Addressing supports third party delivery but it isn't normally
+implemented. Could be the answer.
+
+Mark M: ByteIO could be used for third party if someone was to profile
+a new transfer mechanism for it, could split the control and data
+channel.
+
+Andrew: Seems heavyweight to select files from a file system. Could do
+this as an application which brings together various existing /
+proposed specs.  More like a profile than a new spec.
+
+Still a requirement for wildcard naming. WS-Directory supports
+this. Would there be a problem if the directory was dynamically
+populated?
+
+Ch 8 - Storage Resouce Management
+=================================
+
+? question missed
+
+Hiro: GSM claims it's outside of OGSA
+Dave B: GSM is not WSRF based but will use OGSA
+
+Ch 9 - Cache Services
+=====================
+
+Ch 10 - Data Replication
+========================
+
+OREP is dead.
+
+Ch 11 - Data Federation
+=======================
+
+Argued over Data Federation definition and its relation/difference to
+Data Integration.
+
+Data federation is the integration of distributed data resources to
+present a single coherent view.
+
+(Some companies have proprietary versions and it seems like a hard
+topic to standardize.)
+
+Ch12 - Metadata catalogues
+==========================
+
+** Scenarios Document v0.8
+
+(Note as we are using the document, rather than slides, I haven't been
+able to put in locators for the questions and discussion)
+
+Ravi: May want add Data Provenance scenario
+- we don't cover this in Data Architecture just now.
+
+Hiro: request that you update the reference the OGSA Use Case document
+as this has been published
+
+Hiro: is the metadata catalogue an instance of the registry as
+displayed in the first diagram? Yes.
+
+Ravi: you had data on the right, is it being modelled as a service or
+as an object
+- they're supposed to be data resources i.e. anything that can act as
+  a source or sink of data
+
+Ravi: can the discovery services, replication services be plural
+- stephen: assumed many discovery services, single replication service
+- allen: this is a simple ds1 to ds2 replication
+
+[Figure on p9]
+Ravi: why would the replication service be the one which publishes
+into the discovery? the data service should do that. The authoritative
+information source is the discovery service.
+- Dave B: this is just one way of doing replication, not the only way.
+- Ravi: problem with the semantics that go with the tags beside each line.
+
+Fred B: How did you come up with the term discovery service
+- a discovery service is not necessarily the same as a registry
+
+Dave S: should split the roles of data manager and data accessor and
+how they interact with replication and discovery services.
+
+[p14]
+Hiro: Visualisation service, you consider the rendering service as one
+of the data services, not as a computational service using a data
+service.  Ravi: separation of concerns is not clean.  - Dave B: it
+produces data so it can be considered as a data resource.  - neil: can
+have combinations of both compute and data porttypes/interfaces -
+Ravi: make this clearer, show that this presents a view of the data
+side of this scenario
+
+Hiro: diagram is still not clear, distinction between services and resources.
+
+Allen: wrap rendered animations as data services.
+
+Dave S: might want to show the specific interfaces on each box.
+
+[p19]
+Fred B: Data Integration scenario, have difficulty with definition
+of data discovery service.  Dave: our definition is a data registry.
+
+Dave S: What's the difference between data integration and data federation.
+
+Neil: it depends on who you talk to
+
+Dave B: not sure whether it's always bringing all data to one place.
+
+Stephen: schema mapping service stores the schema maps between local
+and global schemas.
+
+Ravi: schema mapping service in simple scenario suggests that the
+service is doing the transformation
+- Stephen: probably better to call it schema storage service or similar.
+
+Hiro: why is it called Personal Data Profile
+- Stephen: emphasise it is more than just a way of accessing data
+  services but also a place to store all sorts of data you might need
+  e.g. to configure your work environment.
+- maybe use "personal data space" instead?
+
+Dave B: Should we move data storage earlier in the document.
+
+Hiro: why is "file space" box not got a grey background?
+- Stephen: check back with Peter Kunszt, may to identify it's not a service.
+
+Dave B: intention is that architecture document will refer back to the
+scenarios document.
+
+Hiro: do you have a plan to add a requirements section in the
+scenarios document.
+
+Dave B: Should make it clear what the purpose of the scenarios
+document is at the start - it is not a use case and requirements
+document.
+- Stephen: it should already be there in the abstract
+
+Next steps
+==========
+
+Dave S: can use must/should, not MUST/SHOULD since it is not a
+normative document
+
+- present/future distinction
+
+Andreas: important to say that someone can do something in this way,
+but that it's not actually a standard e.g. recommended.
+
+JSDL spec shows a use of pseudo schema for types (copied from
+W3C). Should ensure names, and arguments are well defined.
+
+It is more important to pick the right names for the operations rather
+than try to make sure that all parameters are correct. Going through
+the process is important to clarify the architecture.
+
+UML would be a good idea for normative specs.
+
+Some discussion missed on requirements, ontologies etc.
+
+As part of architecture, probably want to see what we want to do in
+terms of gaps for working groups.  Persuade existing groups to do it?
+Create new groups, do it yourself.

@@ -1,0 +1,153 @@
+OGSA BES WG Telecon (12 May 2005)
+
+Attendees
+---------
+	Mark Morgan (Minutes)
+	Steve McGough
+	Andrew Grimshaw
+	Fred Maciel
+	Karl Czajkowski
+	Steven Newhouse
+	Darren Pulsipher
+	Michel Drescher
+
+Agenda
+------
+	* Agenda Bashing
+	* Breif Cont. on Agreement
+	* How Basic is Basic Discussion
+	* Decide what the agenda will be for the sunday meeting in the UK
+	* Fred requests 20 to 30 minute slot in face to face to present
+	  Resource Modelling
+
+Minutes
+-------
+	* Approved the minutes from last week
+
+WS-Agreement
+------------
+	* Should we be moving towards WS-Agreement?
+	* Based on what Karl described and the specification, Andrew in favor
+	  of using Agreement if we can resolve how to deal with profiles.
+	* Big problem for some is that you have moved beyond BES to a more
+	  complex ES.
+		- Means that your execution service now has to be far more
+		  intelligent then "I have a job and I can either run it or I
+		  can't.".
+		- Issue is that now you have to be able to do Agreements which
+		  might include things beyond BES
+			-- might have to understand QoS terms, etc.
+		- Also, if we go into Agreement, the intelligence of the
+		  container suddenly has to be much greater.
+			-- Does it have to?
+			-- What are the mandatory parts of Agreement?
+				--- Very few says Karl.
+				--- We should be able to define a template that
+				    is extremely minimal.
+				--- A BES doesn't have to support any of the
+				    extra stuff -- it can be VERY simple.
+				--- It can simply reject all of the agreement
+				    requests that it doesn't understand.
+			--  Point is to say that BES should define a profile
+			    that defines which parts of Agreement are to be
+			    used.
+		- The entire point of the BES spec would be to define which
+		  terms are part of BES.
+		- In general, seems like people like WS-Agreement at a high
+		  level, but don't want BES to get too complicated.
+		- One of the parts of Agreement is that you have to define
+		  templates of what kinds of Agreements I can make.  Does that
+		  mean that Templates carry metadata about the container?
+			-- Yes, it could.
+	* Some worry that we might be in danger of loosing consensus if we try
+	  to capture Agreement too early.
+	* If we aren't adding any value, why would we using a basic profile of
+	  Agreement.
+	* If we go with Agreement, and we assume other services like data
+	  services went with it, then it would be a more unified way of
+	  gathering together resources that a job manager would have to deal
+	  with.
+	* What sort of timescale are we wanting to get?
+		- First draft is GGF14.
+		- One or two implementations by October or September.
+		- Karl thinks that it's actually a benefit that WS-Agreement is
+		  in it's second comment phase.
+	* As long as we don't have to bring everything in with it, then there
+	  are some thoughts that it would actually allow us to get away from
+	  the discussion of WSRF.
+	* Essentially seems to be two ways to approach the problem
+		- 1) We go ahead with BES as we have been thinking to now and
+		     someone could wrap Agreement around that, or
+		- 2) we could do BES with Agreement to begin with in terms of a
+		     proflie.
+		- The more complex the service gets, the harder it is to make
+		  committments to get implementations out in the time frame
+		  alotted.  If we start looking at WS-Agreement, we add risk
+		  for getting implementations out there.
+	* If you are talking to the container, then you may want to do job
+	  management functions on the container.  You might have to have
+	  non-Agreement port types to do that.
+		- Agreement covers the basic job management, but you might have
+		  to add other stuff to do more complex job management.
+	* If we start a discussion of this in email, will people participate
+	  or will it be pointless?
+	* What do we loose by not using WS-Agreement and instead using a simple
+	  job description?
+		- Not the end of the world, just kind of wasteful.
+	* If we had some basic exectuion class, and it has a bunch of port
+	  types, then you may be a subclass on that one that does Agreement,
+	  essentially extends the basic one, and essentially be a BES
+	  Agreement.
+	Straw poll now (and on the mailing list) -- Agreement or Not?
+		Who			Agreement/Not
+		---			-------------
+		Steve McGough		Not
+		Mark Morgan		Don't Care
+		Andrew Grimshaw		Agreement
+		Fred Maciel		Obstain
+		Karl			Agreement
+		Steven Newhouse		Not
+		Darren Pulsipher	Undecided
+		Michel Drescher		Agreement
+
+	* Can we carry forward without making a decision?
+		- An alternative path is to carry forward, see what we need,
+		  and then decide whether or not Agreement satisfies what we
+		  need and see if we want to use it down the line.
+		  	-- That would allow us to focus on what is the basic
+			   interface that we want/need.
+	* GridSAM -- just using plaing vanilla web services and JSDL
+		- Should we look at that to see how it was done without
+		  Agreement?
+	* What we are going to do right now is assume for the moment (with
+	  discussoin to happen in email) to focus on BES piece to decide what
+	  we really need and re-examine at a later date whether we want to use
+	  Agreement to satisfy those requirements.
+
+Recap something that Steven brought up a couple of weeks ago.
+	Paraphrase, "...we should treat basic execution services as basic.  We
+	aren't going to hand it a JSDL document that has a lot of staging,
+	etc.  Nothing too complex.  Intstead, it should do basic things.  An
+	overall job manager might worry about these things, but the basic one
+	would be just that.  If you needed staging, then a simple staging job
+	would be started."
+This seems like a very intriguing notion to really strip it down to it's very
+basic pieces.
+	* How do people feel?
+		Many liked this
+	* Then we can say that thigns are out of scope if they aren't that
+	  basic.
+	* You could have a Job Manager service or Workflow Orchestration
+	  service handle the more complex interations.
+	* A BES service would consume a tiny piece of a JSDL document, not the
+	  entire thing.
+	* Seems to be a few people who think that this is a great idea.
+	* Andrew to write this up in a simple scenario in the next week or so.
+	* Then we can start asking, does this fit what we want to do?
+	* What pieces of JSDL have to be supported by a BES thing and which
+	  don't.
+	* Same would apply for Agreement if we went that path.
+	* Is there any dissent?
+		- No dissent!
+	* That's good because it significantly simplifies the scope of what we
+	  are going to do.

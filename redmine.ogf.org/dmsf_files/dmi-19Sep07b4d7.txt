@@ -1,0 +1,158 @@
+DMI Call - 19 Sep 07
+====================
+
+Attendees:
+	   Steve Newhouse, Microsoft
+	   Mario Antonioletti, EPCC
+	   Michel Drescher, Fujitsu
+	   Allen Luniewski, IBM
+
+Agenda:
+
+ - Slide set for OGF21
+ - Michel's communications protocol taxonomy
+ - Data EPRs
+ - Mario's edit of the DMI spec
+
+
+Actions:
+
+[Michel] Distribute the slide set that was given at the OGSA F2F 
+         meeting.
+[Michel] Create a new tracker to park things to consider for a 
+         future version of the DMI spec.
+[Steve]  Produce a zeroth slides draft for the OGF21 DMI session.
+[Allen]  Come up a preliminary interface definition that will generate 
+         the Data EPRS.
+[Michel] After discussion convert Allen's interface definition to
+         WSDL.
+[Steven] Go through Mario's changes and comments and accept the 
+         trivial changes/comments and leave anything that's more 
+         complex to review at a future call.
+
++---
+
+Michel mentioned pulling out some of the stuff in the currently
+in the spec to produce a WS-I rendering but we did not come back
+to discuss this.
+
+ - Slide set for OGF21
+
+Michel to mail out the slide set presented at the face-to-face.
+Steve will do a pass first pass through to create a slide set 
+for OGF21.
+
+ - Michel's communications protocol taxonomy
+
+The discussion was based on the mail that Michel posted to the DMI
+mailing list:
+
+http://www.ogf.org/pipermail/ogsa-dmi-wg/2007-September/000250.html
+
+Inclusion of the capabilities at the end point (in the EPR?) could
+give us lots of flexibility in the future but it would introduce a lot
+of complexity.
+
+Have lots of pull/push and end up with only five thing that result in
+valid transfers.
+
+The five use cases are restrictive - there might be a service at the
+source that can push data to the sink or a service at a sink that
+could pull data to a sink. These are plausible scenarios that have not
+been included. The table was constructed using Michel's existing
+knowledge of these protocols - in the future there may be additional
+protocols that can enable other possibilities. The table only shows
+what is possible today.
+
+Allen - some of the stuff is pretty obvious - if both the client and
+sink can only pull data then they will never be able to talk to each
+other. That's not going to change.
+
+Michel - In row 5 the source can push the data.
+
+Allen - the sink needs to be able to act as the end-point of a push
+operation. The table could be completed by adding two more columns
+with the source and sink end-points.
+
+Michel - it appears that the definition of pull and push is too fuzzy.
+
+Steven - does this add value to the spec or does it just add
+complexity?  At the moment it seems adds more complexity than value.
+
+Michel - that is a good point - if we cannot simplify this then maybe
+we should remove it.
+
+Steve - this is trying to provide a taxonomy to classify the
+protocols, if we use a particular protocol can it act as a recipient
+of a push?  That is an interesting classification to make. If we had
+such a taxonomy and relate it to a set of end points then that would
+allow us to compose protocols together.
+
+Michel - could leave this out for the first version of the spec, play
+with it and then see what is missing from the spec.
+
+Steve - could revisit this later on ....
+
+Michel - could take this out and put it in a tracker and re-examine at
+a later point.
+
+Michel will create a new tracker for items to consider for a future
+version of the DMI spec. When someone can formulate this item then it
+could be added to this tracker.
+
+- data EPRs
+
+Allen - we are dumping too much stuff in the Data EPR. This is
+information that should be available at the source and sink where this
+information can be queried. That might be a better way to do it.
+
+Steven - don't disagree with your point. Issue as to where this
+information comes from is one that we keep on coming back to. This may
+come up in public comment - where do the EPRs come from and how are
+they are formulated? As an EPR or as a look up with a document
+returned. Need to capture some text putting in the rationale for our
+decisions - at least more than we have at the moment - might be worth
+defining a third port type which could contain an operation called
+lookup.
+
+Allen - getting an EPR to a service is fairly natural. The way the
+spec is written is that we need a specialised form of an EPR - where
+is this thing being generated? Could get this from the source/sink and
+then we've generated another port type.
+
+Michel - this complements the way that grid file systems work - the
+RNS spec - they have identified the ability to specify data location
+using EPRs. The RNS spec is just a lookup of a logical name to
+produce an EPR that tells you where the data is stored.
+
+Steven - someone should sit down and produce a portType with some
+operations - need to think about what we are going to put in order to
+get something out ... Allen and Michel?
+
+Allen - I could write the interface - though not produce the WSDL.
+
+Michel - Allen can do the interface and I'll put together the WSDL.
+
+- Mario's edits of the DMI spec.
+
+Mario - I think the best way to proceed with this is for someone to 
+sanity check the changes that I have made and leave anything that 
+requires discussion for  a future telcon.
+
+Steven is kindly volunteered to do this.
+
+Mario - just two salient points:
+
+ - we refer to the DMI and the DTF explicitly as port types but at
+   other points we seem to refer to them as service instances
+   implicitly. It would be good to try and make this more consistent.
+ - At various points we refer to time instances but we are not clear
+   as where the standard clock for these are - the consensus, after
+   some discussion, is that times should be related to the time at
+   which the DTF/DTI services the client is communicating with. This
+   needs to be stated clearly in the spec.
+
+AOB
+
+None. Meet at the same time next week.
+

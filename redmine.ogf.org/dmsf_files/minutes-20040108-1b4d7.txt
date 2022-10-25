@@ -1,0 +1,318 @@
+OGSA Teleconference - January 8, 2004
+=====================================
+
+* Participants
+
+  Abdeslem Djaoui (RL)
+  Steve Fisher (RL)
+  Bill Horn (IBM)
+  Hiro Kishimoto (Fujitsu)
+  Fred Maciel (Hitachi)
+  James Magowan (IBM, Hursley)
+  Benny Rocheberg (IBM)
+  Andreas Savva (Fujitsu)
+  Jem Treadwell (HP)
+  James Warnes (IBM)
+
+  Apologies: Andrew Grimshaw, Frank Siebenlist, David Snelling.
+
+  Minutes: Andreas Savva
+
+* Summary of Actions
+
+** From review of [Proposed_Logger_Service_Description]
+
+   Action: Hiro to add a Requirements section in the template.
+   Action: Bill to change "OGSA Logger system" to "OGSA Logging Service." 
+   Action: Bill to check whether 'supplier' and 'consumer' are in the
+           OGSA glossary and add them if necessary.
+   Action: Bill to add more desription on QoS.
+   Action: This ordering statement seems too specific for the OGSA
+           document. It is probably ok to go into this level of detail
+           in the more specific document. Bill to revise.
+   Action: Bill to drop the lines "This timestamp...time"
+   Action: Bill to add more explanation on the location of filtering.
+   Action: Bill to motivate the "Create LogStream" feature better or
+           drop it from the document.
+   Action: Bill to provide more explanation on the significance of
+           the acknowledgement.
+   Action: Bill to add reference to OGSI. And position wrt OGSI.
+   Action: Hiro to come up with initial UML guidelines.
+   Action: Bill to look into any IBM UML guidelines and provide input.
+   Action: Bill to add OGSI in underlying services
+
+** From [OGSA_Logger_and_GMA] discussion
+
+  Action: Hiro to arrange for a continuation of this discussion at a
+          subsequent teleconference. Thursdays are preferred by GMA
+          participants since most are based in Europe.
+         
+          (Changing the Monday timeslot to one hour earlier is another
+          possibility.)
+
+* Early discussion
+
+** Minutes 2003/12/11 - No comments, approved
+
+** Minutes 2003/12/18 - Approval postponed
+   
+   - Approval postponed as they were posted a very short time before
+     the call.
+
+** AOB
+
+  - Include discussion of the [OGSA_Logger_and_GMA] document submitted
+    on the list.
+
+  - The teleconference reservation for this time slot expired last
+    year. Hiro, Steve Tuecke and David Snelling arranged for a new
+    reservation which should last another year.
+
+* Information and Messaging discussion
+
+** [Proposed_Logger_Service_Description]
+
+   Proposed addition to the OGSA document.
+
+   Bill gave an overview of effort leading up to this draft. (Started
+   as special topic, separate teleconfs, etc.) Worked a lot on the
+   requirements.
+
+*** Requirements section (6.13.1)
+   
+   Requirements section (6.13.1) is not in template but felt it is a
+   good idea to put it in.
+
+   (Hiro) There is a separate requirements section in the OGSA
+          document. But having more detailed requirements section for
+          each service sounds good.
+
+   Action: Hiro to add a Requirements section in the template.
+
+   (Hiro) 'System' in "OGSA Logger system" does not sound
+          appropriate. Maybe use Service.
+
+   Action: Bill to change "OGSA Logger system" to "OGSA Logging Service." 
+
+   (Hiro) This text uses 'supplier' and 'consumer'. GMA uses
+          'producer' and 'consumer'. Do we need uniform terminology?
+
+   Different groups use different terminology for what may be the same
+   concept. It's ok as long as terms are used consistently within one
+   piece of work.
+
+   Action: Bill to check whether 'supplier' and 'consumer' are in the
+           OGSA glossary and add them if necessary.
+
+*** 6.13.1.1
+
+    Action: Bill to add more desription on QoS.
+
+*** Section (6.13.1.4)
+  
+  "The timestamps used for ordering should be established by the Logger
+  subsystem and not the application." 
+
+  - Specifies that the ordering is done by the system. Timestamps are
+    a minimum requirement.
+  - An application can add its own application-specific data for
+    application-specific ordering.
+
+  - In GMA you can use the system time if it's good enough. But if you
+    have access to more precise time you can use that instead.
+
+  Action: This ordering statement seems too specific for the OGSA
+          document. It is probably ok to go into this level of detail
+          in the more specific document. Bill to revise.
+
+  "This timestamp should include be expressed in GMT and include the
+  offset between GMT and Local time." 
+
+  - Specify UTC rather than GMT
+  - The "local time" is the time at the node's location.
+
+  Action: Bill to drop the lines "This timestamp...time"
+
+*** 6.13.1.8            
+
+    Action: Bill to add more explanation on the location of filtering.
+
+*** Create logstream
+  
+  - What is the purpose of this feature? A use case might be useful.
+
+  - A way to create a 'private' logstream or 'sub-logstream' E.g.,
+    Start a new stream from an existing one by applying a filter. It's
+    a convenience mechanism.
+
+    (Some discussion on where this feature came from. Nothing
+    definite.)
+
+  Action: Bill to motivate the "Create LogStream" feature better or
+          drop it from the document.
+
+*** 6.13.1.10   Synchronous and Asynchronous Write Semantics
+
+    ''Some applications require an acknowledgement for every write.''
+
+    - The Logger sends an acknowledgement to the application.
+       
+    Action: Bill to provide more explanation on the significance of
+            the acknowledgement.
+
+*** 6.13.1.13   Coexistence with OGSA Messaging
+
+    (Bill) Semantics of logging and messaging are different.
+
+*** 6.13.1.14.0 Secure Logs
+
+    - May have additional requirements section to add here. It is a
+      placeholder for more security discussion.
+
+*** 6.13.2 Detailed list of services
+
+    - (Hiro) Would like more information in this section. For example,
+      more description on the operations, filters etc. These appear in
+      the UML diagram but not described in subsequent sections.
+   
+      - (Bill) Not sure what is the appropriate level of detail for
+        this document.
+
+    - Order of detailed services section
+      - Maybe change ordering of sections to make it from the point
+        view of the consumer [of the document].
+      - At the moment using the ordering of the top part of the uml diagram
+      - Agreed that the current ordering is fine.
+
+    - Bottom part of UML diagram
+      - Depicts implementation or inheritance of interface.  NOT
+        dependencies.
+
+    Action: Bill to add reference to OGSI. And position wrt OGSI.
+
+    - Side-discussion on UML notation of the diagram
+
+      For example, what is the meaning of the icons on the left side
+      of operations. If they are not standard icons they should be
+      dropped. 
+
+      (The tool that produced this diagram was Rational Rose. Some
+      free tools exist such as ArgoUML, MagicUML. DMTF uses
+      Visio. Should everyone working on the OGSA document use the same
+      tool?)
+
+      Agreed that doing UML is a good idea. But we should have a
+      consistent way to do things in the OGSA document. Eventually we
+      should have guidelines. (It may be too early to worry about
+      style. Keep it simple and revisit later when we have some more
+      stuff.)
+
+      Action: Hiro to come up with initial UML guidelines.
+      Action: Bill to look into any IBM UML guidelines and provide input.
+
+*** 6.13.3 ``standard schema/document''
+
+    - (Bill) Unsure what, if anything should go here.
+ 
+    - The event schema is one candidate.
+    - But the event schema would be covered by the event section. (And
+      the event section might not have any services.)
+
+    - Clarified that this section is not for WSDL or ServiceData descriptions.
+
+    - Agreed that there is nothing appropriate for the Logger Service.
+
+*** 6.13.4 ``Underlying services''
+
+    - Action: Bill to add OGSI in underlying services
+
+    - Not clear if Policy&Agreement should be here
+    - Decided to keep it as is, and revisit when policy/agreement
+      becomes more clear.
+
+*** 6.13.5 ``Related Standards''
+
+    - Clarified that something MUST be a standard to go here.
+    - Action: Hiro to decide how to format this section.
+
+** [Messaging_Logging_Directory_Patterns]
+
+   Updated presentation to address comments from last review.
+
+** "Messaging, Logging, & Directory Patterns" p2 
+
+    - Added existing technologies to each pattern (Blue box)
+    - Core meaning of pattern (Brown box)
+    - Relevant ogsa section for this pattern (Green box) 
+
+    - Problem with OGSA/OGSI in distinguishing/separating discovery
+      and directory.
+    - The OGSA explanation relating to directory/naming pattern seems
+      weak.
+
+** [OGSA_Logger_and_GMA]
+
+  - The core issue is how information services are structured. Not
+    just logging but how do the information services relate to
+    discovery or other services.
+
+  - The key question is what is more fundamental: logging or
+    information services.  (Logging is used as an example; GMA can be
+    used for other patterns.)
+
+    - GMA group positions logging on top of information services
+    - Bill thinks logging is lower level. Mainly due to the special
+      (performance) requirements placed on logging.
+
+  - GMA group tried to do information services on top of logging and had
+    problems. But doing logging on top of information services was
+    feasible.
+
+  - GMA services in OGSA would be similar to JMS. What sits between
+    them can be implemented in different ways
+  
+  - The proposal is that all 3 patterns (messaging/logging/directory)
+    should(could) be built on GMA
+            GMA providing interfaces for producer/consumer
+
+            RGMA also provides plumbing between supplier/consumer
+                 (Bill) Does 'plumbing' mean wsdl and bindings?
+                 (Abdeslem) No. The engine of transfer and delivery.
+                 (Abdeslem) The persistency between supplier and consumer
+                            would be a function of the
+                            intermediary. The intermediary can support
+                            different characteristics.
+
+  - RGMA is a relational implementation but other implementations are
+    also ok.
+
+  - Some GMA pieces are fundamental while other pieces are higher
+    level.
+
+  - Would RGMA belong in section 4 or 6 of the OGSA document? It is
+    not clear how to proceed.
+
+  Action: Hiro to arrange for a continuation of this discussion at a
+          subsequent teleconference. Thursdays are preferred by GMA
+          participants since most are based in Europe.
+         
+          (Changing the Monday timeslot to one hour earlier is another
+          possibility.)
+
+
+* References
+
+  [Proposed_Logger_Service_Description] updated January 6
+           https://forge.gridforum.org/projects/ogsa-wg/document/proposed_logger_service_description_V1.doc/en/1
+
+   [Messaging_Logging_Directory_Patterns]
+           https://forge.gridforum.org/projects/ogsa-wg/document/Messaging_-_Logging_-_Directory_Patterns_for_JAN_08_OGSA-WG_Teleconference_Discussions/en/1
+
+  [Logging_service_overview]
+        https://forge.gridforum.org/projects/ogsa-wg/document/Logging_service_overview_0.6_0.3/en/1
+
+  [OGSA_Logger_System_V9]
+        https://forge.gridforum.org/projects/ogsa-wg/document/OGSA_Logger_System_V9/en/1
+
+  [OGSA_Logger_and_GMA]
+        http://www-unix.gridforum.org/mail_archive/ogsa-wg/2004/01/msg00009.html

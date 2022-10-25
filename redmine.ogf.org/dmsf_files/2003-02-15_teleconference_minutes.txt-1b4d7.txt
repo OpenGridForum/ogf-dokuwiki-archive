@@ -1,0 +1,238 @@
+Minutes for twenty-fifth OGSI-WG Teleconference
+February 15-16, 2003 @ 17:30 - 19:30 GMT
+
+Attendees (at various times over the two day call):
+
+Nick Butler - IBM
+Dave Snelling - Fujitsu
+Pete Vanderbilt - NASA
+Steve Graham - IBM
+Karl Czajkowski - ISI 
+
+1) Approve minutes of February 14th Teleconference - OK
+
+2) Action Review:
+
+Action:  82: Steve T: In the HandleResolver portType section, remove all discussion of clients and resolver protocols, etc.  "Just state the facts, ma'am." - Done (2/15)
+
+Action:  82: Steve G: In section 3.2, add non-normative discussion on handles, references, how handles resolve to references via HandleResolver, etc. - Done (2/15)
+
+Action:  82: Feb 15: Steve T: to look at softening the language. - Done (2/15)
+
+Action:  49: Feb 15: Steve T: Make PT extensions explicit in the wsdl. - Done (2/15)
+
+Action: ---: Feb 13: Steve T: To check for MUSTs that should be SHOULDs with respect to Sink not being a GridService, e.g. MUST throw GSfault, etc. - Done (2/15)
+
+Action: ---: --- --: Steve T: some types use "ServiceType", and some use "GridServiceType".  Make these consistent - Done (2/15)
+
+Action: 110: Feb 15: Dave S: Remove fault hierarchy from Spec. Deferred to V2. - Done (2/16)
+
+Action:  97: --- --: ----- -: Check that draft schema support optional parameters, e.g. empty extensibility, See Section 9, and resolved bug 67.  Options: Define a <nil> element that can go into a ##any, or use substitution group, or use XSD nillable - Done (2/16)
+
+Action: ---: Feb 15: Steve T: To check if Incorrectvalue is the right fault name in SetServiceData operation.
+
+Action:  86: Feb 12: Steve T: Check that our service data elements that need coherency semantics, e.g. non-static/non-constant, have them specified. 
+
+Action: ---: Feb 12: Tom M: To produce a GWSDL Draft.
+
+Action:  42: --- --: Steve T: Complete the faults for all operations in all portTypes (Action on Feb 5).
+
+Action: ---: Feb 13: Steve T: To check if these faults are needed in the spec (GT3 alpha has them) findServiceData: InvalidQuery/QueryNotSupported; subscribe: SubscriptionTargetNotFound
+
+Action: ---: Feb 13: Steve T: SetServiceData Incorrectvalue for example. The language needs to be cleaned up here so that we can indicate which value has faulted.
+
+Action: Steve T: Convert Service/portType to interface in the spec, other than ServiceGroup. 
+
+Action: Check that the faults in Section 9.2.2 work for any cases other than the byName 
+        updateExpressionType.
+
+Action:  97: --- --: Pete V: To find cases where an alternative to emptyExtensibility matters. 
+
+3) Re-factor ServiceGroup
+
+   In a long discussion, the following issues were discussed with the noted proposals being
+   widely supported. Based on this discission, and a proposal from Karl C. (Feb 15, 2003:
+   [ogsi-wg] alternate ServiceGroup refactoring), Dave S and Nick B were actioned to produce
+   a new draft incorporating the following and clarifying the semantics of the ContentModel.
+
+   Key issues:
+
+  a) Do we want to push on with re-factoring ServiceGroup?
+
+     The trend is toward yes, but there is a lot of discussion to do.
+
+     Resolved: Yes, re-factor.
+
+  b) Can we allow an implementation NOT to use ServiceGroupEntry PortType explicitly?
+
+      Resolved: Yes, ServiceGroupEntry is visible in the ServiceGroup, i.e. it's Locator
+                is an element of the Entry SDE.
+
+       - If yes, could we implement by allowing EntryType.ServiceGroupEntryLocator
+         to be nilable or minOccurs=0.
+
+       Resolved: In EntryType the ServiceGroupEntryLocator is nilable.
+
+       - If yes, Should we use SHOULD or MAY or say nothing?
+
+       Resolved: Use SHOULD/RECOMMENDED, but express the option explicitly in the section
+                 defining nil meaning of ServiceGroupEntryType (e.g. you will not be able
+                 to manage lifetime). (There was some support for MAY, but there was no
+                 sword falling).
+
+       - If yes, Should we change the meaning of xsd:nil in ServiceGroupEntryType?
+
+       Resolved: Yes. On the ServiceGroupEntryType SDE nil implies that ServiceGroupEntries
+                      are not used to implement the ServiceGroup
+
+  c) Should the ContentModelType allow non-GridService entries?
+
+
+        Resolved: The ServiceType  in the content model is not nilable, i.e. ServiceGroup members
+                  are all grid Services.
+
+  d) Can each element of the ContentModelType allow more than one portType?
+       - If yes, could we implement by allowing ContentModelType.ServiceType to be maxOccurs='unbounded'
+
+       Why is the MemberServiceType min/maxOccurs=1? The only major reason boils down to
+       simplicity of the ContentModel. There were several good examples of why it should be
+       maxOccurs=unbounded.
+
+       Resolved: In the ContentModelType, max/min=1 - This keeps the semantics clear.
+
+       Resolved: In Entry/etc min=1 / max = unbounded. - While this allows flexibility.
+
+
+  e) Should the ContentModelType be static or constant?
+       - Either way it should match ServiceEntryType
+
+       These values may actually be static in the member services, but are not known when
+       the SG is tooled. There may be other factors such as search strategies.
+
+       Resolved: It should be constant.
+
+  f) Need to define precisely the semantics implied by the ContentModelType.
+
+       Member service type if the key. What if a query matches more that one?
+       Consider a Data entry key name.
+
+       Resolved: The ContentModelType semantics
+                 - Member Services MUST implement one or more portTypes listed in the ContentModel
+                 - The content SHOULD include all the content listed in the ContentModel (i.e. Union)
+                 - There SHOULD be only one entry for each member service.
+
+  g) Should Entry SDE be modifiable="true|false"?
+
+       Resolved: modifiable="false".
+
+  h) Should ManagedServiceGroup inherit ServiceGroup? (See Karl's mail)
+
+      [Note from Dave: I liked and didn't like this idea. I could imagine cases where I would
+      want to do both in different contexts. I was also unhappy with complicated semantics of
+      requiring (in the text) that a PT that extended both had to add ServiceGroupEntryLocator
+      to the Entry type. Therefore ....]
+
+      ST: But add and remove are the interesting parts.
+
+      The ManageServiceGroup has many other uses that do not involve discovery. Therefore, the
+      service group need not have access to the state of the ServiceGroup. This argues for both
+      ServiceGroup and ManagedServiceGroup inherit directly from GridService.
+
+      Rejected: Remove ManagedServiceGroup from the OGSI and let domain specific
+                portTypes (ResourceSet, Registry, ServiceFederation, CRM) extend with tailored
+                management functions.
+
+      Resolved: Retain ManagedServiceGroup as inheriting from ServiceGroup
+
+      Resolved: Nuke ServiceGroupEntryType SDE.
+
+
+   i) Name Changes:
+
+      Resolved: ManagedServiceGroup => ServiceGroupRegistration
+
+      Resolved: ContentModelType => MembershipContentRule
+
+      Resolved: ServiceType => MemberInterface
+
+
+4) WSDL Schema Issue: - Not discussed.
+
+   It has been suggested that we put the WSDL schema under CVS or the like.
+      - Who gets write permission?
+      - Is there a verification process possible?
+      - Should it include a Notification service?
+      - How long do we allow changes?
+
+5) Extensibility and optional parameters.
+
+      Resolved: Adopt Steve T's proposal as of email:  Feb 16, 2003: Extensible operations proposal
+
+      Rejected: Add a documentation section. Not really needed, as there is a place to
+                put it and most of the consumption will be by a machine. It morally
+                belongs in the XML type definitions anyway.
+
+      Resolved: CreateServiceExtensibility PortType => CreateInteface
+
+6) Naming Conventions:
+
+   Types: Capital +  the word Type
+   portTypes: Capital
+   SDEElements: Camel
+   Operations: Camel
+   xsd:element: Camel
+   atributes: Camel
+
+   Resolved: GridServiceFault => FaultType
+
+   Resolved: Remain with a single namespace for ogsi.
+
+7) From Comment sweep:
+
+   Section 9.2.2:
+      TM: Not sure these faults work for any case other than the byName 
+      updateExpressionType.
+
+      This item has been actioned, see above.
+
+   Section 10:
+      DS: [Faults of FindByHandle] I'm not sure the spec should include these
+      last four faults as they imply a level of functionality beyond that of
+      may simpler resolver schemes. If we do keep these in, they should be 
+      subtypes of NoReferenceAvailable.
+
+      This item is Resolved: By recent edits.
+   
+8) Bugzilla Items:
+
+   -  82 New grid service instance registration to handle resolver
+
+      Resolved: Soften language.
+
+   -  94 CreationExpressionTypes (Actually more general type naming issue).
+
+      Resolved: Covered by new approach to extensibility arguments.
+
+   -  97 an alternative to emptyExtensibility
+
+      Actioned to Pete V. Action: Pete to find issues where this matters. 
+
+   - 109 Re-factor Service Group
+
+      Resolved: As per proposal from Dave S. and Nick B.
+
+9) Next Meeting:
+
+Monday, Feb 17, 2003: 
+
+  09:30-11:30 US Pacific
+  10:30-12:30 US Mountain
+  11:30-13:30 US Central
+  12:30-14:30 US Eastern
+  16:30-18:30 GMT
+  17:30-19:30 UK
+  18:30-20:30 Central Europe
+  01:30-03:30 Japan
+
+Place: number 484-630-8733 and the passcode 95279.
+

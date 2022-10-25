@@ -1,0 +1,208 @@
+OGSA Teleconference - 17 July 2005
+==================================
+
+* Participants
+
+  Pete Ziu (Northrop Grumman)
+  Jay Unger (IBM)
+  Osamu Tatebe (AIST)
+  Latha Srinivasan (HP)
+  Dave Snelling (Fujitsu)
+  Andreas Savva (Fujitsu)
+  Manuel Pereira (IBM)
+  Steven Newhouse (OMII)
+  Takuya Mori (NEC)
+  Mark Morgan (UVa)
+  Tom Maguire (IBM)
+  Hiro Kishimoto (Fujitsu)
+  Andrew Grimshaw (UVa)
+  Dave Berry (NeSC)
+  Mike Behrens (R2AD, LLC)
+  
+* Minutes approval
+
+  Minutes approved with minor changes. Proposed changes described in
+  http://www-unix.gridforum.org/mail_archive/ogsa-wg/2005/07/msg00056.html
+
+* August F2F updates
+
+  - Andrew is leaving Thursday
+    - Proposal to start Naming early and finish at 11am on Thursday;
+      or move the Naming session to Wednesday
+    - Agreed to move Naming session to Wednesday
+  - Hiro and Mark have to leave before Friday noon
+    - Agreed to start Friday early and if possible finish the session
+      by 11am; continue without them, if necessary.
+
+  - ByteIO moved to Tuesday
+  
+  - Proposal to allocate time during the F2F for resource modelling
+    - Hiro to allocate three hours on Wednesday afternoon in the OGSA
+      session.
+
+  - WSDM conflict update: Heather Kreger has agreed to move the WSDM
+    meeting to another week.
+
+  - Hiro has contacted Allen L.: Prefers Data session later in the
+    week.
+
+  - Data moved to Thursday
+    - Dave B wants to have a discussion on data staging as a separate
+      job rather than as part of a single job. A number of JSDL-WG
+      members will be at the F2F so having a discussion as part of the
+      Data session is a possibility.
+
+* WSRF BP 1.0 review
+
+  - Tom has uploaded v27 on gridforge
+
+   Action: Tom continues to have the pen and will upload a new draft
+           after the call.
+
+** Canonizalization proposal
+    - There are several (three) canonicalization proposals but many do
+      not define a serialization. The proposed addition (below) does.
+    - l.336-340 modified to use the OASIS specification "Schema
+      Centric XML Canonicalization."
+      - Also softened language (MUST to SHOULD) because it is not
+        clear what the implementation status of this specification is.
+    - This specification is a 'Committee Specification.' In other
+      words, the specification has been approved by the TC as a CD,
+      submitted to public comment (and only minor changes were
+      required to address comments). But it has not gone through a
+      final approval vote. In terms of the Profile Definition
+      classification it is at least "Evolving Institutional."
+
+    Action: Tom will check to see the implementation status. (Contact
+            the IBM co-author of this proposal.)
+    Action: Takuya will review this addition. He will also check the
+            implementation status (within NEC).
+    
+    Agreed to delete comments against this proposal.
+
+** Security
+
+   Discussed security issues raised on the list.
+
+   Action: Tom to arrange a separate teleconf to discuss the security
+           issues below. Invite Marty, Dave S, Mark McKeown, Frank,
+           Takuya.
+    
+*** Signed endpoint references
+
+   Issue raised on the list by Mark McKeown
+   http://www-unix.gridforum.org/mail_archive/ogsa-wg/2005/07/msg00049.html
+
+   - Presumably transport level security would not require this.
+   - For Message level security, need to define what to sign; probably
+     everything including reference properties.
+
+   Action: Takuya will follow up with Frank on whether it should be
+           mandated. 
+
+*** Mandating transport or message security
+
+   The profile as it stand does not allow non-encrypted messages or
+   channels.
+
+   There are cases when one would not want either, e.g., large data
+   transfers that may cause performance degradation. Also depending on
+   the environment it might be acceptable to not encrypt (e.g.,
+   operating within enterprise (behind firewall)).
+
+   (If corruption is the issue then signatures and not encryption is
+   appropriate.)
+
+   Consensus on softening the requirement: 
+   - Change l.466 'requires' to 'recommends'
+   - And also change transport level compliance statements R0811-14
+     from MUST to SHOULD.
+          
+*** Mutual authentication
+
+   - Discussed and agreed on last week.
+   - The non-normative text is out of sync with the normative text.
+     Agreed to change l.489 to 'recommended.'
+
+   Action: Takuya to reply to Marty's email.
+
+*** User name/password authentication
+
+    There is no statement about name/password authentication in the
+    WSRF BP. It is allowed by the WS-I Security BP (token
+    authentication).
+
+    l.491 is problematical, however. The phrasing explicitly allows
+    only x.509. But this is a non-normative statement and no normative
+    statements back this up.
+   
+    Action: Takuya will look into this issue and report back to the
+            group.
+
+* Resource modelling discussion
+
+  [Timeboxed to 15 minutes.]
+
+  The BES has put resource modelling out of scope. But it looks more
+  and more that OGSA should face this issue sooner rather than
+  later. And avoid or minimize rework later on
+
+  There was a presentation about CIM/JSDL mapping at GGF14. This is a
+  good starting point and OGSA-WG should discuss whether CIM is the
+  solution for OGSA. The main questions are
+   - what is a reasonable model for OGSA (for Grid); and
+   - is CIM it
+
+  Are there other candidates besides CIM? 
+  - It was noted that WSDM also seems to be turning towards CIM.
+  - GLUE is an option but there is work to provide a CIM mapping.
+  
+  The rendering and semantics distinction/definition is discussed in
+  GFD-I.45. Available at http://www.ggf.org/documents/GFD.45.pdf
+
+  There is also the WS-CIM work. The group should check how far that
+  work satisfies OGSA requirements.
+   
+  Initially a limited experiment might be in order. For example apply
+  CIM to BES/JSDL. But BES-WG cannot take this work on, and RSS-WG
+  also is moving to put it out of scope.
+
+  One related issue is how to 'sell' CIM to the wider Grid
+  community. It was proposed to put together a concrete proposal in a
+  document format so as to have something concrete to discuss by the
+  F2F.
+
+  The RM call agenda (Tuesday) is set to discuss this topic.
+
+  And continue this discussion on another OGSA call (possibly next
+  Monday).
+
+* RNS specification review
+
+  Draft:
+  https://forge.gridforum.org/projects/gfs-wg/document/RNS-Proposed_Final_Draft-v1.7/en/7
+
+  Manuel gave an overview of the specification. The referenced draft
+  is being prepared for submission. 
+  - Some grid file system parts (e.g. one of the appendices) will be
+    removed for final submission.
+  - Also to remove sentence in Sec.1.2.1 about manipulation via
+    WSRF. It gives the wrong impression.
+  
+  Andrew had a number of comments and he will post them on the OGSA
+  and GFS lists.
+
+  There are two ways to proceed: 
+  - GFS submits the document to GGF Editor soon and there is followup
+    discussion as part of the public comment period; or
+  - GFS discusses with OGSA, adjusts the RNS specification if
+    necessary and then submits.
+ 
+  Action: Manuel will take this proposal back to the GFS group and
+          will let OGSA know in a subsequent email.
+
+* Next call (Wednesday)
+
+  - Next steps discussion
+  - Teleconf schedule
+  - WSRF BP 1.0 review

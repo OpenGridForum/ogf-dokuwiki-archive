@@ -1,0 +1,86 @@
+OGSA WG Phone Conference
+========================
+
+7 August 2008
+
+
+Participants
+------------
+Steven Newhouse, Microsoft
+Andrew Grimshaw, UVa
+Krasimira Kapitanova, UVa
+Andreas Savvas, Fujitsu 
+Sergio Andreozzi, INFN
+Michel Drescher, Fujitsu
+Hiro Kishimoto, Fujitsu
+
+New Action Items:
+-----------------
+- AI-0806a: Michel to prime OGSA WG on the CMDBf efforts for information management
+- AI-0806b: Andrew to expand the port type straw man for active usage model (e.g. events, notifications)
+
+Agenda
+------
+1) Early discussion 	Note taker assignment 		- https://forge.gridforum.org/sf/go/wiki1848 	Roll call 	Agenda bashing
+2) Minutes approval and AI review
+	Minutes approval: 		July 17 call: https://forge.gridforum.org/sf/go/doc15299
+	Action Item review 		https://forge.gridforum.org/sf/tracker/do/listArtifacts/projects.ogsa-wg/tracker.action_list
+3) Simple strawman portType
+	Andrew provides a strawman port type definition
+4) Generic query interface
+	Sergio provides a reference to a work performed by colleagues in Padova about generic query interface
+5) AoB
+
+Minutes
+=======
+
+1) Minutes approval
+-------------------
+- Jul 17 minutes approved without changes
+
+2) Simple Information Services strawman portType
+------------------------------------------------
+- Two camps favoring different architecture (e.g. WS/XML style or database style)
+- Very simple strawman
+- Information Services are considered a bag of things
+- Hiro: How are attributes specified to select the desired information?
+	-- Andrew: That would be part of the XML Query that is contained (as untyped string) in the request message
+- The strawman is not supposed not to be pressed on anybody. It should be treated as a focal point to concentrate on aligning the mental pictures
+- What is the relation to information dissemination services?
+- What is the relation to event/notification mechanisms?
+- Those use cases might be best suited being modeled in separate port types
+- But what about information federation?
+	-- Recursive queries?
+- Federation should be implementation detail
+- What metadata, e.g. scope does the provided information cover?
+- Information guarantee? How “stale” is this information? 
+	-- Services must advertise, “What is it?”
+	-- Services must provide, “How accurate/recent is this information?”
+- What should be the search criteria?
+- How should the information being returned?
+- How to handle the query result size? Potentially tens of Gigabytes clearly do not fit into an XML message
+	-- Does this affect the query language? E.g. by allowing to specify a size threshold for the response?
+- How about ordering languages?
+	-- Maybe looking at the solutions of RSS for ordering criteria may help here
+- HPCB Filters are defined as primitive queries on pre-defined attributes
+- What types of queries do we want to support?
+	-- If we find a common set of typical queries that can be modeled fairly easily, can this lead to not use a powerful generic query language?
+- What are typical queries issued in EGEE information services?
+	-- Anything that can be represented in GLUE is stored in EGEE IS and also queried
+- Is what DMTF’s CMDBf WG doing worth investigating to solve our problem?
+	-- Action Item: Michel to review and summarize the effort undertaken in CMDBf for the OGSA IS problem space
+- Current strawman is a passive (i.e. pull) interface – it needs to be opened up to active (i.e. event/notification) interaction too.
+	-- AI Andrew: Incorporate support for “active” interface
+
+3) Generic query interface
+--------------------------
+- The interface features the notion of “dialects”
+- The dialects depend on the availability of alternative renderings of the same information into the different dialects
+- Example dialects are LDAP, OSG, ClassAd, etc.
+- One interface is the same, but part of the query is the dialect, and the real query is given in that dialect
+- The interface architecture features plug-ins for translators into the favorite dialect
+
+4) Any other business
+---------------------
+- Date of next meeting
+	-- 28 August 2008

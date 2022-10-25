@@ -1,0 +1,413 @@
+OGSA Interim Meeting at OGF20 
+=============================
+
+  - Venue: University of Manchester 
+  - Date: 11 May
+
+  - Agenda details:
+       https://forge.gridforum.org/sf/go/wiki1714
+
+  - Minutes: Minute taker is noted per topic 
+  - Participants: Participant changes, if any, are noted per section
+
+* Participants
+
+  Hiro Kishimoto
+  Jem Treadwell
+  Andreas Savva
+  Donal Fellows
+  Ellen Stokes
+  Dave Snelling
+  Hugo Mills
+  Michel Drescher
+  Steven Newhouse
+  Ravi Subramaniam
+  Steve McGough
+  Chris Kantarjiev
+  ZackK
+  Fred Maciel
+  Ferenc Szalai
+  Adrian Toth
+  Fred Brisard
+  Bahareh Rahmanzadeh
+  Abdeslem Djaoui
+  Sergio Andreozzi 
+  Laurence Field
+
+  Bridge: Frank Siebenlist
+
+* Summary of Actions
+
+  AI-0511a: Ferenc Szalai to confirm NorduGrid/KnowARC participation
+            and potential co-leader of IS design team.
+
+  AI-0511b: Michel to pulla workflow strawman poposal together
+
+  AI-0511c: Steve Newhouse volunteered to look into the possible next
+            documents for the EMS Architecture and draw up a proposal
+
+  AI-0511d: Hiro to do another zoomerang to confirm summer F2F dates
+
+* Glossary review
+
+  [Minutes: Andreas Savva]
+
+  - It is still an open issue whether to publish this version of the
+    Glossary as new GFD or not.
+    - So far this document has been synchronized with the OGSA
+      Architecture document, but work on that document has not started
+      yet.
+    - There is a possibility to do an errata release for the OGSA
+      Architecture for just the Data-related definitions.
+
+** Discussion of terms
+
+   [Some of the discussion captured below. The final text is in the
+   draft edited by Jem during the meeting.]
+
+*** State
+
+   Following last call and list discussions
+
+   - Should text on 'stable' (non-changing) state be removed because
+     it is 'not interesting'?
+   - Is state a 'snapshot' of interesting values? No, state is not a
+     snapshot; but a snapshot can be taken of it.
+   - Deleted second paragraph (new paragraph introduced after list
+     discussion)
+   - Clarified what 'change in state' means: it is a change in the
+     value of an attribute
+   - Do not discuss configuration, or define static or dynamic state;
+     might use informally
+
+*** Abstraction
+
+   - Discussed whether to define this term or not, or say it is
+     dictionary definition. Agreed to remove
+
+*** Virtualization
+
+   Reworked definition at length. See document.
+
+*** Data definitions
+
+    Skipped revised definitions. These should be relatively
+    uncontroversial and are result of discussions within the OGSA Data
+    WG.
+
+*** Reviewed status of other terms
+
+    Discussed and agreed to delete the following terms:
+
+    - Grid component: eventually needed but a more precise definition
+      will be provided by the RM-WG
+    - {Commercial, Technical,} Enterprise applications
+    - Enterprise grid
+    - VMM
+    - acyclic digraph
+    - Grid computing
+    - ... 
+
+    Agreed to discuss further on a call:
+    - Network element
+    - Pool
+
+* Security - AOGS-AuthZ
+
+  [Minutes: Michel Drescher]
+
+- Frank Siebenlist summarises AuthZ sessions at OGF
+- Discussions are reported around caching session management
+- Collaboration progress report by Frank
+  -- Authorisation call out interface
+  -- Concept of obligations (identifiers to call-out handlers)
+  -- Obligations need to be standardises for the PDP [PEP?] needs to
+     know them
+  -- complete certificate representation in the rtequest context
+  -- for this, the attribute names under which those certificates are
+     registered need to be standardised, too
+- Hiro: Caching session management, is there another standardisation
+  group like OASIS that takes care if this?
+  -- Frank: Not Grid specific indeed, but there is no group in OASIS
+     known that standardises similar technology such as XCAML
+- Hiro: This is very important and basic issues, but why does the
+  WS-Security group does not care about this?
+  -- Frank: [...]
+- Hiro: AuthZ discusses an architecture document, is there a roadmap
+  for such document?
+  -- Frank: The group thinks there is still more discussion required
+     before going into the details of this document
+- D. Snelling: What's the timescale for the plans?
+  -- Frank: I don't know. THe standardisation of the attributes
+     mentioned above are foreseen to be finished in the next couple of
+     months.  The CVS document is much more complicated document which
+     will require considerately more time.
+- D. Snelling: There is nothing more recent in the AuthZ group other
+     than GGF14. Can you give us a pointer to more recent versions?
+  -- Frank: Indeed - there is also no documents referenced in the
+     meeting info for OGF20. I will send out the relevant documents
+     that were posted on the AuthZ mailing list to the OGSA mailing
+     list.
+
+* OGSA EMS Scenarios 
+
+  [Minutes: Andreas Savva]
+
+  - The document has finished public comment. It has been updated and
+    also completed the a final call on the list
+  - Agreed that there is no problem with resubmitting the document to
+    the OGF Editor for publication
+
+* OGSA Information Model and Information Services
+
+  [Minutes: Andreas Savva]
+
+  - Confirmed that Laurence Field has permission to lead the
+    Information Services design team
+  - NorduGrid/KnowARC will look into providing more participation and
+    perhaps put a name forward as a co-leaded of this team
+  - The overall plan moving forward is to arrange teleconference slots
+    on OGSA calls; set up the design team and possibly propose a new
+    WG at the next OGF
+
+  AI-0511a: Ferenc Szalai to confirm NorduGrid/KnowARC participation
+    and potential co-leader of IS design team.
+
+** Adrian Toth presentation on Requirements
+   (See uploaded separate notes)
+
+   - Aggregate all information, or select which information should be
+     aggregated
+     - Does IS need to understand the contents? Main concern with
+       scalability and performance.
+   - Is it just to deliver information? Need also to decide whether
+     push or pull model or both
+   - Aggregate information and then how to query it. XQuery as a
+     candidate. 
+   - Agreed to give Ravi some time to repeat part of his presentation
+     from the JSDL XQuery session
+   - Lifecycle of information and problem with it always being
+     out-of-date because of distributed nature of the grid
+   - Logging or provenance information should be separate but probably
+     in similar infrastructure
+   - Uniform type of aggregation?
+     - Doing more than collect and aggregate might require some common
+       base aggregation types to enable aggregation without needing to
+       understand all the content
+   - Snapshot of the whole is not possible; but it should be possible
+     to take partial snapshot efficiently
+   - Discussed whether general or specialized IS is necessary and what
+     the problems with scalability etc are. Main concern with the
+     general approach is that it might lead to lower performance.
+   - 'General' should really just mean:
+     - same information model; same (or similar) interfaces; and
+       different performance characteristics, specific to domain
+   - Agreed that goal is not to design an information system; but to
+     identify the interfaces, info model etc. Building an information
+     model is a different exercise.
+   
+** Ravi's presentation on XQuery 
+
+   - slide 7: similar to CMDB? CMDB is a concept. This could provide
+     same functionality.
+   - slide 8: it should be possible to set lifetime; but lifecycle is
+     more complicated because it depends on environment etc
+   - slide 10: both DB and XML DB and this drives the requirement for
+     XQuery because it can provide same functionality as SQL
+     - data is synchronized between stores; just looks like a single
+       db
+     - primary form is XML; incoming data is XML and it updates
+       relational db
+     - relational db is for large queries and to provide better
+       performance
+     - Aggregate is based on what clients require
+   - slide 13: access control? What kind of information can be 'seen';
+     for subscription, etc.
+   - How many machines: 400 at the time.
+
+   - Relation with OGSA RSS? Could be implemented as query front end
+     to this kind of information service.
+     - RSS in its current incarnation does JSDL rewriting in addition
+       to querying
+   - Should this be a different interface or one for answering a
+     particular set of questions?
+     - Perhaps decompose interface as separate query and rewrite for
+       jsdl; rather than an interface that refines jsdl
+   - ...
+
+** InfoD connection
+
+   - Need to check what INFO-D has done in this area because it has
+     been designed for this kind of problem. There is a short and
+     dense document published
+   - If it does not fit requirements might be worth pursuing changes
+     to INFO-D
+   - INFO-D does not use a specific language for the filter
+
+   Chris K is the primary contact for information regarding INFO-D but
+   the IS team should be the one to look into whether INFO-D satisfies
+   requirements
+
+* Participants Changes
+
+  Leaving: 
+  - Jem Treadwell
+  - Ferenc Szalai
+  - Sergio Andreozzi
+  - Laurence Field
+  - Bridge: Frank Siebenlist 
+
+  Joining: 
+  - Reagan Moore
+  - Bridge: Fabio Benedetti 
+
+* Workflow
+  
+  [Minutes: Michel Drescher]
+
+  - Chris K recaps the workflow session that were held at OGF20
+  - Adrian now gives a presentation about WfMC, Workflow Management
+    Correlation (http://wfmc.org)
+  - WfMC is a member of OASIS and OMC
+  - XPDL and Wf-XML/ASAP standards exist
+  - workflow design patterns, terminology and glosary are available
+  - Workflow interop levels
+    -- no interop
+    -- coexistence
+       --- no standard approach
+   --- products share execution environment
+   --- human interaction
+    -- Unified Gateway
+    -- API
+    -- Shared definition formats
+       --- XPDL 2.0 is proposed for use in OGSA
+  - 4 abstract interop abstract models defined
+  - Nested synchronous sub-process
+  - XPDL vs BPEL
+    -- XPDL is abstract, BPEL is concrete
+    -- many similarities
+    -- different, yet complementary
+
+  - AI-0511b: Michel to pulla workflow strawman poposal together
+
+  - Abdeslem presents a couple of slides on OGSA and workflow
+    -- Basic aspects
+       --- Addressing instantiation, hosting, deployment, etc
+    -- Differential aspects
+       --- Managing state
+   --- Asynchronous comms
+   --- human interaction, is it possible?
+  - Example: BPEL
+    --- abstract and executable processes
+    --- a workflow is exposed as a web service
+    --- asynch PtP comms using events
+  - Example: Microsoft WF
+    -- Based on XAML or .NET
+    -- suppots basic aspects as described above
+    -- plus, it allows direct programming as code snippets in the WF
+    -- can be exposed as a web service
+    -- Export/Import WS-BPEL
+  - OGSA perspective
+    -- worflows are services
+    -- abstract process definition
+    -- What's the OGSA scope?
+  - The group enters an open discussion
+  - Macro style extension of BPEL is not possible, such would be BPEL 
+    sub-processes
+  - If using BPEL would restrict and make impossible certain features
+    OGSA needs
+  - OGSA already took the decision that workflow interop is out of scope
+  - The group discusses whether OGSA should endorse BPEL and move on, or
+    rather keep silend on workflow and orchestration
+  - XPDL at first pass seem less appropriate
+  - A big issue is the integration of workflows with the current/evolving
+    security infrastructure
+  - Probably best to write a primer/best practices on integrating BPEL with
+    OGSA?
+  - We have a need to compose several BES instances together
+  - More important, composing BES instances and DMI instances together in
+    order to meet the full JSL requirements (stage in, execute, stage out)
+  - Executing an application can actually be observed as a workflow all by
+    itself (provision, deploy, configure, instantiate, execute, etc.)
+  - The group would like to collect a list of scenarios that describe
+    workflows in greater detail
+  - The group reached consensus to create a Community Practice track document
+    summarizing the experiences taken so far with workflows.
+
+* Participant Changes
+
+  Leaving: 
+  - Abdeslem Djaoui
+  - Hugo Mills
+
+* General session
+
+  [Minutes: Andreas Savva]
+
+** Document status updates
+
+   Updates done by Hiro directly to the status presentation. Brief
+   notes below only on major issues.
+
+*** EMS
+
+   OGSA EMS Scenarios was submitted to the OGF around noon and has
+   been published in record time as GFD.106. There are two other
+   candidate documents for the EMS design team but there are no firm
+   dates associated with them and no work started.
+
+  AI-0511c: Steve Newhouse volunteered to look into the possible next
+            documents for the EMS Architecture and draw up a proposal
+
+*** Interoperability 
+
+    The interoperability session during OGF20 raised a number of
+    questions about the commitment of the parties. There seems to be
+    backtracking from the initial agreement.
+
+    There is also another cloud due to the new profile
+    proposals. Other specifications mentioned in that session are in
+    the process of doing their own interoperability and do not require
+    an OGSA-led effort. 
+
+    There is no consensus that this interoperability testing is
+    needed.
+
+[Participant Changes: Leaving: Fred Brisard]
+
+** Tasks
+
+   Updates to the tasks by Hiro directly to the presentation slides
+
+** F2F discussion
+
+   According to the (partial) results of the zoomerang survey the best
+   dates are Aug. 13-15. Some late submissions to the zoomerang
+   (Andreas) were not included, however.
+
+   Discussed and produced a tentative F2F agenda to be uploaded by
+   Hiro to gridforge.
+
+   AI-0511d: Hiro to do another zoomerang to confirm summer F2F dates
+
+** Teleconference schedule
+
+   - Discussed the time slots and various proposals for different
+     times and decided to leave as is
+   - Discussed topics and updated in line; hiro will upload and
+     need everyone to confirm 
+   - Agreed that having a logistics slot every week is too
+     much. Agreed to put three logistics slots every 4 weeks; leaving
+     one week between a Thursday and a Monday slot.
+
+** Leadership
+
+   - Discussed and drew up a short list of candidates:
+     - Andrew Grimshaw
+     - Chris Kantarjiev
+     - Steven Newhouse
+
+   The candidates that were present were asked to consider the time
+   commitment involved. Hiro will contact Andrew Grimshaw.
+
+   

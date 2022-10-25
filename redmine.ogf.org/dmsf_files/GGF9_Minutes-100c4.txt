@@ -1,0 +1,153 @@
+GGF IPv6 WG meeting at GGF9, Chicago, October 6, 2003
+=====================================================
+
+Co-chairs: Brian Carpenter and Piers O'Hanlon
+
+Scribe: Matt Crawford (post-editing by Brian Carpenter)
+
+--Agenda and introduction--
+
+Agenda Bashing + Administrivia (5 min)
+IPR reminder
+Charter/milestones discussion (10 min)
+IP version dependencies in GGF specifications, discussion of first draft (30 min)
+Guidelines for IP version independence, discussion of first draft (30 min)
+Other issues? (Java,...)
+
+The agenda remained unbashed.
+
+After the IPR policy reminder, notes from the WG charter were shown.
+
+First milestones were met: submission of 2 drafts before this meeting.
+Next milestone is final documents, before GGF10.
+If issues with IPv6 are found, one additional doc (liaison to IETF) needs to be written before GGF10.
+
+--Discussion of drafts--
+
+(Slides will be available on gridforge)
+
+Guidelines for IP version independence in GGF specifications
+dated 19 September 2003
+T. Chown, University of Southampton, UK
+J. Bound, HP, US
+S. Jiang, UCL, UK
+P. O’Hanlon, UCL. UK
+
+Document was presented by Piers O'Hanlon for Tim Chown
+
+Motivation:
+Aid in creation of IP independent specs
+Ipv4 to IPv6 transition
+How to avoid IPv4 dependencies
+Raises new IPv6-specific issues 
+To be used as checklist for all new GGF specs.
+
+The draft gives a general introduction to IPv6 features requiring consideration.
+Points especially emphasized:
+
+Watch out for IPv6 address literals in URIs!  The colon may get you in 
+the end.
+Note the recommended "example" address prefix for use in documents.
+Single-Source Multicast underlined for certain purposes.
+Mobility made nicer.
+
+Guidelines for specifications:
+
+1. Literal addresses should use the format of RFC2732 where address:port pairs are expressed (i.e. URI’s URLs). Note RFC2396 only defines IPv4 literals
+2. Fully Qualified Domain Names (FQDNs) should be used in preference to IP addresses where practical to do so.
+3. IPv6 addresses may potentially be shorter or longer than IPv4 addresses when represented as a text string (three to 39 characters, as opposed to seven to 15 characters).
+4. Special addresses, such as loopback/localhost (127.0.0.1 in IPv4, ::1 in IPv6), are represented differently in each protocol; use of localhost by name abstracts this difference.
+5. The agreed IPv6 Documentation prefix should be used in specification documents.
+6. New implications of IPv6, as outlined in Section 5, should be considered.
+
+Guidelines for implementations:
+
+1. Code should be developed to be IP-independent, not IPv4-only or IPv6-only.
+2. IP-independent API’s and data structures should be used, e.g. the getnameinfo() function and addrinfo for storage.
+3. Code should be modular such that future changes to the networking mechanics should be minimal.
+4. Care should be given to how IPv4 or IPv6 protocols are preferred and selected when both protocols are available.
+5. Applications may need to iterate (or parallelise) connection attempts using multiple different source or address combination pairs due to multi-addressing (with multiple IPv6 addresses, or IPv4 and IPv6 addresses in dual stack nodes).
+6. New implications of IPv6, as outlined in Section 5 of the draft, should be considered.
+
+Discussion:
+ If addresses are to be STORED or TRANSMITTED, there must be an
+ address type specifier. This should be added to the guidelines.
+
+ Do the guidelines go much too far? Well, for currrent Globus toolkit, yes,
+ but features such as multicast may be important in the future.
+
+ There hasn't been much comment on the list yet, given the scope of
+ this work.  Comments must come soon in order to be taken into acccount.
+
+ Q. Is there any coupling betweeen Globus toolkit and IPSEC?  
+ A. None now, probably little ever.
+
+ Q. What about SSL/TLS?  
+ A. Unchanged in IPv6.
+
+----
+
+Survey of IPv4 Dependencies in Global Grid Forum Specifications
+dated 19 September 2003
+Rute Sofia, FCCN
+Sheng Jiang, UCL
+Christos Bouras, CTI
+Dimitris Primpas, CTI
+Kostas Stamos, CTI
+
+Document was presented by Piers O'Hanlon for Rute Sofia
+
+Similar to IETF documents named draft-ietf-v6ops-ipv4survey-*
+
+The authors examined all final and draft GGF documents, looking
+for dependencies on IPv4 address format in any shape or form.
+
+Typical dependencies:
+
+URI format (IPv6 needs RFC2732 citation)
+Explicit IPv4 addresses mentioned
+Examples containing IPv4 only
+Reference to network entities with dependencies, especially NAT.
+
+Summary: 25 of 73 documents surveyed had some IPv4 dependency.
+Usually not major.
+
+Discussion:
+
+ No substantive comments on the draft. Brian Carpenter especially
+ thanked the authors for the painstaking work. When finished, the
+ GGF steering group will be asked to tackle the issue of fixing
+ the 25 documents with IPv4 dependency.
+
+ Can this check be integrated into GGF steering group review in the
+ future, using the previous draft as a checklist?
+
+ Assuming this draft passes WG last call soon, should the systematic check be
+ repeated in the future? 
+
+--Other Issues--
+
+Jim Bound sent mail that casts doubts on the possibility of developing 
+IP version independent code with JDK 1.4.  (Java doesn't expose anything 
+about the addresses?)  Also, cannot use mapped addresses in
+JDK 1.4 to make all addresses appear to be IPv6.
+
+N.B.: 1.4 is the first JDK to include IPv6 support. 1.5 is feature-
+frozen.
+
+This area needs work to determine what (if anything) needs to be changed in
+Java 1.6. Do we carry messages to the Java community, and if so, how? 
+
+The chairs will ask the AD if a Java work item can be added to the WG charter.
+
+Q. What about other languages?  
+A. We can't boil the ocean!
+
+Jim has also raised the issue of IPv4/IPv6 coexistence and transition
+scenarios in Grid ennvironments. Should the WG tackle this? From
+discussion, the WG seemed to feel that more experience (e.g. from 6NET)
+is needed before this can be boiled down to a document, so the WG doesn't 
+want to add this to its charter in the short term, but it needs to be kept 
+in mind.
+
+---

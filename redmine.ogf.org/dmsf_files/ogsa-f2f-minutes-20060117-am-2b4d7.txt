@@ -1,0 +1,218 @@
+OGSA January 2006 Interim Meeting
+=================================
+
+  Location: Sunnyvale, CA
+  Date:     17/1/2006, morning
+
+* Participants
+
+  Hiro Kishimoto
+  Dave Snelling
+  Jay Unger
+  Fred Maciel
+  Fred Brisard
+  Chuck Spitz
+  Darren Pulsipher
+  Ellen Stokes
+  Andreas Savva
+  Patricia Kovatch
+  Chris Jordan
+  Jem Treadwell
+  Steven Newhouse
+  Steve McGough
+  Jun  Tatemura
+  Takuya Mori
+  Mark Morgan
+  Andrew Grimshaw
+  Tom Maguire
+  Dejan Milojicic
+
+  Minutes: Chuck Spitz, Mike Behrens (and Andreas Savva)
+
+* Summary of CDDLM/ACS joint session 
+
+  See also Andrew's notes on gridforge: 
+  - [1] https://forge.gridforum.org/projects/ogsa-wg/document/cddlm-acs-joint-session-notes/en/1
+
+  - Discussed the role of CDL and JSDL, and where they overlap (data
+    staging). 
+    - Agreed that more information is needed on how to use CDL. Some
+      examples (simple to complex) would help.
+  - Proposed action for Dejan: Take a real use case (e.g., gaussian)
+    and walk through it, highlighting CDL usage.
+
+  - No major change to the overall EMS picture. An initial proposal to
+    make the BES container responsible for driving the deployment of
+    new capabilities on itself was rejected.
+    - JM still orchestrates the deployment (defined by CDL) and
+      startup of a job (defined by JSDL).
+
+  - More work is needed on Discovery, what properties are advertised
+    by BES and how those are used by RSS.
+    - In particular how are already deployed capabilities discovered,
+      how they are updated after deployment, their lifetime and how
+      that affects how or when they are advertised.
+  - Tentative agreement on Jay's statement:
+    - Deployment is driven by Job management
+    - Provisioning is driven by policy  
+
+* CDDLM/ACS Joint session detailed notes
+
+  - Starting from EMS Architecture Composition Roadmap Section 3
+    "Deployment and Configuration"
+  
+  - Recap of CDDLM position and function ([1] page 1 )
+    - CDL and JSDL relative positioning
+    - There is some functionality overlap
+    - CDDLM - consists of 3 pieces
+      - CDL, Deployment service, Component model
+
+  - Need to be able to find the repository of the things to be
+    deployed. This repository is expected to be an ACS, storing data
+    (configuration, etc) relating to the application.
+
+  Andrew: is the CDL representation of a simple case (linux vN, on
+         x86, foo.exe) simple? CDL is always hierarchical
+
+  - Jay proposes 2 levels of deployment - container and other (outside
+    container). 
+  - Provisioning vs Execution. Prior to run or scheduled.
+
+  - There is some overlap between CDL & JSDL
+    - JSDL: Defines a job submission (Run a Job)
+      - Could it be done by just referencing "name" of product?
+      - Probably not just that because for many people it is important
+        to explicitly specify the job requirements. Many people's
+        applications are tuned to a specific configuration.
+      - Overlaps a little with CDL (JSDL supports data staging which
+        could be thought of as part of deployment).
+      - Assumes environment is already in place (containers) [Note:
+        More correctly, describes the required environment for the job.]
+ 
+  - CDL: describes how to prepare a capability to do something
+    - Perhaps need to provide mapping where instantiated inventories
+      are advertised (repository?)
+    - When is there a relationship between scheduling a job execution
+      and provisioning
+      - Given existing JVM, a simple load is easy
+      - Most of the time, it is a larger drain on resources (and time)
+      - Look around and find what is needed
+    - ACS could be the repository
+      - Named
+      - List of containers where it was previously installed
+      - History?
+      - Name of container to run - no scheduling involved
+      - Do X and Y and come back ready to go (many actions to get
+        ready).
+      - What if 'magic' includes OS on service container
+    - However from CDDLM's point of view, it is concerned with all
+      infrastructure
+      - May invoke lots of scripts
+      - New BES container could come alive with new OS install.
+
+  - What information should BES be broadcasting ? (from Information
+    Model discussion). This is a big gap in the architecture at the
+    moment.
+
+  - Confusion about what role CDL has in configuring containers. A use
+    case would definitely help.
+    - For example, what would a CDL document look like for simple
+      example vs complicated example?
+
+  - CDL can define OS and applications, however one is 'on top' of the
+    BES container and the other is 'below'. And the decision on where
+    to draw the line depends on the specific system.
+
+    Jay: The way CDDLM works is there is a complete tree, bottom is
+         processor.  Branches on tree, however leaves may not repeat.
+         Somewhere there is a line that defines what is on top of a
+         container and stuff below the container. Line defines a BES
+         container: there are things that it covers up (OS, machine
+         type) and the container becomes the machine - hiding the
+         detail of the actual hardware. One way to solve problem is to
+         break tree deliberately into two trees.  (Sometimes we can
+         run more than one BES on machine.)  BES is a surrogate for
+         machines.  Then we want to run applications on top of those
+         surrogates.
+
+  - If part of CDDLM, then only provisions stuff in a BES, then that
+    would be good since every time you call the CDDLM (P)rovisioner, a
+    new BES is created. And (D)eployer targets a BES container.
+
+  - One scenario:
+    1. Start deploying from top of CDL tree - at some point, BES
+       decides its missing something, and starts another deployment
+       operation.
+    2. A deployment service will receive a cdl document
+    3. Deploying into container - overlaps with jsdl (provision app)
+
+    In other words the proposal is
+    - Job mgr - user submits jobs. JM fills out the JSDL and sends it
+      to a BES for execution
+      - BES provisions itself 
+      - BES starts the job as defined by JSDL
+
+    - CDDLM could be used only for provisioning containers
+    - In addition it could be used to provision an application on top
+      of a container
+
+    - Jay wants to be able to provision a new container when one
+      doesn't exist. He distinguishes between using CDL for
+      provisioning containers and provisioning activities.
+
+  Jay - I want to run gaussian. It has a set of requirements (perhaps
+      stored in ACS).
+      - The scheduling and resources requirements are matched to a
+        container.
+      - The BES container can advertise that it can process CDL. (It
+        was also pointed out that this statement is analogous to
+        saying that you can run any script; e.g., advertise that you
+        can run perl)
+
+  Jay - using other CDL's can create other containers - through some
+      other mechanism.  This is provisioning.  The top layer - running
+      CDL to prepare for a JSDL submission is deployment.
+
+  So in addition to POSIX app, we could have CDL app.
+
+  One approach could be to use that for complex, highly abstract
+  deployments.  Use JSDL for simple, concrete jobs.
+
+  - CDL does not describe where things are located (they may be
+    located with a repository like ACS).
+  - CDL let's you define dependencies
+
+  - JSDL should expand in the resource space
+
+  - Steven suggests that small, focused services are better than
+    overarching giant - "deploy the grid cdl files"
+    - The main concern is that proposal outline above hides too much
+      of the work under BES; it makes BES more opaque and creates
+      difficulties identifying the cause of error when things go
+      wrong.
+    - Also it seems to be changing the EMS architecture by creating
+      some 'god service.' 
+    - Prefer instead collection of small services that can be
+      orchestrated.
+
+  In short:
+  - 1st approach - BES container knows about CDL and invokes it (late
+    binding)
+  - 2nd approach - job mgr gets CDL, calls deployment api, and then
+    passes jsdl to bes (early binding) 
+
+  And RESOLVED in favor of approach 2. (No change to EMS architecture)
+
+  - Further work is needed to clarify the relation of CDDLM and EMS.
+    - Pick some use cases - try to implement with CDL & JSDL - see if
+      where the line is becomes clearer.
+
+  - Need to have a relationship between deployment api's and BES containers
+  - Deployment is driven by job mgr
+  - Provisioning is driven by policy to make broader capabilities
+    available to the job mgr
+
+  - Also is every deployment going to result in a change to what the
+    BES advertises?
+    - If the change to a container is persistent, it should be
+      advertised with an associated lifetime

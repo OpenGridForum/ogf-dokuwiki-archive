@@ -1,0 +1,170 @@
+Minutes of the Eleventh OGSI-WG Teleconference
+11/Dec/2002 @ 21:30-23:00 GMT
+
+Attendees:
+
+Karl Czajkowski <USC/ISI>
+Steve Graham <IBM>
+Andreas Savva <Fujitsu>
+Dave Snelling <Fujitsu>
+Steve Teucke <ANL>
+Pete Vanderbilt <NASA>
+
+1. Approval of Minutes - OK
+
+2. Review actions
+
+Action: Jeff Frey to draw up a description of how to integrate the 'implicit' verses 'SDE' state dichotomy. Also look into other issues of coherency control. - Pending
+
+Action: Steve T&G to push on W3C to get what we need (portType extension without breaking encapsulation). Take ownership.  - Pending
+
+Action: Tom Maguire and John R, not being happy with the mutability language, will propose new language reflecting the current meaning. - Pending
+
+Action: Dave S Faults summary. - Pending
+
+Action: Steve Graham and Pete to drive the creation of an XML Schema for the specification (#35). Dependent on service data and some pointers on WSDL 1.2 syntax. - Pending
+
+Action: Dave Snelling and Andrew Grimshaw to look at requirements and solutions for pull like semantics. - Pending
+
+Action: Dave S to put a proposition for registration portType, together
+with exact text. - Pending
+
+Action: Andrew G to write a document describing the options for reslover behavior. - Pending
+
+Action: Steve Graham to craft language for recommendations to developers for use of resolvers (#17) - Pending
+
+Action: Steve T. Email list of proposed resolve->verified bugs - Done.
+
+Action: Pete V. and Steve T. to propose a more general solution to the extensibility argument pattern, see bug 34. - Pending
+
+Action: Pete V. to create XML schema for locator elements, see bug 37 - Done.
+
+3.  Workgroup Interim meeting:
+
+Planned for Jan. 22-24 2003. Any one wishing to host should contact STeve T before the end of the week, or we will default to Chicago. 
+
+4. Close loose ends on mutability and modifiability:
+
+>From the list Peter V. wrote:
+
+------
+Second, "setOnce" implies that there may be a state in which the SDE
+is not initialized.  Presumably a settable SDE is present to affect or
+control the service.  But if it's not set, then we have a service
+that's not completely initialized.  What does the service do if it
+gets a request before the SDE is set?  What happens if the SDE is
+referenced before it is set?  Is there a standard representation for
+an uninitialized SDE?
+
+In my opinion, this is an unnecessary complication.  If the SDE is not
+modifiable, the service should set the value at service-creation time.
+If the SDE should be supplied by the client, make it a parameter to
+the factory's createService method.  In both cases, the service is
+fully ready to go immediately after creation and none of these
+complications come into play.
+-------
+
+The discussion covered the question of wether an SDE could remain unset for a time or had to be present when the service started. One proposal was to drop the setOnce concept and let it be covered by minoccuss and lifetime management. However, it was felt that the setOnce concept was rather useful, but that the model was cleaner with the above proposal. therefore:
+
+Resolved: setOnce SDE MUST be initialized before the service is accessible to clients.
+
+Therefore the table of options is now:
+
+Mutability     Modifiability     Comments
+----------     -------------     --------
+constant       false             Appears in the WSDL only.
+setOnce        false             Not in the WSDL, exists as soon as the service exists, better name?
+append         true              Can be used with minoccurs=0 maxoccurs =1 to do client side "setOnce" semantics.
+append         false             As before
+mutable        true              As before
+mutable        false             As before
+
+
+5. Service data 
+
+We had a short discussion of the Service Data document under preparation by Steve G. and company. There are several issues that will arise around this document. These were highlighted briefly in discussions. To summarize:
+
+- Generally agreed that some way of making the Service Data concept appeal to the Web Services community should be sought.
+- It was not so clear that making this document separate from the Grid Service Specification was the right way to go.
+- It was clear the there will be some discussion on the port decoration sections.
+- Previews of the ideas in Jeff Frey's section on service data semantics indicate that discussion will be required.
+- We might consider splitting off a Service data portType from the root GridService as a way of lowering the threshold to WS community.
+
+We hope to have a draft by the end of the week.  
+
+6. Confirm bug closure:
+
+The following items have been fixed and verified for some time. They will be closed after these minutes have been approved at next week's teleconference.
+
+4    FIXE   compatibilityAssertion: who is making the assertion
+6    FIXE   Move ServiceImplementation to a serviceData Element
+7    FIXE   Drop Compatibility Assertions
+8    FIXE   Make Handles URIs
+9    FIXE   Add ServiceData descriptions to a grid service description
+10   FIXE   Nuke PrimaryKey PortType
+13   WONT   Use Measured TimeStamps
+14   FIXE   SetTerminationTime of "forever"
+15   FIXE   Combine SetTerminationTime and Destroy
+18   FIXE   Add gsdl:subscriptionExpression type?
+22   FIXE   What if SDE lifetime attributes are not specified?
+25   FIXE   Version numbers vs immutable service description
+26   FIXE   Who controls handle namespaces?
+28   FIXE   Restrictions on http GSH resolver protocol
+29   FIXE   Operation to check if GSH (or two) refers to instance
+33   FIXE   QNames as sole extensibility mechanism
+36   FIXE   Does OGSA need a more reliable way to resolve qnames?
+38   WONT   unique service instance reference
+40   FIXE   Does minOccurs=1 make sense in light of authorization?
+45   FIXE   serviceData type attribute is redundant
+47   FIXE   Clarify terminology of serviceData
+54   FIXE   We need some way of specifying 'nothing' as an SDE ...
+12   LATE   Change Notification Source/Sink to Producer/Consumer?    - Close as WONTFIX
+27   INVA   Multiple GSHs within one URI scheme to the same instance - Close as WONTFIX
+64   INVA   Does minoccurs >= 1 make sense? - Close as DUPLICATE
+16   LATE   Absolute or relative termination time - close as WONTFIX
+5    WONT   Factory extensibility
+52   WONT   Refactor Registration portType
+57   WONT   We need events and Topics
+65   FIXE   Do we need to put IPR statements in the Spec? - close as WONTFIX
+
+7. Registration
+
+This bug can be closed as we have agreed not to include WS-Inspection at this time.
+
+20   LATE   Is WS-Inspection document required in registry?
+
+There was a short discussion about what needed to be there instead. The minimum properties requested were:
+
+  - Handel/Locator
+  - References
+  - Service WSDL,
+  - Most derived porttype
+  - link to other services (Locator) 
+
+This action is alread with dave S, and Steve G. has offered to help with the angle brackets.
+
+7. Buggzilla Sweep from Bug 39.
+
+none.
+
+8. Next Meeting:
+
+December 18, Wednesday pm (US & Europe) or Thursday am (Asia-Pacific) at:
+
+    13.30-15.00 US Pacific (e.g. Los Angeles)
+    14.30-16.00 US Mountain (e.g. Denver)
+    15.30-17.00 US Central (e.g. Chicago)
+    16.30-18.00 US Eastern (e.g. New York)
+    21.30-23.00 GMT
+    21.30-23.00 UK (e.g. London)
+    22.30-00.00 Central Europe (e.g. Paris)
+    06.30-08.00 Japan (next day)
+
+Teleconferences are scheduled for:
+    January 8, 15
+
+The teleconference information for all remaining scheduled teleconferences is:
+    1-484-630-8733
+    Passcode: 72316
+
+

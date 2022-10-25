@@ -1,0 +1,204 @@
+Minutes of the OGSI-WG Session
+Global Grid Forum 5
+22-23/July/2002
+
+Session 1: Update, Status, and Planning
+22/July/2002
+15.00 - 16.30
+
+Minute take: Frank Siebenlist
+
+Steve Tuecke presented slides:
+  http://www.gridforum.org/ogsi-wg/minutes/2002-07-22_ggf5_update.pdf
+
+The following items are discussion points related to these slides:
+
+* Slide 11: A Timestamp for Distributed Computing
+
+Steve explained that the "orphaned" spec was revitalized recently,
+because of its importance for OGSI.
+
+It is more generically useful than just for ogsi, which brought up the
+question whether ogsi would be the appropriate place for this spec.
+
+The agreed conclusion was that as long as there is not better place,
+we'll keep it in the ogsi-wg.
+
+* Slide 12: Grid Compliance Service
+
+General agreement that defining a set of compliance tests could be
+good for this group.
+
+Steve Graham: Caution.  Do a scoping exercise.  How expensive will
+this be?  Not cheap to build something like this.
+
+Brian Carpenter: There could be legal liability implication of
+specifying "compliance".
+
+Ian Foster: Argue strongly against thinking about compliance tests
+that go into technical spec.  Can have parallel efforts to do this,
+but not in core group.
+
+Maybe compliance specification is too much - maybe better
+informational "best practices".
+
+Look at the web services world and how they have their own
+interoperability organization WS-Interoperability.
+
+Steve Tuecke: Suggestion to put a more complete draft together by
+people interested in this area, and revisit this matter later once we
+have something more concrete to evaluate. Rob Baxter "volunteered" to
+take the lead (that he already seemed to have).
+
+Also need to ask guidance from GGF on the legal implications.  
+
+* Slide 13: Java OGSI Hosting Environment
+
+Agreed by show of hands that it should be handled in a separate
+working group.
+
+* Slide 14: OGSA Security Document
+
+Proposed and agreed to have its own ogsa-security working group.
+(Also discussed at OGSA Roadmap BOF, and security area meeting.)
+
+It won't collide with other security related WGs, like GSI and CP,
+because the charter will be ogsa specific.
+
+* Slide 15: Grid Service Primer
+
+Need a document that includes motivations, approaches, decisions.
+
+The intended audience is the service developers community. 
+
+It shouldn't be implementation specific, but more how the patterns,
+like notification and factories, are applied. 
+
+Who will step up? Kate Keahey "volunteered"
+
+May not need to be part of ogsi - but needs place to publish.
+
+Leave it to the authors how they want to proceed and where they want
+to publish.
+
+* Secure Grid Naming Protocol
+
+Andrew reminded us that SGNP was also posted to wg email list, and
+should be discussed.
+
+Discussion about whether naming is well enough addressed within the
+WG?  Should ogsi define just one naming scheme or should it be generic to
+accommodate more flavors?  The Handle system was mentioned as a
+possible alternative. 
+
+Further discussion deferred to next ogsi-wg session.
+
+* Need more time between new drafts and meetings for people to digest
+
+There was a claim that GGF has a 14 day cut-off that should be adhered
+to.
+
+Steve: To my knowledge, there is no such rule, and I cannot find any
+such rule in the GGF document process document.  There is a
+logistics-driven cutoff if you want documents printed for a GGF, but
+that is not the issue here.  I will follow-up with Charlie to get
+clarification.
+
+* Slide 22: Implementations of OGSI
+
+  1) Thomas Sandholm (ANL): Globus Toolkit OGSI Technology Preview
+
+     Thomas gave a short overview and status update.
+
+     The technology preview release will be the basis for next Globus
+     Toolkit (GT3)
+
+  2) David Snelling (Fujitsu): Unicore OGSI Demonstrator
+
+     Unicore complex batch job workflow. (www.unicore.org)
+
+     Move on top of Webservices (wrapped Unicore servlet
+     implementations) 
+
+     Totally parallel effort.  No shared code with #1.
+
+* Slide 24: Working Group Chair
+
+Co-chair Jeff Frey (IBM) went on 6 months leave.
+
+Chairs have nearly total control, which would a reason for a co-chair.
+
+Steve himself admits that he could use help.
+
+Co-chair was recommended by members by show of hands.
+
+Co-chair should come from industry was generally supported.
+
+* Slide 25: Weekly Phone Call
+
+Suggestion to use a tool like "placeware" to go with the call.
+
+W3C WSDL WG uses a IRC channel in parallel with the call.
+
+Concensus is to have weekly call at the proposed time.
+
+* Slide 26: Mini ogsi-wg Meeting
+
+Concensus is to have an interim meeting at Argonne (Chicago) in late
+August or early September.
+
+In session 2, 6 to 3 vote for Sept 4th over August 28th.
+
+----------------------------------------------------------------
+
+Session 2: Technical discussions
+22/July/2002
+17.00 - 18.00
+
+Session 3: Technical discussions
+23/July/2002
+13.00 - 14.30
+
+Minute takers: John Rofrano, Josh, Steve Tuecke
+
+Both sessions were debates on handles and references (section 4.7 of
+the Grid Service Specification, draft 3)
+
+Resolution: Leave handle as a URI.
+
+Resolution: Pull http(s) resolver protocols out to separate
+specification document.
+
+Considerable discussion about "same Grid service instance".  Andrew
+will follow-up on email list with concrete language.
+
+Resolution (issue 26): There is a notion of a handle that is known to
+an instance.  There may also be "handles" that are not known to the
+instance.  This needs to be clarified in the spec.
+
+Issue 27: Choices for handles (as known to instances):
+    1) exactly one handle, in exactly one uri scheme (straw poll: 8)
+    2) at most one handle, in each uri scheme (straw poll: 14)
+    3) any number of handles, in each uri scheme (straw poll: 8)
+
+    Resolution: Provisionally go with #2, but do not completely
+    close. Onus is on counter proposals (on ogsi-wg mail list) for #1
+    and #3 to be compelling.
+
+    If #2 or #3, how does and instance decide which handle to give out
+    to whom?  Resolution: This is not mandated in spec.
+
+Questions still to be answered:
+
+  1) Can the set of handles that are known by an instance change
+     during the lifetime of that instance?
+
+  2) Can clients request or require that new handles be added to the
+     list that is known by the instance?
+
+  3) Must a handle be resolvable? For all time?
+
+  4) What is the relationship of a "handle" with "identity"?
+
+  5) Should there be a isThisHandleYou(GSH) operation?
+

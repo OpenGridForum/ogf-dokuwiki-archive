@@ -1,0 +1,233 @@
+OGSA-Data WG OGF20 - 7th May 2007
+=================================
+
+Chair:      Dave Berry (DB)
+Note taker: Mario Antonioletti (MAA)
+
+
+Regan Moore (RM) asks whether the data that is being is access is
+managed by the service or whether it is managed by something else. If
+it is managed by something else then the service needs to know whether
+the data it provides access to is being modified under it - how do you
+detect that and maintain consistency?
+
+Andrew Grimshaw (AG) gives a set of counter examples.
+
+RM: who controls the data?
+
+DB: This depends on the implementation but in theory the service could
+    control the data or it might be done by the underlying object.
+
+RM: when building a data management environment you make assertions as
+     to how the data is being managed - who maintains those the
+     assertions?
+
+DB: The application has the responsibility for maintaining these assertions.
+
+Mark Morgan (MM): if you write a program that writes to an output
+                  stream then you care what that output interface has
+                  agreed to do that for you. If you are writing to a
+                  disk then other dependencies come in and you care
+                  about those other things too.
+
+AG: the basic interface say that this is what this service does and
+    everything else is out of scope. You can combine other interfaces
+    to do this.
+
+...
+
+MM: ByteIO is for accessing files ... encourage phrasing such as
+    ByteIO is for accessing files in a file like way while DAIS is for
+    accessing data in a database like way...
+
+...
+
+RM: who manages the name spaces across the services? Which data
+    service do you have to go to?
+
+DB: Implementation level
+
+RM: can you implement a federation with one name spaces?
+
+AG: In WS-Naming there are human level names where there could be
+    collisions and another layer which uses EPRs are used where it is
+    very unlikely that you will have collisions.
+
+David Martin (DM): the document is kind of silent on this ...
+
+DB: yes - there is very little that is truly generic that can be said
+    about the data federation interface.
+
+...
+
+DB: have to look at the scenarios - need to examine the data
+    federation scenario to see whether Regan's question is addressed.
+
+...
+
+AG: storage is distinct from RNS?
+
+DB: yes
+
+
+...
+
+RM: are you suggesting any collective operations on to storage like
+    load leveller? ... If I have 5 storage systems and I want to
+    distribute files across all of them ... you would have to have to
+    specify it in policy - you don't need to reserve space but can
+    check if there is aggregate space available.
+
+...
+
+MM: have been talking about getting policies to services - creation of
+    a resource that you want replicated happens indirectly because
+    you've done something else - trying to see how you carry
+    information across a call session ...
+
+DM: want to plug in to a generic policy system ....
+
+MM: there is other information that you need ... you may need to know
+    in what RNS space you operate - there is an implicit context on
+    which you operate ...
+
+AG: if you make these things part of the arguments then you may need
+    to know different things as well ... there are also issues with
+    talking to a policy managers ... in CORBA you had contacts that
+    were included in the messages you could get in touch with ...
+
+MM: in genesis 2 pass this type of information in SOAP headers
+
+RM: interested in management of policies ... can apply policy at the
+    services but also over the data you manage. We had to implement a
+    name space for policies and a name space for services and another
+    name space for outcomes of the policies ... had to manage the
+    service, the operations and the outcome of the policy ....
+
+...
+
+DM: can you use WSRF to manage a session framework? Have a persistent
+    services that acts as a session ...
+
+DB: Could do ... doable ... 
+
+...
+
+Moving on to Scenarios document
+
+AG: have built a grid file system using RNS and ByteIO
+
+...
+
+AG: have implemented a replication service - the registry is a ws-name
+    resolver ... can take an EPR which is unbounded the resolver will
+    give you a replicator to interact with ... have the same idea as
+    in the scenario - have different coherency protocols you may want
+    to use - could use read only so you then have no coherency problem
+    ... the replica that gets the write begins to propagate straight
+    away ... ws-naming can be used pretty transparently ... if one
+    fails the client can rebind ...
+
+DM: how does one know it fails?
+
+MM: there are some conditions that a client can specify - a security
+    exception could lead to a rebind - it's up to client to decide
+    that some condition may exist that makes them rebind -
+    e.g. connection refused ...
+
+DM: may need to deal with exceptions - if the replica fails you'll
+    need to rebind ....
+
+AG: tried to capture all of the logic of when something goes wrong
+    inside the resolver ....
+
+RM: someone has to notify the replications service that it was done
+
+AG: can deduce this if it's not talking
+
+...
+
+MM: want to respond to RM's point - replication service may need to
+    know of the failure - in ws-naming when the client goes to the
+    resolver the client can say "I've failed to communicate with the
+    target and this is how I address the target" as the resolver may
+    not know which target has failed - the resolver may have some
+    management capabilities or there may be nothing wrong with that
+    replica - the problem may be at the client. The resolver can still
+    re-direct. The registry can poll or be notified by the client ...
+
+RM: where does this type of functionality lie in the architecture?
+
+...
+
+DB: have no monitoring in this scenario ..
+
+DM: is there a part of ogsa that deals with notifications.
+
+AG: fault tolerance and notification ... there is a management section
+    in OGSA but it needs to be fleshed.
+
+RM: same problem when you put a file out - how do you know if it
+    works?
+
+AG: there is a fault model ....
+
+DM: or you do it at the transfer service ...
+
+AG: the service will then get the fault ...
+
+Chris Smith (CS): but most of the stuff is done asynchronously - you
+                  can register for a notification (of failure) and/or
+                  you can poll the service ....
+
+...
+
+Arun Jaqatheesan (AJ): do we need a replication for replication?
+
+DB: Have some scenarios on take 2 approaches to replication .... there
+    are more possibilities ... maybe it could be an informational
+    document that fleshes out replication
+
+AJ: in the grid file system - the client can specify - the service
+    should not be forced ....
+
+DB: should do a slide that has an information service talking to a
+    replication management system directly - this scenario only shows
+    that it can be done using OGSA.
+
+...
+
+
+AJ: the GFS scenario?
+
+Chris Jordan was going send us a scenario but it's not happened as
+yet.
+
+??: for file access is there a concept of data sets? a collection of
+    files that had some related ...
+
+AG: could use an RNS directory to do that - if all the data was flat
+    file data, create a directory, these would have EPRs and have an
+    RNS entries for those EPRs...
+
+??: For replicas you'd need to validate that these have the same
+    context ... does the architecture allow for this and allow the
+    stuff to be put back in coherency ...
+
+DB: The data entries we deal with can be pretty much anything ... the
+    files should really say files or collection of files - the
+    essential thing is that it can be named ..,
+
+AG: can do this in RNS in a multiple of ways: can have RNS names point
+    to EPR which have WS-Names which can then go into a replica manage
+    service; if you take a subset of a tree and use this ...
+
+???: if you move replica from the user space to the service space ...
+     does this support versioning of files?
+
+DB: not explicitly - you would have to to do that yourself.  If you
+    have a file system that can handle versioning you could plug that
+    in.
+
+....
+

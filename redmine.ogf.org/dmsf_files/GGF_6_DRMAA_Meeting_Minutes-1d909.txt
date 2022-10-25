@@ -1,0 +1,134 @@
+DRMAA-WG meetings at GGF6, Chicago.
+These meeting notes are a composite of notes as taken by Roger Brobst and
+John Tollefsrud
+
+Session handout: GWR-R Distributed Resource Management API Specification, v
+1.9 (note, version number not shown on the doc)
+
+
+Session 1 of 3, Oct 15, attendance ~28
+
+ + Meeting agenda proposed and accepted
+
+ + Overview of DRMAA-WG Charter/Goals/Progress by Hrabri (preso available at
+DRMAA-WG site)
+
+ + C22 Discussion (Precedence rules)
+   + A case was made for not applying one set of precedences for all
+     attributes because sometimes a value should be overridable, and
+     sometimes it shouldn't be ... it depends on the attribute.
+   + It was noted that different attributes can influence native
+     specifications in subtle ways ... making it difficult to specify
+     anything other than "implementation-defined behaviour" when
+     native specifications are used.
+   + Discussion was terminated due to time constraints
+
+ + DRMAA_PS_DONE discussion
+   + It was suggested that it might be desirable to add the
+     "DRMAA_PS_HOLD" job state to easily identify jobs which
+     require a 'Release' before they can be run.
+   + There is a need to create a "job state transition" diagram
+     and supporting documentation.
+   + It was noted that POSIX has different "hold" states for
+     userHold and systemHold
+   + General agreement a state diagram would facilitate the
+     development and review of state issues. Need a proposal.
+
+Session 2 of 3, Wed Oct 16, attendance ~ 16
+
+ + Reordering of agenda, followed by acceptance
+
+ + Control Issues
+   + drmaa_control()
+     + C11: Consensus to remove issue concerning potential race condition
+       if job status query is used to confirm drmaa_control invocation
+       was successful
+   + drmaa_synchronize()
+     + C14: Consensus that timeout value is useful and should remain
+       IN (not IN/OUT) parameter
+     + Request to confirm that DRMAA_TIMEOUT_{WAIT_FOREVER,NO_WAIT} values
+       are consistent with POSIX
+     + Request that "reaping information" be clarified in "global" section.
+       In particular, does this include job exit status.
+     + Rough consensus reached for existing text
+   + drmaa_wait()
+     + C12: Consensus reached that timeout parameter should be consistent
+       with that in drmaa_synchronize (issue C14, above).
+     + It was noted that applications which use drmaa_synchronize() should
+       specify dispose=0 (false) if it is desirable to later call
+drmaa_wait()
+       for the job.
+     + It was noted that drmaa_wait does not need separate return codes to
+       distinguish "already reaped" from "unknown job" because a previous
+       reap is likely to be the cause of the job no longer being known.
+     + Consensus to remove the error code -2, job is already reaped
+     + Rough consensus to remove text which discusses the ability to obtain
+       job information from a previous drmaa session.
+     + Hrabri will write new text to describe that can only reap once, and
+	 have only one error code
+    + C13: Consensus that the DRMAA_JOB_IDS_ALL constant should be renamed
+       to DRMAA_JOB_IDS_SESSION_ALL
+     + It was noted that there is currently no API to conveniently wait for
+       any ("the next") job associated with the session.  If someone wants
+       this, they should make a proposal.
+
+ + N11: Mechanism to insulate drmaa-client application from site setup
+   + Rough consensus to remove DRMAA_JOB_CATEGORIES and
+     DRMAA_NATIVE_SPECIFICATION environ variables as these settings are
+     likely to be modified on a per-job submission basis
+   + Rough consensus to remove DRMAA_CONTACT_STRING environ variable as it
+     is not perceived as required at this time, and somewhat complicates
+     applications which use multiple (non-concurrent) drmaa sessions.
+
+ + C18 : Validity of JobId's across sessions
+   + There was discussion about how this could be useful to permit an
+     application to be restarted (after a crash) and essentially revive
+     the crashed session  (assuming that the crashed application saved
+     its jobId's such that the restarted application could retrieve them).
+   + The above model introduces reaping problems when an application
+     adopts a job into the application's drmaa session
+   + Session closed without any agreements on this item.
+
+
+Session 3 of 3, Wed Oct 16, attendance ~8
+ + Agenda proposed and accepted.
+
+ + C16: Error Handling
+   + Discussion about the how proposed functions assume an output file,
+     which is poorly suited for GUI applications, and that the static
+     message text associated with an error code is frequently insufficient
+     to describe a problem (i.e., Which host is not responding ?)
+   + 3 different approaches to allow the application to obtain error
+     context information were discussed: (1) Thread-local storage of error
+     context (much like libc's errno), (2) allow application to register
+     a callback function which will be provided with error code and context
+     string, (3) allow application to (optionally) provide a buffer when
+     invoking drmaa routines, which the drmaa routine will (if provided)
+     initialize with the error context.
+   + Approach 3 was chosen over 2 to ease language bindings and a future
+     protocol-based specification.  Approach 3 was chosen over 1 to
+     simplify the drmaa-library implementation by not requiring it to
+     explicitly deal with threading issues (e.g., thread-local storage).
+   + Consensus reached on adding error_string_buffer parameter to functions
+     which return an error code, and to require a minimum (1024) bufsize
+     when a non-NULL value is passed.
+   + Consensus reached for removing drmaa_set_trace_file, drmaa_trace_text,
+     drmaa_perror routines.
+
+ + C4+C5: DRMAA I/O Streams
+   + Discussion of DRMAA vs. POSIX qsub needs.
+     In particular, the need for a stdin file
+   + Rough consensus that DRMAA should define a format for specifying
+     filepaths to facilitate DRMS-independent application development.
+   + Consensus to use POSIX path format, as specified for qsub.
+     Discussion of URL-based filepaths ensued, but there seemed to be
+     insufficient justification to diverge from POSIX paths which are
+     directly supported by DRMSs.
+   + Rough consensus to progress on the I/O Streams issue by
+     adapting/revising POSIX spec, taking into consideration Jeff's
+     contributions.
+
+
+Attendance sheets for all meetings were taken and given to GGF staff.
+
+

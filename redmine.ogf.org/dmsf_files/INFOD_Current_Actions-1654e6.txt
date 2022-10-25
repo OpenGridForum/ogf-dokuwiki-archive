@@ -1,0 +1,273 @@
+INFOD Current Actions
+=====================
+
+This is a list of current actions.  Each action has a serial number, once it
+is closed it is moved to a companion document of closed actions.
+
+==============================================================================
+
+
+10      Update R-GMA scenario with operations as per Chicago F2F June 05
+ 
+        - Date: 1 Jul 2005
+        - Owner: Steve F
+        - Target date: 29 Nov 2005
+
+        This cannot be performed until a later INFOD spec supports the POBOX
+
+
+21      Update the charter, to reflect new schedule
+
+        The text has been simplified
+
+        - Date: 1 Jul 2005
+        - Owners: Susan 
+        - target date: 27 Oct 2005 
+
+
+22      Produce a plan for at least two implementations
+
+        - Date: 1 Jul 2005
+        - Owner: 
+        - target date: GGF16
+
+        This may be hard to do - Arjun
+        Dieter will send a document about ref implementations
+
+
+28      Produce interaction diagram to guide readers in understanding general usage
+
+        - Date: 21 Jul 2005
+        - Owner: Chris
+        - target date: 29 Nov 2005
+
+        Some progress made 
+
+
+29      Write up consumer service requirement - is this addressed by POBOX?
+
+        - Date: 21 Jul 2005
+        - Owner: Steve F.
+        - Target date: 29 Nov 2005
+
+
+31      Define late binding and determine where late binding is supported
+
+        Expanding recipient list from logical EPR?
+
+        - Date: 21 Jul 2005
+        - Owner: Shailendra, Cecile
+        - Target date: Not in base spec
+
+
+36      Look at WSN to see how they have cleaned up soap/web-services header
+        contents description
+
+        - Date: 25 Aug 2005
+        - Owner: Arjun
+        - Target date: 17 Nov 2005
+
+
+43     Describe the two approaches:
+        (1) Re-pacakaging a message at each hop in a new header
+        (2) Removing the header and adding a new appropriate message
+            header after transformation
+
+        The following should be incorporated by Cecile into the spec
+        which is currently locked.
+
+	  Since the get data call returns just the body of the
+	  message. In my understanding we need another call:
+	  getMsgInfo,+which will return an opaque message metadata
+	  back to the client.  The client can call getAttribute on
+	  this opaque data to get the necessary info.  Similiarly the
+	  publish call needs to take this opaque data as an Argument
+	  which can be populated through setAttribute call.  The
+	  getAttribute, setAttribute operate on a descriptor and one
+	  of the ways we populate them is as under:
+
+	  SetAttribute(MsgDesc, MsgPropertyNm, MsgPropertyVal);
+	  GetAttribute(MsgDesc, MsgPropertyNm, MsgPropertyVal);
+
+       - Date 3 Oct 2005
+       - Owner: Shailendra, Cecile
+       - Target: 20 Oct 2005
+
+       Cecile is not happy with this yet
+
+
+45     Describe the behavior of DestinationEPRs and MessageIds in 
+       an INFOD system
+
+       The following should be incorporated by Cecile into the spec
+       which is currently locked:
+
+          MessageIds are universaly unique ids and are created at the
+	  time of publish. Messages can be correlated using the
+	  correlation id. The uniqueness of MessageIds is very useful
+	  in P2P protocols and message recovery after instance
+	  failure.
+
+       - Date 3 Oct 2005
+       - Owner: Shailendra, Cecile
+       - Target: 20 Oct 2005
+
+       Cecile still needs to check
+
+
+46     Justify message structure and map to the patterns.
+
+       This should resolve issue 2
+
+       - Date 3 Oct 2005
+       - Owner: Shailendra and Vijay
+       - Target: 1 Dec 2005
+
+
+48     Define sequence number,operationalCharacteristics more clearly
+
+       The following should be incorporated by Cecile into the spec
+       which is currently locked:
+
+
+          Sequence no is used to group messages based on message/selector
+          attributes. The publish and getData api needs to enhanced
+	  substantialy to handle grouped messages.
+
+          Here is an example: Consider a set of messages which need to be
+          Grouped together:
+        
+            We call begin_group() which establishes the group context.
+
+            Now call publish() once for each message in the group.
+
+            Call end_group().
+
+            The Api?s implicitly associate sequence no. for each
+            message in the group.
+
+          Now on the get side:
+
+            Call get_first_group() which establishes the message group
+            context.
+
+            Call get first message using the group context. 
+
+	    Now   call get_next message until all messages in a group are  exhausted.
+
+	    Now call get_next_group and so on.
+
+          This allows a user to manipulate a group of messages.
+
+        Then it will be DONE
+
+       - Date 3 Oct 2005
+       - Owner: Shailendra, Cecile
+       - Target: 31 Oct 2005
+
+       Cecile to check
+
+
+49     Reconsider the manifest name and to give it a name that is
+       consistent with its content.
+
+       Webster dictionary defines Manifest as ?To be the evidence off?,
+       The content of the manifest reveals routing information of a
+       message.
+
+       Steve F is unhappy with this and so takes the action over 
+
+       The agreed word is "Trail". The change needs to go into the
+       Spec then it will be DONE
+
+       - Date 3 Oct 2005
+       - Owner: Cecile
+       - Target: 10 Nov 2005
+
+
+50     Explain the need for incorporating information in the INFOD
+       messages to deal with the integration of SOAP and asynchronous
+       messaging
+
+       - Date 3 Oct 2005
+       - Owner: Shailendra and Vijay
+       - Target: 1 Dec 2005
+
+
+51     Add a subscriber id to the create subscription interface
+
+       - Date 3 Oct 2005
+       - Owner: Dieter
+       - Target: 10 Nov 2005
+
+        Delivered to Cecile when it can be marked as DONE
+        Not done yet.
+
+
+52     Explore the use of the subscription interface with the registry
+       manager to notify publishers and consumers of changes to the
+       contents of the registry manager (e.g., changes to
+       subscriptions, changes to publishers, changes to consumers) -
+       in other words explore the registry manager acting as a
+       publisher
+
+       This should resolve issue 7
+
+       - Date 3 Oct 2005
+       - Owner: Vijay
+       - Target: 1 Dec 2005
+
+
+55     Create/revise use case in accordance with new template: ChS (Chemsecure)
+
+       - Date 3 Oct 2005
+       - Owner: Ronny
+       - Target: 29 Nov 2005
+
+       Work has started.  Also see action 58
+
+
+56     Create/revise use case in accordance with new template: Media
+
+       - Date 3 Oct 2005
+       - Owner: Stephen D
+       - Target: 29 Nov 2005
+
+
+58     Create/revise use case in accordance with new template: Sensor
+
+       - Date 3 Oct 2005
+       - Owner: Arjun
+       - Target: 29 Nov 2005
+
+       Will be revised in conjuntion with the ChemSecure case - action 55
+
+
+59     Create/revise use case in accordance with new template: 3rd party delivery
+
+       - Date 3 Oct 2005
+       - Owner: Dieter
+       - Target: 29 Nov 2005
+
+       Work has started  
+
+
+60     Assemble the use case and pattern document
+
+       Include mention of the desirability of a bank balance
+       notification use case and an e-mail filter use case
+
+       - Date: 3 Oct 2005
+       - Owner: Susan
+       - Target: 15 Dec 2005
+
+
+61     Produce propoasal for managing groups and transactions 
+
+       - Date: 3 Nov 2005
+       - Owner: Dieter
+       - Target: 29 Nov 2005
+
+       Work has started
+
+62

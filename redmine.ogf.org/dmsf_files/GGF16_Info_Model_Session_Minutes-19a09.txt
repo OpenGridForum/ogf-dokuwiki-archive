@@ -1,0 +1,48 @@
+GGF16 Information Model Session
+
+Wed 2/15/2006
+
+Fred/Ellen lead.
+Minute taker: Jem Treadwell, with further edits by Fred Maciel
+
+Fred presents introduction on the Resource Management Design Team, and on the meaning of "information model and data model"
+
+Jay: Is there additional semantic definition associated with attributes in CIM? Fred: There are descriptions other than UML: MOF files describe the entities and attributes, white papers and profiles give further explanations.  Ellen: MOF is just one rendering -- basis is English description.  Jay: very important -- one thing good is that it nails down some abstratction that services etc. can rally around for interoperability.
+
+Ellen walks through the following documents:
+
+https://forge.gridforum.org/projects/ogsa-wg/document/GGF16_OGSA_container_-
+_info_model/en/1
+
+https://forge.gridforum.org/projects/ogsa-wg/document/GGF16_BES_Profile_-_Info_Model/en/1 
+
+Dave Martin: Filesystem/storage seems like overlap.  Ellen: seeing it as two spaces.  No info on storage right now.
+
+Q: What about pre-installed software environment?  Ellen: Removed from this version -- that part of the CIM model is broken, and there are proposals from elsewhere to fix it.  If it's a problem we can look at. Jay: Hard to do it now.  Ellen: Could do some parts now, but it will change.
+
+Q: What about authorization information?  Hiro: Good question, but we aren't looking at security aspects of BES. Steve N: Not doing that in BES; relying on OGSA security.  We identify our needs, not the solution.  Ellen: we have immediate users, and we need to get going.
+
+Questions to clarify what is the container. Steven: It's a front end node (in traditional grid computing parlance) -- container is just a mechanism for starting stopping etc. -- for functional spec we didn't want to get concerned with the info model you see here. Jay: Its relationship to real computing resources (CPUs) is various -- could be several containers per machine, several machines per computer -- container is a virtualized capability to execute work.
+
+Comment: In the case of heterogeneous clusters it's hard to define the O/S type.  Steve: The current information model should express heterogeneity but may not fully reflect this at the moment.
+
+Chris: Info model has to be able to express the multiplicity of entities in a container.  Ellen: would be described in a UML model. Chris Smith: Can we make this model show aggregates & instances of what's going on behind the BES container? Fred: Have to have a correct definition of what a container is, and represent it. Jay: One possibility is that you can construct a relationship between a container and a bunch of O/S's. Chris: Can we see the model before the relationships?  Darren: BES & JSDL don't care; whatever model you come up with, we will expose it.  This model is the glue.
+
+Q: JSDL is an extensible format and the model may need to take extensions into account. Also, operating system type is a required attribute, but I don't need to know an O/S for web service invocation. Discussion. Fred: we've been told not to go beyond what's in BES for this work. Ellen: we'll define whatever is needed for BES -- if we have to take changes back to JSDL we'll do that. Jay: Good idea to take a container one might build and populate instances in the model that represent attributes of the container. Take four or five scenarios, populate with objects and relationships etc., people would be able to understand. People have scenarios in their heads, and it would be useful to get them down and see it it works and if we're making progress.  Steve McGough agrees, but should do the same thing with GLUE.  Hiro: This discussion is scheduled for Friday -- need some volunteers to do the scenarios by then.  Jay/Chris/Steve McG to do some simple scenarios.
+
+Q: Queue limits supported?  A: No, not part of BES.  Q: So how do you handle a PBS scheduler? A: Modeled as a job manager, not a BES container. Some things might not map to a BES container.
+
+BES can be anything.  Queue is in a job manager; different container. Nothing wrong with a BES container being a job manager.  Discussed both ways, currently modeled as an end-point, not with a queue at this stage.  Not saying it's a queue, just that it has an attribute.  Need to model something that is really behind the BES container.  Chris: I select between machines based on # CPUs, between queuing systems based on how many jobs are in the queue.  Chris: How do I choose between elements of the CIM model? Jay: Scenario where BES is a job manager with a  queue is a useful scenario. 
+
+Roger Reich: recommend a simple model that everyone supports, then sub-profiles.  That's what we're trying to do.
+
+Jay: can we agree that another use case is a scheduler sitting on top of a queue? That's what we thought it was. Jay: OK, one use case is a BES that submits jobs to a simple cluster, with no queuing. Jay: Virtual cluster? Multiple virtual machines.
+
+Ellen compilles a list of scenarios mentioned so far.
+ 
+- BES container sitting on a unitary computer system 
+- BES container sitting on a simple scheduler / batch queue 
+- BES container sitting on simple cluster controller (no queue) 
+- BES container on unitary computer system running multiple virtual machines 
+
+Q: Relationship with GLUE? Fred: comparison with existing models is part of the work; the comparison with GLUE is partly done. Q: Is there contact with the GLUE team?  Ellen: yes, have been interacting with team members. GLUE 2.0 may be relevant -- Ellen will contact.

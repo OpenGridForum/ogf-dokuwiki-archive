@@ -1,0 +1,150 @@
+
+OGSA-Authz at GGF9
+==================
+
+DC=David Chadwick; AIM=Andrew McNab; RL=Rebekah Lepro; VW=Von Welch; 
+FS=Frank Siebenlist; MT=Mary Thompson; ML=Markus Lorch
+
+Welome, GGF IP, Agenda bashing (5 minutes)
+------------------------------------------
+
+VW introduced the group. 
+
+Update on SAML, XACML activities - Rebekah Lepro (10 miniutes)
+--------------------------------------------------------------
+
+RL has participated in these groups. No slides. Straw poll of audience:  
+~50% knew what SAML and XACML are. ~25% knew difference and how to work
+together (sort of.) Active work in SAML and XACML communities about how
+the two can work together. Mary's document will talk about reps. of
+attributes. SAML is another way to pass things around. SAML very open on
+what you do with info. XACML provides this:  specific on decisions made
+with information, but open on how you get it.  Don't always match up 100%.
+They are putting lots of time into this now, with the face to face
+meetings.
+
+SAML: has discussed format of attribute. What about metadata? eg Issuer. 
+How to represent SAML attribute in XACML policy? Also how to get info to 
+XACML in the SAML framework. Seems that in several systems that process is 
+the same, even if implementation is different. VW and FS and others 
+discussing this in Grid contexts.
+
+No questions.
+
+OGSA Authorization Policy: First steps - Frank Siebenlist ( 10 minutes)
+-----------------------------------------------------------------------
+
+FS: one slide. "Still vaporware spec". Trying to leverage XACML 2.0 work. 
+FS has been involved in XACML 2.0 work. Long list of requirements, some of 
+them influenced by our Grid requirements. (Delegation of policy admin, 
+pushing of policy, combining on policy etc.)
+
+Doc shouldn't be XACML specific, but helps to work off and existing 
+language.
+
+FS will post pointer to ogsa-authz list of requirements list of XACML 2.0 
+group, including ~50% that are Grid influenced.
+
+Questions: if not specifying XACML, what are you doing? FS: enumerating
+features that are required: eg delegation, pushing policies down wire.  
+Easier if have a language to make this concrete.
+
+MT question: MT tried to think of requirements at higher level, but need 
+language to really make that concrete. 
+
+VW: make requirements a GGF document? FS: too temporary?? DC: lists still 
+valid even if accepted. FS will post pointers to webpages about this.
+
+AM: also worth defining a set of XACML we actually recommend people
+implement: all, some, different subsets? That's what implementors actually
+need for interoperability.
+
+VW: yes, but keep separate from any GGF requirement document.
+
+FS: I will have two slides next time!
+
+OGSA Authorization Requirements and Interface Status and Issues - Von 
+Welch (15 minutes)
+-----------------------------------------------------------------------
+
+VW's slides. Two issues outstanding in doc. Multistage authz, "simple 
+response" (ie yes/no.) Both deprecated in SAML 1.1, since use ReplyWith 
+attribute. Multi stage is very complicated.
+
+Author's proposal: remove multi-stage from doc. In SAML/XACML reqs lists, 
+so will solve this for us? (hopefully) We will contribute to solution in 
+OASIS.
+
+Leave "simple response" in document, since important and does not 
+complicate document (find another way to do it), will follow SAML work on 
+this (since they realise this too.)
+
+RL: there are very valid use-cases of SAML, which they are aware of, so 
+may reappear in a future (2.0?) version??
+
+Question: for interfaces, what's your plan. VW: plan is WSDL port type of 
+authz service, answering authz decision requests. RL: need to think about 
+bindings, and compliance with SAML spec. eg defined for HTTP, but need to 
+follow process for other uses of it. VW: writing WSDL spec of this will be 
+non-trivial.
+
+Question: better not to restrict to SAML? use flexible port types instead?  
+VW:  goal isn't to prescribe SAML, but to say how to use it if you do. 
+
+DC:  other thing is reqs doc - so you could take reqs doc and implement
+somthing. 
+
+Question: is there binding of SAML for HTTP? (Yes) Is there is req for
+SAML to be of specific MIME type? What about plugins in std browsers
+responding to this? AM: this is a bit like Java applet auth modules for
+use with portals. VW: maybe interesting use case - please post to mailing
+list. RL: SAML doc for bindings and profiles with use cases.  Benefit to
+get use cases into this.
+
+OGSA Attributes  - Rebekah? (50 min/Remaining time) 
+---------------------------------------------------------
+
+MT summarised doc as stands. See MT's slides. 
+
+ML: what if have bare attribute, no issuer?
+
+MT: sig is optional (eg secure channel) ML: issuer optional too? VW: are 
+we requiring the issuer is used, or just known. ML: if secure channels 
+AIM: if verification is done before policy is applied.
+
+Question: some assertions don't have issuers. When build authz service 
+porttype, can it accept any assertion, or just these ones? VW: yes: 
+username token might be attribute. DC: isn't the implication that the 
+recipient issued it, if its a username say? VW: can be implied, therefore 
+mandating it in protocol is a problem.
+
+So issuer will be changed to optional.
+
+DC: why value and datatype "0 or more"? MT: "do not cache" does not have a 
+value. DC: it's boolean! Olle Mulmo: no, presence or absence of flags in 
+X509.
+
+Long discussion about whether statement of holder with no attributes, for
+instance, means anything. Can make all elements optional? MT: does it make
+it less clear to make things optional? Make recommendation?
+
+SAML easier than XACML, since XACML actually has to understand it.
+
+AIM: are all attributes we care about representable as strings that can be 
+handled by std XACML attribute matching? DC: no, some role ones can't, 
+unless choose names to be increasing order lexical order, say, (AIM: eg 
+/operator/manager is higher than /operator? DC: yes) but then can't 
+change your mind about the ordering.
+
+DC: eduPerson limited in not specifying what the attributes mean fully 
+enough. Long discussion about issues with this, and how attributes can be 
+trusted/meaningful across VO/institution boundaries.
+
+AOB
+---
+
+VW: who found telecons useful? ~12 people. No hummers found them not 
+useful. How was 2 week freq? No objections. VW will organise more and 
+schedule.
+
+

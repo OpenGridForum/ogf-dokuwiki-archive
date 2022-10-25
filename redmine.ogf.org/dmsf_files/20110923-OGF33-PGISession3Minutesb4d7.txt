@@ -1,0 +1,246 @@
+14:00-13:30 PGI Session 3
+-------------------------
+
+Chair: Andrew Grimshaw
+Minutes: Steve Crouch
+
+Name shortcuts:
+ AG - Andrew Grimshaw
+ EU - Etiennce Urbah
+ OS - Oxana Smirnov
+ JPN - JP Navarro
+ KS - Katsushige Saga
+ SC - Steve Crouch
+ DM - David Meredith
+
+New actions:
+
+Minutes
+
+Discussion of state model - how can we accommodate additional states?
+
+EU: doc number is 16306 under OGSA-BES WG on GridForge.
+
+[Page 31, fig 6]
+
+EU: take same states as original BES, add in transitions. Add purge finished -> [end], add failure transition pending -> failed. [end] means purged. Add failed -> pending (automatic resubmission if requested inside JSDL).
+
+AG: this is change in underlying state model.
+
+EU: could drop it, it exists on one system. If it doesn't fit, we drop it.
+
+EU: next diagram for held states [fig 7, pg 34]. Based on original BES, only added some transitions.
+
+AG: if specified to go into suspended state initially in JSDL, it starts in suspend until told to resume ('proceeding'). Transitions from suspended/proceeding to both cancelled and failed. Still need to add a transition. Automatic resubmission perhaps not put in.
+
+AG: other one is extended job state [referring to session slide 3] from RENKEI.
+
+KS: EU covered this in more detail yesterday. (Discussion of incoming queues for pre-processing).
+
+JPN: other terms meaning same thing: pre-processing:pending, pre-processing:complete.
+
+AG: are we trying to go to a different state model? We'e handled this as specified in the spec, which has substates dealing with staging in and out. e.g. staging-in is pre-processing state. Also running:executing is a substate. Didn't we want to stay with the basic state model and extend via substates? This state model is extended.
+
+EU: not compatible with basic state model?
+
+KS: mapping exists from this to basic state model substates [next slide].
+
+AG: good profile some of these substates - we need to know what these substates actually mean. Are these proposed JSDL extensions?
+
+KS: this implementation is just for testing. We don't care deeply about extensions.
+
+AG: you name a substate where you want it to stop?
+
+KS: yes.
+
+AG: thought something similar to EU's idea. In original state model, two place for helds (need pre and post): in running (as EU did), in pending, and terminated held/finished held failed/held. But this is subsumed into EU's.
+  Do we want to give advice for how to order additional substates? Do we recommend these in proceeding or suspended? If we use substates as in data staging, execution in running where to put the helds?
+
+SM: better to have a named state for data staging pre/post. Confusing for client otherwise.
+
+AG: optional client initiated staging hold. Letting client do whatever they want to do. Dont want to hold for all purposes.
+
+Mike: you know it's held for pre-processing.
+
+AG: what does delegated refer to? Delegated queue for queued, delegated running for running.
+
+SM: want to have pre and post for delegated.
+
+EU: names not well chosen.
+
+AG: suggest change names for some of these states.
+
+SM: delgated - incoming is queued.
+
+AG: delegated should be processing. Delegated:incoming should be delegated:queued-in. Processing:outgoing (renamed) not visible to outside, used as transitory state.
+
+Mike: no error around it, it's mandatory right?
+
+AG: if somebody were to subscribe to notification about this, ...
+
+AG: processing:running, processing:hold.
+  If no queueing system, just executes - can it go directly to running.
+
+SM: debugging problematic. Held not implemented for all middlewares.
+
+AG: not sure I like this (confusion with states of running jobs for held/running for executing jobs).
+
+SM: have u seen EMI execution service? Can take some of these from there.
+
+AG: keep same 5 states.
+
+SM: have attributes for substates.
+
+AG: need to agree on these attributes. To avoid having to guess on substate meanings.
+
+SM: many reasons for including more info in substates e.g. errors - storage is down, etc.
+
+EU: doc - 10th March on pgi list. PGI execution specification.
+
+[Discussion about pg 20 and state definitions - pre-processing and processing]
+
+AG: mapping of these states to our discussed states.
+
+SM discusses how this mapping works.
+
+AG: referring to current state model...
+  Agreed yesterday not to change state model otherwise, have to change spec. Profile substates, don't have to.
+
+SM: too simple to represent all things. Problems with users to distinguish clearly with states.
+
+AG: use [substates] and no pushback from users.
+
+Mike: but we'd have to change the spec.
+
+AG: want to expedite the process. If it can be done in context of the existing state model, it vastly simplifies things unless it's too ugly.
+
+SM having multiple states.
+
+AG: how do we feel about this.
+
+SM: many substates of failed - how do we identify that?
+
+SC: this would break state model, new model, should use existing spec where possible.
+
+SM: make concept smoother - define running, focus on pre/main/post processing.
+
+AG: we went around the state discussions before, with substates you can model everything.
+  Doing a whole new spec would take longer.
+
+SM: one more possible point - model from EU/KS they have this community requirement.
+
+AG: NAREGI state model - all these collapse into running.
+
+SM: limiting, should find a better way.
+
+AG: can't go backwards and change the document.
+
+SM: staging as substate - what does this mean?
+
+Mike: it may need to change anyway. A cleaner way would be to redo this.
+
+SM: substates of failed, terminate...
+
+AG: legitimate to do this in model.
+
+MM: problem we found was no additional additional transition to failure state. It can occur at any moment. We introduced artificial transition to failure state.
+  Afraid about too much substating of running state - other substates have more informative meaning e.g. running: data-staging.
+
+AG: if we do a new version of the spec base it on existing spec, and just change the bits we need e.g. FactoryAttributes, vector operations, but keep it simple, otherwise it will escalate - genie out of the bottle.
+  SM is right - various people have substated this in very similar ways in implementations - substates in running. This is fine, can even have k layers deep of substates. What are transitions introduced? To error states?
+
+AG: too much of a decision to reach today. If we redo the spec, we timebox it. If not, we will profile. Otherwise it will get into a problem of arguing about stuff as in PGI.
+
+JPN: use cases for these requirements?
+
+AG: held states got us here. They wanted client-initiated held states for data staging, then can say 'go'. Then be able to stop it afterwards. No requirement for us, since data staging is automated, or done manually.
+
+JPN: requirement for all BES to support thee states?
+
+AG: specified in JSDL, if you don't support it, you throw a fault.
+
+EU: not in favour of manual staging in complicated state model. Have documented it in documentation so people can understand these complexities. Advocate existing BES states, just adding few transitions that are missing e.g. pending -> failed.
+
+AG: pending -> failed could be done as an addendum e.g. it was forgotten, ok. Adding new states is different.
+
+SM: have given this requirement to PGI and EMI.
+
+EU: have a requirement to users. They should think about workflow model before trying to send jobs.
+
+SM: our users are expecting this held, manual staging. We shoulnd't perhaps introduce hold mechanism, just implement simple flags. But doesn't have to be supported.
+
+EU: do we have to implement new state model.
+
+SM: no. Different issue.
+
+EU: related to post/pre processing.
+
+AG: hold and manual can be substated away. SM wants to restate misleading substates.
+
+SM: e.g. running:queued.
+
+EU: just rename.
+
+DM: haven't heard a convincing argument for these pre/post processing substates...
+
+AG: it's ugly, a bit of ugly at a time. Term for this: technical debt. The easy path, some point in future clean it up, not today - fine with me! Not me who will have to implement.
+  SM from UNICORE. PGI and EMI had this as their requirements. PGI/WG had this as a requirement driven from gLite and ARC. But now UNICORE?
+
+SM: yes.
+
+AG: how functionality differnet from telling them to copy data in first?
+
+SM: job starts, get EPR & storage service reference, use this to stage data into. Can upload files/directory into this, once done, start job physically.
+
+AG: 3 choices
+ 1) We stay on profile only path, incorporate reqs fully later on
+ 2) Bite bullet and do the spec rewrites
+ 3) Addendum - additional profile to stick changes in only
+
+AG: addendum to add state ok, changing state space wouldn't ba an addendum as such.
+  Other than UNICORE, others want to profile.
+  UNICORE - do it properly, rewrite.
+Need input from others - gLite, CREAM, SAGA, NorduGrid, etc. Need to get this approach right.
+
+SM: first priority data staging profiling ok, state model - secondary. Thirdly (personal) BES - meaning of substates from user's point of view.
+  Rename running as processing.
+
+AG: addendum?
+
+Mike: can we do all this in profiles?
+
+AG: don't think vectors can be done this way. Is it important? Not sure - may slide on important scale. Those that wanted it have walked away from the table.
+
+EU: in EDGI, we're implementing handling of vectors. Tell users if you want vector, you explain in separate file internally and generate internally as many jobs as necessary using existing client interfaces.
+
+AG: support in our client implementation by generating multiple internal JSDLs from a single one, returning single EPR. If you send list, we'll accept and start them all.
+  Param sweep spec never says what to return.
+
+SM: rename states.
+
+AG: perhaps not a bad idea. Notion of addendums to specs; very easily done.
+  a) transition from pending to failed.
+  b) rename running to processing.
+
+AG: can have conditional - support both running and processing (but they mean the same thing).
+  On to the substate model. Assuming processing, not running. Perhaps not enough time. Back and forth transitions are problematic, not sure it's way to go. Alternative way would be to have hold states within processing; not clear how existing imps that break down running into substates would handle this. Look at RENKEI's mapping.
+
+EU: see previews drawing.
+
+KS: we implement pre-processing/post-processing only for data staging. Maybe original PGI specification state model comes from strawman. Also doc says pre-post used for data staging.
+
+AG: think they are.
+
+KS: implement this state model. In our system we have workflow system, with this system, we can transfer data directory from and to computer resources. We implemented these states.
+
+EU: pre/post processing not only for manual but automatic data staging.
+
+AG: right.
+  Not a strictly requirement to support suspend/resume.
+
+AG: consensus to take running renamed as processing, change from running:stage-in/running:stage-out to new processing states.
+
+SM: how to do this resume in service?
+
+AG: discussed yesterday, new port type.
+

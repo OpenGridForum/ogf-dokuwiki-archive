@@ -1,0 +1,116 @@
+DAIS Interop - 7th August 2009
+==============================
+
+Present
+-------
+          Mario Antonioletti, EPCC
+          Steve Lynden, AIST
+          Sunil Ahn, Kisti
+	  Mike Jackson, EPCC
+
+Agenda
+------
+
+       - Agenda bashing
+       - Mike's test results
+       - Outstanding issues in the interop document
+       - Planning
+
+---
+
+For this call we walked through version 21 of the interop document
+available at:
+
+   http://forge.gridforum.org/sf/go/doc15667?nav=1
+
+Mario commented that we should provide some documentation on the
+SoapUI based test suite.  Steven will add some content in an appendix
+about the SoapUI test suite. Sunil and Mike to expand this if necessary.
+
+Both SQLCommunicationArea and SQLCommunicationsArea used in the spec -
+need to make consistent - adopt SQLCommunicationsArea unless the other
+version is more authoritative. Also affects issue 32 on p32. Steven
+will have a look as to whether there is external consensus and use
+that otherwise adopt SQLCommunicationsArea.
+
+Section 6.1.2 details the changes made to the test suite.
+
+Test-2 seems incomplete. Missing a condition for that test.
+Sunil need Mike to add what bits that need to be added. Mike to
+add something that Sunil can then adapt.
+
+"?" is not a URI so that was changed in the test suite.
+
+Sunil will check the SoapUI configuration file to see if there are any
+problems for AMGA.
+
+Test 19 Mike added a forward access mode as well as the random access
+mode supported by AMGA.
+
+Remove the "name" attribute from all GetSQLXXXPropertyDocument for
+input and output elements. Steve to note down as an issue at the back
+of the document.
+
+Remove the example that has www.sqlquery.org from the spec - the
+language map element (example configuration map in the
+document). Steve to add to the issues at the back of the document.
+
+Some bugs discovered in the OGSA-DAI implementation are documented.
+
+Issue with validation that may have to do with the tooling. Should
+probably be noted in the SoapUI appendix.
+
+Should make a DatasetData element optional else a number of these with
+no content will be introduced in the messages.
+
+Had 5 failures in the initial run of the test-suite for the OGSA-DAI
+DAIR implementation.
+
+Test 11 SchemaCompliance failure - getting an SQLResponse property
+document. Need to the SQLResponse schema to be added to the WSDL.
+Steven to add these to the proposed changes to the spec.
+
+Test 27 & 34 XPath Match fails - fixed by using qualified namespaces.
+
+Test 30 run sql update and get
+
+<xsd:element name="SQLUpdateCount" type="xsd:int"/>
+
+which fails if you try and validate it against the schema. There is a
+fix by defining it within the element itself. Not sure if it is a
+limitation in axis. Mike to have another look and propose some
+recommendation.
+
+Test 16 - got schema compliance error. Only thing to fix this was to
+change the wsdl/schema it goes away. Are there different wsdl/xsd or
+is it a binding issue?
+
+This could be a SoapUI limitation. When Sunil tries the modified
+tests it will be using the test suite with our schema:
+
+ - fixed test suite with the AMGA schema
+ - fixed test suite with the ogsa-dai schema/wsdl
+ - fixed test suite with the ogsa-dai schema/wsdl and default qualified 
+   name space
+
+Sunil can try this out and comment back. Mike will put up different
+versions of the OGSA-DAI.
+
+Second run of test all run apart from test 30.
+
+Continued to examine the proposed resolutions added by Mario and
+commented on by Mike at the back of the document.
+
+Next stages:
+
+   - Steven will put up an updated version of the interop document.
+   - Mike will pass Sunil updated versions of the test suite and
+     the location of the OGSA-DAI DAIR test services.
+   - Sunil to go through the updated test suite and note any issues
+     and see whether any of the few outstanding issues can be resolved.
+   - All to go through the outstanding issues and resolutions in 
+     section 7 of the document.
+
+Hopefully getting very close to the end game now.
+
+Date of Next Call 8:30am UK time (GMT+1) 18 August 2009.

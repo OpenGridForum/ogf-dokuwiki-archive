@@ -1,0 +1,31 @@
+ For convenience data staging functionality related to BES Activity is divided into 5 cases.
+
+
+1. Data needed for performing Activity and residing locally at client or directly accessible by client or entity which can act on behalf of client and not accessible by BES Service
+2. Data needed for performing Activity and residing at location accessible by BES service or service handling Activity. 
+NOTE: Service may need additional access rights dynamically provided/handled by client. This is an important part of functionality but belongs to different part of GIN Profile.
+3. Data generated while performing Activity with destination accessible by Service.
+4. Data generated while performing Activity with no destination accessible by Service.
+5. Data with unpredictable application specific source and/or destination 
+
+ Service may choose to support only subset of data staging capabilities. If requested capability is not supported then Service returns error with reason clearly stated both in machine and human readable way (see below). Service advertise supported functionality through Glue2 description of service in ComputingEndpoint.Staging property. That property currently is missing support for cases 1, 4 and 5. Instead of having values for all 26 combinations (or at least 14 if case 5 is out of scope) maybe this property could have multiplicity 0..* with possible values: stagein, stageout, pushin, pullout, runtime.
+ 
+
+ Case 5 should be supported in application specific way possibly requesting that application to be executed in specially crafted environment which enables application to perform needed data access. Requesting such environment should be part of GIN Profile but it belongs to different section. 
+
+
+ Cases 2 and 3 are to be supported through JSDL DataStaging elements. Corresponding elements must have FileName and either Target or/and Source sub-elements. Target and Source must have URI element. 
+ There may be multiple elements with same FileName for multiple possible sources/destination of file. Service may perform stage-in from only one of them. Service must perform stage-out to all of them.
+FOR DISCUSSION: Maybe there could be some ways to specify how many destinations should be processed and if multiple sources are identical.
+TODO: define structure of URI, minimal set of supported protocols, advertisement of supported protocols and set of additional protocol specific elements.
+TODO: define meaning and support for other JSDL elements of DataStaging.
+TODO: define if Service accepting Activity should fetch/upload data itself or can delegate it to another service. It is needed for strict delegations.
+
+
+ Cases 1 and 4 are to be handled by client initiating data staging to/from Service using URLs communicated to it during CreateActivity procedure. Data files are represented by DataStaging elements in JSDL with Target and/or Source (for data staged out and into Service respectively) present and no URI elements. No JSDL schema change is needed.
+ In reply to CreateActivity request Service returns CreateActivityResponse with additional DataStaging elements of JSDL schema with FileName identical to one in ActivityDocument and Target (for data staged into Service) and/or Source (for data staged out of Service) containing URI which client will use for transferring data. Note Target and Source exchanged as compared to initial JSDL in request.
+There may be multiple DataStaging elements with same FileName and different URI one per each protocol supported by Service. Protocols must support capability of ensuring that complete file/data instance is transferred. It is proposed to have at least HTTP(S) supported.
+ After successful CreateActivity operation client or anything on behalf of client must initiate data transfer to URLs specified in Target elements. After Activity finished executing client or anything on behalf of client must initiate data transfer from URLs specified in Source elements.
+
+Failures: If Service does not support any of requested Data Staging cases then CreateActivity request must return InvalidRequestMessageFault with failed element referred and human readable description of problem.
+

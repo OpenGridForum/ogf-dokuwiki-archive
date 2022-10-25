@@ -1,0 +1,222 @@
+OGSA-DMI OGF20 Session 1 - 7 May 2007
+=====================================
+
+Chair: Michel Drescher (MD)
+Notes: Mario Antonioletti (MAA)
+
+Steve Newhouse (SN): does DMI just initiate the data transfers?
+
+MD: it initiates and manages the data transfer. It would sit on top of
+    something like RFT.
+
+...
+
+SN: you are going to use WSDM for the management?
+
+MD: An implementation may use WSDM for the management.
+
+SN: are the management functions going to manage the services or the
+    transfer itself? For managing the services WSDM would be good but
+    for managing the transfer it might be best for the operations to
+    be defined by the group.
+
+Donald?: whatever is done should follow the BES pattern so that people
+         only have to learn one pattern. There is a common management
+         pattern defined there.
+
+Neil Chue Hong (NCH): it is sort of is except the way you destroy the
+          transfer - it would make sense for BES and DMI to have the
+          same management interface ...
+
+SN: a management service in BES stops the container and restarts it
+    have thinks like - halt transfer, restart transfer, ... the
+    management of the service should be out of scope for DMI.
+
+NCH: DMI should be all about managing the transfer so the
+     starting/stopping of the transfer should be done by DMI. EGEE has
+     a model where management of the instance is the same as the
+     management of the service ...
+
+David Martin: so what are you saying ... the management of the service
+              is a generic of web service management activity ....
+
+MD: managing the factory with WSDM is fine ... but managing the
+    instance would change the transfer ....
+
+...
+
+MD: can implement DMI in a fully dynamic and interactive way - but it
+    could also be implemented in a fully static manner.
+
+...
+
+Arun Jaqatheesan (AJ): the instance will not be that useful to control
+     the transfer - you will need transfer management functions
+     specific to that protocol ...
+
+MD: in this instance the user would not be able to manage this - it
+    would be up to the instance to manage this information on behalf
+    of the user.
+
+SN: there is a lot of stuff on the information model in the spec
+    which, for a user that only wants to move the data, implies that
+    the user will have to care about a lot of other things they do not
+    need to know about ....
+
+DM: it is difficult to decide where the dividing line ...
+
+SN: you are forcing users to think of their high level requirements
+    for scheduling but things like parallelism is not something the
+    user is concerned about as this might be something that is
+    negotiated.
+
+...
+
+DM: if I want to copy something from GridFTP space to a file system
+    space - the factory will not know how to go between them ...
+
+MD: the source and sink have to speak the same protocol
+
+NCH: would not be using DMI if the source and sink did not use the
+     same protocol.
+
+SN: the beauty of this is the high level specification of the data
+    transfer which is then passed to the lower levels for negotiation
+    and other stuff to sort out the details of the transfer ... I want
+    to transfer data from A to B.
+
+DM: A and B have to be of the same type.
+
+SN: but for the user all they care about is whether the transfer is
+    possible or not.
+
+DM: so the user only specifies from A to B ...
+
+...
+
+SN: in order to promote interoperability I would look at the HPC
+    profile ...
+
+...
+
+SN: role management issue is being introduced into DMI which makes me
+    very nervous....
+
+MD: a single entity may assume more than one role
+
+SN: a lot of this stuff is very orthogonal to the roles - the grid
+    community has not defined a standard set of roles. I see this as
+    opening up a can of warms in what could be a very simple spec ...
+
+NCH: are we getting enough traction with the security groups? 
+
+...
+
+MD: For data operations we need a role based infrastructure -
+    something that comes from the security - we need to know who is
+    interacting with whom and who is at the other end.
+
+DM: you just need to know that you trust them.
+
+MD: You need to know the identity of who you are talking to ...
+
+SN: you have a model where you are looking to describe the
+    functionality for the user at the factory, the client and the
+    instance. Everything else will be opaque to the user - it's up to
+    the factory to do the negotiation ... the security roles can all
+    be used at the back end - why do they have to be explicitly
+    defined for the back end? A lot of the details will be done in the
+    negotiation phase ...
+
+DM: ... the identity of the user does not have to be an identity at
+    the source or the sink - you have to pass that info from the user
+    to the client to the factory ... the data nodes need the complete
+    picture.
+
+AJ: assuming a GFS - that would add all of the access controls.  Every
+    interface you provide should not have to provide that type of
+    information ...
+
+MD: DMI needs to pass that information to the source and the sink.
+    The authorisation is done at the source and the sink ..
+
+SN: that needs to stay at the factory - you seem to say that source
+    and sink need to have the same DMI sink ... the factory has to
+    have the right intelligence to pass that to the source and
+    sink....
+
+NCH: DMI should not have to do the security mapping ...
+
+...
+
+SN: In BES, put all the different types of functionality into
+    different port types - with potential roles there but the
+    implementation of the roles was pushed to the container ....
+
+AJ: so are you saying that you have different port types for the same
+    service?
+
+SN: the operations are split into different portTypes, factory,
+    management, etc so that you could apply policy relating to their
+    grouping in those portTypes
+
+MD: At the moment we do not see the need for that ...
+
+...
+
+??: By using xsd:any you are punting it ... better to punt it and wrap
+    the calls in a secure protocol.
+
+SN: none of the operations should have security credentials in its
+    arguments ... the power of DMI is its simplicity - these are my
+    credentials and this is the transfer that I want to use ... if you
+    can, use the same credentials .... 
+
+??: There are 3 different things:
+
+      protocol for authentication
+      protocol for authorisation
+      DMI protocol works inside these ....
+
+SN: I should provide my credentials and the factory does the
+    negotiation, ... there is too much scope there to try and get it
+    into DMI which is going to add unnecessary complexity. The HPC
+    profile has username/password, x509 certificate and they are going
+    to try and get a myProxy ....
+
+...
+
+??: Interoperability - xsd:any makes it difficult to do this ...
+
+MD: If we require additional information in the SOAP headers - can set
+    up the messages so that certain elements are targeted at certain
+    entities.
+
+SN: everything to the right of the factory you don't want to know
+    about (referring to the figure one in the spec)
+
+
+NCH: using that line then DMI specifies everything on the left but on
+     the right you are using DMI to constrain the end points.
+
+SN: there is a discussion on the rhs but that is not normative .....
+
+DM: you still need a secure communication across that dotted line
+    though
+
+SN: it depends on what protocols you are trying to use - you don't
+      need SOAP or a security protocol ...
+
+DM: but you are still passing the credentials ...
+
+SN: but that could be done as a fork through the factory process that
+    takes that identity ... you are doing this within the factory, the
+    security token ....
+
+DM: but if you have to do that under a different identity ...
+
+SN: but that can be passed to the factory on the rhs as part of 
+    the security context ...
+
+Session drawn to an end - discussion would follow on the information
+model in session 2.

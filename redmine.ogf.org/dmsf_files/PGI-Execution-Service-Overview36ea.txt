@@ -1,0 +1,169 @@
++-----------------------------------------+
+|  OGF :  PGI Execution Service Overview  |
++-----------------------------------------+
+
+
+1) Context
+2) Types of grid Jobs processed by the PGI Execution Service
+3) Single Jobs
+4) Collection Jobs
+5) Parameter Sweep Jobs
+6) DAG Jobs
+
+
+
+1) Context
+==========
+The PGI Execution Service, which processes grid Jobs, is NOT designed such as any instance of the Execution Service works as a standalone grid service, but such as each instance of the Execution Service works in cooperation with at least :
+
+-  Batch Systems really executing the Jobs, and other instances of the Execution Service to which it can delegate grid Jobs.
+
+-  An 'Information Service' implementing GLUE 2.0 as specified at http://www.ogf.org/documents/GFD.147.pdf
+   So, for information on the existence, capability, status, load and end points of its entities, the Execution Service :
+   - MUST publish it to the Information Service.  Implementation (push or pull, WS or ActiveMQ or other) has to be defined in accordance with the Information Service,
+   - CAN optionally publish it through a port type of its own Web Service, but that is NOT mandatory.
+
+-  An 'Accounting Service'.  So, for accounting information, the Execution Service :
+   - MUST publish it as specified by UR at http://www.ogf.org/documents/GFD.98.pdf
+   - CAN optionally publish it through a port type of its own Web Service, but that is NOT mandatory.
+
+-  A 'Logging and Bookkeeping' Service keeping the history of all events for each Job.
+   Standardization of this 'Logging and Bookkeeping' is under way inside OGF JSDL with the name 'Activity Instance' at http://forge.gridforum.org/sf/docman/do/listDocuments/projects.jsdl-wg/docman.root.working_drafts.activity_schema
+   So, for Job events, the Execution Service : 
+   - MUST publish as much as it can to 'Logging and Bookkeeping'.  Implementation (push or pull, WS or ActiveMQ or other) has to be defined in accordance with the 'Logging and Bookkeeping' Service,
+   - CAN optionally publish them through a port type of its own Web Service, but that is NOT mandatory.
+
+For 'Accounting' and 'Logging and Bookkeeping', the 'Joint Security Policy Group' has published a draft of 'Grid Policy on the Handling of User-Level Job Accounting Data', available at http://www.jspg.org/wiki/Grid_Policy_on_the_Handling_of_User-Level_Job_Accounting_Data
+
+
+
+2) Types of grid Jobs processed by the PGI Execution Service
+============================================================
+Each grid Job is defined by a Job description.  The standard for Job description is JSDL specified at http://www.ogf.org/documents/GFD.136.pdf
+
+The PGI Execution Service can process following types of grid Jobs :
+
+-  Single Jobs, whose description contains only 1 Job executed by only 1 Batch System,
+
+-  Collection Jobs, which are containers for a limited number of explicitly described independent Single Jobs,
+
+-  Parameter Sweep Jobs, which describe independent Single Jobs to be created dynamically,
+
+-  DAG Jobs, which describe a DAG workflow of a limited number of explicitly described Single Jobs.
+
+
+
+3) Single Jobs
+==============
+Their description contains only 1 Job executed by only 1 Batch System.
+
+The state model and behaviour INTERNALLY used by any implementation of the Execution Service to process Single Jobs is OUT OF SCOPE.
+
+But the state model and behaviour exposed by the Execution Service to the Job Submitter for each Single Job is described in following documents :
+
+-  'PGI Single Job State Model - Textual description' at http://forge.gridforum.org/sf/go/doc15697?nav=1
+
+-  'PGI Single Job State Model (available as ZARGO, XMI and PNG)' at http://forge.gridforum.org/sf/go/doc15655?nav=1
+
+At any time after having received the Jobid (or EPR) of the Single Job, the Submitter CAN request the status of the Single Job to the Execution Service, with MUST return it.
+
+
+
+4) Collection Jobs
+==================
+They are containers for a limited number of explicitly described independent Single Jobs.
+
+The gLite implementation currently processes such jobs.
+They are also implicitly defined by 'Create multiple Activities' in chapter 3.1.2 of 'Strawman of the Geneva grid job Execution Service (GES)' at http://forge.gridforum.org/sf/go/doc15590?nav=1 is NOT covered by the 'Single Job State Model'
+
+On arrival of a Collection Job, the Execution Service MUST immediately :
+
+-  Associate a Jobid (or EPR) to the Job Collection itself,
+
+-  For each Single Job described, submit it and get back the associated Jobid (or EPR, or Error message),
+
+-  Return the whole list of Jobids (or EPRs) and Error messages to the Submitter of the Job Collection.
+
+With this behaviour, the Collection Job itself can be considered as stateless.
+
+
+At any time after having received the list of Jobids (or EPRs), the Submitter of the Collection Job CAN request :
+
+-  The status of each Single Job (standard case for a Single Job),
+
+-  The status of the Collection Job itself.  In this case, the Execution Service MUST return the whole list of status for each Single Job,
+
+-  To cancel the execution of the Collection Job.  In this case, the Execution Service MUST cancel each submitted Single Job not already finished.
+
+
+
+5) Parameter Sweep Jobs
+=======================
+They describe independent Single Jobs to be created dynamically, as specified by 'JSDL Parameter Sweep Job Extension' at http://www.ogf.org/documents/GFD.149.pdf
+
+I propose that the Execution Service MUST expose to the Submitter of a Parameter Sweep Job following state model and behaviour :
+
+Submitted
+---------
+On arrival of a Parameter Sweep Job, the Execution Service immediately associates a Jobid (or EPR) to the Parameter Sweep Job itself, and immediately returns it to the Submitter.
+
+Processing
+----------
+For each Single Job to be created dynamically, the Execution Service :
+-  generates the appropriate Job description,
+-  submits it,
+-  gets back the associated Jobid (or EPR, or Error message),
+-  notifies this Jobid (or EPR, or Error message) to the Submitter of the Parameter Sweep Job.
+
+Finished
+--------
+As soon as the Execution Service has no more Single Job to create.
+
+
+At any time after having received any Jobid (or EPR), the Submitter of the Parameter Sweep Job CAN request :
+
+-  The status of each Single Job (standard case for a Single Job),
+
+-  The status of the Parameter Sweep Job itself.  In this case, the Execution Service MUST return its status, and CAN return the number of Single Jobs already successfully submitted, the number of Single Jobs already unsuccessfully submitted, and if possible the number of Single Jobs still to be submitted,
+
+-  To cancel the execution of the Parameter Sweep Job.  In this case, the Execution Service MUST cancel the Parameter Sweep Job itself, but each already submitted Single Job continues its own life,
+
+-  To cancel the execution of the Parameter Sweep Job including already submitted Single Jobs.  In this case, the Execution Service MUST cancel the Parameter Sweep Job itself, and each already submitted Single Job not already finished.
+
+
+
+6) DAG Jobs
+===========
+They describe a DAG workflow of a limited number of explicitly described Single Jobs.
+
+I propose that the Execution Service MUST expose to the Submitter of a DAG Job following state model and behaviour :
+
+Submitted
+---------
+On arrival of a DAG Job, the Execution Service immediately associates a Jobid (or EPR) to the DAG Job itself, and immediately returns it to the Submitter.
+
+Processing
+----------
+At the appropriate time defined by the DAG workflow, the Execution Service :
+-  submits 1 appropriate single Job,
+-  gets back the associated Jobid (or EPR, or Error message),
+-  notifies this Jobid (or EPR, or Error message) to the Submitter of the DAG Job.
+
+Finished
+--------
+As soon as the Execution Service has no more Single Job to create.
+
+
+At any time after having received any Jobid (or EPR), the Submitter of the DAG Job CAN request :
+
+-  The status of each Single Job (standard case for a Single Job),
+
+-  The status of the DAG Job itself.  In this case, the Execution Service MUST return its status, the status of each Single Job already submitted, and if possible the number of Single Jobs still to be submitted,
+
+-  To cancel the execution of the DAG Job.  In this case, the Execution Service MUST cancel the DAG Job itself, but each already submitted Single Job continues its own life,
+
+-  To cancel the execution of the DAG Job including already submitted Single Jobs.  In this case, the Execution Service MUST cancel the DAG Job itself, and each already submitted Single Job not already finished.
+
+
+
+To be thoroughly reviewed and criticized.

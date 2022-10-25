@@ -1,0 +1,181 @@
+Minutes of the Forth OGSI-WG Teleconference
+28/Aug/2002 @ 15:00-16:30 GMT
+
+Attendees:
+
+Tim Banks <IBM>
+Karl Czajkowski <ISI>
+Steve Graham <IBM>
+Fred Maciel <Hitachi>
+Andreas Savva <Fujitsu>
+David Snelling <Fujitsu>
+John Tollefsrud <Sun>
+Steve Tuecke <ANL>
+Peter Vanderbilt <NASA>
+
+Shell? <Sun>
+
+1) Minutes of 21 Aug 2002 Teleconference were approved as published to
+   the list.
+
+2) Goals and Strategy for Face to Face meeting next week.
+
+   - 13:00 Wednesday Sept. 4th to 15:00 Friday Sept. 6th.
+   - The plan is that there will be no fee required (depending on
+     numbers).
+   - Wireless network will be available.
+   - Agenda will be based on existing list plus Bugzilla items (post
+     issues ASAP).
+   - We will consider crafting text for Handles, but straw-men before
+     hand would help.
+   - Bring your own hard copy of the GSS.
+
+3) ServiceType Inheritance Discussion
+
+As the WSDL group will meet in two weeks time, we covered the issues
+surrounding serviceType inheritance so that Steve Tuecke will know
+where we all stand (roughly).
+
+The issue was not dealt with in detail last time because it was late
+in the day, but the concerns as reported by S. Graham centered around
+the question: Why not just cut and paste portTypes or use include
+files?
+
+The GridService community's argument is roughly:
+
+   - Inheritance in the interface expresses the designer's intent.
+   - It provides support for discovery, "I want another one like this
+     one."
+   - The server side implementation need not be OO, see CORBA approach
+     to C.
+   - However, this may have been one of the acceptance problems with
+     CORBA.
+   - Knowing that the semantics are inherited helps client tooling.
+   - Overloading was raised as an issue, but is already present
+     without inheritance.
+
+Action: Steve Tuecke to write to WDSL working group asking that this
+item be placed early on the agenda so people have time to think about
+it.
+
+Our serviceType inheritance means the transitive closure of both the
+interfaces and semantics of all portTypes in all the serviceTypes of
+the hierarchy, i.e the union. Note that it is like a set, i.e. no
+duplicated portTypes even if they appear in several constituent
+serviceTypes.
+
+If they ask what we plan to do if they don't include serviceType
+inheritance, our position is that we will do it ourselves by
+extension. We will note that so will others, as it will be a very
+useful extension. We should stress the standards issue as part of the
+reason for doing it.
+
+If they decide not to do it, we should press them for clear a
+justification to pass back to the Grid community.
+
+Item for next week's agenda: Discuss the formal language aspects on
+what we mean by serviceType inheritance. This should help with the
+WSDL meeting as well as clarify our own thinking.
+
+4) Technical Discussion: Registration portType
+
+Background: The Registration portType provides a method for a client
+(in this case usually a GridService) to notify the GS implementing
+this portType that it exists and has a handle. This portType will be
+common on any GS acting as a registry, but may also be implemented by
+other services. What is done with the Handle and any other information
+about the registering GS is up to the implementation. [Note: I use the
+term 'registry' below for a GS that implements the Registration
+portType. It may not have all or any of the functions we normally
+associate with a registry, but this will aid the discussion.]
+
+The questions are then: 
+
+    a) Do we bind, in the specification, the service data describing
+       the content of the registry to this portType?
+
+    b) If we do bind it, is there at least one (minoccurs=1)
+       mechanism/format for describing the content on the registry?
+
+    c) If yes, is that format a WS-Inspection document?
+
+It was clear from the discussion that a "document only" approach
+presented a problem for very a large registry with millions of
+entries. Some form of operational interface would be needed for this
+type of registry. However, it was also felt important to bind the
+concept of registry content to the Registration portType.
+
+There were several arguments in favor of requiring at least one
+mechanism/format for this registry content, but since in the end a
+client may not be authorized to get the content.
+
+Although many GSs will publish WS-Inspection documents, other
+formants/mechanisms would need to be supported. There were also
+questions about the status of WSIL, from Sun in particular. There has
+been no public forum process applied to WSIL yet and no statement as
+to the IPR terms to be applied to it. There was general agreement that
+some statement was needed as to what the terms were going to be before
+we tied the spec to this standard. There was also a strong feeling
+that the terms should be "royalty free", but it was acknowledged that
+GGF only required RAND at present.
+
+A brief discussion rejected the idea of attempting to define a query
+portType to complement the Registration portType.
+
+Decision: Yes to (a) in the form of a SDE (working name
+"RegistryContentNames") containing the service data names of SDEs
+containing registry content. Minoccurs=0 was agreed for (b). And by
+default, a WS-Inspection document is therefore not required.
+
+Issues raised that should be carried forward:
+
+   - Track the IPR status of WSIL.
+   - Should WS-Inspection document (or other formats) be explicitly
+     noted in the spec?
+   - The minoccurs=1 instances in the spec as a whole should be
+     revisited in light of authorization issues etc.
+
+5) Next Meeting:
+
+No teleconference on Sept 4th. The next teleconference will therefore
+be:
+
+Time:
+  Wednesday, September 11th
+     08:00-09:30 US Pacific (GMT - 7)
+     09:00-10:30 US Mountain (GMT - 6)
+     10:00-11:30 US Central (GMT - 5)
+     11:00-12:30 US Eastern (GMT - 4)
+     15:00-16:30 GMT
+     16:00-17:30 UK (GMT + 1)
+     17:00-18:30 Central Europe (GMT + 2)
+     00:00-01:30 Japan
+
+Place:
+  Phone:
+	Phone number: 1-484-630-5376
+	Pass code: 93031
+  IRC:
+     DALnet
+     #ogsi
+
+6) Open Issues:
+
+    Time
+      #16 Absolute or relative termination time
+      #13 Use Measured TimeStamps
+      #22 What if SDE lifetime attributes are not specified?
+      #23 Expressing "forever" in SDE lifetime attributes
+
+    Factory
+      #05 Factory extensibility
+      #19 Reduce Factory::CreateService output parameters
+
+    Not yet numbered:
+      - Discuss the formal language aspects of serviceType inheritance.
+      - Track the IPR status of WSIL.
+      - Should WS-Inspection document (or other formats) be explicitly
+        noted in the spec?
+      - The minoccurs=1 instances in the spec as a whole should be
+        revisited in light of authorization issues etc.
+

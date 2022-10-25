@@ -1,0 +1,203 @@
+OGSA DMI Session 2 - OGF20 - 7th May 2007
+=========================================
+
+Chair: Michel Drescher (MD)
+Notes: Mario Antonioletti (MAA)
+
+Discussion of the Information Model in DMI.
+
+Steven Newhouse (SN): parallelism is inward facing, chunk size is not
+    something a user would specify retries could just about see -
+    handling failure of the underlying infrastructure ... may not cope
+    with all the cases - retry if busy or if there is failure
+    ... probably a good starting point ...  bandwidth is really a
+    finish time
+
+DM: bandwidth might be related to a cost - to transfer
+    not at the moment but in the future ...
+
+SN: would argue that this is something that is embedded in the factory
+    and not specified at all.
+
+...
+
+SN: the layering ... have DMI at the top and you will have other
+    layers below it, e.g. RFT, etc, which will have their own specific
+    parameters this should be addressed by the factory negotiating
+    with the underlying layer to get the best transfer ....
+
+MD: We still need to find a clear boundary between a very high abstraction
+    (from A to B) or to allow all the details to be provided ....
+
+...
+
+MAA: can provide different layers of abstractions where the user can
+     drill down from the higher levels to the lower levels and pass
+     down optional values specific to a given transport layer on the
+     other hand your power users would probably go directly to the
+     direct transport layer without going through DMI ...
+
+...
+
+SN: the more optional parameters that you have the more complex the
+    spec validation process is going to be ...
+
+...
+
+SN: combination of protocols and not the bandwidth at all is what is
+    important - the user should not have to specify the given
+    bandwidth they require....
+
+MD: Still have a use case where you are paying for your bandwidth ....
+
+SN: if you get into an economic argument then you have a whole bunch
+    of other charging models to take into account and it's all going to
+    get too complex ....
+
+...
+
+Charging model can be addressed in a future version of the spec.
+
+...
+
+Need a failure policy ... not necessarily how many times that it
+retries to transfer the data.  Coming up with suitable polices that
+capture all the requirements may be difficult - FailAtFirstFailure may
+be the simplest and cleanest way to specify this.
+
+The dependencies between time constraints and failure rates are not
+well defined.
+
+SN: if you have two options on the table always pick the simplest. For
+    the first iteration just go for reflecting your failures back to
+    the User otherwise you end up with a very complex service to
+    implement. If you end up with more sophisticated use case policies
+    then you have a good reason to enter them in.
+
+...
+
+SN: the transfer protocols will have their own semantics. You may not
+    want to expose this ...
+
+SN: get rid of striping ... 
+
+Arun Jaqatheesan (AJ): this is heading towards RFT ....
+
+AJ: replicas should go
+
+MAA: agrees
+
+...
+
+David Martin (DM): getting into the level of WS-Agreement ... could
+                   have a zillion options like this ...
+
+SN: this might be a way of working with WS-Agreement
+
+We would still have to define the transfer terms
+
+SN: could put these in an appendix for things to be considered at some
+    later stage ...
+
+....
+
+For the data transfer factory
+
+timing options -> could be a policy document
+
+if the policy options are defined by the specification then they
+should be understood by the factory.
+
+The policy terms should probably not be defined in version 1 of the
+spec.
+
+as policy is overloaded the policy document should really be la
+labelled as transfer requirements.
+
+...
+
+retry strategy and the undo strategy and completion time strategy
+could be useful ... everything else might not be.
+
+...
+
+TimingOptions with EndNoLaterThan should be there.
+
+Make EndNoLaterThan nillable so that it can specify an open ended
+transfer.
+
+...
+
+Discussion as to what the semantics of EndNoLaterThan are as some
+transfer protocols will not be able to supply this kind of information
+and in some cases it may not be able to terminate an existing transfer
+- idea might be that the transfer instance controls the temporal
+aspect and terminates the transfer, if it can, when the EndNoLater has
+been exceeded - this is the time by which the transfer of data will
+have transferred completely or not which determines whether the
+operation has failed or not. Failure should produce a fault which can
+be passed back to the initiator so, if the transfer is part of a
+workflow, the enactment engine can take a failure/success into
+account.
+
+...
+
+Should use clean-up as opposed to undo for that information property.
+
+AJ: DMI is controlling all the data data transfer time options as
+    these may not be available at the protocol level.
+
+SM: now that this has a lifetime associated with you need a state
+    diagram.
+
+MD shows one (from the specification document) ...
+
+AJ: interrupt and destroy - what are the semantics of interrupt?
+
+SN: Can either mandate that all protocols behind DMI or state that DMI
+    can only do best effort.
+
+Each interrupt lines should have two splits - one to done (clean up
+successfully), unsatisfiable - means that it cannot be interrupted or
+that it cannot be cleaned up - can go elsewhere.
+
+In the state diagram transferring needs suspend and resume
+
+The only way to reschedule a transfer might be for it to create a new
+instance.
+
+But this would invalidated a lot of the informational properties.
+
+...
+
+Mathias?: this looks like a specialisation of the BES job container
+           model - have you thought of doing a mapping as you would
+           have the same notion of a transfer and a job execution? ...
+
+SN: the BES state model is very complicated as it is extensible ... so
+    I would not advocate using that - there are a whole set of states
+    of what a job does compared to what a data transfer does
+
+Mathias: but you could think of the transfer as a job execution - have
+         something in the running state <-> transfer, etc
+
+MD: could do something from the BES state model ...
+
+SN: could get the DMI state model and then see how it compares to the
+    BES state model ....
+
+Mathias: when writing a scheduler - would be nice to transfer of data
+          to be the same as a job execution.
+
+...
+
+SN: negotiating could go into unsatisfiable - once the transfers starts
+    it can only fail without going into unsatisfiable - distinguishes
+    it as a failure from an unsatisfied negotiation and a job that
+    runs that fails (i.e. not really unsatisfiable).
+
+Failure cleaned up and failure not cleaned up.
+
+Action: 
+
+[SN] Finish off the state model for DMI :)

@@ -1,0 +1,411 @@
+DAIS Telcon - 12/04/05
+======================
+
+Chair:      Norman Paton
+Note Taker: Mario Antonioletti
+
+Attendees:
+	   Mario Antonioletti, EPCC
+	   Thomas Soddemann, RGZ
+	   Norman Paton, University of Manchester
+	   Savas Parastatidis, University of Newcastle
+	   Susan Malaika, IBM
+	   Allen Luniewski, IBM
+	   Simon Laws, IBM
+	   Dave Pearson, Oracle
+
+Agenda:
+
+	Mappings of DAIS Specifications (Discuss
+	Proposal from GGF13 Session 2) 
+
+Actions:
+
+[Simon] Post note to list on refined GGF13 proposal and relationship to 
+        mapping approach (4).
+
+[Norman] Seek to ensure that relevant OGSA/WSRF people are following the 
+         process.
+
+---
+
+Start with a top level discussion about options and gradually progress
+to discuss the GGF proposals that has been posted to the list. Then
+discuss on how we proceed.
+
+Start from the postings made to the DAIS mailing list:
+
+http://www-unix.gridforum.org/mail_archive/dais-wg/2005/04/msg00003.html
+
+Also:
+
+http://www-unix.gridforum.org/mail_archive/dais-wg/2005/04/msg00001.html
+http://www-unix.gridforum.org/mail_archive/dais-wg/2005/04/msg00002.html
+
+Hope to reach a resolution by discussion and consensus.
+
+There are four possibilities for DAIS:
+
+      1] Use WSRF for all types of resource.
+      2] Use no WSRF at all.
+      3] Use WSRF only for some resources.
+      4] Use a twin tracks approach.
+
+Mario: At GGF WSRF seemed very credible but there was no major opposition
+       present.
+
+Norman: but the conclusion was not to use a WSRF only solution - (3)
+        seemed to be the preferred option
+
+Susan: I had a very extensive discussions with Savas before the meeting
+       to take his point of view into account.
+
+Savas: ... but my twin track approach was not really discussed.
+
+...
+
+Norman: For (3) is it desirable to have a subset that is only
+        dependent on WS-I?
+
+Susan: is that the conduit only bit?
+
+Norman: suggesting the mapping into portTypes that Simon described is
+	not necessarily the one that we would use. In approach (3) we
+	have: three type of resources and their mapping to services
+	.....  the type 2 would not have a mapping to WSRF.
+
+Susan: if this will make more people use it then that would be a good
+       approach.  As long as it does not make it any harder to write
+       the spec.
+
+Norman: There will be a core spec that will only provide access to
+	type 2 resources and another one that does all 3 resources.
+
+Mario: what does that do to interoperability?
+
+Norman: In the core all type 2 implementations would be
+	interoperable. There is only one way of doing each thing.  You
+	then need to know if you are talking to a resource that
+	implements part of or the full specification.
+
+	There seems to be tentative support for having a section that
+	only has WS-I dependencies if it will get more people on board
+	who might not use the spec otherwise.  There are some UK
+	e-Science projects that fall under this category.
+
+Mario: what about Microsoft and Oracle?
+
+Savas: a core that is not dependent on WSRF will make it more
+       palatable for companies like Microsoft and Oracle.
+
+Susan: At the second DAIS session in GGF13 we had OGSA and WSRF people
+       in the room. The key point that we got across was that DAIS is
+       not representing some of the resources in the database or
+       managing them - but is about providing access to these. So,
+       that's why they agreed that not everything could be represented
+       by WSRF. I did not think though that a particular solution
+       came out.
+
+Norman: but a proposal has gone out. Services to represent type (3)
+	resources are identical to those in DAIS. In type (2) the
+	naming scheme is in the body and does not use the WSRF
+	lifetime management - resource names are in the message body
+	and WSRF lifetime management is not used
+
+Savas: if this group accepts the fact that there are going to be two
+       worlds out there - a core WS world with which everyone is happy
+       with and extensions that not everybody is happy with, then the
+       functionalities that use these extension that are not
+       implemented will simply be lost. What if there was an approach
+       if everyone had access to this functionality in a different
+       way?
+
+       The idea would be that all the functionality that DAIS wants to
+       make available is done only with the WS-I based specifications
+       with the proviso that there would be a route for WSRF for those
+       wanting to use WSRF.
+
+Norman: does that not raise interoperability problems?
+
+Savas: yes, but if the functionality is there then that will also be
+       a problem ....
+
+Norman: let's push on the GGF 13 proposal and then you can detail a
+	mapping for possibility (4).
+
+Susan: If we go through Simon's note:
+
+ http://www-unix.gridforum.org/mail_archive/dais-wg/2005/04/msg00002.html
+
+
+       The scenario is where you say he conflatated the two portTypes.
+
+       There are some service templates - you would get properties of
+       the service conduit and could get information about the resources
+       that would come out of the CIM model.
+
+Norman: only in the relational case.
+
+Susan: as they have not done XML yet. The split then is quite natural.
+       Then you have the messages targeted at the conduit portion,
+       you have all the properties, you can destroy the conduits.  You
+       can have messages targeted at the resources themselves and you
+       can get the properties and you have an SQLExecute with messages
+       targeted at a service. Then there is the ability to create a
+       result set rather than execute the query and then there is a
+       generic response ... those are the operations for the combined
+       conduit and resource type 2 resource.
+
+       The second type of service would expose the properties of a
+       rowset created by the previous portType. You would then have
+       messages to get access to the resource set.
+
+       Then there is a scenario to use the services. Can deploy,
+       configure, get the properties, the data, get a results set.
+
+       Finally there are some points for further discussion.
+
+       You can model the type 3 resources under the conduit as type 2
+       resources. Things could be laid out differently.
+
+       Can express properties of the conduit and capabilities over and
+       above the WSDL.
+
+Norman: in essence the properties of the conduit help what task -
+	service selection?
+
+Susan: could put info in a registry and ask questions of the service.
+
+Norman: it could expose properties of the underlying resources and the
+	service
+
+Susan: in the proposal to the mailing it would, as it combines the
+       conduit with the resources. If you were to split these then
+       that would not be the case.
+
+Norman: if someone wanted to use a resource you may ask questions of
+	the potential interaction they could have with that service.
+	You could also ask questions about the underlying resource.
+	You could interrogate the resource or you could use a
+	registry.  The conduit has local metadata properties of that
+	conduit - like a local registry. When you have metadata from
+	the local resource or somewhere else there is also a question
+	about the coherency and quantity of the metadata available
+	....
+
+Susan: in the spec you would have to be very clear. if you split this
+       then you might only get the appropriate metadata from a single
+       source ....
+
+...
+
+Susan: the points raised is that when you create a result set you
+       could give it to the database to manage or you could give it to
+       DAIS to manage. In the first instance you will give it to DAIS
+       to manage.
+
+       We have a document with many resources ....
+
+*Simon joins*
+
+Susan continues going over Simon's point for discussion.
+
+...
+
+Norman: the suggestion that one has separate portTypes for type 1, 2
+	and 3 resources.
+
+Simon: not trying to imply that all of these messages would live in
+       the same portType.
+
+Norman: there are 2 things we would like to clarify:
+
+	which information is available from a type 1 resource and how
+	that compares to what is available through a type 2 resource.
+	Is it the complete set or a sub set?
+
+	Separating type 2 and seeing if there is felt to be support
+	for a proposal to have a subset that does not have the WSRF
+	dependency if that increase the number of adopters.
+
+Simon: type 2 does not have a WSRF dependency at the moment.
+
+Norman: the proposal is slightly more lumping rather than separating
+        at the moment.
+
+Simon: you would like to see what the portTypes look like?
+
+Norman: yes
+
+Simon: that is reasonable.
+
+Norman: So, Savas wanted to make an approach to mapping approach 4.
+
+Savas: it's not exactly sharing messages. The proposal is very similar
+       to how execution services are being designed - work being done
+       by Steve Newhouse and Andrew Grimshaw for submission at the
+       next GGF. A service is a container of resources. The approach
+       they are taking is that you talk with a service and the
+       resources are named. You use abstract name for the resources
+       and there is a way of resolving those names into WSRF EPRs if
+       you want to and from then onwards you can treat the interaction
+       with the resources as WSRF. However, the service also supports
+       interaction that do not require WSRF.
+
+       In DAIS there would be no need to distinguish between type 2
+       and type 3 resources.  
+
+Norman: so you could send a messages to a data service you would send
+	a SQL query with an optional abstract name and you could
+	optionally get the EPR and use that afterwards ...
+
+Savas: ok, so you are assuming that many data resource could be
+       accessible through the services. You could send the SQL
+       statement and then you could send an abstract name. You could
+       ask for the results to be kept at the service and the you could
+       do things with those results kept at the service. If you want
+       to manage the lifetime in a WSRF way, the service will support
+       a resolve method the abstract name can be converted to an EPR.
+
+Simon: I've talked to Savas as well so I have an understanding of his
+       method. The resolver could sit happily on service A and provide
+       that type of functionality. The question pushes down on the
+       things that people talked about that were WSRF specific that
+       could be pulled into the conduit. Savas is saying that
+       everything could be pulled under the conduit. We would have to
+       make sure that the lifetime was covered.
+
+Savas: for the non-WSRF you would need to define explicit lifetime
+       messages.
+
+Norman: questions like how do we construct message bodies that type 2
+	and 3 looks pretty consistent in the GGF13 proposition would
+	come up against issues that are very like this. The GGF 13
+	proposal is something rather like Savas' proposal but where
+	you are told what to use for a particular resource.
+
+Savas: I'm saying that the functionality will be the same but you will
+       have to provide something in DAIS that replicates WSRF
+       functionality.
+
+Norman: I think we are on the same page.
+
+	The pros of this approach is that everyone can use whatever
+	they like, have different capabilities.
+
+	The con is that individuals implementing the DAIS specs end up
+	with two routes in and we have to decide which ones are
+	optional and mandatory. There is then a case of publicising
+	this to a potential client.
+
+Susan: are there considerations for naming?
+
+Simon: we need to know how to write or handle names in both cases.
+
+Norman: My feeling is that the the blend of mapping approach 4 and
+	mapping approach 3 are not miles away from each other. It's
+	just approach 3 has a MUST which is not in approach
+	4. Approach 4 gives you an alternative ....
+
+Savas: as a result it allows those that do not support WSRF can now
+       implement the spec.
+
+Norman: inching towards a smaller decision. Can discuss this with
+	stake holders. How do we proceed?
+
+Susan: need to do a sketchy write up.
+
+Simon: can add Savas' model to this ...
+
+Susan: would you have alternatives or options?
+
+Norman: it is reasonable to put both these options into the same
+        document - given that you have these collection of switches
+        you can use whichever you want or you can pre-set those
+        switches.
+
+*Dave Pearson joins*
+
+      Norman provides a brief summary for Dave.
+
+      
+Norman: did you have any views on the proposal?
+
+Dave: still struggling with what interoperability between WS-I and
+      WSRF is?
+
+....
+
+Savas: if you implement a service with only WS-I everyone can talk to
+       you. If you use WSRF then any extra functionality then you can
+       only use that if you use WSRF. That is not to say that WSRF
+       does not comply with WS-I.
+
+....
+
+Dave: my view is you use WSRF, mainly for result sets, because it is a
+      data resource and the database is a WSRF resource then you are
+      saying you use WSRF only full stop.
+
+Norman: if you take the proposal that was circulated strictly as
+	described you are using WSRF. A small modification would
+	involve separate portTypes for type 1,2 and 3. This allows us
+	to pull out type 2 so that it only has dependencies on WS-I so
+	that you would not have need for WSRF. You would however not
+	get the factory pattern
+
+Dave: what are the implications on tooling? How will the tooling know
+      whether you are interacting with a type 2 or 3.
+
+Savas: in what I suggested there is no distinction between 2 and 3 it
+       will all look the same. If semantically you try to send the
+       wrong message then that will be dealt by the
+       implementation. This could also be applied in the WSRF case -
+       no distinction between type 2 and 3.
+
+Norman: yes, they could always be represented the same way. 
+
+Savas: to move forward we document this but we need WSDL - happy for
+       the non-WSRF to case to work with a simple implementation to
+       test the idea to see what the portTypes look like.
+
+Norman: very happy for people to do experiments.
+
+Dave: provided there is a time scale ...
+
+Norman: trying to progress quite rapidly. The next call is in 2 weeks
+        on this topic.
+
+Savas: offered to get together with Dave Snelling to discuss this.
+
+Norman: That would be very useful.
+
+	Simon will adjust the proposal to incorporate Savas' ideas.
+
+Simon: produce a new one - leave the other for historical reasons.
+
+Norman: then pass that out to the list. Once that is done then we can
+	discuss it. We should also explicitly bat a reference to that
+	proposal to the OGSA list for discussion.
+
+Dave: the time to bat something the OGSA list when we are confident
+      about things else the control may pass over to the OGSA list.
+      We should get the OGSA team.
+
+Norman: will try to invite comment from a smaller set of people.
+
+	Hopefully these things can be done quite quickly and then
+	widen the discussion. Savas raised the issue about having a
+	meeting in London.
+
+Simon: happy to contribute WSDL to that effort. 
+
+Dave: what if Savas and Simon do some work and if it's not possible
+      in London to set up a web conference or AG?
+
+Savas: we could do that but its replication of effort.
+
+...
+
+Dave: if you are going to have a meeting in London, let me know and I
+      can arrange for an Oracle office to be used.

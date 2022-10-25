@@ -1,0 +1,498 @@
+Notes taken by Dave Konerding, Shantenu Jha
+-------------------------------------------
+
+Meeting notes #1
+
+-Introduction by tom goodale
+
+- Moderation and introduction by Ed Seidel
+   Presentations and topics from other projects
+ - Discuss API and how SAGA API relates
+ - Lessons learned from experience and how it applies to SAGA
+ - How other projects can help/interact with SAGA
+
+-- Craig Lee:
+
+   Introduced GridRPC and discussed what it might mean for SAGA:
+   said APIs need to rely on external services which are outside of
+   the scope of what the API is chartered to do
+
+  4 main points:
+    - GridRPC Arguments in Middleware
+
+    - Service Discovery: in the grid world, service discovery is going
+    to be fundamental. How to expose/how much to expose at the
+    application level?
+
+    - Introspection: what a service is?  Discovering characteristics
+    rather than build all that in. How to force the end user to deal
+    with all this?
+
+    - Persistent data and workkflow flow graph b/w say rpcs. There is
+    going to be dataflow; how to minimize data. Gow to expose that to the
+    user in the API?  Binding data handles to data: implicit or
+    explicit?  Movement initiated by the user?  m/w role: lazy or
+    eager?
+
+      
+    These lessons will be folded into SAGA as SAGA learns/discovers
+
+    Ed: Q: wiill this (RPC) be assimilated into SAGA?  
+    Craig: Yes.
+    Ninf-G would benefit with a SAGA
+
+    Hrabri Q: Do users use RPC because of the ease of use of API or
+    the library feature that comes with it?
+
+    A: Library feature
+         Gave example of Netsolve
+
+         Power lies in the library. Is there a lesson for SAGA?
+
+         Libraries with appropriate binding; feeds into the need to
+         make the code/application portable
+         
+
+-- Steven Newhouse:
+       SAGA & OMII:
+
+         OMII packaging a grid software stack built upon basic web 
+services (WS-I+)
+
+         Invoke MPI analogy. Interface is important for OMII.
+
+         No proprietary interface
+
+         experience:
+           give scientists an API they are happy
+           give scientists a SOA they are confused
+
+         having a solid API is important
+           80/20: keep it simple
+             what to do now, rather than in the long term
+           focus, focus, focus (do a little, well, instead of a lot, poorly)
+          
+       Role of SAGA for your projects:  
+         Conventional API to grid operations highly desirable
+     
+       geodiseLAB
+       GridSAM: job execution through WS
+       Grimories registry: information storage and discovery in UDDI
+       Workflow in a generic manner
+       WS-N and WS-RM/R: interfaces to infrastructure
+
+     
+       How will OMII interact with the SAGA
+
+         We won't but projects will expect standard APIs to either be:
+           a) adopted
+           b) changed through engagement
+           c) proposed (if changesa aren't made)
+         will support standard process
+        lightweight process for experimental s/w rather than a very long 
+development/standardization process
+
+
+       Q: SAGA work on workflow?
+       A: Yes. now- not clear. best way- not clear. What is the best way 
+to define? should be what is the best way for users?
+
+       Q: Use case
+       A: Will forward use case template
+
+-- Susanne Balle:
+
+     Wore two hats: HP and UPDT (user programming and development
+     tools)
+
+     HP hate: globus interface changing is very problematic. If SAGA
+     can standardize will help  Wants to see virtualization layer
+     (like SAGA)
+
+     UPDT: stability and ease of use.  SAGA has to cover a lot of
+     areas, but not tackle too many.  Choose easier areas.  Backward
+     compatibility.  Using Unicore vs. globus should be transparent to
+     the user.  
+
+     Don't try a Simple API for everything. time to market, i.e. need to 
+try out
+     QUICK
+
+     Invoked MPI example
+       
+     but remember: 2.5 years, every 6 weeks of a mature lines
+
+     Q (Ed): important to have people who have experienced the
+     pains to point out the difficulties. Experience with CACTUS
+     (framework for high-performance computing): MPI is still tooooo
+     complicated!  CACTUS establishes another layer.
+
+     A (Susanne): SAGA is probably for advanced users. Not just for 
+simple batch
+     jobs.  Simpler users will just run batch jobs.
+   
+     A (Satoshi): Role of research group is not to do standardization.
+     Role is to find out what areas to focus on ("where in the whole
+     space of application should effort be focussed").  Eventually a
+     WG will be formed a more committed group of people will do the
+     standardization
+
+     A (S Newhouse): lightweight specification vs more formal
+     heavyweight API. "RG can produce experimental specification"
+
+     A (Satoshi): RG can produce experimental documentation
+
+     A (Thilo): Group should form design team.  let's go ahead and
+     build an experimental API
+
+
+-- Andreas
+
+    DRMAA + SAGA relation
+    not clear what the exact relationship.  DRMs used within
+    enterprises, grids are global.  
+
+    - challenge to get ALL vendors to agree
+
+    - DRMAA has a couple of experience that can be made use of. For
+    example, DRMAA has already liased with companies.
+       
+    Role of this RG should be to map what kind of APIs make sense
+
+    DRMAA has experience, and Andreas will be sad if the experience will 
+be lost.
+
+    DRMAA is a self-contained API
+
+    Should effort b/w SAGA and DRMAA be separated
+
+    Protocols used to implement grids separate from grids!
+
+    Is DRMAA interface user-friendly?
+      Yes.   e.g many Java bindings have 1/0 arguments.
+      DRMAA has 2.5 implementations:
+        1 condor
+        0.5 globus
+        1 for gridway(?) framework
+ 
+        3rd vendor is Sun Grid Engine
+        Susanne Balle: Gap analysis-   SAGA should study DRMAA
+
+     common thread: abstraction of the operations that the Applications 
+will need
+     technology wont be critical
+
+
+--  Chris Smith, Platform
+  several issues mentioned important
+   
+  batch queue systems
+  APIs are comprehensive - interaction of DRAM systems
+          
+  ISVs write command line scripts because of lack of APIs
+
+
+  Lessons learnt:
+    Stability is more important than functionality
+
+    ISVs most often don't use more than 20% - so keep that part stable
+    and bugfree
+ 
+    Don't lock end-users into an infrastructure model
+      e.g. don't only support PKI encryption as kerberos is still
+      used; behind firewalls, some people use no authentication at all
+ 
+    ISVs and users aren't going to wait for the pace of GGF; they will
+    implement their own technology then refuse to switch
+   
+    SAGA is implemented for the grid-tech user and provide
+      - "lock-in", sell them a standard API, ISVs will be more
+        willing to consider. And show progress
+
+    File mamangement, job management and streaming/messaging are most
+    important.  Don't want to write code for many different data
+    middlewares.  Don't want to fall back on NFS proxies.  Platform
+    can provide use cases:
+    ***ACTION ITEM: follow up use case offer from Platform!***
+
+-- Gregor von Laszewski:
+    Agrees with Susan, Andreas
+
+    look at file transfer as example: 15 projects have developed their
+    own file transfer protocols.
+
+    David Konerding: introduction (stand-in for Keith)
+
+    Stephen Pickles:
+      Echos points made by others all plus a special focus on steering
+
+     1. code for steering but not be locked into one solution, i.e.
+        can their source code be proofed against collapse
+
+     2. How can they build tools that enable this
+
+
+   GridLab (Goodale):
+     GridLab has GAT as prototype API
+     
+   Haas: might be wise to separate data and compute API.  Need to keep 
+them independent
+
+
+ What other areas SAGA should attempt to cover:
+
+  Gregor:  SAGA should focus on: authentication and file transfer.
+    CoG kit has them; could be developed for kerberos
+    possible to provide for DRMAA
+
+    DRMAA vs  GRAM
+
+    Problem with legacy stuff.
+
+    How to do the standardization?
+   
+    e.g. 6 ways to do message passing.  In grid computing, baseline
+   experience.  pick up the best bits of all ways painful experience
+   migrating to the standard
+
+   DRMAA is available on:
+    GridEngine 6.0 and Condor, Nfusion, GridIron, PBS?, DRMAA ontop of LSF?
+
+   User adoption from vendors is going to be critical
+
+  Craig: strongly advocate "design team" starting as soon as possible
+
+  Newhouse: I ditto craig.
+    But which areas? What does it mean to "support data"
+
+  Ed Seidel offered to host such a "design team" meeting at LSU
+ 
+  Craig: re-iterate the need to be sooner than later.  There is going
+    to be ton of stuff, but not everything should go in.
+
+  Hrabri: experience with DRMAA. quick way - 1 day. but then 2 years to 
+sort out the details.
+
+    
+  HPF versus MPI model. HPF failed. Why? Social engineering issues.
+
+  Steven Newhouse's list:
+    Compute
+    Data
+    File transfer
+    Discovery
+    Steering
+
+================================================================================
+
+
+================================================================================
+Meeting notes #2
++ Introduction and chair by Tom Goodale
++ Group Business
+
++ Stephen Pickles steps down
+
+  Discussion for 3rd chair.  Possibly have someone from DRMAA group?
+  Consensus on having a 3rd chair.
+  1 consensus
+
+  * Hrabri is nominated
+
+  * Chairs are encouraged from overlapping groups, but highly
+   discouraged if person is a chair in another group. Possible, but
+   resistance will be high
+
+  Nominations will be continued on the mailing list
+
+  Why 3? Given the overlap with other groups and the rational to spawn
+  multiple working groups, there might be a case to have a third.
+
+  Consensus on secretaries: Replace Kryzysztof Kurowski (doesn't
+  attend GGF) and Ian Taylor (too busy) with Hartmut Kaiser and David
+  Konerding
+
+  Q (Thilo): why more than one secretary
+
+  A (Andras): to relieve shantenu
+  A (Hrirabi): secretaries can't always fly around globe to go to all
+  meetings
+
+
++ Milestones reviewed
+
+  Aims:
+    Informational document: use case and app scenarios (which in turn
+    will inform an informational document describing the API
+    requirements, then finally an experimental document: the SAGA API
+
+  GGF12: use case and app scenario survey
+  GGF13: presentaiton of requirements document
+  GGF14: draf of "abstract definition of SAGA"
+  GGF15: final version of "abstract defintion of SAGA"
+ 
+  GGF13 is the new target of the Use Cases and application
+        scenarios
+
+  ACTION ITEM: Make a short catalogue/compilation of frameworks of relevance
+     Andre+Gab will edit (expected to be done late October, early November)
+
+  There was discussion of a speeding up the process, such as coming up
+  with a staw man API
+
++  Agreement to do a F2F at SC04.
+   e.g. an agenda could be:
+   - review use cases
+   - development team, straw man
+
+  Decision was to attempt an LSU/Amsterdam AG meeting to set a design
+  team/work/strawman discussion, 4 days some time before Christmas,
+
+  Note from Pickles: membership must be open and known
+
+  Which areas to cover will be determined later...
+
+  *Action: Liasons to follow up. Jha to post liasons on mailing list*
+  OGSA liason is Christopher from Platform
+
+  Stephen Pickles pointed out a subtlety:   some of those use-cases were 
+about capbilities rather than API
+
+  Action: Repeat call for USE CASES with new deadlines
+          with the aim of SC04
+   ACTION ITEM: Short deadline for use cases: Oct 15th.
+
+   ACTION ITEM: Get use cases on the Wiki. And add those in second call.
+   ACTION ITEM: Jha: follow up with liasons to get use cases.
+
++ Discussion of Use Cases
+   1. Computational steering of a ground water pollution simulation.
+   Submitted as batch job to HPC system; sometimes a steering
+   application is attached.
+      i. simulation  moving
+      ii. authorization and authentication
+      iii. Data transport: equivalent of a socket; typed data under the hood
+      transparency of data
+      
+   2. Collaborative visualization of atmospherical data
+       An API which is also useful for developing tools
+
+       Persistent Archive Users group use case.
+
+   3. Reality Grid: use case in very brief
+
+   4. GridLab use case in very brief
+       3. & 4. involve resource discovery
+
+   5. Bulk Job submission
+       Helps to have mechanisms to ease submission
+       (not just JSDL)
+       
++ statistics of use cases were discussed
+   file movement (2)
+   job submission(3)
+   monitoring   (1)
+   steering (3)
+   data transport (3)
+   resource finding (3)
+   checkpoint (2)
+   process disovery/registry (2)
+
+   useful to extend the above analysis to remaining use cases
+
+  *ACTION ITEM: Revise template to have 2 authors and ....
+
+
+================================================================================
+
+================================================================================
+Meeting notes #3
+
+Introduction by tom goodale
+
+- Tom goodale asked for reasons why the "milestones"
+were being revisited?
+
+- TK: Leave as it is.
+
+- Q: Deadline for Use Cases?: 15th of October
+    
+  *Action:  Decision was to leave as is; restructure the milestones
+      after the design team meets, or action at next GGF*
+      ==============================
+
+Item 2:
+     Focus and Design team:
+     =====================
+     Action: Focus to be determined around 22nd October
+     Action: 3 more use cases from Rosa and Peggy
+
+      - Go up immediately up on a Wiki suggestion by thilo
+   
+   File movement - better understood Andre Merzky
+   Data transport - communication between 2 peers
+   Job submission  - Rosa Badia, as well as file priority
+   Computational  Steering-  Pascal (NEC)
+   
+   Does data transport involve data translation?
+   TBD . Such issues will feed into strawman ...
+   
+   Does Monitoring include fault tolerance? Does it refer to
+   performance monitoring?
+
+   Any notion of workflow?
+      Rosa will provide use case.
+
+      Priortize in areas - to keep it simple
+      e.g. base case -> start job send job and get back
+
+      At least across 2 areas?
+
+    Error handling.
+    
+    Action: End of October deadline for Gab/Andre
+    Action: Agenda for F2F at SC04, 4 weeks before
+      -  gap analysis for use cases, documents
+      - hash initial startup information for design team
+
+ possible future F2F - GlobusWorld none
+         Atlanta     > 3
+-  Use Case Document
+
+    "requirements" to be captured in the use cases
+    
+    Action: Craig to get Naregi and UTK to write up a GridRPC use
+      case.
+
+    Action: Dave Konerding will write use case: Molecular simulation
+      for protein folding on the grid.
+    
+    Error handling and other "things" that come out of the
+    API process should be bulleted
+      . what is thread-safe
+      . mulitple processes, should the API be aware...
+        maybe there should be a "flag" for the distribution
+      . GridID?
+      . Job Mgmt
+      . security
+
+  - how to worry about security issues?
+     Keith Jackson volunteered as security expert?
+
+  - Level of control     
+        note: careful to the  dangers of coding against backends
+
+
+      Hrabri: 2 entries points ot the API
+         - end users see an attribute
+         - person who adminsters the facility
+
+         - model is "power to the users, but its dangerous"
+
+     - relationship of SAGA API with respect to other Grid APIs?
+
+
+  - langauges and consistency between them: Fortran, C, C++, Java,
+  Python, MatLab, Perl
+================================================================================
+

@@ -1,0 +1,228 @@
+<html>
+
+<!-- Mirrored from redmine.ogf.org/dmsf_files/7344?download=11537 by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 Oct 2022 21:20:17 GMT -->
+<head>
+<title>
+	Advanced Collaborative Environments
+</title>
+<body background="../images/background_gradient03.html" bgcolor="#ffffff" TEXT="#000000" link="#003300" VLINK="#003300" ALINK="#000000">
+
+
+<!-------------------------------------------------------->
+
+
+<FONT SIZE="2" face="arial,helvetica">
+<h4>
+	Minutes from ACE-grid Vis WG Meeting
+
+</h4></FONT>
+<i>	September 8, 2003</i>
+<ul>
+<pre> 
+This is a summary of Monday's AG meeting on the Visualization 
+Frameworks document.  Thanks to Tom Coffin for taking copious notes.
+
+The participants were;
+	John Shalf         LBNL	
+	MIke Papka         ANL	
+	Tom Coffin         NCSA
+	Dave Semararo      NCSA
+	Bill Sherman       NCSA	
+	Ken Brodlie        U Leeds	
+	Stuart Charters    Durham
+	Mark Hewitt        Newcastle	
+	Ieuan Nicholas     Cardiff
+	Nick Avis          Cardiff
+	Jim Ahrens         LANL
+	Andre Merzky       ZIB	
+	Andrei Hutanu      ZIB
+	Sarah Bunn         Caltech (phone)	
+	John McCorquodale  Caltech		
+
+Intro---------------------------------------------
+
+This meeting was a discussion of visualization, data analysis, model 
+structures and the analysis of the additional requirements imposed by 
+the movement to a grid-based visualization and data analysis system.  
+The GGF wants to see documents that identify best-practices in the 
+community to point the way for future grid technology development 
+efforts.  Therefore, this effort will revolve around creating such a 
+document revolving around data models and requirements for grid vis.
+
+There is an incredibly long history regarding creation of vis model.  
+At a minimum, we need a proper assessment assessment of what has been 
+done in the past in terms of both theory and implementation.  In the 
+DOE, there is an effort to address these issues for interoperable 
+visualization and data analysis components called DiVA (Distributed 
+Visualization Architecture)
+	http://vis.lbl.gov/diva
+
+Likewise the Storage Resource Management (SRM) ISAC in DOE has a 
+similar effort afoot for distributed storage management systems.
+	http://sdm.lbl.gov/~arie/sdm/SDM.Framework.wshp.htm
+
+This effort will likely focus on the bigger issues that will drive both 
+the SRM and DiVA activities.
+
+So, the initial proposal is that the document consist of the following 
+4 chapters.
+1- data model requirments
+2- history of theory in vis modelling
+3- history of data model implementation
+4- additional reqs. for the grid (distributed parrallel)
+
+The goal is to;
+	* understand and document the requirements of the scientific community
+	* document the breadth of solutions (both in theory and 
+implementation) that attempt to address the needs of the community
+	* understand and document the constraints parallel/distributed 
+environments place on these data models
+
+All of this is done with the intent of providing more breadth to future 
+efforts on Grid-based data analysis environments.  There is a general 
+concern that without such a document, the resulting grid services 
+standards developed through the GGF will be too narrow in focus to form 
+the basis of a robust and broadly-applicable Grid "infrastructure."
+
+----------Discussion------------------
+
+At this point, we turned to each site to get their opinions on what the 
+overall content of the document should be and what areas they could 
+contribute to such a document.
+
+Ken Brodle:  UK Leeds
+	* concerned about the desired result of this document (why are we 
+doing this?).
+	* also concerned because many people have tried and failed at this 
+before.
+	* can contribute to the following subjects
+	-critique of some past attempts at unified data models
+	-requirements that drive development of GVis
+	-alterations/improvements/problems with NAG Explorer data structures 
+that make them inappropriate for use on the Grid (and some desired 
+solutions/requirements that would address these problems).
+	
+Nick Avis, Leuan Nicholas:  Cardiff (Covise)
+	* starting work on distributed environment.  Will share preliminary 
+requirements for distributed Covise.  Namely, there will be a 
+description of what aspects of the distributed environment will force 
+reworking/adjustments in the Covise data structures and abstract data 
+model.
+	
+Stuart Charters at Durham:
+	* Interested in contributing a section on issues related to streaming 
+data.
+	* One issue in distributed environments is how to efficiently manage 
+concurrent access to data.
+	* partial results out of the pipeline before you have finished.
+	* Several peer-to-peer items to the same data source.
+	* Scientists and for information visualization for textual information.
+	* Will describe both requirements that these use-cases impose on the 
+abstract data model as well as implementation issues that address these 
+constraints.
+	
+Jim Ahrens: 	
+	* Like many others, feels this will be very *hard* to do.
+	* In the interest of focusing the document, there is a general desire 
+that we focus on distributed/grid computing issues so that we don't end 
+up with an unmanageably large scope.
+	*  Interested in considerations of distributed issues for data models 
+-- what extensions are required to manage distributed data and how they 
+relate to pipeline design.
+
+Andre Merzky and Andrei Hutanu: ZIB
+	* They have an interest in the fiber bundle approach as a means to 
+provide a more generality as well as adaptors for domain-specific data 
+models for efficiency.
+	* There is an effort in GGF to tag a file format, but it is in need of 
+supplemental information that can be provided through understanding of 
+the data models and requirements.
+	* Also interested in HDF5 file formats and data models, data sturcture 
+requirements for remoteHDF5, fiber bundles.
+	* Possible areas of contribution (depending on time)
+		-considerations for both fiber bundle data models
+		-description of the domain-specific adaptor approach 
+(compare/contrast)
+		-describe data model requirements of Amira customers such as medical 
+imaging and astrophysics research
+		-AMR data
+		-considerations for distributed pipelines
+
+Dave Semeraro at NCSA:
+	* Requirements from SWOF and Teragrid projects
+	* Can pull some requirements and ideas from Bob Wilhelmson's ambitious 
+with big data movement for weather modeling.  This will provide a very 
+good example/use-case.
+	* Can also describe requirements for projects in Astrophysics,
+		-FLASH code (some AMR)
+	* SWOF project wants to deal with data in the Access Grid
+		-It would be very interesting to hear what kinds of constraints the 
+AG or AG-hosted visualization places on data analysis data models.
+
+Mike Papka:  	
+	* This is going to be hard, but it is also necessary.
+	* need focus and deadlines.
+	
+John McCorquodale at CalTech:
+	* Research on high throughput parallel data analysis system
+		-T221 backed by 4 nodes with a pair of myrinets
+		-12-16 GigE channels to Teragrid router
+		-1-2Gigabytes/sec from a remote renderer
+		-ANL teragrid vis cluster
+	* Software support for this environment requires custom streaming 
+media protocols (hybrid unicast/multicast)
+	* The performance requirements motivate him to create the simplest 
+wire format possible for a file  (one serialization format/protocol per 
+use).  Generalization is likely to lead to inefficiency.
+	* Proposes that the nucleating thought around which we build this 
+document is "what requirements are of parallelism" and "what are all of 
+the kinds of parallelism that this format percludes".  This will help 
+focus the scope of this document.
+
+
+Action Items:
+	Questionnaire:  Tom Coffin suggested we develop a questionnaire to 
+determine the disposition of the various people contributing to this 
+document and help separate areas of inquiry that participants believe 
+are "pressing issues" from more mundane considerations.  We will try to 
+get this out to you in a week or two.
+	Initial Outline:  A draft outline of the content for this document 
+will be created in response to the questionnaire results.
+	Milestones:  At that point, we must also need to agree on a schedule 
+for completing this document so that it doesn't drag on forever.  This 
+is also forthcoming.
+
+
+
+</pre>        
+</ul>
+
+
+
+
+<!-------------------------------------------------------->
+<!-------------------------------------------------------->
+<!--------modify info here-------------------------------->
+
+<font face="arial,helvetica" size="-1">
+<hr noshade size=1>
+this site maintained by:<br>
+    <a href="http://www.ncsa.uiuc.edu/" TARGET="_blank">
+    <img src="../images/footerlogo-combined.html" border=0 alt="NCSA"></a>
+<br>
+    <a href="http://calder.ncsa.uiuc.edu/ACCESS/" TARGET="_blank">
+    Alliance Center for Collaboration Education Science and Software</a><br>
+    <a href="http://www.ncsa.uiuc.edu/" TARGET="_blank">
+    The National Center for Supercomputing Applications</a><br>
+    <a href="http://www.uiuc.edu/" TARGET="_blank">
+    University of Illinois at Urbana-Champaign</a><br>
+<br>
+    <a href="mailto:tcoffin@ncsa.uiuc.edu">tcoffin@ncsa.uiuc.edu</a><br>
+
+<p><h6>Last modified: September 10, 2003</h6><br>
+  
+
+<!-------------------------------------------------------->
+
+</font></body>
+

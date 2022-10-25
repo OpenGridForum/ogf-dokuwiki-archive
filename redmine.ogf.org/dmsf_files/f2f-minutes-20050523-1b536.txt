@@ -1,0 +1,621 @@
+OGSA F2F, London -- 23 May 2005
+
+Attendees
+	Hiro Kishimoto
+	Jay Unger
+	Mark Morgan
+	Andrew Grimshaw
+	Fred Maciel
+	Steven Newhouse
+	Abdelsum Djaoui
+	Dave Berry
+	Chris Smith
+	Takuya Mori
+	Steve McGough
+	Mathias Dalheimer
+	Donal Fellows
+	Soonwook Hwang
+	Kazushige Saga
+	Andreas Savvas
+	Tom McGuire on Net Meeting
+	Ravi Subramaniam
+	Dave Snelling
+	Jem Treadwell
+
+Agenda Bashing
+--------------
+	* More time for Naming on Tuesday?
+		- No, don't think so.  Intent was only an update, not
+		  discussion.
+
+EMS architecture discussion I (90 min)
+--------------------------------------
+	* Summary of BES Yesterday
+		-- Ian's document raises some questions
+		-- Hiro's response does at well
+		-- Are we making a mistake trying to use WSRF for everything
+		   under the sun?
+	* Hiro would like time today to discuss Ian's document
+	* Are the port types that are to be used by other services in the big
+	  picture?
+		- Not sure about the questions.  There are port types that will
+		  be called from outside -- create, kill, etc.
+		- Not likely to be called by the end user, probably more from
+		  other pieces in EMS.  Likely called by Application Manager.
+	* Model is going to include stagin.  Does that mean copy in/copy out.
+		- Staging will be one mechanism, but the way that JSDL works,
+		  you can also specify an input file type and a file system so
+		  that if you had an RNS system with ByteIO file points, mapped
+		  in by NFS or CIFS then could you instead use JSDL to indicate
+		  pre-fetching, but not staging.
+
+Resource Selection Services
+---------------------------
+	* Going to form WG at next GGF.  Their scope will be to the Candidate
+	  Set Generator and Execution Planning Service.  Mathias Dalheimer and
+	  group doing this.
+	* Mathias to present
+	* Andrew suggests that BES should be in the related groups for RSS
+	* Calana
+		- Doesn't need an information system (except to keep auctions)
+		- Broker is sort of a queue
+		- Broker broadcasts auctions to all agents
+		- Agents register with the broker
+		- Can fan out message, but it's still a broadcast
+		- How do you deal with a situation of a hierarchy of schedulers
+		- If you have a hierarchy of schedulers, the meta scheduler
+		  can't bid on behalf of it's underlying cluster managers.  It
+		  could know something about the resources underneath, but then
+		  the model isn't consistent.
+		- What about pre-reserving resources below you, then you can
+		  bid it up?
+		- Process Check -- Are we trying to design RSS now?  No, we're
+		  just talking about a related project.
+	* OurGrid
+		- What does replication based scheduling mean?
+			-- They replicate jobs on a couple of resources, and
+			   then if one fails, they have others.
+	* Unicore/GS Broker
+	* NAREGI Super Scheduler (SS)
+	* OGSA-RSS charter summary
+		- Define interfaces and protocols for RSS, namely
+			-- EPS
+			-- CSG
+			-- Rservation Servies (RS)
+		- Deliverables
+			-- D1:  A spec doc describing the EPS and CSG protocol
+			-- D2:  A spec doc describing the Reservation Service
+			   here: focus on a basic reservation service
+		- Reservations
+			-- They need it, but a complete and extensive
+			   reservation service is out of scope
+			-- Start with a "Basic Reservation Service" to satisfy
+			   requirements
+			-- Placeholder for future Reservation Service
+			-- Provide input to a future GGF group
+			-- What application scenarios require a reservation
+			   service.  The only one shown was MPI.  While it's
+			   interesting, not that many people need that.
+			   However, co-scheduling is very important
+				--- telemedicine, etc.
+		- You say you will provide specification for EPS and CSG...
+		  Worry that these two services are not so clear at this
+		  moment.  We have a paragraph of the CSG, but we can't say
+		  that it is well defined.
+		- Yes, but we have talked about this quite a bit more then just
+		  the one paragraph that showed up.  We had a much more
+		  involved document that was paired down, but it has been
+		  thought a lot more then just a single paragraph.
+		  Recommendation to produce a document, a few pages long, to
+		  review with the EMS team to see if every one agrees with it.
+		- Timeline
+			-- GGF14 BoF
+			-- GGF15 -- gourp kick off, Service Description
+				Milestone, discussion of D1
+			-- GGF16 -- First draft of D1, discussion of D2
+			-- GGF17 -- Revised draft of D1, first draft of D2
+			-- GGF18 -- D1 in public comment, revised version of D2
+		- What will a large scale reservation system do that is out of
+		  scope
+			-- A basic reservation will provide simple information
+			   that current systems would support
+			-- Forward, something more fluid where you have the
+			   basic capability, but also a general notion that I
+			   have 8 to 10 of this resource, but not all at once,
+			   or you could take bits and pieces and have stuff
+			   added to it as time goes on.   A more rounded system
+			   with notifcations to know when things have been
+			   allocated or de-allocated from your reservation.  It
+			   supports advanced reservatoin, but also a more
+			   general one as well.  A lot of functionallity in a
+			   robust allocation system which you might only see a
+			   little bit of in a bsaic one.
+			-- What about reserving other forms of reservations
+			   then just cpu -- network, disk storage, access to
+			   filesystems, etc...
+			-- Could you use WS-Agreement for reservation -- well,
+			   you probably could, but they haven't talked about
+			   specific terms for reservations yet.
+				--- WS Agreement  seems to have gotten a little
+				    too out of control
+			-- Possible solution to WS-Agreement is to break it up
+			   into smaller pieces.
+			-- Some people have only implemented small pieces of
+			   WS-Agreement.
+			-- In order to get somewhere with this, we probably
+			   need to get some people to go actually participate
+			   in the working group.
+			-- Think that EPS and CSG into one spec is too big.
+			   But can they all be done in one group.  Also, the
+			   milestones might be too aggressive.
+			-- Yeah, but defining the interfaces isn't nearly as
+			   hard as implementing it.  Especially in EPS.
+			-- But they can focus on port type, and let BES worry
+			   about meta-data stuff.
+			-- The reason why CSG and EPS are together as one
+			   deliverable is because they are closely related in
+			   implementations.
+			-- One of the reasons we said we'd do it later was
+			   because we didn't have the bandwidth.
+			-- Naregi has already done this so maybe this isn't bad
+			-- No one involved from EGEE or Globus
+				--- EGEE has gotten pushed recently to put more
+				   efforts into standards efforts.
+			-- Do we think that Reservation Service should be
+			   dropped completely or should it be moved to another
+			   group
+				--- GRAAP should be doing
+				--- If other groups are doing soemthing,
+				    sometimes we can encourage them to go in a
+				    specific direction that will fit in with
+				    the general needs.
+				--- If GRAAP can be convinced of the importance
+				    of this, then perhaps they can be sped up.
+				--- GRAAP probably doesn't have too much
+				    bandwidth
+				--- What will GFSG will think about a group
+				    have three specifications in it's charters
+				--- You could drop reservation interface from
+				    charter, it doesn't mean that you can't do
+				    it later.
+				--- Dalheimer to talk with GRAAP people
+
+Refactoring of EMS and Data
+------------------------------------------
+	* Want to raise the fact that given the resource model that we have
+	  with WSRF, how can we begin modelling data as a resource just as we
+	  model jobs as a resource.  When you come to things like CSG where
+	  data can become another resource -- we talk about staging in and
+	  staging out, but there is other provisioning.
+	* If we manage to come up with a better meta-model for resource set,
+	  and somehow extend notion of resource monitoring so it becomes
+	  possible for an arbitrary service to advertise a capability, it would
+	  be nice if you can advertize abilities, access to various data
+	  virtualizations, etc.  Notion of extensible, abstract model, will
+	  help a lot integrating data into the overall scheduling domain.
+	* Think we have been working down this path.  Originally EMS was not
+	  just legacy jobs, etc.  Dave Berry and OGSA-D-WG have been working on
+	  an architecture that has a base type model and how to fit in query
+	  result sets, etc.
+	* Worry is, if you have abstract resource model, and you think of it as
+	  applying to relatively concrete resources such as processors, cluster
+	  components, software license, etc., then it's pretty easy to imagine
+	  the information grantularity and capacity of such a system.  But, if
+	  you also open it up to abstract items like files, etc. broadly, it
+	  explodes.  What happens if the resource modelling space explodes and
+	  you suddenly have in some domain, 100s of thousands of point
+	  resources that are relatively small granularity.  What constraints
+	  does that put on things.  We aren't saying that it isn't tractable,
+	  but we have to think about it.
+	* If a file is a resource, there is going to be millions of those, but
+	  that doesn't mean that you use that all the time.  An abstract
+	  resource is a dependency node between a supplier and a user.  It
+	  might be the case that the way that you manage this is that a
+	  supplier could advertise a capability that no one cares about, then
+	  you may only remember minimal information about it.
+	* In distributed systems, there are two ways to name things -- you can
+	  advertise attributes, but another common way is like directory
+	  services.  In RNS, there will be some path, and there will be a tree
+	  structure.  We aren't going to broadcast this to the world though.  
+	  The amount of logical resources is going to grow tremendously.  Given
+	  that, we have to make it a formal aspect that meta data management
+	  will have to factor this.
+	* The auction model that was discussed in Calana may be a good thing
+	  for scaleability.  We are going to have to mix and match push and
+	  pull.
+	* Our point of view right now is that data is available if someone
+	  needs it.  It's highly visible.  We're going to have to start doing
+	  duplication of data for performance a-priori.  But, maybe instead of
+	  doing data sharing, we should start doing data management.  Because
+	  we know the work that is coming in, we can use that to our advantage
+	  to manage the way that the data is being driven.  Current models
+	  don't tell us much about what we know about the use of the data.
+	* We've been talking about data virtualization for three years now -- I
+	  have one or more sources in some format and I want to federate and
+	  expose through some interface that data.  I have a relational table,
+	  an XML file, and a flat file....who's responsible (what person) for
+	  designing the virtualization.  In lots of cases, it's geeky enough
+	  that if the scientist who's doing siesmic stuff wants this
+	  virtualization, he'll have to find some smart person to help him
+	  write the DFDL file, or whatever.  Scientist will say fine, do that,
+	  give me the WS-Name and he'll be happy.  We're going to need tooling
+	  over time to regular people to do the same thing.
+	* To do the semantic piece is often very application specific.  To
+	  build a generic grid tool to do that seems out of scope for us.  The
+	  data community has been trying to do this for year with very few
+	  results.
+	* This is bad because it means that data virtualization will have a
+	  slow growth.
+	* The growth is going to be fast because there are standard formats in
+	  many of the areas (life sciences, etc.) and so there is tooling for
+	  that.
+	* In bioinformatics seem to have target types enumerated, but sources
+	  grow exponentially.
+	* The biggest hole that we have in data virtualization is that probably
+	  better then 50% of the apps we talk about access flat files.
+	* We really need a good schema language for record and byte oriented
+	  data.
+	* The schema language might be out of scope, but how to implement that
+	  doesn't seem to be out of scope.
+	* The transform itself is a first class object.  The transform is a
+	  computational function with input and output types.  That's a way to
+	  represent the operation model to the system.
+	* From the point of view of the user, the user would never schedule the
+	  transform -- he want simply want the WS-Name.
+	* That's why the data products are first class data objects.  They may
+	  not be materialized, but the user doesn't know that.
+	* And it might not be a static wholesale transform.  If the source is
+	  asynchronous, a stream, or you choose not to materialize a physical
+	  replica, it may happen as the cursor moves.
+	* This is what the data group has been working on.  The process has
+	  gone from very specific data to the more general.
+	* Data has the notion of a federation service.
+	* Why is federation hard?  Different groups define federate differently.
+	* When we talk about containers, we need to talk about data as well as
+	  jobs.
+	* What should be the operations be on a database container, and a job
+	  container, and are they unified.
+	* Ultimately, when you go to talk to a data source, you are going to
+	  talk to soemthing with a service oriented API, but that isn't
+	  associated with a container, it's just materialized as an attribute
+	  on the container.
+	* The name BES implies something that constrains what it does.
+	* Container as data or compute
+	* What are the operations that we want on a container when the
+	  container is a DBMS and how does that map to the container for BES? 
+	  To other containers?
+	* At what level can we see some commonality
+	* Two issues associated with the instance of a data object in the grid
+		-- How do I access it
+		-- How do I understand it's characteristics from a scheduling
+	   	   perspective.
+	* There is so much data and so we have to have some way of keeping list
+	  of abstract resources that we have to deal with bounded.  What we
+	  want to do is wait in many cases for someone to say, I need this
+	  thing, then we'll go and try to get inventory of information about
+	  the thing.  We'll wait for the concordance between the source and
+	  the uesr.  Until that happens, I'll remmber maybe nothing about the
+	  source.
+	* When you are scheduling, what do you need?
+		-- Is it shareable
+		-- Does it have a locale
+	* Scheduling is meta data driven.  Can this data be shared, where?
+	  How many hops?
+	* You actually will have multiple scheduling algorithms that will
+	  cooperate to schedule jobs, data, etc.
+	* Data and workload are two aspects of scheduling, but there's more.
+	* Data scheduler is just another instance of a function that is trying
+	  to adjust configuration to match some constraints.
+	* What are the ways that we can virtualize compute and data so that the
+	  exhibit the same handles
+	* This is why meta model is important
+	* Assertion that we need to start documenting the similarities and
+	  unification of resources.  We need to identify commonality between
+	  all resources.
+	* Most often, when an entity creates a resource, it's not creating it
+	  in a container, or on a CPU, it's creating it in some abstract space
+	  which may actually have common locales, but it's not like that
+	  resource is in the same container.
+	* Do we have a general consensus about this?
+	* The thing that is scariest about theis problem of resource modelling,
+	  is how much has been done in the real world (CIM, WSDM, GLUE) that
+	  doesn't take into consideration any of these abstract properties, or
+	  very little of them.  If I go look at CIM, it models data centers
+	  very well, but no notion of abstract locale.  How do you tell that a
+	  processor and a disk are close together in CIM -- there is no way.
+	  It's very hrad.  There is a lot of work to do here.
+	* We need to define a resource management service, and then people can
+	  use whatever model they want....Yes, but what is OGSA unifying?  If
+	  you are saying we are going to add yet another.
+	* Are the common bits the meta-model.  We can map the meta-model to
+	  these different things.
+	* What do we mean my meta-model.  Every modelling system has a meta
+	  model.  Base classes that everything is built up from.
+	* What we are talking about is how to express the value of something so
+	  you can evaluate it.
+	* Yesterday we had a very concreteized and tightly bound set of
+	  attributes (JSDL).  There was no dependency on any type or class.
+	* Why aren't we doing this as a subspace of dimension?  Well, we're not
+	  sure yet.
+	* We came about this backwords, but the goal is to have a flexible
+	  requirements specification, and a flexible resource specifications.
+	  The base classes are simply the cases in a switch statement.
+	* The meta-model, and BES should be applied to everything.  Should we
+	  have three months -- yes, but we are being pressed into doing this
+	  quickly.
+	* We want to build a first order logic language in XML?  Because the
+	  realm here is huge.  Part of us says we should have been doing this
+	  all along.  This is why Class Ads pop to mind.
+	* Maybe, in the process of stealing, we'll modify this stuff a little
+	  bit.
+	* What about semantic web technologies?  Too early, no tools, etc.
+	* What are the attributes that we need to unify resources in scheduling.
+	* How are the people who should come together to discuss this?  The
+	  people in OGSA-D?  Possibly, possibly not.  What's important from a
+	  scheduling perspective to other resources, to understand.
+	* Some sort of expression associated with closeness is necessary.  It's
+	  going to take people from both base scheduling decisions and data
+	  decisions to get this right.  Having said that, we are going to have
+	  to punt a little bit because it's hard enough to meet the JSDL
+	  requirements in 3 weeks.  We'll take as an additional objective to
+	  make sure that the baes classes are open enough to extend.  This is a
+	  pretty big job end to end, it's unfortunate that we got to this point
+	  without doing that job, but that's where we are and we have to go
+	  forward given the constraints that we have.
+	* In the long term, does this mean that we are creating the OGSA
+	  Resource Requirement Language.
+	* The Meta Model thing came as an "Aha" reaction to something in BES.
+	  Some people think that we need to be having these discussions in ogsa
+	  at large.  We need to be precipitating this down to the working
+	  groups rathre then having these "aha's" coming up from the bottom.
+	  Ravi is talking about the underlying framework.  What is the common
+	  framework for all of this.
+
+Basic Profile
+-------------
+	* Start with template.
+	* Rather stable for some time
+	* Suggest we go through it briefly
+	* See if we need to raise issues.
+	* None currently in trackers
+	* W3C said you couldn't cut and paste the WS-I definition document, but
+	  you can reference it.
+	* Need to add discussion of appendices as normative extension for
+	  conformance requirements.  Basic Profile is different from WS-I
+	  profile.  The explanation should be in there.
+	* Where comments not accepted, need tracker on GridForge
+	* On page 4, Draft Specification -- comment to add a discussion on
+	  non-exclusivity.
+		-- Everything that is implemented is greater then unimplemented
+	  	-- in otherwords, a specification that is a community
+		   specification, is also interoperable as well as implemented.
+		-- There is two ways to nuderstand interop.  One is to say that
+	  	   there is an impl. that is interop.  Another is when there
+	 	   are specs that are interop so that you can do some sort of
+		   test without having an impl.
+		-- A spec. that is included in a profile must have it's
+	 	   adoption level specified.  
+	* Status of a specification
+		-- We have grades of "standard".  How much of  a standard is a
+		   standard.
+	* Defacto doesn't really require a specification as long as it is 
+	  commonly available to everyone.
+	* Something doesn't have to be released to the public for it to be a
+	  Consortium Specification.
+	* Another important dimension is the level of adoption
+	* We need to clarify that all states of adoption apply to the bits of
+	  the target specs that are being referred to, not the entire specs.
+	* Are we going to add a discussion of what it means to be implemented
+	  with respect to the profile.
+	* Is SMIS a consortium?  We should pick up only the various obvious
+	  examples.
+	* SMIS is a private organization.  Leave SMIS out.
+	* Also, in the doc, it would be nice to point out that the names in the
+	  doc are examples (WSRF, WSDL, etc.)
+	* Notion of community level of adoption was defined vaguely, but leave
+	  it vague intentionally.  It's a vague thing.
+	* Our only way of determining implemented is to look at claims.  There
+	  isn't a test.
+	* Must you list all points of extensibility?  Is that in this
+	  document?  No, but should it be?  The intention is to capture 
+	  everything.
+	* What about stylistic things?  Yes, that information is referenced in
+	  the WS-I profile.  If some of things are already there, why
+	  reproduce them here?  Some of them are not.  If there is a delta
+	  being captured here, shouldn't there be a delta in the styling?  No,
+	  not really....not that kind of delta.
+	* Types of profile:
+		- Informational Profile
+		- Recommended Profile as Proposed Recommendation
+		- Recommended Profile as Grid Recommendation
+	* Can other working groups create profiles?  Yes, any group can create
+	  a profile.
+	* Who talks about when a profile is necessary as opposed to a spec? 
+	  Not this one -- what about WS-I?  No, they only talk about profiles.
+		- In our profiles, you can have an appendix with mini-specs (
+		  little bits of schema).  In some ways, the distinction is
+	  	  orthoganol to this process itself.
+		- What's important here is that they are both normative
+	  	  documents.  The distinction between them is not relevant
+		  here.
+	* Profiles are hear because of existing specifications which aren't
+	  necessarily well written.
+	* Evolving Standard is included to allow us to run in parallel with
+	  something that is not quite a standard.
+	* All profiles/specs referenced in Base profile are on schedule to be
+	  standard within 6 months and so base profile will move from Proposed
+	  Recommendation to Grid Recommendation.
+	* We don't want to have the same problem that WSDM had -- they
+	  reference the wrong version of WS-Addressing.  What we are proposing
+	  here it to avoid that problem.  As a proposed rec.  People can go 
+	  away and start experimenting with.  Doesn't get full GGF status until
+	  all specs are stable.
+	* You can only submit after a reference spec has atleast a first draft.
+	* Do we have profile versioning.
+	* Removing evolving standard from Proposed Recommendation is very hard.
+	  Is it possible to add more restriction to the criteria.
+	* Definition of proposed recommendation is -- here is a spec ready for
+	  people to go and implement.
+	* Should we add versions?  We can have that anyways.
+	* Should we say Evolving standards that have a stable implementation to
+	  use.  Something that is releasing concrete snapshots.
+	* Why is Appendix an appendix.  Move it into the document.
+	* Do we have a plan to update profile 1.0 soon?
+
+Basic Profile
+-------------
+	* XPath
+		- What about query serialization.  XPath defines several types
+		  for it's evaluation result.  As Tom said in the call, there
+		  is boolean value, string value, number value, and also node
+		  est.  We need some set of structured result for response 
+		  method.  It is also a problem for result type of this
+		  message.
+		- Even if we can serialize node set, the serialized
+		  representation may not be well formed XML Document.  This is
+		  for the digital signatures one.  You can't parse the result
+		  set as a well formed XML Document.  We can develope a
+		  structured message response for this operation, but not sure
+		  if we can reach a consensus for the requirements for this
+		  thing.
+		- Can we drop QueryResourceProperties from the basic profile. 
+		  Why do we need these?  Basically, in order to do discovery.
+		- Some of the namespace in an XPath, which ones do you use
+		  when you serialize it.  Also need a structured response type
+		  format.  In order to profile it, we'd need to define the
+		  structured return type.  Second one is if we serialize a
+		  node set by using XML Canonicalized specifications, would it
+		  be useful to requester.  If you select a namespace, you get a
+		  namespace node, not a wellformed XML instance.
+		- If we had an XML serialization of a Node set, then there is
+		  less of a problem.
+		- Are we talking one schema, or one per resource property for
+		  every possible node set.
+		- We need a generic schema for a node set.
+		- What can we do to profile the request side to make sure we
+		  have a meaningful query.
+		- Picking a canonicalization and picking a schema for the node
+		  set response would allow us to deal with this in the profile
+		  correctly.
+		- Decision -- Canonicalize, add structure for result set, and
+		  schema for node set serialization.  No, we still don't have a
+		  solution for interoperability.  It doesn't deal with prefix
+		  problems in namespaces.
+		- We need to have some way to agree on the prefix on both
+		  requester and service side.
+			-- The client and server have to agree at run time what
+			   the prefix to namespace mapping is.
+		- Can we profile a namespace query which isn't bad.
+		- Prefixes are part of the query if you make them that way.  So
+		  to profile tihs, we say you no prefixes on request, you this
+		  provided structure on response, canonicalize the response
+		  with this XML Digital Signature.
+		- What's the use case where you want to do something dumb.  We
+		  don't want define that people HAVE to use full namespaces.
+		- Decision
+			-- Put in warning about prefixes on request
+			-- Provide Schema for nodeset
+			-- Provide data structure for results including a
+			   choice for the different response types
+		- Do we need canonicalization?  Not sure that we do.
+	* Use of proxy certificates
+		- Proxy certificates generated by MyProxy -- no web service
+		  interface.
+		- Don't think there is enough infrastructure on proxy
+	          certificates to profile it.
+		- seems like development of standards in this area are too
+		  premature for profiling.  Omit them from the profile.
+		- There is an X509 Proxy Certificate Profile in IETF right now.
+	* Communication of Assertions
+		- Profiles for common assertions in headers or proxy
+		  certificates.
+		- Probably shouldn't put them in proxy certs, but we don't have
+		  proxies now, so that's OK
+		- SAML Token Profile is defined by WS-Security as a part of
+		  WS-Security spec. by OASIS.  WS-I also specifies their
+		  profile for how to use the OASIS's SAML token profile.  Let's
+		  refer to WS-I's SAML Token Profile.
+		- This is in order to pass general purpose assertions in SOAP 
+		  headers.  Or is it more general then that?  Also, how to
+		  refer to the assertion in the header.  Also, some various
+		  functionallity in that profile -- e.g. if the assertion
+		  carries keying material to attest that the message sender is,
+		  it defines some vocabulary for how to attest the sender...how
+		  to bind keying material of sender using SAML assertions.
+		- There are several ways to expression assertions -- SAML
+		  assertions, other is X509 attribute certificates.  Let's
+		  make this the recommended additional text for the profile.
+		- Are both mechanisms equiv?  No, SAML is richer, but they are
+		  both profiled.
+	* Basic Discovery Properties
+		- Currently in the profile, we list resource properties for the
+		  qnames for the other resource properties.  What about adding
+		  a couple more for basic discovery
+			-- A final resource interface -- QName of the most
+		  	   derived portType of the resource 0..1
+		- Resource Interface - QName of a portTypes mixed into the
+		  Final Resource Interface 0..n
+			-- Why make this a resource property.
+			-- If I'm running a dynamic management environment, it
+			   would be nice
+			-- This information is useful in service groups.
+		- ResourceEndPointReference - An EPR to this Resource 0..n
+	* Notification of death required?
+		- No
+	* Why require a seperate element for KeyInfo in digital signature.
+		- Tooling supports the KeyInfoElement, that's why change to
+		  our namespace to clarify the use.
+		- ds:KeyInfo defines an element for signature key and 
+		  encryption key the endpoint reference key info repreesnts
+		  which is for the endpoint reference that includes endpoint
+		  key info.
+		- Semantics is that the key info is not generic in EPR, but for
+		  that specific EPR.
+		- How is that different ?
+		- If you saw a ds:KeyInfo element, it would be different from 
+		  the one for the EPR?
+		- Decision -- let's put this KeyInfo in the OGSA basic profile
+		  namespace.  In otherwords, resolve not to do anything and
+		  close the tracker.
+	* Resilient References
+		- Wanted to put endpoint reference resiliency back in the
+		  basic profile.
+		- What meant by uncomfortable with something going on in naming
+		- What they mean was they didn't like the linkage between an
+		  abstract name and the ability to renew it.
+		- You might want to have the ability to renew an EPR that
+		  doesn't have an abstract name.
+		- If you have a reference, what are you renewing the reference
+		  to?
+		- We don't want to have two ways of doing renewal and resolution
+		- WS-Naming is in multiple pieces....there's the piece about
+		  how you get the resolution bit, and then there is the thing
+		  about the resolver protocol.
+		- Where does this belong?
+			-- Andrew and Mark to write down a way to solve this
+			   issue of not having to have an abstract name to do
+			   resolution, but would be ok for everyone involved
+		- Maybe the right thing to do is to push resolution piece down
+		  into basic profile.
+		- We can't mark this as resolved yet, but we'd like to have the
+		  opportunity to fix this up in a way that would make everyone
+		  happy.
+		- Date is May 27th.  We can submit a latest draft at that time.
+		  After that, we can make changes.
+		- Change status of this to resolved, WS-Naming to decouple
+		  abstract name from resolution.
+
+Document from Ian
+-----------------
+	* These are the same operations that we have, or are explicitly out of
+	  scope.
+	* BES -- can we force state changes.
+	* From the Job Manager point of view, doesn't it have to know the
+	  interface of the job?
+	* Ians' model has two interfaces -- job manager and job.  In OGSA we 
+	  have three, but do we factor them differently in a bad way?  Ian's
+	  interface has factory and activity.
+	* What is the concern here?
+	* What about the list operation on grid servies.  BES handles this in
+	  the container.  Do we want a general mechanism?  Seems like a bad
+	  idea in general unless you adopt something like Service Groups.

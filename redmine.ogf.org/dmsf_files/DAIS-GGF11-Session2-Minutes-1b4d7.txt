@@ -1,0 +1,321 @@
+GGF 11 - 08/06/04 - DAIS Session 2: Specification Realisations 
+==============================================================
+
+Chair: Norman Paton
+Note Taker: Mario Antonioletti
+
+Agenda for this meeting:
+
+   1. Relational Realisation: Brian Collins
+   2. XML Realisation: Amrey Krause
+   3. Summary/Plans
+
+---
+
+Norman introduces the session.
+
+1. Relational Realisation: Brian Collins
+
+Presentation at: 
+
+http://forge.gridforum.org/projects/dais-wg/document/GGF11-DAIS2-Relational/en/1
+
+Have changed the name of the specifications to use the "WS-" prefix.
+Specific changes made since the GGF10 version of the spec are outlined in 
+the slides.
+
+There is a small mistake in the spec submitted to GGF SQLResponseAccess 
+should really be labelled a factory. This will be corrected.
+
+Can have alternative formats for the data coming back. The valid set
+of return data types is specified by the SQLResponseDescription.
+
+Have tried to be consistent with faults coming back both in the
+relational and xml realisations. Still not entirely consistent but we
+are getting better.
+
+A couple of scenarios are described in diagrams in the slides.
+
+Guy Rixon: in the behavioural properties ... can a custom form be
+           used?  If you could put in one of the interfaces are
+           ADQL....
+
+Dave Pearson: what would you expect the service to do ...
+
+Charlie Little: you could say that this is not supported ....
+
+Brian: we chose the three types - common standards across vendors ...
+
+Guy: but you may want to know the dialect ... the client may want to
+     check this ... if the service does not understand then you want
+     to know why it does not understand...
+
+Norman Paton: the values in the spec are indicative ... these are not
+              necessarily the legal values ...
+
+Guy: you could have a version, e.g. 1.8.
+
+Norman: yes you could.
+
+Brian: if you put a statement that is illegal to that database then
+       you will get an error at the database level which will then
+       bubble up to the service level and be passed back to the
+       service.
+
+Guy: do you have to put a flavour in the execute query that could be
+     used?
+
+Brian: no ... we are interacting with CIM to see if general stuff can
+       be added ...
+
+Dave: your motivation for asking this is that when you are discovering
+      services you want to ensure that your client will be able to
+      talk to the data resource?
+
+Guy: yes ... however this could be done through other processes ...
+
+Norman: in an early version of the spec you could specify the language
+        constructs that could be used with that data resource but we
+        thought that was the beginning of the slippery slope ... now
+        we do this very simple thing ... if you go with the CIM model
+        you will get versioning and the optional packages that the
+        data resource supports ... also vendors publish versions of
+        this model which could be used by the service.
+
+Charlie: a compatibility service could do this ....
+
+Norman: but that is difficult to do ...
+
+Guy: could it be possible to make this a small set of items?
+
+Brian: the fact that the is already in the plural suggest this...
+
+Charlie: what do you mean by data management?
+
+Brian: decided that this is out of scope ... there are three views to
+       this: 
+
+       - The management of the service, e.g. starting services, etc this
+         is covered by the DMTF's MOWS specs; 
+
+       - There is the management of the underlying resource - start
+         database, stop database, basic DFDL operations some of which
+         could be done using MUWS but to that properly you need to
+         have appropriate informational properties and that is where
+         CIM comes in - as we do not parse the statements that are
+         passed into the services we do not stop you doing this so you
+         can do that by passing SQL queries in but that is vendor
+         specific;
+
+       - the third area is the management of the service and the
+         resource ...
+
+Norman: credential mapping would be in this third area ... there is a
+        smallish number of such things ...
+
+Charlie: by Data management then you don't mean anything like replication?
+
+Norman: we don't ... not sure if that is acceptable ... we do not
+        consider data replication to be in scope .. have not looked at
+        properties that would cover data replication ...
+
+Charlie: asking because I am part of the data replication service
+         ... people keep on asking about files ....
+
+Brian: there is some work on data replication going on in the infod
+       working group.
+
+Dave: that is a use case ... the only replication that you could use
+      would be triggered replication of a database ... we do not do
+      not do replication at the architectural level ...
+
+Allen Luniewski: there is nothing to stop you using the framework to
+                 do replication.
+
+Norman: that is true ... at the service layer we do not say anything
+        about data replication ... there is nothing to stop you to do
+        that behind the scene....
+
+        Let me invite comment on a single thing ... we have adopted a
+        single SQLExecute operation as we are not going to parse the
+        input ... the downside of this is that this produces a rather
+        generic result which is more difficult to unpack which
+        produces a challenge for tooling ... in terms of the factory
+        pattern a collection being returned has to wrap something more
+        complicated ... how do people feel about this? The alternative
+        is to have SQLQuery and SQLUpdate which give you more
+        constrained results.
+...
+
+Norman: the return is an SQLExecuteResponse which wraps the different
+        return types ... 
+
+Guy votes for the way that it has been changed to.
+
+Norman: happy to receive feedback at the meeting or through the list.
+
+----
+
+2. XML Realisation: Amrey Krause
+
+Presentation at: 
+
+http://forge.gridforum.org/projects/dais-wg/document/GGF11-DAIS2-XML/en/1
+
+Amy presents the main changes from GGF10 - now have an
+XMLSquenceAccess which is similar to the relational spec.
+
+Other changes are outlined in the presentation slides.
+
+Operations have not changed other than the first letter being
+capitalised for the xml collection access operations.
+
+...
+
+Some of the portTypes have been tided up a little bit.
+
+W3C currently working in XMLSerializationMethod ... and also working
+in XMLSerializationProperties ...
+
+Amy starts talking about issues associated with the current XML spec.
+Mentions the association of multiple XML Schemas with a collection.
+
+Norman: why can there be multiple schemas?
+
+That is the way that it is out there.
+
+Dave: does that correspond to views in tables?
+
+I don't think that that is the same thing ...
+
+...
+
+Norman: the difficulty in this context is that the XML standards are not
+        there ... 
+
+Need use cases.
+
+Steve Langella: you could put everything in one schemas but if you had
+                a schema for books and magazines then it might be best
+                to associate a document with one of the schema ... if
+                you had a schema that extended another schema then
+                would you require to have both schemas there?
+
+Yes, that is similar to my next issue.... these things need to be
+resolved.
+
+Norman: if you don't have the ability to remove documents using XPath
+         you could do that one document at a time .. the use of XPath
+         is an optimisation
+
+Steve: I suggested using XPath to remove documents ... I believe
+        that you can do already do this using XUpdate.
+
+XML management standards do not support management so we have provided
+our own interfaces ... when interfaces become available we may be able
+to use these but up until the point that that happens we need to
+provide interfaces.
+
+Norman: sounds to me like we need to support that kind of
+       functionality ... if over a period that functionality become
+       available then we could support that ... it's not as if we have
+       a large number of operations.
+
+I agree ... I think we should leave it there for now.
+
+Guy Rixon: in DFDL have binary representations of files ... to which
+           you'll be able to perform XPath queries ... was wondering
+           whether you would be able to support that kind of
+           functionality ...
+
+Is that not the kind of thing that you would put behind a file based
+interface ... we have not done that ...
+
+Norman: that is an implementation interface ... you could use these
+        interfaces to wrap this kind of access ...
+
+However if you want to return binary ... we only return xml...
+
+Norman: but we have the capability to return multiple formats. It is a
+        legitimate question to see whether the current spec could used
+        to provide that type of access ...
+
+----
+
+3. Summary/Plans
+
+Presentation at: 
+
+http://forge.gridforum.org/projects/dais-wg/document/GGF11-DAIS2-Summary/en/1
+
+Have 12 weeks until the next GGF12 document deadline. This includes
+July/August when people generally take holidays. Dave Pearson and I
+discussed activities that are required for DAIS.
+
+     - Socialising - take the out specs out and expose them to get
+       feedback and encourage involvement. We think that we are in the
+       right position to do this now. There are still mapping issues
+       but the core bits are more stable. Need to have an executive
+       summary and questionnaire to bring out issues. Have targeted
+       interaction and report back to GGF12. Dave has volunteered to
+       move this forward.
+
+Dave: would be interesting to get a response from people in the IT
+      industry, system integrators ... people that might like to adopt
+      the standards and try to implement them ... looking for
+      communities.
+
+Charlie Little: work for a software vendor ... what about object data
+                bases or other access mechanisms that do not fit in
+                these patterns ...
+
+Norman: we have sought to accommodate different realisations
+        ... currently also inching towards an object realisation
+        ... have a 15 min slot this afternoon to talk about this
+        ... want to keep the number of realisations down at the moment
+        ... looking for feedback.
+
+Charlie: trying to look at the difference between the specs compared
+         to what was there before and trying to catch up ... important
+         to keep in mind that these specs should not limit the types
+         of data access ... do not want to restrict this ... try to
+         keep that in mind...
+
+Brian Collins: we are also kicking off a files BOF which is a
+               potential fourth realisation ....
+
+Charlie: is the metadata working group that has a coordination
+         activity that needs to be coordinated with this?
+
+Steve Langella: there is no metadata working group ... we are trying
+                to find a home ..
+
+Charlie: can use metadata as the driver for a more generic query system ...
+
+...
+
+Currently have 5 documents in progress. Three of these have been
+updated for this GGF ... the OGSA data service document has not been
+updated for this GGF. The specs are thus slightly out of phase. Want
+to focus on the OGSA data services document for GGF12.
+
+Have a discussion on the OGSA data services document at a session
+later on today.
+
+Also have the mapping document that will be aired for the first time
+at this GGF. Look forward to this going through as an informational
+document for GGF12. 
+
+Need to ensure that we have a nominated person from DAIS that is
+tracking/involved in the OGSA data architecture document.
+
+Contemplating having a DAIS f2f possibly coinciding with the OGSA Data
+Architecture document.
+
+Guy: when will the specifications become standards?
+
+There are explicit dependencies on other standards that require to be
+resolved before these drafts can go to specification status... the
+answer to this question largely depends on the mapping question.
+
+----

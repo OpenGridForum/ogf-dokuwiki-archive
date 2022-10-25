@@ -1,0 +1,53 @@
+9 December 2005
+
+Attendees
+---------------
+Frank Siebenlist
+Hiro Kishimoto
+Andrew Grimshaw
+Marvin Theimer
+Mark Morgan (Notes)
+Dave Berry
+Manuel Pereira
+Dave Snelling
+Mike Behrens
+
+Agenda
+-----------
+* Review Assumptions in document
+* Use of WS-Address To field
+* Assumptions of what in headers on the wire
+* Globally Unique AbstractNames and ramifications
+* Frank's Email
+
+* Assumptions that went into WS-Naming
+	- Most tooling pretty much assumes that the To field is a URL, not a name
+		-- not clear that this is going to change
+		-- this is a critical assumption
+	- Requirements
+		-- Some kind of unique string to identify resource endpoints with a high probabily (for equality comparisons on EPRs)
+		-- Desire to rebind an EPR for whatever reason
+		-- Two seperable things
+* WS-Addressing "To" field
+	- Abstract Name as a piece of meta data would not flow over the wire.
+	- It may not be there.  If the dispatch on the other end NEEDS that information, then it should encode that information somewhere else where it would be passed on the wire.
+	- Same thing applies to the intermediary -- if you need information, then you need to encode that information elsewhere
+	- Security policies
+	- If you construct the unique name from To and ReferenceParameters, then you loose location transparency
+	- What about EPRs that are regenerated exactly (with different AbstractNames)?
+	- Marvin's compromise
+		-- We should recommend/require that the minters of EPRs with AbstractNames deal with the re-use problem.
+	- A profile may be necessary that says in order to avoid un-inteneded aliases, there be a proflie on address and reference parameters that allows for backends to distinguish between re-used addresses
+* How do we "guarantee" globally uniqueue abstract names
+	- Minters should use well known techniques for generating globally unique abstract names
+	- There are ways of doing this
+		- RFC4122
+		- GUIDs with additional information
+	- Do we want to provide guidance? or do we mandate?
+		- recommend against mandating
+	- Everyone agrees that unique in space and time is good
+* Is the spec. OK, or do we need to add things to the spec.
+	- Recommendation text
+	- Inform users of abstract names that they must include all necessary information for dispatching into other places in the EPR
+	- Write up a profile for how to use WS-Addressing "safely" (i.e., deal with un-intential duplicate address uses).
+	- Action on the working group to write this profile or punt it into OGSA

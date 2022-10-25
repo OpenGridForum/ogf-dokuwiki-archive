@@ -1,0 +1,184 @@
+OGSA Teleconference - 23 October 2006
+=====================================
+
+* Participants
+
+  Mike Behrens (R2AD, LLC)
+  Chris Kantarjiev (Oracle)
+  Hiro Kishimoto (Fujitsu)
+  Fred Maciel (Hitachi)
+  Tom Maguire (EMC)
+  Andreas Savva (Fujitsu)
+  Alan Sill (TTU)
+  Dave Snelling (Fujitsu)
+  Ellen Stokes (IBM)
+  Paul Strong (eBay)
+
+  Minutes: Andreas Savva
+
+* Summary of new actions
+
+  AI-1023a: Tom and Ellen will do a CIM Profile Introduction for
+            Oct.30 (45-60 minutes session)
+  AI-1023b: Tom and Ellen will start working on an introductory
+            example for the F2F.
+            - The exact topic is not decided. It may be good to make
+              sure that it aligns with the XQuery examples that Michel
+              is using. (Tom will contact Michel.)
+            - Michel and Fred should be involved in this work.
+  AI-1023c: Tom volunteered to review Hiro's HPC Cluster use case
+            slides and make appropriate changes to indicate where the
+            CIM Profile would fit in and how it would link into the
+            Reference Model.
+  AI-1023d: Paul will add more items to list on slide 6 of the HPC
+            Cluster use case
+  AI-1023e: Hiro will send out references to relevant OGF specs,
+            e.g., BES and CDDLM
+  AI-1023f: Paul will review relevant OGF specs and give feedback to
+            Hiro for the next version of the use case slide deck.
+  AI-1023g: Hiro will look at other parts of slide 5 and identify
+            further possible refinements of this use case.
+
+
+* Action item review
+
+  - AI-1005a: Alan has written a draft charter and will be approaching
+              the new ADs. Opinions vary on whether to do a BOF at
+              GGF19 or try and form a WG directly. Doing a BOF would
+              help clarify deliverables. Alan will send the link to
+              the charter draft to the list for comments. (Closed)
+  - AI-0925c: Hiro has sent email to EGA contacts. (Closed)
+
+* F2F update
+
+  Considered and rejected adding a session for the EGA Refererence
+  Model/HPC Cluster use case. Many expected participants cannot join
+  in person.
+
+* Information/Service separation discusion
+
+  - Discussion based on Tom's email sent to the list.
+  - The term 'Profile' is overloaded. The WS-I (also OGF/OGSA) meaning
+    is different from the DMTF/SNIA usage.
+    - Missing link is the connection between the refined (profiled)
+      information model and service; currently this is not done for
+      OGSA profiles (ref BES)
+  - Are these approaches(profiles) really different, or is it just a
+    difference in formats?  There are similarities in purpose but they
+    result in significantly different profiles. For example, the WS-I
+    or OGSA profiles do not specialize information models and link
+    that specialization to a service interface. 
+    - (An example of such a specialization would be if a relationship
+      that in the model is defined as 0..N is profiled to be appear
+      exactly twice.)
+  - One end result after exploring this area could be additions to the
+    DMTF work register.
+  - Ellen pointed out that CIM does not have a reasonable service
+    model. The existing service model is basically a placeholder and
+    needs refinement before Tom's proposal can be taken forward.
+  - (The motivation of the 'middle bubble' (intermediate model for
+    matchmaking) of the EMS figure is along the same lines.)
+  - Though normative work is the goal some educational work on what is
+    a CIM profile is needed.
+
+  AI-1023a: Tom and Ellen will do a CIM Profile Introduction for
+            Oct.30 (45-60 minutes session)
+
+  AI-1023b: Tom and Ellen will start working on an introductory
+            example for the F2F.
+            - The exact topic is not decided. It may be good to make
+              sure that it aligns with the XQuery examples that Michel
+              is using. (Tom will contact Michel.)
+            - Michel and Fred should be involved in this work.
+
+  AI-1023c: Tom volunteered to review Hiro's HPC Cluster use case
+            slides and make appropriate changes to indicate where the
+            CIM Profile would fit in and how it would link into the
+            Reference Model.
+            
+  - One discussion point was how to represent dags in the Reference
+    Model---they seem to represent dependencies on aspects of the
+    underlying information model. In a sense a different 'slice' of
+    the information models in DMTF.
+
+* HPC Cluster use case & EGA reference model
+
+  [Slide 4]
+    - Added BLAST binary and CHARMM binary and dependencies
+    - Hiro was not sure how to express this in the model.
+    - This slide shows something closer to an instance model rather
+      than an information model. In an information model there would
+      be some kind of relationships expressed; whiler here there is
+      only one kind of relationship and not the type usually used in
+      an information model
+
+    - There is a relationship to the Application information
+      model. Some explanation of that model might be useful. It was
+      not clear what kind of applications the Information Model covers
+      (packaged application, perhaps implicitly?) and whether it could
+      also cover business functions (probably).
+
+  [Slide 6]
+    - Hiro started a list of expected functions
+    
+    AI-1023d: Paul will add more items to list on slide 6 of the HPC
+              Cluster use case
+
+    Discussed the differences between batch job submission and
+    stateful services operating on (users') data and why the latter
+    paradigm is more important here.
+
+  [Slide 7]
+    - Noted that not all service transitions would have to be realized
+      (some transitions can be 'silent' or implicit)
+  
+  [Slide 9]
+    - Shows an attempted mapping between the two state models. Though
+      there does not seem to be anything contradictory some BES states
+      would probably map to multiple Reference model states. E.g.,
+      bes:Pending mapping to both unconfigured and inactive.
+    - Discussed bes:finished as a separate state. The motivation is
+      that after the job completes some information might remain until
+      the user retrieves it (or possibly longer). The service being
+      managed has disappeared and the remaining state lifetime is
+      separate from that of the running state.
+
+  [Slide 11]
+    - There seems to be some mismatch in the two models. CDDLM makes
+      distinctions between 'initialized' and 'running' state while the
+      Reference model only has 'initialized'.
+    - It may be that the cddlm lifecycle captures two aspects: the
+      lifecycle of the binary and some part of the lifecycle of the
+      service/component
+
+    - As a basic use case, assuming CDDLM may be more than needed. For
+      example with BES it may be sufficient to assume manual
+      deployment.
+
+** Next steps
+   
+   Discussed whether the HPC Cluster use case is too simple. Though
+   some aspects look simple (submit/run) other aspects (pre-, post-)
+   should provide a good target for further refinement.
+
+    AI-1023e: Hiro will send out references to relevant OGF specs,
+              e.g., BES and CDDLM
+    AI-1023f: Paul will review relevant OGF specs and give feedback to
+              Hiro for the next version of the use case slide deck.
+    AI-1023g: Hiro will look at other parts of slide 5 and identify
+              further possible refinements of this use case.
+
+    Next review is scheduled for 2 weeks later.
+
+* Glossary review
+
+  - Discussion focused on 'enterprise' related terms.
+  - Agreed that the term 'enterprise' should be defined and preferably
+    in a way that motivates the definition of other related terms.
+    - Decided after lengthy debate to stay with a simple definition
+      (that may have some unstated exceptions).
+  - Agreed that e-Science should also be added
+  - Refined definitions of 'enterprise computing' and 'enterprise
+    application'
+  - Revised definitions are in the working copy of the Glossary. Jem
+    will uploaded after further refinement.
