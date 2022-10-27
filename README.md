@@ -4,8 +4,8 @@ the following assets, archived in read-only mode. Current active content for
 ongoing activities is hosted on the [OpenGridForum organizational pages on GitHub](https://github.com/opengridforum).
 Groups wishing to continue OGF work can refer to these historical archives for past activity.
 
--   [Archived Main OGF Dokuwiki WebSite 
-    content](http://archive.ogf.org/www.ogf.org/dokuwiki/doku.php/start.html)
+-   [Archived Main Open Grid Forum Dokuwiki Web Site 
+    content](https://dokuwiki.ogf.org/)
     (2013 - 2022)
     
     This site supported the front-facing main web content for overall information about OGF
