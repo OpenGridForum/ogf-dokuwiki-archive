@@ -23,7 +23,7 @@ Groups wishing to continue OGF work can refer to these historical archives for p
     copy of the older GridForge site content to ensure accessibility of older content
     and to document provenance and historical development of this content.
     
--   [Archived GridForge project pages content](https://archive.ogf.org/forge.ogf.org/sf/sfmain/do/home.html) (2003 - 2013)
+-   [Archived GridForge project pages content](https://forge.ogf.org/sf/sfmain/do/home.html) (2003 - 2013)
 
     The GridForge site served as the primary content manager for individual projects and their
     associated community and working groups from early in the formation of the Grid Forum through its 
